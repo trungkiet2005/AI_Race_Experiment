@@ -1,0 +1,19 @@
+# Core environment used by the AI Race engine and result writers.
+pandas>=2.0,<3
+numpy>=1.24,<3
+
+# Analysis (required by results/scripts/analyze_ai_race.py).
+scipy>=1.11,<2
+statsmodels>=0.14,<1
+matplotlib>=3.8,<4
+
+# Offline inference is installed to match the Kaggle CUDA image.
+# vllm
+# transformers
+# torch
+# sentencepiece
+# accelerate
+# bitsandbytes
+
+# Development:
+# pytest>=8,<9

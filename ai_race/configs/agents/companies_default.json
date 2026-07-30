@@ -1,0 +1,10 @@
+{
+  "name": "companies_default",
+  "nPlayers": 2,
+  "names": ["Company_1", "Company_2"],
+  "personas": {
+    "en": ["", ""]
+  },
+  "description": "Neutral company seats for the paper-faithful baseline; no safety or risk persona is injected."
+}
+

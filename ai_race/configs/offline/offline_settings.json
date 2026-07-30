@@ -1,0 +1,23 @@
+{
+  "backend": "vllm",
+  "modelPreset": "models_qwen2.5-7b",
+  "sampling": {
+    "temperature": 0.7,
+    "maxTokens": 256,
+    "logprobs": 0
+  },
+  "engine": {
+    "maxModelLen": 4096,
+    "gpuMemoryUtilization": 0.9,
+    "tensorParallelSize": 1,
+    "enforceEager": true,
+    "dtype": "auto",
+    "quantization": null,
+    "kvCacheDtype": null,
+    "maxNumSeqs": null,
+    "cpuOffloadGb": 0,
+    "trustRemoteCode": false
+  },
+  "batchSize": 0,
+  "maxParseRetries": 3
+}

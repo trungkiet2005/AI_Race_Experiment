@@ -1,0 +1,104 @@
+# AI Race LLM Experiment
+
+This repository studies how large language models behave in a repeated, idealised
+AI-development race. Two model-controlled companies repeatedly choose between
+**Safe** and **Unsafe** development. Unsafe development is faster and pays more in
+the current round, but it accumulates a private setback risk for a race winner.
+
+The environment is adapted from Fernández Domingos and Han (2026), *Falling Behind
+Drives Unsafe Development in an Idealised AI Race Experiment* (arXiv:2607.26034).
+The source study used human participants; this project is an LLM adaptation and does
+not present its future model outputs as a replication of human cognition.
+
+## Canonical game
+
+- Two players choose simultaneously in every round.
+- Safe advances `1.0` step; Unsafe advances `1.5` steps.
+- Stage payoff matrix (row = own action, column = opponent action):
+
+  | own \ opponent | Safe | Unsafe |
+  |---|---:|---:|
+  | Safe | 1.0 | 0.6 |
+  | Unsafe | 2.4 | 2.0 |
+
+- The race lasts at least five rounds. After every completed round from round 5
+  onward, it stops with probability `0.2`, so the expected duration is 9 rounds.
+- The progress leader receives 100 ECU; a tie gives 50 ECU to each player.
+- Treatments set maximum private risk to `0.1`, `0.6`, or `0.9`.
+- Before each decision, both agents observe both accumulated stage payoffs,
+  both current private risks, both race positions, and the preceding revealed
+  action profile; same-round choices remain simultaneous and hidden.
+- A winner's effective setback probability is
+  `max_private_risk * unsafe_actions / rounds_played`. A setback removes that
+  player's entire race payoff. A loser keeps stage payoffs and receives no prize.
+
+## Repository layout
+
+```text
+ai_race/                 Core engine, prompts, configs, runners, tests, and metrics
+FAIRGAME/                Vendored model connectors reused for offline/API inference
+kaggle/
+  experiments/           GPU notebook source for the offline baseline
+  benchmarks/            Kaggle Benchmark task for frontier/API models
+  setup/                 Offline-wheel preparation notes and script
+references/papers/
+  markdown/              AI-readable summary of the one retained reference paper
+  pdf/                   The single retained AI Race source PDF
+strategy_analysis/       AS/AU/CS/CAS trajectory classification
+results/                 Empty AI Race result surface and analysis script
+paper/                   Manuscript scaffold; no fabricated results
+slides/                  AI Race presentation outline
+```
+
+Legacy Collective Risk outputs and trained strategy artifacts are preserved locally
+under `.archive/collective_risk/` and excluded from Git. They are not mixed with the
+AI Race result schema.
+
+## Baseline configuration
+
+The paper-faithful baseline is
+[`ai_race/configs/experiment/baseline.json`](ai_race/configs/experiment/baseline.json).
+It sweeps the three private-risk treatments using neutral companies and a hidden
+stochastic horizon. The checked-in configuration is explicitly a three-repetition
+`pilot`; it must not be pooled with confirmatory data. Freeze the protocol, set
+`runPhase` to `confirmatory`, and choose the preregistered sample size before a full
+run.
+
+Expected output for each model:
+
+```text
+turns.jsonl      one row per player decision
+races.csv        one row per two-player race
+players.csv      one row per player-race
+run_manifest.json
+```
+
+The main behavioral outcomes are Unsafe frequency, response to the opponent's
+previous action, pre-decision progress gap, first-round momentum, and winner/loser
+Unsafe frequency.
+
+## Run policy
+
+The current workstation is not used to execute experiments. Run the offline baseline
+from [`kaggle/experiments/baseline.py`](kaggle/experiments/baseline.py) on Kaggle
+with GPU enabled. The script is organized with `# %%` cells, copies the read-only
+input repository to `/kaggle/working`, loads model inputs sequentially, and writes a
+zip archive to Kaggle Output.
+
+Kaggle Benchmark publication and remote runs are checkpointed operations. See
+[`kaggle/benchmarks/README.md`](kaggle/benchmarks/README.md) for the exact
+push/status/log commands; do not invent a kernel slug when no
+`kernel-metadata.json` is present.
+
+## Research status
+
+- AI Race game mechanics, state, scoring, prompt, logging schema, and baseline
+  configuration are implemented.
+- CRSD-specific documents, experiments, results, manuscript figures, and slides have
+  been removed from the active project.
+- No AI Race experiment has been executed and no result is claimed.
+- Static review is appropriate on this machine; behavioral and GPU validation must
+  be performed on Kaggle.
+
+See [`PROJECT.md`](PROJECT.md) for research questions, estimands, and validation
+criteria.

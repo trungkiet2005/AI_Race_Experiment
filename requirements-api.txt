@@ -1,0 +1,7 @@
+# Optional API and Kaggle Benchmark dependencies.
+anthropic>=0.39
+openai>=1.40
+mistralai>=1.0
+python-dotenv>=1.0
+kaggle>=1.7
+kaggle-benchmarks

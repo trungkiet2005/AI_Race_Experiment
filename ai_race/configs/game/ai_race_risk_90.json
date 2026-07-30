@@ -1,0 +1,23 @@
+{
+  "name": "ai_race_risk_90",
+  "engine": "ai_race",
+  "nPlayers": 2,
+  "safeProgress": 1.0,
+  "unsafeProgress": 1.5,
+  "stagePayoffs": {
+    "safeSafe": 1.0,
+    "safeUnsafe": 0.6,
+    "unsafeSafe": 2.4,
+    "unsafeUnsafe": 2.0
+  },
+  "minRounds": 5,
+  "stopProbability": 0.2,
+  "maxRoundsSafetyCap": 100,
+  "racePrize": 100,
+  "maxPrivateRisk": 0.9,
+  "historyMode": "previous_round",
+  "agentsCommunicate": false,
+  "promptTemplate": "ai_race_{language}",
+  "promptVersion": "ai-race-paper-v2",
+  "agents": "companies_default"
+}

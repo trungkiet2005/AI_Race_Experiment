@@ -1,0 +1,57 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Môi trường
+.venv/
+venv/
+.env
+kaggle.json
+**/kaggle.json
+.kaggle/
+
+# Local archive from the former Collective Risk project.
+/.archive/
+
+# Generated AI Race results. Keep analysis code, README, and empty result surfaces.
+/results/**
+!/results/frontier/
+!/results/frontier/.gitkeep
+!/results/open_source/
+!/results/open_source/.gitkeep
+!/results/scripts/
+!/results/scripts/*.py
+!/results/README.md
+/ai_race_results/
+/models/
+FAIRGAME/resources/results/
+*.safetensors
+*.gguf
+*.zip
+
+# LaTeX build artifacts.
+paper/*.aux
+paper/*.bbl
+paper/*.blg
+paper/*.fdb_latexmk
+paper/*.fls
+paper/*.log
+paper/*.out
+paper/main.pdf
+slides/*.aux
+slides/*.fdb_latexmk
+slides/*.fls
+slides/*.log
+slides/*.nav
+slides/*.out
+slides/*.snm
+slides/*.toc
+slides/*.vrb
+slides/*.xdv
+
+# OS
+.DS_Store
+Thumbs.db

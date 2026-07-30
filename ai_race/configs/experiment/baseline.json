@@ -1,0 +1,19 @@
+{
+  "name": "baseline",
+  "runPhase": "pilot",
+  "description": "Paper-faithful LLM baseline: neutral two-company races, English prompt, hidden stochastic horizon, and maximum private risk treatments 0.1/0.6/0.9. No human demographics or elicited risk-preference covariates.",
+  "games": [
+    "ai_race_risk_10",
+    "ai_race_risk_60",
+    "ai_race_risk_90"
+  ],
+  "agents": "companies_default",
+  "languages": ["en"],
+  "models": ["LocalQwen"],
+  "useOffline": true,
+  "offlineSettings": "offline_settings",
+  "repetitions": 3,
+  "seed": 260726,
+  "maxParseRetries": 3,
+  "verbose": true
+}

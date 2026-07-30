@@ -1,0 +1,14 @@
+{
+  "name": "qwen25-72b-instruct-awq",
+  "modelPath": "/kaggle/input/models/qwen-lm/qwen2.5/transformers/72b-instruct-awq/1",
+  "engine": {
+    "maxModelLen": 4096,
+    "gpuMemoryUtilization": 0.92,
+    "tensorParallelSize": 1,
+    "dtype": "auto",
+    "quantization": null,
+    "kvCacheDtype": "fp8",
+    "maxNumSeqs": 32,
+    "trustRemoteCode": false
+  }
+}

@@ -1,0 +1,153 @@
+\documentclass[11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{microtype}
+\usepackage[margin=1in]{geometry}
+\usepackage[hidelinks]{hyperref}
+\usepackage[numbers,sort&compress]{natbib}
+
+\title{Large Language Models in an Idealised AI Race:\\
+A Repeated-Game Evaluation of Competitive Safety Decisions}
+\author{Author information pending}
+\date{\today}
+
+\newcommand{\Safe}{\textsc{Safe}}
+\newcommand{\Unsafe}{\textsc{Unsafe}}
+\newcommand{\pending}{\textbf{Pending}}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Competitive technology development can make speed privately advantageous even when unsafe development carries substantial risk. A recent framed experiment studied this tension with human participants in a repeated, two-player AI race and found that dynamic race state was more informative about Unsafe choices than elicited risk preference alone. We adapt the same canonical game structure into a controlled evaluation of large language model agents. The planned study will compare model behaviour across private-risk treatments while preserving simultaneous decisions, stochastic race length, progress incentives, terminal prize allocation, and accumulated setback risk. It will test whether an opponent's preceding action, relative race position, and first-round choice predict later Unsafe decisions, while separating behavioural associations from claims about model beliefs or subjective risk. This manuscript is a protocol scaffold: model selection, sample size, preregistration, and all empirical results remain pending. No LLM outcome is claimed.
+\end{abstract}
+
+\section{Introduction}
+
+Advanced AI development is often described as a race in which laboratories, firms, or states can benefit from moving faster than competitors. This framing creates a strategic tension. Safety work may reduce the probability of costly failure, yet a slower actor may lose influence or a first-mover prize. A useful experiment must therefore represent both the direct attraction of speed and the way that one competitor's behaviour changes the incentives faced by another.
+
+Fernández Domingos and Han introduced a framed repeated AI-race task for human participants \citep{fernandezDomingosHan2026}. Paired participants repeatedly selected Safe or Unsafe development under an uncertain time horizon. Unsafe development produced faster progress and larger immediate payoffs but increased a private terminal setback probability. Their preregistered comparison between maximum private-risk levels of 0.60 and 0.90 was not supported, and elicited human risk preference did not significantly predict Unsafe choice. Their central findings concerning the opponent's preceding action, relative race position, and first-round behaviour arose from exploratory analyses. A reduced four-strategy evolutionary model provided a compact interpretation of those patterns.
+
+The present project asks a different empirical question: how do LLM agents act when placed in the same idealised strategic environment? The human study supplies a game specification and external behavioural reference, not an LLM result. Language models differ from human participants in training history, prompt sensitivity, memory implementation, sampling noise, and the absence of a directly comparable elicited risk-preference construct. A rigorous adaptation must make those differences explicit and avoid interpreting action sequences as evidence of subjective fear, intent, or preference.
+
+The study is designed around three confirmatory questions. First, does the maximum private-risk treatment change the probability of an Unsafe choice for an LLM agent? Second, conditional on the recorded game state, does an opponent's preceding Unsafe action predict a greater probability of a focal Unsafe action? Third, does relative position predict Unsafe choice, with lagging agents more likely to select the faster action? First-round behaviour, model family, pairing, and prompt condition will be prespecified as secondary sources of heterogeneity. Exact hypotheses and contrasts will be frozen before confirmatory data collection.
+
+\section{Prior work and scope}
+
+The focal source combines a human behavioural experiment with a reduced evolutionary model \citep{fernandezDomingosHan2026}. Its canonical stage game has the Deadlock ordering \(T>P>R>S\), not the standard Prisoner's Dilemma ordering: Unsafe strictly dominates Safe in immediate payoff, and mutual Unsafe is not directly costly at the stage-game level. The cost of unsafe development instead enters through accumulated private setback risk at the end of the race. This distinction matters because an implementation that charges a per-round collective loss would constitute a different game.
+
+The source study recruited human participants through Prolific and implemented the task in oTree. Its dynamic associations cannot be imported as hypotheses that LLMs are expected to ``replicate.'' We will treat them as preregistration targets whose signs can be supported, contradicted, or left unresolved by independently generated agent data. Any comparison with human estimates will be descriptive unless a common estimand and uncertainty-aware comparison are specified in advance.
+
+\section{Methods}
+
+\subsection{Canonical repeated AI-race game}
+
+Two agents, indexed by \(i\in\{1,2\}\), choose simultaneously in round \(t\) between actions \(a_i^t\in\{S,U\}\), representing Safe and Unsafe development. Safe advances the focal agent by one race step, while Unsafe advances it by \(1.5\) steps:
+\begin{equation}
+    \sigma(S)=1,\qquad \sigma(U)=1.5.
+\end{equation}
+The per-round payoff matrix is
+\begin{equation}
+    \pi =
+    \begin{pmatrix}
+        1 & 0.6\\
+        2.4 & 2
+    \end{pmatrix},
+\end{equation}
+where rows index the focal action \((S,U)\) and columns index the opponent action \((S,U)\). The environment will calculate these quantities directly; model-generated arithmetic or rationales will never determine the state transition.
+
+Every race lasts at least five rounds. Immediately after round 5, and after every subsequently completed round, the race terminates with probability \(0.2\). Thus,
+\begin{equation}
+    T=5+G,\qquad G\sim\operatorname{Geom}(0.2)-1,
+\end{equation}
+and the theoretical expected duration is nine rounds. A seeded environment random-number generator will produce and log each stopping draw. Agents will receive only information allowed by the frozen protocol and will not receive the future horizon.
+
+At termination, the agent with greater cumulative progress receives 100 experimental currency units, and tied leaders split the prize. For a winner or tied winner, accumulated private setback probability is
+\begin{equation}
+    q_i(T)=p_r^{\max}\frac{n_i^U(T)}{T},
+\end{equation}
+where \(n_i^U(T)\) is the number of focal Unsafe choices and \(p_r^{\max}\in\{0.10,0.60,0.90\}\) is assigned at the race level. If a terminal setback is realised, the affected agent loses the task payoff as defined in the canonical environment. Unit tests and hand-checked fixtures must verify winner, loser, tie, all-Safe, all-Unsafe, and mixed-action cases before data collection.
+
+\subsection{Agent observation and action protocol}
+
+At each decision, an agent will receive a versioned prompt containing the current round, treatment, both players' progress, both accumulated stage payoffs, both current accumulated private risks, and the preceding revealed action profile when \(t>1\). The exact wording, ordering, numeric formatting, system instruction, and memory policy will be frozen and hashed. The canonical condition will request one parseable action token. Free-form reasoning, if studied, will be stored separately and will not override the parsed action.
+
+Same-round decisions will be isolated. Both responses must be committed before either agent is shown the opponent's current choice or any state derived from it. The retry and invalid-action policy will be fixed before runs begin. Raw response, parsed response, parser status, retry count, latency metadata when available, and final fallback action will be recorded for every decision.
+
+\subsection{Models, pairings, and experimental units}
+
+The model roster, exact checkpoint or endpoint revision, provider, access date, context limit, decoding parameters, and seed support are \pending. Pairings may include homogeneous dyads and prespecified heterogeneous dyads, but the confirmatory design will balance risk treatments within every pairing stratum. A race generated from an independently allocated environment seed is the primary experimental unit; individual rounds are repeated observations nested within the race and dyad.
+
+Power or precision analysis, target race counts, pilot allocation, and stopping criteria are \pending. These quantities will be determined before the confirmatory run and will not be changed after inspecting confirmatory outcomes. Pilot races used for parser, state, and infrastructure validation will be labelled and excluded from confirmatory inference.
+
+\subsection{Conditions and controls}
+
+The first experiment will use the canonical game and vary only \(p_r^{\max}\). Additional prompt framing, persistent memory, persona, communication, governance, or disclosure conditions will be treated as separate extensions rather than silently folded into the baseline. Each extension will define its own estimand and factorial allocation. Run order will be randomised or blocked to reduce confounding by endpoint drift and transient service conditions.
+
+To assess protocol comprehension without attributing human-like understanding, a deterministic state-transition audit and a structured action-format check will precede the behavioural run. Any model-facing comprehension probes, if used, will be prespecified and kept separate from the outcome-generating context unless the condition explicitly studies their effect.
+
+\subsection{Outcomes and statistical analysis}
+
+The primary round-level outcome is an indicator that the focal agent selected Unsafe. Treatment-level summaries will report the number of independent races, agents, decisions, invalid responses, retries, and completed terminal calculations. Estimates will include uncertainty intervals and will never treat rounds from the same race as independent replicates.
+
+The planned dynamic model will relate \(a_i^t\) for \(t\geq2\) to maximum-risk treatment, the focal preceding action \(a_i^{t-1}\), the opponent preceding action \(a_{-i}^{t-1}\), and preceding relative progress \(\Delta S_{i,t-1}=S_{i,t-1}-S_{-i,t-1}\). Prespecified specifications will test relevant interactions, include first-round Unsafe choice, and control for frozen model, pairing, and prompt strata. Standard errors or hierarchical effects will account for clustering within independently seeded races and repeated model pairings. The final estimator, contrast coding, multiplicity correction, convergence criteria, and sensitivity analyses are \pending\ and will be preregistered.
+
+Secondary outcomes will include first-round Unsafe frequency, within-race switching, mutual-Unsafe persistence, terminal progress, win and tie frequencies, realised setback, payoff, invalid-action rate, and variation across model pairings. Exploratory language analysis will be clearly separated from confirmatory action analysis. Textual rationales will not be used to infer hidden psychological states without a separately validated measurement model.
+
+\subsection{Reproducibility and data provenance}
+
+Each Kaggle run will emit an append-only event log and a manifest containing code revision, configuration hash, prompt hash, model metadata, package versions, seed allocation, start and end timestamps, and checkpoint or resume history. Derived tables will be reproducible from event logs without parsing notebook console output. Failed sessions, endpoint errors, truncations, and exclusions will remain visible in the accounting trail.
+
+Data cleaning and model fitting will operate on immutable snapshots. The manuscript will cite the snapshot identifier used for every table and figure. No local execution is assumed by this protocol; local files provide source control, while compute and validation runs will occur in the declared Kaggle environment.
+
+\section{Results}
+
+\subsection{Run completion and data accounting}
+
+\pending. No LLM race has been analysed for this manuscript scaffold. This subsection will report planned races, completed races, exclusions, endpoint failures, invalid responses, retries, decision counts, and the final number of independent clustering units. It will not be populated from pilot logs.
+
+\subsection{Maximum-risk treatment effects}
+
+\pending. No treatment estimate, uncertainty interval, significance test, or qualitative direction is currently available. The human-study pattern reported by Fernández Domingos and Han \citep{fernandezDomingosHan2026} is prior work and will not be presented as this project's result.
+
+\subsection{Opponent response, race position, and first-round behaviour}
+
+\pending. This subsection will report preregistered dynamic coefficients and marginal effects only after the analysis snapshot is frozen. Associations will not be described as causal effects unless the design and estimator identify such effects.
+
+\subsection{Model and condition heterogeneity}
+
+\pending. Heterogeneity claims will require prespecified contrasts or will be labelled exploratory. A difference between sampled outputs will not be generalised beyond the tested model revisions, prompts, decoding settings, and run period.
+
+\section{Discussion}
+
+The Discussion will be written after the Results are frozen. It will distinguish evidence that an agent's action changes with observable race state from stronger and generally unsupported claims about subjective fear, risk preference, strategic intent, or an internal world model. Agreement with the human-study coefficient signs would constitute behavioural alignment under this task, not psychological equivalence. Disagreement would likewise not invalidate the human study because the populations and decision mechanisms differ.
+
+Policy implications will remain conditional on external validity. The canonical game isolates a narrow speed--safety trade-off with private terminal risk. It does not directly model frontier-lab organisation, collective catastrophe, regulation, communication, or real capability uncertainty. Governance extensions must therefore be evaluated as new experimental games rather than inferred from the baseline alone.
+
+\section{Limitations}
+
+The planned study uses a stylised two-agent environment and sampled text-model policies. Results may depend on prompt wording, context representation, model pairing, decoding settings, endpoint updates, and provider-side inference changes. Repeated calls to one checkpoint do not constitute a population sample comparable to independently recruited human participants. Statistical uncertainty from sampled races does not capture uncertainty about task validity or generalisation to real institutions.
+
+The source study focuses on private risk, and this adaptation preserves that baseline. It therefore cannot answer how agents behave when unsafe development imposes collective or third-party harm without an explicit extension. The stochastic horizon is short, the action set is binary, and agents do not develop new capabilities during a race. These abstractions support controlled inference but limit substantive scope.
+
+\section{Ethics and responsible reporting}
+
+The proposed experiment does not recruit human participants. Nevertheless, the study will document provider terms, access controls, data retention, energy or compute accounting when available, and any model-generated sensitive content. Reports will avoid anthropomorphic claims, cherry-picked transcripts, and selective omission of failed runs. Raw model outputs will be released only when licensing, privacy, and platform policies permit.
+
+\section{Data and code availability}
+
+Code, prompts, manifests, and de-identified event logs will be linked here after the first frozen release. Availability statement: \pending.
+
+\section{Conclusion}
+
+This manuscript defines a controlled route from a human repeated AI-race experiment to an LLM-agent evaluation. Its contribution at the present stage is a game specification, measurement plan, and reproducibility boundary. Empirical conclusions remain pending until independently seeded Kaggle runs and preregistered analyses are complete.
+
+\bibliographystyle{plainnat}
+\bibliography{refs}
+
+\end{document}
