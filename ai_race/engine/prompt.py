@@ -78,6 +78,8 @@ def build_prompt(
     progress: Sequence[float],
     stage_payoffs: Sequence[float],
     unsafe_counts: Sequence[int],
+    opponent_persona_text: str = "",
+    opponent_persona_probability: float = 100.0,
 ) -> str:
     """Render the information available before a simultaneous decision."""
     if len(player_names) != 2:
@@ -133,6 +135,8 @@ def build_prompt(
             "currentPlayerName": player_name,
             "opponent1": player_names[opponent_index],
             "personality": persona_text.strip(),
+            "opponentPersonality1": opponent_persona_text.strip(),
+            "opponentPersonalityProbability1": _fmt(opponent_persona_probability),
             "currentRound": round_number,
             "strategy1": Action.SAFE.label,
             "strategy2": Action.UNSAFE.label,
@@ -163,8 +167,11 @@ def build_prompt(
         {
             # The persona seat is empty in the paper-faithful baseline.
             "intro": bool(persona_text.strip()),
-            # No opponent-personality prior is disclosed in this design.
-            "opponentIntro": False,
+            # Opt-in via config: revealOpponentPersonaPrior (default off, matching
+            # the paper-faithful baseline where no opponent-personality prior is disclosed).
+            "opponentIntro": bool(
+                config.reveal_opponent_persona_prior and opponent_persona_text.strip()
+            ),
             # The horizon is deliberately hidden from the agents.
             "gameLength": False,
             # Agents never exchange messages, so only the decision phase exists.

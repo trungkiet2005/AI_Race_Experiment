@@ -224,20 +224,26 @@ def _comparison_inputs(coefficient: float, standard_error: float):
             "cohens_d": [0.01, 0.5],
         }
     )
+    # E5/E6 read the round-2+ table; the all-rounds table carries deliberately
+    # different numbers so a test that passes cannot be reading the wrong one.
+    contrast_tables = {
+        "treatment_contrasts.csv": contrasts.assign(cohens_d=[9.0, -9.0]),
+        "treatment_contrasts_round2plus.csv": contrasts,
+    }
     player_metrics = pd.DataFrame(
         {
             "unsafe_rate": [0.6, 0.55, 0.62],
             "strategy_best": ["CAS", "CS", "AU"],
         }
     )
-    return coefficients, contrasts, player_metrics
+    return coefficients, contrast_tables, player_metrics
 
 
 def test_human_comparison_scores_a_matching_llm_result_as_replicated():
-    coefficients, contrasts, player_metrics = _comparison_inputs(0.61, 0.1)
+    coefficients, contrast_tables, player_metrics = _comparison_inputs(0.61, 0.1)
     comparison, metadata = ANALYSER._build_human_comparison(
         coefficients=coefficients,
-        treatment_contrasts=contrasts,
+        contrast_tables=contrast_tables,
         player_metrics=player_metrics,
         reference_path=ANALYSER.HUMAN_REFERENCE_PATH,
     )
@@ -253,10 +259,10 @@ def test_human_comparison_scores_a_matching_llm_result_as_replicated():
 
 
 def test_human_comparison_flags_a_reversed_sign():
-    coefficients, contrasts, player_metrics = _comparison_inputs(-0.61, 0.1)
+    coefficients, contrast_tables, player_metrics = _comparison_inputs(-0.61, 0.1)
     comparison, _ = ANALYSER._build_human_comparison(
         coefficients=coefficients,
-        treatment_contrasts=contrasts,
+        contrast_tables=contrast_tables,
         player_metrics=player_metrics,
         reference_path=ANALYSER.HUMAN_REFERENCE_PATH,
     )
@@ -265,10 +271,10 @@ def test_human_comparison_flags_a_reversed_sign():
 
 
 def test_human_comparison_is_inconclusive_without_a_fitted_logit():
-    _, contrasts, player_metrics = _comparison_inputs(0.61, 0.1)
+    _, contrast_tables, player_metrics = _comparison_inputs(0.61, 0.1)
     comparison, _ = ANALYSER._build_human_comparison(
         coefficients=None,
-        treatment_contrasts=contrasts,
+        contrast_tables=contrast_tables,
         player_metrics=player_metrics,
         reference_path=ANALYSER.HUMAN_REFERENCE_PATH,
     )
@@ -477,3 +483,421 @@ def test_shared_base_seed_widens_the_crn_block_only_when_verifiable():
     assert not ANALYSER._shared_base_seed(partial)
 
     assert not ANALYSER._shared_base_seed(pd.DataFrame({"other": [1]}))
+
+
+def _player_metrics_for_two_windows() -> pd.DataFrame:
+    """Player metrics whose round-1 behaviour contradicts their later behaviour.
+
+    The whole reason the paper reports two treatment tests is that they can
+    disagree; a fixture where they agree would let a table mix-up pass.
+    """
+
+    rows = []
+    for risk, all_rounds, later in ((0.1, 0.9, 0.1), (0.6, 0.2, 0.8)):
+        for offset in (-0.05, 0.0, 0.05):
+            rows.append(
+                {
+                    "model": "m",
+                    "max_private_risk": risk,
+                    "unsafe_rate": all_rounds + offset,
+                    "later_unsafe_rate": later + offset,
+                }
+            )
+    return pd.DataFrame.from_records(rows)
+
+
+def test_round2plus_contrasts_differ_from_the_all_round_contrasts():
+    metrics = _player_metrics_for_two_windows()
+    all_rounds = ANALYSER._pairwise_contrasts(
+        metrics,
+        strata=["model"],
+        factor="max_private_risk",
+        value="unsafe_rate",
+    ).iloc[0]
+    later = ANALYSER._pairwise_contrasts(
+        metrics,
+        strata=["model"],
+        factor="max_private_risk",
+        value="later_unsafe_rate",
+    ).iloc[0]
+    assert all_rounds["cohens_d"] > 0 and later["cohens_d"] < 0, (
+        "the fixture is built so the two analysis windows disagree in sign"
+    )
+    assert all_rounds["cohens_d"] != pytest.approx(later["cohens_d"])
+
+
+def test_human_comparison_scores_contrasts_on_the_round2plus_table():
+    reference = json.loads(
+        ANALYSER.HUMAN_REFERENCE_PATH.read_text(encoding="utf-8")
+    )
+    by_id = {effect["id"]: effect for effect in reference["effects"]}
+    for effect_id in ("E5", "E6"):
+        assert (
+            by_id[effect_id]["contrast_table"]
+            == "treatment_contrasts_round2plus.csv"
+        ), "the human Cohen's d comes from the round-2+ pairwise table"
+
+    coefficients, contrast_tables, player_metrics = _comparison_inputs(0.61, 0.1)
+    comparison, _ = ANALYSER._build_human_comparison(
+        coefficients=coefficients,
+        contrast_tables=contrast_tables,
+        player_metrics=player_metrics,
+        reference_path=ANALYSER.HUMAN_REFERENCE_PATH,
+    )
+    scored = comparison.set_index("effect_id")
+    # The all-rounds table carries d = 9.0 / -9.0; reading it would flip both.
+    assert scored.loc["E5", "llm_value"] == pytest.approx(0.01)
+    assert scored.loc["E6", "llm_value"] == pytest.approx(0.5)
+    assert scored.loc["E5", "contrast_table"] == "treatment_contrasts_round2plus.csv"
+
+
+def test_human_comparison_refuses_an_unknown_contrast_table(tmp_path):
+    reference = json.loads(
+        ANALYSER.HUMAN_REFERENCE_PATH.read_text(encoding="utf-8")
+    )
+    for effect in reference["effects"]:
+        if effect["id"] == "E5":
+            effect["contrast_table"] = "does_not_exist.csv"
+    path = tmp_path / "human_reference.json"
+    path.write_text(json.dumps(reference), encoding="utf-8")
+
+    _, contrast_tables, player_metrics = _comparison_inputs(0.61, 0.1)
+    with pytest.raises(ValueError, match="does not emit"):
+        ANALYSER._build_human_comparison(
+            coefficients=None,
+            contrast_tables=contrast_tables,
+            player_metrics=player_metrics,
+            reference_path=path,
+        )
+
+
+def _sample_summary_frames():
+    """Two cells, one of which loses a race to a parse failure."""
+
+    context = {
+        "model": "m",
+        "persona_condition": "none",
+        "prompt_version": "v3",
+        "protocol_signature": "sig",
+        "run_phase": "pilot",
+        "run_status": "completed",
+    }
+    turn_rows, all_turn_rows, race_rows, player_rows = [], [], [], []
+    for risk, n_races in ((0.1, 2), (0.6, 1)):
+        for race in range(n_races):
+            game_id = f"g{risk}_{race}"
+            for seat in (0, 1):
+                for round_number in (1, 2, 3):
+                    row = {
+                        **context,
+                        "source_run": "run",
+                        "max_private_risk": risk,
+                        "game_id": game_id,
+                        "player_id": f"{game_id}_p{seat}",
+                        "round": round_number,
+                        "parse_failed": False,
+                        "retry_count": 0,
+                    }
+                    turn_rows.append(row)
+                    all_turn_rows.append(row)
+                player_rows.append(
+                    {
+                        **context,
+                        "source_run": "run",
+                        "max_private_risk": risk,
+                        "game_id": game_id,
+                        "player_id": f"{game_id}_p{seat}",
+                        "unsafe_rate": 0.2 + 0.2 * seat,
+                        "later_unsafe_rate": 0.1 + 0.2 * seat,
+                    }
+                )
+            race_rows.append(
+                {
+                    **context,
+                    "source_run": "run",
+                    "max_private_risk": risk,
+                    "game_id": game_id,
+                    "n_rounds": 3,
+                    "included_in_behavioral_estimands": True,
+                }
+            )
+    # A contaminated race: recorded and counted for protocol health, excluded from
+    # every behavioural number.
+    for seat in (0, 1):
+        all_turn_rows.append(
+            {
+                **context,
+                "source_run": "run",
+                "max_private_risk": 0.6,
+                "game_id": "g_bad",
+                "player_id": f"g_bad_p{seat}",
+                "round": 1,
+                "parse_failed": True,
+                "retry_count": 1,
+            }
+        )
+    race_rows.append(
+        {
+            **context,
+            "source_run": "run",
+            "max_private_risk": 0.6,
+            "game_id": "g_bad",
+            "n_rounds": 1,
+            "included_in_behavioral_estimands": False,
+        }
+    )
+    return (
+        pd.DataFrame.from_records(turn_rows),
+        pd.DataFrame.from_records(player_rows),
+        pd.DataFrame.from_records(all_turn_rows),
+        pd.DataFrame.from_records(race_rows),
+    )
+
+
+def test_sample_summary_has_one_row_per_analysis_cell():
+    turns, player_metrics, all_turns, race_quality = _sample_summary_frames()
+    summary = ANALYSER._build_sample_summary(
+        turns,
+        player_metrics,
+        all_turns=all_turns,
+        race_quality=race_quality,
+    )
+    assert len(summary) == 2
+    assert summary[ANALYSER.CONTEXT].drop_duplicates().shape[0] == len(summary)
+    assert summary["n_races"].sum() == 3, "behavioural races only"
+    assert (
+        summary["n_races_recorded"].sum() == len(race_quality)
+    ), "recorded races must reconcile with race_quality.csv"
+
+
+def test_sample_summary_separates_behavioural_and_protocol_denominators():
+    turns, player_metrics, all_turns, race_quality = _sample_summary_frames()
+    summary = ANALYSER._build_sample_summary(
+        turns,
+        player_metrics,
+        all_turns=all_turns,
+        race_quality=race_quality,
+    ).set_index("max_private_risk")
+
+    contaminated = summary.loc[0.6]
+    assert contaminated["n_races"] == 1 and contaminated["n_races_excluded"] == 1
+    # 6 clean decisions + 2 failed ones; the failure rate uses all eight.
+    assert contaminated["n_decisions"] == 6
+    assert contaminated["n_decisions_all_races"] == 8
+    assert contaminated["parse_failure_rate"] == pytest.approx(0.25)
+    assert summary.loc[0.1, "parse_failure_rate"] == pytest.approx(0.0)
+
+
+def test_sample_summary_reports_the_median_the_theory_bridge_needs():
+    turns, player_metrics, all_turns, race_quality = _sample_summary_frames()
+    summary = ANALYSER._build_sample_summary(
+        turns,
+        player_metrics,
+        all_turns=all_turns,
+        race_quality=race_quality,
+    )
+    assert "median_phi_U" in summary, (
+        "Figure 3B of the source paper matches the median, not the mean"
+    )
+    assert summary["median_phi_U"].iloc[0] == pytest.approx(0.3)
+    assert summary["mean_n_rounds"].iloc[0] == pytest.approx(3.0)
+
+
+def _jackknife_turns(*, contaminated_block: str | None) -> pd.DataFrame:
+    """Blocks that agree on the opponent effect, except one that reverses it.
+
+    The jackknife is only useful if removing the offending block visibly moves the
+    coefficient, so the fixture builds exactly that situation and the test asserts
+    the block is named.
+    """
+
+    rng = random.Random(7)
+    rows = []
+    for rep in range(12):
+        block = f"m::rep{rep}"
+        reversed_block = contaminated_block is not None and block == contaminated_block
+        for risk in (0.1, 0.6, 0.9):
+            for seat in (0, 1):
+                for round_number in range(2, 8):
+                    opponent_prev = float(rng.random() < 0.5)
+                    # Elsewhere: opponent Unsafe pushes Unsafe up. In the
+                    # contaminated block the association is inverted and much
+                    # stronger, so it drags the pooled coefficient.
+                    if reversed_block:
+                        probability = 0.05 if opponent_prev else 0.95
+                    else:
+                        probability = 0.75 if opponent_prev else 0.35
+                    rows.append(
+                        {
+                            "source_run": "run",
+                            "game_id": f"g-{rep}-{risk}",
+                            "player_id": f"g-{rep}-{risk}-p{seat}",
+                            "round": round_number,
+                            "valid_unsafe": float(rng.random() < probability),
+                            "max_private_risk": risk,
+                            "first_round_unsafe": float(rng.random() < 0.5),
+                            "own_prev_unsafe": float(rng.random() < 0.5),
+                            "opponent_prev_unsafe": opponent_prev,
+                            "progress_gap_before": rng.choice([-1.0, -0.5, 0.0, 0.5]),
+                            "retry_count": 0,
+                            "randomization_block_id": block,
+                            "prompt_version": "v3",
+                            "model": "m",
+                            "run_phase": "pilot",
+                            "run_status": "completed",
+                            "protocol_signature": "sig",
+                            "persona_condition": "none",
+                        }
+                    )
+    return pd.DataFrame.from_records(rows)
+
+
+def test_jackknife_names_the_block_that_carries_a_coefficient(tmp_path):
+    pytest.importorskip("statsmodels")
+    turns = _jackknife_turns(contaminated_block="m::rep3")
+    ANALYSER._fit_logit_robustness(turns, output_directory=tmp_path)
+    table = pd.read_csv(tmp_path / "logit_robustness_jackknife.csv")
+    row = table.loc[
+        table["variant"].eq("full") & table["term"].eq("opponent_prev_unsafe")
+    ].iloc[0]
+    assert row["block_of_max_shift"] == "m::rep3"
+    assert row["n_blocks_refitted"] == row["n_blocks"] == 12
+
+
+def test_jackknife_reports_a_homogeneous_effect_as_stable(tmp_path):
+    pytest.importorskip("statsmodels")
+    turns = _jackknife_turns(contaminated_block=None)
+    ANALYSER._fit_logit_robustness(turns, output_directory=tmp_path)
+    table = pd.read_csv(tmp_path / "logit_robustness_jackknife.csv")
+    row = table.loc[
+        table["variant"].eq("full") & table["term"].eq("opponent_prev_unsafe")
+    ].iloc[0]
+    assert row["coefficient_full"] > 0 and bool(row["sign_stable"])
+    # Removing one of twelve blocks cannot move a real effect by its own size.
+    assert row["max_abs_shift"] < abs(row["coefficient_full"])
+
+
+def test_jackknife_emits_every_exclusion_variant(tmp_path):
+    pytest.importorskip("statsmodels")
+    turns = _jackknife_turns(contaminated_block=None)
+    ANALYSER._fit_logit_robustness(turns, output_directory=tmp_path)
+    table = pd.read_csv(tmp_path / "logit_robustness_jackknife.csv")
+    assert set(table["variant"]) == {
+        "full",
+        "exclude_retried_races",
+        "exclude_min_horizon",
+    }
+    metadata = json.loads((tmp_path / "logit_robustness_metadata.json").read_text())
+    assert "not an inferential test" in metadata["interpretation"]
+
+
+def test_a_negligible_coefficient_is_not_reported_as_a_sign_flip():
+    assert ANALYSER._tolerant_sign(1e-16) == 0
+    assert ANALYSER._tolerant_sign(-1e-16) == 0
+    assert ANALYSER._tolerant_sign(0.2) == 1
+    assert ANALYSER._tolerant_sign(-0.2) == -1
+    assert ANALYSER._tolerant_sign(float("nan")) == 0
+
+
+def test_robustness_variants_drop_whole_races_not_single_rows():
+    frame = pd.DataFrame(
+        {
+            "source_run": ["run"] * 10,
+            "game_id": ["short"] * 4 + ["long"] * 4 + ["retried"] * 2,
+            "round": [2, 3, 4, 5] + [2, 3, 4, 9] + [2, 3],
+            "retry_count": [0] * 8 + [0, 2],
+        }
+    )
+    variants = ANALYSER._robustness_variants(frame)
+    assert set(variants["exclude_min_horizon"]["game_id"]) == {"long"}, (
+        "the retried race also stops at the minimum, so both are dropped"
+    )
+    # One retried decision must remove the whole race, or the surviving lags would
+    # point at rounds no longer in the sample.
+    assert "retried" not in set(variants["exclude_retried_races"]["game_id"])
+    assert variants["full"] is frame
+
+
+def _theory_sample_summary() -> pd.DataFrame:
+    """One row per analysis cell, two models, so model-independence is testable."""
+
+    rows = []
+    for model in ("m1", "m2"):
+        for risk, median in ((0.1, 0.8), (0.6, 0.5), (0.9, 0.2)):
+            rows.append(
+                {
+                    "model": model,
+                    "max_private_risk": risk,
+                    "persona_condition": "none",
+                    "prompt_version": "v3",
+                    "protocol_signature": "sig",
+                    "run_phase": "pilot",
+                    "run_status": "completed",
+                    "n_players": 20,
+                    "mean_phi_U": median + 0.02,
+                    "median_phi_U": median,
+                }
+            )
+    return pd.DataFrame.from_records(rows)
+
+
+def test_theory_prediction_does_not_depend_on_the_model():
+    """The column most likely to be misread as a fit. It has no model input."""
+
+    table, _ = ANALYSER._build_theory_comparison(_theory_sample_summary())
+    for (risk, point), group in table.groupby(
+        ["max_private_risk", "parameter_point"], observed=True
+    ):
+        assert group["predicted_phi_U"].nunique() == 1, (
+            f"prediction differs across models at {risk}/{point}"
+        )
+    assert set(table["model"]) == {"m1", "m2"}
+
+
+def test_theory_comparison_uses_the_median_not_the_mean():
+    summary = _theory_sample_summary()
+    table, metadata = ANALYSER._build_theory_comparison(summary)
+    row = table.loc[
+        table["model"].eq("m1")
+        & table["max_private_risk"].eq(0.1)
+        & table["parameter_point"].eq("reference")
+    ].iloc[0]
+    assert row["observed_median_phi_U"] == pytest.approx(0.8)
+    assert row["difference"] == pytest.approx(
+        row["observed_median_phi_U"] - row["predicted_phi_U"]
+    )
+    assert "Figure 3B" in metadata["statistic"]
+
+
+def test_theory_prediction_falls_with_the_risk_treatment():
+    """The direction the evolutionary model gives: less Unsafe at higher risk."""
+
+    table, _ = ANALYSER._build_theory_comparison(_theory_sample_summary())
+    reference = (
+        table.loc[table["parameter_point"].eq("reference")]
+        .drop_duplicates("max_private_risk")
+        .set_index("max_private_risk")["predicted_phi_U"]
+    )
+    assert reference[0.1] >= reference[0.6] > reference[0.9]
+
+
+def test_theory_comparison_metadata_carries_both_warnings():
+    _, metadata = ANALYSER._build_theory_comparison(_theory_sample_summary())
+    assert "not a fit" in metadata["model_independence_warning"]
+    assert "identical for every LLM" in metadata["model_independence_warning"]
+    # The mutation rate is nominal, and the reader has to be told so.
+    assert metadata["mutation_regime"] == "small_mutation_limit"
+    assert "is not applied" in metadata["mutation_regime_caveat"]
+    assert metadata["unmatched_risk_treatments"] == []
+
+
+def test_theory_comparison_flags_a_treatment_with_no_configured_mechanism():
+    summary = _theory_sample_summary()
+    summary.loc[summary["max_private_risk"].eq(0.6), "max_private_risk"] = 0.42
+    table, metadata = ANALYSER._build_theory_comparison(summary)
+    assert metadata["unmatched_risk_treatments"] == [0.42]
+    unmatched = table.loc[table["max_private_risk"].eq(0.42)]
+    assert unmatched["predicted_phi_U"].isna().all(), (
+        "an unconfigured treatment must produce no prediction rather than a "
+        "prediction borrowed from another treatment"
+    )

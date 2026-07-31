@@ -1,0 +1,20 @@
+{
+  "id": "foundnotkiet/ai-race-baseline",
+  "title": "AI Race Baseline",
+  "code_file": "experiments/baseline.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_tpu": false,
+  "enable_internet": false,
+  "keywords": ["gpu"],
+  "dataset_sources": ["foundnotkiet/ai-race-vllm-wheels"],
+  "competition_sources": ["arc-prize-2026-arc-agi-3"],
+  "kernel_sources": ["foundnotkiet/git-ai-race"],
+  "model_sources": [
+    "qwen-lm/qwen2.5/Transformers/7b-instruct/1",
+    "qwen-lm/qwen2.5/Transformers/14b-instruct/1"
+  ],
+  "machine_shape": "NvidiaRtxPro6000"
+}

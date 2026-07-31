@@ -63,6 +63,7 @@ class AIRaceRound:
         prompts: list[str] = []
         names = [agent.name for agent in self.game.agents]
         for player_index, agent in enumerate(self.game.agents):
+            opponent = self.game.agents[1 - player_index]
             prompts.append(
                 build_prompt(
                     self.game.template,
@@ -76,6 +77,8 @@ class AIRaceRound:
                     progress=self.game.progress,
                     stage_payoffs=self.game.stage_payoffs,
                     unsafe_counts=self.game.unsafe_counts,
+                    opponent_persona_text=opponent.persona_text,
+                    opponent_persona_probability=opponent.persona_probability,
                 )
             )
         return prompts

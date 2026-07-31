@@ -10,8 +10,13 @@ Notebook này dùng đúng runner của project:
 
 Repo input được tự dò bằng hai marker ``ai_race/`` và ``FAIRGAME/``, sau đó copy
 vào ``/kaggle/working/ai_race_repo`` để Python có thể import và ghi cache. Các
-model được nạp, chạy, giải phóng tuần tự. Không cần Internet nếu Kaggle image đã
-có vLLM hoặc một Dataset wheels đã được add làm input.
+model được nạp, chạy, giải phóng tuần tự.
+
+Cấu hình mặc định dùng **transformers có sẵn trong image Kaggle**: không cài gì,
+không cần wheelhouse, Internet OFF. Backend nạp bf16 với ``device_map="auto"`` và
+flash-attention-2 nếu có (tự lùi về SDPA nếu không). Đổi ``engine`` của từng model
+sang ``"vllm"`` khi cần throughput — mọi hằng cấu hình của vLLM vẫn còn nguyên bên
+dưới.
 """
 
 # %%
@@ -21,25 +26,41 @@ from pathlib import Path
 
 MODELS = [
     {
-        "path": "/kaggle/input/models/qwen-lm/qwen2.5/transformers/7b-instruct/1",
-        "short_name": "qwen2.5-7b-instruct",
-        "engine": "vllm",
+        "path": "/kaggle/input/models/qwen-lm/qwen2.5/transformers/14b-instruct/1",
+        "short_name": "qwen2.5-14b-instruct",
+        "engine": "transformers",
         # Các override dưới đây là tùy chọn:
         # "temperature": 0.7,
         # "max_tokens": 256,
-        # "logprobs": 5,  # opt-in; keep 0/off for the behavioral baseline
-        # "max_model_len": 4096,
-        # "engine_overrides": {"quantization": "awq", "dtype": "auto"},
+        # "quantization": "bnb-4bit",  # transformers chỉ nhận bnb-4bit/bnb-8bit
     },
-    # Thêm model khác tại đây; notebook sẽ chạy lần lượt, không nạp đồng thời.
+    {
+        "path": "/kaggle/input/models/google/gemma-3/transformers/gemma-3-12b-it/1",
+        "short_name": "gemma-3-12b-it",
+        "engine": "transformers",
+    },
+    # Thêm model khác tại đây; notebook sẽ chạy lần lượt, không nạp đồng thời
+    # (mỗi model được free_model() giải phóng VRAM trước khi nạp checkpoint kế tiếp).
+    #
+    # Muốn chạy lại bằng vLLM thì đổi "engine" ở trên, ĐỪNG thêm một entry thứ hai
+    # cho cùng checkpoint: short_name quyết định thư mục output, nên hai entry trùng
+    # short_name sẽ ghi đè lên nhau (RunJournal mở với reset=True). Khi dùng vLLM có
+    # thể chỉnh riêng "gpu_memory_utilization" hoặc "engine_overrides" trong entry đó.
 ]
 
 # Dataset đã stage: https://www.kaggle.com/datasets/nguyenlamphuquy/ai-race-experiment
-# Kaggle mount dataset theo *slug*, không kèm username, nên path là
-# /kaggle/input/ai-race-experiment. Username chỉ nằm trong dataset id dùng cho CLI
-# (nguyenlamphuquy/ai-race-experiment). Để None thì notebook tự dò input nào có
-# đồng thời ai_race/ và FAIRGAME/.
-REPO_INPUT_DIR = "/kaggle/input/ai-race-experiment"
+#
+# Kaggle dùng hai layout mount tuỳ notebook: chỉ *slug* (không kèm username), hoặc
+# datasets/<owner>/<slug>. Liệt kê cả hai và lấy cái nào tồn tại — pin đúng một
+# chuỗi thì đổi notebook là hỏng, còn bỏ trống hoàn toàn thì mất cái chốt chặn
+# "add nhầm dataset". Ứng viên đầu tiên khớp sẽ được dùng.
+#
+# Username chỉ nằm trong dataset id dùng cho CLI (nguyenlamphuquy/ai-race-experiment).
+# Đặt REPO_INPUT_DIRS = None để bỏ chốt chặn và tự dò mọi input.
+REPO_INPUT_DIRS = [
+    "/kaggle/input/datasets/nguyenlamphuquy/ai-race-experiment",
+    "/kaggle/input/ai-race-experiment",
+]
 
 # Mọi cell persona phải chạy trong CÙNG một session. protocol_signature gồm source
 # revision, decoding và package versions; chạy lệch session thì persona trùng khít
@@ -87,20 +108,39 @@ RUN_PHASE_OVERRIDE = None  # "pilot" hoặc "confirmatory"; None = dùng config
 REQUIRED_GPU_NAME = os.environ.get("AI_RACE_REQUIRED_GPU", "").strip()
 MIN_GPU_VRAM_GIB = float(os.environ.get("AI_RACE_MIN_GPU_VRAM_GIB", "0"))
 
-DEFAULT_ENGINE = "vllm"
+# Dùng transformers có sẵn trong image Kaggle. Không cần cài vLLM, không cần
+# wheelhouse, và Internet vẫn OFF. Đổi lại là chậm hơn nhiều — xem BATCH_SIZE.
+DEFAULT_ENGINE = "transformers"
 TEMPERATURE = 0.7
 MAX_TOKENS = 256
-LOGPROBS = 0  # Opt-in only; values >0 add substantial decode memory/work.
+LOGPROBS = 0  # Backend transformers không hỗ trợ; >0 sẽ raise ngay khi build config.
+
+# --- Bốn hằng dưới đây CHỈ có tác dụng với backend vllm ---------------------
+# `transformers_init_kwargs` không đọc chúng, nên ở cấu hình hiện tại chúng bị bỏ
+# qua hoàn toàn. Giữ lại để đổi ngược về vLLM không phải viết lại. Backend
+# transformers luôn nạp bf16 với `device_map="auto"`, tự trải qua GPU đang có.
 MAX_MODEL_LEN = 4096
 GPU_MEMORY_UTILIZATION = 0.90
 TENSOR_PARALLEL_SIZE = 1
 ENFORCE_EAGER = True
+# ---------------------------------------------------------------------------
+
+# Chỉ còn tác dụng khi seeds=None. Runner LUÔN truyền seed cho từng quyết định
+# (đó là invariant của repo, không phải tuỳ chọn), nên backend transformers rơi
+# về sinh TỪNG PROMPT MỘT: một forward pass gộp dùng chung một torch RNG nên
+# không thể tôn trọng seed riêng của mỗi (rep, round, agent). Nghĩa là throughput
+# ở đây là ~1 generation/lượt, không phải 128.
 BATCH_SIZE = 128
 MAX_PARSE_RETRIES_OVERRIDE = None  # None = dùng maxParseRetries trong experiment
 FAIL_ON_INCOMPLETE_RUN = True
 
+# Chỉ chạy khi có model nào khai engine="vllm". Với cấu hình transformers hiện tại
+# thì cell cài vLLM tự bỏ qua.
 INSTALL_VLLM_IF_MISSING = True
-VLLM_WHEELS_DIR = None  # Bắt buộc điền Dataset wheelhouse đã audit nếu cần cài.
+# Dataset wheelhouse đã audit: vllm==0.11.0, build bởi kaggle/setup/build_quant_wheels.py
+# trên cùng image RTX Pro 6000, xem foundnotkiet/ai-race-wheelhouse (145 wheels, manifest
+# SHA-256 tại vllm_wheels/manifest.json).
+VLLM_WHEELS_DIR = "/kaggle/input/ai-race-vllm-wheels/vllm_wheels"
 
 WORK_COPY = Path("/kaggle/working/ai_race_repo")
 OUTPUT_DIR = Path("/kaggle/working/ai_race_results")
@@ -145,26 +185,35 @@ def is_repo_input(directory):
 
 
 def find_repo_input(root="/kaggle/input"):
-    """Prefer the configured dataset mount, then fall back to discovery.
+    """Prefer a configured dataset mount, then fall back to discovery.
 
-    Naming the expected path turns "wrong dataset added" into an explicit error
+    Naming the expected paths turns "wrong dataset added" into an explicit error
     instead of a silent fallback onto some other input that happens to contain the
     two marker directories — which would run a different source revision than the
     one the manifest is about to claim.
+
+    Several candidates are allowed because Kaggle mounts a dataset either under its
+    bare slug or under datasets/<owner>/<slug> depending on the notebook. Both name
+    the same dataset, so trying them in order costs nothing and keeps the guard.
     """
-    configured = globals().get("REPO_INPUT_DIR")
+    configured = globals().get("REPO_INPUT_DIRS")
     if configured:
-        configured = Path(configured)
-        if is_repo_input(configured):
-            return configured.resolve()
+        if isinstance(configured, (str, Path)):
+            configured = [configured]
+        candidates = [Path(candidate) for candidate in configured]
+        for candidate in candidates:
+            if is_repo_input(candidate):
+                return candidate.resolve()
         discovered = find_directory(root, is_repo_input)
+        listed = ", ".join(str(candidate) for candidate in candidates)
         raise FileNotFoundError(
-            f"REPO_INPUT_DIR={configured} does not contain both ai_race/ and "
+            f"None of REPO_INPUT_DIRS ({listed}) contains both ai_race/ and "
             "FAIRGAME/. Add the dataset "
             "'nguyenlamphuquy/ai-race-experiment' as a notebook input, or set "
-            "REPO_INPUT_DIR=None to auto-discover. "
+            "REPO_INPUT_DIRS=None to auto-discover. "
             + (
-                f"A usable repo input was found at {discovered}."
+                f"A usable repo input was found at {discovered}; add it to "
+                "REPO_INPUT_DIRS if that is the intended dataset."
                 if discovered
                 else "No usable repo input was found under /kaggle/input."
             )

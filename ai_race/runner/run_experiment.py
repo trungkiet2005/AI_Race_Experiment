@@ -45,6 +45,10 @@ def _agents_for_language(agents_cfg: dict, language: str) -> list[RaceAgent]:
     personas = list(personas_by_language.get(language, ["", ""]))
     if len(personas) != 2:
         raise ValueError(f"Agent configuration must define two {language!r} personas")
+    probabilities_by_language = agents_cfg.get("personaProbabilities", {}) or {}
+    probabilities = list(probabilities_by_language.get(language, [100.0, 100.0]))
+    if len(probabilities) != 2:
+        raise ValueError(f"Agent configuration must define two {language!r} personaProbabilities")
     condition = str(agents_cfg.get("personaCondition", "none")).strip()
     if condition != "none" and not all(str(text).strip() for text in personas):
         # Otherwise a run labelled with a persona condition would render neutral
@@ -58,9 +62,10 @@ def _agents_for_language(agents_cfg: dict, language: str) -> list[RaceAgent]:
         RaceAgent(
             name=str(name),
             persona_text=str(persona),
+            persona_probability=float(probability),
             persona_role=str(role),
         )
-        for name, persona, role in zip(names, personas, roles)
+        for name, persona, probability, role in zip(names, personas, probabilities, roles)
     ]
 
 

@@ -55,6 +55,10 @@ LOGIT_SPECIFICATIONS: tuple[tuple[str, str], ...] = (
     ),
     ("6", LOGIT_FORMULA),
 )
+# The mechanism guarantees at least five rounds before the stop lottery starts, so
+# a race that ends at exactly this length drew "stop" on its first opportunity.
+# Those races are the shortest possible and carry the least within-race history.
+CANONICAL_MINIMUM_HORIZON = 5
 MISSING_PROMPT_VERSION = "__MISSING_PROMPT_VERSION__"
 MISSING_RUN_PHASE = "__MISSING_RUN_PHASE__"
 MISSING_RUN_STATUS = "__MISSING_RUN_STATUS__"
@@ -1009,8 +1013,10 @@ def _prepare_races(
         or not np.equal(races["n_rounds"], np.floor(races["n_rounds"])).all()
     ):
         raise ValueError("races.csv.n_rounds must contain positive integers")
-    races["canonical_minimum_horizon"] = races["n_rounds"].ge(5)
-    if races["n_rounds"].lt(5).any() and not allow_noncanonical_mechanism:
+    races["canonical_minimum_horizon"] = races["n_rounds"].ge(
+        CANONICAL_MINIMUM_HORIZON
+    )
+    if races["n_rounds"].lt(CANONICAL_MINIMUM_HORIZON).any() and not allow_noncanonical_mechanism:
         raise ValueError(
             "canonical AI Race horizons require n_rounds >= 5; pass "
             "--allow-noncanonical-mechanism only for an explicitly labelled "
@@ -2959,6 +2965,121 @@ def _winner_loser_pairs(player_metrics: pd.DataFrame) -> pd.DataFrame:
     return complete.sort_values([*RACE_KEY]).reset_index(drop=True)
 
 
+def _build_sample_summary(
+    turns: pd.DataFrame,
+    player_metrics: pd.DataFrame,
+    *,
+    all_turns: pd.DataFrame,
+    race_quality: pd.DataFrame,
+) -> pd.DataFrame:
+    """One row per analysis cell, pooling numbers that are otherwise scattered.
+
+    ``median_phi_U`` is not decoration: the source paper matches its evolutionary
+    prediction against the *median* Unsafe frequency, so the theory-versus-data
+    bridge reads this column rather than the mean.
+
+    Behavioural counts come from ``turns`` (parse-clean, canonical-mechanism races
+    only) while protocol-health counts come from ``all_turns`` and
+    ``race_quality``; mixing the two denominators is what would make a parse
+    failure rate look better than it is.
+    """
+
+    groups = [*CONTEXT]
+
+    # game_id is only unique inside a source_run, so races are counted on the full
+    # RACE_KEY; nunique on game_id alone would merge two runs that reused an id.
+    decisions = (
+        turns.groupby(groups, observed=True)
+        .agg(n_decisions=("round", "size"))
+        .reset_index()
+        .merge(
+            turns[[*RACE_KEY, *groups]]
+            .drop_duplicates()
+            .groupby(groups, observed=True)
+            .size()
+            .reset_index(name="n_races"),
+            on=groups,
+            how="outer",
+        )
+    )
+    later = (
+        turns.loc[turns["round"].ge(2)]
+        .groupby(groups, observed=True)
+        .agg(n_decisions_round2plus=("round", "size"))
+        .reset_index()
+    )
+    players = (
+        player_metrics.groupby(groups, observed=True)
+        .agg(
+            n_players=("player_id", "size"),
+            mean_phi_U=("unsafe_rate", "mean"),
+            median_phi_U=("unsafe_rate", "median"),
+            sd_phi_U=("unsafe_rate", "std"),
+            mean_phi_U_round2plus=("later_unsafe_rate", "mean"),
+            median_phi_U_round2plus=("later_unsafe_rate", "median"),
+        )
+        .reset_index()
+    )
+    horizons = (
+        race_quality.loc[race_quality["included_in_behavioral_estimands"]]
+        .groupby(groups, observed=True)
+        .agg(mean_n_rounds=("n_rounds", "mean"), median_n_rounds=("n_rounds", "median"))
+        .reset_index()
+    )
+    health = (
+        all_turns.groupby(groups, observed=True)
+        .agg(
+            n_decisions_all_races=("parse_failed", "size"),
+            parse_failure_rate=("parse_failed", "mean"),
+        )
+        .reset_index()
+    )
+    excluded = (
+        race_quality.groupby(groups, observed=True)
+        .agg(
+            n_races_recorded=("included_in_behavioral_estimands", "size"),
+            n_races_excluded=(
+                "included_in_behavioral_estimands",
+                lambda flags: int((~flags.astype(bool)).sum()),
+            ),
+        )
+        .reset_index()
+    )
+
+    summary = players
+    for frame in (decisions, later, horizons, health, excluded):
+        summary = summary.merge(frame, on=groups, how="outer")
+    for column in (
+        "n_players",
+        "n_races",
+        "n_decisions",
+        "n_decisions_round2plus",
+        "n_decisions_all_races",
+        "n_races_recorded",
+        "n_races_excluded",
+    ):
+        summary[column] = summary[column].fillna(0).astype(int)
+    ordered = [
+        *groups,
+        "n_players",
+        "n_races",
+        "n_decisions",
+        "n_decisions_round2plus",
+        "mean_phi_U",
+        "median_phi_U",
+        "sd_phi_U",
+        "mean_phi_U_round2plus",
+        "median_phi_U_round2plus",
+        "mean_n_rounds",
+        "median_n_rounds",
+        "parse_failure_rate",
+        "n_decisions_all_races",
+        "n_races_recorded",
+        "n_races_excluded",
+    ]
+    return summary[ordered].sort_values(groups).reset_index(drop=True)
+
+
 def _build_tables(
     turns: pd.DataFrame,
     player_metrics: pd.DataFrame,
@@ -3146,6 +3267,12 @@ def _build_tables(
         )
     tables["strategy_summary_player.csv"] = strategy_summary
     tables["player_metrics.csv"] = player_metrics
+    tables["sample_summary.csv"] = _build_sample_summary(
+        turns,
+        player_metrics,
+        all_turns=all_turns,
+        race_quality=race_quality,
+    )
 
     # --- Figure-2A analogue: pairwise treatment contrasts -------------------
     risk_strata = [column for column in by_context if column != "max_private_risk"]
@@ -3161,6 +3288,24 @@ def _build_tables(
         strata=persona_strata,
         factor="persona_condition",
         value="unsafe_rate",
+    )
+
+    # The source paper reports two different treatment tests: Figure 2A over every
+    # round, and the pairwise-comparison table over exactly the round-2+ sample the
+    # panel model uses. They disagree whenever round 1 differs from later rounds,
+    # and the reported effect sizes come from the round-2+ table, so both have to
+    # exist before a contrast can be scored against the human numbers.
+    tables["treatment_contrasts_round2plus.csv"] = _pairwise_contrasts(
+        player_metrics,
+        strata=risk_strata,
+        factor="max_private_risk",
+        value="later_unsafe_rate",
+    )
+    tables["persona_contrasts_round2plus.csv"] = _pairwise_contrasts(
+        player_metrics,
+        strata=persona_strata,
+        factor="persona_condition",
+        value="later_unsafe_rate",
     )
 
     # --- Figure-2B analogue: lagged action profile and race position --------
@@ -3388,18 +3533,12 @@ def _persona_identification(frame: pd.DataFrame) -> dict[str, Any]:
     }
 
 
-def _fit_clustered_logit(
-    turns: pd.DataFrame,
-    *,
-    output_directory: Path,
-    allow_mixed_protocols: bool = False,
-) -> list[str]:
-    try:
-        import statsmodels.formula.api as smf
-    except ImportError as exc:
-        raise RuntimeError(
-            "--fit-logit requires statsmodels; install the project requirements"
-        ) from exc
+def _logit_model_data(turns: pd.DataFrame) -> pd.DataFrame:
+    """The round-2+ estimation sample shared by the main fit and the robustness fits.
+
+    Kept in one place so a jackknife or exclusion variant can never differ from the
+    headline model by anything other than the rows it deliberately drops.
+    """
 
     model_data = turns.loc[
         turns["round"].ge(2)
@@ -3430,7 +3569,23 @@ def _fit_clustered_logit(
     model_data["opponent_prev_unsafe"] = model_data[
         "opponent_prev_unsafe"
     ].astype(int)
+    return model_data
 
+
+def _fit_clustered_logit(
+    turns: pd.DataFrame,
+    *,
+    output_directory: Path,
+    allow_mixed_protocols: bool = False,
+) -> list[str]:
+    try:
+        import statsmodels.formula.api as smf
+    except ImportError as exc:
+        raise RuntimeError(
+            "--fit-logit requires statsmodels; install the project requirements"
+        ) from exc
+
+    model_data = _logit_model_data(turns)
     if model_data.empty:
         raise ValueError("no complete round-2+ observations are available for the logit")
     if model_data["unsafe"].nunique() < 2:
@@ -3555,6 +3710,231 @@ def _fit_clustered_logit(
     return [coefficient_name, metadata_name]
 
 
+# Far below any log-odds effect an experiment could resolve, so a coefficient
+# under it is numerically zero rather than small.
+NEGLIGIBLE_COEFFICIENT = 1e-8
+
+
+def _tolerant_sign(value: float) -> int:
+    if not math.isfinite(value) or abs(value) <= NEGLIGIBLE_COEFFICIENT:
+        return 0
+    return 1 if value > 0 else -1
+
+
+def _robustness_variants(model_data: pd.DataFrame) -> dict[str, pd.DataFrame]:
+    """Sample variants that answer "is this result driven by awkward races?".
+
+    The human paper refits its whole table after dropping one anomalous pair. The
+    LLM analogue has no dropouts, so the analogous awkward races are the ones where
+    generation needed a retry — the closest thing here to imperfect data — and the
+    ones that stopped at the five-round minimum and therefore contribute the least
+    within-race history to the lagged terms.
+
+    Exclusions are applied at *race* level, not decision level: a lagged predictor
+    is built from the race trajectory, so dropping single rows would leave the
+    remaining lags referring to rounds that are no longer in the sample.
+    """
+
+    variants: dict[str, pd.DataFrame] = {"full": model_data}
+
+    if "retry_count" in model_data:
+        retried = model_data.groupby(RACE_KEY, observed=True)["retry_count"].transform(
+            "max"
+        )
+        variants["exclude_retried_races"] = model_data.loc[
+            retried.fillna(0).le(0)
+        ].copy()
+
+    horizon = model_data.groupby(RACE_KEY, observed=True)["round"].transform("max")
+    variants["exclude_min_horizon"] = model_data.loc[
+        horizon.gt(CANONICAL_MINIMUM_HORIZON)
+    ].copy()
+    return variants
+
+
+def _fit_logit_robustness(
+    turns: pd.DataFrame,
+    *,
+    output_directory: Path,
+) -> list[str]:
+    """Leave-one-CRN-block-out jackknife of the saturated specification.
+
+    A coefficient that flips sign or moves further than its own magnitude when one
+    block is removed is being carried by that block. Reporting the worst case per
+    term is what makes "the result is not driven by one cluster" a checkable claim
+    rather than an assertion.
+    """
+
+    try:
+        import statsmodels.formula.api as smf
+    except ImportError as exc:
+        raise RuntimeError(
+            "--fit-logit-robustness requires statsmodels; install the project "
+            "requirements"
+        ) from exc
+
+    base = _logit_model_data(turns)
+    if base.empty:
+        raise ValueError(
+            "no complete round-2+ observations are available for the robustness fits"
+        )
+    protocol_controls = _logit_formula_for(base).removeprefix(LOGIT_FORMULA)
+    formula = LOGIT_FORMULA + protocol_controls
+
+    def fit(frame: pd.DataFrame) -> pd.Series | None:
+        # A dropped block can leave a cell empty or a term collinear. A failed
+        # refit is reported as a skipped block, never as a coefficient of zero.
+        if frame.empty or frame["unsafe"].nunique() < 2:
+            return None
+        if frame["randomization_block_id"].nunique() < 2:
+            return None
+        try:
+            result = smf.logit(formula, data=frame).fit(
+                disp=False,
+                cov_type="cluster",
+                cov_kwds={"groups": frame["randomization_block_id"]},
+            )
+        except Exception:
+            return None
+        if not bool(result.mle_retvals.get("converged", False)):
+            return None
+        return result.params
+
+    rows: list[dict[str, Any]] = []
+    skipped: dict[str, list[str]] = {}
+    for variant, frame in _robustness_variants(base).items():
+        full = fit(frame)
+        if full is None:
+            skipped.setdefault(variant, []).append("__variant_did_not_fit__")
+            continue
+        blocks = sorted(frame["randomization_block_id"].astype(str).unique().tolist())
+        jackknife: dict[str, pd.Series] = {}
+        for block in blocks:
+            dropped = fit(
+                frame.loc[frame["randomization_block_id"].astype(str).ne(block)]
+            )
+            if dropped is None:
+                skipped.setdefault(variant, []).append(block)
+                continue
+            jackknife[block] = dropped
+
+        for term, coefficient_full in full.items():
+            values = {
+                block: float(params[term])
+                for block, params in jackknife.items()
+                if term in params.index
+            }
+            if values:
+                shifts = {
+                    block: value - float(coefficient_full)
+                    for block, value in values.items()
+                }
+                worst = max(shifts, key=lambda block: abs(shifts[block]))
+                # An estimate indistinguishable from zero has no meaningful sign,
+                # and calling its numerical noise a "flip" would bury the terms
+                # that really do move. Zeros are compatible with either sign.
+                signs = {
+                    _tolerant_sign(value)
+                    for value in [*values.values(), float(coefficient_full)]
+                }
+                signs.discard(0)
+                rows.append(
+                    {
+                        "variant": variant,
+                        "term": term,
+                        "n_observations": int(len(frame)),
+                        "n_blocks": len(blocks),
+                        "n_blocks_refitted": len(values),
+                        "coefficient_full": float(coefficient_full),
+                        "coefficient_min": float(min(values.values())),
+                        "coefficient_max": float(max(values.values())),
+                        "max_abs_shift": float(abs(shifts[worst])),
+                        "sign_stable": bool(len(signs) <= 1),
+                        "negligible_at_full_sample": bool(
+                            _tolerant_sign(float(coefficient_full)) == 0
+                        ),
+                        "block_of_max_shift": worst,
+                    }
+                )
+            else:
+                rows.append(
+                    {
+                        "variant": variant,
+                        "term": term,
+                        "n_observations": int(len(frame)),
+                        "n_blocks": len(blocks),
+                        "n_blocks_refitted": 0,
+                        "coefficient_full": float(coefficient_full),
+                        "coefficient_min": float("nan"),
+                        "coefficient_max": float("nan"),
+                        "max_abs_shift": float("nan"),
+                        "sign_stable": False,
+                        "negligible_at_full_sample": bool(
+                            _tolerant_sign(float(coefficient_full)) == 0
+                        ),
+                        "block_of_max_shift": "",
+                    }
+                )
+
+    table = (
+        pd.DataFrame.from_records(rows)
+        if rows
+        else pd.DataFrame(
+            columns=[
+                "variant",
+                "term",
+                "n_observations",
+                "n_blocks",
+                "n_blocks_refitted",
+                "coefficient_full",
+                "coefficient_min",
+                "coefficient_max",
+                "max_abs_shift",
+                "sign_stable",
+                "negligible_at_full_sample",
+                "block_of_max_shift",
+            ]
+        )
+    )
+    table_name = "logit_robustness_jackknife.csv"
+    table.to_csv(output_directory / table_name, index=False)
+
+    metadata = {
+        "specification": "6 (saturated), plus the protocol controls of the main fit",
+        "formula": formula,
+        "variants": {
+            "full": "every race in the behavioural sample",
+            "exclude_retried_races": (
+                "races where at least one decision needed a generation retry"
+            ),
+            "exclude_min_horizon": (
+                "races that stopped at the "
+                f"{CANONICAL_MINIMUM_HORIZON}-round minimum"
+            ),
+        },
+        "jackknife": (
+            "One refit per source_run/model/rep common-random-number block, each "
+            "omitting that block. sign_stable is False if the full-sample "
+            "coefficient and any leave-one-out coefficient disagree in sign."
+        ),
+        "skipped_blocks": skipped,
+        "skipped_block_note": (
+            "A block whose removal makes the model unidentified or non-convergent "
+            "is listed rather than recorded as a zero coefficient."
+        ),
+        "interpretation": (
+            "This is a sensitivity diagnostic, not an inferential test: the "
+            "leave-one-out spread is not a standard error and has no p-value."
+        ),
+    }
+    metadata_name = "logit_robustness_metadata.json"
+    (output_directory / metadata_name).write_text(
+        json.dumps(metadata, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
+    return [table_name, metadata_name]
+
+
 def _tost_equivalent(
     estimate: float,
     standard_error: float,
@@ -3582,10 +3962,13 @@ def _tost_equivalent(
     return p_value < alpha, p_value
 
 
+DEFAULT_CONTRAST_TABLE = "treatment_contrasts.csv"
+
+
 def _build_human_comparison(
     *,
     coefficients: pd.DataFrame | None,
-    treatment_contrasts: pd.DataFrame,
+    contrast_tables: dict[str, pd.DataFrame],
     player_metrics: pd.DataFrame,
     reference_path: Path,
 ) -> tuple[pd.DataFrame, dict[str, Any]]:
@@ -3594,6 +3977,11 @@ def _build_human_comparison(
     The criteria live in ``human_reference.json`` rather than in this function so
     they can be frozen before any model output is inspected; scoring them here
     afterwards is then mechanical.
+
+    Each contrast effect names the table it is scored on, because the human effect
+    sizes come from the round-2+ pairwise-comparison table rather than from the
+    all-rounds Figure 2A test. Silently scoring one against the other would compare
+    two different samples.
     """
 
     reference = json.loads(reference_path.read_text(encoding="utf-8"))
@@ -3627,6 +4015,7 @@ def _build_human_comparison(
             "llm_p_value": float("nan"),
             "criterion": "",
             "verdict": "inconclusive",
+            "contrast_table": "",
             "description": effect["description"],
         }
 
@@ -3667,12 +4056,20 @@ def _build_human_comparison(
                     )
 
         elif effect["kind"] == "contrast":
-            match = treatment_contrasts.loc[
-                treatment_contrasts["factor"].eq(effect["factor"])
-                & treatment_contrasts["level_left"].astype(float).eq(
+            table_name = str(effect.get("contrast_table", DEFAULT_CONTRAST_TABLE))
+            if table_name not in contrast_tables:
+                raise ValueError(
+                    f"human_reference.json effect {effect['id']} asks for contrast "
+                    f"table {table_name!r}, which the analyser does not emit"
+                )
+            row["contrast_table"] = table_name
+            contrasts = contrast_tables[table_name]
+            match = contrasts.loc[
+                contrasts["factor"].eq(effect["factor"])
+                & contrasts["level_left"].astype(float).eq(
                     float(effect["level_left"])
                 )
-                & treatment_contrasts["level_right"].astype(float).eq(
+                & contrasts["level_right"].astype(float).eq(
                     float(effect["level_right"])
                 )
             ]
@@ -3750,6 +4147,164 @@ def _build_human_comparison(
     return pd.DataFrame.from_records(rows), metadata
 
 
+GAME_CONFIG_DIRECTORY = REPOSITORY_ROOT / "ai_race" / "configs" / "game"
+# The paper's reference parameter point and its reported best fit to the human
+# data. Both are evaluated in the small-mutation limit here, so the mutation rates
+# are recorded as nominal targets and never applied; see the emitted metadata.
+THEORY_PARAMETER_POINTS: tuple[dict[str, Any], ...] = (
+    {"label": "reference", "beta": 2.0, "nominal_mu": 0.02},
+    {"label": "best_fit", "beta": 0.01, "nominal_mu": 0.05},
+)
+THEORY_POPULATION_SIZE = 100
+
+
+def _game_configs_by_risk() -> dict[float, Any]:
+    """Load the checked-in mechanisms, keyed by treatment.
+
+    The theory must be derived from the same configuration files the runner used.
+    Restating the payoffs inside the analyser would let the two drift apart, and
+    the drift would look like a finding.
+    """
+
+    if str(REPOSITORY_ROOT) not in sys.path:
+        sys.path.insert(0, str(REPOSITORY_ROOT))
+    from ai_race.engine.state import GameConfig
+
+    configs: dict[float, Any] = {}
+    for path in sorted(GAME_CONFIG_DIRECTORY.glob("*.json")):
+        config = GameConfig.from_dict(json.loads(path.read_text(encoding="utf-8")))
+        configs[round(float(config.max_private_risk), 10)] = config
+    return configs
+
+
+def _build_theory_comparison(
+    sample_summary: pd.DataFrame,
+) -> tuple[pd.DataFrame, dict[str, Any]]:
+    """Put the observed median Unsafe frequency beside the model's prediction.
+
+    Uses the median rather than the mean because that is what Figure 3B of the
+    source paper compares.
+
+    The prediction depends only on ``max_private_risk``. It is *identical* for
+    every model and every persona cell, so ``difference`` measures how far an LLM
+    sits from the game-theoretic benchmark. It is not a fit, it has no free
+    parameters estimated from these data, and a small difference is not evidence
+    about the model — the caveat is repeated in the emitted metadata because this
+    column is the one most likely to be read as a goodness-of-fit.
+    """
+
+    if str(REPOSITORY_ROOT) not in sys.path:
+        sys.path.insert(0, str(REPOSITORY_ROOT))
+    from ai_race.theory.evolution import (
+        MUTATION_REGIME,
+        expected_unsafe_frequency,
+        small_mutation_stationary,
+    )
+    from ai_race.theory.payoffs import (
+        STRATEGY_ORDER,
+        expected_payoff_matrix,
+        self_play_unsafe_frequency,
+    )
+
+    configs = _game_configs_by_risk()
+    predictions: dict[tuple[float, str], float] = {}
+    for risk, config in configs.items():
+        matrix = expected_payoff_matrix(config)
+        per_strategy = {
+            name: self_play_unsafe_frequency(config, name) for name in STRATEGY_ORDER
+        }
+        for point in THEORY_PARAMETER_POINTS:
+            stationary = small_mutation_stationary(
+                matrix,
+                Z=THEORY_POPULATION_SIZE,
+                beta=point["beta"],
+            )
+            predictions[(risk, point["label"])] = expected_unsafe_frequency(
+                stationary,
+                per_strategy,
+            )
+
+    grouping = [column for column in CONTEXT if column in sample_summary.columns]
+    rows: list[dict[str, Any]] = []
+    unmatched: list[float] = []
+    for _, cell in sample_summary.iterrows():
+        risk = round(float(cell["max_private_risk"]), 10)
+        for point in THEORY_PARAMETER_POINTS:
+            predicted = predictions.get((risk, point["label"]), float("nan"))
+            if math.isnan(predicted) and risk not in unmatched:
+                unmatched.append(risk)
+            observed = float(cell["median_phi_U"])
+            rows.append(
+                {
+                    **{column: cell[column] for column in grouping},
+                    "parameter_point": point["label"],
+                    "beta": point["beta"],
+                    # The limit actually evaluated. nominal_mu is the paper's
+                    # parameter point this row approximates, not an applied value.
+                    "mu": 0.0,
+                    "nominal_mu": point["nominal_mu"],
+                    "mutation_regime": MUTATION_REGIME,
+                    "Z": THEORY_POPULATION_SIZE,
+                    "n_players": int(cell["n_players"]),
+                    "observed_median_phi_U": observed,
+                    "observed_mean_phi_U": float(cell["mean_phi_U"]),
+                    "predicted_phi_U": predicted,
+                    "difference": observed - predicted,
+                }
+            )
+
+    columns = [
+        *grouping,
+        "parameter_point",
+        "beta",
+        "mu",
+        "nominal_mu",
+        "mutation_regime",
+        "Z",
+        "n_players",
+        "observed_median_phi_U",
+        "observed_mean_phi_U",
+        "predicted_phi_U",
+        "difference",
+    ]
+    table = (
+        pd.DataFrame.from_records(rows)[columns]
+        if rows
+        else pd.DataFrame(columns=columns)
+    )
+
+    metadata = {
+        "prediction_source": (
+            "ai_race.theory, small-mutation evolutionary limit over the four "
+            "reduced strategies, derived from ai_race/configs/game/*.json"
+        ),
+        "model_independence_warning": (
+            "predicted_phi_U depends only on max_private_risk. It is identical for "
+            "every LLM and every persona condition in this table. 'difference' is "
+            "the distance between an LLM and the game theory, not a fit; agreement "
+            "is a property of the game and is not evidence about the model."
+        ),
+        "statistic": (
+            "Median player-level Unsafe frequency, matching Figure 3B of the source "
+            "paper. The mean is carried alongside for reference only."
+        ),
+        "parameter_points": list(THEORY_PARAMETER_POINTS),
+        "population_size": THEORY_POPULATION_SIZE,
+        "mutation_regime": MUTATION_REGIME,
+        "mutation_regime_caveat": (
+            "mu is 0 because these are limit values; nominal_mu records the source "
+            "paper's parameter point each row approximates and is not applied. In "
+            "the limit AU and CAS are exactly payoff-equivalent against each other, "
+            "so the predicted transition between them near p_r^max = 0.2 is absent "
+            "and predicted_phi_U is close to 1 at both 0.1 and 0.6. Reproducing "
+            "Figure 3B's small gap between 0.6 and 0.9 requires the finite-mutation "
+            "chain, which is not implemented."
+        ),
+        "unmatched_risk_treatments": sorted(unmatched),
+    }
+    return table, metadata
+
+
 def _write_outputs(
     *,
     tables: dict[str, pd.DataFrame],
@@ -3761,6 +4316,7 @@ def _write_outputs(
     races: pd.DataFrame,
     players: pd.DataFrame,
     fit_logit: bool,
+    fit_logit_robustness: bool,
     prompt_versions: Sequence[str],
     persona_conditions: Sequence[str],
     protocol_payloads: dict[str, dict[str, Any]],
@@ -3806,10 +4362,19 @@ def _write_outputs(
         fitted_coefficients = pd.read_csv(
             output_directory / "clustered_logit_coefficients.csv"
         )
+    if fit_logit_robustness:
+        written.extend(
+            _fit_logit_robustness(turns, output_directory=output_directory)
+        )
 
     comparison, comparison_metadata = _build_human_comparison(
         coefficients=fitted_coefficients,
-        treatment_contrasts=tables["treatment_contrasts.csv"],
+        contrast_tables={
+            name: table
+            for name, table in tables.items()
+            if name.startswith("treatment_contrasts")
+            or name.startswith("persona_contrasts")
+        },
         player_metrics=tables["player_metrics.csv"],
         reference_path=HUMAN_REFERENCE_PATH,
     )
@@ -3820,6 +4385,20 @@ def _write_outputs(
         encoding="utf-8",
     )
     written.append("human_comparison_metadata.json")
+
+    theory_comparison, theory_metadata = _build_theory_comparison(
+        tables["sample_summary.csv"]
+    )
+    theory_comparison.to_csv(
+        output_directory / "theory_vs_experiment.csv",
+        index=False,
+    )
+    written.append("theory_vs_experiment.csv")
+    (output_directory / "theory_vs_experiment_metadata.json").write_text(
+        json.dumps(theory_metadata, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
+    written.append("theory_vs_experiment_metadata.json")
 
     manifest = {
         "source_runs": [path.resolve().as_posix() for path in run_directories],
@@ -3898,6 +4477,7 @@ def _write_outputs(
             "refuses inputs without valid blocks spanning risk treatments"
         ),
         "logit_requested": fit_logit,
+        "logit_robustness_requested": fit_logit_robustness,
         "logit_formula": _logit_formula_for(turns) if fit_logit else None,
         "outputs": sorted(written),
     }
@@ -3933,6 +4513,15 @@ def main(argv: Sequence[str] | None = None) -> int:
         help=(
             "fit the planned statsmodels logistic regression with standard errors "
             "clustered by source_run/model/rep CRN blocks"
+        ),
+    )
+    parser.add_argument(
+        "--fit-logit-robustness",
+        action="store_true",
+        help=(
+            "refit the saturated specification once per CRN block, each time "
+            "omitting that block, plus retry and minimum-horizon exclusion "
+            "variants; off by default because it is N extra fits"
         ),
     )
     parser.add_argument(
@@ -4070,6 +4659,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         races=races,
         players=players,
         fit_logit=args.fit_logit,
+        fit_logit_robustness=args.fit_logit_robustness,
         prompt_versions=prompt_versions,
         persona_conditions=persona_conditions,
         protocol_payloads=protocol_payloads,
