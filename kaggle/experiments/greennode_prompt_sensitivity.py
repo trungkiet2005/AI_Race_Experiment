@@ -60,13 +60,16 @@ def sha256_file(path: Path) -> str:
 def source_tree_sha256(root: Path) -> str:
     digest = hashlib.sha256()
     roots = [root / "ai_race", root / "FAIRGAME" / "src"]
-    files = sorted(
+    files = {
         path
         for source_root in roots
         for path in source_root.rglob("*")
         if path.is_file() and path.suffix.lower() in {".py", ".json", ".txt"}
-    )
-    for path in files:
+    }
+    # The orchestration connector affects backend/seeding/provenance semantics and
+    # must therefore participate in the run contract, not only the engine tree.
+    files.add(Path(__file__).resolve())
+    for path in sorted(files):
         digest.update(path.relative_to(root).as_posix().encode("utf-8"))
         digest.update(b"\0")
         digest.update(path.read_bytes())
@@ -205,7 +208,9 @@ def run_experiment_shard(
     expected_races = len(games)
     journal = RunJournal(output_dir, reset=True)
     manifest = {
-        "schema_version": "ai-race-greennode-run-v1",
+        # Reuse the analyser's provenance-rich offline schema. Ollama is the
+        # local engine and its immutable model digest identifies the checkpoint.
+        "schema_version": "ai-race-kaggle-run-v1",
         "status": "running",
         "started_utc": utc_now(),
         "completed_utc": None,
@@ -216,6 +221,10 @@ def run_experiment_shard(
         "effective_experiment_sha256": hashlib.sha256(
             json.dumps(experiment, sort_keys=True, separators=(",", ":")).encode()
         ).hexdigest(),
+        "game_config_sha256": {
+            game_name: sha256_file(config_dir / "game" / f"{game_name}.json")
+            for game_name in experiment["games"]
+        },
         "expected_races": expected_races,
         **agents_provenance(root, experiment),
         "n_races": 0,
@@ -314,17 +323,30 @@ def main() -> None:
         "hostname": platform.node(),
         "gpu_name": detected_gpu,
         "ollama_version": ollama_version,
-        "model": model_info,
+        "model": {
+            "short_name": args.model,
+            "path": f"ollama://localhost/{args.model}@{model_info['digest']}",
+            "engine": "ollama",
+            "config_sha256": model_info["digest"],
+        },
+        "ollama_model": model_info,
         "source_sha256": source_hash,
         "prompt_version": "ai-race-fairgame-v3",
         "prompt_sha256": sha256_file(prompt_path),
         "decoding": {
             "temperature": args.temperature,
             "max_tokens": args.max_tokens,
+            "logprobs": 0,
+            "logprobs_enabled": False,
+            "max_parse_retries": 3,
             "num_ctx": 4096,
             "workers": args.workers,
             "seed_requested": True,
             "seed_probe_exact_match": True,
+        },
+        "package_versions": {
+            "python": platform.python_version(),
+            "ollama": str(ollama_version),
         },
         "base_seed": 260726,
     }
