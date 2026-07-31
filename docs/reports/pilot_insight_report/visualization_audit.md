@@ -137,10 +137,9 @@ Status from run:
 ## 7) Files to check
 
 - Artifact: [artifact.json](/AI_Race_Experiment/docs/reports/pilot_insight_report/artifact.json)
-- Candidate HTML: [candidate.html](/AI_Race_Experiment/docs/reports/pilot_insight_report/candidate.html)
-- Last render-failure screenshots (if present):
-  - `report.html.tmp-2912-afbd242c-25cc-4c8b-af9c-822fd891399f.validation-failure.png`
-  - `report.html.tmp-6736-c34fe603-13a3-4ea3-a51e-cb10058634c2.validation-failure.png`
+- Audit notes: [visualization_audit.md](/AI_Race_Experiment/docs/reports/pilot_insight_report/visualization_audit.md)
+- Build/readme instructions: [README.md](/AI_Race_Experiment/docs/reports/pilot_insight_report/README.md)
+- Temporary render-debug outputs are ignored and are not tracked.
 
 ## 8) Current caveat
 

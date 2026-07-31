@@ -72,3 +72,7 @@ slides/*.xdv
 # OS
 .DS_Store
 Thumbs.db
+# Clean generated artifact artifacts
+/docs/reports/**/*.tmp-*.verification-failure.png
+/docs/reports/**/*candidate.html
+/docs/reports/**/*fail.png
