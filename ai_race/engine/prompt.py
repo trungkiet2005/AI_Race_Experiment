@@ -45,7 +45,18 @@ def _previous_round_text(
     if not history:
         return "No previous round has been played."
 
-    selected = history if history_mode == "full" else history[-1:]
+    if history_mode == "full":
+        selected = list(history)
+    elif history_mode == "first_and_previous":
+        # The opening move is the only thing separating CS from CAS. Under plain
+        # memory-one the agent cannot see its own round-1 action once the race has
+        # moved on, so that distinction is unreachable for it by construction —
+        # even though the analysis conditions on it. Carrying round 1 alongside the
+        # latest round closes that gap without turning the prompt into a full
+        # transcript whose length would grow with the horizon.
+        selected = [history[0]] if len(history) == 1 else [history[0], history[-1]]
+    else:
+        selected = history[-1:]
     lines: list[str] = []
     opponent_index = 1 - player_index
     for record in selected:
@@ -78,6 +89,8 @@ def build_prompt(
     progress: Sequence[float],
     stage_payoffs: Sequence[float],
     unsafe_counts: Sequence[int],
+    opponent_persona_text: str = "",
+    opponent_persona_probability: float = 100.0,
 ) -> str:
     """Render the information available before a simultaneous decision."""
     if len(player_names) != 2:
@@ -133,6 +146,8 @@ def build_prompt(
             "currentPlayerName": player_name,
             "opponent1": player_names[opponent_index],
             "personality": persona_text.strip(),
+            "opponentPersonality1": opponent_persona_text.strip(),
+            "opponentPersonalityProbability1": _fmt(opponent_persona_probability),
             "currentRound": round_number,
             "strategy1": Action.SAFE.label,
             "strategy2": Action.UNSAFE.label,
@@ -163,8 +178,11 @@ def build_prompt(
         {
             # The persona seat is empty in the paper-faithful baseline.
             "intro": bool(persona_text.strip()),
-            # No opponent-personality prior is disclosed in this design.
-            "opponentIntro": False,
+            # Opt-in via config: revealOpponentPersonaPrior (default off, matching
+            # the paper-faithful baseline where no opponent-personality prior is disclosed).
+            "opponentIntro": bool(
+                config.reveal_opponent_persona_prior and opponent_persona_text.strip()
+            ),
             # The horizon is deliberately hidden from the agents.
             "gameLength": False,
             # Agents never exchange messages, so only the decision phase exists.

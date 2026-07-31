@@ -54,9 +54,10 @@ Python cần chỗ ghi `__pycache__`). Không có input đó thì notebook dừn
 **Đã stage sẵn:** <https://www.kaggle.com/datasets/nguyenlamphuquy/ai-race-experiment>
 (private, ~4.9 MB, 205 file).
 
-Đường mount trong notebook là **`/kaggle/input/ai-race-experiment`** — Kaggle mount theo
-*slug*, **không kèm username**. Username chỉ nằm trong dataset id dùng cho CLI
-(`nguyenlamphuquy/ai-race-experiment`).
+Đường mount trong notebook là **`/kaggle/input/datasets/nguyenlamphuquy/ai-race-experiment`**
+hoặc **`/kaggle/input/ai-race-experiment`** (slug trần, không kèm username) tuỳ
+notebook. Notebook khai cả hai và lấy cái nào có thật; xem [A3](#a3-inputs-cần-add-vào-notebook).
+Username chỉ bắt buộc trong dataset id dùng cho CLI (`nguyenlamphuquy/ai-race-experiment`).
 
 Script tái tạo / cập nhật:
 
@@ -102,13 +103,16 @@ kaggle datasets files nguyenlamphuquy/ai-race-experiment -v | head
 
 | Input | Bắt buộc | Mount path |
 |---|---|---|
-| Dataset `nguyenlamphuquy/ai-race-experiment` | có | `/kaggle/input/ai-race-experiment` |
-| Kaggle Model (ví dụ `qwen-lm/qwen2.5/transformers/7b-instruct`) | có | `/kaggle/input/models/qwen-lm/qwen2.5/transformers/7b-instruct/1` |
+| Dataset `nguyenlamphuquy/ai-race-experiment` | có | `/kaggle/input/datasets/nguyenlamphuquy/ai-race-experiment` hoặc `/kaggle/input/ai-race-experiment` |
+| Kaggle Model — `qwen-lm/qwen2.5/transformers/72b-instruct` | có | `/kaggle/input/models/qwen-lm/qwen2.5/transformers/72b-instruct/1` |
 | Dataset wheelhouse vLLM | chỉ khi image chưa có vLLM | điền `VLLM_WHEELS_DIR`; phải có `manifest.json` liệt kê SHA-256 từng wheel |
 
-Notebook đã pin `REPO_INPUT_DIR = "/kaggle/input/ai-race-experiment"`. Nếu add nhầm
-dataset, nó raise kèm gợi ý nơi tìm thấy repo thật, thay vì âm thầm dùng input khác —
-chạy nhầm source revision là lỗi mà manifest sẽ ghi lại sai.
+Notebook pin `REPO_INPUT_DIRS` là **danh sách** cả hai path trên và lấy cái nào tồn
+tại. Kaggle mount dataset lúc theo slug trần, lúc theo `datasets/<owner>/<slug>` tuỳ
+notebook — pin đúng một chuỗi thì đổi notebook là hỏng. Nếu không path nào khớp, nó
+raise kèm gợi ý nơi tìm thấy repo thật, thay vì âm thầm dùng input khác: chạy nhầm
+source revision là lỗi mà manifest sẽ ghi lại sai. Đặt `REPO_INPUT_DIRS = None` để bỏ
+chốt chặn và tự dò (tìm tới độ sâu 6, đủ cho cả hai layout).
 
 Internet OFF. Auto-discovery wheel bị tắt cố ý — phải chỉ đúng path wheelhouse đã audit.
 
@@ -117,15 +121,84 @@ Internet OFF. Auto-discovery wheel bị tắt cố ý — phải chỉ đúng pa
 Sửa cell cấu hình đầu file:
 
 ```python
-MODELS = [{"path": "/kaggle/input/models/.../1", "short_name": "qwen2.5-7b-instruct", "engine": "vllm"}]
+MODELS = [
+    {"path": ".../qwen-lm/qwen2.5/transformers/72b-instruct/1",
+     "short_name": "qwen2.5-72b-instruct", "engine": "transformers",
+     "engine_overrides": {"quantization": "bnb-4bit"}},
+]
 EXPERIMENTS = ["baseline"]      # hoặc thêm các persona_baseline_*
 REPETITIONS_OVERRIDE = 10       # pilot; None = dùng config (50)
 RUN_PHASE_OVERRIDE = None       # "confirmatory" khi đã freeze
 TEMPERATURE = 0.7               # KHÔNG dùng 0, xem mục "Bẫy" bên dưới
 ```
 
-Chạy notebook (GPU T4/P100), tải `ai_race_results.zip` trong output về
+Accelerator: **RTX PRO 6000, 96 GB**. Tải `ai_race_results.zip` trong output về
 `results/open_source/`.
+
+#### Backend: transformers có sẵn trong image
+
+Cấu hình mặc định dùng `engine="transformers"`, tức thư viện `transformers` đã có
+trong image Kaggle. Không cài gì, không cần wheelhouse vLLM, Internet vẫn OFF. Cell
+cài vLLM tự bỏ qua và in `No configured model requires vLLM.`; `run_manifest.json`
+sẽ ghi `packageVersions.vllm = null`, đúng với thực tế.
+
+#### VRAM: 72B BẮT BUỘC quantize
+
+| Cách nạp | Byte/tham số | 72,7 tỉ tham số | Vừa 96 GB? |
+|---|---|---|---|
+| bf16 | 2,0 | ≈ 145 GB | **không** |
+| bnb-8bit | 1,0 | ≈ 73 GB | vừa, nhưng sát trần |
+| **bnb-4bit (NF4)** | 0,55 | **≈ 40 GB** | **thoải mái** |
+
+Notebook đặt `"engine_overrides": {"quantization": "bnb-4bit"}`.
+
+> **Bẫy:** `quantization` phải nằm trong `engine_overrides`. Đặt nó ở cấp trên cùng của
+> dict model sẽ **bị bỏ qua im lặng** — `offline_settings_for()` chỉ đọc
+> `engine_overrides` — và model sẽ cố nạp bf16 rồi OOM sau vài phút tải weight.
+
+Backend `transformers` chỉ nhận `bnb-4bit` / `bnb-8bit`, cần wheel `bitsandbytes` có sẵn
+trong image (Internet OFF nên không tự tải được). Giá trị kiểu vLLM (`awq`, `gptq`, `fp8`)
+sẽ raise ngay. Checkpoint **đã** quantize sẵn thì để `quantization=None` — transformers tự
+đọc `quantization_config`.
+
+`TENSOR_PARALLEL_SIZE` vẫn là 1 và không có tác dụng ở backend này; transformers dùng
+`device_map="auto"`.
+
+**Cái phải đánh đổi là tốc độ.** Runner luôn cấp seed riêng cho từng quyết định — đó
+là invariant của repo. Một forward pass gộp lại dùng chung một torch RNG nên không
+thể tôn trọng seed riêng của từng `(rep, round, agent)`, vì vậy backend transformers
+**rơi về sinh từng prompt một** khi có seeds. `BATCH_SIZE = 128` do đó không có tác
+dụng, throughput là ~1 generation mỗi lượt.
+
+Ước lượng thô cho `REPETITIONS_OVERRIDE = 10`: 3 treatment × 10 rep = 30 race, dài
+trung bình 9 vòng, 2 người chơi ≈ **540 generation/model/experiment**. Bỏ override
+(50 rep) thì thành ≈ 2.700. Nhân với thời gian sinh 256 token của model 12–14B để ra
+wall-clock, rồi đối chiếu giới hạn phiên của Kaggle trước khi chạy bản đầy đủ.
+
+Nếu cần nhanh hơn thì đổi `engine` của từng model về `"vllm"`; bốn hằng
+`MAX_MODEL_LEN` / `GPU_MEMORY_UTILIZATION` / `TENSOR_PARALLEL_SIZE` / `ENFORCE_EAGER`
+vẫn còn nguyên trong notebook và chỉ có tác dụng ở backend đó. Đổi backend làm đổi
+`packageVersions` nên `protocol_signature` khác đi — run vLLM và run transformers
+**không pool chung được** ở primary mode.
+
+#### Gemma-3 12B là model multimodal
+
+Đây là rủi ro cụ thể cần kiểm trước khi chạy dài. `_init_transformers_engine` nạp
+bằng `AutoModelForCausalLM`. Với Gemma-3, chỉ bản 1B là text-only
+(`Gemma3ForCausalLM`); các bản 4B/12B/27B dùng `Gemma3ForConditionalGeneration` và
+config của chúng **không** nằm trong bảng ánh xạ của `AutoModelForCausalLM`. Khả năng
+cao lệnh nạp raise `Unrecognized configuration class ... for AutoModelForCausalLM`.
+
+Chạy thử nạp riêng Gemma-3 trước, hoặc chạy Qwen trước để có kết quả chắc chắn.
+Notebook ghi lỗi của từng model vào manifest rồi đi tiếp, nhưng
+`FAIL_ON_INCOMPLETE_RUN = True` sẽ báo hỏng ở cuối. Ba cách xử lý, theo thứ tự ưu
+tiên: dùng `engine="vllm"` cho riêng Gemma-3 (vLLM xử lý được kiến trúc này); hoặc
+đổi sang checkpoint text-only; hoặc sửa connector để lùi về
+`AutoModelForImageTextToText` — nhưng `FAIRGAME/` là vendored, sửa nó là tạo nhánh
+riêng phải tự bảo trì.
+
+Gemma-3 cũng cần `transformers ≥ 4.50`; kiểm tra `packageVersions.transformers` trong
+manifest sau lần chạy đầu.
 
 ### A5. Persona: chạy tất cả cell trong CÙNG một session
 

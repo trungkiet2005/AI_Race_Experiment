@@ -1,0 +1,24 @@
+{
+  "name": "persona_risk_1_3",
+  "nPlayers": 2,
+  "names": [
+    "Company_1",
+    "Company_2"
+  ],
+  "personaCondition": "R1-R3",
+  "personaRoles": [
+    "risk-1",
+    "risk-3"
+  ],
+  "personas": {
+    "en": [
+      "an executive who, faced with six increasingly risky gambles in a prior assessment, chose the first gamble, the secure option with zero variance, and prefers a certain outcome over any prize left to chance",
+      "an executive who, faced with six increasingly risky gambles in a prior assessment, chose the third gamble, accepting a moderate amount of variance for a moderate rise in expected payoff"
+    ],
+    "vi": [
+      "một giám đốc từng chọn mức cược thứ nhất trên thang sáu mức cược rủi ro tăng dần, và luôn ưu tiên một kết quả chắc chắn hơn phần thưởng bị phó mặc cho may rủi",
+      "một giám đốc từng chọn mức cược thứ ba trên thang sáu mức cược rủi ro tăng dần, chấp nhận mức phương sai vừa phải để đổi lấy mức tăng vừa phải trong kỳ vọng phần thưởng"
+    ]
+  },
+  "description": "Risk-preference matrix cell (1, 3) of 6x6: seat 1 = Eckel-Grossman gamble 1 of 6, seat 2 = gamble 3 of 6 (paper SI Task 1, arXiv-2607.26034v1). Each seat's risk level is drawn independently, since risk preference is a per-participant attribute, not a race-level constant; the diagonal (i == j) is the symmetric case."
+}

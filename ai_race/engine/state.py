@@ -3,6 +3,7 @@ from __future__ import annotations
 
 from dataclasses import asdict, dataclass, field
 from enum import Enum
+import math
 from typing import Any, Optional
 
 
@@ -55,6 +56,7 @@ class GameConfig:
     max_private_risk: float = 0.1
     history_mode: str = "previous_round"
     agents_communicate: bool = False
+    reveal_opponent_persona_prior: bool = False
     language: str = "en"
     prompt_template: str = "ai_race_en"
     prompt_version: str = "ai-race-fairgame-v3"
@@ -74,6 +76,23 @@ class GameConfig:
             raise ValueError(f"Unsupported engine {self.engine!r}; expected 'ai_race'")
         if self.n_players != 2:
             raise ValueError("The paper-faithful AI Race requires exactly two players")
+        mechanism_values = {
+            "safe_progress": self.safe_progress,
+            "unsafe_progress": self.unsafe_progress,
+            "payoff_safe_safe": self.payoff_safe_safe,
+            "payoff_safe_unsafe": self.payoff_safe_unsafe,
+            "payoff_unsafe_safe": self.payoff_unsafe_safe,
+            "payoff_unsafe_unsafe": self.payoff_unsafe_unsafe,
+            "race_prize": self.race_prize,
+            "max_private_risk": self.max_private_risk,
+            "stop_probability": self.stop_probability,
+        }
+        nonfinite = [
+            name for name, value in mechanism_values.items()
+            if not math.isfinite(float(value))
+        ]
+        if nonfinite:
+            raise ValueError(f"Game mechanism values must be finite: {nonfinite}")
         if self.safe_progress <= 0 or self.unsafe_progress <= self.safe_progress:
             raise ValueError("Unsafe progress must be greater than positive Safe progress")
         if self.min_rounds < 1:
@@ -86,8 +105,11 @@ class GameConfig:
             raise ValueError("race_prize cannot be negative")
         if not 0 <= self.max_private_risk <= 1:
             raise ValueError("max_private_risk must be in [0, 1]")
-        if self.history_mode not in {"previous_round", "full"}:
-            raise ValueError("history_mode must be 'previous_round' or 'full'")
+        if self.history_mode not in {"previous_round", "first_and_previous", "full"}:
+            raise ValueError(
+                "history_mode must be 'previous_round', 'first_and_previous', "
+                "or 'full'"
+            )
         if self.run_phase not in {"pilot", "confirmatory"}:
             raise ValueError("run_phase must be 'pilot' or 'confirmatory'")
         if not str(self.persona_condition).strip():
@@ -107,6 +129,7 @@ class GameConfig:
         run_phase: Optional[str] = None,
         persona_condition: Optional[str] = None,
         persona_sha256: Optional[str] = None,
+        prompt_version: Optional[str] = None,
     ) -> "GameConfig":
         payoffs = data.get("stagePayoffs", {}) or {}
         return cls(
@@ -126,9 +149,10 @@ class GameConfig:
             max_private_risk=float(data.get("maxPrivateRisk", 0.1)),
             history_mode=str(data.get("historyMode", "previous_round")),
             agents_communicate=bool(data.get("agentsCommunicate", False)),
+            reveal_opponent_persona_prior=bool(data.get("revealOpponentPersonaPrior", False)),
             language=language or str(data.get("language", "en")),
             prompt_template=str(data.get("promptTemplate", "ai_race_en")),
-            prompt_version=str(data.get("promptVersion", "ai-race-fairgame-v3")),
+            prompt_version=prompt_version or str(data.get("promptVersion", "ai-race-fairgame-v3")),
             run_phase=run_phase or str(data.get("runPhase", "pilot")),
             agents_ref=str(data.get("agents", "companies_default")),
             # Persona lives in the agents configuration, so the caller supplies it;

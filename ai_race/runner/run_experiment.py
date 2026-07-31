@@ -23,6 +23,7 @@ from ai_race.engine.game import AIRaceGame
 from ai_race.engine.state import GameConfig
 from ai_race.models.factory import get_send_batch, init_offline_backend
 from ai_race.paths import CONFIGS_DIR, PROMPTS_DIR, RESULTS_DIR
+from ai_race.prompts.sensitivity import apply_prompt_variant, get_prompt_variant
 from ai_race.runner.batch import run_games_batched
 
 
@@ -44,6 +45,10 @@ def _agents_for_language(agents_cfg: dict, language: str) -> list[RaceAgent]:
     personas = list(personas_by_language.get(language, ["", ""]))
     if len(personas) != 2:
         raise ValueError(f"Agent configuration must define two {language!r} personas")
+    probabilities_by_language = agents_cfg.get("personaProbabilities", {}) or {}
+    probabilities = list(probabilities_by_language.get(language, [100.0, 100.0]))
+    if len(probabilities) != 2:
+        raise ValueError(f"Agent configuration must define two {language!r} personaProbabilities")
     condition = str(agents_cfg.get("personaCondition", "none")).strip()
     if condition != "none" and not all(str(text).strip() for text in personas):
         # Otherwise a run labelled with a persona condition would render neutral
@@ -57,9 +62,10 @@ def _agents_for_language(agents_cfg: dict, language: str) -> list[RaceAgent]:
         RaceAgent(
             name=str(name),
             persona_text=str(persona),
+            persona_probability=float(probability),
             persona_role=str(role),
         )
-        for name, persona, role in zip(names, personas, roles)
+        for name, persona, probability, role in zip(names, personas, probabilities, roles)
     ]
 
 
@@ -86,6 +92,8 @@ def build_games_for_model(
     base_seed = int(exp["seed"])
     languages = list(exp.get("languages", ["en"]))
     games: list[AIRaceGame] = []
+    prompt_variant_id = str(exp.get("promptVariant", "canonical"))
+    prompt_variant = get_prompt_variant(prompt_variant_id)
 
     for game_name in exp["games"]:
         game_path = CONFIGS_DIR / "game" / f"{game_name}.json"
@@ -103,17 +111,28 @@ def build_games_for_model(
                 run_phase=str(exp.get("runPhase", "pilot")),
                 persona_condition=persona_condition,
                 persona_sha256=persona_hash,
+                prompt_version=(
+                    prompt_variant.version
+                    if prompt_variant_id != "canonical"
+                    else str(game_data.get("promptVersion", "ai-race-fairgame-v3"))
+                ),
             )
             template_name = config.prompt_template.format(language=language)
             template_path = PROMPTS_DIR / f"{template_name}.txt"
-            template = template_path.read_text(encoding="utf-8")
+            template = apply_prompt_variant(
+                template_path.read_text(encoding="utf-8"), prompt_variant_id
+            )
             for rep in range(repetitions):
                 # Deliberately independent of the treatment name: the same repetition
                 # shares horizon and fixed-seat setback draws across risk conditions.
                 game_seed = base_seed + rep
+                variant_component = (
+                    "" if prompt_variant_id == "canonical"
+                    else f"__prompt-{prompt_variant_id}"
+                )
                 game_id = (
                     f"{config.name}__{model_slug(model)}__{language}__"
-                    f"{resolved_agents_name}__rep{rep:04d}"
+                    f"{resolved_agents_name}{variant_component}__rep{rep:04d}"
                 )
                 games.append(
                     AIRaceGame(

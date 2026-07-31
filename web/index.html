@@ -18,6 +18,7 @@
       <a href="#mechanics">Mechanics</a>
       <a href="#simulator">Simulator</a>
       <a href="#protocol">Protocol</a>
+      <a href="#audit">Audit</a>
       <a class="nav-cta" href="../slides/index.html">Open deck <span>↗</span></a>
     </nav>
   </header>
@@ -286,18 +287,40 @@
       <div class="boundary-card">
         <div class="source-side"><span class="boundary-label">SOURCE STUDY</span><h3>Human participants</h3><p>Motivates hypotheses and supplies the canonical game mechanics.</p><small>Fernández Domingos & Han, 2026</small></div>
         <div class="boundary-arrow"><span>ADAPT<br>MECHANICS</span><i>→</i><span>TEST<br>ANEW</span></div>
-        <div class="project-side"><span class="boundary-label">THIS PROJECT</span><h3>LLM agents</h3><p>Produces new behavioral evidence only after validated Kaggle runs.</p><small class="pending-chip">RESULTS PENDING</small></div>
+        <div class="project-side"><span class="boundary-label">THIS PROJECT</span><h3>LLM agents</h3><p>Pilot audit evidence is admitted; confirmatory treatment inference remains pending.</p><small class="pending-chip">PILOT AUDIT COMPLETE</small></div>
+      </div>
+    </section>
+
+    <section class="audit-section" id="audit">
+      <div class="section-heading light-heading">
+        <div><span class="kicker">04 / GAME UNDERSTANDING AUDIT</span><h2>Knowing the table<br>is not knowing the game.</h2></div>
+        <p>One Qwen2.5 7B F16 checkpoint was tested with 41 atomic questions, five fixed-seed repetitions, paraphrases, answer-order reversals and verified calculator outputs. This is pilot evidence, not a claim about every model.</p>
+      </div>
+      <div class="audit-kpis" aria-label="Pilot audit headline metrics">
+        <article><span>PROBE OUTPUTS</span><strong>685 / 685</strong><small>all raw prompts + responses retained</small></article>
+        <article><span>UNAIDED ACCURACY</span><strong>52.1%</strong><small>semantic scoring, strict format separate</small></article>
+        <article><span>CALCULATOR ACCURACY</span><strong>75.6%</strong><small>disclosed-answer tool uptake</small></article>
+        <article><span>BEHAVIOR PARSE FAILURES</span><strong>0</strong><small>1,116 logged decisions</small></article>
+      </div>
+      <div class="audit-visual-grid">
+        <figure><img src="../paper/figures/game_understanding_accuracy.png" alt="Paired bars showing high rule recall and stage payoff accuracy but low state transition and expected payoff accuracy."><figcaption><b>Task validity:</b> rule recall reached 97.4% and payoff lookup 100%, while transition accuracy was 22.2% and expected-payoff accuracy 16.7%.</figcaption></figure>
+        <figure><img src="../paper/figures/calculator_behavior_ablation.png" alt="Pilot unsafe action rate and realized payoff under canonical and calculator-card prompts across three risk treatments."><figcaption><b>Behavioral ablation:</b> exact current-round arithmetic did not automatically produce safer play or greater realized payoff.</figcaption></figure>
+      </div>
+      <div class="audit-boundary">
+        <div><span>WHAT PASSED</span><p>Exact engine oracle, browser parity, source/model hashes, paired hidden horizons, prompt reconstruction and calculator re-computation.</p></div>
+        <div><span>WHAT IT SUPPORTS</span><p>Rule and arithmetic performance under this checkpoint, prompt pool, decoding contract and mechanism.</p></div>
+        <div><span>WHAT IT DOES NOT SUPPORT</span><p>An internal world model, subjective understanding, stable risk preference or generalization to other models.</p></div>
       </div>
     </section>
 
     <section class="closing">
-      <span class="kicker">THE CONTRIBUTION, FOR NOW</span>
-      <h2>A faithful environment.<br>An auditable protocol.<br><em>Evidence comes next.</em></h2>
+      <span class="kicker">THE EVIDENCE BOUNDARY</span>
+      <h2>A faithful environment.<br>A verified pilot audit.<br><em>Confirmation comes next.</em></h2>
       <div><a class="button primary" href="../slides/index.html">Present the research deck <span>↗</span></a><a class="button secondary" href="../README.md">View repository guide</a></div>
     </section>
   </main>
 
-  <footer><div class="brand"><span class="brand-mark">AR</span><span>AI RACE <b>LAB</b></span></div><p>Interactive protocol companion · No experiment results are represented.</p><span class="mono">v0.2 · 2026</span></footer>
+  <footer><div class="brand"><span class="brand-mark">AR</span><span>AI RACE <b>LAB</b></span></div><p>Interactive protocol companion · Pilot audit shown; confirmatory results pending.</p><span class="mono">v0.3 · 2026</span></footer>
 
   <dialog id="resultDialog">
     <div class="result-orbit" aria-hidden="true"></div>

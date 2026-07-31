@@ -1,8 +1,8 @@
 # AI Race results
 
-This tree is intentionally empty until an AI Race run completes on Kaggle. It does
-not retain Collective Risk outputs and it does not contain placeholder observations,
-effect sizes, or figures.
+This tree contains admitted open-weight smoke and pilot artifacts. It does not
+retain Collective Risk outputs, placeholder observations, or fabricated effect
+sizes. Confirmatory AI Race inference remains pending.
 
 ```text
 results/
@@ -11,6 +11,20 @@ results/
   scripts/         analysis code tracked in Git
   derived/         generated tables (ignored; created by the analyser)
 ```
+
+The complete public GreenNode handoff is indexed in
+`open_source/gpu_run_archive/archive_ledger.json`. It includes immutable raw and
+analysis bundles for persona sensitivity, surface sensitivity, and game
+understanding, with expanded review-friendly pilot tables under neighboring
+directories. Run `python results/scripts/audit_gpu_archives.py --archive-dir
+results/open_source/gpu_run_archive` to verify all archive hashes and metadata
+from a clean clone.
+
+## Consolidated visual output & insight snapshot
+
+For this workspace, keep one canonical visualization-insight report here:
+
+- [results/visualization_insight_full.md](/AI_Race_Experiment/results/visualization_insight_full.md)
 
 Keep one self-contained directory per run. A run directory must contain
 `turns.jsonl`, `races.csv`, `players.csv`, and `run_manifest.json` so completion,
@@ -112,6 +126,22 @@ the same realised horizon and stopping-draw stream.
 
 ## Analysis
 
+Prompt surface-sensitivity runs use a separate paired analysis so modified prompt
+hashes can never enter the canonical primary pool accidentally:
+
+```bash
+python results/scripts/analyze_surface_sensitivity.py \
+  --lane-root /path/to/lane-a --lane-root /path/to/lane-b \
+  --output-dir results/derived/surface-sensitivity
+```
+
+It checks a single model/source/decoding contract, one completed shard per
+variant, manifest/file counts, common-random-number horizons, and exact first-round
+pairing. The first-round flip rate is the direct surface-sensitivity estimand;
+whole-trajectory Unsafe-rate differences also contain state feedback after an
+earlier action changes. Reported intervals resample complete repetition blocks,
+not dependent decision rows.
+
 Run this on Kaggle after downloading or mounting completed experiment outputs:
 
 ```bash
@@ -137,7 +167,14 @@ The script produces:
 - later Unsafe rates split by the first-round action;
 - parse-failure and retry rates plus per-race inclusion accounting;
 - per-player trajectory metrics and winner/loser/tie comparisons;
-- nearest canonical AS/AU/CS/CAS mismatch summaries.
+- nearest canonical AS/AU/CS/CAS mismatch summaries;
+- `sample_summary.csv`, one row per analysis cell pooling sample sizes, mean and
+  median Unsafe frequency, realised horizons, and parse-failure accounting;
+- pairwise treatment contrasts on **two** analysis windows, `treatment_contrasts.csv`
+  over every round and `treatment_contrasts_round2plus.csv` over the panel sample,
+  with the persona equivalents; the two disagree whenever round 1 differs from later
+  rounds, and `human_reference.json` names which table each effect is scored on;
+- `theory_vs_experiment.csv`, described under *Theory outputs* below.
 
 Player-level tables first calculate each player's trajectory rate and then average
 those rates. They complement the decision-level summaries because a longer realised
@@ -280,3 +317,86 @@ the source paper are deliberately absent: they are not defined for LLM agents.
 The optional `--include-exploratory-behind` flag adds
 `BEHIND_UNSAFE_EXPLORATORY` to strategy-distance tables. It is not one of the
 paper's canonical strategies and must remain labelled exploratory.
+
+## Optional robustness refits
+
+```bash
+python results/scripts/analyze_ai_race.py --fit-logit-robustness
+```
+
+Off by default because it is one fit per common-random-number block. It refits the
+saturated specification once per block, each time omitting that block, and writes
+`logit_robustness_jackknife.csv` plus `logit_robustness_metadata.json`.
+
+| column | meaning |
+|---|---|
+| `variant` | `full`, `exclude_retried_races`, or `exclude_min_horizon` |
+| `term` | regression term |
+| `n_observations`, `n_blocks`, `n_blocks_refitted` | sample and refit accounting |
+| `coefficient_full` | estimate on the whole variant sample |
+| `coefficient_min`, `coefficient_max` | leave-one-block-out range |
+| `max_abs_shift`, `block_of_max_shift` | largest displacement and the block causing it |
+| `sign_stable` | full-sample and every leave-one-out estimate agree in sign |
+| `negligible_at_full_sample` | the estimate is numerically zero, so it has no sign |
+
+Exclusions are applied at race level, never at decision level: the lagged
+predictors are built from the race trajectory, so dropping single rows would leave
+later lags pointing at rounds no longer in the sample. `exclude_retried_races`
+drops any race where a decision needed a generation retry — the closest analogue
+here to the source paper's dropped pair — and `exclude_min_horizon` drops races
+that stopped at the five-round minimum and therefore carry the least history.
+
+A block whose removal makes the model unidentified or non-convergent is listed in
+`skipped_blocks` rather than recorded as a zero coefficient. The leave-one-out
+spread is a sensitivity diagnostic, not a standard error, and has no p-value.
+
+## Theory outputs
+
+```bash
+python results/scripts/build_theory_tables.py
+```
+
+Writes to `results/derived/ai_race_theory/`. This script reads **no run output**.
+Every number is a property of the game defined by `ai_race/configs/game/*.json` and
+is identical for every model, persona condition, and run.
+
+| file | contents |
+|---|---|
+| `theory_payoff_matrix.csv` | expected payoff for each ordered strategy pair per treatment, with the `method` that produced it |
+| `theory_equilibria.csv` | stage-game class, social-dilemma threshold, pure Nash profiles, and the AS/AU closed-form boundaries |
+| `theory_stationary_distribution.csv` | predicted population composition under evolutionary dynamics |
+| `theory_expected_unsafe.csv` | Unsafe frequency implied by that composition |
+| `theory_metadata.json` | parameters, method notes, and the caveats below |
+
+Payoffs are computed by exact enumeration over the horizon distribution by default.
+`--payoff-method monte_carlo` reproduces the source paper's construction (closed
+form on the four AS/AU pairs, 10⁴ replications elsewhere) and exists for
+cross-checking. The equilibrium and evolutionary tables always use the exact
+matrix: `Pi(CAS, AU)` and `Pi(AU, AU)` are the same number in the game, sampling
+noise makes them differ by roughly 0.04, and an exhaustive best-response search
+reads that difference as a strict preference and drops real equilibria.
+
+Two things these files are not:
+
+- **`theory_stationary_distribution.csv` is not `strategy_summary_player.csv`.**
+  The first is a predicted population composition; the second classifies observed
+  LLM trajectories against the nearest canonical strategy. Different questions.
+- **`theory_vs_experiment.csv` is not a fit.** The analyser emits it alongside the
+  behavioural tables, comparing each cell's observed *median* Unsafe frequency —
+  the statistic Figure 3B of the source paper uses — against the model prediction.
+  `predicted_phi_U` depends only on `max_private_risk`, so it is identical for every
+  model and persona cell. `difference` measures how far an LLM sits from the game
+  theory; a small difference is a property of the game, not evidence about a model.
+  The warning is repeated in `theory_vs_experiment_metadata.json`.
+
+The evolutionary tables are the **small-mutation limit**, where the population is
+monomorphic and the chain reduces to fixation probabilities between the four
+strategies. `nominal_mu` records the mutation rate of the source paper's parameter
+point that a row approximates; it is not applied, and `mu` is 0. Two consequences
+are recorded in the metadata rather than left to be discovered: AU and CAS are
+exactly payoff-equivalent against each other in this limit, so the paper's AU-to-CAS
+transition near `p_r^max = 0.2` cannot appear and their stationary mass splits
+evenly instead; and a finite mutation rate spreads mass into mixed populations that
+the limit cannot represent. What the limit does reproduce is the CS takeover above
+roughly `p_r^max = 0.6` and the negligible stationary mass of Always Safe at every
+treatment.

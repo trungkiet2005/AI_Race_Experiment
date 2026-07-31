@@ -1,0 +1,36 @@
+.audit-result-layout {
+  display: grid;
+  grid-template-columns: 1.65fr .75fr;
+  gap: 1.5vw;
+  align-items: stretch;
+  height: 40vh;
+}
+.audit-result-layout figure {
+  margin: 0;
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 1vw;
+  overflow: hidden;
+}
+.audit-result-layout img { width: 100%; height: 100%; object-fit: contain; }
+.audit-result-copy { display: grid; grid-template-columns: 1fr 1fr; gap: .7vw; }
+.audit-result-copy > div {
+  background: var(--ink);
+  color: white;
+  border-radius: .8vw;
+  padding: 1vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.audit-result-copy span { font-size: 1.8vw; font-weight: 850; color: var(--lime); }
+.audit-result-copy small { font: .58vw ui-monospace, monospace; color: #93a0b1; }
+.audit-result-copy p {
+  grid-column: 1 / -1;
+  margin: 0;
+  background: var(--amber);
+  border-radius: .8vw;
+  padding: 1vw;
+  font-size: .72vw;
+  line-height: 1.45;
+}

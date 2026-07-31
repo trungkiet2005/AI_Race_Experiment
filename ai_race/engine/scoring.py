@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+import math
 from typing import Sequence
 
 from .state import Action, GameConfig
@@ -53,6 +54,10 @@ def joint_round_outcome(
 def race_outcomes(progress: Sequence[float], *, tolerance: float = 1e-9) -> list[str]:
     if len(progress) != 2:
         raise ValueError("AI Race terminal scoring requires exactly two players")
+    if not all(math.isfinite(float(value)) for value in progress):
+        raise ValueError("AI Race progress values must be finite")
+    if not math.isfinite(float(tolerance)) or tolerance < 0:
+        raise ValueError("AI Race tie tolerance must be finite and non-negative")
     if abs(float(progress[0]) - float(progress[1])) <= tolerance:
         return ["tie", "tie"]
     if progress[0] > progress[1]:
@@ -84,6 +89,26 @@ def terminal_scoring(
     }
     if lengths != {2}:
         raise ValueError("Terminal scoring expects two values for every player field")
+    if rounds_played <= 0:
+        raise ValueError("Terminal scoring requires at least one completed round")
+    if not math.isfinite(float(max_private_risk)) or not 0 <= max_private_risk <= 1:
+        raise ValueError("Terminal maximum private risk must be finite and in [0, 1]")
+    if not math.isfinite(float(race_prize)) or race_prize < 0:
+        raise ValueError("Terminal race prize must be finite and non-negative")
+    if not all(math.isfinite(float(value)) for value in (*stage_payoffs, *progress)):
+        raise ValueError("Terminal payoff and progress values must be finite")
+    if any(
+        isinstance(count, bool)
+        or not isinstance(count, int)
+        or not 0 <= count <= rounds_played
+        for count in unsafe_counts
+    ):
+        raise ValueError("Unsafe counts must be integers in [0, rounds_played]")
+    if not all(
+        math.isfinite(float(value)) and 0 <= float(value) <= 1
+        for value in setback_draws
+    ):
+        raise ValueError("Setback draws must be finite and in [0, 1]")
 
     outcomes = race_outcomes(progress)
     tie = outcomes == ["tie", "tie"]
@@ -114,4 +139,3 @@ def terminal_scoring(
         setbacks=setbacks,
         final_payoffs=final_payoffs,
     )
-

@@ -127,3 +127,50 @@ def test_loser_is_never_set_back_even_when_draw_is_below_private_risk() -> None:
     assert scored.setback_eligible == [False, True]
     assert scored.setbacks[0] is False
     assert scored.final_payoffs[0] == 3.0
+
+
+@pytest.mark.parametrize(
+    "overrides",
+    [
+        {"safe_progress": float("nan")},
+        {"unsafe_progress": float("inf")},
+        {"payoff_safe_safe": float("nan")},
+        {"payoff_safe_unsafe": float("-inf")},
+        {"race_prize": float("nan")},
+    ],
+)
+def test_game_config_rejects_nonfinite_mechanism_values(overrides) -> None:
+    with pytest.raises(ValueError, match="must be finite"):
+        GameConfig(name="invalid", **overrides)
+
+
+@pytest.mark.parametrize("progress", [[float("nan"), 1.0], [1.0, float("inf")]])
+def test_terminal_outcome_rejects_nonfinite_progress(progress) -> None:
+    from ai_race.engine.scoring import race_outcomes
+
+    with pytest.raises(ValueError, match="progress values must be finite"):
+        race_outcomes(progress)
+
+
+@pytest.mark.parametrize(
+    ("field", "value", "message"),
+    [
+        ("rounds_played", 0, "at least one"),
+        ("unsafe_counts", [6, 0], "Unsafe counts"),
+        ("setback_draws", [-0.1, 0.2], "Setback draws"),
+        ("max_private_risk", float("nan"), "maximum private risk"),
+    ],
+)
+def test_terminal_scoring_rejects_impossible_inputs(field, value, message) -> None:
+    inputs = {
+        "stage_payoffs": [2.0, 2.0],
+        "progress": [5.0, 5.0],
+        "unsafe_counts": [1, 1],
+        "rounds_played": 5,
+        "max_private_risk": 0.6,
+        "race_prize": 100.0,
+        "setback_draws": [0.2, 0.2],
+    }
+    inputs[field] = value
+    with pytest.raises(ValueError, match=message):
+        terminal_scoring(**inputs)

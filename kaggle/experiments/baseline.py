@@ -10,68 +10,169 @@ Notebook này dùng đúng runner của project:
 
 Repo input được tự dò bằng hai marker ``ai_race/`` và ``FAIRGAME/``, sau đó copy
 vào ``/kaggle/working/ai_race_repo`` để Python có thể import và ghi cache. Các
-model được nạp, chạy, giải phóng tuần tự. Không cần Internet nếu Kaggle image đã
-có vLLM hoặc một Dataset wheels đã được add làm input.
+model được nạp, chạy, giải phóng tuần tự.
+
+Hai chế độ chạy được gói vào một switch duy nhất, ``ENGINE_PROFILE`` ngay dưới đây —
+đổi máy/teammate thì chỉ sửa một dòng, không phải lục lại từng model:
+
+* ``"vllm"``         — cần wheelhouse offline đã audit (``VLLM_WHEELS_DIR``), batch
+  thật (``BATCH_SIZE`` prompt/lượt), throughput cao. Dùng khi đã có wheelhouse.
+* ``"transformers"`` — dùng thẳng image Kaggle, không cài gì, không cần wheelhouse.
+  Vì runner LUÔN truyền seed riêng cho mỗi quyết định (invariant của repo), backend
+  này buộc phải sinh TỪNG PROMPT MỘT — chậm hơn vllm rất nhiều (~1 generation/lượt,
+  không phải ``BATCH_SIZE``). Dùng khi chưa có wheelhouse hoặc máy không có vLLM.
 """
 
 # %%
 # Cấu hình người dùng — sửa path theo các input đã add trong Kaggle.
+import os
 from pathlib import Path
+
+# Switch duy nhất giữa 2 chế độ — xem so sánh ở docstring trên đầu file.
+ENGINE_PROFILE = "vllm"  # đổi thành "transformers" nếu chưa có wheelhouse vLLM
 
 MODELS = [
     {
-        "path": "/kaggle/input/models/qwen-lm/qwen2.5/transformers/7b-instruct/1",
-        "short_name": "qwen2.5-7b-instruct",
-        "engine": "vllm",
-        # Các override dưới đây là tùy chọn:
+        "path": "/kaggle/input/models/qwen-lm/qwen2.5/transformers/72b-instruct/1",
+        "short_name": "qwen2.5-72b-instruct",
+        "engine": ENGINE_PROFILE,
+        # 72B KHÔNG vừa bf16: 72,7 tỉ tham số × 2 byte ≈ 145 GB, trong khi RTX PRO
+        # 6000 có 96 GB. Nếu chạy bằng "transformers" thì bắt buộc quantize. NF4 ≈
+        # 0,55 byte/tham số → ≈ 40 GB, còn dư chỗ cho KV cache. bnb-8bit (≈ 73 GB)
+        # cũng vừa nhưng sát trần. Khi ENGINE_PROFILE="vllm" thì bỏ qua engine_overrides
+        # này (vLLM tự đọc quantization_config trong checkpoint nếu có, hoặc set
+        # "quantization" tường minh trong engine_overrides theo format vLLM: awq/gptq/
+        # fp8/bitsandbytes — KHÔNG dùng "bnb-4bit" ở đây, đó là tên riêng của transformers).
+        #
+        # LƯU Ý: quantization phải nằm trong engine_overrides. Đặt "quantization" ở
+        # cấp trên cùng của dict này sẽ bị BỎ QUA IM LẶNG — offline_settings_for()
+        # chỉ đọc engine_overrides, và model sẽ cố nạp bf16 rồi OOM.
+        "engine_overrides": {"quantization": "bnb-4bit"} if ENGINE_PROFILE == "transformers" else {},
+        # Các override tùy chọn khác:
         # "temperature": 0.7,
         # "max_tokens": 256,
-        # "logprobs": 5,  # opt-in; keep 0/off for the behavioral baseline
-        # "max_model_len": 4096,
-        # "engine_overrides": {"quantization": "awq", "dtype": "auto"},
     },
-    # Thêm model khác tại đây; notebook sẽ chạy lần lượt, không nạp đồng thời.
+    # Thêm model khác tại đây; notebook sẽ chạy lần lượt, không nạp đồng thời
+    # (mỗi model được free_model() giải phóng VRAM trước khi nạp checkpoint kế tiếp).
+    #
+    # ĐỪNG thêm một entry thứ hai cho cùng checkpoint: short_name quyết định thư mục
+    # output, nên hai entry trùng short_name sẽ ghi đè lên nhau (RunJournal mở với
+    # reset=True). Một entry riêng có thể override "engine" khác ENGINE_PROFILE nếu
+    # cần trộn 2 backend trong cùng lần chạy.
 ]
 
 # Dataset đã stage: https://www.kaggle.com/datasets/nguyenlamphuquy/ai-race-experiment
-# Kaggle mount dataset theo *slug*, không kèm username, nên path là
-# /kaggle/input/ai-race-experiment. Username chỉ nằm trong dataset id dùng cho CLI
-# (nguyenlamphuquy/ai-race-experiment). Để None thì notebook tự dò input nào có
-# đồng thời ai_race/ và FAIRGAME/.
-REPO_INPUT_DIR = "/kaggle/input/ai-race-experiment"
+#
+# Kaggle dùng hai layout mount tuỳ notebook: chỉ *slug* (không kèm username), hoặc
+# datasets/<owner>/<slug>. Liệt kê cả hai và lấy cái nào tồn tại — pin đúng một
+# chuỗi thì đổi notebook là hỏng, còn bỏ trống hoàn toàn thì mất cái chốt chặn
+# "add nhầm dataset". Ứng viên đầu tiên khớp sẽ được dùng.
+#
+# Username chỉ nằm trong dataset id dùng cho CLI (nguyenlamphuquy/ai-race-experiment).
+# Đặt REPO_INPUT_DIRS = None để bỏ chốt chặn và tự dò mọi input.
+REPO_INPUT_DIRS = [
+    "/kaggle/input/datasets/nguyenlamphuquy/ai-race-experiment",
+    "/kaggle/input/ai-race-experiment",
+]
 
 # Mọi cell persona phải chạy trong CÙNG một session. protocol_signature gồm source
 # revision, decoding và package versions; chạy lệch session thì persona trùng khít
 # với batch và analyser sẽ từ chối ước lượng hệ số persona.
-EXPERIMENTS = [
+PROMPT_SENSITIVITY_EXPERIMENTS = [
     "baseline",                       # none  — đối chứng trung tính
-    # "baseline_swapped",             # none  — đảo ghế, đo artefact vị trí
-    # "persona_baseline_neutral",     # R0    — placebo cùng độ dài
-    # "persona_baseline_risk_averse", # R-
-    # "persona_baseline_risk_seeking",# R+
-    # "persona_baseline_coop_coop",   # S_CC
-    # "persona_baseline_adv_adv",     # S_AA
-    # "persona_baseline_adv_coop",    # S_AC  — cell bất đối xứng
-    # "persona_baseline_coop_adv",    # S_CA  — mirror bắt buộc của S_AC
+    "baseline_swapped",               # none  — đảo ghế, đo artefact vị trí
+    "persona_baseline_neutral",       # R0    — placebo cùng độ dài
+    "persona_baseline_risk_averse",   # R-
+    "persona_baseline_risk_seeking",  # R+
+    "persona_baseline_coop_coop",     # S_CC
+    "persona_baseline_adv_adv",       # S_AA
+    "persona_baseline_adv_coop",      # S_AC  — cell bất đối xứng
+    "persona_baseline_coop_adv",      # S_CA  — mirror bắt buộc của S_AC
 ]
-REPETITIONS_OVERRIDE = 10  # pilot; None = dùng config (50). Chạy check_symmetry.py
-# trên output pilot trước khi bỏ override này.
+
+# Kernel bootstrap có thể chọn profile mà không sửa source đã hash. Mọi arm của
+# prompt-sensitivity phải chạy trong cùng session để source/model/decoding giống hệt.
+RUN_PROFILE = os.environ.get("AI_RACE_RUN_PROFILE", "baseline").strip().lower()
+PROFILE_EXPERIMENTS = {
+    "baseline": ["baseline"],
+    "prompt_sensitivity_smoke": PROMPT_SENSITIVITY_EXPERIMENTS,
+    "prompt_sensitivity_pilot": PROMPT_SENSITIVITY_EXPERIMENTS,
+}
+if RUN_PROFILE not in PROFILE_EXPERIMENTS:
+    raise ValueError(
+        f"Unknown AI_RACE_RUN_PROFILE={RUN_PROFILE!r}; expected one of "
+        f"{sorted(PROFILE_EXPERIMENTS)}"
+    )
+EXPERIMENTS = list(PROFILE_EXPERIMENTS[RUN_PROFILE])
+
+_repetition_default = {
+    "baseline": 10,
+    "prompt_sensitivity_smoke": 2,
+    "prompt_sensitivity_pilot": 10,
+}[RUN_PROFILE]
+_repetition_env = os.environ.get("AI_RACE_REPETITIONS_OVERRIDE")
+REPETITIONS_OVERRIDE = (
+    int(_repetition_env) if _repetition_env is not None else _repetition_default
+)
+# Smoke = 2 rep/arm; pilot = 10 rep/arm. Chỉ scale sau khi coverage, parser và
+# symmetry gates đều đạt. Config gốc vẫn giữ 50 rep cho confirmatory sau freeze.
 RUN_PHASE_OVERRIDE = None  # "pilot" hoặc "confirmatory"; None = dùng config
 
-DEFAULT_ENGINE = "vllm"
+REQUIRED_GPU_NAME = os.environ.get("AI_RACE_REQUIRED_GPU", "").strip()
+MIN_GPU_VRAM_GIB = float(os.environ.get("AI_RACE_MIN_GPU_VRAM_GIB", "0"))
+
+# Cùng switch với ENGINE_PROFILE ở trên — model nào không khai "engine" riêng sẽ
+# dùng giá trị này.
+DEFAULT_ENGINE = ENGINE_PROFILE
 TEMPERATURE = 0.7
 MAX_TOKENS = 256
-LOGPROBS = 0  # Opt-in only; values >0 add substantial decode memory/work.
+LOGPROBS = 0  # Backend transformers không hỗ trợ; >0 sẽ raise ngay khi build config.
+
+# --- Bốn hằng dưới đây CHỈ có tác dụng với backend vllm ---------------------
+# `transformers_init_kwargs` không đọc chúng, nên ở cấu hình hiện tại chúng bị bỏ
+# qua hoàn toàn. Giữ lại để đổi ngược về vLLM không phải viết lại. Backend
+# transformers luôn nạp bf16 với `device_map="auto"`, tự trải qua GPU đang có.
 MAX_MODEL_LEN = 4096
 GPU_MEMORY_UTILIZATION = 0.90
 TENSOR_PARALLEL_SIZE = 1
 ENFORCE_EAGER = True
+# ---------------------------------------------------------------------------
+
+# Chỉ còn tác dụng khi seeds=None. Runner LUÔN truyền seed cho từng quyết định
+# (đó là invariant của repo, không phải tuỳ chọn), nên backend transformers rơi
+# về sinh TỪNG PROMPT MỘT: một forward pass gộp dùng chung một torch RNG nên
+# không thể tôn trọng seed riêng của mỗi (rep, round, agent). Nghĩa là throughput
+# ở đây là ~1 generation/lượt, không phải 128.
 BATCH_SIZE = 128
 MAX_PARSE_RETRIES_OVERRIDE = None  # None = dùng maxParseRetries trong experiment
 FAIL_ON_INCOMPLETE_RUN = True
 
+# Chỉ chạy khi có model nào khai engine="vllm". Với cấu hình transformers hiện tại
+# thì cell cài vLLM tự bỏ qua.
 INSTALL_VLLM_IF_MISSING = True
-VLLM_WHEELS_DIR = None  # Bắt buộc điền Dataset wheelhouse đã audit nếu cần cài.
+# Dataset wheelhouse đã audit: vllm==0.26.0, build bởi pip download (cp312,
+# manylinux_2_28_x86_64, cu130) từ máy local, xem
+# nguyenlamphuquy/vllm-0-26-0-wheelhouse-cu130-py312 (184 wheels, manifest
+# SHA-256 tại manifest.json).
+VLLM_WHEELS_DIR = "/kaggle/input/datasets/nguyenlamphuquy/vllm-0-26-0-wheelhouse-cu130-py312"
+
+# Wheelhouse bitsandbytes cho quantization bnb-4bit/bnb-8bit ở backend transformers.
+# Dataset: nguyenlamphuquy/ai-race-bnb-wheels (private) — bitsandbytes==0.50.0,
+# wheel py3-none-manylinux_2_24_x86_64 nên độc lập phiên bản Python; chứa sẵn
+# libbitsandbytes_cuda128.so khớp torch 2.10.0+cu128 của image. Kaggle tự giải nén
+# nên wheel nằm ở gốc dataset. Liệt kê cả hai layout mount như REPO_INPUT_DIRS.
+BNB_WHEELS_DIRS = [
+    "/kaggle/input/datasets/nguyenlamphuquy/ai-race-bnb-wheels",
+    "/kaggle/input/ai-race-bnb-wheels",
+]
+
+# Debug: in lại chuỗi prompt của một race sau khi chạy xong (đọc từ turns.jsonl,
+# không gọi lại model). False = tắt · True = lấy race đầu tiên · "<game_id>" =
+# chỉ đích danh. Cell debug in sẵn danh sách game_id để copy vào đây.
+DEBUG_DUMP_RACE = False
+# Ghế 1 chỉ khác ghế 0 ở hoán vị danh tính, nên mặc định chỉ in phần khác biệt.
+DEBUG_DIFF_SECOND_SEAT = True
+DEBUG_MAX_PROMPT_CHARS = None  # None = in trọn prompt; đặt số để cắt bớt
 
 WORK_COPY = Path("/kaggle/working/ai_race_repo")
 OUTPUT_DIR = Path("/kaggle/working/ai_race_results")
@@ -81,7 +182,6 @@ RESET_OUTPUT_DIR = True
 
 # %%
 # Helpers tự dò input. Tìm có giới hạn độ sâu để tránh quét toàn bộ model weights.
-import os
 import sys
 
 
@@ -117,26 +217,35 @@ def is_repo_input(directory):
 
 
 def find_repo_input(root="/kaggle/input"):
-    """Prefer the configured dataset mount, then fall back to discovery.
+    """Prefer a configured dataset mount, then fall back to discovery.
 
-    Naming the expected path turns "wrong dataset added" into an explicit error
+    Naming the expected paths turns "wrong dataset added" into an explicit error
     instead of a silent fallback onto some other input that happens to contain the
     two marker directories — which would run a different source revision than the
     one the manifest is about to claim.
+
+    Several candidates are allowed because Kaggle mounts a dataset either under its
+    bare slug or under datasets/<owner>/<slug> depending on the notebook. Both name
+    the same dataset, so trying them in order costs nothing and keeps the guard.
     """
-    configured = globals().get("REPO_INPUT_DIR")
+    configured = globals().get("REPO_INPUT_DIRS")
     if configured:
-        configured = Path(configured)
-        if is_repo_input(configured):
-            return configured.resolve()
+        if isinstance(configured, (str, Path)):
+            configured = [configured]
+        candidates = [Path(candidate) for candidate in configured]
+        for candidate in candidates:
+            if is_repo_input(candidate):
+                return candidate.resolve()
         discovered = find_directory(root, is_repo_input)
+        listed = ", ".join(str(candidate) for candidate in candidates)
         raise FileNotFoundError(
-            f"REPO_INPUT_DIR={configured} does not contain both ai_race/ and "
+            f"None of REPO_INPUT_DIRS ({listed}) contains both ai_race/ and "
             "FAIRGAME/. Add the dataset "
             "'nguyenlamphuquy/ai-race-experiment' as a notebook input, or set "
-            "REPO_INPUT_DIR=None to auto-discover. "
+            "REPO_INPUT_DIRS=None to auto-discover. "
             + (
-                f"A usable repo input was found at {discovered}."
+                f"A usable repo input was found at {discovered}; add it to "
+                "REPO_INPUT_DIRS if that is the intended dataset."
                 if discovered
                 else "No usable repo input was found under /kaggle/input."
             )
@@ -150,6 +259,40 @@ import hashlib
 import importlib.util
 import json
 import subprocess
+
+
+def validate_gpu_runtime():
+    """Fail closed before loading weights when the assigned GPU is wrong."""
+
+    import torch
+
+    if not torch.cuda.is_available():
+        raise RuntimeError("CUDA is unavailable; refusing to run a GPU experiment")
+    properties = torch.cuda.get_device_properties(0)
+    name = str(properties.name)
+    total_vram_gib = float(properties.total_memory) / 1024**3
+    if REQUIRED_GPU_NAME and REQUIRED_GPU_NAME.lower() not in name.lower():
+        raise RuntimeError(
+            f"GPU mismatch: required name containing {REQUIRED_GPU_NAME!r}, got {name!r}"
+        )
+    if total_vram_gib + 1e-9 < MIN_GPU_VRAM_GIB:
+        raise RuntimeError(
+            f"GPU VRAM mismatch: require >= {MIN_GPU_VRAM_GIB:.1f} GiB, "
+            f"got {total_vram_gib:.1f} GiB"
+        )
+    runtime = {
+        "gpu_name": name,
+        "gpu_vram_gib": round(total_vram_gib, 3),
+        "cuda_version": str(torch.version.cuda),
+        "torch_cuda_device_count": int(torch.cuda.device_count()),
+        "required_gpu_name": REQUIRED_GPU_NAME or None,
+        "minimum_gpu_vram_gib": MIN_GPU_VRAM_GIB,
+    }
+    print(f"GPU runtime: {json.dumps(runtime, sort_keys=True)}")
+    return runtime
+
+
+GPU_RUNTIME = validate_gpu_runtime()
 
 needs_vllm = any(
     model.get("engine", DEFAULT_ENGINE).lower() == "vllm" for model in MODELS
@@ -236,6 +379,101 @@ elif needs_vllm:
     print("vLLM is already available in this Kaggle image.")
 else:
     print("No configured model requires vLLM.")
+
+
+# %%
+# Cài bitsandbytes offline nếu có model xin quantize bnb-* và image chưa có.
+#
+# 72B không vừa bf16 trên 96 GB nên phải quantize, mà backend transformers chỉ
+# nhận bnb-4bit/bnb-8bit — tức bắt buộc có wheel bitsandbytes. Internet OFF nên
+# nó phải đến từ một Dataset đã stage sẵn.
+
+
+def verify_wheelhouse(wheels_dir, label):
+    """Đối chiếu từng wheel với SHA-256 trong manifest trước khi cài.
+
+    Một wheelhouse chứa shared object CUDA; cài nhầm bản là hỏng theo kiểu khó
+    truy, nên kiểm hash là bắt buộc chứ không phải cẩn thận thừa.
+    """
+    wheels_dir = Path(wheels_dir)
+    if not wheels_dir.is_dir():
+        raise FileNotFoundError(f"Không tìm thấy {label} wheelhouse tại {wheels_dir}")
+    manifest_path = wheels_dir / "manifest.json"
+    if not manifest_path.is_file():
+        raise FileNotFoundError(f"{label} wheelhouse thiếu manifest SHA-256: {manifest_path}")
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    entries = manifest.get("files")
+    if not isinstance(entries, list) or not entries:
+        raise ValueError(f"{label} manifest.files phải là list không rỗng")
+    declared = set()
+    for entry in entries:
+        if not isinstance(entry, dict) or not {"name", "sha256"} <= set(entry):
+            raise ValueError(f"{label}: mỗi entry cần name và sha256")
+        name = str(entry["name"])
+        if Path(name).name != name or not name.endswith(".whl"):
+            raise ValueError(f"{label}: tên wheel không hợp lệ: {name!r}")
+        if name in declared:
+            raise ValueError(f"{label}: tên wheel trùng: {name}")
+        declared.add(name)
+        path = wheels_dir / name
+        if not path.is_file():
+            raise FileNotFoundError(f"{label}: wheel khai trong manifest nhưng thiếu: {path}")
+        if "bytes" in entry and path.stat().st_size != int(entry["bytes"]):
+            raise RuntimeError(f"{label}: lệch kích thước: {path.name}")
+        digest = hashlib.sha256()
+        with path.open("rb") as handle:
+            for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+                digest.update(chunk)
+        if digest.hexdigest().lower() != str(entry["sha256"]).lower():
+            raise RuntimeError(f"{label}: lệch SHA-256: {path.name}")
+    actual = {p.name for p in wheels_dir.glob("*.whl")}
+    if actual != declared:
+        raise RuntimeError(
+            f"{label}: nội dung wheelhouse không khớp manifest; "
+            f"thừa={sorted(actual - declared)}, thiếu={sorted(declared - actual)}"
+        )
+    return manifest
+
+
+def find_wheelhouse(candidates):
+    for candidate in candidates or []:
+        path = Path(candidate)
+        if (path / "manifest.json").is_file():
+            return path
+    return None
+
+
+needs_bnb = any(
+    str((model.get("engine_overrides") or {}).get("quantization", "")).lower().startswith("bnb")
+    for model in MODELS
+)
+has_bnb = importlib.util.find_spec("bitsandbytes") is not None
+
+if needs_bnb and not has_bnb:
+    bnb_dir = find_wheelhouse(BNB_WHEELS_DIRS)
+    if bnb_dir is None:
+        raise FileNotFoundError(
+            "MODELS xin quantization bnb-* nhưng image chưa có bitsandbytes và không "
+            f"tìm thấy wheelhouse ở {BNB_WHEELS_DIRS}. Add Dataset "
+            "'nguyenlamphuquy/ai-race-bnb-wheels' vào notebook, hoặc bỏ "
+            "engine_overrides.quantization (khi đó 72B sẽ OOM ở bf16)."
+        )
+    bnb_manifest = verify_wheelhouse(bnb_dir, "bitsandbytes")
+    subprocess.check_call(
+        [
+            sys.executable, "-m", "pip", "install",
+            "--no-index", "--only-binary=:all:", f"--find-links={bnb_dir}",
+            "bitsandbytes",
+        ]
+    )
+    importlib.invalidate_caches()
+    import bitsandbytes  # noqa: F401  — fail ngay tại đây thay vì lúc nạp weight
+    print(f"Installed bitsandbytes offline from {bnb_dir}")
+    print(f"  target runtime: {bnb_manifest.get('target_runtime')}")
+elif needs_bnb:
+    print("bitsandbytes is already available in this Kaggle image.")
+else:
+    print("No configured model requests bnb quantization.")
 
 
 # %%
@@ -413,6 +651,9 @@ def run_one_experiment(model, experiment_name, send_batch):
         "started_utc": datetime.now(timezone.utc).isoformat(),
         "completed_utc": None,
         "source_sha256": SOURCE_SHA256,
+        "run_profile": RUN_PROFILE,
+        "repetitions_override": REPETITIONS_OVERRIDE,
+        "gpu_runtime": GPU_RUNTIME,
         "experiment_name": experiment_name,
         "run_phase": str(experiment.get("runPhase", "pilot")),
         "experiment": experiment,
@@ -480,6 +721,9 @@ def run_one_experiment(model, experiment_name, send_batch):
             experiment,
             model["short_name"],
         )
+        expected_races = len(games)
+        run_manifest["expected_races"] = expected_races
+        write_run_manifest()
         results = run_games_batched(
             games,
             send_batch,
@@ -487,6 +731,12 @@ def run_one_experiment(model, experiment_name, send_batch):
             max_parse_retries=max_parse_retries,
             on_round_complete=journal.record_round,
         )
+        if len(results) != expected_races or journal.race_count != expected_races:
+            raise RuntimeError(
+                "Incomplete experiment coverage: "
+                f"expected={expected_races}, results={len(results)}, "
+                f"journal={journal.race_count}"
+            )
     except Exception as error:
         run_manifest.update(
             {
@@ -597,6 +847,64 @@ def merge_csv_files(filename, destination):
     return len(rows)
 
 
+def write_prompt_sensitivity_summary(players_path, destination):
+    """Write decision-weighted arm effects relative to the neutral baseline.
+
+    This is a descriptive smoke/pilot diagnostic, not the confirmatory estimator.
+    The repository analyser remains authoritative for clustered inference.
+    """
+
+    if not players_path.is_file():
+        return 0
+    aggregates = {}
+    with players_path.open("r", newline="", encoding="utf-8") as handle:
+        for row in csv.DictReader(handle):
+            key = (
+                str(row.get("model", "")),
+                str(row.get("experiment", "")),
+                str(row.get("persona_condition", "")),
+                float(row["max_private_risk"]),
+            )
+            bucket = aggregates.setdefault(
+                key, {"unsafe": 0, "decisions": 0, "trajectories": 0}
+            )
+            bucket["unsafe"] += int(float(row["unsafe_count"]))
+            bucket["decisions"] += int(float(row["n_rounds"]))
+            bucket["trajectories"] += 1
+
+    baseline_rates = {}
+    for (model, experiment, _condition, risk), values in aggregates.items():
+        if experiment == "baseline" and values["decisions"]:
+            baseline_rates[(model, risk)] = values["unsafe"] / values["decisions"]
+
+    rows = []
+    for (model, experiment, condition, risk), values in sorted(aggregates.items()):
+        unsafe_rate = values["unsafe"] / values["decisions"]
+        baseline_rate = baseline_rates.get((model, risk))
+        rows.append(
+            {
+                "model": model,
+                "experiment": experiment,
+                "persona_condition": condition,
+                "max_private_risk": risk,
+                "player_trajectories": values["trajectories"],
+                "decisions": values["decisions"],
+                "unsafe_rate": unsafe_rate,
+                "baseline_unsafe_rate": baseline_rate,
+                "unsafe_rate_delta_vs_baseline": (
+                    unsafe_rate - baseline_rate if baseline_rate is not None else ""
+                ),
+            }
+        )
+    if not rows:
+        return 0
+    with destination.open("w", newline="", encoding="utf-8") as handle:
+        writer = csv.DictWriter(handle, fieldnames=list(rows[0]))
+        writer.writeheader()
+        writer.writerows(rows)
+    return len(rows)
+
+
 # %%
 # Chạy model tuần tự. Manifest được cập nhật sau từng model để giữ kết quả đã xong.
 if RESET_OUTPUT_DIR and OUTPUT_DIR.exists():
@@ -605,9 +913,12 @@ OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 manifest = {
     "repo_input": str(repo_input),
+    "run_profile": RUN_PROFILE,
+    "repetitions_override": REPETITIONS_OVERRIDE,
     "experiments": list(EXPERIMENTS),
     "source_sha256": SOURCE_SHA256,
     "package_versions": PACKAGE_VERSIONS,
+    "gpu_runtime": GPU_RUNTIME,
     "models": [],
     "runs": [],
 }
@@ -662,6 +973,140 @@ for model in MODELS:
 
 
 # %%
+# Debug: in lại toàn bộ chuỗi prompt của MỘT race.
+#
+# Đọc từ turns.jsonl đã ghi, không chạy lại model — nên rẻ, và xem được đúng cái
+# prompt đã thực sự gửi đi chứ không phải cái ta nghĩ là đã gửi.
+#
+# Mặc định chỉ in đầy đủ prompt của ghế 0 và phần KHÁC BIỆT của ghế 1. Hai prompt
+# trong cùng một vòng chỉ khác nhau ở hoán vị danh tính (~2.100 ký tự giống hệt),
+# nên in cả hai bản đầy đủ chỉ làm trôi log. Đặt DEBUG_DIFF_SECOND_SEAT = False
+# nếu muốn xem trọn vẹn cả hai.
+import difflib
+
+
+def list_race_ids(output_dir=None, limit=None):
+    """Liệt kê game_id có trong output, kèm model và mức rủi ro."""
+    output_dir = Path(output_dir or OUTPUT_DIR)
+    seen = {}
+    for path in sorted(output_dir.rglob("turns.jsonl")):
+        for line in path.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            row = json.loads(line)
+            seen.setdefault(
+                row["game_id"],
+                (row.get("model"), row.get("max_private_risk"), row.get("rep"), path),
+            )
+    items = list(seen.items())
+    return items[:limit] if limit else items
+
+
+def _load_race_turns(game_id=None, output_dir=None):
+    """Trả về (game_id, các lượt đã sắp xếp). game_id=None -> lấy race đầu tiên."""
+    output_dir = Path(output_dir or OUTPUT_DIR)
+    rows = []
+    for path in sorted(output_dir.rglob("turns.jsonl")):
+        for line in path.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            row = json.loads(line)
+            if game_id is None or row["game_id"] == game_id:
+                rows.append(row)
+        if rows and game_id is None:
+            # Chốt luôn race đầu tiên gặp được, đừng gom cả thư mục.
+            game_id = rows[0]["game_id"]
+            rows = [r for r in rows if r["game_id"] == game_id]
+            break
+        if rows:
+            break
+    rows.sort(key=lambda r: (int(r["round"]), int(r.get("player_index", 0))))
+    return game_id, rows
+
+
+def dump_race_prompts(
+    game_id=None,
+    output_dir=None,
+    diff_second_seat=True,
+    max_prompt_chars=None,
+    show_response=True,
+):
+    """In từng vòng của một race: prompt gửi đi, phản hồi thô, hành động đã parse."""
+    game_id, rows = _load_race_turns(game_id, output_dir)
+    if not rows:
+        print(f"[debug] không tìm thấy lượt nào cho game_id={game_id!r}")
+        return
+
+    head = rows[0]
+    print("=" * 78)
+    print(f"RACE   {game_id}")
+    print(f"model  {head.get('model')}   p_max={head.get('max_private_risk')}   "
+          f"rep={head.get('rep')}   seed={head.get('game_seed')}")
+    print(f"prompt_version={head.get('prompt_version')}  "
+          f"persona={head.get('persona_condition')}  "
+          f"vòng={max(int(r['round']) for r in rows)}")
+    print("=" * 78)
+
+    for round_number in sorted({int(r["round"]) for r in rows}):
+        seats = [r for r in rows if int(r["round"]) == round_number]
+        print(f"\n{'─' * 78}\nVÒNG {round_number}\n{'─' * 78}")
+        reference = None
+        for seat in seats:
+            label = f"[{seat.get('player')} idx={seat.get('player_index')}]"
+            print(f"\n{label}  seed={seat.get('sampling_seed')}  "
+                  f"gap_before={seat.get('progress_gap_before')}")
+            prompt = seat.get("prompt") or ""
+            if reference is None or not diff_second_seat:
+                shown = prompt if max_prompt_chars is None else prompt[:max_prompt_chars]
+                print(shown)
+                if max_prompt_chars is not None and len(prompt) > max_prompt_chars:
+                    print(f"... (cắt bớt {len(prompt) - max_prompt_chars} ký tự)")
+                reference = prompt
+            else:
+                diff = [
+                    line
+                    for line in difflib.unified_diff(
+                        reference.split("\n"), prompt.split("\n"), lineterm="", n=0
+                    )
+                    if line.startswith(("+", "-"))
+                    and not line.startswith(("+++", "---"))
+                ]
+                print(f"(khác ghế trước {len(diff)} dòng; đặt "
+                      f"diff_second_seat=False để in đầy đủ)")
+                for line in diff:
+                    print("   " + line)
+            if show_response:
+                print(f"  -> raw     : {seat.get('raw_response')!r}")
+                print(f"  -> action  : {seat.get('action')}   "
+                      f"parse_failed={seat.get('parse_failed')}   "
+                      f"retry={seat.get('retry_count')}")
+
+    print(f"\n{'=' * 78}\nQUỸ ĐẠO")
+    for player in dict.fromkeys(r.get("player") for r in rows):
+        trail = [
+            r["action"][0].upper()
+            for r in rows
+            if r.get("player") == player
+        ]
+        print(f"  {player:12s} {' '.join(trail)}")
+    print("=" * 78)
+
+
+if DEBUG_DUMP_RACE:
+    target = None if DEBUG_DUMP_RACE is True else str(DEBUG_DUMP_RACE)
+    available = list_race_ids(limit=8)
+    print(f"[debug] {len(list_race_ids())} race trong output; 8 cái đầu:")
+    for race_id, (model_name, risk, rep, _) in available:
+        print(f"   {race_id}   ({model_name}, p_max={risk}, rep={rep})")
+    print()
+    dump_race_prompts(
+        target,
+        diff_second_seat=DEBUG_DIFF_SECOND_SEAT,
+        max_prompt_chars=DEBUG_MAX_PROMPT_CHARS,
+    )
+
+
+# %%
 # Gộp bảng so sánh chéo model và đóng gói output để tải từ Kaggle.
 import zipfile
 
@@ -672,6 +1117,11 @@ n_player_rows = merge_csv_files(
     "players.csv", OUTPUT_DIR / "ai_race_players_all_models.csv"
 )
 print(f"Merged {n_race_rows} race rows and {n_player_rows} player rows.")
+summary_rows = write_prompt_sensitivity_summary(
+    OUTPUT_DIR / "ai_race_players_all_models.csv",
+    OUTPUT_DIR / "prompt_sensitivity_summary.csv",
+)
+print(f"Prompt-sensitivity diagnostic: {summary_rows} rows.")
 
 with zipfile.ZipFile(ZIP_PATH, "w", zipfile.ZIP_DEFLATED) as archive:
     for path in sorted(OUTPUT_DIR.rglob("*")):
