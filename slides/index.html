@@ -6,15 +6,16 @@
   <meta name="description" content="Presentation deck for the AI Race LLM research protocol.">
   <title>AI Race — Research Protocol Deck</title>
   <link rel="stylesheet" href="deck.css">
+  <link rel="stylesheet" href="audit.css">
 </head>
 <body>
   <main class="deck" aria-live="polite">
     <section class="slide title-slide active" data-title="Title">
-      <div class="slide-no">01</div><div class="status-chip">PROTOCOL · RESULTS PENDING</div>
+      <div class="slide-no">01</div><div class="status-chip">PILOT AUDIT COMPLETE · CONFIRMATORY PENDING</div>
       <div class="title-lockup"><span class="eyebrow">LLM BEHAVIOR × STRATEGIC SAFETY</span><h1>LLM agents in an<br><em>idealised AI race.</em></h1><p>When unsafe development is faster and more profitable, who still chooses safety?</p></div>
       <div class="title-race" aria-hidden="true"><div class="race-line cyan"><i></i><b>A</b></div><div class="race-line amber"><i></i><b>B</b></div><span class="finish">FINISH</span></div>
       <footer><span>AI RACE LAB · RESEARCH PLAN</span><span>01 / 19</span></footer>
-      <aside class="notes">Introduce this as a controlled adaptation of a human behavioral AI-race experiment. State immediately that no LLM result is being presented.</aside>
+      <aside class="notes">Introduce this as a controlled adaptation of a human behavioral AI-race experiment. A diagnostic pilot audit is available; confirmatory race effects remain pending.</aside>
     </section>
 
     <section class="slide dark" data-title="Strategic choice">
@@ -121,11 +122,11 @@
     </section>
 
     <section class="slide kaggle-slide" data-title="Execution">
-      <div class="slide-no">11</div><span class="eyebrow">EXECUTION ENVIRONMENT</span><h2>Kaggle-only<br>model runs.</h2>
-      <div class="compute-map"><div class="local-box"><span>LOCAL</span><strong>Code + static review</strong><small>No behavioral runs</small></div><i>→</i><div class="kaggle-box"><span>KAGGLE GPU</span><strong>Inference + checkpoints</strong><small>Deterministic resume</small></div><i>→</i><div class="output-stack"><span>turns.jsonl</span><span>races.csv</span><span>players.csv</span><span>run_manifest.json</span></div></div>
+      <div class="slide-no">11</div><span class="eyebrow">EXECUTION ENVIRONMENT</span><h2>Immutable source.<br>Two H100 lanes.</h2>
+      <div class="compute-map"><div class="local-box"><span>LOCAL</span><strong>Code + deterministic tests</strong><small>Archive source by commit</small></div><i>→</i><div class="kaggle-box"><span>GREENNODE H100 × 2</span><strong>Probe + behavior lanes</strong><small>Same model digest · shared disk</small></div><i>→</i><div class="output-stack"><span>probe_outputs.jsonl</span><span>turns.jsonl</span><span>races.csv</span><span>run_manifest.json</span></div></div>
       <div class="checkpoint-line"><span>START</span><i></i><b>CHECKPOINT</b><i></i><b>RESUME</b><i></i><span>EXPORT</span></div>
       <footer><span>NOTEBOOK CONSOLE TEXT IS NOT THE DATASET</span><span>11 / 19</span></footer>
-      <aside class="notes">A resumed session must reconstruct state from explicit checkpoints. Final analysis must reproduce from exported logs and manifest.</aside>
+      <aside class="notes">The pilot used source commit 1e96ce20fd5a and Qwen2.5 7B F16 digest 59805c…ff16c. The analyzer reconstructs prompts, scores and calculator arithmetic from persistent raw logs.</aside>
     </section>
 
     <section class="slide dark" data-title="Analysis">
@@ -149,17 +150,17 @@
         <article><span>05</span><b>✓</b><strong>Parser visibility</strong><p>Retries and failures remain logged.</p></article>
         <article><span>06</span><b>✓</b><strong>Stable joins</strong><p>Race, player and turn identifiers.</p></article>
       </div>
-      <div class="pending-bar">RUNTIME VALIDATION STATUS <b>PENDING KAGGLE SMOKE RUN</b></div>
+      <div class="pending-bar">RUNTIME VALIDATION STATUS <b>SMOKE + PILOT PASSED · 0 PARSE FAILURES</b></div>
       <footer><span>ENGINEERING FAILURES ≠ BEHAVIORAL DATA</span><span>13 / 19</span></footer>
       <aside class="notes">Static unit tests are necessary but not a substitute for a real Kaggle smoke run that validates inference, parsing and checkpoint behavior.</aside>
     </section>
 
-    <section class="slide results-slide" data-title="Results template">
-      <div class="slide-no">14</div><span class="source-banner">LLM EXPERIMENT · THIS PROJECT</span><h2>Results template.</h2>
-      <div class="result-grid"><article><span>RUN ACCOUNTING</span><div class="empty-chart">PENDING</div></article><article><span>TREATMENT EFFECTS</span><div class="empty-chart bars">PENDING</div></article><article><span>DYNAMIC EFFECTS</span><div class="empty-chart points">PENDING</div></article><article><span>HETEROGENEITY</span><div class="empty-chart lines">PENDING</div></article></div>
-      <div class="result-rule">Populate only from a frozen analysis snapshot—with sample units, confidence intervals, exclusions and snapshot ID.</div>
-      <footer><span>NO PILOT ANECDOTES · NO HUMAN VALUES</span><span>14 / 19</span></footer>
-      <aside class="notes">This slide is intentionally empty. Never fill it with source-study estimates or isolated pilot observations.</aside>
+    <section class="slide results-slide" data-title="Pilot audit">
+      <div class="slide-no">14</div><span class="source-banner">LLM PILOT AUDIT · THIS PROJECT</span><h2>Recall is not<br>full-game comprehension.</h2>
+      <div class="audit-result-layout"><figure><img src="../paper/figures/game_understanding_accuracy.png" alt="Accuracy by game-understanding audit domain."></figure><div class="audit-result-copy"><div><span>685 / 685</span><small>probe outputs retained</small></div><div><span>100%</span><small>stage-payoff lookup</small></div><div><span>22.2%</span><small>state-transition accuracy</small></div><div><span>16.7%</span><small>expected-payoff accuracy</small></div><p>Five fixed-seed repeats were identical. That is narrow reliability—not proof of task validity or an internal world model.</p></div></div>
+      <div class="result-rule">Pilot evidence · Qwen2.5 7B F16 · protocol v2 · confirmatory treatment effects remain pending.</div>
+      <footer><span>ANALYSIS SNAPSHOT · PILOT</span><span>14 / 19</span></footer>
+      <aside class="notes">The model reads the rules and one-step payoff table very well, but often fails multi-round state arithmetic. Action choice alone is therefore not a valid comprehension check.</aside>
     </section>
 
     <section class="slide dark" data-title="Interpretation">
@@ -170,8 +171,8 @@
     </section>
 
     <section class="slide closing-slide" data-title="Contribution">
-      <div class="slide-no">16</div><span class="eyebrow">THE CONTRIBUTION, FOR NOW</span><h2>A faithful environment.<br>An auditable protocol.<br><em>Evidence comes next.</em></h2>
-      <div class="contribution-flow"><span>SPECIFICATION</span><i>→</i><span>ENGINE</span><i>→</i><span>LOGS</span><i>→</i><span>ESTIMATES</span><i>→</i><span class="pending-node">KAGGLE RUNS<br>PENDING</span></div>
+      <div class="slide-no">16</div><span class="eyebrow">THE CONTRIBUTION, FOR NOW</span><h2>A faithful environment.<br>A verified pilot audit.<br><em>Confirmation comes next.</em></h2>
+      <div class="contribution-flow"><span>SPECIFICATION</span><i>→</i><span>ENGINE</span><i>→</i><span>PROBE AUDIT</span><i>→</i><span>PAIRED PILOT</span><i>→</i><span class="pending-node">CONFIRMATORY<br>RUN PENDING</span></div>
       <div class="final-points"><p>Exact two-player AI Race mechanics</p><p>Reproducible LLM evaluation pipeline</p><p>Prespecified dynamic tests</p></div>
       <footer><span>AI RACE LAB · QUESTIONS</span><span>16 / 19</span></footer>
       <aside class="notes">Close on the present contribution. The next milestone is a validated Kaggle execution—not a prewritten conclusion.</aside>

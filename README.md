@@ -45,8 +45,8 @@ references/papers/
   markdown/              AI-readable summary of the one retained reference paper
   pdf/                   The single retained AI Race source PDF
 strategy_analysis/       AS/AU/CS/CAS trajectory classification
-results/                 Empty AI Race result surface and analysis script
-paper/                   Manuscript scaffold; no fabricated results
+results/                 Analysis scripts and admitted pilot tables/hashes
+paper/                   Manuscript with bounded pilot audit evidence
 slides/                  AI Race presentation outline
 ```
 
@@ -133,8 +133,9 @@ push/status/log commands; do not invent a kernel slug when no
 - CRSD-specific documents, experiments, results, manuscript figures, and slides have
   been removed from the active project.
 - No AI Race experiment has been executed and no result is claimed.
-- Static review is appropriate on this machine; behavioral and GPU validation must
-  be performed on Kaggle.
+- Deterministic checks and analysis run locally. Model evidence must run in a
+  declared GPU environment with exact source, model, decoding, and hardware
+  provenance; the current understanding pilot used two GreenNode H100 lanes.
 
 See [`PROJECT.md`](PROJECT.md) for research questions, estimands, and validation
 criteria.
@@ -164,3 +165,16 @@ taxonomy, and paired estimands are documented in
 [`docs/prompt-sensitivity-survey.md`](docs/prompt-sensitivity-survey.md). Surface
 variants are deliberately excluded from the canonical primary-mechanism pool and
 are analyzed with `results/scripts/analyze_surface_sensitivity.py`.
+
+## Game-understanding audit
+
+The admitted Qwen2.5 7B F16 pilot contains 685 atomic rule/arithmetic probe outputs
+and 60 paired canonical/calculator-card races (1,116 decisions). Rule recall and
+stage-payoff lookup were strong, while state-transition and expected-payoff
+accuracy were weak. This is checkpoint-scoped pilot evidence, not proof of an
+internal world model and not confirmatory evidence about treatment effects.
+
+- protocol and admission gates: [`docs/game-understanding-audit.md`](docs/game-understanding-audit.md)
+- bounded results and provenance: [`docs/game-understanding-audit-results.md`](docs/game-understanding-audit-results.md)
+- admitted tables and hashes: [`results/open_source/game_understanding_pilot/`](results/open_source/game_understanding_pilot/)
+- publication figures: [`paper/figures/`](paper/figures/)

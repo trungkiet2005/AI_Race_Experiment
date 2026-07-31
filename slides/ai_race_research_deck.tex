@@ -379,14 +379,14 @@ You S & 1.0 & 0.6\\
 \end{frame}
 
 % 11
-\begin{frame}{Kaggle-only model runs.}
+\begin{frame}{Immutable source. Two H100 lanes.}
 \eyebrow{Execution environment}
 \vspace{0.45cm}
 \begin{tikzpicture}[node distance=.55cm]
 \tikzset{box/.style={draw=RaceInk!18,fill=white,rounded corners=7pt,minimum width=3.7cm,minimum height=2.2cm,align=center},arrow/.style={-{Stealth},RaceMuted,thick}}
-\node[box] (l) {\textcolor{RaceCyanDark}{\scriptsize\bfseries LOCAL}\\[2mm]\textbf{Code + static review}\\{\scriptsize No behavioral runs}};
-\node[box,fill=RaceInk,text=white,right=of l,minimum width=4.4cm] (k) {\textcolor{RaceAmber}{\scriptsize\bfseries KAGGLE GPU}\\[2mm]\textbf{Inference + checkpoints}\\{\scriptsize Deterministic resume}};
-\node[box,right=of k] (o) {\scriptsize\ttfamily turns.jsonl\\races.csv\\players.csv\\run\_manifest.json};
+\node[box] (l) {\textcolor{RaceCyanDark}{\scriptsize\bfseries LOCAL}\\[2mm]\textbf{Code + exact tests}\\{\scriptsize Archive source by commit}};
+\node[box,fill=RaceInk,text=white,right=of l,minimum width=4.4cm] (k) {\textcolor{RaceAmber}{\scriptsize\bfseries GREENNODE H100 $\times$ 2}\\[2mm]\textbf{Probe + behavior lanes}\\{\scriptsize Same model digest}};
+\node[box,right=of k] (o) {\scriptsize\ttfamily probe\_outputs.jsonl\\turns.jsonl\\races.csv\\run\_manifest.json};
 \draw[arrow] (l)--(k);\draw[arrow] (k)--(o);
 \end{tikzpicture}
 \vspace{0.65cm}
@@ -444,38 +444,25 @@ You S & 1.0 & 0.6\\
 \end{columns}
 \vfill
 \begin{beamercolorbox}[sep=.25cm,rounded=true]{normal text}
-\scriptsize\bfseries RUNTIME STATUS\hfill\textcolor{RaceCyanDark}{PENDING KAGGLE SMOKE RUN}
+\scriptsize\bfseries RUNTIME STATUS\hfill\textcolor{RaceCyanDark}{SMOKE + PILOT PASSED / ZERO PARSE FAILURES}
 \end{beamercolorbox}
 \end{frame}
 
 % 14
-\begin{frame}{Results template.}
-\projectchip\hfill\pending
-\vspace{0.35cm}
+\begin{frame}{Recall is not full-game comprehension.}
+\projectchip\hfill{\scriptsize\bfseries PILOT AUDIT}
+\vspace{-0.05cm}
 \begin{columns}[T,onlytextwidth]
-\column{.49\textwidth}
-\begin{beamercolorbox}[sep=.23cm,rounded=true]{normal text}
-{\scriptsize\bfseries RUN ACCOUNTING}\par\vspace{.15cm}
-\begin{tikzpicture}\draw[RaceInk!18,dashed] (0,0) rectangle (6.2,1.35);\node[text=RaceMuted,font=\scriptsize\bfseries] at (3.1,.67) {PENDING};\end{tikzpicture}
-\end{beamercolorbox}
-\vspace{.18cm}
-\begin{beamercolorbox}[sep=.23cm,rounded=true]{normal text}
-{\scriptsize\bfseries DYNAMIC EFFECTS}\par\vspace{.15cm}
-\begin{tikzpicture}\draw[RaceInk!18,dashed] (0,0) rectangle (6.2,1.35);\node[text=RaceMuted,font=\scriptsize\bfseries] at (3.1,.67) {PENDING};\end{tikzpicture}
-\end{beamercolorbox}
-\column{.49\textwidth}
-\begin{beamercolorbox}[sep=.23cm,rounded=true]{normal text}
-{\scriptsize\bfseries TREATMENT EFFECTS}\par\vspace{.15cm}
-\begin{tikzpicture}\draw[RaceInk!18,dashed] (0,0) rectangle (6.2,1.35);\node[text=RaceMuted,font=\scriptsize\bfseries] at (3.1,.67) {PENDING};\end{tikzpicture}
-\end{beamercolorbox}
-\vspace{.18cm}
-\begin{beamercolorbox}[sep=.23cm,rounded=true]{normal text}
-{\scriptsize\bfseries HETEROGENEITY}\par\vspace{.15cm}
-\begin{tikzpicture}\draw[RaceInk!18,dashed] (0,0) rectangle (6.2,1.35);\node[text=RaceMuted,font=\scriptsize\bfseries] at (3.1,.67) {PENDING};\end{tikzpicture}
-\end{beamercolorbox}
+\column{.72\textwidth}
+\includegraphics[width=\linewidth,height=4.5cm,keepaspectratio]{paper/figures/game_understanding_accuracy.pdf}
+\column{.25\textwidth}
+\begin{beamercolorbox}[sep=.09cm,rounded=true]{normal text}\large\bfseries 685 / 685\\{\tiny\color{RaceMuted}raw probe outputs}\end{beamercolorbox}\vspace{.04cm}
+\begin{beamercolorbox}[sep=.09cm,rounded=true]{normal text}\large\bfseries 100\%\\{\tiny\color{RaceMuted}stage-payoff lookup}\end{beamercolorbox}\vspace{.04cm}
+\begin{beamercolorbox}[sep=.09cm,rounded=true]{normal text}\large\bfseries 22.2\%\\{\tiny\color{RaceMuted}state-transition accuracy}\end{beamercolorbox}\vspace{.04cm}
+\begin{beamercolorbox}[sep=.09cm,rounded=true]{alerted text}\large\bfseries 16.7\%\\{\tiny expected-payoff accuracy}\end{beamercolorbox}
 \end{columns}
 \vfill
-{\color{RaceMuted}\scriptsize Populate only from a frozen analysis snapshot with units, intervals, exclusions and snapshot ID.}
+{\color{RaceMuted}\scriptsize Five fixed-seed repeats were identical: narrow reliability, not proof of task validity or an internal world model.}
 \end{frame}
 
 % 15
@@ -503,11 +490,11 @@ You S & 1.0 & 0.6\\
 \begin{tikzpicture}[remember picture,overlay]\fill[RaceCyan] (current page.south west) rectangle (current page.north east);\end{tikzpicture}
 \vspace{0.5cm}
 {\scriptsize\bfseries THE CONTRIBUTION, FOR NOW}\par\vspace{0.35cm}
-{\fontsize{30}{32}\selectfont\bfseries A faithful environment.\\An auditable protocol.\\\textcolor{RaceInk!55}{Evidence comes next.}}\par
+{\fontsize{30}{32}\selectfont\bfseries A faithful environment.\\A verified pilot audit.\\\textcolor{RaceInk!55}{Confirmation comes next.}}\par
 \vspace{0.55cm}
 \begin{tikzpicture}[node distance=.35cm]
 \tikzset{node/.style={draw=RaceInk,rounded corners=7pt,minimum width=2.45cm,minimum height=.85cm,font=\scriptsize\bfseries},arr/.style={-{Stealth},RaceInk}}
-\node[node] (a) {SPECIFICATION};\node[node,right=of a] (b) {ENGINE};\node[node,right=of b] (c) {LOGS};\node[node,right=of c] (d) {ESTIMATES};\node[node,fill=RaceInk,text=RaceLime,right=of d,minimum width=3cm] (e) {KAGGLE RUNS PENDING};
+\node[node] (a) {SPECIFICATION};\node[node,right=of a] (b) {ENGINE};\node[node,right=of b] (c) {PROBE AUDIT};\node[node,right=of c] (d) {PAIRED PILOT};\node[node,fill=RaceInk,text=RaceLime,right=of d,minimum width=3cm] (e) {CONFIRMATORY PENDING};
 \draw[arr](a)--(b);\draw[arr](b)--(c);\draw[arr](c)--(d);\draw[arr](d)--(e);
 \end{tikzpicture}
 \vfill
