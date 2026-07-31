@@ -10,8 +10,13 @@ Notebook này dùng đúng runner của project:
 
 Repo input được tự dò bằng hai marker ``ai_race/`` và ``FAIRGAME/``, sau đó copy
 vào ``/kaggle/working/ai_race_repo`` để Python có thể import và ghi cache. Các
-model được nạp, chạy, giải phóng tuần tự. Không cần Internet nếu Kaggle image đã
-có vLLM hoặc một Dataset wheels đã được add làm input.
+model được nạp, chạy, giải phóng tuần tự.
+
+Cấu hình mặc định dùng **transformers có sẵn trong image Kaggle**: không cài gì,
+không cần wheelhouse, Internet OFF. Backend nạp bf16 với ``device_map="auto"`` và
+flash-attention-2 nếu có (tự lùi về SDPA nếu không). Đổi ``engine`` của từng model
+sang ``"vllm"`` khi cần throughput — mọi hằng cấu hình của vLLM vẫn còn nguyên bên
+dưới.
 """
 
 # %%
@@ -20,15 +25,18 @@ from pathlib import Path
 
 MODELS = [
     {
-        "path": "/kaggle/input/models/qwen-lm/qwen2.5/transformers/7b-instruct/1",
-        "short_name": "qwen2.5-7b-instruct",
-        "engine": "vllm",
+        "path": "/kaggle/input/models/qwen-lm/qwen2.5/transformers/14b-instruct/1",
+        "short_name": "qwen2.5-14b-instruct",
+        "engine": "transformers",
         # Các override dưới đây là tùy chọn:
         # "temperature": 0.7,
         # "max_tokens": 256,
-        # "logprobs": 5,  # opt-in; keep 0/off for the behavioral baseline
-        # "max_model_len": 4096,
-        # "engine_overrides": {"quantization": "awq", "dtype": "auto"},
+        # "quantization": "bnb-4bit",  # transformers chỉ nhận bnb-4bit/bnb-8bit
+    },
+    {
+        "path": "/kaggle/input/models/google/gemma-3/transformers/gemma-3-12b-it/1",
+        "short_name": "gemma-3-12b-it",
+        "engine": "transformers",
     },
     # Thêm model khác tại đây; notebook sẽ chạy lần lượt, không nạp đồng thời.
 ]
@@ -65,18 +73,34 @@ REPETITIONS_OVERRIDE = 10  # pilot; None = dùng config (50). Chạy check_symme
 # trên output pilot trước khi bỏ override này.
 RUN_PHASE_OVERRIDE = None  # "pilot" hoặc "confirmatory"; None = dùng config
 
-DEFAULT_ENGINE = "vllm"
+# Dùng transformers có sẵn trong image Kaggle. Không cần cài vLLM, không cần
+# wheelhouse, và Internet vẫn OFF. Đổi lại là chậm hơn nhiều — xem BATCH_SIZE.
+DEFAULT_ENGINE = "transformers"
 TEMPERATURE = 0.7
 MAX_TOKENS = 256
-LOGPROBS = 0  # Opt-in only; values >0 add substantial decode memory/work.
+LOGPROBS = 0  # Backend transformers không hỗ trợ; >0 sẽ raise ngay khi build config.
+
+# --- Bốn hằng dưới đây CHỈ có tác dụng với backend vllm ---------------------
+# `transformers_init_kwargs` không đọc chúng, nên ở cấu hình hiện tại chúng bị bỏ
+# qua hoàn toàn. Giữ lại để đổi ngược về vLLM không phải viết lại. Backend
+# transformers luôn nạp bf16 với `device_map="auto"`, tự trải qua GPU đang có.
 MAX_MODEL_LEN = 4096
 GPU_MEMORY_UTILIZATION = 0.90
 TENSOR_PARALLEL_SIZE = 1
 ENFORCE_EAGER = True
+# ---------------------------------------------------------------------------
+
+# Chỉ còn tác dụng khi seeds=None. Runner LUÔN truyền seed cho từng quyết định
+# (đó là invariant của repo, không phải tuỳ chọn), nên backend transformers rơi
+# về sinh TỪNG PROMPT MỘT: một forward pass gộp dùng chung một torch RNG nên
+# không thể tôn trọng seed riêng của mỗi (rep, round, agent). Nghĩa là throughput
+# ở đây là ~1 generation/lượt, không phải 128.
 BATCH_SIZE = 128
 MAX_PARSE_RETRIES_OVERRIDE = None  # None = dùng maxParseRetries trong experiment
 FAIL_ON_INCOMPLETE_RUN = True
 
+# Chỉ chạy khi có model nào khai engine="vllm". Với cấu hình transformers hiện tại
+# thì cell cài vLLM tự bỏ qua.
 INSTALL_VLLM_IF_MISSING = True
 VLLM_WHEELS_DIR = None  # Bắt buộc điền Dataset wheelhouse đã audit nếu cần cài.
 
