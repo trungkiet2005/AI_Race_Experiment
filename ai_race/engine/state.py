@@ -87,8 +87,11 @@ class GameConfig:
             raise ValueError("race_prize cannot be negative")
         if not 0 <= self.max_private_risk <= 1:
             raise ValueError("max_private_risk must be in [0, 1]")
-        if self.history_mode not in {"previous_round", "full"}:
-            raise ValueError("history_mode must be 'previous_round' or 'full'")
+        if self.history_mode not in {"previous_round", "first_and_previous", "full"}:
+            raise ValueError(
+                "history_mode must be 'previous_round', 'first_and_previous', "
+                "or 'full'"
+            )
         if self.run_phase not in {"pilot", "confirmatory"}:
             raise ValueError("run_phase must be 'pilot' or 'confirmatory'")
         if not str(self.persona_condition).strip():
