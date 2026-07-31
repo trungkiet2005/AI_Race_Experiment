@@ -79,3 +79,18 @@ def test_greennode_lanes_partition_the_matrix_without_duplicates():
 def test_greennode_profiles_freeze_smoke_and_pilot_sizes():
     profiles = _literal_assignment(GREENNODE, "PROFILE_REPETITIONS")
     assert profiles == {"smoke": 2, "pilot": 10}
+
+
+def test_greennode_identified_matrix_keeps_controls_and_asymmetric_cells():
+    lanes = _literal_assignment(GREENNODE, "IDENTIFIED_LANE_EXPERIMENTS")
+    selected = set(lanes["a"]) | set(lanes["b"])
+    assert set(lanes["a"]).isdisjoint(lanes["b"])
+    assert selected == {
+        "baseline",
+        "baseline_swapped",
+        "persona_baseline_neutral",
+        "persona_baseline_risk_averse",
+        "persona_baseline_adv_adv",
+        "persona_baseline_adv_coop",
+        "persona_baseline_coop_adv",
+    }

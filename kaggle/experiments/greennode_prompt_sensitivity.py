@@ -40,6 +40,26 @@ LANE_EXPERIMENTS = {
         "persona_baseline_coop_adv",
     ],
 }
+IDENTIFIED_LANE_EXPERIMENTS = {
+    # R+ and S_CC saturate at 100% and 0% Unsafe respectively in smoke runs;
+    # scaling them cannot identify dynamic race-position responses. Preserve the
+    # smoke result and spend pilot compute on cells that retain action variation.
+    "a": [
+        "baseline",
+        "persona_baseline_neutral",
+        "persona_baseline_risk_averse",
+        "persona_baseline_adv_coop",
+    ],
+    "b": [
+        "baseline_swapped",
+        "persona_baseline_adv_adv",
+        "persona_baseline_coop_adv",
+    ],
+}
+EXPERIMENT_MATRICES = {
+    "full": LANE_EXPERIMENTS,
+    "identified": IDENTIFIED_LANE_EXPERIMENTS,
+}
 PROFILE_REPETITIONS = {"smoke": 2, "pilot": 10}
 DEFAULT_MODEL = "qwen2.5:7b-instruct-fp16"
 DEFAULT_ENDPOINT = "http://localhost:11434"
@@ -274,6 +294,7 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument("--lane", choices=sorted(LANE_EXPERIMENTS), required=True)
     parser.add_argument("--profile", choices=sorted(PROFILE_REPETITIONS), default="smoke")
+    parser.add_argument("--matrix", choices=sorted(EXPERIMENT_MATRICES), default="full")
     parser.add_argument("--repo-root", type=Path, required=True)
     parser.add_argument("--output-root", type=Path, required=True)
     parser.add_argument("--model", default=DEFAULT_MODEL)
@@ -290,7 +311,7 @@ def main() -> None:
     args = parse_args()
     root = args.repo_root.resolve()
     output_root = args.output_root.resolve()
-    experiments = LANE_EXPERIMENTS[args.lane]
+    experiments = EXPERIMENT_MATRICES[args.matrix][args.lane]
     repetitions = PROFILE_REPETITIONS[args.profile]
     detected_gpu = gpu_name()
     if args.required_gpu.lower() not in detected_gpu.lower():
@@ -319,6 +340,7 @@ def main() -> None:
     prompt_path = root / "ai_race" / "prompts" / "ai_race_en.txt"
     common = {
         "profile": args.profile,
+        "matrix": args.matrix,
         "lane": args.lane,
         "hostname": platform.node(),
         "gpu_name": detected_gpu,

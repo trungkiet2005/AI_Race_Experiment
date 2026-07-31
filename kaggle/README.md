@@ -63,6 +63,11 @@ Runner khóa model name/digest, Ollama version, hostname, GPU, source hash, prom
 hash, decoding và fixed-seed probe. Smoke dùng 2 repetition/arm; pilot dùng 10 và
 chỉ được launch sau khi merge output smoke qua coverage/parser/symmetry gates.
 
+Nếu một persona đối xứng bão hòa ở một action và làm symmetry gate thất bại, giữ
+cell đó như saturation diagnostic từ full smoke. Pilot dùng `--matrix identified`
+để scale controls và các cell còn action/race-position variation; manifest ghi rõ
+matrix nên hai tập không bao giờ bị pool âm thầm.
+
 ## Thứ tự dùng trên Kaggle
 
 1. Nếu Kaggle image chưa có vLLM, chọn một exact vLLM version đã audit, chạy

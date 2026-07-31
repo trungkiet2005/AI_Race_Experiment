@@ -2540,8 +2540,11 @@ def _validate_mechanics_and_terminal_state(
             block_rows["randomization_block_id"].isin(matched_blocks)
         ]
         if not block_rows.empty:
+            # The setback RNG is fixed by physical seat, not by the displayed
+            # company name. Seat-swap controls deliberately move Company_1 and
+            # Company_2 between player indices while preserving the same draws.
             seat_draw_counts = block_rows.groupby(
-                ["randomization_block_id", "player_id"],
+                ["randomization_block_id", "player_index"],
                 observed=True,
             )["setback_draw"].nunique()
             if seat_draw_counts.gt(1).any():
