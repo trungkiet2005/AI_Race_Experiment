@@ -112,6 +112,22 @@ the same realised horizon and stopping-draw stream.
 
 ## Analysis
 
+Prompt surface-sensitivity runs use a separate paired analysis so modified prompt
+hashes can never enter the canonical primary pool accidentally:
+
+```bash
+python results/scripts/analyze_surface_sensitivity.py \
+  --lane-root /path/to/lane-a --lane-root /path/to/lane-b \
+  --output-dir results/derived/surface-sensitivity
+```
+
+It checks a single model/source/decoding contract, one completed shard per
+variant, manifest/file counts, common-random-number horizons, and exact first-round
+pairing. The first-round flip rate is the direct surface-sensitivity estimand;
+whole-trajectory Unsafe-rate differences also contain state feedback after an
+earlier action changes. Reported intervals resample complete repetition blocks,
+not dependent decision rows.
+
 Run this on Kaggle after downloading or mounting completed experiment outputs:
 
 ```bash

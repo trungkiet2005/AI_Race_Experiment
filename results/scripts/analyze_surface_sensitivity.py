@@ -5,7 +5,7 @@ import argparse
 import csv
 import hashlib
 import json
-import math
+import random
 from collections import defaultdict
 from pathlib import Path
 from typing import Any, Iterable
@@ -19,15 +19,28 @@ def sha256_file(path: Path) -> str:
     return digest.hexdigest()
 
 
-def wilson(successes: int, total: int) -> tuple[float, float]:
-    if total == 0:
-        return math.nan, math.nan
-    z = 1.959963984540054
-    p = successes / total
-    denominator = 1 + z * z / total
-    center = (p + z * z / (2 * total)) / denominator
-    radius = z * math.sqrt(p * (1 - p) / total + z * z / (4 * total * total)) / denominator
-    return center - radius, center + radius
+def clustered_rate_ci(
+    counts_by_rep: dict[int, tuple[int, int]], *, seed_label: str, draws: int = 5000
+) -> tuple[float, float]:
+    """Percentile CI from a repetition-block bootstrap.
+
+    A repetition is the independent randomization unit shared across risk cells,
+    seats, horizons, and prompt variants. Resampling individual decisions would
+    therefore produce spuriously narrow intervals.
+    """
+    reps = sorted(counts_by_rep)
+    if not reps or any(total <= 0 for _, total in counts_by_rep.values()):
+        raise ValueError("Cluster bootstrap requires non-empty repetition blocks")
+    seed = int(hashlib.sha256(seed_label.encode("utf-8")).hexdigest()[:16], 16)
+    rng = random.Random(seed)
+    estimates: list[float] = []
+    for _ in range(draws):
+        sampled = [reps[rng.randrange(len(reps))] for _ in reps]
+        successes = sum(counts_by_rep[rep][0] for rep in sampled)
+        total = sum(counts_by_rep[rep][1] for rep in sampled)
+        estimates.append(successes / total)
+    estimates.sort()
+    return estimates[int(0.025 * draws)], estimates[int(0.975 * draws) - 1]
 
 
 def write_csv(path: Path, rows: list[dict[str, Any]]) -> None:
@@ -164,8 +177,30 @@ def main() -> None:
             safe_to_unsafe += int(control == 0 and observed == 1)
             unsafe_to_safe += int(control == 1 and observed == 0)
         unsafe_count = sum(int(row["unsafe"]) for row in selected)
-        unsafe_low, unsafe_high = wilson(unsafe_count, len(selected))
-        flip_low, flip_high = wilson(flips, len(first))
+        unsafe_by_rep: dict[int, tuple[int, int]] = {}
+        flip_by_rep: dict[int, tuple[int, int]] = {}
+        for rep in sorted({int(row["rep"]) for row in selected}):
+            rep_rows = [row for row in selected if int(row["rep"]) == rep]
+            unsafe_by_rep[rep] = (
+                sum(int(row["unsafe"]) for row in rep_rows), len(rep_rows)
+            )
+            rep_first = [row for row in first if int(row["rep"]) == rep]
+            rep_flips = sum(
+                int(
+                    int(row["unsafe"])
+                    != canonical_first[
+                        (float(row["max_private_risk"]), rep, int(row["player_index"]))
+                    ]
+                )
+                for row in rep_first
+            )
+            flip_by_rep[rep] = (rep_flips, len(rep_first))
+        unsafe_low, unsafe_high = clustered_rate_ci(
+            unsafe_by_rep, seed_label=f"unsafe:{variant}"
+        )
+        flip_low, flip_high = clustered_rate_ci(
+            flip_by_rep, seed_label=f"flip:{variant}"
+        )
         variant_rows.append(
             {
                 "variant": variant,
@@ -173,12 +208,12 @@ def main() -> None:
                 "interpretation": metadata[variant]["interpretation"],
                 "n_decisions": len(selected),
                 "unsafe_rate": unsafe_count / len(selected),
-                "unsafe_rate_ci95_low": unsafe_low,
-                "unsafe_rate_ci95_high": unsafe_high,
+                "unsafe_rate_cluster_bootstrap_ci95_low": unsafe_low,
+                "unsafe_rate_cluster_bootstrap_ci95_high": unsafe_high,
                 "n_first_round": len(first),
                 "first_round_flip_rate_vs_canonical": flips / len(first),
-                "first_round_flip_ci95_low": flip_low,
-                "first_round_flip_ci95_high": flip_high,
+                "first_round_flip_cluster_bootstrap_ci95_low": flip_low,
+                "first_round_flip_cluster_bootstrap_ci95_high": flip_high,
                 "first_round_safe_to_unsafe": safe_to_unsafe,
                 "first_round_unsafe_to_safe": unsafe_to_safe,
                 "parse_failures": sum(int(bool(row["parse_failed"])) for row in selected),
@@ -225,7 +260,8 @@ def main() -> None:
         ),
         "note": (
             "First-round flips compare identical states and matched sampling seeds. "
-            "Whole-trajectory unsafe-rate differences include feedback from earlier actions."
+            "Whole-trajectory unsafe-rate differences include feedback from earlier actions. "
+            "Intervals resample repetition blocks, not dependent decisions."
         ),
         "raw_files": raw_files,
     }

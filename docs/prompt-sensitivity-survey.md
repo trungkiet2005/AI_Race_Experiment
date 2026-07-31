@@ -12,6 +12,7 @@ least the following families:
 | Paraphrase / lexical form | Mizrahi et al. evaluate 6.5M instances and show that instruction paraphrases change absolute and relative model rankings. | Close synonyms, instruction paraphrase, impersonal/passive syntax. |
 | Format / delimiters | Sclar et al. find up to 76 accuracy points of variation under subtle meaning-preserving formats and recommend reporting a range over formats. | Markdown, XML, dense layout, extra spacing, numbered state, uppercase emphasis. |
 | Spelling / wording / template perturbations | POSIX measures sensitivity across spelling, wording, and template-level changes; PromptBench supplies adversarial prompt attacks. | One recoverable typo plus the structured variants above. |
+| Answer-label / token bias | Zheng et al. separate token, position, and common-token biases in multiple-choice selectors. | Held fixed in this matrix so label remapping cannot be confused with game behavior; a later verbalizer study must use an alias-aware parser and its own protocol version. |
 | Emotional framing | EmotionPrompt reports behavior/performance changes after adding emotional stimuli. | One explicitly non-invariance treatment, `emotional_importance`. |
 
 Primary sources:
@@ -23,6 +24,7 @@ Primary sources:
 - Mizrahi et al. (TACL 2024), [State of What Art? A Call for Multi-Prompt LLM Evaluation](https://aclanthology.org/2024.tacl-1.52/)
 - Weber et al. (Findings of EMNLP 2024), [POSIX: A Prompt Sensitivity Index for Large Language Models](https://aclanthology.org/2024.findings-emnlp.852/)
 - Zhu et al. (2023), [PromptBench: Towards Evaluating the Robustness of Large Language Models on Adversarial Prompts](https://arxiv.org/abs/2306.04528)
+- Zheng et al. (Findings of ACL 2024), [Large Language Models Are Not Robust Multiple Choice Selectors](https://aclanthology.org/2024.findings-acl.333/)
 - Li et al. (2023), [EmotionPrompt](https://arxiv.org/abs/2307.11760)
 - Hua et al. (EMNLP 2025), [Flaw or Artifact? Rethinking Prompt Sensitivity in Evaluating LLMs](https://aclanthology.org/2025.emnlp-main.1006/)
 
@@ -72,7 +74,9 @@ The paired design reports two different quantities:
    risk, and history, so later decisions no longer share identical states.
 
 Parse failures, SAFE→UNSAFE flips, UNSAFE→SAFE flips, risk-stratified rates, and
-paired horizon equality are audited separately. Smoke results select cells worth
+paired horizon equality are audited separately. Uncertainty intervals resample
+whole repetition blocks rather than treating dependent decisions, seats, and risk
+cells as independent observations. Smoke results select cells worth
 scaling; confirmatory claims require more repetitions and a frozen analysis plan.
 
 ## Reproduce on GreenNode
