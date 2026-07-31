@@ -1,8 +1,8 @@
 # AI Race results
 
-This tree is intentionally empty until an AI Race run completes on Kaggle. It does
-not retain Collective Risk outputs and it does not contain placeholder observations,
-effect sizes, or figures.
+This tree contains admitted open-weight smoke and pilot artifacts. It does not
+retain Collective Risk outputs, placeholder observations, or fabricated effect
+sizes. Confirmatory AI Race inference remains pending.
 
 ```text
 results/
@@ -11,6 +11,14 @@ results/
   scripts/         analysis code tracked in Git
   derived/         generated tables (ignored; created by the analyser)
 ```
+
+The complete public GreenNode handoff is indexed in
+`open_source/gpu_run_archive/archive_ledger.json`. It includes immutable raw and
+analysis bundles for persona sensitivity, surface sensitivity, and game
+understanding, with expanded review-friendly pilot tables under neighboring
+directories. Run `python results/scripts/audit_gpu_archives.py --archive-dir
+results/open_source/gpu_run_archive` to verify all archive hashes and metadata
+from a clean clone.
 
 Keep one self-contained directory per run. A run directory must contain
 `turns.jsonl`, `races.csv`, `players.csv`, and `run_manifest.json` so completion,

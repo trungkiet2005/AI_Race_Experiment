@@ -1,0 +1,9 @@
+effect_id,name,kind,test,human_value,llm_value,llm_se,llm_p_value,criterion,verdict,description
+E1,Opponent previous Unsafe choice,coefficient,directional,0.607,0.0578281623651594,0.2918011506391401,0.8429068883027648,positive and p < 0.05,not_replicated,Unsafe responding increases after the opponent previously chose Unsafe.
+E2,Progress gap before choice,coefficient,directional,-0.296,1.155750906178954,0.0896776610533443,5.270257469576636e-38,negative and p < 0.05,not_replicated,Being further ahead predicts less Unsafe development.
+E3,First-round Unsafe persistence,coefficient,directional,0.217,4.600832812868195,1.591856214792899,0.0038495834886052,positive and p < 0.1,replicated,An Unsafe first choice predicts later Unsafe development.
+E4,Own previous Unsafe choice,coefficient,equivalence,-0.193,-1.024483432907322,0.3629809716731985,0.9770290520084911,TOST |beta| < 0.3,not_replicated,The human estimate is treated as a small/null carry-over effect.
+E5,Risk 0.6 versus risk 0.9,contrast,equivalence,-0.027,0.03544376217876958,,,|d| < 0.2,replicated,Unsafe rates at medium and high private risk are practically equivalent.
+E6,Risk 0.1 versus risk 0.6,contrast,directional_effect_size,0.332,0.09379573843974892,,,positive and |d| > 0.2,not_replicated,Table S3 reports more Unsafe development at low than medium risk.
+E7,Overall Unsafe frequency,level,interval,0.584,0.5378276815776816,,,"within [0.4, 0.75]",replicated,The overall Unsafe rate falls in a broad human-reference interval.
+E8,Always-Safe strategy share,strategy_share,upper_bound,0.0,0.44857142857142857,,,share < 0.1,not_replicated,Always-Safe is uncommon in the human reference sample.

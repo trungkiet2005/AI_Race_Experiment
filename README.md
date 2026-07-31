@@ -132,7 +132,9 @@ push/status/log commands; do not invent a kernel slug when no
   configuration are implemented.
 - CRSD-specific documents, experiments, results, manuscript figures, and slides have
   been removed from the active project.
-- No AI Race experiment has been executed and no result is claimed.
+- Open-weight smoke and diagnostic pilot runs have been executed for persona
+  sensitivity, prompt-surface sensitivity, and game understanding. Confirmatory
+  inference has not been executed.
 - Deterministic checks and analysis run locally. Model evidence must run in a
   declared GPU environment with exact source, model, decoding, and hardware
   provenance; the current understanding pilot used two GreenNode H100 lanes.
@@ -165,6 +167,12 @@ taxonomy, and paired estimands are documented in
 [`docs/prompt-sensitivity-survey.md`](docs/prompt-sensitivity-survey.md). Surface
 variants are deliberately excluded from the canonical primary-mechanism pool and
 are analyzed with `results/scripts/analyze_surface_sensitivity.py`.
+
+The complete public GPU handoff contains 11 hash-verified raw/analysis archives
+plus expanded derived tables. See
+[`results/open_source/gpu_run_archive/`](results/open_source/gpu_run_archive/) and
+verify a clean clone with `python results/scripts/audit_gpu_archives.py
+--archive-dir results/open_source/gpu_run_archive`.
 
 ## Game-understanding audit
 

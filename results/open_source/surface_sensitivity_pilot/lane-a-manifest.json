@@ -1,0 +1,992 @@
+{
+  "schema_version": "ai-race-surface-sensitivity-lane-v1",
+  "status": "completed",
+  "started_utc": "2026-07-31T07:38:44.820616+00:00",
+  "profile": "pilot",
+  "lane": "a",
+  "hostname": "nb-17c64ac4-3f70-43b9-8d6f-579c209b038d-5d7d76f986-4vdvg",
+  "gpu_name": "NVIDIA H100 80GB HBM3",
+  "ollama_version": "0.30.8",
+  "model": {
+    "short_name": "qwen2.5:7b-instruct-fp16",
+    "path": "ollama://localhost/qwen2.5:7b-instruct-fp16@59805ce4a4046be2d8f63231a78daacd2e66f5dccf1a64d0d138ebeeb26ff16c",
+    "engine": "ollama",
+    "config_sha256": "59805ce4a4046be2d8f63231a78daacd2e66f5dccf1a64d0d138ebeeb26ff16c"
+  },
+  "ollama_model": {
+    "name": "qwen2.5:7b-instruct-fp16",
+    "digest": "59805ce4a4046be2d8f63231a78daacd2e66f5dccf1a64d0d138ebeeb26ff16c",
+    "size": 15237866977,
+    "details": {
+      "parent_model": "/Users/ollama/.ollama/models/blobs/sha256-678e1e0883636c4234928f23fd208337f790456121124a1986cbf1b806baeadb",
+      "format": "gguf",
+      "family": "qwen2",
+      "families": [
+        "qwen2"
+      ],
+      "parameter_size": "7.6B",
+      "quantization_level": "F16",
+      "context_length": 32768,
+      "embedding_length": 3584
+    }
+  },
+  "source_sha256": "f9d926306fd8ee15399d24c587ae506725c271a870b23c5ede6b738cc1dd478a",
+  "decoding": {
+    "temperature": 0.7,
+    "max_tokens": 16,
+    "max_parse_retries": 3,
+    "num_ctx": 4096,
+    "workers": 16,
+    "seed_requested": true,
+    "seed_probe_exact_match": true
+  },
+  "package_versions": {
+    "python": "3.10.12",
+    "ollama": "0.30.8"
+  },
+  "base_seed": 260726,
+  "variants": [
+    "canonical",
+    "order_actions_reversed",
+    "order_payoffs_reversed",
+    "order_state_reversed",
+    "position_goal_first",
+    "position_risk_near_response",
+    "lexical_synonyms",
+    "paraphrase_instruction",
+    "voice_impersonal"
+  ],
+  "repetitions": 10,
+  "runs": [
+    {
+      "schema_version": "ai-race-surface-sensitivity-run-v1",
+      "status": "completed",
+      "started_utc": "2026-07-31T07:38:44.834992+00:00",
+      "completed_utc": "2026-07-31T07:39:40.834899+00:00",
+      "profile": "pilot",
+      "lane": "a",
+      "hostname": "nb-17c64ac4-3f70-43b9-8d6f-579c209b038d-5d7d76f986-4vdvg",
+      "gpu_name": "NVIDIA H100 80GB HBM3",
+      "ollama_version": "0.30.8",
+      "model": {
+        "short_name": "qwen2.5:7b-instruct-fp16",
+        "path": "ollama://localhost/qwen2.5:7b-instruct-fp16@59805ce4a4046be2d8f63231a78daacd2e66f5dccf1a64d0d138ebeeb26ff16c",
+        "engine": "ollama",
+        "config_sha256": "59805ce4a4046be2d8f63231a78daacd2e66f5dccf1a64d0d138ebeeb26ff16c"
+      },
+      "ollama_model": {
+        "name": "qwen2.5:7b-instruct-fp16",
+        "digest": "59805ce4a4046be2d8f63231a78daacd2e66f5dccf1a64d0d138ebeeb26ff16c",
+        "size": 15237866977,
+        "details": {
+          "parent_model": "/Users/ollama/.ollama/models/blobs/sha256-678e1e0883636c4234928f23fd208337f790456121124a1986cbf1b806baeadb",
+          "format": "gguf",
+          "family": "qwen2",
+          "families": [
+            "qwen2"
+          ],
+          "parameter_size": "7.6B",
+          "quantization_level": "F16",
+          "context_length": 32768,
+          "embedding_length": 3584
+        }
+      },
+      "source_sha256": "f9d926306fd8ee15399d24c587ae506725c271a870b23c5ede6b738cc1dd478a",
+      "decoding": {
+        "temperature": 0.7,
+        "max_tokens": 16,
+        "max_parse_retries": 3,
+        "num_ctx": 4096,
+        "workers": 16,
+        "seed_requested": true,
+        "seed_probe_exact_match": true
+      },
+      "package_versions": {
+        "python": "3.10.12",
+        "ollama": "0.30.8"
+      },
+      "base_seed": 260726,
+      "experiment_name": "surface_sensitivity__canonical",
+      "experiment": {
+        "name": "surface_sensitivity__canonical",
+        "runPhase": "pilot",
+        "description": "Paper-faithful LLM baseline: neutral two-company races, English prompt, hidden stochastic horizon, and maximum private risk treatments 0.1/0.6/0.9. No human demographics or elicited risk-preference covariates.",
+        "games": [
+          "ai_race_risk_10",
+          "ai_race_risk_60",
+          "ai_race_risk_90"
+        ],
+        "agents": "companies_default",
+        "languages": [
+          "en"
+        ],
+        "models": [
+          "LocalQwen"
+        ],
+        "useOffline": true,
+        "offlineSettings": "offline_settings",
+        "repetitions": 10,
+        "seed": 260726,
+        "maxParseRetries": 3,
+        "verbose": true,
+        "samplingSeedApplied": true,
+        "promptVariant": "canonical"
+      },
+      "experiment_config_sha256": "a970d59c646fcca45a7404cbb3e9ae73bc9cb0d18e57675690e9f62a150ce550",
+      "effective_experiment_sha256": "cfb95a49f4d4f3b2563e3aa8638173c5b6925b6bcc8ae402b6ff8a12303a3e6a",
+      "prompt_variant": {
+        "id": "canonical",
+        "family": "control",
+        "description": "Frozen FAIRGAME v3 wording and layout.",
+        "interpretation": "control"
+      },
+      "prompt_version": "ai-race-fairgame-v3",
+      "prompt_sha256": "27086bd80378c25e859d03527a5ae55c1046f231ef7b914db9cb3c3b4fb2df3e",
+      "prompt_characters": 2809,
+      "game_config_sha256": {
+        "ai_race_risk_10": "c0a12fb6980e7642bd15f724e8fe6a676920afcdb0095c3917629420a563ddcf",
+        "ai_race_risk_60": "fe69d6f0ff71b3fdd119aa40c4f90a2c33f73c5bf71863d48fb835b51b0119ff",
+        "ai_race_risk_90": "df4166c4ed6532bb863ba865aa51c8f2b69582248233606b7035656a4e8e81e1"
+      },
+      "expected_races": 30,
+      "agents_name": "companies_default",
+      "agents_config_sha256": "2f10d2926c96a68c3d4733a47a9173d3720ff4888fd0f42ab917d11e1f6a09b7",
+      "persona_condition": "none",
+      "persona_roles": [
+        "",
+        ""
+      ],
+      "persona_sha256": "d7c1f053e2581812f2db2c745131a2c8a1971ab5ad7725aeadd6d4f3c17fe6a1",
+      "n_races": 30,
+      "n_turns": 558,
+      "error": null
+    },
+    {
+      "schema_version": "ai-race-surface-sensitivity-run-v1",
+      "status": "completed",
+      "started_utc": "2026-07-31T07:39:40.935753+00:00",
+      "completed_utc": "2026-07-31T07:40:32.072493+00:00",
+      "profile": "pilot",
+      "lane": "a",
+      "hostname": "nb-17c64ac4-3f70-43b9-8d6f-579c209b038d-5d7d76f986-4vdvg",
+      "gpu_name": "NVIDIA H100 80GB HBM3",
+      "ollama_version": "0.30.8",
+      "model": {
+        "short_name": "qwen2.5:7b-instruct-fp16",
+        "path": "ollama://localhost/qwen2.5:7b-instruct-fp16@59805ce4a4046be2d8f63231a78daacd2e66f5dccf1a64d0d138ebeeb26ff16c",
+        "engine": "ollama",
+        "config_sha256": "59805ce4a4046be2d8f63231a78daacd2e66f5dccf1a64d0d138ebeeb26ff16c"
+      },
+      "ollama_model": {
+        "name": "qwen2.5:7b-instruct-fp16",
+        "digest": "59805ce4a4046be2d8f63231a78daacd2e66f5dccf1a64d0d138ebeeb26ff16c",
+        "size": 15237866977,
+        "details": {
+          "parent_model": "/Users/ollama/.ollama/models/blobs/sha256-678e1e0883636c4234928f23fd208337f790456121124a1986cbf1b806baeadb",
+          "format": "gguf",
+          "family": "qwen2",
+          "families": [
+            "qwen2"
+          ],
+          "parameter_size": "7.6B",
+          "quantization_level": "F16",
+          "context_length": 32768,
+          "embedding_length": 3584
+        }
+      },
+      "source_sha256": "f9d926306fd8ee15399d24c587ae506725c271a870b23c5ede6b738cc1dd478a",
+      "decoding": {
+        "temperature": 0.7,
+        "max_tokens": 16,
+        "max_parse_retries": 3,
+        "num_ctx": 4096,
+        "workers": 16,
+        "seed_requested": true,
+        "seed_probe_exact_match": true
+      },
+      "package_versions": {
+        "python": "3.10.12",
+        "ollama": "0.30.8"
+      },
+      "base_seed": 260726,
+      "experiment_name": "surface_sensitivity__order_actions_reversed",
+      "experiment": {
+        "name": "surface_sensitivity__order_actions_reversed",
+        "runPhase": "pilot",
+        "description": "Paper-faithful LLM baseline: neutral two-company races, English prompt, hidden stochastic horizon, and maximum private risk treatments 0.1/0.6/0.9. No human demographics or elicited risk-preference covariates.",
+        "games": [
+          "ai_race_risk_10",
+          "ai_race_risk_60",
+          "ai_race_risk_90"
+        ],
+        "agents": "companies_default",
+        "languages": [
+          "en"
+        ],
+        "models": [
+          "LocalQwen"
+        ],
+        "useOffline": true,
+        "offlineSettings": "offline_settings",
+        "repetitions": 10,
+        "seed": 260726,
+        "maxParseRetries": 3,
+        "verbose": true,
+        "samplingSeedApplied": true,
+        "promptVariant": "order_actions_reversed"
+      },
+      "experiment_config_sha256": "a970d59c646fcca45a7404cbb3e9ae73bc9cb0d18e57675690e9f62a150ce550",
+      "effective_experiment_sha256": "d9637f01f000468109b64f5773da2ca3d60285ede46c0c33d4aaf3234c0df943",
+      "prompt_variant": {
+        "id": "order_actions_reversed",
+        "family": "order",
+        "description": "Reverse SAFE/UNSAFE mention and output-option order.",
+        "interpretation": "meaning_preserving"
+      },
+      "prompt_version": "ai-race-surface-sensitivity-v1:order_actions_reversed",
+      "prompt_sha256": "167c97d47ddf676e97c09d67a5b1639da95e5376764b44e0f3971a9a1cd0d2ab",
+      "prompt_characters": 2809,
+      "game_config_sha256": {
+        "ai_race_risk_10": "c0a12fb6980e7642bd15f724e8fe6a676920afcdb0095c3917629420a563ddcf",
+        "ai_race_risk_60": "fe69d6f0ff71b3fdd119aa40c4f90a2c33f73c5bf71863d48fb835b51b0119ff",
+        "ai_race_risk_90": "df4166c4ed6532bb863ba865aa51c8f2b69582248233606b7035656a4e8e81e1"
+      },
+      "expected_races": 30,
+      "agents_name": "companies_default",
+      "agents_config_sha256": "2f10d2926c96a68c3d4733a47a9173d3720ff4888fd0f42ab917d11e1f6a09b7",
+      "persona_condition": "none",
+      "persona_roles": [
+        "",
+        ""
+      ],
+      "persona_sha256": "d7c1f053e2581812f2db2c745131a2c8a1971ab5ad7725aeadd6d4f3c17fe6a1",
+      "n_races": 30,
+      "n_turns": 558,
+      "error": null
+    },
+    {
+      "schema_version": "ai-race-surface-sensitivity-run-v1",
+      "status": "completed",
+      "started_utc": "2026-07-31T07:40:32.170406+00:00",
+      "completed_utc": "2026-07-31T07:41:30.443076+00:00",
+      "profile": "pilot",
+      "lane": "a",
+      "hostname": "nb-17c64ac4-3f70-43b9-8d6f-579c209b038d-5d7d76f986-4vdvg",
+      "gpu_name": "NVIDIA H100 80GB HBM3",
+      "ollama_version": "0.30.8",
+      "model": {
+        "short_name": "qwen2.5:7b-instruct-fp16",
+        "path": "ollama://localhost/qwen2.5:7b-instruct-fp16@59805ce4a4046be2d8f63231a78daacd2e66f5dccf1a64d0d138ebeeb26ff16c",
+        "engine": "ollama",
+        "config_sha256": "59805ce4a4046be2d8f63231a78daacd2e66f5dccf1a64d0d138ebeeb26ff16c"
+      },
+      "ollama_model": {
+        "name": "qwen2.5:7b-instruct-fp16",
+        "digest": "59805ce4a4046be2d8f63231a78daacd2e66f5dccf1a64d0d138ebeeb26ff16c",
+        "size": 15237866977,
+        "details": {
+          "parent_model": "/Users/ollama/.ollama/models/blobs/sha256-678e1e0883636c4234928f23fd208337f790456121124a1986cbf1b806baeadb",
+          "format": "gguf",
+          "family": "qwen2",
+          "families": [
+            "qwen2"
+          ],
+          "parameter_size": "7.6B",
+          "quantization_level": "F16",
+          "context_length": 32768,
+          "embedding_length": 3584
+        }
+      },
+      "source_sha256": "f9d926306fd8ee15399d24c587ae506725c271a870b23c5ede6b738cc1dd478a",
+      "decoding": {
+        "temperature": 0.7,
+        "max_tokens": 16,
+        "max_parse_retries": 3,
+        "num_ctx": 4096,
+        "workers": 16,
+        "seed_requested": true,
+        "seed_probe_exact_match": true
+      },
+      "package_versions": {
+        "python": "3.10.12",
+        "ollama": "0.30.8"
+      },
+      "base_seed": 260726,
+      "experiment_name": "surface_sensitivity__order_payoffs_reversed",
+      "experiment": {
+        "name": "surface_sensitivity__order_payoffs_reversed",
+        "runPhase": "pilot",
+        "description": "Paper-faithful LLM baseline: neutral two-company races, English prompt, hidden stochastic horizon, and maximum private risk treatments 0.1/0.6/0.9. No human demographics or elicited risk-preference covariates.",
+        "games": [
+          "ai_race_risk_10",
+          "ai_race_risk_60",
+          "ai_race_risk_90"
+        ],
+        "agents": "companies_default",
+        "languages": [
+          "en"
+        ],
+        "models": [
+          "LocalQwen"
+        ],
+        "useOffline": true,
+        "offlineSettings": "offline_settings",
+        "repetitions": 10,
+        "seed": 260726,
+        "maxParseRetries": 3,
+        "verbose": true,
+        "samplingSeedApplied": true,
+        "promptVariant": "order_payoffs_reversed"
+      },
+      "experiment_config_sha256": "a970d59c646fcca45a7404cbb3e9ae73bc9cb0d18e57675690e9f62a150ce550",
+      "effective_experiment_sha256": "25de64122a65a22425e1c19ae4f4f6fd9c1dc3af3f5fc25cc6787214b09f08dc",
+      "prompt_variant": {
+        "id": "order_payoffs_reversed",
+        "family": "order",
+        "description": "Reverse the four payoff-case sentences.",
+        "interpretation": "meaning_preserving"
+      },
+      "prompt_version": "ai-race-surface-sensitivity-v1:order_payoffs_reversed",
+      "prompt_sha256": "7b873ecba86a57805ceabf1630c8cb6558c786adf51fab7f6051491b2b39a036",
+      "prompt_characters": 2809,
+      "game_config_sha256": {
+        "ai_race_risk_10": "c0a12fb6980e7642bd15f724e8fe6a676920afcdb0095c3917629420a563ddcf",
+        "ai_race_risk_60": "fe69d6f0ff71b3fdd119aa40c4f90a2c33f73c5bf71863d48fb835b51b0119ff",
+        "ai_race_risk_90": "df4166c4ed6532bb863ba865aa51c8f2b69582248233606b7035656a4e8e81e1"
+      },
+      "expected_races": 30,
+      "agents_name": "companies_default",
+      "agents_config_sha256": "2f10d2926c96a68c3d4733a47a9173d3720ff4888fd0f42ab917d11e1f6a09b7",
+      "persona_condition": "none",
+      "persona_roles": [
+        "",
+        ""
+      ],
+      "persona_sha256": "d7c1f053e2581812f2db2c745131a2c8a1971ab5ad7725aeadd6d4f3c17fe6a1",
+      "n_races": 30,
+      "n_turns": 558,
+      "error": null
+    },
+    {
+      "schema_version": "ai-race-surface-sensitivity-run-v1",
+      "status": "completed",
+      "started_utc": "2026-07-31T07:41:30.500349+00:00",
+      "completed_utc": "2026-07-31T07:42:30.015858+00:00",
+      "profile": "pilot",
+      "lane": "a",
+      "hostname": "nb-17c64ac4-3f70-43b9-8d6f-579c209b038d-5d7d76f986-4vdvg",
+      "gpu_name": "NVIDIA H100 80GB HBM3",
+      "ollama_version": "0.30.8",
+      "model": {
+        "short_name": "qwen2.5:7b-instruct-fp16",
+        "path": "ollama://localhost/qwen2.5:7b-instruct-fp16@59805ce4a4046be2d8f63231a78daacd2e66f5dccf1a64d0d138ebeeb26ff16c",
+        "engine": "ollama",
+        "config_sha256": "59805ce4a4046be2d8f63231a78daacd2e66f5dccf1a64d0d138ebeeb26ff16c"
+      },
+      "ollama_model": {
+        "name": "qwen2.5:7b-instruct-fp16",
+        "digest": "59805ce4a4046be2d8f63231a78daacd2e66f5dccf1a64d0d138ebeeb26ff16c",
+        "size": 15237866977,
+        "details": {
+          "parent_model": "/Users/ollama/.ollama/models/blobs/sha256-678e1e0883636c4234928f23fd208337f790456121124a1986cbf1b806baeadb",
+          "format": "gguf",
+          "family": "qwen2",
+          "families": [
+            "qwen2"
+          ],
+          "parameter_size": "7.6B",
+          "quantization_level": "F16",
+          "context_length": 32768,
+          "embedding_length": 3584
+        }
+      },
+      "source_sha256": "f9d926306fd8ee15399d24c587ae506725c271a870b23c5ede6b738cc1dd478a",
+      "decoding": {
+        "temperature": 0.7,
+        "max_tokens": 16,
+        "max_parse_retries": 3,
+        "num_ctx": 4096,
+        "workers": 16,
+        "seed_requested": true,
+        "seed_probe_exact_match": true
+      },
+      "package_versions": {
+        "python": "3.10.12",
+        "ollama": "0.30.8"
+      },
+      "base_seed": 260726,
+      "experiment_name": "surface_sensitivity__order_state_reversed",
+      "experiment": {
+        "name": "surface_sensitivity__order_state_reversed",
+        "runPhase": "pilot",
+        "description": "Paper-faithful LLM baseline: neutral two-company races, English prompt, hidden stochastic horizon, and maximum private risk treatments 0.1/0.6/0.9. No human demographics or elicited risk-preference covariates.",
+        "games": [
+          "ai_race_risk_10",
+          "ai_race_risk_60",
+          "ai_race_risk_90"
+        ],
+        "agents": "companies_default",
+        "languages": [
+          "en"
+        ],
+        "models": [
+          "LocalQwen"
+        ],
+        "useOffline": true,
+        "offlineSettings": "offline_settings",
+        "repetitions": 10,
+        "seed": 260726,
+        "maxParseRetries": 3,
+        "verbose": true,
+        "samplingSeedApplied": true,
+        "promptVariant": "order_state_reversed"
+      },
+      "experiment_config_sha256": "a970d59c646fcca45a7404cbb3e9ae73bc9cb0d18e57675690e9f62a150ce550",
+      "effective_experiment_sha256": "2884045e99e2dc3a57b43f666c2af4658f47529a6a5550afefe6c6a020050234",
+      "prompt_variant": {
+        "id": "order_state_reversed",
+        "family": "order",
+        "description": "Reverse the seven state rows.",
+        "interpretation": "meaning_preserving"
+      },
+      "prompt_version": "ai-race-surface-sensitivity-v1:order_state_reversed",
+      "prompt_sha256": "505ac367fa87b592d5d36af72e67a552234c634c02087ce9b876df9e2f8e5eb8",
+      "prompt_characters": 2809,
+      "game_config_sha256": {
+        "ai_race_risk_10": "c0a12fb6980e7642bd15f724e8fe6a676920afcdb0095c3917629420a563ddcf",
+        "ai_race_risk_60": "fe69d6f0ff71b3fdd119aa40c4f90a2c33f73c5bf71863d48fb835b51b0119ff",
+        "ai_race_risk_90": "df4166c4ed6532bb863ba865aa51c8f2b69582248233606b7035656a4e8e81e1"
+      },
+      "expected_races": 30,
+      "agents_name": "companies_default",
+      "agents_config_sha256": "2f10d2926c96a68c3d4733a47a9173d3720ff4888fd0f42ab917d11e1f6a09b7",
+      "persona_condition": "none",
+      "persona_roles": [
+        "",
+        ""
+      ],
+      "persona_sha256": "d7c1f053e2581812f2db2c745131a2c8a1971ab5ad7725aeadd6d4f3c17fe6a1",
+      "n_races": 30,
+      "n_turns": 558,
+      "error": null
+    },
+    {
+      "schema_version": "ai-race-surface-sensitivity-run-v1",
+      "status": "completed",
+      "started_utc": "2026-07-31T07:42:30.097670+00:00",
+      "completed_utc": "2026-07-31T07:43:25.859947+00:00",
+      "profile": "pilot",
+      "lane": "a",
+      "hostname": "nb-17c64ac4-3f70-43b9-8d6f-579c209b038d-5d7d76f986-4vdvg",
+      "gpu_name": "NVIDIA H100 80GB HBM3",
+      "ollama_version": "0.30.8",
+      "model": {
+        "short_name": "qwen2.5:7b-instruct-fp16",
+        "path": "ollama://localhost/qwen2.5:7b-instruct-fp16@59805ce4a4046be2d8f63231a78daacd2e66f5dccf1a64d0d138ebeeb26ff16c",
+        "engine": "ollama",
+        "config_sha256": "59805ce4a4046be2d8f63231a78daacd2e66f5dccf1a64d0d138ebeeb26ff16c"
+      },
+      "ollama_model": {
+        "name": "qwen2.5:7b-instruct-fp16",
+        "digest": "59805ce4a4046be2d8f63231a78daacd2e66f5dccf1a64d0d138ebeeb26ff16c",
+        "size": 15237866977,
+        "details": {
+          "parent_model": "/Users/ollama/.ollama/models/blobs/sha256-678e1e0883636c4234928f23fd208337f790456121124a1986cbf1b806baeadb",
+          "format": "gguf",
+          "family": "qwen2",
+          "families": [
+            "qwen2"
+          ],
+          "parameter_size": "7.6B",
+          "quantization_level": "F16",
+          "context_length": 32768,
+          "embedding_length": 3584
+        }
+      },
+      "source_sha256": "f9d926306fd8ee15399d24c587ae506725c271a870b23c5ede6b738cc1dd478a",
+      "decoding": {
+        "temperature": 0.7,
+        "max_tokens": 16,
+        "max_parse_retries": 3,
+        "num_ctx": 4096,
+        "workers": 16,
+        "seed_requested": true,
+        "seed_probe_exact_match": true
+      },
+      "package_versions": {
+        "python": "3.10.12",
+        "ollama": "0.30.8"
+      },
+      "base_seed": 260726,
+      "experiment_name": "surface_sensitivity__position_goal_first",
+      "experiment": {
+        "name": "surface_sensitivity__position_goal_first",
+        "runPhase": "pilot",
+        "description": "Paper-faithful LLM baseline: neutral two-company races, English prompt, hidden stochastic horizon, and maximum private risk treatments 0.1/0.6/0.9. No human demographics or elicited risk-preference covariates.",
+        "games": [
+          "ai_race_risk_10",
+          "ai_race_risk_60",
+          "ai_race_risk_90"
+        ],
+        "agents": "companies_default",
+        "languages": [
+          "en"
+        ],
+        "models": [
+          "LocalQwen"
+        ],
+        "useOffline": true,
+        "offlineSettings": "offline_settings",
+        "repetitions": 10,
+        "seed": 260726,
+        "maxParseRetries": 3,
+        "verbose": true,
+        "samplingSeedApplied": true,
+        "promptVariant": "position_goal_first"
+      },
+      "experiment_config_sha256": "a970d59c646fcca45a7404cbb3e9ae73bc9cb0d18e57675690e9f62a150ce550",
+      "effective_experiment_sha256": "7af1154975892dac40f674b5f62897cb92b8e00a9ba6296bdac0cc8b7ce34515",
+      "prompt_variant": {
+        "id": "position_goal_first",
+        "family": "position",
+        "description": "Move the objective immediately after the game introduction.",
+        "interpretation": "meaning_preserving"
+      },
+      "prompt_version": "ai-race-surface-sensitivity-v1:position_goal_first",
+      "prompt_sha256": "b0f3e69b72731e9b79af1223abe1fa58de1e66b545c5c320ad49be7c0d1b85aa",
+      "prompt_characters": 2810,
+      "game_config_sha256": {
+        "ai_race_risk_10": "c0a12fb6980e7642bd15f724e8fe6a676920afcdb0095c3917629420a563ddcf",
+        "ai_race_risk_60": "fe69d6f0ff71b3fdd119aa40c4f90a2c33f73c5bf71863d48fb835b51b0119ff",
+        "ai_race_risk_90": "df4166c4ed6532bb863ba865aa51c8f2b69582248233606b7035656a4e8e81e1"
+      },
+      "expected_races": 30,
+      "agents_name": "companies_default",
+      "agents_config_sha256": "2f10d2926c96a68c3d4733a47a9173d3720ff4888fd0f42ab917d11e1f6a09b7",
+      "persona_condition": "none",
+      "persona_roles": [
+        "",
+        ""
+      ],
+      "persona_sha256": "d7c1f053e2581812f2db2c745131a2c8a1971ab5ad7725aeadd6d4f3c17fe6a1",
+      "n_races": 30,
+      "n_turns": 558,
+      "error": null
+    },
+    {
+      "schema_version": "ai-race-surface-sensitivity-run-v1",
+      "status": "completed",
+      "started_utc": "2026-07-31T07:43:25.930678+00:00",
+      "completed_utc": "2026-07-31T07:44:22.105981+00:00",
+      "profile": "pilot",
+      "lane": "a",
+      "hostname": "nb-17c64ac4-3f70-43b9-8d6f-579c209b038d-5d7d76f986-4vdvg",
+      "gpu_name": "NVIDIA H100 80GB HBM3",
+      "ollama_version": "0.30.8",
+      "model": {
+        "short_name": "qwen2.5:7b-instruct-fp16",
+        "path": "ollama://localhost/qwen2.5:7b-instruct-fp16@59805ce4a4046be2d8f63231a78daacd2e66f5dccf1a64d0d138ebeeb26ff16c",
+        "engine": "ollama",
+        "config_sha256": "59805ce4a4046be2d8f63231a78daacd2e66f5dccf1a64d0d138ebeeb26ff16c"
+      },
+      "ollama_model": {
+        "name": "qwen2.5:7b-instruct-fp16",
+        "digest": "59805ce4a4046be2d8f63231a78daacd2e66f5dccf1a64d0d138ebeeb26ff16c",
+        "size": 15237866977,
+        "details": {
+          "parent_model": "/Users/ollama/.ollama/models/blobs/sha256-678e1e0883636c4234928f23fd208337f790456121124a1986cbf1b806baeadb",
+          "format": "gguf",
+          "family": "qwen2",
+          "families": [
+            "qwen2"
+          ],
+          "parameter_size": "7.6B",
+          "quantization_level": "F16",
+          "context_length": 32768,
+          "embedding_length": 3584
+        }
+      },
+      "source_sha256": "f9d926306fd8ee15399d24c587ae506725c271a870b23c5ede6b738cc1dd478a",
+      "decoding": {
+        "temperature": 0.7,
+        "max_tokens": 16,
+        "max_parse_retries": 3,
+        "num_ctx": 4096,
+        "workers": 16,
+        "seed_requested": true,
+        "seed_probe_exact_match": true
+      },
+      "package_versions": {
+        "python": "3.10.12",
+        "ollama": "0.30.8"
+      },
+      "base_seed": 260726,
+      "experiment_name": "surface_sensitivity__position_risk_near_response",
+      "experiment": {
+        "name": "surface_sensitivity__position_risk_near_response",
+        "runPhase": "pilot",
+        "description": "Paper-faithful LLM baseline: neutral two-company races, English prompt, hidden stochastic horizon, and maximum private risk treatments 0.1/0.6/0.9. No human demographics or elicited risk-preference covariates.",
+        "games": [
+          "ai_race_risk_10",
+          "ai_race_risk_60",
+          "ai_race_risk_90"
+        ],
+        "agents": "companies_default",
+        "languages": [
+          "en"
+        ],
+        "models": [
+          "LocalQwen"
+        ],
+        "useOffline": true,
+        "offlineSettings": "offline_settings",
+        "repetitions": 10,
+        "seed": 260726,
+        "maxParseRetries": 3,
+        "verbose": true,
+        "samplingSeedApplied": true,
+        "promptVariant": "position_risk_near_response"
+      },
+      "experiment_config_sha256": "a970d59c646fcca45a7404cbb3e9ae73bc9cb0d18e57675690e9f62a150ce550",
+      "effective_experiment_sha256": "a8c79ce0261cbee6eafea4bc3ffa69f5def594423824dbdb65a2677bcfaf9c9c",
+      "prompt_variant": {
+        "id": "position_risk_near_response",
+        "family": "position",
+        "description": "Move terminal risk rules next to the response instruction.",
+        "interpretation": "meaning_preserving"
+      },
+      "prompt_version": "ai-race-surface-sensitivity-v1:position_risk_near_response",
+      "prompt_sha256": "1568326caa8cc384b9f4f7a0e1ec5d89f95bcdeff128ad4ff72c1ba1a8f941a6",
+      "prompt_characters": 2809,
+      "game_config_sha256": {
+        "ai_race_risk_10": "c0a12fb6980e7642bd15f724e8fe6a676920afcdb0095c3917629420a563ddcf",
+        "ai_race_risk_60": "fe69d6f0ff71b3fdd119aa40c4f90a2c33f73c5bf71863d48fb835b51b0119ff",
+        "ai_race_risk_90": "df4166c4ed6532bb863ba865aa51c8f2b69582248233606b7035656a4e8e81e1"
+      },
+      "expected_races": 30,
+      "agents_name": "companies_default",
+      "agents_config_sha256": "2f10d2926c96a68c3d4733a47a9173d3720ff4888fd0f42ab917d11e1f6a09b7",
+      "persona_condition": "none",
+      "persona_roles": [
+        "",
+        ""
+      ],
+      "persona_sha256": "d7c1f053e2581812f2db2c745131a2c8a1971ab5ad7725aeadd6d4f3c17fe6a1",
+      "n_races": 30,
+      "n_turns": 558,
+      "error": null
+    },
+    {
+      "schema_version": "ai-race-surface-sensitivity-run-v1",
+      "status": "completed",
+      "started_utc": "2026-07-31T07:44:22.146671+00:00",
+      "completed_utc": "2026-07-31T07:45:22.185096+00:00",
+      "profile": "pilot",
+      "lane": "a",
+      "hostname": "nb-17c64ac4-3f70-43b9-8d6f-579c209b038d-5d7d76f986-4vdvg",
+      "gpu_name": "NVIDIA H100 80GB HBM3",
+      "ollama_version": "0.30.8",
+      "model": {
+        "short_name": "qwen2.5:7b-instruct-fp16",
+        "path": "ollama://localhost/qwen2.5:7b-instruct-fp16@59805ce4a4046be2d8f63231a78daacd2e66f5dccf1a64d0d138ebeeb26ff16c",
+        "engine": "ollama",
+        "config_sha256": "59805ce4a4046be2d8f63231a78daacd2e66f5dccf1a64d0d138ebeeb26ff16c"
+      },
+      "ollama_model": {
+        "name": "qwen2.5:7b-instruct-fp16",
+        "digest": "59805ce4a4046be2d8f63231a78daacd2e66f5dccf1a64d0d138ebeeb26ff16c",
+        "size": 15237866977,
+        "details": {
+          "parent_model": "/Users/ollama/.ollama/models/blobs/sha256-678e1e0883636c4234928f23fd208337f790456121124a1986cbf1b806baeadb",
+          "format": "gguf",
+          "family": "qwen2",
+          "families": [
+            "qwen2"
+          ],
+          "parameter_size": "7.6B",
+          "quantization_level": "F16",
+          "context_length": 32768,
+          "embedding_length": 3584
+        }
+      },
+      "source_sha256": "f9d926306fd8ee15399d24c587ae506725c271a870b23c5ede6b738cc1dd478a",
+      "decoding": {
+        "temperature": 0.7,
+        "max_tokens": 16,
+        "max_parse_retries": 3,
+        "num_ctx": 4096,
+        "workers": 16,
+        "seed_requested": true,
+        "seed_probe_exact_match": true
+      },
+      "package_versions": {
+        "python": "3.10.12",
+        "ollama": "0.30.8"
+      },
+      "base_seed": 260726,
+      "experiment_name": "surface_sensitivity__lexical_synonyms",
+      "experiment": {
+        "name": "surface_sensitivity__lexical_synonyms",
+        "runPhase": "pilot",
+        "description": "Paper-faithful LLM baseline: neutral two-company races, English prompt, hidden stochastic horizon, and maximum private risk treatments 0.1/0.6/0.9. No human demographics or elicited risk-preference covariates.",
+        "games": [
+          "ai_race_risk_10",
+          "ai_race_risk_60",
+          "ai_race_risk_90"
+        ],
+        "agents": "companies_default",
+        "languages": [
+          "en"
+        ],
+        "models": [
+          "LocalQwen"
+        ],
+        "useOffline": true,
+        "offlineSettings": "offline_settings",
+        "repetitions": 10,
+        "seed": 260726,
+        "maxParseRetries": 3,
+        "verbose": true,
+        "samplingSeedApplied": true,
+        "promptVariant": "lexical_synonyms"
+      },
+      "experiment_config_sha256": "a970d59c646fcca45a7404cbb3e9ae73bc9cb0d18e57675690e9f62a150ce550",
+      "effective_experiment_sha256": "7a8a5218a1d75192bd38e89350255813e4bbb880a1558cf65d1b9a1d07942291",
+      "prompt_variant": {
+        "id": "lexical_synonyms",
+        "family": "lexical",
+        "description": "Replace selected rule phrases with close synonyms.",
+        "interpretation": "meaning_preserving"
+      },
+      "prompt_version": "ai-race-surface-sensitivity-v1:lexical_synonyms",
+      "prompt_sha256": "1e0d7b9c696731e1a3c7188f43b382543edd98f6c143231e273153f4201557e1",
+      "prompt_characters": 2835,
+      "game_config_sha256": {
+        "ai_race_risk_10": "c0a12fb6980e7642bd15f724e8fe6a676920afcdb0095c3917629420a563ddcf",
+        "ai_race_risk_60": "fe69d6f0ff71b3fdd119aa40c4f90a2c33f73c5bf71863d48fb835b51b0119ff",
+        "ai_race_risk_90": "df4166c4ed6532bb863ba865aa51c8f2b69582248233606b7035656a4e8e81e1"
+      },
+      "expected_races": 30,
+      "agents_name": "companies_default",
+      "agents_config_sha256": "2f10d2926c96a68c3d4733a47a9173d3720ff4888fd0f42ab917d11e1f6a09b7",
+      "persona_condition": "none",
+      "persona_roles": [
+        "",
+        ""
+      ],
+      "persona_sha256": "d7c1f053e2581812f2db2c745131a2c8a1971ab5ad7725aeadd6d4f3c17fe6a1",
+      "n_races": 30,
+      "n_turns": 558,
+      "error": null
+    },
+    {
+      "schema_version": "ai-race-surface-sensitivity-run-v1",
+      "status": "completed",
+      "started_utc": "2026-07-31T07:45:22.267496+00:00",
+      "completed_utc": "2026-07-31T07:46:17.813093+00:00",
+      "profile": "pilot",
+      "lane": "a",
+      "hostname": "nb-17c64ac4-3f70-43b9-8d6f-579c209b038d-5d7d76f986-4vdvg",
+      "gpu_name": "NVIDIA H100 80GB HBM3",
+      "ollama_version": "0.30.8",
+      "model": {
+        "short_name": "qwen2.5:7b-instruct-fp16",
+        "path": "ollama://localhost/qwen2.5:7b-instruct-fp16@59805ce4a4046be2d8f63231a78daacd2e66f5dccf1a64d0d138ebeeb26ff16c",
+        "engine": "ollama",
+        "config_sha256": "59805ce4a4046be2d8f63231a78daacd2e66f5dccf1a64d0d138ebeeb26ff16c"
+      },
+      "ollama_model": {
+        "name": "qwen2.5:7b-instruct-fp16",
+        "digest": "59805ce4a4046be2d8f63231a78daacd2e66f5dccf1a64d0d138ebeeb26ff16c",
+        "size": 15237866977,
+        "details": {
+          "parent_model": "/Users/ollama/.ollama/models/blobs/sha256-678e1e0883636c4234928f23fd208337f790456121124a1986cbf1b806baeadb",
+          "format": "gguf",
+          "family": "qwen2",
+          "families": [
+            "qwen2"
+          ],
+          "parameter_size": "7.6B",
+          "quantization_level": "F16",
+          "context_length": 32768,
+          "embedding_length": 3584
+        }
+      },
+      "source_sha256": "f9d926306fd8ee15399d24c587ae506725c271a870b23c5ede6b738cc1dd478a",
+      "decoding": {
+        "temperature": 0.7,
+        "max_tokens": 16,
+        "max_parse_retries": 3,
+        "num_ctx": 4096,
+        "workers": 16,
+        "seed_requested": true,
+        "seed_probe_exact_match": true
+      },
+      "package_versions": {
+        "python": "3.10.12",
+        "ollama": "0.30.8"
+      },
+      "base_seed": 260726,
+      "experiment_name": "surface_sensitivity__paraphrase_instruction",
+      "experiment": {
+        "name": "surface_sensitivity__paraphrase_instruction",
+        "runPhase": "pilot",
+        "description": "Paper-faithful LLM baseline: neutral two-company races, English prompt, hidden stochastic horizon, and maximum private risk treatments 0.1/0.6/0.9. No human demographics or elicited risk-preference covariates.",
+        "games": [
+          "ai_race_risk_10",
+          "ai_race_risk_60",
+          "ai_race_risk_90"
+        ],
+        "agents": "companies_default",
+        "languages": [
+          "en"
+        ],
+        "models": [
+          "LocalQwen"
+        ],
+        "useOffline": true,
+        "offlineSettings": "offline_settings",
+        "repetitions": 10,
+        "seed": 260726,
+        "maxParseRetries": 3,
+        "verbose": true,
+        "samplingSeedApplied": true,
+        "promptVariant": "paraphrase_instruction"
+      },
+      "experiment_config_sha256": "a970d59c646fcca45a7404cbb3e9ae73bc9cb0d18e57675690e9f62a150ce550",
+      "effective_experiment_sha256": "1835092cc223c69f7181c351c8d031b5e80f56450dd46ee9d143a143d042d4ff",
+      "prompt_variant": {
+        "id": "paraphrase_instruction",
+        "family": "paraphrase",
+        "description": "Paraphrase the objective and final choice instruction.",
+        "interpretation": "meaning_preserving"
+      },
+      "prompt_version": "ai-race-surface-sensitivity-v1:paraphrase_instruction",
+      "prompt_sha256": "fa252a70aa7a4a8472d8a2b657af05b57564e03862a0ca6b3306a4d8e58467ba",
+      "prompt_characters": 2766,
+      "game_config_sha256": {
+        "ai_race_risk_10": "c0a12fb6980e7642bd15f724e8fe6a676920afcdb0095c3917629420a563ddcf",
+        "ai_race_risk_60": "fe69d6f0ff71b3fdd119aa40c4f90a2c33f73c5bf71863d48fb835b51b0119ff",
+        "ai_race_risk_90": "df4166c4ed6532bb863ba865aa51c8f2b69582248233606b7035656a4e8e81e1"
+      },
+      "expected_races": 30,
+      "agents_name": "companies_default",
+      "agents_config_sha256": "2f10d2926c96a68c3d4733a47a9173d3720ff4888fd0f42ab917d11e1f6a09b7",
+      "persona_condition": "none",
+      "persona_roles": [
+        "",
+        ""
+      ],
+      "persona_sha256": "d7c1f053e2581812f2db2c745131a2c8a1971ab5ad7725aeadd6d4f3c17fe6a1",
+      "n_races": 30,
+      "n_turns": 558,
+      "error": null
+    },
+    {
+      "schema_version": "ai-race-surface-sensitivity-run-v1",
+      "status": "completed",
+      "started_utc": "2026-07-31T07:46:17.868306+00:00",
+      "completed_utc": "2026-07-31T07:47:13.342106+00:00",
+      "profile": "pilot",
+      "lane": "a",
+      "hostname": "nb-17c64ac4-3f70-43b9-8d6f-579c209b038d-5d7d76f986-4vdvg",
+      "gpu_name": "NVIDIA H100 80GB HBM3",
+      "ollama_version": "0.30.8",
+      "model": {
+        "short_name": "qwen2.5:7b-instruct-fp16",
+        "path": "ollama://localhost/qwen2.5:7b-instruct-fp16@59805ce4a4046be2d8f63231a78daacd2e66f5dccf1a64d0d138ebeeb26ff16c",
+        "engine": "ollama",
+        "config_sha256": "59805ce4a4046be2d8f63231a78daacd2e66f5dccf1a64d0d138ebeeb26ff16c"
+      },
+      "ollama_model": {
+        "name": "qwen2.5:7b-instruct-fp16",
+        "digest": "59805ce4a4046be2d8f63231a78daacd2e66f5dccf1a64d0d138ebeeb26ff16c",
+        "size": 15237866977,
+        "details": {
+          "parent_model": "/Users/ollama/.ollama/models/blobs/sha256-678e1e0883636c4234928f23fd208337f790456121124a1986cbf1b806baeadb",
+          "format": "gguf",
+          "family": "qwen2",
+          "families": [
+            "qwen2"
+          ],
+          "parameter_size": "7.6B",
+          "quantization_level": "F16",
+          "context_length": 32768,
+          "embedding_length": 3584
+        }
+      },
+      "source_sha256": "f9d926306fd8ee15399d24c587ae506725c271a870b23c5ede6b738cc1dd478a",
+      "decoding": {
+        "temperature": 0.7,
+        "max_tokens": 16,
+        "max_parse_retries": 3,
+        "num_ctx": 4096,
+        "workers": 16,
+        "seed_requested": true,
+        "seed_probe_exact_match": true
+      },
+      "package_versions": {
+        "python": "3.10.12",
+        "ollama": "0.30.8"
+      },
+      "base_seed": 260726,
+      "experiment_name": "surface_sensitivity__voice_impersonal",
+      "experiment": {
+        "name": "surface_sensitivity__voice_impersonal",
+        "runPhase": "pilot",
+        "description": "Paper-faithful LLM baseline: neutral two-company races, English prompt, hidden stochastic horizon, and maximum private risk treatments 0.1/0.6/0.9. No human demographics or elicited risk-preference covariates.",
+        "games": [
+          "ai_race_risk_10",
+          "ai_race_risk_60",
+          "ai_race_risk_90"
+        ],
+        "agents": "companies_default",
+        "languages": [
+          "en"
+        ],
+        "models": [
+          "LocalQwen"
+        ],
+        "useOffline": true,
+        "offlineSettings": "offline_settings",
+        "repetitions": 10,
+        "seed": 260726,
+        "maxParseRetries": 3,
+        "verbose": true,
+        "samplingSeedApplied": true,
+        "promptVariant": "voice_impersonal"
+      },
+      "experiment_config_sha256": "a970d59c646fcca45a7404cbb3e9ae73bc9cb0d18e57675690e9f62a150ce550",
+      "effective_experiment_sha256": "83c322a7b406990534ae93ebf4861d2df0bc3442fbdd9aad3b3648535eef2a29",
+      "prompt_variant": {
+        "id": "voice_impersonal",
+        "family": "syntax",
+        "description": "Use impersonal/passive constructions for game and timing statements.",
+        "interpretation": "meaning_preserving"
+      },
+      "prompt_version": "ai-race-surface-sensitivity-v1:voice_impersonal",
+      "prompt_sha256": "dd2cd8f1cb276fa4a62195d1c4620a99c1559615881a2d38a662823311dbf8b9",
+      "prompt_characters": 2821,
+      "game_config_sha256": {
+        "ai_race_risk_10": "c0a12fb6980e7642bd15f724e8fe6a676920afcdb0095c3917629420a563ddcf",
+        "ai_race_risk_60": "fe69d6f0ff71b3fdd119aa40c4f90a2c33f73c5bf71863d48fb835b51b0119ff",
+        "ai_race_risk_90": "df4166c4ed6532bb863ba865aa51c8f2b69582248233606b7035656a4e8e81e1"
+      },
+      "expected_races": 30,
+      "agents_name": "companies_default",
+      "agents_config_sha256": "2f10d2926c96a68c3d4733a47a9173d3720ff4888fd0f42ab917d11e1f6a09b7",
+      "persona_condition": "none",
+      "persona_roles": [
+        "",
+        ""
+      ],
+      "persona_sha256": "d7c1f053e2581812f2db2c745131a2c8a1971ab5ad7725aeadd6d4f3c17fe6a1",
+      "n_races": 30,
+      "n_turns": 558,
+      "error": null
+    }
+  ],
+  "completed_utc": "2026-07-31T07:47:13.377070+00:00",
+  "elapsed_seconds": 508.549,
+  "error": null
+}
