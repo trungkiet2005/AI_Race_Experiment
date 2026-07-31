@@ -73,6 +73,36 @@ players.csv      one row per player-race
 run_manifest.json
 ```
 
+## Hosted-model (API) runs
+
+[`ai_race/configs/experiment/api_baseline.json`](ai_race/configs/experiment/api_baseline.json)
+runs the identical treatments through the Kaggle model proxy instead of a local
+GPU. It selects `"backend": "proxy"`, and `models` must name routes listed in
+`LLMS_AVAILABLE`.
+
+```bash
+kaggle benchmarks auth            # refresh MODEL_PROXY_* in .env; the token is short-lived
+python -m ai_race.runner.run_experiment ai_race/configs/experiment/api_baseline.json
+```
+
+The proxy backend retries transport failures with backoff and then raises. A failed
+call is never converted into a Safe action, so an expired token stops the run and
+writes a `failed` manifest instead of contaminating the panel. `samplingSeedApplied`
+stays `false` because the proxy does not confirm that a forwarded seed was applied.
+`"backend": "api"` still routes to the FAIRGAME provider SDK connectors, which need
+`API_KEY_OPENAI` / `API_KEY_ANTHROPIC` / `API_KEY_MISTRAL` instead.
+
+## Prompt templates
+
+Prompts in [`ai_race/prompts/`](ai_race/prompts/) follow the FAIRGAME
+`resources/game_templates` convention: camelCase placeholders (`{currentPlayerName}`,
+`{opponent1}`, `{strategy1}`, `{weight1}`…`{weight4}`, `{history}`, `{currentRound}`)
+plus optional blocks written as `{blockName}: [ ... ]`. `intro` is kept only when the
+seat carries a persona; `gameLength`, `opponentIntro`, and `communicate` are deleted
+in this design, so the horizon stays hidden. Templates keep the strict
+`ACTION: SAFE` / `ACTION: UNSAFE` output contract, because parse failures are a
+recorded protocol-health measure rather than a rescued free-text answer.
+
 The main behavioral outcomes are Unsafe frequency, response to the opponent's
 previous action, pre-decision progress gap, first-round momentum, and winner/loser
 Unsafe frequency.

@@ -1,13 +1,39 @@
-"""Paper-faithful prompt construction for one AI Race decision."""
+"""Paper-faithful prompt construction for one AI Race decision.
+
+Templates follow the FAIRGAME ``resources/game_templates`` convention: camelCase
+placeholders plus optional blocks written as ``{blockName}: [ ... ]`` that are
+either unwrapped or deleted before ``str.format`` runs. Legacy snake_case
+placeholders remain available as aliases so older templates keep rendering.
+"""
 from __future__ import annotations
 
+import re
 from typing import Any, Sequence
 
 from .state import Action, GameConfig
 
+_OPTIONAL_BLOCK_RE = r"\{{{name}\}}:\s*\[(.*?)\]"
+
 
 def _fmt(value: float) -> str:
     return f"{float(value):.3f}".rstrip("0").rstrip(".")
+
+
+def apply_optional_blocks(template: str, blocks: dict[str, bool]) -> str:
+    """Unwrap or delete FAIRGAME ``{name}: [ ... ]`` blocks.
+
+    ``blocks[name] is True`` keeps the bracketed text, ``False`` removes the whole
+    construct. Names absent from ``blocks`` are left untouched so an unexpected
+    block surfaces as a formatting error rather than being silently dropped.
+    """
+    rendered = template
+    for name, keep in blocks.items():
+        pattern = re.compile(_OPTIONAL_BLOCK_RE.format(name=re.escape(name)), re.DOTALL)
+        replacement = (lambda match: match.group(1)) if keep else (lambda match: "")
+        rendered = pattern.sub(replacement, rendered)
+    # Deleting a block leaves an empty line behind; collapse those, not real blanks.
+    rendered = re.sub(r"[ \t]+\n", "\n", rendered)
+    return re.sub(r"\n{3,}", "\n\n", rendered)
 
 
 def _previous_round_text(
@@ -103,8 +129,55 @@ def build_prompt(
             config.history_mode,
         ),
     }
+    # FAIRGAME game_template placeholder names. ``weight`` ordering follows the
+    # FAIRGAME convention: 1 = both strategy1, 2 = the strategy2 chooser against
+    # strategy1, 3 = the strategy1 chooser against strategy2, 4 = both strategy2.
+    values.update(
+        {
+            "currentPlayerName": player_name,
+            "opponent1": player_names[opponent_index],
+            "personality": persona_text.strip(),
+            "currentRound": round_number,
+            "strategy1": Action.SAFE.label,
+            "strategy2": Action.UNSAFE.label,
+            "weight1": values["payoff_safe_safe"],
+            "weight2": values["payoff_unsafe_safe"],
+            "weight3": values["payoff_safe_unsafe"],
+            "weight4": values["payoff_unsafe_unsafe"],
+            "step1": values["safe_progress"],
+            "step2": values["unsafe_progress"],
+            "nRounds": config.min_rounds,
+            "minRounds": config.min_rounds,
+            "stopProbabilityPercent": values["stop_probability_percent"],
+            "racePrize": values["race_prize"],
+            "tiePrize": values["tie_prize"],
+            "maxPrivateRiskPercent": values["max_private_risk_percent"],
+            "ownPrivateRiskPercent": values["own_private_risk_percent"],
+            "opponentPrivateRiskPercent": values["opponent_private_risk_percent"],
+            "ownStagePayoff": values["own_stage_payoff"],
+            "opponentStagePayoff": values["opponent_stage_payoff"],
+            "ownProgress": values["own_progress"],
+            "opponentProgress": values["opponent_progress"],
+            "progressGap": values["progress_gap"],
+            "history": values["previous_round"],
+        }
+    )
+    prepared = apply_optional_blocks(
+        template,
+        {
+            # The persona seat is empty in the paper-faithful baseline.
+            "intro": bool(persona_text.strip()),
+            # No opponent-personality prior is disclosed in this design.
+            "opponentIntro": False,
+            # The horizon is deliberately hidden from the agents.
+            "gameLength": False,
+            # Agents never exchange messages, so only the decision phase exists.
+            "communicate": config.agents_communicate,
+            "choose": True,
+        },
+    )
     try:
-        rendered = template.format(**values)
+        rendered = prepared.format(**values)
     except KeyError as exc:
         raise ValueError(f"Unknown prompt placeholder: {exc.args[0]}") from exc
     return rendered.strip() + "\n"

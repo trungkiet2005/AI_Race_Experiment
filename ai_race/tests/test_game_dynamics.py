@@ -96,8 +96,8 @@ def test_horizon_is_not_sampled_before_round_five_and_is_hidden_from_players(
     assert game.stop_draws == []
     round_five_prompts = game.build_round_prompts()
     for prompt in round_five_prompts:
-        assert "CURRENT DECISION" in prompt
-        assert "ROUND 5" in prompt
+        assert "The current round is number 5." in prompt
+        assert "This is the state of the race before your current decision:" in prompt
         assert "You do not know the final round in advance." in prompt
         assert "stop_draw" not in prompt
 
@@ -148,3 +148,26 @@ def test_finished_game_rejects_further_prompts_and_responses(
         game.build_round_prompts()
     with pytest.raises(RuntimeError, match="finished"):
         game.apply_round_responses(["ACTION: SAFE", "ACTION: SAFE"])
+
+
+def test_fairgame_optional_blocks_track_persona_and_hidden_horizon(
+    game_factory: Callable[..., AIRaceGame],
+) -> None:
+    """FAIRGAME ``{name}: [ ... ]`` blocks are unwrapped or deleted, never leaked."""
+    template = (PROMPTS_DIR / "ai_race_en.txt").read_text(encoding="utf-8")
+
+    neutral = game_factory(template=template).build_round_prompts()[0]
+    assert "{" not in neutral and "}" not in neutral
+    # gameLength stays hidden: the agent must not learn the horizon.
+    assert "rounds to decide" not in neutral
+    assert "You are ." not in neutral
+
+    persona_game = game_factory(template=template)
+    persona_game.agents[0].persona_text = "a safety-first laboratory"
+    persona_prompt = persona_game.build_round_prompts()[0]
+    assert "You are a safety-first laboratory." in persona_prompt
+    assert "{" not in persona_prompt
+
+    # The communicate block is dropped whenever agents do not exchange messages.
+    assert "Send one short message" not in neutral
+    assert "ACTION: UNSAFE" in neutral

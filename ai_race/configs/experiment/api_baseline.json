@@ -1,0 +1,30 @@
+{
+  "name": "api_baseline",
+  "runPhase": "pilot",
+  "description": "Hosted-model pilot over the Kaggle model proxy. Same treatments, agents, and prompt as the offline baseline; only the decision backend differs. Model routes must appear in LLMS_AVAILABLE, and MODEL_PROXY_API_KEY must be unexpired (refresh with 'kaggle benchmarks auth').",
+  "games": [
+    "ai_race_risk_10",
+    "ai_race_risk_60",
+    "ai_race_risk_90"
+  ],
+  "agents": "companies_default",
+  "languages": ["en"],
+  "models": [
+    "google/gemini-3-flash-preview"
+  ],
+  "useOffline": false,
+  "backend": "proxy",
+  "samplingSeedApplied": false,
+  "proxyOptions": {
+    "temperature": 0.7,
+    "max_tokens": 256,
+    "timeout": 120,
+    "max_transport_retries": 3,
+    "concurrency": 8,
+    "send_seed": false
+  },
+  "repetitions": 3,
+  "seed": 260726,
+  "maxParseRetries": 3,
+  "verbose": true
+}

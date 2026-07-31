@@ -114,9 +114,27 @@ def get_send_batch(
     *,
     offline: bool = True,
     batch_size: int = 0,
+    backend: str = "auto",
+    proxy_options: dict[str, Any] | None = None,
 ) -> Callable[..., list[str | dict[str, Any]]]:
-    """Return ``send_batch(prompts, seeds=None)`` for the selected backend."""
-    if offline:
+    """Return ``send_batch(prompts, seeds=None)`` for the selected backend.
+
+    ``backend`` is ``"offline"`` (vLLM/transformers), ``"proxy"`` (Kaggle model
+    proxy), ``"api"`` (FAIRGAME provider SDK connectors), or ``"auto"``, which
+    resolves from the legacy ``offline`` flag.
+    """
+    backend = str(backend or "auto").lower()
+    if backend == "auto":
+        backend = "offline" if offline else "api"
+    if backend not in {"offline", "proxy", "api"}:
+        raise ValueError(f"Unsupported model backend: {backend!r}")
+
+    if backend == "proxy":
+        from ai_race.models.proxy import make_proxy_send_batch
+
+        return make_proxy_send_batch(model_name, **(proxy_options or {}))
+
+    if backend == "offline":
         from FAIRGAME.src.llm_connectors.local_vllm_connector import send_prompts_global
 
         def send(

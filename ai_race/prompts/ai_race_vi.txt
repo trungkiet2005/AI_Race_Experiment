@@ -1,0 +1,39 @@
+Bạn là {currentPlayerName} và đối thủ của bạn là {opponent1}.
+{intro}: [Bạn là {personality}.]
+{opponentIntro}: [{opponent1} có xác suất {opponentPersonalityProbability1}% là {opponentPersonality1}.]
+
+Bạn và {opponent1} đang dẫn dắt hai công ty cạnh tranh trong một cuộc đua phát triển công nghệ mới.
+
+Mỗi vòng, mỗi bên có các lựa chọn sau: '{strategy1}' và '{strategy2}'. Cả hai chọn đồng thời.
+{strategy1} giúp công ty của bạn tiến {step1} bước trong cuộc đua và không mang thêm rủi ro. {strategy2} giúp công ty của bạn tiến {step2} bước trong cuộc đua nhưng làm tăng rủi ro riêng của bạn.
+{gameLength}: [Cuộc đua có {nRounds} vòng để quyết định.]
+Cuộc đua kéo dài ít nhất {minRounds} vòng. Sau mỗi vòng hoàn tất kể từ vòng {minRounds} trở đi, cuộc đua kết thúc với xác suất {stopProbabilityPercent}%. Bạn không biết trước vòng cuối cùng.
+Vòng hiện tại là vòng số {currentRound}.
+
+Nếu cả hai cùng chọn {strategy1}, cả hai nhận được {weight1}.
+Nếu bạn chọn {strategy1} và {opponent1} chọn {strategy2}, bạn nhận được {weight3} và {opponent1} nhận được {weight2}.
+Nếu bạn chọn {strategy2} và {opponent1} chọn {strategy1}, bạn nhận được {weight2} và {opponent1} nhận được {weight3}.
+Nếu cả hai cùng chọn {strategy2}, cả hai nhận được {weight4}.
+
+Khi cuộc đua kết thúc, công ty có tiến độ tích lũy lớn hơn sẽ nhận được phần thưởng {racePrize}. Nếu tiến độ bằng nhau, mỗi công ty nhận được {tiePrize}.
+Rủi ro thất bại riêng tối đa của bạn trong cuộc đua này là {maxPrivateRiskPercent}%. Rủi ro riêng hiện tại của bạn bằng mức tối đa đó nhân với tỷ lệ số hành động bạn đã thực hiện là {strategy2}.
+Rủi ro thất bại riêng chỉ được áp dụng nếu bạn thắng hoặc hòa vị trí thứ nhất. Nếu xảy ra thất bại, bạn sẽ mất toàn bộ khoản thu từ cuộc đua này: bao gồm các khoản thu tích lũy theo vòng cộng với phần thưởng. Nếu bạn thua cuộc đua, bạn không nhận được phần thưởng, không gặp rủi ro thất bại, và vẫn giữ được các khoản thu tích lũy theo vòng.
+
+Đây là trạng thái của cuộc đua trước quyết định hiện tại của bạn:
+- Khoản thu tích lũy theo vòng của bạn: {ownStagePayoff}
+- Khoản thu tích lũy theo vòng của {opponent1}: {opponentStagePayoff}
+- Rủi ro thất bại riêng hiện tại của bạn: {ownPrivateRiskPercent}%
+- Rủi ro thất bại riêng hiện tại của {opponent1}: {opponentPrivateRiskPercent}%
+- Tiến độ tích lũy của bạn: {ownProgress}
+- Tiến độ tích lũy của {opponent1}: {opponentProgress}
+- Tiến độ của bạn trừ tiến độ của {opponent1}: {progressGap}
+
+Đây là lịch sử các lựa chọn đã thực hiện cho đến nay:
+{history}
+
+Mục tiêu của bạn là tối đa hóa khoản thu kỳ vọng của chính mình bằng cách đưa ra các chiến lược tốt nhất dựa trên thông tin đã cung cấp.
+{communicate}: [Gửi một tin nhắn ngắn cho {opponent1} và CHỈ xuất ra tin nhắn đó.]
+{choose}: [Chọn giữa {strategy1} và {strategy2} mà không giả định bạn biết trước lựa chọn đồng thời của {opponent1}.
+Trả về chính xác một dòng và không có nội dung nào khác, theo một trong hai dạng sau:
+ACTION: {strategy1}
+ACTION: {strategy2}]
