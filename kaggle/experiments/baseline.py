@@ -38,7 +38,13 @@ MODELS = [
         "short_name": "gemma-3-12b-it",
         "engine": "transformers",
     },
-    # Thêm model khác tại đây; notebook sẽ chạy lần lượt, không nạp đồng thời.
+    # Thêm model khác tại đây; notebook sẽ chạy lần lượt, không nạp đồng thời
+    # (mỗi model được free_model() giải phóng VRAM trước khi nạp checkpoint kế tiếp).
+    #
+    # Muốn chạy lại bằng vLLM thì đổi "engine" ở trên, ĐỪNG thêm một entry thứ hai
+    # cho cùng checkpoint: short_name quyết định thư mục output, nên hai entry trùng
+    # short_name sẽ ghi đè lên nhau (RunJournal mở với reset=True). Khi dùng vLLM có
+    # thể chỉnh riêng "gpu_memory_utilization" hoặc "engine_overrides" trong entry đó.
 ]
 
 # Dataset đã stage: https://www.kaggle.com/datasets/nguyenlamphuquy/ai-race-experiment
@@ -102,7 +108,10 @@ FAIL_ON_INCOMPLETE_RUN = True
 # Chỉ chạy khi có model nào khai engine="vllm". Với cấu hình transformers hiện tại
 # thì cell cài vLLM tự bỏ qua.
 INSTALL_VLLM_IF_MISSING = True
-VLLM_WHEELS_DIR = None  # Bắt buộc điền Dataset wheelhouse đã audit nếu cần cài.
+# Dataset wheelhouse đã audit: vllm==0.11.0, build bởi kaggle/setup/build_quant_wheels.py
+# trên cùng image RTX Pro 6000, xem foundnotkiet/ai-race-wheelhouse (145 wheels, manifest
+# SHA-256 tại vllm_wheels/manifest.json).
+VLLM_WHEELS_DIR = "/kaggle/input/ai-race-vllm-wheels/vllm_wheels"
 
 WORK_COPY = Path("/kaggle/working/ai_race_repo")
 OUTPUT_DIR = Path("/kaggle/working/ai_race_results")

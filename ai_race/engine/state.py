@@ -55,6 +55,7 @@ class GameConfig:
     max_private_risk: float = 0.1
     history_mode: str = "previous_round"
     agents_communicate: bool = False
+    reveal_opponent_persona_prior: bool = False
     language: str = "en"
     prompt_template: str = "ai_race_en"
     prompt_version: str = "ai-race-fairgame-v3"
@@ -126,6 +127,7 @@ class GameConfig:
             max_private_risk=float(data.get("maxPrivateRisk", 0.1)),
             history_mode=str(data.get("historyMode", "previous_round")),
             agents_communicate=bool(data.get("agentsCommunicate", False)),
+            reveal_opponent_persona_prior=bool(data.get("revealOpponentPersonaPrior", False)),
             language=language or str(data.get("language", "en")),
             prompt_template=str(data.get("promptTemplate", "ai_race_en")),
             prompt_version=str(data.get("promptVersion", "ai-race-fairgame-v3")),
