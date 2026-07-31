@@ -1,7 +1,12 @@
 # Game-understanding and payoff audit protocol
 
-Protocol: `ai-race-game-understanding-v1`  
+Protocol: `ai-race-game-understanding-v2`
 Frozen before model inference: 2026-07-31
+
+Version note: the v1 smoke run was rejected before promotion because its semantic
+parser still required the strict `ANSWER:` prefix. V2 prespecifies that exactly one
+bare scalar (for example `YES` or `5`) is semantically parseable while remaining a
+strict-format failure. V1 outputs remain diagnostic only and are not pooled.
 
 ## Claim boundary
 

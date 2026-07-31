@@ -106,7 +106,8 @@ def test_every_probe_condition_renders_and_round_trips_the_correct_answer():
     [
         ("ANSWER: YES", True, True, True),
         ("Reasoning\nANSWER: YES", False, True, True),
-        ("YES", False, False, False),
+        ("YES", False, True, True),
+        ("A long unsupported explanation", False, False, False),
         ("ANSWER: NO", True, True, False),
     ],
 )
@@ -123,6 +124,8 @@ def test_numeric_semantic_scoring_recovers_units_but_flags_nonanswers():
     recovered = score_probe_response(item, "work\nANSWER: 40%")
     assert not recovered.strict_valid
     assert recovered.semantic_valid and recovered.semantic_correct
+    bare = score_probe_response(item, "40")
+    assert not bare.strict_valid and bare.semantic_valid and bare.semantic_correct
     assert not score_probe_response(item, "ANSWER: forty").semantic_valid
 
 

@@ -110,7 +110,7 @@ def run_probes(
                     }
                 )
     manifest = {
-        "schema_version": "ai-race-game-understanding-run-v1",
+        "schema_version": "ai-race-game-understanding-run-v2",
         "status": "running",
         "started_utc": utc_now(),
         "completed_utc": None,
@@ -228,7 +228,7 @@ def run_behavior_condition(
         raise ValueError(f"Unknown behavior condition: {condition}")
     journal = RunJournal(output_dir, reset=True)
     manifest = {
-        "schema_version": "ai-race-game-understanding-run-v1",
+        "schema_version": "ai-race-game-understanding-run-v2",
         "status": "running",
         "started_utc": utc_now(),
         "completed_utc": None,

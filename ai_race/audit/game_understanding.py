@@ -24,7 +24,7 @@ from ai_race.engine.state import Action, GameConfig
 from ai_race.paths import PROMPTS_DIR
 
 
-AUDIT_PROTOCOL = "ai-race-game-understanding-v1"
+AUDIT_PROTOCOL = "ai-race-game-understanding-v2"
 ANSWER_RE = re.compile(r"^ANSWER\s*:\s*(.*?)\s*$", re.IGNORECASE)
 
 
@@ -271,6 +271,12 @@ def _semantic_candidate(response: str) -> tuple[str | None, bool]:
         match = ANSWER_RE.fullmatch(lines[0])
         assert match is not None
         return match.group(1).strip(), True
+    # Protocol v2: the semantic layer accepts one bare scalar while the strict
+    # layer still records the instruction-following failure.  V1 accidentally
+    # required the ANSWER prefix in both layers; the H100 smoke exposed that a
+    # correct bare `YES` or `5` was therefore misclassified as a knowledge error.
+    if len(lines) == 1 and re.fullmatch(r"[A-Za-z0-9_.+,%\- ]+", lines[0]):
+        return lines[0], False
     matches = [ANSWER_RE.search(line) for line in lines]
     recovered = [match.group(1).strip() for match in matches if match is not None]
     if recovered:

@@ -11,6 +11,7 @@ from pathlib import Path
 from typing import Any, Callable, Iterable
 
 from ai_race.audit.game_understanding import (
+    AUDIT_PROTOCOL,
     build_probe_bank,
     canonical_rules_context,
     probe_conditions,
@@ -80,6 +81,8 @@ def validate_probes(root: Path) -> tuple[list[dict[str, Any]], dict[str, Any]]:
     manifest = read_json(manifest_path)
     if manifest.get("status") != "completed":
         raise ValueError(f"Probe manifest is not completed: {manifest.get('status')}")
+    if manifest.get("audit_protocol") != AUDIT_PROTOCOL:
+        raise ValueError(f"Probe protocol mismatch: {manifest.get('audit_protocol')}")
     rows = read_jsonl(output_path)
     if len(rows) != int(manifest["n_outputs"]):
         raise ValueError("Probe manifest/output count mismatch")
@@ -238,6 +241,10 @@ def validate_behavior(root: Path) -> tuple[dict[str, list[dict[str, Any]]], dict
         manifest = read_json(manifest_path)
         if manifest.get("status") != "completed":
             raise ValueError(f"Behavior {condition} is not completed")
+        if manifest.get("audit_protocol") != AUDIT_PROTOCOL:
+            raise ValueError(
+                f"Behavior {condition} protocol mismatch: {manifest.get('audit_protocol')}"
+            )
         condition_turns = read_jsonl(turn_path)
         condition_races = read_csv(race_path)
         if len(condition_turns) != int(manifest["n_turns"]):
@@ -327,15 +334,46 @@ def main() -> None:
     probe_rows, probe_audit = validate_probes(args.probe_root)
     probe_summary, pair_summary = probe_summaries(probe_rows)
     behavior_turns, behavior_audit = validate_behavior(args.behavior_root)
+    probe_manifest = probe_audit["manifest"]
+    behavior_manifests = behavior_audit["manifests"]
+    for label, probe_value, behavior_values in (
+        (
+            "source",
+            probe_manifest["source_sha256"],
+            {manifest["source_sha256"] for manifest in behavior_manifests.values()},
+        ),
+        (
+            "model",
+            probe_manifest["model"]["config_sha256"],
+            {
+                manifest["model"]["config_sha256"]
+                for manifest in behavior_manifests.values()
+            },
+        ),
+        (
+            "profile",
+            probe_manifest["profile"],
+            {manifest["profile"] for manifest in behavior_manifests.values()},
+        ),
+    ):
+        if behavior_values != {probe_value}:
+            raise ValueError(
+                f"Probe/behavior {label} contract mismatch: "
+                f"probe={probe_value!r}, behavior={behavior_values!r}"
+            )
     behavioral = behavior_summary(behavior_turns)
     args.output_dir.mkdir(parents=True, exist_ok=True)
     write_csv(args.output_dir / "probe_summary.csv", probe_summary)
     write_csv(args.output_dir / "probe_pair_stability.csv", pair_summary)
     write_csv(args.output_dir / "behavior_summary.csv", behavioral)
     admission = {
-        "schema_version": "ai-race-game-understanding-analysis-v1",
+        "schema_version": "ai-race-game-understanding-analysis-v2",
         "status": "completed",
-        "evidence_class": "pilot",
+        "evidence_class": (
+            "diagnostic" if probe_manifest["profile"] == "smoke" else "pilot"
+        ),
+        "profile": probe_manifest["profile"],
+        "audit_protocol": AUDIT_PROTOCOL,
         "probe_outputs": len(probe_rows),
         "probe_items": len(build_probe_bank()),
         "probe_strict_format_rate": _rate(probe_rows, "strict_valid"),
