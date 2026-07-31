@@ -108,10 +108,11 @@ FAIL_ON_INCOMPLETE_RUN = True
 # Chỉ chạy khi có model nào khai engine="vllm". Với cấu hình transformers hiện tại
 # thì cell cài vLLM tự bỏ qua.
 INSTALL_VLLM_IF_MISSING = True
-# Dataset wheelhouse đã audit: vllm==0.11.0, build bởi kaggle/setup/build_quant_wheels.py
-# trên cùng image RTX Pro 6000, xem foundnotkiet/ai-race-wheelhouse (145 wheels, manifest
-# SHA-256 tại vllm_wheels/manifest.json).
-VLLM_WHEELS_DIR = "/kaggle/input/ai-race-vllm-wheels/vllm_wheels"
+# Dataset wheelhouse đã audit: vllm==0.26.0, build bởi pip download (cp312,
+# manylinux_2_28_x86_64, cu130) từ máy local, xem
+# nguyenlamphuquy/vllm-0-26-0-wheelhouse-cu130-py312 (184 wheels, manifest
+# SHA-256 tại manifest.json).
+VLLM_WHEELS_DIR = "/kaggle/input/datasets/nguyenlamphuquy/vllm-0-26-0-wheelhouse-cu130-py312"
 
 WORK_COPY = Path("/kaggle/working/ai_race_repo")
 OUTPUT_DIR = Path("/kaggle/working/ai_race_results")
