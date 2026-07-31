@@ -12,22 +12,29 @@ Repo input được tự dò bằng hai marker ``ai_race/`` và ``FAIRGAME/``, s
 vào ``/kaggle/working/ai_race_repo`` để Python có thể import và ghi cache. Các
 model được nạp, chạy, giải phóng tuần tự.
 
-Cấu hình mặc định dùng **transformers có sẵn trong image Kaggle**: không cài gì,
-không cần wheelhouse, Internet OFF. Backend nạp bf16 với ``device_map="auto"`` và
-flash-attention-2 nếu có (tự lùi về SDPA nếu không). Đổi ``engine`` của từng model
-sang ``"vllm"`` khi cần throughput — mọi hằng cấu hình của vLLM vẫn còn nguyên bên
-dưới.
+Hai chế độ chạy được gói vào một switch duy nhất, ``ENGINE_PROFILE`` ngay dưới đây —
+đổi máy/teammate thì chỉ sửa một dòng, không phải lục lại từng model:
+
+* ``"vllm"``         — cần wheelhouse offline đã audit (``VLLM_WHEELS_DIR``), batch
+  thật (``BATCH_SIZE`` prompt/lượt), throughput cao. Dùng khi đã có wheelhouse.
+* ``"transformers"`` — dùng thẳng image Kaggle, không cài gì, không cần wheelhouse.
+  Vì runner LUÔN truyền seed riêng cho mỗi quyết định (invariant của repo), backend
+  này buộc phải sinh TỪNG PROMPT MỘT — chậm hơn vllm rất nhiều (~1 generation/lượt,
+  không phải ``BATCH_SIZE``). Dùng khi chưa có wheelhouse hoặc máy không có vLLM.
 """
 
 # %%
 # Cấu hình người dùng — sửa path theo các input đã add trong Kaggle.
 from pathlib import Path
 
+# Switch duy nhất giữa 2 chế độ — xem so sánh ở docstring trên đầu file.
+ENGINE_PROFILE = "vllm"  # đổi thành "transformers" nếu chưa có wheelhouse vLLM
+
 MODELS = [
     {
         "path": "/kaggle/input/models/qwen-lm/qwen2.5/transformers/14b-instruct/1",
         "short_name": "qwen2.5-14b-instruct",
-        "engine": "transformers",
+        "engine": ENGINE_PROFILE,
         # Các override dưới đây là tùy chọn:
         # "temperature": 0.7,
         # "max_tokens": 256,
@@ -36,15 +43,15 @@ MODELS = [
     {
         "path": "/kaggle/input/models/google/gemma-3/transformers/gemma-3-12b-it/1",
         "short_name": "gemma-3-12b-it",
-        "engine": "transformers",
+        "engine": ENGINE_PROFILE,
     },
     # Thêm model khác tại đây; notebook sẽ chạy lần lượt, không nạp đồng thời
     # (mỗi model được free_model() giải phóng VRAM trước khi nạp checkpoint kế tiếp).
     #
-    # Muốn chạy lại bằng vLLM thì đổi "engine" ở trên, ĐỪNG thêm một entry thứ hai
-    # cho cùng checkpoint: short_name quyết định thư mục output, nên hai entry trùng
-    # short_name sẽ ghi đè lên nhau (RunJournal mở với reset=True). Khi dùng vLLM có
-    # thể chỉnh riêng "gpu_memory_utilization" hoặc "engine_overrides" trong entry đó.
+    # ĐỪNG thêm một entry thứ hai cho cùng checkpoint: short_name quyết định thư mục
+    # output, nên hai entry trùng short_name sẽ ghi đè lên nhau (RunJournal mở với
+    # reset=True). Một entry riêng có thể override "engine" khác ENGINE_PROFILE nếu
+    # cần trộn 2 backend trong cùng lần chạy.
 ]
 
 # Dataset đã stage: https://www.kaggle.com/datasets/nguyenlamphuquy/ai-race-experiment
@@ -79,9 +86,9 @@ REPETITIONS_OVERRIDE = 10  # pilot; None = dùng config (50). Chạy check_symme
 # trên output pilot trước khi bỏ override này.
 RUN_PHASE_OVERRIDE = None  # "pilot" hoặc "confirmatory"; None = dùng config
 
-# Dùng transformers có sẵn trong image Kaggle. Không cần cài vLLM, không cần
-# wheelhouse, và Internet vẫn OFF. Đổi lại là chậm hơn nhiều — xem BATCH_SIZE.
-DEFAULT_ENGINE = "transformers"
+# Cùng switch với ENGINE_PROFILE ở trên — model nào không khai "engine" riêng sẽ
+# dùng giá trị này.
+DEFAULT_ENGINE = ENGINE_PROFILE
 TEMPERATURE = 0.7
 MAX_TOKENS = 256
 LOGPROBS = 0  # Backend transformers không hỗ trợ; >0 sẽ raise ngay khi build config.
