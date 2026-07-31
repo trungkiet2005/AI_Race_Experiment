@@ -77,7 +77,9 @@ def sha256_file(path: Path) -> str:
     return digest.hexdigest()
 
 
-def source_tree_sha256(root: Path) -> str:
+def source_tree_sha256(
+    root: Path, extra_files: tuple[Path, ...] = ()
+) -> str:
     digest = hashlib.sha256()
     roots = [root / "ai_race", root / "FAIRGAME" / "src"]
     files = {
@@ -89,6 +91,7 @@ def source_tree_sha256(root: Path) -> str:
     # The orchestration connector affects backend/seeding/provenance semantics and
     # must therefore participate in the run contract, not only the engine tree.
     files.add(Path(__file__).resolve())
+    files.update(path.resolve() for path in extra_files)
     for path in sorted(files):
         digest.update(path.relative_to(root).as_posix().encode("utf-8"))
         digest.update(b"\0")
