@@ -88,9 +88,9 @@
     "noise_minor_typo": 0.0333
   },
   "artifacts": {
-    "raw_results_path": "/network-volume/icse27/ai_race_prompt_sensitivity/runs/8a0746bcce78bcc447dfe2b4e812c3287d1f9f36/surface-pilot-raw.tar.gz",
+    "raw_results_path": "gpu_run_archive/surface-pilot-raw.tar.gz",
     "raw_results_sha256": "366a027900c58ade9e8f564885c3d184bda499d4b0f34d40630f76719c10dc98",
-    "derived_analysis_path": "/network-volume/icse27/ai_race_prompt_sensitivity/runs/8a0746bcce78bcc447dfe2b4e812c3287d1f9f36/surface-pilot-analysis-v2.tar.gz",
+    "derived_analysis_path": "gpu_run_archive/surface-pilot-analysis-v2.tar.gz",
     "derived_analysis_sha256": "72a84946d438d54c431b7d940a8c22589b40e2415b9e45a2ee091352866d64aa"
   },
   "interpretation": "Exploratory pilot evidence only. Surface form materially changed Qwen2.5-7B decisions under a fixed game mechanism. First-round flips estimate direct prompt sensitivity; trajectory Unsafe-rate shifts additionally contain endogenous state feedback."

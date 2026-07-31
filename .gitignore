@@ -26,10 +26,19 @@ kaggle.json
 !/results/open_source/game_understanding_pilot/
 !/results/open_source/game_understanding_pilot/*.csv
 !/results/open_source/game_understanding_pilot/admission.json
+!/results/open_source/gpu_run_archive/
+!/results/open_source/gpu_run_archive/**
+!/results/open_source/prompt_sensitivity_pilot/
+!/results/open_source/prompt_sensitivity_pilot/**
+!/results/open_source/surface_sensitivity_pilot/
+!/results/open_source/surface_sensitivity_pilot/**
+!/results/open_source/surface_sensitivity_smoke/
+!/results/open_source/surface_sensitivity_smoke/**
 !/results/scripts/
 !/results/scripts/*.py
 !/results/scripts/*.json
 !/results/README.md
+!/results/visualization_insight_full.md
 /ai_race_results/
 /output/game_understanding/
 /models/
@@ -64,3 +73,7 @@ slides/*.xdv
 # OS
 .DS_Store
 Thumbs.db
+# Clean generated artifact artifacts
+/docs/reports/**/*.tmp-*.verification-failure.png
+/docs/reports/**/*candidate.html
+/docs/reports/**/*fail.png

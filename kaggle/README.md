@@ -4,7 +4,13 @@ Thư mục này có hai đường chạy độc lập:
 
 - `experiments/baseline.py`: notebook GPU/Internet OFF cho các checkpoint
   open-source. Notebook tái sử dụng trực tiếp package `ai_race` và FAIRGAME, nạp
-  nhiều model lần lượt để tránh giữ nhiều model trên GPU.
+  nhiều model lần lượt để tránh giữ nhiều model trên GPU. Có switch
+  `ENGINE_PROFILE` (`"vllm"` mặc định / `"transformers"`).
+- `experiments/baseline_transformers.py`: bản song song cố định ở backend
+  `transformers`, không có switch. Dùng khi chưa có wheelhouse vLLM. 72B bắt buộc
+  quantize `bnb-4bit` ở backend này, nên notebook tự cài `bitsandbytes` offline từ
+  Dataset `nguyenlamphuquy/ai-race-bnb-wheels` (kiểm SHA-256 trước khi cài). Hai
+  file là **bản sao song song**: sửa cơ chế/manifest/gate ở một bên phải sửa bên kia.
 - `experiments/prompt_sensitivity.py`: entrypoint private, fail-closed cho RTX PRO
   6000 (>=80 GiB). Mặc định chạy smoke 2 repetition trên 9 arm trong cùng session:
   baseline, seat-swap, placebo, risk-averse/risk-seeking và bốn social-persona cell.

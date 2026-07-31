@@ -1,0 +1,218 @@
+{
+  "archive_count": 11,
+  "archives": [
+    {
+      "bytes": 45072,
+      "evidence_class": "pilot-analysis",
+      "file": "analysis-pilot-identified-t1-0.tar.gz",
+      "json_metadata_files": 3,
+      "manifest_races": 0,
+      "manifest_turns": 0,
+      "members": 29,
+      "run_manifests": 0,
+      "run_statuses": {},
+      "scanned_files": 28,
+      "schemas": {},
+      "sha256": "c7c7e8569fb347dae68bba6b5a7f0796a2333ea9a0a064d404fb7f91c2728109",
+      "study": "persona-sensitivity"
+    },
+    {
+      "bytes": 175886,
+      "evidence_class": "smoke-and-pilot-raw",
+      "file": "game-understanding-results.tar.gz",
+      "json_metadata_files": 17,
+      "manifest_races": 84,
+      "manifest_turns": 1404,
+      "members": 80,
+      "run_manifests": 9,
+      "run_statuses": {
+        "completed": 9
+      },
+      "scanned_files": 50,
+      "schemas": {
+        "ai-race-game-understanding-analysis-v1": 1,
+        "ai-race-game-understanding-analysis-v2": 1,
+        "ai-race-game-understanding-run-v1": 3,
+        "ai-race-game-understanding-run-v2": 6
+      },
+      "sha256": "7c895cf719b53a36b52c9c895e3c1788369f8d39c8665221f250b7e68f3c6a35",
+      "study": "game-understanding"
+    },
+    {
+      "bytes": 320201,
+      "evidence_class": "pilot-raw",
+      "file": "pilot-identified-t1-0-results.tar.gz",
+      "json_metadata_files": 9,
+      "manifest_races": 210,
+      "manifest_turns": 3906,
+      "members": 47,
+      "run_manifests": 7,
+      "run_statuses": {
+        "completed": 7
+      },
+      "scanned_files": 37,
+      "schemas": {
+        "ai-race-greennode-lane-v1": 2,
+        "ai-race-kaggle-run-v1": 7
+      },
+      "sha256": "6ef49b248bae0b1b2fedff575c73bbd5900c9a478a0f41a3d9b3614570a65516",
+      "study": "persona-sensitivity"
+    },
+    {
+      "bytes": 71699,
+      "evidence_class": "smoke-raw",
+      "file": "smoke-results.tar.gz",
+      "json_metadata_files": 11,
+      "manifest_races": 54,
+      "manifest_turns": 648,
+      "members": 59,
+      "run_manifests": 9,
+      "run_statuses": {
+        "completed": 9
+      },
+      "scanned_files": 47,
+      "schemas": {
+        "ai-race-greennode-lane-v1": 2,
+        "ai-race-greennode-run-v1": 9
+      },
+      "sha256": "2213c3acaa2970c4143d1484ac3a333600883676100b08820124233941f675e8",
+      "study": "persona-sensitivity"
+    },
+    {
+      "bytes": 75123,
+      "evidence_class": "smoke-raw",
+      "file": "smoke-t1-0-results.tar.gz",
+      "json_metadata_files": 11,
+      "manifest_races": 54,
+      "manifest_turns": 648,
+      "members": 59,
+      "run_manifests": 9,
+      "run_statuses": {
+        "completed": 9
+      },
+      "scanned_files": 47,
+      "schemas": {
+        "ai-race-greennode-lane-v1": 2,
+        "ai-race-kaggle-run-v1": 9
+      },
+      "sha256": "546b21a0e46ed37666345dfd469b773224ecd9a42ab9794a0dd868ff91410636",
+      "study": "persona-sensitivity"
+    },
+    {
+      "bytes": 75311,
+      "evidence_class": "smoke-raw",
+      "file": "smoke-t1-2-results.tar.gz",
+      "json_metadata_files": 11,
+      "manifest_races": 54,
+      "manifest_turns": 648,
+      "members": 59,
+      "run_manifests": 9,
+      "run_statuses": {
+        "completed": 9
+      },
+      "scanned_files": 47,
+      "schemas": {
+        "ai-race-greennode-lane-v1": 2,
+        "ai-race-kaggle-run-v1": 9
+      },
+      "sha256": "38dd0f0cd871043fb50cf13449f80076c307dd9a8797f301cca1f534d8f1cde3",
+      "study": "persona-sensitivity"
+    },
+    {
+      "bytes": 4827,
+      "evidence_class": "pilot-analysis",
+      "file": "surface-pilot-analysis-v2.tar.gz",
+      "json_metadata_files": 1,
+      "manifest_races": 0,
+      "manifest_turns": 0,
+      "members": 4,
+      "run_manifests": 0,
+      "run_statuses": {},
+      "scanned_files": 3,
+      "schemas": {
+        "ai-race-surface-sensitivity-analysis-v1": 1
+      },
+      "sha256": "72a84946d438d54c431b7d940a8c22589b40e2415b9e45a2ee091352866d64aa",
+      "study": "surface-sensitivity"
+    },
+    {
+      "bytes": 803682,
+      "evidence_class": "pilot-raw",
+      "file": "surface-pilot-raw.tar.gz",
+      "json_metadata_files": 20,
+      "manifest_races": 540,
+      "manifest_turns": 10044,
+      "members": 112,
+      "run_manifests": 18,
+      "run_statuses": {
+        "completed": 18
+      },
+      "scanned_files": 92,
+      "schemas": {
+        "ai-race-surface-sensitivity-lane-v1": 2,
+        "ai-race-surface-sensitivity-run-v1": 18
+      },
+      "sha256": "366a027900c58ade9e8f564885c3d184bda499d4b0f34d40630f76719c10dc98",
+      "study": "surface-sensitivity"
+    },
+    {
+      "bytes": 4522,
+      "evidence_class": "superseded-smoke-analysis",
+      "file": "surface-smoke-analysis-v1.tar.gz",
+      "json_metadata_files": 1,
+      "manifest_races": 0,
+      "manifest_turns": 0,
+      "members": 4,
+      "run_manifests": 0,
+      "run_statuses": {},
+      "scanned_files": 3,
+      "schemas": {
+        "ai-race-surface-sensitivity-analysis-v1": 1
+      },
+      "sha256": "2e7fb769f6c70b5dac498f3bbab728526a81817b6499e3eb3c7770ec77be4621",
+      "study": "surface-sensitivity"
+    },
+    {
+      "bytes": 4307,
+      "evidence_class": "smoke-analysis",
+      "file": "surface-smoke-analysis-v2.tar.gz",
+      "json_metadata_files": 1,
+      "manifest_races": 0,
+      "manifest_turns": 0,
+      "members": 4,
+      "run_manifests": 0,
+      "run_statuses": {},
+      "scanned_files": 3,
+      "schemas": {
+        "ai-race-surface-sensitivity-analysis-v1": 1
+      },
+      "sha256": "8a7f97dc1f9ea30575d27795e690ecad28562dede2b799c54be2c05d4e4f91a7",
+      "study": "surface-sensitivity"
+    },
+    {
+      "bytes": 154190,
+      "evidence_class": "smoke-raw",
+      "file": "surface-smoke-raw.tar.gz",
+      "json_metadata_files": 20,
+      "manifest_races": 108,
+      "manifest_turns": 1296,
+      "members": 112,
+      "run_manifests": 18,
+      "run_statuses": {
+        "completed": 18
+      },
+      "scanned_files": 92,
+      "schemas": {
+        "ai-race-surface-sensitivity-lane-v1": 2,
+        "ai-race-surface-sensitivity-run-v1": 18
+      },
+      "sha256": "f96e20f0c75aefff64a69ed0002f1e94fb97e465b6d460eb3705702441ede41e",
+      "study": "surface-sensitivity"
+    }
+  ],
+  "privacy_boundary": "Result payloads and scientific manifests only; pod access logs, PIDs, source snapshots, model caches, credentials, and third-party source copies excluded.",
+  "schema_version": "ai-race-public-gpu-archive-ledger-v1",
+  "status": "verified",
+  "total_bytes": 1734820,
+  "total_scanned_files": 449
+}

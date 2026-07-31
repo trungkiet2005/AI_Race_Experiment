@@ -1,0 +1,23 @@
+{
+  "name": "persona_baseline_risk_3_1",
+  "runPhase": "pilot",
+  "description": "Persona condition R3-R1 (risk matrix cell 3,1 of 6x6). Identical mechanism, prompt, seed, and repetitions to the neutral baseline; only the agents configuration differs, so the difference from 'none' is the persona effect.",
+  "games": [
+    "ai_race_risk_10",
+    "ai_race_risk_60",
+    "ai_race_risk_90"
+  ],
+  "agents": "persona_risk_3_1",
+  "languages": [
+    "en"
+  ],
+  "models": [
+    "LocalQwen"
+  ],
+  "useOffline": true,
+  "offlineSettings": "offline_settings",
+  "repetitions": 50,
+  "seed": 260726,
+  "maxParseRetries": 3,
+  "verbose": true
+}

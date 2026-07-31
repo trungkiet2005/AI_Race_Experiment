@@ -1,0 +1,210 @@
+{
+  "all_manifest_counts_verified": true,
+  "allow_mixed_protocols": false,
+  "allow_noncanonical_mechanism": false,
+  "allow_nonconfirmatory_runs": true,
+  "allow_nonfinal_runs": false,
+  "behavior_filter": "A race is included in behavioral, strategy, and logit estimands only when every decision parsed and the race used a canonical risk treatment, reached the five-round minimum, and did not terminate at a forced safety cap. All races remain in protocol-health and accounting outputs.",
+  "behavioral_models": [
+    "qwen2.5:7b-instruct-fp16"
+  ],
+  "behavioral_persona_conditions": [
+    "R-",
+    "R0",
+    "S_AA",
+    "S_AC",
+    "S_CA",
+    "none"
+  ],
+  "behavioral_prompt_versions": [
+    "ai-race-fairgame-v3"
+  ],
+  "behavioral_protocol_signatures": [
+    "d9189c2e5217f018ed55b6e1a70e918bcd699ee0f14d339b92be406e83b8f90f"
+  ],
+  "behavioral_run_phases": [
+    "pilot"
+  ],
+  "behavioral_run_statuses": [
+    "completed"
+  ],
+  "inference_cluster": "source_run/model/rep common-random-number repetition block; the logit refuses inputs without valid blocks spanning risk treatments",
+  "logit_formula": "unsafe ~ C(max_private_risk) + first_round_unsafe + own_prev_unsafe * opponent_prev_unsafe * progress_gap_before + C(persona_condition)",
+  "logit_requested": true,
+  "mechanics_checks_passed": [
+    "step_increment matches Safe=1.0/Unsafe=1.5",
+    "round_payoff matches the canonical 2x2 stage game",
+    "own_progress_after matches pre-state plus step increment",
+    "each trajectory starts from zero progress",
+    "progress state is continuous across rounds",
+    "progress_gap_after matches focal minus opponent progress",
+    "opponent_progress_before matches the paired trajectory",
+    "opponent_progress_after matches the paired trajectory",
+    "own accumulated stage payoff before the decision matches prior round payoffs",
+    "cumulative stage payoff matches the round-payoff trajectory",
+    "accumulated stage payoff advances by the current round payoff",
+    "own private risk before the decision matches prior Unsafe frequency",
+    "current private risk matches max_private_risk times cumulative Unsafe frequency",
+    "opponent accumulated stage payoff before the decision matches the paired trajectory",
+    "opponent private risk before the decision matches the paired trajectory",
+    "stopped marks exactly the terminal game-round",
+    "stop_draw follows the shared minimum-5-round, p=0.2 stopping rule",
+    "horizon and stopping draws are fixed within each CRN repetition block",
+    "players.csv n_rounds matches trajectory length",
+    "players.csv unsafe_count matches enacted trajectory",
+    "players.csv unsafe_frequency matches enacted trajectory",
+    "players.csv progress matches terminal turn state",
+    "players.csv stage_payoff matches summed round payoffs",
+    "players.csv private_risk matches max_private_risk times realised Unsafe frequency",
+    "players.csv prize matches canonical winner=100/tie=50/loser=0",
+    "setback eligibility matches winner/tied-winner status",
+    "setback flags match eligibility, draw, and private risk",
+    "players.csv final_payoff is zero after setback and otherwise stage_payoff plus prize",
+    "setback draws are fixed by player seat within each CRN repetition block",
+    "players.csv outcomes match terminal progress",
+    "races.csv tie matches player outcomes"
+  ],
+  "n_parse_failures": 0,
+  "n_player_races_behavioral": 420,
+  "n_player_races_total": 420,
+  "n_player_rounds_behavioral": 3906,
+  "n_player_rounds_total": 3906,
+  "n_races_behavioral": 210,
+  "n_races_excluded_any_parse_failure": 0,
+  "n_races_excluded_forced_safety_cap_stop": 0,
+  "n_races_excluded_noncanonical_mechanism": 0,
+  "n_races_excluded_total": 0,
+  "n_races_total": 210,
+  "n_source_runs": 7,
+  "outputs": [
+    "clustered_logit_coefficients.csv",
+    "clustered_logit_metadata.json",
+    "first_round_persistence_player.csv",
+    "first_round_persistence_turn.csv",
+    "gap_collinearity.csv",
+    "horizon_distribution.csv",
+    "human_comparison.csv",
+    "human_comparison_metadata.json",
+    "opponent_response_player.csv",
+    "opponent_response_turn.csv",
+    "outcome_player.csv",
+    "parse_failures.csv",
+    "persona_contrasts.csv",
+    "player_metrics.csv",
+    "race_quality.csv",
+    "race_state_player.csv",
+    "seat_balance.csv",
+    "strategy_summary_player.csv",
+    "treatment_contrasts.csv",
+    "unsafe_by_gap_bin_turn.csv",
+    "unsafe_by_gap_lag_turn.csv",
+    "unsafe_by_lag_profile_turn.csv",
+    "unsafe_by_race_state_turn.csv",
+    "unsafe_by_risk_model_player.csv",
+    "unsafe_by_risk_model_turn.csv",
+    "winner_loser_correlation.csv",
+    "winner_loser_pairs.csv"
+  ],
+  "persona_conditions": [
+    "R-",
+    "R0",
+    "S_AA",
+    "S_AC",
+    "S_CA",
+    "none"
+  ],
+  "persona_identification": {
+    "confounded_with_protocol_signature": false,
+    "identified": true,
+    "n_persona_conditions": 6,
+    "persona_conditions": [
+      "R-",
+      "R0",
+      "S_AA",
+      "S_AC",
+      "S_CA",
+      "none"
+    ],
+    "remedy": "Run every persona cell in one batch so they share source revision, decoding, and package versions; persona then varies inside a single protocol signature and its coefficient is estimable.",
+    "varies_within_protocol_signature": true
+  },
+  "player_level_note": "Player-level tables average within-player trajectory rates so longer realised horizons do not automatically receive more weight.",
+  "prompt_versions": [
+    "ai-race-fairgame-v3"
+  ],
+  "protocol_grouping": "Every descriptive table is stratified by prompt_version, protocol_signature, run_phase, and run_status. By default each model label may have only one exact manifest contract; overrides are explicit sensitivity/protocol audits.",
+  "protocol_signature_payloads": {
+    "d9189c2e5217f018ed55b6e1a70e918bcd699ee0f14d339b92be406e83b8f90f": {
+      "decoding": {
+        "logprobs": 0,
+        "logprobs_enabled": false,
+        "max_parse_retries": 3,
+        "max_tokens": 16,
+        "num_ctx": 4096,
+        "seed_probe_exact_match": true,
+        "seed_requested": true,
+        "temperature": 1.0,
+        "workers": 16
+      },
+      "manifest_schema": "ai-race-kaggle-run-v1",
+      "mechanism": {
+        "game_config_sha256": {
+          "ai_race_risk_10": "c0a12fb6980e7642bd15f724e8fe6a676920afcdb0095c3917629420a563ddcf",
+          "ai_race_risk_60": "fe69d6f0ff71b3fdd119aa40c4f90a2c33f73c5bf71863d48fb835b51b0119ff",
+          "ai_race_risk_90": "df4166c4ed6532bb863ba865aa51c8f2b69582248233606b7035656a4e8e81e1"
+        },
+        "games": [
+          "ai_race_risk_10",
+          "ai_race_risk_60",
+          "ai_race_risk_90"
+        ]
+      },
+      "model": {
+        "config_sha256": "59805ce4a4046be2d8f63231a78daacd2e66f5dccf1a64d0d138ebeeb26ff16c",
+        "engine": "ollama",
+        "label": "qwen2.5:7b-instruct-fp16",
+        "path": "ollama://localhost/qwen2.5:7b-instruct-fp16@59805ce4a4046be2d8f63231a78daacd2e66f5dccf1a64d0d138ebeeb26ff16c",
+        "route": null
+      },
+      "prompt": {
+        "canonical_match": true,
+        "canonical_version": "ai-race-fairgame-v3",
+        "sha256": "27086bd80378c25e859d03527a5ae55c1046f231ef7b914db9cb3c3b4fb2df3e",
+        "version": "ai-race-fairgame-v3"
+      },
+      "runtime": {
+        "package_versions": {
+          "ollama": "0.30.8",
+          "python": "3.10.12"
+        }
+      },
+      "seed_contract": {
+        "backend": "ollama",
+        "base_seed_field": "experiment.seed",
+        "base_seed_value_in_signature": false,
+        "provenance": "ai-race-kaggle-run-v1 deterministic per-decision seed contract",
+        "seed_forwarded_to_backend": true
+      },
+      "signature_schema": "ai-race-analysis-protocol-signature-v1",
+      "source_sha256": "fdd06b8ef6f02ad481c15f45627d48825573b927be1cac6ea790e098ddeacd9e"
+    }
+  },
+  "protocol_signatures": [
+    "d9189c2e5217f018ed55b6e1a70e918bcd699ee0f14d339b92be406e83b8f90f"
+  ],
+  "run_phases": [
+    "pilot"
+  ],
+  "run_statuses": [
+    "completed"
+  ],
+  "source_runs": [
+    "gpu_run_archive/pilot-identified-t1-0-results.tar.gz::pilot_identified_t1_0/lane_a/baseline",
+    "gpu_run_archive/pilot-identified-t1-0-results.tar.gz::pilot_identified_t1_0/lane_a/persona_baseline_adv_coop",
+    "gpu_run_archive/pilot-identified-t1-0-results.tar.gz::pilot_identified_t1_0/lane_a/persona_baseline_neutral",
+    "gpu_run_archive/pilot-identified-t1-0-results.tar.gz::pilot_identified_t1_0/lane_a/persona_baseline_risk_averse",
+    "gpu_run_archive/pilot-identified-t1-0-results.tar.gz::pilot_identified_t1_0/lane_b/baseline_swapped",
+    "gpu_run_archive/pilot-identified-t1-0-results.tar.gz::pilot_identified_t1_0/lane_b/persona_baseline_adv_adv",
+    "gpu_run_archive/pilot-identified-t1-0-results.tar.gz::pilot_identified_t1_0/lane_b/persona_baseline_coop_adv"
+  ]
+}
