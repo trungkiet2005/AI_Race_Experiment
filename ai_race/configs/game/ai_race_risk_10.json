@@ -15,7 +15,7 @@
   "maxRoundsSafetyCap": 100,
   "racePrize": 100,
   "maxPrivateRisk": 0.1,
-  "historyMode": "previous_round",
+  "historyMode": "first_and_previous",
   "agentsCommunicate": false,
   "promptTemplate": "ai_race_{language}",
   "promptVersion": "ai-race-fairgame-v3",

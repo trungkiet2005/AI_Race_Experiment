@@ -87,8 +87,11 @@ class GameConfig:
             raise ValueError("race_prize cannot be negative")
         if not 0 <= self.max_private_risk <= 1:
             raise ValueError("max_private_risk must be in [0, 1]")
-        if self.history_mode not in {"previous_round", "full"}:
-            raise ValueError("history_mode must be 'previous_round' or 'full'")
+        if self.history_mode not in {"previous_round", "first_and_previous", "full"}:
+            raise ValueError(
+                "history_mode must be 'previous_round', 'first_and_previous', "
+                "or 'full'"
+            )
         if self.run_phase not in {"pilot", "confirmatory"}:
             raise ValueError("run_phase must be 'pilot' or 'confirmatory'")
         if not str(self.persona_condition).strip():
@@ -108,6 +111,7 @@ class GameConfig:
         run_phase: Optional[str] = None,
         persona_condition: Optional[str] = None,
         persona_sha256: Optional[str] = None,
+        prompt_version: Optional[str] = None,
     ) -> "GameConfig":
         payoffs = data.get("stagePayoffs", {}) or {}
         return cls(
@@ -130,7 +134,7 @@ class GameConfig:
             reveal_opponent_persona_prior=bool(data.get("revealOpponentPersonaPrior", False)),
             language=language or str(data.get("language", "en")),
             prompt_template=str(data.get("promptTemplate", "ai_race_en")),
-            prompt_version=str(data.get("promptVersion", "ai-race-fairgame-v3")),
+            prompt_version=prompt_version or str(data.get("promptVersion", "ai-race-fairgame-v3")),
             run_phase=run_phase or str(data.get("runPhase", "pilot")),
             agents_ref=str(data.get("agents", "companies_default")),
             # Persona lives in the agents configuration, so the caller supplies it;

@@ -45,7 +45,18 @@ def _previous_round_text(
     if not history:
         return "No previous round has been played."
 
-    selected = history if history_mode == "full" else history[-1:]
+    if history_mode == "full":
+        selected = list(history)
+    elif history_mode == "first_and_previous":
+        # The opening move is the only thing separating CS from CAS. Under plain
+        # memory-one the agent cannot see its own round-1 action once the race has
+        # moved on, so that distinction is unreachable for it by construction —
+        # even though the analysis conditions on it. Carrying round 1 alongside the
+        # latest round closes that gap without turning the prompt into a full
+        # transcript whose length would grow with the horizon.
+        selected = [history[0]] if len(history) == 1 else [history[0], history[-1]]
+    else:
+        selected = history[-1:]
     lines: list[str] = []
     opponent_index = 1 - player_index
     for record in selected:

@@ -25,6 +25,7 @@ Hai chế độ chạy được gói vào một switch duy nhất, ``ENGINE_PROF
 
 # %%
 # Cấu hình người dùng — sửa path theo các input đã add trong Kaggle.
+import os
 from pathlib import Path
 
 # Switch duy nhất giữa 2 chế độ — xem so sánh ở docstring trên đầu file.
@@ -71,20 +72,48 @@ REPO_INPUT_DIRS = [
 # Mọi cell persona phải chạy trong CÙNG một session. protocol_signature gồm source
 # revision, decoding và package versions; chạy lệch session thì persona trùng khít
 # với batch và analyser sẽ từ chối ước lượng hệ số persona.
-EXPERIMENTS = [
+PROMPT_SENSITIVITY_EXPERIMENTS = [
     "baseline",                       # none  — đối chứng trung tính
-    # "baseline_swapped",             # none  — đảo ghế, đo artefact vị trí
-    # "persona_baseline_neutral",     # R0    — placebo cùng độ dài
-    # "persona_baseline_risk_averse", # R-
-    # "persona_baseline_risk_seeking",# R+
-    # "persona_baseline_coop_coop",   # S_CC
-    # "persona_baseline_adv_adv",     # S_AA
-    # "persona_baseline_adv_coop",    # S_AC  — cell bất đối xứng
-    # "persona_baseline_coop_adv",    # S_CA  — mirror bắt buộc của S_AC
+    "baseline_swapped",               # none  — đảo ghế, đo artefact vị trí
+    "persona_baseline_neutral",       # R0    — placebo cùng độ dài
+    "persona_baseline_risk_averse",   # R-
+    "persona_baseline_risk_seeking",  # R+
+    "persona_baseline_coop_coop",     # S_CC
+    "persona_baseline_adv_adv",       # S_AA
+    "persona_baseline_adv_coop",      # S_AC  — cell bất đối xứng
+    "persona_baseline_coop_adv",      # S_CA  — mirror bắt buộc của S_AC
 ]
-REPETITIONS_OVERRIDE = 10  # pilot; None = dùng config (50). Chạy check_symmetry.py
-# trên output pilot trước khi bỏ override này.
+
+# Kernel bootstrap có thể chọn profile mà không sửa source đã hash. Mọi arm của
+# prompt-sensitivity phải chạy trong cùng session để source/model/decoding giống hệt.
+RUN_PROFILE = os.environ.get("AI_RACE_RUN_PROFILE", "baseline").strip().lower()
+PROFILE_EXPERIMENTS = {
+    "baseline": ["baseline"],
+    "prompt_sensitivity_smoke": PROMPT_SENSITIVITY_EXPERIMENTS,
+    "prompt_sensitivity_pilot": PROMPT_SENSITIVITY_EXPERIMENTS,
+}
+if RUN_PROFILE not in PROFILE_EXPERIMENTS:
+    raise ValueError(
+        f"Unknown AI_RACE_RUN_PROFILE={RUN_PROFILE!r}; expected one of "
+        f"{sorted(PROFILE_EXPERIMENTS)}"
+    )
+EXPERIMENTS = list(PROFILE_EXPERIMENTS[RUN_PROFILE])
+
+_repetition_default = {
+    "baseline": 10,
+    "prompt_sensitivity_smoke": 2,
+    "prompt_sensitivity_pilot": 10,
+}[RUN_PROFILE]
+_repetition_env = os.environ.get("AI_RACE_REPETITIONS_OVERRIDE")
+REPETITIONS_OVERRIDE = (
+    int(_repetition_env) if _repetition_env is not None else _repetition_default
+)
+# Smoke = 2 rep/arm; pilot = 10 rep/arm. Chỉ scale sau khi coverage, parser và
+# symmetry gates đều đạt. Config gốc vẫn giữ 50 rep cho confirmatory sau freeze.
 RUN_PHASE_OVERRIDE = None  # "pilot" hoặc "confirmatory"; None = dùng config
+
+REQUIRED_GPU_NAME = os.environ.get("AI_RACE_REQUIRED_GPU", "").strip()
+MIN_GPU_VRAM_GIB = float(os.environ.get("AI_RACE_MIN_GPU_VRAM_GIB", "0"))
 
 # Cùng switch với ENGINE_PROFILE ở trên — model nào không khai "engine" riêng sẽ
 # dùng giá trị này.
@@ -121,6 +150,14 @@ INSTALL_VLLM_IF_MISSING = True
 # SHA-256 tại manifest.json).
 VLLM_WHEELS_DIR = "/kaggle/input/datasets/nguyenlamphuquy/vllm-0-26-0-wheelhouse-cu130-py312"
 
+# Debug: in lại chuỗi prompt của một race sau khi chạy xong (đọc từ turns.jsonl,
+# không gọi lại model). False = tắt · True = lấy race đầu tiên · "<game_id>" =
+# chỉ đích danh. Cell debug in sẵn danh sách game_id để copy vào đây.
+DEBUG_DUMP_RACE = False
+# Ghế 1 chỉ khác ghế 0 ở hoán vị danh tính, nên mặc định chỉ in phần khác biệt.
+DEBUG_DIFF_SECOND_SEAT = True
+DEBUG_MAX_PROMPT_CHARS = None  # None = in trọn prompt; đặt số để cắt bớt
+
 WORK_COPY = Path("/kaggle/working/ai_race_repo")
 OUTPUT_DIR = Path("/kaggle/working/ai_race_results")
 ZIP_PATH = Path("/kaggle/working/ai_race_results.zip")
@@ -129,7 +166,6 @@ RESET_OUTPUT_DIR = True
 
 # %%
 # Helpers tự dò input. Tìm có giới hạn độ sâu để tránh quét toàn bộ model weights.
-import os
 import sys
 
 
@@ -207,6 +243,40 @@ import hashlib
 import importlib.util
 import json
 import subprocess
+
+
+def validate_gpu_runtime():
+    """Fail closed before loading weights when the assigned GPU is wrong."""
+
+    import torch
+
+    if not torch.cuda.is_available():
+        raise RuntimeError("CUDA is unavailable; refusing to run a GPU experiment")
+    properties = torch.cuda.get_device_properties(0)
+    name = str(properties.name)
+    total_vram_gib = float(properties.total_memory) / 1024**3
+    if REQUIRED_GPU_NAME and REQUIRED_GPU_NAME.lower() not in name.lower():
+        raise RuntimeError(
+            f"GPU mismatch: required name containing {REQUIRED_GPU_NAME!r}, got {name!r}"
+        )
+    if total_vram_gib + 1e-9 < MIN_GPU_VRAM_GIB:
+        raise RuntimeError(
+            f"GPU VRAM mismatch: require >= {MIN_GPU_VRAM_GIB:.1f} GiB, "
+            f"got {total_vram_gib:.1f} GiB"
+        )
+    runtime = {
+        "gpu_name": name,
+        "gpu_vram_gib": round(total_vram_gib, 3),
+        "cuda_version": str(torch.version.cuda),
+        "torch_cuda_device_count": int(torch.cuda.device_count()),
+        "required_gpu_name": REQUIRED_GPU_NAME or None,
+        "minimum_gpu_vram_gib": MIN_GPU_VRAM_GIB,
+    }
+    print(f"GPU runtime: {json.dumps(runtime, sort_keys=True)}")
+    return runtime
+
+
+GPU_RUNTIME = validate_gpu_runtime()
 
 needs_vllm = any(
     model.get("engine", DEFAULT_ENGINE).lower() == "vllm" for model in MODELS
@@ -470,6 +540,9 @@ def run_one_experiment(model, experiment_name, send_batch):
         "started_utc": datetime.now(timezone.utc).isoformat(),
         "completed_utc": None,
         "source_sha256": SOURCE_SHA256,
+        "run_profile": RUN_PROFILE,
+        "repetitions_override": REPETITIONS_OVERRIDE,
+        "gpu_runtime": GPU_RUNTIME,
         "experiment_name": experiment_name,
         "run_phase": str(experiment.get("runPhase", "pilot")),
         "experiment": experiment,
@@ -537,6 +610,9 @@ def run_one_experiment(model, experiment_name, send_batch):
             experiment,
             model["short_name"],
         )
+        expected_races = len(games)
+        run_manifest["expected_races"] = expected_races
+        write_run_manifest()
         results = run_games_batched(
             games,
             send_batch,
@@ -544,6 +620,12 @@ def run_one_experiment(model, experiment_name, send_batch):
             max_parse_retries=max_parse_retries,
             on_round_complete=journal.record_round,
         )
+        if len(results) != expected_races or journal.race_count != expected_races:
+            raise RuntimeError(
+                "Incomplete experiment coverage: "
+                f"expected={expected_races}, results={len(results)}, "
+                f"journal={journal.race_count}"
+            )
     except Exception as error:
         run_manifest.update(
             {
@@ -654,6 +736,64 @@ def merge_csv_files(filename, destination):
     return len(rows)
 
 
+def write_prompt_sensitivity_summary(players_path, destination):
+    """Write decision-weighted arm effects relative to the neutral baseline.
+
+    This is a descriptive smoke/pilot diagnostic, not the confirmatory estimator.
+    The repository analyser remains authoritative for clustered inference.
+    """
+
+    if not players_path.is_file():
+        return 0
+    aggregates = {}
+    with players_path.open("r", newline="", encoding="utf-8") as handle:
+        for row in csv.DictReader(handle):
+            key = (
+                str(row.get("model", "")),
+                str(row.get("experiment", "")),
+                str(row.get("persona_condition", "")),
+                float(row["max_private_risk"]),
+            )
+            bucket = aggregates.setdefault(
+                key, {"unsafe": 0, "decisions": 0, "trajectories": 0}
+            )
+            bucket["unsafe"] += int(float(row["unsafe_count"]))
+            bucket["decisions"] += int(float(row["n_rounds"]))
+            bucket["trajectories"] += 1
+
+    baseline_rates = {}
+    for (model, experiment, _condition, risk), values in aggregates.items():
+        if experiment == "baseline" and values["decisions"]:
+            baseline_rates[(model, risk)] = values["unsafe"] / values["decisions"]
+
+    rows = []
+    for (model, experiment, condition, risk), values in sorted(aggregates.items()):
+        unsafe_rate = values["unsafe"] / values["decisions"]
+        baseline_rate = baseline_rates.get((model, risk))
+        rows.append(
+            {
+                "model": model,
+                "experiment": experiment,
+                "persona_condition": condition,
+                "max_private_risk": risk,
+                "player_trajectories": values["trajectories"],
+                "decisions": values["decisions"],
+                "unsafe_rate": unsafe_rate,
+                "baseline_unsafe_rate": baseline_rate,
+                "unsafe_rate_delta_vs_baseline": (
+                    unsafe_rate - baseline_rate if baseline_rate is not None else ""
+                ),
+            }
+        )
+    if not rows:
+        return 0
+    with destination.open("w", newline="", encoding="utf-8") as handle:
+        writer = csv.DictWriter(handle, fieldnames=list(rows[0]))
+        writer.writeheader()
+        writer.writerows(rows)
+    return len(rows)
+
+
 # %%
 # Chạy model tuần tự. Manifest được cập nhật sau từng model để giữ kết quả đã xong.
 if RESET_OUTPUT_DIR and OUTPUT_DIR.exists():
@@ -662,9 +802,12 @@ OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 manifest = {
     "repo_input": str(repo_input),
+    "run_profile": RUN_PROFILE,
+    "repetitions_override": REPETITIONS_OVERRIDE,
     "experiments": list(EXPERIMENTS),
     "source_sha256": SOURCE_SHA256,
     "package_versions": PACKAGE_VERSIONS,
+    "gpu_runtime": GPU_RUNTIME,
     "models": [],
     "runs": [],
 }
@@ -719,6 +862,140 @@ for model in MODELS:
 
 
 # %%
+# Debug: in lại toàn bộ chuỗi prompt của MỘT race.
+#
+# Đọc từ turns.jsonl đã ghi, không chạy lại model — nên rẻ, và xem được đúng cái
+# prompt đã thực sự gửi đi chứ không phải cái ta nghĩ là đã gửi.
+#
+# Mặc định chỉ in đầy đủ prompt của ghế 0 và phần KHÁC BIỆT của ghế 1. Hai prompt
+# trong cùng một vòng chỉ khác nhau ở hoán vị danh tính (~2.100 ký tự giống hệt),
+# nên in cả hai bản đầy đủ chỉ làm trôi log. Đặt DEBUG_DIFF_SECOND_SEAT = False
+# nếu muốn xem trọn vẹn cả hai.
+import difflib
+
+
+def list_race_ids(output_dir=None, limit=None):
+    """Liệt kê game_id có trong output, kèm model và mức rủi ro."""
+    output_dir = Path(output_dir or OUTPUT_DIR)
+    seen = {}
+    for path in sorted(output_dir.rglob("turns.jsonl")):
+        for line in path.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            row = json.loads(line)
+            seen.setdefault(
+                row["game_id"],
+                (row.get("model"), row.get("max_private_risk"), row.get("rep"), path),
+            )
+    items = list(seen.items())
+    return items[:limit] if limit else items
+
+
+def _load_race_turns(game_id=None, output_dir=None):
+    """Trả về (game_id, các lượt đã sắp xếp). game_id=None -> lấy race đầu tiên."""
+    output_dir = Path(output_dir or OUTPUT_DIR)
+    rows = []
+    for path in sorted(output_dir.rglob("turns.jsonl")):
+        for line in path.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            row = json.loads(line)
+            if game_id is None or row["game_id"] == game_id:
+                rows.append(row)
+        if rows and game_id is None:
+            # Chốt luôn race đầu tiên gặp được, đừng gom cả thư mục.
+            game_id = rows[0]["game_id"]
+            rows = [r for r in rows if r["game_id"] == game_id]
+            break
+        if rows:
+            break
+    rows.sort(key=lambda r: (int(r["round"]), int(r.get("player_index", 0))))
+    return game_id, rows
+
+
+def dump_race_prompts(
+    game_id=None,
+    output_dir=None,
+    diff_second_seat=True,
+    max_prompt_chars=None,
+    show_response=True,
+):
+    """In từng vòng của một race: prompt gửi đi, phản hồi thô, hành động đã parse."""
+    game_id, rows = _load_race_turns(game_id, output_dir)
+    if not rows:
+        print(f"[debug] không tìm thấy lượt nào cho game_id={game_id!r}")
+        return
+
+    head = rows[0]
+    print("=" * 78)
+    print(f"RACE   {game_id}")
+    print(f"model  {head.get('model')}   p_max={head.get('max_private_risk')}   "
+          f"rep={head.get('rep')}   seed={head.get('game_seed')}")
+    print(f"prompt_version={head.get('prompt_version')}  "
+          f"persona={head.get('persona_condition')}  "
+          f"vòng={max(int(r['round']) for r in rows)}")
+    print("=" * 78)
+
+    for round_number in sorted({int(r["round"]) for r in rows}):
+        seats = [r for r in rows if int(r["round"]) == round_number]
+        print(f"\n{'─' * 78}\nVÒNG {round_number}\n{'─' * 78}")
+        reference = None
+        for seat in seats:
+            label = f"[{seat.get('player')} idx={seat.get('player_index')}]"
+            print(f"\n{label}  seed={seat.get('sampling_seed')}  "
+                  f"gap_before={seat.get('progress_gap_before')}")
+            prompt = seat.get("prompt") or ""
+            if reference is None or not diff_second_seat:
+                shown = prompt if max_prompt_chars is None else prompt[:max_prompt_chars]
+                print(shown)
+                if max_prompt_chars is not None and len(prompt) > max_prompt_chars:
+                    print(f"... (cắt bớt {len(prompt) - max_prompt_chars} ký tự)")
+                reference = prompt
+            else:
+                diff = [
+                    line
+                    for line in difflib.unified_diff(
+                        reference.split("\n"), prompt.split("\n"), lineterm="", n=0
+                    )
+                    if line.startswith(("+", "-"))
+                    and not line.startswith(("+++", "---"))
+                ]
+                print(f"(khác ghế trước {len(diff)} dòng; đặt "
+                      f"diff_second_seat=False để in đầy đủ)")
+                for line in diff:
+                    print("   " + line)
+            if show_response:
+                print(f"  -> raw     : {seat.get('raw_response')!r}")
+                print(f"  -> action  : {seat.get('action')}   "
+                      f"parse_failed={seat.get('parse_failed')}   "
+                      f"retry={seat.get('retry_count')}")
+
+    print(f"\n{'=' * 78}\nQUỸ ĐẠO")
+    for player in dict.fromkeys(r.get("player") for r in rows):
+        trail = [
+            r["action"][0].upper()
+            for r in rows
+            if r.get("player") == player
+        ]
+        print(f"  {player:12s} {' '.join(trail)}")
+    print("=" * 78)
+
+
+if DEBUG_DUMP_RACE:
+    target = None if DEBUG_DUMP_RACE is True else str(DEBUG_DUMP_RACE)
+    available = list_race_ids(limit=8)
+    print(f"[debug] {len(list_race_ids())} race trong output; 8 cái đầu:")
+    for race_id, (model_name, risk, rep, _) in available:
+        print(f"   {race_id}   ({model_name}, p_max={risk}, rep={rep})")
+    print()
+    dump_race_prompts(
+        target,
+        diff_second_seat=DEBUG_DIFF_SECOND_SEAT,
+        max_prompt_chars=DEBUG_MAX_PROMPT_CHARS,
+    )
+
+
+# %%
 # Gộp bảng so sánh chéo model và đóng gói output để tải từ Kaggle.
 import zipfile
 
@@ -729,6 +1006,11 @@ n_player_rows = merge_csv_files(
     "players.csv", OUTPUT_DIR / "ai_race_players_all_models.csv"
 )
 print(f"Merged {n_race_rows} race rows and {n_player_rows} player rows.")
+summary_rows = write_prompt_sensitivity_summary(
+    OUTPUT_DIR / "ai_race_players_all_models.csv",
+    OUTPUT_DIR / "prompt_sensitivity_summary.csv",
+)
+print(f"Prompt-sensitivity diagnostic: {summary_rows} rows.")
 
 with zipfile.ZipFile(ZIP_PATH, "w", zipfile.ZIP_DEFLATED) as archive:
     for path in sorted(OUTPUT_DIR.rglob("*")):

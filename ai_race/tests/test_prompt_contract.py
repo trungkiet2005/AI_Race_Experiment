@@ -145,3 +145,93 @@ def test_canonical_prompt_predicate_rejects_relabelled_text():
     assert not analyser._is_canonical_prompt(canonical, "0" * 64)
     assert not analyser._is_canonical_prompt("ai-race-paper-v2", known_sha256)
     assert not analyser._is_canonical_prompt(canonical, None)
+
+
+def _history(rounds: int) -> list[dict]:
+    """Alternating actions so the first and the latest round are distinguishable."""
+    return [
+        {
+            "round": index,
+            "actions": ["unsafe" if index == 1 else "safe", "safe"],
+            "payoffs": [2.4 if index == 1 else 1.0, 0.6 if index == 1 else 1.0],
+            "increments": [1.5 if index == 1 else 1.0, 1.0],
+        }
+        for index in range(1, rounds + 1)
+    ]
+
+
+def test_first_and_previous_carries_the_opening_move():
+    """CS and CAS differ only in round 1, so the agent has to be able to see it."""
+
+    from ai_race.engine.prompt import _previous_round_text
+
+    text = _previous_round_text(
+        _history(6), 0, ["Company_1", "Company_2"], "first_and_previous"
+    )
+    lines = text.split("\n")
+    assert len(lines) == 2
+    assert lines[0].startswith("Round 1:") and "you chose UNSAFE" in lines[0]
+    assert lines[1].startswith("Round 6:") and "you chose SAFE" in lines[1]
+    # Nothing in between leaks through; this stays memory-one plus the opener.
+    assert "Round 3:" not in text and "Round 5:" not in text
+
+
+def test_first_and_previous_does_not_repeat_a_single_round():
+    """At round 2 the opener *is* the previous round; printing it twice would
+    tell the agent it played two rounds when it played one."""
+
+    from ai_race.engine.prompt import _previous_round_text
+
+    text = _previous_round_text(
+        _history(1), 0, ["Company_1", "Company_2"], "first_and_previous"
+    )
+    assert text.count("Round 1:") == 1
+    assert "\n" not in text
+
+
+def test_history_modes_stay_distinct():
+    from ai_race.engine.prompt import _previous_round_text
+
+    history = _history(6)
+    names = ["Company_1", "Company_2"]
+    previous = _previous_round_text(history, 0, names, "previous_round")
+    first_prev = _previous_round_text(history, 0, names, "first_and_previous")
+    full = _previous_round_text(history, 0, names, "full")
+
+    assert len(previous.split("\n")) == 1
+    assert len(first_prev.split("\n")) == 2
+    assert len(full.split("\n")) == 6
+    # previous_round must not have silently gained the opener.
+    assert "Round 1:" not in previous
+
+
+def test_empty_history_is_unchanged_by_the_new_mode():
+    from ai_race.engine.prompt import _previous_round_text
+
+    for mode in ("previous_round", "first_and_previous", "full"):
+        assert (
+            _previous_round_text([], 0, ["Company_1", "Company_2"], mode)
+            == "No previous round has been played."
+        )
+
+
+def test_game_config_accepts_and_rejects_history_modes():
+    from ai_race.engine.state import GameConfig
+
+    for mode in ("previous_round", "first_and_previous", "full"):
+        assert GameConfig(name="t", history_mode=mode).history_mode == mode
+    with pytest.raises(ValueError, match="history_mode must be"):
+        GameConfig(name="t", history_mode="last_three")
+
+
+def test_checked_in_game_configs_use_first_and_previous():
+    """A protocol setting worth failing on if someone reverts it by accident."""
+
+    import json
+
+    directory = REPOSITORY_ROOT / "ai_race" / "configs" / "game"
+    modes = {
+        path.name: json.loads(path.read_text(encoding="utf-8"))["historyMode"]
+        for path in sorted(directory.glob("*.json"))
+    }
+    assert set(modes.values()) == {"first_and_previous"}, modes
