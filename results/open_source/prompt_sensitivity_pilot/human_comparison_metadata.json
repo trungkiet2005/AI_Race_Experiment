@@ -1,0 +1,11 @@
+{
+  "human_sample": "Human-participant AI Race experiment reported by Fernández Domingos & Han (2026)",
+  "notes": [
+    "E4 and E5 use equivalence criteria; failure to reject a null is not counted as replication.",
+    "E6 follows the positive low-risk contrast in Table S3, which conflicts with the Figure 2A caption."
+  ],
+  "pooling_warning": "Verdicts pool every persona condition, model, and treatment present in the input. Score one condition at a time when the comparison is meant to be about a specific cell.",
+  "reference_schema": "ai-race-human-reference-v1",
+  "reference_source": "Fernández Domingos & Han (2026), Table 1 model 6 and Table S3",
+  "scoring": "Criteria are frozen in human_reference.json and applied mechanically. 'inconclusive' means the LLM estimate was unavailable, not that the effect was absent."
+}
