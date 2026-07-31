@@ -33,18 +33,24 @@ ENGINE_PROFILE = "vllm"  # đổi thành "transformers" nếu chưa có wheelhou
 
 MODELS = [
     {
-        "path": "/kaggle/input/models/qwen-lm/qwen2.5/transformers/14b-instruct/1",
-        "short_name": "qwen2.5-14b-instruct",
+        "path": "/kaggle/input/models/qwen-lm/qwen2.5/transformers/72b-instruct/1",
+        "short_name": "qwen2.5-72b-instruct",
         "engine": ENGINE_PROFILE,
-        # Các override dưới đây là tùy chọn:
+        # 72B KHÔNG vừa bf16: 72,7 tỉ tham số × 2 byte ≈ 145 GB, trong khi RTX PRO
+        # 6000 có 96 GB. Nếu chạy bằng "transformers" thì bắt buộc quantize. NF4 ≈
+        # 0,55 byte/tham số → ≈ 40 GB, còn dư chỗ cho KV cache. bnb-8bit (≈ 73 GB)
+        # cũng vừa nhưng sát trần. Khi ENGINE_PROFILE="vllm" thì bỏ qua engine_overrides
+        # này (vLLM tự đọc quantization_config trong checkpoint nếu có, hoặc set
+        # "quantization" tường minh trong engine_overrides theo format vLLM: awq/gptq/
+        # fp8/bitsandbytes — KHÔNG dùng "bnb-4bit" ở đây, đó là tên riêng của transformers).
+        #
+        # LƯU Ý: quantization phải nằm trong engine_overrides. Đặt "quantization" ở
+        # cấp trên cùng của dict này sẽ bị BỎ QUA IM LẶNG — offline_settings_for()
+        # chỉ đọc engine_overrides, và model sẽ cố nạp bf16 rồi OOM.
+        "engine_overrides": {"quantization": "bnb-4bit"} if ENGINE_PROFILE == "transformers" else {},
+        # Các override tùy chọn khác:
         # "temperature": 0.7,
         # "max_tokens": 256,
-        # "quantization": "bnb-4bit",  # transformers chỉ nhận bnb-4bit/bnb-8bit
-    },
-    {
-        "path": "/kaggle/input/models/google/gemma-3/transformers/gemma-3-12b-it/1",
-        "short_name": "gemma-3-12b-it",
-        "engine": ENGINE_PROFILE,
     },
     # Thêm model khác tại đây; notebook sẽ chạy lần lượt, không nạp đồng thời
     # (mỗi model được free_model() giải phóng VRAM trước khi nạp checkpoint kế tiếp).

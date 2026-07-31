@@ -104,8 +104,7 @@ kaggle datasets files nguyenlamphuquy/ai-race-experiment -v | head
 | Input | Bắt buộc | Mount path |
 |---|---|---|
 | Dataset `nguyenlamphuquy/ai-race-experiment` | có | `/kaggle/input/datasets/nguyenlamphuquy/ai-race-experiment` hoặc `/kaggle/input/ai-race-experiment` |
-| Kaggle Model — `qwen-lm/qwen2.5/transformers/14b-instruct` | có | `/kaggle/input/models/qwen-lm/qwen2.5/transformers/14b-instruct/1` |
-| Kaggle Model — `google/gemma-3/transformers/gemma-3-12b-it` | có | `/kaggle/input/models/google/gemma-3/transformers/gemma-3-12b-it/1` |
+| Kaggle Model — `qwen-lm/qwen2.5/transformers/72b-instruct` | có | `/kaggle/input/models/qwen-lm/qwen2.5/transformers/72b-instruct/1` |
 | Dataset wheelhouse vLLM | chỉ khi image chưa có vLLM | điền `VLLM_WHEELS_DIR`; phải có `manifest.json` liệt kê SHA-256 từng wheel |
 
 Notebook pin `REPO_INPUT_DIRS` là **danh sách** cả hai path trên và lấy cái nào tồn
@@ -123,10 +122,9 @@ Sửa cell cấu hình đầu file:
 
 ```python
 MODELS = [
-    {"path": ".../qwen-lm/qwen2.5/transformers/14b-instruct/1",
-     "short_name": "qwen2.5-14b-instruct", "engine": "transformers"},
-    {"path": ".../google/gemma-3/transformers/gemma-3-12b-it/1",
-     "short_name": "gemma-3-12b-it", "engine": "transformers"},
+    {"path": ".../qwen-lm/qwen2.5/transformers/72b-instruct/1",
+     "short_name": "qwen2.5-72b-instruct", "engine": "transformers",
+     "engine_overrides": {"quantization": "bnb-4bit"}},
 ]
 EXPERIMENTS = ["baseline"]      # hoặc thêm các persona_baseline_*
 REPETITIONS_OVERRIDE = 10       # pilot; None = dùng config (50)
@@ -144,9 +142,27 @@ trong image Kaggle. Không cài gì, không cần wheelhouse vLLM, Internet vẫ
 cài vLLM tự bỏ qua và in `No configured model requires vLLM.`; `run_manifest.json`
 sẽ ghi `packageVersions.vllm = null`, đúng với thực tế.
 
-VRAM không phải ràng buộc ở đây: Qwen2.5-14B bf16 ≈ 29,5 GB và Gemma-3-12B ≈ 24,4 GB,
-đều thoải mái trên 96 GB, chạy tuần tự từng model một. Giữ `TENSOR_PARALLEL_SIZE = 1`
-và không cần quantize.
+#### VRAM: 72B BẮT BUỘC quantize
+
+| Cách nạp | Byte/tham số | 72,7 tỉ tham số | Vừa 96 GB? |
+|---|---|---|---|
+| bf16 | 2,0 | ≈ 145 GB | **không** |
+| bnb-8bit | 1,0 | ≈ 73 GB | vừa, nhưng sát trần |
+| **bnb-4bit (NF4)** | 0,55 | **≈ 40 GB** | **thoải mái** |
+
+Notebook đặt `"engine_overrides": {"quantization": "bnb-4bit"}`.
+
+> **Bẫy:** `quantization` phải nằm trong `engine_overrides`. Đặt nó ở cấp trên cùng của
+> dict model sẽ **bị bỏ qua im lặng** — `offline_settings_for()` chỉ đọc
+> `engine_overrides` — và model sẽ cố nạp bf16 rồi OOM sau vài phút tải weight.
+
+Backend `transformers` chỉ nhận `bnb-4bit` / `bnb-8bit`, cần wheel `bitsandbytes` có sẵn
+trong image (Internet OFF nên không tự tải được). Giá trị kiểu vLLM (`awq`, `gptq`, `fp8`)
+sẽ raise ngay. Checkpoint **đã** quantize sẵn thì để `quantization=None` — transformers tự
+đọc `quantization_config`.
+
+`TENSOR_PARALLEL_SIZE` vẫn là 1 và không có tác dụng ở backend này; transformers dùng
+`device_map="auto"`.
 
 **Cái phải đánh đổi là tốc độ.** Runner luôn cấp seed riêng cho từng quyết định — đó
 là invariant của repo. Một forward pass gộp lại dùng chung một torch RNG nên không
