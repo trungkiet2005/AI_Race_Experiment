@@ -10,7 +10,7 @@ from pathlib import Path
 from typing import Any, Optional
 
 from ai_race.dataio.config_loader import load_json, validate_experiment, validate_game
-from ai_race.dataio.recorder import RunJournal
+from ai_race.dataio.recorder import RunJournal, write_all_results_csv
 from ai_race.engine.agent import RaceAgent
 from ai_race.engine.game import AIRaceGame
 from ai_race.engine.state import GameConfig
@@ -233,6 +233,7 @@ def run_experiment(
             status="completed",
         )
         all_results.extend(results)
+    write_all_results_csv(all_results, output_root / "all_results.csv")
     return all_results
 
 

@@ -1,0 +1,15 @@
+{
+  "name": "mocktest_5games",
+  "runPhase": "pilot",
+  "description": "Offline mock smoke test: 5 games (1 game config, 1 language, 1 model, 5 repetitions), random SAFE/UNSAFE mock backend. No network calls.",
+  "games": ["ai_race_risk_10"],
+  "agents": "companies_default",
+  "languages": ["en"],
+  "models": ["MockModel"],
+  "useOffline": true,
+  "samplingSeedApplied": true,
+  "repetitions": 5,
+  "seed": 260726,
+  "maxParseRetries": 3,
+  "verbose": true
+}
