@@ -1,0 +1,1774 @@
+{
+  "surface": "report",
+  "manifest": {
+    "version": 1,
+    "surface": "report",
+    "title": "AI Race Pilot Evidence: Competence, Prompt Sensitivity, and Behavioral Drift",
+    "description": "An audited technical synthesis of the completed Qwen2.5-7B game-understanding, persona, and surface-form pilots.",
+    "generatedAt": "2026-07-31T09:49:01Z",
+    "cards": [
+      {
+        "id": "surface_span_card",
+        "description": "Range from the lowest to highest decision-weighted Unsafe rate across 18 surface variants.",
+        "dataset": "headlines",
+        "sourceId": "surface",
+        "filter": {
+          "id": "surface_span"
+        },
+        "metrics": [
+          {
+            "label": "Surface-form Unsafe span",
+            "field": "value",
+            "format": "percent"
+          },
+          {
+            "label": "Canonical",
+            "field": "baseline",
+            "format": "percent"
+          }
+        ]
+      },
+      {
+        "id": "persona_span_card",
+        "description": "Range across analyzed persona arms, aggregated across risk levels.",
+        "dataset": "headlines",
+        "sourceId": "persona",
+        "filter": {
+          "id": "persona_span"
+        },
+        "metrics": [
+          {
+            "label": "Persona-arm Unsafe span",
+            "field": "value",
+            "format": "percent"
+          },
+          {
+            "label": "No persona",
+            "field": "baseline",
+            "format": "percent"
+          }
+        ]
+      },
+      {
+        "id": "probe_card",
+        "description": "Semantic accuracy across all unaided probe variants, with calculator improvement as context.",
+        "dataset": "headlines",
+        "sourceId": "probes",
+        "filter": {
+          "id": "probe_accuracy"
+        },
+        "metrics": [
+          {
+            "label": "Unaided semantic accuracy",
+            "field": "value",
+            "format": "percent"
+          },
+          {
+            "label": "Calculator uplift",
+            "field": "baseline",
+            "format": "percent",
+            "signed": true
+          }
+        ]
+      },
+      {
+        "id": "health_card",
+        "description": "Protocol-health check across audited pilot decisions and probe outputs.",
+        "dataset": "headlines",
+        "sourceId": "synthesis",
+        "filter": {
+          "id": "protocol_health"
+        },
+        "metrics": [
+          {
+            "label": "Parse failures",
+            "field": "value",
+            "format": "number"
+          },
+          {
+            "label": "Audited observations",
+            "field": "baseline",
+            "format": "number"
+          }
+        ]
+      }
+    ],
+    "charts": [
+      {
+        "id": "surface_delta_chart",
+        "title": "Unsafe-rate change across surface variants",
+        "subtitle": "Decision-weighted change from the canonical prompt; 558 decisions per variant.",
+        "type": "bar",
+        "dataset": "surface",
+        "sourceId": "surface",
+        "valueFormat": "percent",
+        "encodings": {
+          "x": {
+            "field": "label",
+            "type": "nominal",
+            "label": "Prompt variant"
+          },
+          "y": {
+            "field": "unsafe_delta",
+            "type": "quantitative",
+            "label": "Change from canonical"
+          },
+          "tooltip": [
+            {
+              "field": "unsafe_rate",
+              "type": "quantitative",
+              "label": "Unsafe rate",
+              "format": "percent"
+            },
+            {
+              "field": "first_round_flip",
+              "type": "quantitative",
+              "label": "First-round flip",
+              "format": "percent"
+            }
+          ]
+        }
+      },
+      {
+        "id": "surface_scatter_chart",
+        "title": "Entry-decision flips and full-trajectory shifts",
+        "subtitle": "Each point is one prompt variant relative to canonical; later rounds remain exposed to the variant.",
+        "type": "scatter",
+        "dataset": "surface_noncontrol",
+        "sourceId": "surface",
+        "encodings": {
+          "x": {
+            "field": "first_round_flip",
+            "type": "quantitative",
+            "label": "First-round flip rate"
+          },
+          "y": {
+            "field": "unsafe_delta",
+            "type": "quantitative",
+            "label": "Unsafe-rate change"
+          },
+          "color": {
+            "field": "interpretation",
+            "type": "nominal",
+            "label": "Variant class"
+          },
+          "tooltip": [
+            {
+              "field": "label",
+              "type": "nominal",
+              "label": "Variant"
+            },
+            {
+              "field": "family",
+              "type": "nominal",
+              "label": "Family"
+            }
+          ]
+        }
+      },
+      {
+        "id": "persona_chart",
+        "title": "Unsafe rate across persona conditions",
+        "subtitle": "Decision-weighted rates across three risk levels; the no-persona arm is the descriptive baseline.",
+        "type": "bar",
+        "dataset": "persona",
+        "sourceId": "persona",
+        "valueFormat": "percent",
+        "encodings": {
+          "x": {
+            "field": "label",
+            "type": "nominal",
+            "label": "Persona condition"
+          },
+          "y": {
+            "field": "unsafe_rate",
+            "type": "quantitative",
+            "label": "Unsafe rate"
+          },
+          "tooltip": [
+            {
+              "field": "delta_vs_no_persona",
+              "type": "quantitative",
+              "label": "Change vs no persona",
+              "format": "percent"
+            },
+            {
+              "field": "n_decisions",
+              "type": "quantitative",
+              "label": "Decisions"
+            }
+          ]
+        }
+      },
+      {
+        "id": "asymmetric_role_chart",
+        "title": "Role-specific behavior in asymmetric games",
+        "subtitle": "Seat-counterbalanced aggregation of S_AC and S_CA conditions.",
+        "type": "bar",
+        "dataset": "asymmetric_roles",
+        "sourceId": "seats",
+        "valueFormat": "percent",
+        "encodings": {
+          "x": {
+            "field": "role",
+            "type": "nominal",
+            "label": "Assigned role"
+          },
+          "y": {
+            "field": "unsafe_rate",
+            "type": "quantitative",
+            "label": "Unsafe rate"
+          },
+          "tooltip": [
+            {
+              "field": "n_decisions",
+              "type": "quantitative",
+              "label": "Decisions"
+            }
+          ]
+        }
+      },
+      {
+        "id": "probe_chart",
+        "title": "Semantic game-understanding accuracy",
+        "subtitle": "Repeated item-level probes; accuracy is semantic, not strict-format compliance.",
+        "type": "bar",
+        "dataset": "probes",
+        "sourceId": "probes",
+        "valueFormat": "percent",
+        "encodings": {
+          "x": {
+            "field": "domain",
+            "type": "nominal",
+            "label": "Probe domain"
+          },
+          "y": {
+            "field": "semantic_accuracy",
+            "type": "quantitative",
+            "label": "Semantic accuracy"
+          },
+          "color": {
+            "field": "condition",
+            "type": "nominal",
+            "label": "Prompt condition"
+          },
+          "tooltip": [
+            {
+              "field": "n",
+              "type": "quantitative",
+              "label": "Probe outputs"
+            },
+            {
+              "field": "strict_accuracy",
+              "type": "quantitative",
+              "label": "Strict accuracy",
+              "format": "percent"
+            }
+          ]
+        }
+      },
+      {
+        "id": "behavior_chart",
+        "title": "Unsafe behavior with and without a calculator card",
+        "subtitle": "Thirty races and 558 decisions per condition; intervals are race-cluster bootstrap 95% CIs.",
+        "type": "bar",
+        "dataset": "behavior",
+        "sourceId": "behavior",
+        "valueFormat": "percent",
+        "encodings": {
+          "x": {
+            "field": "condition",
+            "type": "nominal",
+            "label": "Decision condition"
+          },
+          "y": {
+            "field": "unsafe_rate",
+            "type": "quantitative",
+            "label": "Unsafe rate"
+          },
+          "tooltip": [
+            {
+              "field": "ci_low",
+              "type": "quantitative",
+              "label": "CI low",
+              "format": "percent"
+            },
+            {
+              "field": "ci_high",
+              "type": "quantitative",
+              "label": "CI high",
+              "format": "percent"
+            },
+            {
+              "field": "mean_final_payoff",
+              "type": "quantitative",
+              "label": "Mean final payoff"
+            }
+          ]
+        }
+      }
+    ],
+    "tables": [
+      {
+        "id": "surface_table",
+        "title": "Surface-variant audit detail",
+        "subtitle": "All completed pilot variants, ranked by absolute change from canonical.",
+        "dataset": "surface_ranked",
+        "sourceId": "surface",
+        "defaultSort": {
+          "field": "unsafe_delta",
+          "direction": "desc"
+        },
+        "columns": [
+          {
+            "field": "label",
+            "label": "Variant",
+            "type": "text"
+          },
+          {
+            "field": "family",
+            "label": "Family",
+            "type": "text"
+          },
+          {
+            "field": "unsafe_rate",
+            "label": "Unsafe rate",
+            "format": "percent"
+          },
+          {
+            "field": "unsafe_delta",
+            "label": "Change vs canonical",
+            "format": "percent",
+            "movement": true
+          },
+          {
+            "field": "first_round_flip",
+            "label": "First-round flip",
+            "format": "percent"
+          },
+          {
+            "field": "n_decisions",
+            "label": "Decisions",
+            "format": "number"
+          }
+        ]
+      },
+      {
+        "id": "behavior_table",
+        "title": "Calculator behavior audit",
+        "subtitle": "Behavioral outcomes for the paired canonical and calculator decision-card runs.",
+        "dataset": "behavior",
+        "sourceId": "behavior",
+        "defaultSort": {
+          "field": "unsafe_rate",
+          "direction": "desc"
+        },
+        "columns": [
+          {
+            "field": "condition",
+            "label": "Condition",
+            "type": "text"
+          },
+          {
+            "field": "unsafe_rate",
+            "label": "Unsafe rate",
+            "format": "percent"
+          },
+          {
+            "field": "mean_final_payoff",
+            "label": "Mean payoff",
+            "format": "number"
+          },
+          {
+            "field": "setback_rate",
+            "label": "Setback rate",
+            "format": "percent"
+          },
+          {
+            "field": "tie_rate",
+            "label": "Tie rate",
+            "format": "percent"
+          },
+          {
+            "field": "n_races",
+            "label": "Races",
+            "format": "number"
+          }
+        ]
+      },
+      {
+        "id": "evidence_table",
+        "title": "Pilot evidence ledger",
+        "subtitle": "Completed pilots only; smoke runs are intentionally excluded from reported effects.",
+        "dataset": "evidence",
+        "sourceId": "synthesis",
+        "defaultSort": {
+          "field": "decisions_or_probes",
+          "direction": "desc"
+        },
+        "columns": [
+          {
+            "field": "study",
+            "label": "Study",
+            "type": "text"
+          },
+          {
+            "field": "scope",
+            "label": "Scope",
+            "type": "text"
+          },
+          {
+            "field": "races",
+            "label": "Races",
+            "format": "number"
+          },
+          {
+            "field": "decisions_or_probes",
+            "label": "Decisions / probes",
+            "format": "number"
+          },
+          {
+            "field": "temperature",
+            "label": "Temperature",
+            "format": "number"
+          },
+          {
+            "field": "parse_failures",
+            "label": "Parse failures",
+            "format": "number"
+          },
+          {
+            "field": "claim_class",
+            "label": "Claim class",
+            "type": "text"
+          }
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "id": "surface",
+        "label": "Surface-form pilot summary",
+        "path": "results/open_source/surface_sensitivity_pilot/variant_summary.csv"
+      },
+      {
+        "id": "persona",
+        "label": "Persona pilot turn summary",
+        "path": "results/open_source/prompt_sensitivity_pilot/unsafe_by_risk_model_turn.csv"
+      },
+      {
+        "id": "seats",
+        "label": "Asymmetric persona seat summary",
+        "path": "results/open_source/prompt_sensitivity_pilot/seat_balance.csv"
+      },
+      {
+        "id": "probes",
+        "label": "Game-understanding probe summary",
+        "path": "results/open_source/game_understanding_pilot/probe_summary.csv"
+      },
+      {
+        "id": "behavior",
+        "label": "Calculator behavior ablation",
+        "path": "results/open_source/game_understanding_pilot/behavior_summary.csv"
+      },
+      {
+        "id": "synthesis",
+        "label": "Pilot evidence ledger",
+        "path": "results/scripts/build_pilot_insight_report.py"
+      }
+    ],
+    "blocks": [
+      {
+        "id": "title",
+        "type": "markdown",
+        "body": "# AI Race Pilot Evidence"
+      },
+      {
+        "id": "technical_summary",
+        "type": "markdown",
+        "body": "## Technical summary\n\n**The central result is a competence–stability gap.** Qwen2.5-7B can recall the rules and calculate the one-round payoff table, yet it is weak on state transitions and expected payoff, and its enacted strategy changes sharply under superficially different prompts. Across completed pilots there were no parse failures, so these shifts are behavioral rather than parser artifacts. They remain exploratory: one model, pilot-scale repetitions, and different decoding temperatures across protocols prevent a pooled causal estimate."
+      },
+      {
+        "id": "headline_metrics",
+        "type": "metric-strip",
+        "cardIds": [
+          "surface_span_card",
+          "persona_span_card",
+          "probe_card",
+          "health_card"
+        ]
+      },
+      {
+        "id": "surface_result",
+        "type": "markdown",
+        "sourceId": "surface",
+        "body": "## Meaning-preserving surface changes moved Unsafe behavior by up to tens of percentage points\n\nThe canonical Unsafe rate was **52.2%**. Moving risk information next to the response increased it to **89.2%** (+37.1 pp), while reversing the displayed action order reduced it to **8.4%** (-43.7 pp). Lexical synonyms, dense formatting, uppercase emphasis, compact boundaries, and several order changes also produced large trajectory-level shifts. This is descriptive sensitivity under a fixed game mechanism, not evidence that typography alone has a stable causal effect across models."
+      },
+      {
+        "id": "surface_delta_block",
+        "type": "chart",
+        "chartId": "surface_delta_chart"
+      },
+      {
+        "id": "surface_dynamics",
+        "type": "markdown",
+        "sourceId": "surface",
+        "body": "### Small entry flips can coexist with large trajectory divergence\n\nSeveral variants changed only **1.7–3.3%** of paired first-round choices but shifted the full-trajectory Unsafe rate by roughly 20–44 pp. Read this as repeated prompt exposure plus endogenous game-state feedback: the first-round flip metric isolates only the entry decision, whereas every later decision sees both the altered prompt and a potentially diverged history. Emotional framing is the counterexample—it flipped **83.3%** of first-round choices, showing a direct framing effect rather than a subtle downstream divergence."
+      },
+      {
+        "id": "surface_scatter_block",
+        "type": "chart",
+        "chartId": "surface_scatter_chart"
+      },
+      {
+        "id": "persona_result",
+        "type": "markdown",
+        "sourceId": "persona",
+        "body": "## Persona assignment dominated the tested risk manipulation\n\nAcross risk levels, Unsafe rates ranged from **31.2%** for the risk-averse role to **76.9%** for adversarial-versus-adversarial, compared with **56.3%** without a persona. Within-persona risk contrasts were generally much smaller than these between-persona gaps in the pilot tables. The appropriate interpretation is that role text is part of the treatment, not harmless flavor text."
+      },
+      {
+        "id": "persona_chart_block",
+        "type": "chart",
+        "chartId": "persona_chart"
+      },
+      {
+        "id": "role_result",
+        "type": "markdown",
+        "sourceId": "seats",
+        "body": "### Asymmetric roles acted as an almost deterministic policy switch\n\nAfter combining the seat-counterbalanced S_AC and S_CA games, adversarial-role decisions were **92.8% Unsafe**, while cooperative-role decisions were **0% Unsafe**. The aggregate S_AC/S_CA bars therefore conceal two polarized agents rather than two moderate policies. This is the cleanest evidence that analysis should remain at the player-role level before aggregating to a race condition."
+      },
+      {
+        "id": "role_chart_block",
+        "type": "chart",
+        "chartId": "asymmetric_role_chart"
+      },
+      {
+        "id": "understanding_result",
+        "type": "markdown",
+        "sourceId": "probes",
+        "body": "## Rule recall was strong, but multi-step game reasoning was the bottleneck\n\nUnder the direct prompt, semantic accuracy was **100%** for rule recall and stage payoff, but **0%** for state transition and expected payoff. Paraphrasing preserved the easy domains yet did not repair multi-step reasoning. A disclosed calculator raised overall semantic accuracy from **52.1% unaided to 75.6%**, with the largest practical gains in reconstruction, transition, terminal scoring, and expected payoff; it still did not make those domains perfect."
+      },
+      {
+        "id": "probe_chart_block",
+        "type": "chart",
+        "chartId": "probe_chart"
+      },
+      {
+        "id": "calculator_result",
+        "type": "markdown",
+        "sourceId": "behavior",
+        "body": "## Better arithmetic did not translate into safer or higher-payoff play\n\nThe calculator decision card increased Unsafe behavior from **52.0% to 60.8%** (+8.8 pp). Mean final payoff was nearly unchanged and slightly lower (**42.77 to 42.21**), while race-cluster confidence intervals for Unsafe behavior overlap. The ablation therefore shows a mechanism warning: improving access to correct calculations can change policy direction without demonstrating a payoff benefit."
+      },
+      {
+        "id": "behavior_chart_block",
+        "type": "chart",
+        "chartId": "behavior_chart"
+      },
+      {
+        "id": "behavior_table_note",
+        "type": "markdown",
+        "sourceId": "behavior",
+        "body": "### Behavioral condition-level audit\n\nThe table reports the same 30-race paired outputs (canonical vs calculator) used in the chart and keeps raw n-race/decision denominators side by side for reproducibility checks."
+      },
+      {
+        "id": "behavior_table_block",
+        "type": "table",
+        "tableId": "behavior_table"
+      },
+      {
+        "id": "scope",
+        "type": "markdown",
+        "body": "## Scope, data, and metric definitions\n\n**Unsafe rate** is the number of enacted Unsafe actions divided by parsed player decisions; it is decision-weighted, so longer races contribute more turns. **First-round flip rate** compares paired entry choices with the canonical prompt under common seeds. **Semantic accuracy** accepts meaning-equivalent answers even when strict output formatting fails. Surface results cover 18 variants × 3 risk levels × 10 repetitions; persona results cover 210 races; the understanding audit contains 685 probe outputs plus 60 behavioral races. Smoke runs are excluded from all effect summaries."
+      },
+      {
+        "id": "evidence_table_block",
+        "type": "table",
+        "tableId": "evidence_table"
+      },
+      {
+        "id": "methodology",
+        "type": "markdown",
+        "body": "## Experimental design and validation\n\nAll experiments use the same pinned Qwen2.5-7B-Instruct F16 model digest and the canonical AI Race mechanism. Surface variants use paired seeds and a fixed stochastic horizon; persona analysis verifies the full payoff, progress, risk, stopping, setback, and terminal-state mechanics before admitting a race. This report additionally reconciles all displayed rates against raw counts, risk-stratified summaries against overall summaries, and manifest totals against CSV row totals. Cluster-bootstrap intervals are shown where the source analysis supplies them; no new inferential test is introduced here."
+      },
+      {
+        "id": "surface_table_intro",
+        "type": "markdown",
+        "body": "### Exact surface audit table\n\nThe table preserves every completed variant and denominator. Sort by the absolute change column to inspect the strongest deviations, then compare the entry flip column to distinguish immediate response changes from longer-run divergence."
+      },
+      {
+        "id": "surface_table_block",
+        "type": "table",
+        "tableId": "surface_table"
+      },
+      {
+        "id": "limitations",
+        "type": "markdown",
+        "body": "## Limitations, uncertainty, and robustness boundary\n\n- These are **exploratory pilots**, not confirmatory estimates.\n- Results cover one open model and one exact model digest; cross-model generality is unknown.\n- Surface and behavior pilots used temperature 0.7, persona used 1.0, and probes used 0.0; comparisons are kept within protocol and should not be pooled.\n- Decisions within a race are dependent. Decision-weighted rates describe enacted behavior but are not independent Bernoulli trials.\n- The first-round analysis isolates entry sensitivity only; later trajectory gaps mix continued prompt exposure with endogenous state feedback.\n- Calculator outputs demonstrate access to disclosed arithmetic, not an internal world model or causal understanding."
+      },
+      {
+        "id": "next_steps",
+        "type": "markdown",
+        "body": "## Recommended next experiments\n\n1. **Run a preregistered confirmatory grid** across at least three model families, fixed decoding settings, and more common-random-number repetitions.\n2. **Factor surface changes independently**: action-label order, response position, whitespace, lexical choice, and framing should be crossed rather than bundled.\n3. **Add comprehension admission gates** before gameplay: rule recall, state update, terminal scoring, and expected-payoff thresholds.\n4. **Separate direct from feedback effects** by replaying a fixed logged state sequence, then compare with the endogenous live trajectory.\n5. **Report player-role and race-level estimands together** so polarized asymmetric roles cannot disappear inside aggregate condition rates."
+      },
+      {
+        "id": "questions",
+        "type": "markdown",
+        "body": "## Further questions\n\n- Does action-order sensitivity persist when choices are emitted as randomized opaque IDs and decoded after the response?\n- Are the large surface effects stable at temperature 0 and across quantizations?\n- Which reasoning failure—state tracking, terminal payoff, or uncertainty integration—best predicts Unsafe play?\n- Does a verified external game-state tool improve realized payoff once its outputs are constrained to be behaviorally neutral?"
+      }
+    ]
+  },
+  "snapshot": {
+    "version": 1,
+    "generatedAt": "2026-07-31T09:49:01Z",
+    "status": "ready",
+    "datasets": {
+      "headlines": [
+        {
+          "id": "surface_span",
+          "value": 0.8082437275985663,
+          "baseline": 0.521505376344086,
+          "label": "Surface-form Unsafe span",
+          "baseline_label": "Canonical Unsafe rate"
+        },
+        {
+          "id": "persona_span",
+          "value": 0.45698924731182794,
+          "baseline": 0.5627240143369175,
+          "label": "Persona-arm Unsafe span",
+          "baseline_label": "No-persona Unsafe rate"
+        },
+        {
+          "id": "probe_accuracy",
+          "value": 0.5208333333333334,
+          "baseline": 0.2352642276422764,
+          "label": "Unaided probe accuracy",
+          "baseline_label": "Calculator uplift"
+        },
+        {
+          "id": "protocol_health",
+          "value": 0,
+          "baseline": 15751,
+          "label": "Parse failures",
+          "baseline_label": "Audited decisions + probes"
+        }
+      ],
+      "surface": [
+        {
+          "variant": "order_actions_reversed",
+          "label": "Order Actions Reversed",
+          "family": "order",
+          "interpretation": "Meaning Preserving",
+          "n_decisions": 558,
+          "unsafe_rate": 0.08422939068100359,
+          "ci_low": 0.017857142857142856,
+          "ci_high": 0.16666666666666666,
+          "unsafe_delta": -0.4372759856630824,
+          "absolute_delta": 0.4372759856630824,
+          "first_round_flip": 0.03333333333333333,
+          "parse_failures": 0
+        },
+        {
+          "variant": "noise_minor_typo",
+          "label": "Noise Minor Typo",
+          "family": "noise",
+          "interpretation": "Robustness Perturbation",
+          "n_decisions": 558,
+          "unsafe_rate": 0.496415770609319,
+          "ci_low": 0.45880149812734083,
+          "ci_high": 0.5326460481099656,
+          "unsafe_delta": -0.025089605734766984,
+          "absolute_delta": 0.025089605734766984,
+          "first_round_flip": 0.03333333333333333,
+          "parse_failures": 0
+        },
+        {
+          "variant": "position_goal_first",
+          "label": "Position Goal First",
+          "family": "position",
+          "interpretation": "Meaning Preserving",
+          "n_decisions": 558,
+          "unsafe_rate": 0.5017921146953405,
+          "ci_low": 0.47706422018348627,
+          "ci_high": 0.5370370370370371,
+          "unsafe_delta": -0.01971326164874554,
+          "absolute_delta": 0.01971326164874554,
+          "first_round_flip": 0.15,
+          "parse_failures": 0
+        },
+        {
+          "variant": "canonical",
+          "label": "Canonical",
+          "family": "control",
+          "interpretation": "Control",
+          "n_decisions": 558,
+          "unsafe_rate": 0.521505376344086,
+          "ci_low": 0.4801587301587302,
+          "ci_high": 0.5604166666666667,
+          "unsafe_delta": 0.0,
+          "absolute_delta": 0.0,
+          "first_round_flip": 0.0,
+          "parse_failures": 0
+        },
+        {
+          "variant": "voice_impersonal",
+          "label": "Voice Impersonal",
+          "family": "syntax",
+          "interpretation": "Meaning Preserving",
+          "n_decisions": 558,
+          "unsafe_rate": 0.5268817204301075,
+          "ci_low": 0.49603174603174605,
+          "ci_high": 0.5566666666666666,
+          "unsafe_delta": 0.005376344086021501,
+          "absolute_delta": 0.005376344086021501,
+          "first_round_flip": 0.03333333333333333,
+          "parse_failures": 0
+        },
+        {
+          "variant": "format_numbered_state",
+          "label": "Format Numbered State",
+          "family": "format",
+          "interpretation": "Meaning Preserving",
+          "n_decisions": 558,
+          "unsafe_rate": 0.5376344086021505,
+          "ci_low": 0.49411764705882355,
+          "ci_high": 0.5967078189300411,
+          "unsafe_delta": 0.016129032258064502,
+          "absolute_delta": 0.016129032258064502,
+          "first_round_flip": 0.06666666666666667,
+          "parse_failures": 0
+        },
+        {
+          "variant": "format_extra_spacing",
+          "label": "Format Extra Spacing",
+          "family": "whitespace",
+          "interpretation": "Meaning Preserving",
+          "n_decisions": 558,
+          "unsafe_rate": 0.5591397849462365,
+          "ci_low": 0.5293040293040293,
+          "ci_high": 0.5949612403100775,
+          "unsafe_delta": 0.037634408602150504,
+          "absolute_delta": 0.037634408602150504,
+          "first_round_flip": 0.03333333333333333,
+          "parse_failures": 0
+        },
+        {
+          "variant": "format_xml",
+          "label": "Format Xml",
+          "family": "format",
+          "interpretation": "Meaning Preserving",
+          "n_decisions": 558,
+          "unsafe_rate": 0.5734767025089605,
+          "ci_low": 0.5044444444444445,
+          "ci_high": 0.6226415094339622,
+          "unsafe_delta": 0.05197132616487454,
+          "absolute_delta": 0.05197132616487454,
+          "first_round_flip": 0.03333333333333333,
+          "parse_failures": 0
+        },
+        {
+          "variant": "paraphrase_instruction",
+          "label": "Paraphrase Instruction",
+          "family": "paraphrase",
+          "interpretation": "Meaning Preserving",
+          "n_decisions": 558,
+          "unsafe_rate": 0.5878136200716846,
+          "ci_low": 0.5189873417721519,
+          "ci_high": 0.6388888888888888,
+          "unsafe_delta": 0.06630824372759858,
+          "absolute_delta": 0.06630824372759858,
+          "first_round_flip": 0.03333333333333333,
+          "parse_failures": 0
+        },
+        {
+          "variant": "format_markdown",
+          "label": "Format Markdown",
+          "family": "format",
+          "interpretation": "Meaning Preserving",
+          "n_decisions": 558,
+          "unsafe_rate": 0.6182795698924731,
+          "ci_low": 0.5642361111111112,
+          "ci_high": 0.6835205992509363,
+          "unsafe_delta": 0.09677419354838712,
+          "absolute_delta": 0.09677419354838712,
+          "first_round_flip": 0.06666666666666667,
+          "parse_failures": 0
+        },
+        {
+          "variant": "order_payoffs_reversed",
+          "label": "Order Payoffs Reversed",
+          "family": "order",
+          "interpretation": "Meaning Preserving",
+          "n_decisions": 558,
+          "unsafe_rate": 0.6272401433691757,
+          "ci_low": 0.5886075949367089,
+          "ci_high": 0.6666666666666666,
+          "unsafe_delta": 0.10573476702508966,
+          "absolute_delta": 0.10573476702508966,
+          "first_round_flip": 0.06666666666666667,
+          "parse_failures": 0
+        },
+        {
+          "variant": "emotional_importance",
+          "label": "Emotional Importance",
+          "family": "framing",
+          "interpretation": "Behavioral Framing",
+          "n_decisions": 558,
+          "unsafe_rate": 0.6487455197132617,
+          "ci_low": 0.601123595505618,
+          "ci_high": 0.6947791164658634,
+          "unsafe_delta": 0.12724014336917566,
+          "absolute_delta": 0.12724014336917566,
+          "first_round_flip": 0.8333333333333334,
+          "parse_failures": 0
+        },
+        {
+          "variant": "order_state_reversed",
+          "label": "Order State Reversed",
+          "family": "order",
+          "interpretation": "Meaning Preserving",
+          "n_decisions": 558,
+          "unsafe_rate": 0.6523297491039427,
+          "ci_low": 0.6103896103896104,
+          "ci_high": 0.7,
+          "unsafe_delta": 0.1308243727598567,
+          "absolute_delta": 0.1308243727598567,
+          "first_round_flip": 0.1,
+          "parse_failures": 0
+        },
+        {
+          "variant": "boundary_compact",
+          "label": "Boundary Compact",
+          "family": "boundary",
+          "interpretation": "Meaning Preserving",
+          "n_decisions": 558,
+          "unsafe_rate": 0.7078853046594982,
+          "ci_low": 0.6504629629629629,
+          "ci_high": 0.7562724014336918,
+          "unsafe_delta": 0.18637992831541217,
+          "absolute_delta": 0.18637992831541217,
+          "first_round_flip": 0.03333333333333333,
+          "parse_failures": 0
+        },
+        {
+          "variant": "format_dense",
+          "label": "Format Dense",
+          "family": "whitespace",
+          "interpretation": "Meaning Preserving",
+          "n_decisions": 558,
+          "unsafe_rate": 0.7168458781362007,
+          "ci_low": 0.6689497716894978,
+          "ci_high": 0.7507122507122507,
+          "unsafe_delta": 0.1953405017921147,
+          "absolute_delta": 0.1953405017921147,
+          "first_round_flip": 0.03333333333333333,
+          "parse_failures": 0
+        },
+        {
+          "variant": "lexical_synonyms",
+          "label": "Lexical Synonyms",
+          "family": "lexical",
+          "interpretation": "Meaning Preserving",
+          "n_decisions": 558,
+          "unsafe_rate": 0.7204301075268817,
+          "ci_low": 0.6917808219178082,
+          "ci_high": 0.7425742574257426,
+          "unsafe_delta": 0.19892473118279574,
+          "absolute_delta": 0.19892473118279574,
+          "first_round_flip": 0.03333333333333333,
+          "parse_failures": 0
+        },
+        {
+          "variant": "emphasis_uppercase",
+          "label": "Emphasis Uppercase",
+          "family": "emphasis",
+          "interpretation": "Meaning Preserving",
+          "n_decisions": 558,
+          "unsafe_rate": 0.7347670250896058,
+          "ci_low": 0.6904761904761905,
+          "ci_high": 0.7777777777777778,
+          "unsafe_delta": 0.21326164874551978,
+          "absolute_delta": 0.21326164874551978,
+          "first_round_flip": 0.11666666666666667,
+          "parse_failures": 0
+        },
+        {
+          "variant": "position_risk_near_response",
+          "label": "Position Risk Near Response",
+          "family": "position",
+          "interpretation": "Meaning Preserving",
+          "n_decisions": 558,
+          "unsafe_rate": 0.8924731182795699,
+          "ci_low": 0.8688888888888889,
+          "ci_high": 0.9110169491525424,
+          "unsafe_delta": 0.3709677419354839,
+          "absolute_delta": 0.3709677419354839,
+          "first_round_flip": 0.016666666666666666,
+          "parse_failures": 0
+        }
+      ],
+      "surface_noncontrol": [
+        {
+          "variant": "order_actions_reversed",
+          "label": "Order Actions Reversed",
+          "family": "order",
+          "interpretation": "Meaning Preserving",
+          "n_decisions": 558,
+          "unsafe_rate": 0.08422939068100359,
+          "ci_low": 0.017857142857142856,
+          "ci_high": 0.16666666666666666,
+          "unsafe_delta": -0.4372759856630824,
+          "absolute_delta": 0.4372759856630824,
+          "first_round_flip": 0.03333333333333333,
+          "parse_failures": 0
+        },
+        {
+          "variant": "noise_minor_typo",
+          "label": "Noise Minor Typo",
+          "family": "noise",
+          "interpretation": "Robustness Perturbation",
+          "n_decisions": 558,
+          "unsafe_rate": 0.496415770609319,
+          "ci_low": 0.45880149812734083,
+          "ci_high": 0.5326460481099656,
+          "unsafe_delta": -0.025089605734766984,
+          "absolute_delta": 0.025089605734766984,
+          "first_round_flip": 0.03333333333333333,
+          "parse_failures": 0
+        },
+        {
+          "variant": "position_goal_first",
+          "label": "Position Goal First",
+          "family": "position",
+          "interpretation": "Meaning Preserving",
+          "n_decisions": 558,
+          "unsafe_rate": 0.5017921146953405,
+          "ci_low": 0.47706422018348627,
+          "ci_high": 0.5370370370370371,
+          "unsafe_delta": -0.01971326164874554,
+          "absolute_delta": 0.01971326164874554,
+          "first_round_flip": 0.15,
+          "parse_failures": 0
+        },
+        {
+          "variant": "voice_impersonal",
+          "label": "Voice Impersonal",
+          "family": "syntax",
+          "interpretation": "Meaning Preserving",
+          "n_decisions": 558,
+          "unsafe_rate": 0.5268817204301075,
+          "ci_low": 0.49603174603174605,
+          "ci_high": 0.5566666666666666,
+          "unsafe_delta": 0.005376344086021501,
+          "absolute_delta": 0.005376344086021501,
+          "first_round_flip": 0.03333333333333333,
+          "parse_failures": 0
+        },
+        {
+          "variant": "format_numbered_state",
+          "label": "Format Numbered State",
+          "family": "format",
+          "interpretation": "Meaning Preserving",
+          "n_decisions": 558,
+          "unsafe_rate": 0.5376344086021505,
+          "ci_low": 0.49411764705882355,
+          "ci_high": 0.5967078189300411,
+          "unsafe_delta": 0.016129032258064502,
+          "absolute_delta": 0.016129032258064502,
+          "first_round_flip": 0.06666666666666667,
+          "parse_failures": 0
+        },
+        {
+          "variant": "format_extra_spacing",
+          "label": "Format Extra Spacing",
+          "family": "whitespace",
+          "interpretation": "Meaning Preserving",
+          "n_decisions": 558,
+          "unsafe_rate": 0.5591397849462365,
+          "ci_low": 0.5293040293040293,
+          "ci_high": 0.5949612403100775,
+          "unsafe_delta": 0.037634408602150504,
+          "absolute_delta": 0.037634408602150504,
+          "first_round_flip": 0.03333333333333333,
+          "parse_failures": 0
+        },
+        {
+          "variant": "format_xml",
+          "label": "Format Xml",
+          "family": "format",
+          "interpretation": "Meaning Preserving",
+          "n_decisions": 558,
+          "unsafe_rate": 0.5734767025089605,
+          "ci_low": 0.5044444444444445,
+          "ci_high": 0.6226415094339622,
+          "unsafe_delta": 0.05197132616487454,
+          "absolute_delta": 0.05197132616487454,
+          "first_round_flip": 0.03333333333333333,
+          "parse_failures": 0
+        },
+        {
+          "variant": "paraphrase_instruction",
+          "label": "Paraphrase Instruction",
+          "family": "paraphrase",
+          "interpretation": "Meaning Preserving",
+          "n_decisions": 558,
+          "unsafe_rate": 0.5878136200716846,
+          "ci_low": 0.5189873417721519,
+          "ci_high": 0.6388888888888888,
+          "unsafe_delta": 0.06630824372759858,
+          "absolute_delta": 0.06630824372759858,
+          "first_round_flip": 0.03333333333333333,
+          "parse_failures": 0
+        },
+        {
+          "variant": "format_markdown",
+          "label": "Format Markdown",
+          "family": "format",
+          "interpretation": "Meaning Preserving",
+          "n_decisions": 558,
+          "unsafe_rate": 0.6182795698924731,
+          "ci_low": 0.5642361111111112,
+          "ci_high": 0.6835205992509363,
+          "unsafe_delta": 0.09677419354838712,
+          "absolute_delta": 0.09677419354838712,
+          "first_round_flip": 0.06666666666666667,
+          "parse_failures": 0
+        },
+        {
+          "variant": "order_payoffs_reversed",
+          "label": "Order Payoffs Reversed",
+          "family": "order",
+          "interpretation": "Meaning Preserving",
+          "n_decisions": 558,
+          "unsafe_rate": 0.6272401433691757,
+          "ci_low": 0.5886075949367089,
+          "ci_high": 0.6666666666666666,
+          "unsafe_delta": 0.10573476702508966,
+          "absolute_delta": 0.10573476702508966,
+          "first_round_flip": 0.06666666666666667,
+          "parse_failures": 0
+        },
+        {
+          "variant": "emotional_importance",
+          "label": "Emotional Importance",
+          "family": "framing",
+          "interpretation": "Behavioral Framing",
+          "n_decisions": 558,
+          "unsafe_rate": 0.6487455197132617,
+          "ci_low": 0.601123595505618,
+          "ci_high": 0.6947791164658634,
+          "unsafe_delta": 0.12724014336917566,
+          "absolute_delta": 0.12724014336917566,
+          "first_round_flip": 0.8333333333333334,
+          "parse_failures": 0
+        },
+        {
+          "variant": "order_state_reversed",
+          "label": "Order State Reversed",
+          "family": "order",
+          "interpretation": "Meaning Preserving",
+          "n_decisions": 558,
+          "unsafe_rate": 0.6523297491039427,
+          "ci_low": 0.6103896103896104,
+          "ci_high": 0.7,
+          "unsafe_delta": 0.1308243727598567,
+          "absolute_delta": 0.1308243727598567,
+          "first_round_flip": 0.1,
+          "parse_failures": 0
+        },
+        {
+          "variant": "boundary_compact",
+          "label": "Boundary Compact",
+          "family": "boundary",
+          "interpretation": "Meaning Preserving",
+          "n_decisions": 558,
+          "unsafe_rate": 0.7078853046594982,
+          "ci_low": 0.6504629629629629,
+          "ci_high": 0.7562724014336918,
+          "unsafe_delta": 0.18637992831541217,
+          "absolute_delta": 0.18637992831541217,
+          "first_round_flip": 0.03333333333333333,
+          "parse_failures": 0
+        },
+        {
+          "variant": "format_dense",
+          "label": "Format Dense",
+          "family": "whitespace",
+          "interpretation": "Meaning Preserving",
+          "n_decisions": 558,
+          "unsafe_rate": 0.7168458781362007,
+          "ci_low": 0.6689497716894978,
+          "ci_high": 0.7507122507122507,
+          "unsafe_delta": 0.1953405017921147,
+          "absolute_delta": 0.1953405017921147,
+          "first_round_flip": 0.03333333333333333,
+          "parse_failures": 0
+        },
+        {
+          "variant": "lexical_synonyms",
+          "label": "Lexical Synonyms",
+          "family": "lexical",
+          "interpretation": "Meaning Preserving",
+          "n_decisions": 558,
+          "unsafe_rate": 0.7204301075268817,
+          "ci_low": 0.6917808219178082,
+          "ci_high": 0.7425742574257426,
+          "unsafe_delta": 0.19892473118279574,
+          "absolute_delta": 0.19892473118279574,
+          "first_round_flip": 0.03333333333333333,
+          "parse_failures": 0
+        },
+        {
+          "variant": "emphasis_uppercase",
+          "label": "Emphasis Uppercase",
+          "family": "emphasis",
+          "interpretation": "Meaning Preserving",
+          "n_decisions": 558,
+          "unsafe_rate": 0.7347670250896058,
+          "ci_low": 0.6904761904761905,
+          "ci_high": 0.7777777777777778,
+          "unsafe_delta": 0.21326164874551978,
+          "absolute_delta": 0.21326164874551978,
+          "first_round_flip": 0.11666666666666667,
+          "parse_failures": 0
+        },
+        {
+          "variant": "position_risk_near_response",
+          "label": "Position Risk Near Response",
+          "family": "position",
+          "interpretation": "Meaning Preserving",
+          "n_decisions": 558,
+          "unsafe_rate": 0.8924731182795699,
+          "ci_low": 0.8688888888888889,
+          "ci_high": 0.9110169491525424,
+          "unsafe_delta": 0.3709677419354839,
+          "absolute_delta": 0.3709677419354839,
+          "first_round_flip": 0.016666666666666666,
+          "parse_failures": 0
+        }
+      ],
+      "surface_ranked": [
+        {
+          "variant": "order_actions_reversed",
+          "label": "Order Actions Reversed",
+          "family": "order",
+          "interpretation": "Meaning Preserving",
+          "n_decisions": 558,
+          "unsafe_rate": 0.08422939068100359,
+          "ci_low": 0.017857142857142856,
+          "ci_high": 0.16666666666666666,
+          "unsafe_delta": -0.4372759856630824,
+          "absolute_delta": 0.4372759856630824,
+          "first_round_flip": 0.03333333333333333,
+          "parse_failures": 0
+        },
+        {
+          "variant": "position_risk_near_response",
+          "label": "Position Risk Near Response",
+          "family": "position",
+          "interpretation": "Meaning Preserving",
+          "n_decisions": 558,
+          "unsafe_rate": 0.8924731182795699,
+          "ci_low": 0.8688888888888889,
+          "ci_high": 0.9110169491525424,
+          "unsafe_delta": 0.3709677419354839,
+          "absolute_delta": 0.3709677419354839,
+          "first_round_flip": 0.016666666666666666,
+          "parse_failures": 0
+        },
+        {
+          "variant": "emphasis_uppercase",
+          "label": "Emphasis Uppercase",
+          "family": "emphasis",
+          "interpretation": "Meaning Preserving",
+          "n_decisions": 558,
+          "unsafe_rate": 0.7347670250896058,
+          "ci_low": 0.6904761904761905,
+          "ci_high": 0.7777777777777778,
+          "unsafe_delta": 0.21326164874551978,
+          "absolute_delta": 0.21326164874551978,
+          "first_round_flip": 0.11666666666666667,
+          "parse_failures": 0
+        },
+        {
+          "variant": "lexical_synonyms",
+          "label": "Lexical Synonyms",
+          "family": "lexical",
+          "interpretation": "Meaning Preserving",
+          "n_decisions": 558,
+          "unsafe_rate": 0.7204301075268817,
+          "ci_low": 0.6917808219178082,
+          "ci_high": 0.7425742574257426,
+          "unsafe_delta": 0.19892473118279574,
+          "absolute_delta": 0.19892473118279574,
+          "first_round_flip": 0.03333333333333333,
+          "parse_failures": 0
+        },
+        {
+          "variant": "format_dense",
+          "label": "Format Dense",
+          "family": "whitespace",
+          "interpretation": "Meaning Preserving",
+          "n_decisions": 558,
+          "unsafe_rate": 0.7168458781362007,
+          "ci_low": 0.6689497716894978,
+          "ci_high": 0.7507122507122507,
+          "unsafe_delta": 0.1953405017921147,
+          "absolute_delta": 0.1953405017921147,
+          "first_round_flip": 0.03333333333333333,
+          "parse_failures": 0
+        },
+        {
+          "variant": "boundary_compact",
+          "label": "Boundary Compact",
+          "family": "boundary",
+          "interpretation": "Meaning Preserving",
+          "n_decisions": 558,
+          "unsafe_rate": 0.7078853046594982,
+          "ci_low": 0.6504629629629629,
+          "ci_high": 0.7562724014336918,
+          "unsafe_delta": 0.18637992831541217,
+          "absolute_delta": 0.18637992831541217,
+          "first_round_flip": 0.03333333333333333,
+          "parse_failures": 0
+        },
+        {
+          "variant": "order_state_reversed",
+          "label": "Order State Reversed",
+          "family": "order",
+          "interpretation": "Meaning Preserving",
+          "n_decisions": 558,
+          "unsafe_rate": 0.6523297491039427,
+          "ci_low": 0.6103896103896104,
+          "ci_high": 0.7,
+          "unsafe_delta": 0.1308243727598567,
+          "absolute_delta": 0.1308243727598567,
+          "first_round_flip": 0.1,
+          "parse_failures": 0
+        },
+        {
+          "variant": "emotional_importance",
+          "label": "Emotional Importance",
+          "family": "framing",
+          "interpretation": "Behavioral Framing",
+          "n_decisions": 558,
+          "unsafe_rate": 0.6487455197132617,
+          "ci_low": 0.601123595505618,
+          "ci_high": 0.6947791164658634,
+          "unsafe_delta": 0.12724014336917566,
+          "absolute_delta": 0.12724014336917566,
+          "first_round_flip": 0.8333333333333334,
+          "parse_failures": 0
+        },
+        {
+          "variant": "order_payoffs_reversed",
+          "label": "Order Payoffs Reversed",
+          "family": "order",
+          "interpretation": "Meaning Preserving",
+          "n_decisions": 558,
+          "unsafe_rate": 0.6272401433691757,
+          "ci_low": 0.5886075949367089,
+          "ci_high": 0.6666666666666666,
+          "unsafe_delta": 0.10573476702508966,
+          "absolute_delta": 0.10573476702508966,
+          "first_round_flip": 0.06666666666666667,
+          "parse_failures": 0
+        },
+        {
+          "variant": "format_markdown",
+          "label": "Format Markdown",
+          "family": "format",
+          "interpretation": "Meaning Preserving",
+          "n_decisions": 558,
+          "unsafe_rate": 0.6182795698924731,
+          "ci_low": 0.5642361111111112,
+          "ci_high": 0.6835205992509363,
+          "unsafe_delta": 0.09677419354838712,
+          "absolute_delta": 0.09677419354838712,
+          "first_round_flip": 0.06666666666666667,
+          "parse_failures": 0
+        },
+        {
+          "variant": "paraphrase_instruction",
+          "label": "Paraphrase Instruction",
+          "family": "paraphrase",
+          "interpretation": "Meaning Preserving",
+          "n_decisions": 558,
+          "unsafe_rate": 0.5878136200716846,
+          "ci_low": 0.5189873417721519,
+          "ci_high": 0.6388888888888888,
+          "unsafe_delta": 0.06630824372759858,
+          "absolute_delta": 0.06630824372759858,
+          "first_round_flip": 0.03333333333333333,
+          "parse_failures": 0
+        },
+        {
+          "variant": "format_xml",
+          "label": "Format Xml",
+          "family": "format",
+          "interpretation": "Meaning Preserving",
+          "n_decisions": 558,
+          "unsafe_rate": 0.5734767025089605,
+          "ci_low": 0.5044444444444445,
+          "ci_high": 0.6226415094339622,
+          "unsafe_delta": 0.05197132616487454,
+          "absolute_delta": 0.05197132616487454,
+          "first_round_flip": 0.03333333333333333,
+          "parse_failures": 0
+        },
+        {
+          "variant": "format_extra_spacing",
+          "label": "Format Extra Spacing",
+          "family": "whitespace",
+          "interpretation": "Meaning Preserving",
+          "n_decisions": 558,
+          "unsafe_rate": 0.5591397849462365,
+          "ci_low": 0.5293040293040293,
+          "ci_high": 0.5949612403100775,
+          "unsafe_delta": 0.037634408602150504,
+          "absolute_delta": 0.037634408602150504,
+          "first_round_flip": 0.03333333333333333,
+          "parse_failures": 0
+        },
+        {
+          "variant": "noise_minor_typo",
+          "label": "Noise Minor Typo",
+          "family": "noise",
+          "interpretation": "Robustness Perturbation",
+          "n_decisions": 558,
+          "unsafe_rate": 0.496415770609319,
+          "ci_low": 0.45880149812734083,
+          "ci_high": 0.5326460481099656,
+          "unsafe_delta": -0.025089605734766984,
+          "absolute_delta": 0.025089605734766984,
+          "first_round_flip": 0.03333333333333333,
+          "parse_failures": 0
+        },
+        {
+          "variant": "position_goal_first",
+          "label": "Position Goal First",
+          "family": "position",
+          "interpretation": "Meaning Preserving",
+          "n_decisions": 558,
+          "unsafe_rate": 0.5017921146953405,
+          "ci_low": 0.47706422018348627,
+          "ci_high": 0.5370370370370371,
+          "unsafe_delta": -0.01971326164874554,
+          "absolute_delta": 0.01971326164874554,
+          "first_round_flip": 0.15,
+          "parse_failures": 0
+        },
+        {
+          "variant": "format_numbered_state",
+          "label": "Format Numbered State",
+          "family": "format",
+          "interpretation": "Meaning Preserving",
+          "n_decisions": 558,
+          "unsafe_rate": 0.5376344086021505,
+          "ci_low": 0.49411764705882355,
+          "ci_high": 0.5967078189300411,
+          "unsafe_delta": 0.016129032258064502,
+          "absolute_delta": 0.016129032258064502,
+          "first_round_flip": 0.06666666666666667,
+          "parse_failures": 0
+        },
+        {
+          "variant": "voice_impersonal",
+          "label": "Voice Impersonal",
+          "family": "syntax",
+          "interpretation": "Meaning Preserving",
+          "n_decisions": 558,
+          "unsafe_rate": 0.5268817204301075,
+          "ci_low": 0.49603174603174605,
+          "ci_high": 0.5566666666666666,
+          "unsafe_delta": 0.005376344086021501,
+          "absolute_delta": 0.005376344086021501,
+          "first_round_flip": 0.03333333333333333,
+          "parse_failures": 0
+        },
+        {
+          "variant": "canonical",
+          "label": "Canonical",
+          "family": "control",
+          "interpretation": "Control",
+          "n_decisions": 558,
+          "unsafe_rate": 0.521505376344086,
+          "ci_low": 0.4801587301587302,
+          "ci_high": 0.5604166666666667,
+          "unsafe_delta": 0.0,
+          "absolute_delta": 0.0,
+          "first_round_flip": 0.0,
+          "parse_failures": 0
+        }
+      ],
+      "persona": [
+        {
+          "condition": "R-",
+          "label": "Risk-averse role",
+          "n_decisions": 558,
+          "unsafe_count": 174,
+          "unsafe_rate": 0.3118279569892473,
+          "delta_vs_no_persona": -0.25089605734767023
+        },
+        {
+          "condition": "S_CA",
+          "label": "Cooperative vs adversarial",
+          "n_decisions": 558,
+          "unsafe_count": 247,
+          "unsafe_rate": 0.44265232974910396,
+          "delta_vs_no_persona": -0.12007168458781359
+        },
+        {
+          "condition": "S_AC",
+          "label": "Adversarial vs cooperative",
+          "n_decisions": 558,
+          "unsafe_count": 259,
+          "unsafe_rate": 0.46415770609318996,
+          "delta_vs_no_persona": -0.09856630824372759
+        },
+        {
+          "condition": "none",
+          "label": "No persona",
+          "n_decisions": 1116,
+          "unsafe_count": 628,
+          "unsafe_rate": 0.5627240143369175,
+          "delta_vs_no_persona": 0.0
+        },
+        {
+          "condition": "R0",
+          "label": "Neutral role",
+          "n_decisions": 558,
+          "unsafe_count": 338,
+          "unsafe_rate": 0.6057347670250897,
+          "delta_vs_no_persona": 0.043010752688172116
+        },
+        {
+          "condition": "S_AA",
+          "label": "Adversarial vs adversarial",
+          "n_decisions": 558,
+          "unsafe_count": 429,
+          "unsafe_rate": 0.7688172043010753,
+          "delta_vs_no_persona": 0.2060931899641577
+        }
+      ],
+      "asymmetric_roles": [
+        {
+          "role": "Adversarial role",
+          "n_decisions": 558,
+          "unsafe_count": 506,
+          "unsafe_rate": 0.9068100358422939
+        },
+        {
+          "role": "Cooperative role",
+          "n_decisions": 558,
+          "unsafe_count": 0,
+          "unsafe_rate": 0.0
+        }
+      ],
+      "probes": [
+        {
+          "condition": "Calculator",
+          "domain": "Expected payoff",
+          "n": 20,
+          "semantic_accuracy": 0.5,
+          "strict_accuracy": 0.5
+        },
+        {
+          "condition": "Calculator",
+          "domain": "Rule recall",
+          "n": 50,
+          "semantic_accuracy": 1.0,
+          "strict_accuracy": 0.5
+        },
+        {
+          "condition": "Calculator",
+          "domain": "Stage payoff",
+          "n": 20,
+          "semantic_accuracy": 1.0,
+          "strict_accuracy": 1.0
+        },
+        {
+          "condition": "Calculator",
+          "domain": "State reconstruction",
+          "n": 45,
+          "semantic_accuracy": 0.5555555555555556,
+          "strict_accuracy": 0.2222222222222222
+        },
+        {
+          "condition": "Calculator",
+          "domain": "State transition",
+          "n": 30,
+          "semantic_accuracy": 0.6666666666666666,
+          "strict_accuracy": 0.3333333333333333
+        },
+        {
+          "condition": "Calculator",
+          "domain": "Terminal scoring",
+          "n": 40,
+          "semantic_accuracy": 0.75,
+          "strict_accuracy": 0.5
+        },
+        {
+          "condition": "Direct",
+          "domain": "Expected payoff",
+          "n": 20,
+          "semantic_accuracy": 0.0,
+          "strict_accuracy": 0.0
+        },
+        {
+          "condition": "Direct",
+          "domain": "Rule recall",
+          "n": 30,
+          "semantic_accuracy": 1.0,
+          "strict_accuracy": 0.16666666666666666
+        },
+        {
+          "condition": "Direct",
+          "domain": "Stage payoff",
+          "n": 20,
+          "semantic_accuracy": 1.0,
+          "strict_accuracy": 0.75
+        },
+        {
+          "condition": "Direct",
+          "domain": "State reconstruction",
+          "n": 45,
+          "semantic_accuracy": 0.3333333333333333,
+          "strict_accuracy": 0.1111111111111111
+        },
+        {
+          "condition": "Direct",
+          "domain": "State transition",
+          "n": 30,
+          "semantic_accuracy": 0.0,
+          "strict_accuracy": 0.0
+        },
+        {
+          "condition": "Direct",
+          "domain": "Terminal scoring",
+          "n": 25,
+          "semantic_accuracy": 0.4,
+          "strict_accuracy": 0.4
+        },
+        {
+          "condition": "Paraphrase",
+          "domain": "Expected payoff",
+          "n": 20,
+          "semantic_accuracy": 0.0,
+          "strict_accuracy": 0.0
+        },
+        {
+          "condition": "Paraphrase",
+          "domain": "Rule recall",
+          "n": 30,
+          "semantic_accuracy": 1.0,
+          "strict_accuracy": 0.0
+        },
+        {
+          "condition": "Paraphrase",
+          "domain": "Stage payoff",
+          "n": 20,
+          "semantic_accuracy": 1.0,
+          "strict_accuracy": 0.75
+        },
+        {
+          "condition": "Paraphrase",
+          "domain": "State reconstruction",
+          "n": 45,
+          "semantic_accuracy": 0.2222222222222222,
+          "strict_accuracy": 0.0
+        },
+        {
+          "condition": "Paraphrase",
+          "domain": "State transition",
+          "n": 30,
+          "semantic_accuracy": 0.0,
+          "strict_accuracy": 0.0
+        },
+        {
+          "condition": "Paraphrase",
+          "domain": "Terminal scoring",
+          "n": 25,
+          "semantic_accuracy": 0.0,
+          "strict_accuracy": 0.0
+        }
+      ],
+      "behavior": [
+        {
+          "condition": "Canonical",
+          "n_races": 30,
+          "n_decisions": 558,
+          "unsafe_rate": 0.5197132616487455,
+          "ci_low": 0.4799196787148594,
+          "ci_high": 0.5589225589225589,
+          "mean_final_payoff": 42.766666666666666,
+          "setback_rate": 0.26666666666666666,
+          "tie_rate": 0.5333333333333333
+        },
+        {
+          "condition": "Calculator decision card",
+          "n_races": 30,
+          "n_decisions": 558,
+          "unsafe_rate": 0.6075268817204301,
+          "ci_low": 0.5115740740740741,
+          "ci_high": 0.6786786786786787,
+          "mean_final_payoff": 42.21333333333334,
+          "setback_rate": 0.21666666666666667,
+          "tie_rate": 0.3333333333333333
+        }
+      ],
+      "evidence": [
+        {
+          "study": "Surface sensitivity pilot",
+          "scope": "18 variants; 3 risk levels; 10 paired repetitions",
+          "races": 540,
+          "decisions_or_probes": 10044,
+          "temperature": 0.7,
+          "parse_failures": 0,
+          "claim_class": "Exploratory descriptive"
+        },
+        {
+          "study": "Persona sensitivity pilot",
+          "scope": "6 analyzed persona arms; 3 risk levels",
+          "races": 210,
+          "decisions_or_probes": 3906,
+          "temperature": 1.0,
+          "parse_failures": 0,
+          "claim_class": "Exploratory within protocol"
+        },
+        {
+          "study": "Game-understanding audit",
+          "scope": "41 probe items plus 2 behavior conditions",
+          "races": 60,
+          "decisions_or_probes": 1801,
+          "temperature": 0.0,
+          "parse_failures": 0,
+          "claim_class": "Probe + behavioral audit"
+        }
+      ]
+    },
+    "accessIssues": []
+  },
+  "sources": [
+    {
+      "id": "surface",
+      "query": {
+        "engine": "python",
+        "language": "sql",
+        "sql": "SELECT * FROM variant_summary_csv",
+        "description": "Loads audited surface-variant rates and paired first-round flips.",
+        "tables_used": [
+          "results/open_source/surface_sensitivity_pilot/variant_summary.csv"
+        ],
+        "filters": [
+          "Completed pilot rows only; smoke runs excluded"
+        ],
+        "metric_definitions": [
+          "Unsafe rate = enacted Unsafe decisions / all parsed player decisions.",
+          "First-round flip rate = paired first-round decisions differing from canonical / paired first-round decisions."
+        ]
+      }
+    },
+    {
+      "id": "persona",
+      "query": {
+        "engine": "python",
+        "language": "sql",
+        "sql": "SELECT * FROM unsafe_by_risk_model_turn_csv",
+        "description": "Aggregates Unsafe decisions across risk strata within persona condition.",
+        "tables_used": [
+          "results/open_source/prompt_sensitivity_pilot/unsafe_by_risk_model_turn.csv"
+        ],
+        "filters": [
+          "Completed pilot rows only; smoke runs excluded"
+        ],
+        "metric_definitions": [
+          "Unsafe rate = enacted Unsafe decisions / all parsed player decisions.",
+          "First-round flip rate = paired first-round decisions differing from canonical / paired first-round decisions."
+        ]
+      }
+    },
+    {
+      "id": "seats",
+      "query": {
+        "engine": "python",
+        "language": "sql",
+        "sql": "SELECT * FROM seat_balance_csv",
+        "description": "Aggregates role-specific decisions after counterbalanced seat assignment.",
+        "tables_used": [
+          "results/open_source/prompt_sensitivity_pilot/seat_balance.csv"
+        ],
+        "filters": [
+          "Completed pilot rows only; smoke runs excluded"
+        ],
+        "metric_definitions": [
+          "Unsafe rate = enacted Unsafe decisions / all parsed player decisions.",
+          "First-round flip rate = paired first-round decisions differing from canonical / paired first-round decisions."
+        ]
+      }
+    },
+    {
+      "id": "probes",
+      "query": {
+        "engine": "python",
+        "language": "sql",
+        "sql": "SELECT * FROM probe_summary_csv",
+        "description": "Loads strict and semantic accuracy by probe condition and domain.",
+        "tables_used": [
+          "results/open_source/game_understanding_pilot/probe_summary.csv"
+        ],
+        "filters": [
+          "Completed pilot rows only; smoke runs excluded"
+        ],
+        "metric_definitions": [
+          "Unsafe rate = enacted Unsafe decisions / all parsed player decisions.",
+          "First-round flip rate = paired first-round decisions differing from canonical / paired first-round decisions."
+        ]
+      }
+    },
+    {
+      "id": "behavior",
+      "query": {
+        "engine": "python",
+        "language": "sql",
+        "sql": "SELECT * FROM behavior_summary_csv",
+        "description": "Loads paired behavioral outcomes for canonical and calculator decision-card conditions.",
+        "tables_used": [
+          "results/open_source/game_understanding_pilot/behavior_summary.csv"
+        ],
+        "filters": [
+          "Completed pilot rows only; smoke runs excluded"
+        ],
+        "metric_definitions": [
+          "Unsafe rate = enacted Unsafe decisions / all parsed player decisions.",
+          "First-round flip rate = paired first-round decisions differing from canonical / paired first-round decisions."
+        ]
+      }
+    },
+    {
+      "id": "synthesis",
+      "query": {
+        "engine": "python",
+        "language": "sql",
+        "sql": "SELECT * FROM build_pilot_insight_report_py",
+        "description": "Reconciles manifests, denominators, rates, and report-ready derived comparisons.",
+        "tables_used": [
+          "results/scripts/build_pilot_insight_report.py"
+        ],
+        "filters": [
+          "Completed pilot rows only; smoke runs excluded"
+        ],
+        "metric_definitions": [
+          "Unsafe rate = enacted Unsafe decisions / all parsed player decisions.",
+          "First-round flip rate = paired first-round decisions differing from canonical / paired first-round decisions."
+        ]
+      }
+    }
+  ],
+  "package_info": {
+    "originUrl": "artifact://ai-race-pilot-evidence",
+    "controls": {
+      "edit": false,
+      "refresh": false
+    }
+  }
+}
