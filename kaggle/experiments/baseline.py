@@ -143,6 +143,16 @@ INSTALL_VLLM_IF_MISSING = True
 # SHA-256 tại vllm_wheels/manifest.json).
 VLLM_WHEELS_DIR = "/kaggle/input/ai-race-vllm-wheels/vllm_wheels"
 
+# Wheelhouse bitsandbytes cho quantization bnb-4bit/bnb-8bit ở backend transformers.
+# Dataset: nguyenlamphuquy/ai-race-bnb-wheels (private) — bitsandbytes==0.50.0,
+# wheel py3-none-manylinux_2_24_x86_64 nên độc lập phiên bản Python; chứa sẵn
+# libbitsandbytes_cuda128.so khớp torch 2.10.0+cu128 của image. Kaggle tự giải nén
+# nên wheel nằm ở gốc dataset. Liệt kê cả hai layout mount như REPO_INPUT_DIRS.
+BNB_WHEELS_DIRS = [
+    "/kaggle/input/datasets/nguyenlamphuquy/ai-race-bnb-wheels",
+    "/kaggle/input/ai-race-bnb-wheels",
+]
+
 # Debug: in lại chuỗi prompt của một race sau khi chạy xong (đọc từ turns.jsonl,
 # không gọi lại model). False = tắt · True = lấy race đầu tiên · "<game_id>" =
 # chỉ đích danh. Cell debug in sẵn danh sách game_id để copy vào đây.
@@ -356,6 +366,101 @@ elif needs_vllm:
     print("vLLM is already available in this Kaggle image.")
 else:
     print("No configured model requires vLLM.")
+
+
+# %%
+# Cài bitsandbytes offline nếu có model xin quantize bnb-* và image chưa có.
+#
+# 72B không vừa bf16 trên 96 GB nên phải quantize, mà backend transformers chỉ
+# nhận bnb-4bit/bnb-8bit — tức bắt buộc có wheel bitsandbytes. Internet OFF nên
+# nó phải đến từ một Dataset đã stage sẵn.
+
+
+def verify_wheelhouse(wheels_dir, label):
+    """Đối chiếu từng wheel với SHA-256 trong manifest trước khi cài.
+
+    Một wheelhouse chứa shared object CUDA; cài nhầm bản là hỏng theo kiểu khó
+    truy, nên kiểm hash là bắt buộc chứ không phải cẩn thận thừa.
+    """
+    wheels_dir = Path(wheels_dir)
+    if not wheels_dir.is_dir():
+        raise FileNotFoundError(f"Không tìm thấy {label} wheelhouse tại {wheels_dir}")
+    manifest_path = wheels_dir / "manifest.json"
+    if not manifest_path.is_file():
+        raise FileNotFoundError(f"{label} wheelhouse thiếu manifest SHA-256: {manifest_path}")
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    entries = manifest.get("files")
+    if not isinstance(entries, list) or not entries:
+        raise ValueError(f"{label} manifest.files phải là list không rỗng")
+    declared = set()
+    for entry in entries:
+        if not isinstance(entry, dict) or not {"name", "sha256"} <= set(entry):
+            raise ValueError(f"{label}: mỗi entry cần name và sha256")
+        name = str(entry["name"])
+        if Path(name).name != name or not name.endswith(".whl"):
+            raise ValueError(f"{label}: tên wheel không hợp lệ: {name!r}")
+        if name in declared:
+            raise ValueError(f"{label}: tên wheel trùng: {name}")
+        declared.add(name)
+        path = wheels_dir / name
+        if not path.is_file():
+            raise FileNotFoundError(f"{label}: wheel khai trong manifest nhưng thiếu: {path}")
+        if "bytes" in entry and path.stat().st_size != int(entry["bytes"]):
+            raise RuntimeError(f"{label}: lệch kích thước: {path.name}")
+        digest = hashlib.sha256()
+        with path.open("rb") as handle:
+            for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+                digest.update(chunk)
+        if digest.hexdigest().lower() != str(entry["sha256"]).lower():
+            raise RuntimeError(f"{label}: lệch SHA-256: {path.name}")
+    actual = {p.name for p in wheels_dir.glob("*.whl")}
+    if actual != declared:
+        raise RuntimeError(
+            f"{label}: nội dung wheelhouse không khớp manifest; "
+            f"thừa={sorted(actual - declared)}, thiếu={sorted(declared - actual)}"
+        )
+    return manifest
+
+
+def find_wheelhouse(candidates):
+    for candidate in candidates or []:
+        path = Path(candidate)
+        if (path / "manifest.json").is_file():
+            return path
+    return None
+
+
+needs_bnb = any(
+    str((model.get("engine_overrides") or {}).get("quantization", "")).lower().startswith("bnb")
+    for model in MODELS
+)
+has_bnb = importlib.util.find_spec("bitsandbytes") is not None
+
+if needs_bnb and not has_bnb:
+    bnb_dir = find_wheelhouse(BNB_WHEELS_DIRS)
+    if bnb_dir is None:
+        raise FileNotFoundError(
+            "MODELS xin quantization bnb-* nhưng image chưa có bitsandbytes và không "
+            f"tìm thấy wheelhouse ở {BNB_WHEELS_DIRS}. Add Dataset "
+            "'nguyenlamphuquy/ai-race-bnb-wheels' vào notebook, hoặc bỏ "
+            "engine_overrides.quantization (khi đó 72B sẽ OOM ở bf16)."
+        )
+    bnb_manifest = verify_wheelhouse(bnb_dir, "bitsandbytes")
+    subprocess.check_call(
+        [
+            sys.executable, "-m", "pip", "install",
+            "--no-index", "--only-binary=:all:", f"--find-links={bnb_dir}",
+            "bitsandbytes",
+        ]
+    )
+    importlib.invalidate_caches()
+    import bitsandbytes  # noqa: F401  — fail ngay tại đây thay vì lúc nạp weight
+    print(f"Installed bitsandbytes offline from {bnb_dir}")
+    print(f"  target runtime: {bnb_manifest.get('target_runtime')}")
+elif needs_bnb:
+    print("bitsandbytes is already available in this Kaggle image.")
+else:
+    print("No configured model requests bnb quantization.")
 
 
 # %%
