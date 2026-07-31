@@ -1,0 +1,233 @@
+{
+  "schema_version": "ai-race-surface-sensitivity-analysis-v1",
+  "n_variants": 18,
+  "n_races": 540,
+  "n_decisions": 10044,
+  "parse_failures": 0,
+  "paired_horizon_cells": 30,
+  "canonical_unsafe_rate": 0.521505376344086,
+  "unsafe_rate_range": [
+    0.08422939068100359,
+    0.8924731182795699
+  ],
+  "max_first_round_flip_rate_vs_canonical": 0.8333333333333334,
+  "note": "First-round flips compare identical states and matched sampling seeds. Whole-trajectory unsafe-rate differences include feedback from earlier actions. Intervals resample repetition blocks, not dependent decisions.",
+  "raw_files": [
+    {
+      "path": "gpu_run_archive/surface-pilot-raw.tar.gz::lane-a/canonical/turns.jsonl",
+      "sha256": "0880feea1eb73dceb15874639dea517c24f4b2b81078458bac8f91d3c6a76537"
+    },
+    {
+      "path": "gpu_run_archive/surface-pilot-raw.tar.gz::lane-a/canonical/races.csv",
+      "sha256": "8cacb5b54ca3aea17b13f37ca402fac75f04580d7b0ef4bdcbf6444257f439f3"
+    },
+    {
+      "path": "gpu_run_archive/surface-pilot-raw.tar.gz::lane-a/canonical/run_manifest.json",
+      "sha256": "893f0ef689751fc11cbe9d69d17aba88941389e1bcd947241ea9414ef965dcf5"
+    },
+    {
+      "path": "gpu_run_archive/surface-pilot-raw.tar.gz::lane-a/lexical_synonyms/turns.jsonl",
+      "sha256": "1775006ac3ea2530e16ea9da693572673a0e5d57d9b8133c325343ed039b666e"
+    },
+    {
+      "path": "gpu_run_archive/surface-pilot-raw.tar.gz::lane-a/lexical_synonyms/races.csv",
+      "sha256": "7f1778cf68f1140d69c5c7d2e864fb13363fdb284f93752cf362e505885877a3"
+    },
+    {
+      "path": "gpu_run_archive/surface-pilot-raw.tar.gz::lane-a/lexical_synonyms/run_manifest.json",
+      "sha256": "23bab21297e1d1d22b229267c2a080ce2abb95f8d7561af6d661f0bbbe5676af"
+    },
+    {
+      "path": "gpu_run_archive/surface-pilot-raw.tar.gz::lane-a/order_actions_reversed/turns.jsonl",
+      "sha256": "73483451e3205f0af335d904316e6cc86ebed6cb9ce029ffbeab4739d8cf6aef"
+    },
+    {
+      "path": "gpu_run_archive/surface-pilot-raw.tar.gz::lane-a/order_actions_reversed/races.csv",
+      "sha256": "af4a6dd504b864bf120fe6f3fa1d1d019d251feac79e9c71b6ba041c0167d3d3"
+    },
+    {
+      "path": "gpu_run_archive/surface-pilot-raw.tar.gz::lane-a/order_actions_reversed/run_manifest.json",
+      "sha256": "3f89328b006591870a7a3246ed92fd1e49d41a85318919539bce6a6b7679da2e"
+    },
+    {
+      "path": "gpu_run_archive/surface-pilot-raw.tar.gz::lane-a/order_payoffs_reversed/turns.jsonl",
+      "sha256": "20d39ec4c6de1c55c029f2158c5a961562eba606218d383b7e4fd471b4dd4e04"
+    },
+    {
+      "path": "gpu_run_archive/surface-pilot-raw.tar.gz::lane-a/order_payoffs_reversed/races.csv",
+      "sha256": "d3a23b318cc103040d1b01ad78a3e881dcc5951f4ff08447138e7065d0f86c61"
+    },
+    {
+      "path": "gpu_run_archive/surface-pilot-raw.tar.gz::lane-a/order_payoffs_reversed/run_manifest.json",
+      "sha256": "9a7b655627fdad81cc007ff892c06a79c5675ea537d6f56655f8c643e9d7873c"
+    },
+    {
+      "path": "gpu_run_archive/surface-pilot-raw.tar.gz::lane-a/order_state_reversed/turns.jsonl",
+      "sha256": "8f1ca834383aedc00e604ed9f225f63b68ec82cd48d4863212b4a30e4a9b5848"
+    },
+    {
+      "path": "gpu_run_archive/surface-pilot-raw.tar.gz::lane-a/order_state_reversed/races.csv",
+      "sha256": "7a3b1ef7c671c95d6c81d8fe8bdf7dca04c8a20169860c9e538b6fb7bbbfa2fe"
+    },
+    {
+      "path": "gpu_run_archive/surface-pilot-raw.tar.gz::lane-a/order_state_reversed/run_manifest.json",
+      "sha256": "5bbe171234f6f650ed591064d57f76831a5ebed4e52a7605b763c5bf9f007f73"
+    },
+    {
+      "path": "gpu_run_archive/surface-pilot-raw.tar.gz::lane-a/paraphrase_instruction/turns.jsonl",
+      "sha256": "a66b52fbd3ec5d3e389a61acfe180eef0ef912580f787851bab114691de3dec2"
+    },
+    {
+      "path": "gpu_run_archive/surface-pilot-raw.tar.gz::lane-a/paraphrase_instruction/races.csv",
+      "sha256": "9ddae1dd93e54135f4ee5cbfc4d2fc7446f04e90fd806d017242e8c3456e457f"
+    },
+    {
+      "path": "gpu_run_archive/surface-pilot-raw.tar.gz::lane-a/paraphrase_instruction/run_manifest.json",
+      "sha256": "981fe4faff4bf0b1799a6f79b11519fc359d7a20376b84e971a8be9282755221"
+    },
+    {
+      "path": "gpu_run_archive/surface-pilot-raw.tar.gz::lane-a/position_goal_first/turns.jsonl",
+      "sha256": "fdc22e740ad6b6c48b3e73fc4b19db83e7e770346849a32f131f6f7b443117f0"
+    },
+    {
+      "path": "gpu_run_archive/surface-pilot-raw.tar.gz::lane-a/position_goal_first/races.csv",
+      "sha256": "212eec7c57076bcbed4d09a50b60d497fe614707766c8df46c8f18945ecd1f4b"
+    },
+    {
+      "path": "gpu_run_archive/surface-pilot-raw.tar.gz::lane-a/position_goal_first/run_manifest.json",
+      "sha256": "e698b5d86f455550a1052903f2cce2f5eb83f521347d4b73f01cb7b99e5b08dc"
+    },
+    {
+      "path": "gpu_run_archive/surface-pilot-raw.tar.gz::lane-a/position_risk_near_response/turns.jsonl",
+      "sha256": "0f618806f6d40a1539bed759885d7b58d3f7c8d0c6a9890ed69cbccbe359b76b"
+    },
+    {
+      "path": "gpu_run_archive/surface-pilot-raw.tar.gz::lane-a/position_risk_near_response/races.csv",
+      "sha256": "2bc7d7144800d739970bcf60a0834d5804c0e288f11a85cde6a32c0682fef8d4"
+    },
+    {
+      "path": "gpu_run_archive/surface-pilot-raw.tar.gz::lane-a/position_risk_near_response/run_manifest.json",
+      "sha256": "ca5c7d547f275650f654470a7aa9f147919a1096db123517bfb4196563dc5d8f"
+    },
+    {
+      "path": "gpu_run_archive/surface-pilot-raw.tar.gz::lane-a/voice_impersonal/turns.jsonl",
+      "sha256": "cee6e16da140e2c0607fa24c3cbf1809608fec9e5b6a668e2f9b4d0ce5ec5dd0"
+    },
+    {
+      "path": "gpu_run_archive/surface-pilot-raw.tar.gz::lane-a/voice_impersonal/races.csv",
+      "sha256": "0c5ad4f121affae86ed68266502fc78fdda368480f328beeb7551b6e53c2f8f4"
+    },
+    {
+      "path": "gpu_run_archive/surface-pilot-raw.tar.gz::lane-a/voice_impersonal/run_manifest.json",
+      "sha256": "f69b9937b98786532e38af0858c8fcba3c474987895d34a572bdbd9bdc9eafe0"
+    },
+    {
+      "path": "gpu_run_archive/surface-pilot-raw.tar.gz::lane-b/boundary_compact/turns.jsonl",
+      "sha256": "25941b1b534d77fbf1958d8c8fc681d4de42c28ed97a3ed6bfdc3c955e4739ba"
+    },
+    {
+      "path": "gpu_run_archive/surface-pilot-raw.tar.gz::lane-b/boundary_compact/races.csv",
+      "sha256": "164fc2139a2d73d6ae9b3370ab113b35ad0d06873883c57fd424ae156000fa80"
+    },
+    {
+      "path": "gpu_run_archive/surface-pilot-raw.tar.gz::lane-b/boundary_compact/run_manifest.json",
+      "sha256": "ce60c60fe12ee53250beedf2ecb90f5c6503367ee6c2fa5985609e58667e6777"
+    },
+    {
+      "path": "gpu_run_archive/surface-pilot-raw.tar.gz::lane-b/emotional_importance/turns.jsonl",
+      "sha256": "2791126fc6a2980d9decf8b466bb4aa2116b5e5b89d2ed2bf68359e024802ba1"
+    },
+    {
+      "path": "gpu_run_archive/surface-pilot-raw.tar.gz::lane-b/emotional_importance/races.csv",
+      "sha256": "ae0e20054fba37aeb2fb72e3f6e0f3ab99bc4bae97e14df825f9abab47c6faf3"
+    },
+    {
+      "path": "gpu_run_archive/surface-pilot-raw.tar.gz::lane-b/emotional_importance/run_manifest.json",
+      "sha256": "9a040dc102f92a9261476c9c3ef24c776001e5b56dfba68e14c8b7823af08d79"
+    },
+    {
+      "path": "gpu_run_archive/surface-pilot-raw.tar.gz::lane-b/emphasis_uppercase/turns.jsonl",
+      "sha256": "827d72cac01dcdac67bdcb47d867c5625590cc168ef8951bf2e9246831c597d2"
+    },
+    {
+      "path": "gpu_run_archive/surface-pilot-raw.tar.gz::lane-b/emphasis_uppercase/races.csv",
+      "sha256": "3be55b9f70552a44a9f3b2fd28a7e9ec1204582ff6793fe0abb9167fac309b98"
+    },
+    {
+      "path": "gpu_run_archive/surface-pilot-raw.tar.gz::lane-b/emphasis_uppercase/run_manifest.json",
+      "sha256": "ba5dbcb5c99d53d82b04319fe20c37465bda41cf3a752aa91642afde177eeb3a"
+    },
+    {
+      "path": "gpu_run_archive/surface-pilot-raw.tar.gz::lane-b/format_dense/turns.jsonl",
+      "sha256": "514a902e8de982e5265fce799fb5400b522225da430389005454507c09cc9e0b"
+    },
+    {
+      "path": "gpu_run_archive/surface-pilot-raw.tar.gz::lane-b/format_dense/races.csv",
+      "sha256": "6d35bae32da894a81cce694c48820366763b5dc36f2afe3cc7732e2576944a2f"
+    },
+    {
+      "path": "gpu_run_archive/surface-pilot-raw.tar.gz::lane-b/format_dense/run_manifest.json",
+      "sha256": "05264a2a79a87e6b8dc81438a638e09e5c0b85e095050096e853d32ba3c9c970"
+    },
+    {
+      "path": "gpu_run_archive/surface-pilot-raw.tar.gz::lane-b/format_extra_spacing/turns.jsonl",
+      "sha256": "70fb1a3ff558b35fcd4b6069e161f7ea98846b896bb32857b0a71ea02f070cc6"
+    },
+    {
+      "path": "gpu_run_archive/surface-pilot-raw.tar.gz::lane-b/format_extra_spacing/races.csv",
+      "sha256": "771e36224eaff7ca1dbd5c6f16a94a69b95f2370ccda49051f7f576d1c938ea4"
+    },
+    {
+      "path": "gpu_run_archive/surface-pilot-raw.tar.gz::lane-b/format_extra_spacing/run_manifest.json",
+      "sha256": "6ee7e6788a481583e5f989ef2722174387eed8bbf7ac670836357a50e3afd8a0"
+    },
+    {
+      "path": "gpu_run_archive/surface-pilot-raw.tar.gz::lane-b/format_markdown/turns.jsonl",
+      "sha256": "b42a22357eb6940ca7adcb911013c588db7f968fac4793ecbdc12f3fcb300f87"
+    },
+    {
+      "path": "gpu_run_archive/surface-pilot-raw.tar.gz::lane-b/format_markdown/races.csv",
+      "sha256": "598f6a614e861e043d54a7489d7f16dcd23811a4af4b36a8b03ea1741b9ad763"
+    },
+    {
+      "path": "gpu_run_archive/surface-pilot-raw.tar.gz::lane-b/format_markdown/run_manifest.json",
+      "sha256": "d9cf4e42aa3c88a2d64824d5a322dc054921a074a7a485e6156e8f12d6b4f064"
+    },
+    {
+      "path": "gpu_run_archive/surface-pilot-raw.tar.gz::lane-b/format_numbered_state/turns.jsonl",
+      "sha256": "6a2a55059281c3d435e44c135c3b49f2d7a1d6aa3fe46a1d1ff0b8e61ef3f1cf"
+    },
+    {
+      "path": "gpu_run_archive/surface-pilot-raw.tar.gz::lane-b/format_numbered_state/races.csv",
+      "sha256": "9fac2ca5b27e6e783b3860a870b515f9d806ec1e0705d845e265aafefeff8647"
+    },
+    {
+      "path": "gpu_run_archive/surface-pilot-raw.tar.gz::lane-b/format_numbered_state/run_manifest.json",
+      "sha256": "aeb4ac9d8333c0ecaef950daa573154085aee652e3cf692a0c85f44f0cdc79f9"
+    },
+    {
+      "path": "gpu_run_archive/surface-pilot-raw.tar.gz::lane-b/format_xml/turns.jsonl",
+      "sha256": "75c6274d147ba6b476cb05468a2c8edcf21826aa5e57b25cedfe368fdb277217"
+    },
+    {
+      "path": "gpu_run_archive/surface-pilot-raw.tar.gz::lane-b/format_xml/races.csv",
+      "sha256": "1116d8798932bf081cbc7383521ee5debb82d09f4d9b56fd6bf6ff7d796e3798"
+    },
+    {
+      "path": "gpu_run_archive/surface-pilot-raw.tar.gz::lane-b/format_xml/run_manifest.json",
+      "sha256": "86e05e9c94e8b1720978240ca301831ee3fcf0625fafe871cc5b0ddbfd625517"
+    },
+    {
+      "path": "gpu_run_archive/surface-pilot-raw.tar.gz::lane-b/noise_minor_typo/turns.jsonl",
+      "sha256": "b99ffb11e105234f676499130fa4342478448c933155544e7a66348fa5ecc5c7"
+    },
+    {
+      "path": "gpu_run_archive/surface-pilot-raw.tar.gz::lane-b/noise_minor_typo/races.csv",
+      "sha256": "ac5e12f9242780fc3b2c59fbb72ac9771599ec66582ef301c180819665d79e7b"
+    },
+    {
+      "path": "gpu_run_archive/surface-pilot-raw.tar.gz::lane-b/noise_minor_typo/run_manifest.json",
+      "sha256": "9a2b055a0a49bbe7e22dcfa951ebe9429ebbecb8350595594b8b665fd91cecbe"
+    }
+  ]
+}

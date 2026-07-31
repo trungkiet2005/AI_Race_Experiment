@@ -1,0 +1,233 @@
+{
+  "schema_version": "ai-race-surface-sensitivity-analysis-v1",
+  "n_variants": 18,
+  "n_races": 108,
+  "n_decisions": 1296,
+  "parse_failures": 0,
+  "paired_horizon_cells": 6,
+  "canonical_unsafe_rate": 0.4305555555555556,
+  "unsafe_rate_range": [
+    0.013888888888888888,
+    0.8611111111111112
+  ],
+  "max_first_round_flip_rate_vs_canonical": 0.75,
+  "note": "First-round flips compare identical states and matched sampling seeds. Whole-trajectory unsafe-rate differences include feedback from earlier actions.",
+  "raw_files": [
+    {
+      "path": "gpu_run_archive/surface-smoke-raw.tar.gz::lane-a/canonical/turns.jsonl",
+      "sha256": "6ab2190672d866eb47046e836f071b1b24db4b57909160320efe4cdaddf1a491"
+    },
+    {
+      "path": "gpu_run_archive/surface-smoke-raw.tar.gz::lane-a/canonical/races.csv",
+      "sha256": "a4936b4e7f84f864d2bb24cd2c2bcfda6ee8d2181d271707013d217f4893b4b5"
+    },
+    {
+      "path": "gpu_run_archive/surface-smoke-raw.tar.gz::lane-a/canonical/run_manifest.json",
+      "sha256": "f9093f0565d68c76fa5bb52f1195c48fed742f29f5780e5af09d98daeec41fed"
+    },
+    {
+      "path": "gpu_run_archive/surface-smoke-raw.tar.gz::lane-a/lexical_synonyms/turns.jsonl",
+      "sha256": "ebc270c3a7b86f8bc29a564d210452600cd362ccebcc816d3a0367f747613c46"
+    },
+    {
+      "path": "gpu_run_archive/surface-smoke-raw.tar.gz::lane-a/lexical_synonyms/races.csv",
+      "sha256": "7d7217558d25e360f0bac478aa41ac34e9451d065d25f80a989d5c39ff7dd077"
+    },
+    {
+      "path": "gpu_run_archive/surface-smoke-raw.tar.gz::lane-a/lexical_synonyms/run_manifest.json",
+      "sha256": "11f77f6830a52157e99a8990cf913a5be5f03f5812d1ae14ab48d401c2e9c5fd"
+    },
+    {
+      "path": "gpu_run_archive/surface-smoke-raw.tar.gz::lane-a/order_actions_reversed/turns.jsonl",
+      "sha256": "f5ae2f91ea5b15eaf6737518a3249046230064ac8d85786dc13c7eb15f705bd9"
+    },
+    {
+      "path": "gpu_run_archive/surface-smoke-raw.tar.gz::lane-a/order_actions_reversed/races.csv",
+      "sha256": "abe8c76e187ad14bec740c8baa8cf34aad28cdea9243f766b795b218d86b1e69"
+    },
+    {
+      "path": "gpu_run_archive/surface-smoke-raw.tar.gz::lane-a/order_actions_reversed/run_manifest.json",
+      "sha256": "b4b2ffff2c8f5dd6a35cecb0ef5a164d1672d049c0539313073db4dbbeb36a6c"
+    },
+    {
+      "path": "gpu_run_archive/surface-smoke-raw.tar.gz::lane-a/order_payoffs_reversed/turns.jsonl",
+      "sha256": "9046ab282e0ceb11d5fe146b9ea6548ba5ee3fc544be3bb694b619f0addd5bf6"
+    },
+    {
+      "path": "gpu_run_archive/surface-smoke-raw.tar.gz::lane-a/order_payoffs_reversed/races.csv",
+      "sha256": "21276c7cf87de6a9d6e364703908df3774777ebe7735ab905899193fcc143c29"
+    },
+    {
+      "path": "gpu_run_archive/surface-smoke-raw.tar.gz::lane-a/order_payoffs_reversed/run_manifest.json",
+      "sha256": "6f7178f9d3d320fa554e40b63031dd5cbbf07ef7956d5d1b60c50a9f3018746e"
+    },
+    {
+      "path": "gpu_run_archive/surface-smoke-raw.tar.gz::lane-a/order_state_reversed/turns.jsonl",
+      "sha256": "39cbdf9a3dabeb912b564ab68b6d1228ead440ede8626f8744e29d13d29871f2"
+    },
+    {
+      "path": "gpu_run_archive/surface-smoke-raw.tar.gz::lane-a/order_state_reversed/races.csv",
+      "sha256": "3fa123eb656554418d390917b0488d71ba9ac2e0d054ae6c271a84abbbc200c6"
+    },
+    {
+      "path": "gpu_run_archive/surface-smoke-raw.tar.gz::lane-a/order_state_reversed/run_manifest.json",
+      "sha256": "223a96844ec00b110a2d562f5474887dbbfddd6448029876a6fa77da86bdef59"
+    },
+    {
+      "path": "gpu_run_archive/surface-smoke-raw.tar.gz::lane-a/paraphrase_instruction/turns.jsonl",
+      "sha256": "26b02c82b4b3e72de3ffe65f1df6cbcfa963d1a4b7b4d0f7fc1df1073c52d3a2"
+    },
+    {
+      "path": "gpu_run_archive/surface-smoke-raw.tar.gz::lane-a/paraphrase_instruction/races.csv",
+      "sha256": "174f6fddaadcb519532cfb6b854e65b584de61c41a1bee5156654a46f5c1f0c6"
+    },
+    {
+      "path": "gpu_run_archive/surface-smoke-raw.tar.gz::lane-a/paraphrase_instruction/run_manifest.json",
+      "sha256": "4ae0f068ab69bb90f1bc737b10bf7113a12c10864552d52170a5106da4dcdca3"
+    },
+    {
+      "path": "gpu_run_archive/surface-smoke-raw.tar.gz::lane-a/position_goal_first/turns.jsonl",
+      "sha256": "635b652bf7bfee76fcfd175822ecf6b199bda02997cdbf5f39ab69a0bac50727"
+    },
+    {
+      "path": "gpu_run_archive/surface-smoke-raw.tar.gz::lane-a/position_goal_first/races.csv",
+      "sha256": "2feac1d53cfbf0e395a18ad568fb61f922c6b060c96cd64affdc842147e2d460"
+    },
+    {
+      "path": "gpu_run_archive/surface-smoke-raw.tar.gz::lane-a/position_goal_first/run_manifest.json",
+      "sha256": "c0bb4302b3d5a6a6c44a68a97c61e20b96abf9a22269b6e9d8e92457b5271317"
+    },
+    {
+      "path": "gpu_run_archive/surface-smoke-raw.tar.gz::lane-a/position_risk_near_response/turns.jsonl",
+      "sha256": "cbb090d5a5ee96d5c0c44f5c4543f674e765812169b97c6d8496383d969ad0e2"
+    },
+    {
+      "path": "gpu_run_archive/surface-smoke-raw.tar.gz::lane-a/position_risk_near_response/races.csv",
+      "sha256": "90b40a670b7ff6fe1f9ca32bd16e52045b05a333ae8d3be9bbb3c91edeaa5b0f"
+    },
+    {
+      "path": "gpu_run_archive/surface-smoke-raw.tar.gz::lane-a/position_risk_near_response/run_manifest.json",
+      "sha256": "87738b88d3590af506dea5540630825e678f4671cb08546482e8f7b4be534928"
+    },
+    {
+      "path": "gpu_run_archive/surface-smoke-raw.tar.gz::lane-a/voice_impersonal/turns.jsonl",
+      "sha256": "b374dbb23a02a6656f6b0f6a0ca0a5119112a420110de579275986e2edb29628"
+    },
+    {
+      "path": "gpu_run_archive/surface-smoke-raw.tar.gz::lane-a/voice_impersonal/races.csv",
+      "sha256": "75a1d43fbac2013d48110fc88ede896f8051be2e8f45e83eb68af4fe7f9ed36f"
+    },
+    {
+      "path": "gpu_run_archive/surface-smoke-raw.tar.gz::lane-a/voice_impersonal/run_manifest.json",
+      "sha256": "68c36294c6834db4da0be0dd8717fe121030fd0f4bd85d438417fc4d4e76d017"
+    },
+    {
+      "path": "gpu_run_archive/surface-smoke-raw.tar.gz::lane-b/boundary_compact/turns.jsonl",
+      "sha256": "54b1d7a2293d4357881d4a7a63c81883f8463ac0a498a767a99b0e3faf29ad92"
+    },
+    {
+      "path": "gpu_run_archive/surface-smoke-raw.tar.gz::lane-b/boundary_compact/races.csv",
+      "sha256": "ebee239fed27c2cf9302b6037f5953ae7cc73edd19ffd151a21a365132a35fb1"
+    },
+    {
+      "path": "gpu_run_archive/surface-smoke-raw.tar.gz::lane-b/boundary_compact/run_manifest.json",
+      "sha256": "19b65688723b5a2b76e8ea4c0aa4b9a8e023e3fbe44c82877a44638e27cd51d9"
+    },
+    {
+      "path": "gpu_run_archive/surface-smoke-raw.tar.gz::lane-b/emotional_importance/turns.jsonl",
+      "sha256": "91c6fde9300e2fc8f29525979749cdeddd637ab3bf6891137914ef74b07e3cd4"
+    },
+    {
+      "path": "gpu_run_archive/surface-smoke-raw.tar.gz::lane-b/emotional_importance/races.csv",
+      "sha256": "d9e7f3224bd5f280dcc57060e8c804fbddac31ff330e2584231426e7c23a0ebd"
+    },
+    {
+      "path": "gpu_run_archive/surface-smoke-raw.tar.gz::lane-b/emotional_importance/run_manifest.json",
+      "sha256": "1e9e8de40751a456308420a37b5a4b52658153e7e420d3004108f62dbe914c84"
+    },
+    {
+      "path": "gpu_run_archive/surface-smoke-raw.tar.gz::lane-b/emphasis_uppercase/turns.jsonl",
+      "sha256": "67c1ed3d7f738f6386556d8294055c07920093771bccda12948fef85636dc85f"
+    },
+    {
+      "path": "gpu_run_archive/surface-smoke-raw.tar.gz::lane-b/emphasis_uppercase/races.csv",
+      "sha256": "75669a58cee50264ced2ddb59159244090eadeadbde12be673072bf16f04f8e3"
+    },
+    {
+      "path": "gpu_run_archive/surface-smoke-raw.tar.gz::lane-b/emphasis_uppercase/run_manifest.json",
+      "sha256": "04d7e760ac181cb2ec411f18178f3c648059b4bc4c87cbf9bf567eeb88744c2d"
+    },
+    {
+      "path": "gpu_run_archive/surface-smoke-raw.tar.gz::lane-b/format_dense/turns.jsonl",
+      "sha256": "4e8e3cf24cc24720fd01aa54007997b849efea3efc9b181ef1f7776f745a01ff"
+    },
+    {
+      "path": "gpu_run_archive/surface-smoke-raw.tar.gz::lane-b/format_dense/races.csv",
+      "sha256": "19d9ccc9ab1a062d483173619a1ea09cee0c3020dc662bd302efd333e227531f"
+    },
+    {
+      "path": "gpu_run_archive/surface-smoke-raw.tar.gz::lane-b/format_dense/run_manifest.json",
+      "sha256": "35c9fe06057a40058e0c23681c17e14437f34feb419c5db89a671cf4171ff838"
+    },
+    {
+      "path": "gpu_run_archive/surface-smoke-raw.tar.gz::lane-b/format_extra_spacing/turns.jsonl",
+      "sha256": "2c555abfd3e0c25f0036408d1f75c0135a01fee0bab9042d6876bee2bd86a04d"
+    },
+    {
+      "path": "gpu_run_archive/surface-smoke-raw.tar.gz::lane-b/format_extra_spacing/races.csv",
+      "sha256": "50a675e221f6f87722137632a43ab59a58224ce4eef0e4cf63f891f6ae7f37b9"
+    },
+    {
+      "path": "gpu_run_archive/surface-smoke-raw.tar.gz::lane-b/format_extra_spacing/run_manifest.json",
+      "sha256": "2d5d3a1217c673073f21a0ebd11d9aaace754482f52875194ea9ad9e95435e0f"
+    },
+    {
+      "path": "gpu_run_archive/surface-smoke-raw.tar.gz::lane-b/format_markdown/turns.jsonl",
+      "sha256": "b2532aac8d5bf5e840a1937c173b61a86dfe7ff1443330cb8a858244dc780188"
+    },
+    {
+      "path": "gpu_run_archive/surface-smoke-raw.tar.gz::lane-b/format_markdown/races.csv",
+      "sha256": "8aec2d4cad24c1cf9373e8c4f372a8f3b4b52c9be2c4568ea17438deab4218d2"
+    },
+    {
+      "path": "gpu_run_archive/surface-smoke-raw.tar.gz::lane-b/format_markdown/run_manifest.json",
+      "sha256": "073b19fe412d1221bae4cfc775a8252cdd3a55c4aaf421488a8ba540f002f90c"
+    },
+    {
+      "path": "gpu_run_archive/surface-smoke-raw.tar.gz::lane-b/format_numbered_state/turns.jsonl",
+      "sha256": "4341e63f862eb57a76c4f0abb96fb6efacae173945efe6512e58e2f6108b3510"
+    },
+    {
+      "path": "gpu_run_archive/surface-smoke-raw.tar.gz::lane-b/format_numbered_state/races.csv",
+      "sha256": "b15447c58b6bc9783165a977721521d9d516ec3c5a144ac103c0bfda80e09aea"
+    },
+    {
+      "path": "gpu_run_archive/surface-smoke-raw.tar.gz::lane-b/format_numbered_state/run_manifest.json",
+      "sha256": "cb26447807011f76adb6e841a62d1a4fce8f33b0f38e7f39ac93e0661c8e2b28"
+    },
+    {
+      "path": "gpu_run_archive/surface-smoke-raw.tar.gz::lane-b/format_xml/turns.jsonl",
+      "sha256": "bbe9bb303cfb4147619065e6de69cb045a4eecedd6ffcc3e61f03e520e0aa8ae"
+    },
+    {
+      "path": "gpu_run_archive/surface-smoke-raw.tar.gz::lane-b/format_xml/races.csv",
+      "sha256": "91fe1883c4b4d812e61b7c3af8441318ef9b773b7e4f6ed3c0b54ca62ebacf74"
+    },
+    {
+      "path": "gpu_run_archive/surface-smoke-raw.tar.gz::lane-b/format_xml/run_manifest.json",
+      "sha256": "386f67d011e26ba3eaadc8437a288cded1e7161403067baa80349eb9c0409a48"
+    },
+    {
+      "path": "gpu_run_archive/surface-smoke-raw.tar.gz::lane-b/noise_minor_typo/turns.jsonl",
+      "sha256": "78f7be5011ea44d248d89091bcf13814fed7952e6d21edbf98a08537edc07f82"
+    },
+    {
+      "path": "gpu_run_archive/surface-smoke-raw.tar.gz::lane-b/noise_minor_typo/races.csv",
+      "sha256": "52e8b1c309c3a51651287f9912e115d979c301c975282a86c64cd9d7e91a14b8"
+    },
+    {
+      "path": "gpu_run_archive/surface-smoke-raw.tar.gz::lane-b/noise_minor_typo/run_manifest.json",
+      "sha256": "2010354f77f5856aa19e958a1d140cb93edcbec5596f2d6470f8e502bf481fe0"
+    }
+  ]
+}

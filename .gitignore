@@ -26,6 +26,14 @@ kaggle.json
 !/results/open_source/game_understanding_pilot/
 !/results/open_source/game_understanding_pilot/*.csv
 !/results/open_source/game_understanding_pilot/admission.json
+!/results/open_source/gpu_run_archive/
+!/results/open_source/gpu_run_archive/**
+!/results/open_source/prompt_sensitivity_pilot/
+!/results/open_source/prompt_sensitivity_pilot/**
+!/results/open_source/surface_sensitivity_pilot/
+!/results/open_source/surface_sensitivity_pilot/**
+!/results/open_source/surface_sensitivity_smoke/
+!/results/open_source/surface_sensitivity_smoke/**
 !/results/scripts/
 !/results/scripts/*.py
 !/results/scripts/*.json
