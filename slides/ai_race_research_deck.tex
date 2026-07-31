@@ -35,6 +35,10 @@
 \newcommand{\projectchip}{\tikz[baseline=-0.5ex]\node[draw=RaceInk,text=RaceInk,rounded corners=3pt,inner xsep=6pt,inner ysep=3pt,font=\tiny\bfseries]{LLM EXPERIMENT - THIS PROJECT};}
 
 \setbeamertemplate{footline}{%
+  \ifnum\inserttotalframenumber>0%
+    \pgfmathsetlengthmacro{\progresswidth}{\paperwidth*\insertframenumber/\inserttotalframenumber}%
+    \hbox{\color{RaceCyan}\rule{\progresswidth}{0.7pt}}%
+  \fi%
   \leavevmode\hbox{%
   \begin{beamercolorbox}[wd=.82\paperwidth,ht=3.4ex,dp=1.4ex,leftskip=.65cm]{normal text}%
     \color{RaceMuted}\tiny\bfseries AI RACE LAB \hspace{0.5em}|\hspace{0.5em} RESEARCH PROTOCOL
@@ -292,6 +296,59 @@ You S & 1.0 & 0.6\\
 {\color{white!55}\scriptsize\ttfamily game\_id \quad round \quad prompt \quad raw\_response \quad action \quad progress\_gap \quad stop\_draw \quad setback\_draw}
 \vfill
 \centering{\color{RaceLime}\small\bfseries THE ENVIRONMENT - NOT THE LLM - PERFORMS THE ARITHMETIC}
+\end{darkframe}
+
+% Interactive simulator
+\begin{frame}{A round should be understood, not merely computed.}
+\eyebrow{Guided simulator}\hfill\projectchip
+\vspace{0.25cm}
+\begin{columns}[T,onlytextwidth]
+\column{.32\textwidth}
+{\small\color{RaceMuted}The interface turns one state transition into a five-part story.}\par
+\vspace{0.18cm}
+\begin{tikzpicture}[node distance=.14cm]
+\tikzset{phase/.style={draw=RaceInk!16,fill=white,rounded corners=5pt,minimum width=4.25cm,minimum height=.62cm,anchor=west,align=left,font=\scriptsize}}
+\node[phase] (p1) {\textcolor{RaceCyanDark}{\bfseries 01}\quad Observe shared state};
+\node[phase,below=of p1] (p2) {\textcolor{RaceCyanDark}{\bfseries 02}\quad Decide privately};
+\node[phase,below=of p2,draw=RaceAmber,fill=RaceAmber!12] (p3) {\textcolor{RaceAmber}{\bfseries 03}\quad Reveal together};
+\node[phase,below=of p3] (p4) {\textcolor{RaceCyanDark}{\bfseries 04}\quad Update exact state};
+\node[phase,below=of p4] (p5) {\textcolor{RaceCyanDark}{\bfseries 05}\quad Check horizon};
+\end{tikzpicture}
+\column{.66\textwidth}
+\centering
+\begin{tikzpicture}
+\node[inner sep=2pt,fill=white,draw=RaceInk!18,rounded corners=7pt] {\includegraphics[width=8.0cm,trim=0 180 0 0,clip]{slides/assets/simulator-guided.png}};
+\end{tikzpicture}
+\end{columns}
+\end{frame}
+
+% Protocol vs sandbox
+\begin{darkframe}{One interface. Two scientific contracts.}
+\eyebrow{Parameter governance}
+\vspace{0.4cm}
+\begin{columns}[T,onlytextwidth]
+\column{.485\textwidth}
+\begin{beamercolorbox}[sep=.42cm,rounded=true]{normal text}
+\begin{tikzpicture}\node[fill=RaceCyan,text=RaceInk,rounded corners=4pt,font=\scriptsize\bfseries,inner xsep=7pt,inner ysep=4pt]{PROTOCOL MODE};\end{tikzpicture}
+\vspace{0.25cm}
+{\Large\bfseries Evidence-compatible}\par\vspace{0.18cm}
+{\small\color{white!65}Locks progress, payoff matrix, horizon, prize and safety cap. Only the registered risk treatments vary.}\par
+\vspace{0.35cm}
+{\scriptsize\color{RaceCyan}\bfseries $p_r^{\max}\in\{0.10,0.60,0.90\}$}
+\end{beamercolorbox}
+\column{.03\textwidth}\centering\vspace{1.7cm}{\color{white!30}\Large $\neq$}
+\column{.485\textwidth}
+\begin{beamercolorbox}[sep=.42cm,rounded=true]{normal text}
+\begin{tikzpicture}\node[fill=RaceAmber,text=RaceInk,rounded corners=4pt,font=\scriptsize\bfseries,inner xsep=7pt,inner ysep=4pt]{SANDBOX MODE};\end{tikzpicture}
+\vspace{0.25cm}
+{\Large\bfseries Exploratory only}\par\vspace{0.18cm}
+{\small\color{white!65}Unlocks progress, stop probability, minimum rounds, prize and safety cap for mechanism exploration.}\par
+\vspace{0.35cm}
+{\scriptsize\color{RaceAmber}\bfseries CHANGED MECHANICS - NOT PROTOCOL DATA}
+\end{beamercolorbox}
+\end{columns}
+\vfill
+\centering{\color{RaceLime}\small\bfseries THE MODE LABEL TRAVELS WITH THE INTERPRETATION}
 \end{darkframe}
 
 % 10

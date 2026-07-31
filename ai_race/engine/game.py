@@ -214,6 +214,8 @@ class AIRaceGame:
                     max_private_risk=self.config.max_private_risk,
                     prompt_version=self.config.prompt_version,
                     run_phase=self.config.run_phase,
+                    persona_condition=self.config.persona_condition,
+                    seat_persona_role=self.agents[player_index].persona_role,
                     rep=self.rep,
                     game_seed=self.seed,
                     sampling_seed=(
@@ -302,6 +304,8 @@ class AIRaceGame:
             model=self.config.model,
             max_private_risk=self.config.max_private_risk,
             run_phase=self.config.run_phase,
+            persona_condition=self.config.persona_condition,
+            persona_roles=[agent.persona_role for agent in self.agents],
             rep=self.rep,
             game_seed=self.seed,
             n_rounds=rounds_played,

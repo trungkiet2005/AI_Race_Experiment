@@ -22,8 +22,8 @@ phase, counts, and joins can be audited.
 the following analysis fields:
 
 - identifiers/context: `game_id`, `model`, `max_private_risk`,
-  `prompt_version`, `run_phase`, `rep`, `round`, `player`, `player_index`, and
-  `opponent`;
+  `prompt_version`, `run_phase`, `persona_condition`, `seat_persona_role`, `rep`,
+  `round`, `player`, `player_index`, and `opponent`;
 - action/protocol health: `action` (`"safe"` or `"unsafe"`), `unsafe` (`0` or
   `1`), `parse_failed`, and `retry_count`;
 - dynamic state: `own_prev_action`, `opponent_prev_action`,
@@ -41,17 +41,35 @@ logs for reproducibility but are not copied into descriptive tables.
 before the simultaneous round decision.
 
 `races.csv` has one row per race and includes at least `game_id`, `model`,
-`max_private_risk`, `prompt_version`, `run_phase`, `rep`, `n_rounds`, and
+`max_private_risk`, `prompt_version`, `run_phase`, `persona_condition`,
+`player_1_persona_role`, `player_2_persona_role`, `rep`, `n_rounds`, and
 `parse_failures`. `stop_forced` and `tie` are required audit fields. The canonical
 file also records seeds, final progress, Unsafe frequencies, setbacks, and final
 payoffs.
 
 `players.csv` has one row per player-race and includes at least `game_id`, `model`,
-`max_private_risk`, `prompt_version`, `run_phase`, `rep`, `player`, and `outcome`
+`max_private_risk`, `prompt_version`, `run_phase`, `persona_condition`,
+`persona_role`, `rep`, `player`, and `outcome`
 (`winner`, `loser`, or `tie`). `risk` is accepted as a legacy alias for
 `max_private_risk`. The terminal audit fields are required: rounds, progress, stage
 payoff, Unsafe count/frequency, private risk, prize, setback
 eligibility/draw/outcome, and final payoff.
+
+`all_results.csv` has one row per race in the FAIRGAME `all_results` shape: the
+per-round action and payoff sequences as JSON list columns, plus terminal progress,
+Unsafe counts, private risk, prize, setback, and final payoff for each seat. It also
+carries `persona_condition` and `playerN_persona_role`. It is a convenience view for
+skimming outcomes and is not read by the analyser; prompts and raw responses stay in
+`turns.jsonl`, which remains the audit surface.
+
+`persona_condition` labels the seat/persona cell (`none` for the neutral baseline).
+Injecting a persona fills an optional block that is already part of the frozen
+template, so it leaves `prompt_version`, the prompt hash, and `protocol_signature`
+completely unchanged. `persona_condition` is therefore the only thing separating a
+persona race from a neutral one, and the analyser stratifies every table by it and
+refuses unlabelled races unless `--allow-missing-persona-condition` is supplied.
+`seat_persona_role`/`persona_role` name the role of that specific seat, so an
+asymmetric cell such as adversarial-versus-cooperative can be split by seat.
 
 `run_manifest.json` must report `status`, `run_phase`, and output counts.
 `status="completed"` is required for primary analysis. Completed manifests must
@@ -119,7 +137,14 @@ The script produces:
 - later Unsafe rates split by the first-round action;
 - parse-failure and retry rates plus per-race inclusion accounting;
 - per-player trajectory metrics and winner/loser/tie comparisons;
-- nearest canonical AS/AU/CS/CAS mismatch summaries.
+- nearest canonical AS/AU/CS/CAS mismatch summaries;
+- `sample_summary.csv`, one row per analysis cell pooling sample sizes, mean and
+  median Unsafe frequency, realised horizons, and parse-failure accounting;
+- pairwise treatment contrasts on **two** analysis windows, `treatment_contrasts.csv`
+  over every round and `treatment_contrasts_round2plus.csv` over the panel sample,
+  with the persona equivalents; the two disagree whenever round 1 differs from later
+  rounds, and `human_reference.json` names which table each effect is scored on;
+- `theory_vs_experiment.csv`, described under *Theory outputs* below.
 
 Player-level tables first calculate each player's trajectory rate and then average
 those rates. They complement the decision-level summaries because a longer realised
@@ -148,11 +173,25 @@ A conflicting version within one race is always an error. By default, missing
 versions or multiple versions across pooled inputs are also errors, so incompatible
 protocols cannot be combined silently.
 
-The canonical primary prompt is `ai-race-paper-v2`, SHA-256
-`6180d4f699813a602a53cf4290b972aa4df4bf02ff1c646a85ab09d80d7729ff`.
-Both Kaggle paths hash the same prompt text. A different version or hash—including
-modified text relabelled as v2—is rejected from primary analysis and requires the
-explicit mixed-protocol sensitivity override below.
+The canonical primary prompt version is `ai-race-fairgame-v3`. One template file per
+language carries that label, so the analyser accepts any of the frozen template
+hashes:
+
+| template | SHA-256 |
+|---|---|
+| `ai_race/prompts/ai_race_en.txt` | `27086bd80378c25e859d03527a5ae55c1046f231ef7b914db9cb3c3b4fb2df3e` |
+| `ai_race/prompts/ai_race_vi.txt` | `a6d3f738cf58043ae0dadc351cac12da07bd60778317b0566d743f5e40a77510` |
+
+A different version, or a hash outside that set—including modified text relabelled
+as v3—is rejected from primary analysis and requires the explicit mixed-protocol
+sensitivity override below.
+
+Both Kaggle paths hash the same prompt text. `kaggle/benchmarks/ai_race_baseline.py`
+is self-contained by design and does not import the package, so it holds a
+byte-for-byte copy of `ai_race_en.txt`; `ai_race/tests/test_prompt_contract.py`
+compares that copy against the shipped file, because a copy that drifted by one
+character would record a hash outside the canonical set and lose every race to the
+prompt gate.
 
 The analyser also canonicalises the complete manifest protocol payload and hashes
 it as `protocol_signature`. The payload covers the manifest schema, exact source
@@ -248,3 +287,86 @@ the source paper are deliberately absent: they are not defined for LLM agents.
 The optional `--include-exploratory-behind` flag adds
 `BEHIND_UNSAFE_EXPLORATORY` to strategy-distance tables. It is not one of the
 paper's canonical strategies and must remain labelled exploratory.
+
+## Optional robustness refits
+
+```bash
+python results/scripts/analyze_ai_race.py --fit-logit-robustness
+```
+
+Off by default because it is one fit per common-random-number block. It refits the
+saturated specification once per block, each time omitting that block, and writes
+`logit_robustness_jackknife.csv` plus `logit_robustness_metadata.json`.
+
+| column | meaning |
+|---|---|
+| `variant` | `full`, `exclude_retried_races`, or `exclude_min_horizon` |
+| `term` | regression term |
+| `n_observations`, `n_blocks`, `n_blocks_refitted` | sample and refit accounting |
+| `coefficient_full` | estimate on the whole variant sample |
+| `coefficient_min`, `coefficient_max` | leave-one-block-out range |
+| `max_abs_shift`, `block_of_max_shift` | largest displacement and the block causing it |
+| `sign_stable` | full-sample and every leave-one-out estimate agree in sign |
+| `negligible_at_full_sample` | the estimate is numerically zero, so it has no sign |
+
+Exclusions are applied at race level, never at decision level: the lagged
+predictors are built from the race trajectory, so dropping single rows would leave
+later lags pointing at rounds no longer in the sample. `exclude_retried_races`
+drops any race where a decision needed a generation retry — the closest analogue
+here to the source paper's dropped pair — and `exclude_min_horizon` drops races
+that stopped at the five-round minimum and therefore carry the least history.
+
+A block whose removal makes the model unidentified or non-convergent is listed in
+`skipped_blocks` rather than recorded as a zero coefficient. The leave-one-out
+spread is a sensitivity diagnostic, not a standard error, and has no p-value.
+
+## Theory outputs
+
+```bash
+python results/scripts/build_theory_tables.py
+```
+
+Writes to `results/derived/ai_race_theory/`. This script reads **no run output**.
+Every number is a property of the game defined by `ai_race/configs/game/*.json` and
+is identical for every model, persona condition, and run.
+
+| file | contents |
+|---|---|
+| `theory_payoff_matrix.csv` | expected payoff for each ordered strategy pair per treatment, with the `method` that produced it |
+| `theory_equilibria.csv` | stage-game class, social-dilemma threshold, pure Nash profiles, and the AS/AU closed-form boundaries |
+| `theory_stationary_distribution.csv` | predicted population composition under evolutionary dynamics |
+| `theory_expected_unsafe.csv` | Unsafe frequency implied by that composition |
+| `theory_metadata.json` | parameters, method notes, and the caveats below |
+
+Payoffs are computed by exact enumeration over the horizon distribution by default.
+`--payoff-method monte_carlo` reproduces the source paper's construction (closed
+form on the four AS/AU pairs, 10⁴ replications elsewhere) and exists for
+cross-checking. The equilibrium and evolutionary tables always use the exact
+matrix: `Pi(CAS, AU)` and `Pi(AU, AU)` are the same number in the game, sampling
+noise makes them differ by roughly 0.04, and an exhaustive best-response search
+reads that difference as a strict preference and drops real equilibria.
+
+Two things these files are not:
+
+- **`theory_stationary_distribution.csv` is not `strategy_summary_player.csv`.**
+  The first is a predicted population composition; the second classifies observed
+  LLM trajectories against the nearest canonical strategy. Different questions.
+- **`theory_vs_experiment.csv` is not a fit.** The analyser emits it alongside the
+  behavioural tables, comparing each cell's observed *median* Unsafe frequency —
+  the statistic Figure 3B of the source paper uses — against the model prediction.
+  `predicted_phi_U` depends only on `max_private_risk`, so it is identical for every
+  model and persona cell. `difference` measures how far an LLM sits from the game
+  theory; a small difference is a property of the game, not evidence about a model.
+  The warning is repeated in `theory_vs_experiment_metadata.json`.
+
+The evolutionary tables are the **small-mutation limit**, where the population is
+monomorphic and the chain reduces to fixation probabilities between the four
+strategies. `nominal_mu` records the mutation rate of the source paper's parameter
+point that a row approximates; it is not applied, and `mu` is 0. Two consequences
+are recorded in the metadata rather than left to be discovered: AU and CAS are
+exactly payoff-equivalent against each other in this limit, so the paper's AU-to-CAS
+transition near `p_r^max = 0.2` cannot appear and their stationary mass splits
+evenly instead; and a finite mutation rate spreads mass into mixed populations that
+the limit cannot represent. What the limit does reproduce is the CS takeover above
+roughly `p_r^max = 0.6` and the negligible stationary mass of Always Safe at every
+treatment.

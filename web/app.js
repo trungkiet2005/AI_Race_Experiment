@@ -3,120 +3,278 @@
 
   const $ = (selector, root = document) => root.querySelector(selector);
   const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
-  const config = {
-    safeProgress: 1,
-    unsafeProgress: 1.5,
-    payoffs: { safe: { safe: 1, unsafe: .6 }, unsafe: { safe: 2.4, unsafe: 2 } },
-    minRounds: 5,
-    stopProbability: .2,
-    prize: 100,
-    maxRounds: 100
-  };
-
-  let state;
+  const { AIRaceSimulation, DEFAULT_CONFIG, POLICIES, expectedRounds } = window.AIRaceCore;
+  let game;
   let selected = [null, null];
-  let randomState = 20260731;
-
-  function seededRandom() {
-    randomState |= 0;
-    randomState = randomState + 0x6D2B79F5 | 0;
-    let t = Math.imul(randomState ^ randomState >>> 15, 1 | randomState);
-    t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
-    return ((t ^ t >>> 14) >>> 0) / 4294967296;
-  }
-
-  function initialState() {
-    return { round: 1, progress: [0, 0], payoffs: [0, 0], unsafe: [0, 0], history: [], finished: false, maxRisk: Number($('#riskCap').value) / 100 };
-  }
+  let autoRunning = false;
+  let phaseBusy = false;
+  let simMode = 'protocol';
+  const phaseOrder = ['observe', 'decide', 'reveal', 'update', 'stop'];
 
   function actionLabel(action) {
     return `<span class="action-pill ${action}">${action.toUpperCase()}</span>`;
   }
 
-  function privateRisk(player) {
-    return state.history.length ? state.maxRisk * state.unsafe[player] / state.history.length : 0;
+  function policyValue(player) {
+    return $(`#policy${player ? 'B' : 'A'}`).value;
+  }
+
+  function manualActionMap() {
+    const actions = {};
+    [0, 1].forEach(player => {
+      if (policyValue(player) === 'manual' && selected[player]) actions[player] = selected[player];
+    });
+    return actions;
+  }
+
+  function manualReady() {
+    return [0, 1].every(player => policyValue(player) !== 'manual' || Boolean(selected[player]));
+  }
+
+  function applyCanonicalParameters() {
+    $('#safeProgress').value = DEFAULT_CONFIG.safeProgress;
+    $('#unsafeProgress').value = DEFAULT_CONFIG.unsafeProgress;
+    $('#stopProbability').value = DEFAULT_CONFIG.stopProbability * 100;
+    $('#minRounds').value = DEFAULT_CONFIG.minRounds;
+    $('#racePrize').value = DEFAULT_CONFIG.prize;
+    $('#maxRounds').value = DEFAULT_CONFIG.maxRounds;
+    $('#payoffSS').value = DEFAULT_CONFIG.payoffs.safe.safe;
+    $('#payoffSU').value = DEFAULT_CONFIG.payoffs.safe.unsafe;
+    $('#payoffUS').value = DEFAULT_CONFIG.payoffs.unsafe.safe;
+    $('#payoffUU').value = DEFAULT_CONFIG.payoffs.unsafe.unsafe;
+  }
+
+  function readConfig() {
+    return {
+      safeProgress: Number($('#safeProgress').value),
+      unsafeProgress: Number($('#unsafeProgress').value),
+      stopProbability: Number($('#stopProbability').value) / 100,
+      minRounds: Number($('#minRounds').value),
+      prize: Number($('#racePrize').value),
+      maxRounds: Number($('#maxRounds').value),
+      payoffs: {
+        safe: { safe: Number($('#payoffSS').value), unsafe: Number($('#payoffSU').value) },
+        unsafe: { safe: Number($('#payoffUS').value), unsafe: Number($('#payoffUU').value) }
+      }
+    };
+  }
+
+  function updateParameterSummary(config) {
+    $('#stopRule').textContent = `${(config.stopProbability * 100).toFixed(0)}% after R${config.minRounds}`;
+    const expectation = expectedRounds(config);
+    $('#expectedRule').textContent = `${Number.isInteger(expectation) ? expectation : expectation.toFixed(1)} rounds`;
+    $('#prizeRule').textContent = `${config.prize.toFixed(0)} ECU`;
+    $('#parameterLock').textContent = simMode === 'protocol' ? 'LOCKED BY PROTOCOL' : 'EXPLORATORY';
+    $('#modeNote').innerHTML = simMode === 'protocol'
+      ? '<b>Protocol faithful.</b> Only the three risk treatments can change; every other game rule is locked.'
+      : '<b>Sandbox extension.</b> Changed mechanics are exploratory and must not be interpreted as protocol evidence.';
+  }
+
+  function switchMode(mode) {
+    if (game && (game.history.length || phaseBusy)) return;
+    simMode = mode;
+    $$('.mode-switch button').forEach(button => button.classList.toggle('active', button.dataset.mode === mode));
+    if (mode === 'protocol') applyCanonicalParameters();
+    reset();
+  }
+
+  function wait(milliseconds) {
+    return new Promise(resolve => window.setTimeout(resolve, milliseconds));
+  }
+
+  function setPhase(phase, title, body, facts = [], tone = 'cyan') {
+    const activeIndex = phaseOrder.indexOf(phase);
+    $$('.round-stepper li').forEach((item, index) => {
+      item.classList.toggle('active', index === activeIndex);
+      item.classList.toggle('complete', activeIndex >= 0 && index < activeIndex);
+    });
+    $('#narrativeStep').textContent = phase ? `${activeIndex + 1} / 5 · ${phase.toUpperCase()}` : 'READY';
+    $('#narrativeTitle').textContent = title;
+    $('#narrativeBody').textContent = body;
+    $('#narrativeFacts').innerHTML = facts.map(fact => `<span>${fact}</span>`).join('');
+    $('#roundNarrative').dataset.tone = tone;
   }
 
   function selectAction(player, action, button) {
-    if (state.finished) return;
+    if (game.finished || autoRunning || policyValue(player) !== 'manual') return;
     selected[player] = action;
     const group = button.closest('.action-buttons');
     $$('button', group).forEach(item => item.classList.toggle('selected', item === button));
     const card = button.closest('.player-card');
     card.classList.remove('selected-safe', 'selected-unsafe');
     card.classList.add(`selected-${action}`);
-    updateCommit();
+    $(`#decision${player ? 'B' : 'A'}`).textContent = `Manual ${action.toUpperCase()} action queued. It remains hidden until both decisions commit.`;
+    updateControls();
   }
 
-  function updateCommit() {
-    const button = $('#commitRound');
-    const ready = selected.every(Boolean) && !state.finished;
-    button.disabled = !ready;
-    $('span', button).textContent = state.finished ? 'Race complete' : ready ? 'Commit both actions' : 'Commit both actions';
-    $('small', button).textContent = state.finished ? 'Reset to run another race' : ready ? `${selected[0].toUpperCase()} × ${selected[1].toUpperCase()} · reveal simultaneously` : 'Waiting for Company A and Company B';
-  }
-
-  function commitRound() {
-    if (!selected.every(Boolean) || state.finished) return;
-    const actions = [...selected];
-    const increments = actions.map(action => action === 'unsafe' ? config.unsafeProgress : config.safeProgress);
-    const payoffs = [config.payoffs[actions[0]][actions[1]], config.payoffs[actions[1]][actions[0]]];
-    actions.forEach((action, player) => {
-      state.progress[player] += increments[player];
-      state.payoffs[player] += payoffs[player];
-      state.unsafe[player] += Number(action === 'unsafe');
+  function setDecisionVisuals(record) {
+    record.decisions.forEach((decision, player) => {
+      const suffix = player ? 'B' : 'A';
+      const card = $(`.player-${suffix.toLowerCase()}`);
+      card.classList.remove('selected-safe', 'selected-unsafe');
+      card.classList.add(`selected-${decision.action}`);
+      $$('button', $(`.action-buttons[data-player="${player}"]`)).forEach(button => button.classList.toggle('selected', button.dataset.action === decision.action));
+      $(`#decision${suffix}`).textContent = decision.reason;
     });
+  }
 
-    let stopDraw = null;
-    let stopped = false;
-    if (state.round >= config.minRounds) {
-      stopDraw = seededRandom();
-      stopped = stopDraw < config.stopProbability || state.round >= config.maxRounds;
-    }
-    state.history.push({ round: state.round, actions, increments, payoffs, stopDraw, stopped });
-    state.finished = stopped;
-    state.round += 1;
+  function clearQueuedActions() {
     selected = [null, null];
-    $$('.action-buttons button').forEach(button => button.classList.remove('selected'));
-    $$('.player-card').forEach(card => card.classList.remove('selected-safe', 'selected-unsafe'));
+    [0, 1].forEach(player => {
+      if (policyValue(player) === 'manual') {
+        $(`#decision${player ? 'B' : 'A'}`).textContent = 'Choose a manual action for the next round.';
+      }
+    });
+  }
+
+  async function runRound() {
+    if (game.finished || !manualReady() || phaseBusy) return null;
+    phaseBusy = true;
+    const speed = autoRunning ? 180 : 520;
+    const before = game.snapshot();
+    const previous = before.previousActions[0] ? `${before.previousActions[0].toUpperCase()} / ${before.previousActions[1].toUpperCase()}` : 'none yet';
+    const observeTitle = before.round === 1
+      ? 'Opening move: the race begins tied'
+      : before.round === game.config.minRounds
+        ? 'The hidden horizon activates this round'
+        : `Both companies observe round ${before.round}`;
+    setPhase(
+      'observe',
+      observeTitle,
+      `They receive the same pre-action snapshot: progress ${before.progress[0].toFixed(1)} vs ${before.progress[1].toFixed(1)}, with previous actions ${previous}.`,
+      [`A risk ${(game.privateRisk(0) * 100).toFixed(0)}%`, `B risk ${(game.privateRisk(1) * 100).toFixed(0)}%`, 'Same snapshot']
+    );
     render();
-    if (stopped) setTimeout(showResult, 250);
+    await wait(speed);
+
+    setPhase(
+      'decide',
+      'Choices are generated privately',
+      'Each policy reads only the shared pre-round state. Neither company can see the rival’s current choice.',
+      [POLICIES[game.policies[0]], POLICIES[game.policies[1]], 'Actions hidden'],
+      'amber'
+    );
+    await wait(speed);
+
+    const record = game.step(manualActionMap());
+    setPhase(
+      'reveal',
+      `${record.actions[0].toUpperCase()} meets ${record.actions[1].toUpperCase()}`,
+      'Both committed decisions are revealed at the same time. There is no same-round reaction advantage.',
+      [`Company A · ${record.actions[0].toUpperCase()}`, `Company B · ${record.actions[1].toUpperCase()}`, 'Simultaneous reveal'],
+      'amber'
+    );
+    setDecisionVisuals(record);
+    await wait(speed);
+
+    setPhase(
+      'update',
+      'The environment updates exact state',
+      `Progress changes by +${record.increments[0].toFixed(1)} / +${record.increments[1].toFixed(1)} and stage payoff by +${record.payoffs[0].toFixed(1)} / +${record.payoffs[1].toFixed(1)}.`,
+      [`Progress ${record.progressAfter[0].toFixed(1)} / ${record.progressAfter[1].toFixed(1)}`, `Payoff ${record.stagePayoffsAfter[0].toFixed(1)} / ${record.stagePayoffsAfter[1].toFixed(1)}`, 'Risk recalculated'],
+      'lime'
+    );
+    render();
+    await wait(speed);
+
+    const threshold = game.config.stopProbability;
+    const stopMessage = record.stopDraw === null
+      ? `Round ${record.round} is below the minimum horizon. No stop draw is allowed yet.`
+      : record.stopped
+        ? `The stop draw is ${record.stopDraw.toFixed(3)}, below ${threshold.toFixed(3)}. The race ends now.`
+        : `The stop draw is ${record.stopDraw.toFixed(3)}, at least ${threshold.toFixed(3)}. The race continues.`;
+    setPhase(
+      'stop',
+      record.stopped ? 'The hidden horizon stops the race' : 'Check whether the race continues',
+      stopMessage,
+      record.stopDraw === null ? [`Minimum ${game.config.minRounds} rounds`, 'No draw this round'] : [`Draw ${record.stopDraw.toFixed(3)}`, `Stop if draw < ${threshold.toFixed(3)}`, record.stopped ? 'STOP' : 'CONTINUE'],
+      record.stopped ? 'amber' : 'lime'
+    );
+    await wait(speed);
+
+    clearQueuedActions();
+    phaseBusy = false;
+    render();
+    if (game.finished) window.setTimeout(showResult, 180);
+    return record;
+  }
+
+  async function autoRun() {
+    if (!game.canAutoRun() || game.finished || autoRunning) return;
+    autoRunning = true;
+    render();
+    while (!game.finished && autoRunning) {
+      await runRound();
+      if (!game.finished && autoRunning) await wait(260);
+    }
+    autoRunning = false;
+    render();
+  }
+
+  function stopAutoRun() {
+    autoRunning = false;
+    render();
+  }
+
+  function updateControls() {
+    const stepButton = $('#commitRound');
+    const autoButton = $('#autoRun');
+    const ready = manualReady() && !game.finished && !autoRunning && !phaseBusy;
+    stepButton.disabled = !ready;
+    $('span', stepButton).textContent = game.finished ? 'Race complete' : phaseBusy ? 'Explaining round…' : autoRunning ? 'Auto-running…' : 'Run next round';
+    $('small', stepButton).textContent = game.finished ? 'Reset to start a new race' : manualReady() ? 'Both decisions use the same state snapshot' : 'Waiting for manual action';
+    autoButton.disabled = game.finished || !game.canAutoRun() || (phaseBusy && !autoRunning);
+    $('span', autoButton).textContent = autoRunning ? 'Pause auto-run' : 'Auto-run race';
+    $('small', autoButton).textContent = game.canAutoRun() ? 'Run until the hidden stop' : 'Available when both seats use bots';
+    $('#simulationStatus').textContent = game.finished ? 'Race complete' : phaseBusy ? 'Explaining current round' : autoRunning ? 'Bots are racing' : game.history.length ? 'Race in progress' : 'Simulation ready';
+    $('#resetGame').disabled = phaseBusy;
   }
 
   function render() {
-    $('#roundNumber').textContent = state.finished ? state.history.length : state.round;
+    const displayedRound = game.finished ? game.history.length : game.round;
+    $('#roundNumber').textContent = displayedRound;
     [0, 1].forEach(player => {
       const suffix = player ? 'B' : 'A';
-      $(`#progress${suffix}`).textContent = state.progress[player].toFixed(1);
-      $(`#payoff${suffix}`).textContent = state.payoffs[player].toFixed(1);
-      $(`#risk${suffix}`).textContent = `${Math.round(privateRisk(player) * 100)}%`;
+      $(`#progress${suffix}`).textContent = game.progress[player].toFixed(1);
+      $(`#payoff${suffix}`).textContent = game.payoffs[player].toFixed(1);
+      $(`#risk${suffix}`).textContent = `${Math.round(game.privateRisk(player) * 100)}%`;
+      const manual = policyValue(player) === 'manual';
+      const group = $(`.action-buttons[data-player="${player}"]`);
+      group.classList.toggle('manual-enabled', manual);
+      $$('button', group).forEach(button => { button.disabled = !manual || game.finished || autoRunning || phaseBusy; });
     });
-    const difference = state.progress[0] - state.progress[1];
+
+    const difference = game.progress[0] - game.progress[1];
     const labels = difference === 0 ? ['TIED', 'TIED'] : difference > 0 ? ['LEADING', 'TRAILING'] : ['TRAILING', 'LEADING'];
     ['A', 'B'].forEach((suffix, player) => {
       const badge = $(`#lead${suffix}`);
       badge.textContent = labels[player];
       badge.classList.toggle('leading', labels[player] === 'LEADING');
     });
-    const activeRound = state.finished ? state.history.length : state.round;
-    $('#stopLabel').textContent = state.finished ? 'Terminal state reached' : activeRound <= config.minRounds ? 'Guaranteed to continue' : 'Stochastic horizon active';
-    $('#stopDetail').textContent = state.finished ? `Race ended after ${state.history.length} rounds` : activeRound <= config.minRounds ? 'Stop draws begin after round 5' : '20% stop chance after this round';
-    $('#historyCount').textContent = `${state.history.length} ROUND${state.history.length === 1 ? '' : 'S'}`;
-    const treatmentLocked = state.history.length > 0;
-    $('#riskCap').disabled = treatmentLocked;
-    $$('.presets button').forEach(button => { button.disabled = treatmentLocked; });
+
+    $('#stopLabel').textContent = game.finished ? 'Terminal state reached' : displayedRound < game.config.minRounds ? 'Guaranteed to continue' : 'Stochastic horizon active';
+    $('#stopDetail').textContent = game.finished ? `Race ended after ${game.history.length} rounds` : displayedRound < game.config.minRounds ? `A stop draw occurs after round ${game.config.minRounds}` : `${(game.config.stopProbability * 100).toFixed(0)}% stop chance after this round`;
+    $('#historyCount').textContent = `${game.history.length} ROUND${game.history.length === 1 ? '' : 'S'}`;
+    const locked = game.history.length > 0 || autoRunning || phaseBusy;
+    $('#riskCap').disabled = locked || simMode === 'protocol';
+    $('#gameSeed').disabled = locked;
+    $$('.presets button').forEach(button => { button.disabled = locked; });
+    $$('.policy-select').forEach(select => { select.disabled = locked; });
+    $$('.mode-switch button').forEach(button => { button.disabled = locked; });
+    $$('[data-parameter]').forEach(input => { input.disabled = locked || simMode === 'protocol'; });
+    updateParameterSummary(game.config);
     renderHistory();
     renderChart();
-    updateCommit();
+    updateControls();
   }
 
   function renderHistory() {
     const body = $('#historyBody');
-    if (!state.history.length) {
-      body.innerHTML = '<tr class="empty-row"><td colspan="6">Choose two actions to begin the race.</td></tr>';
+    if (!game.history.length) {
+      body.innerHTML = '<tr class="empty-row"><td colspan="6">Run the bots or choose manual actions to begin.</td></tr>';
       return;
     }
-    body.innerHTML = [...state.history].reverse().map(item => `<tr>
+    body.innerHTML = [...game.history].reverse().map(item => `<tr title="A: ${item.decisions[0].reason} B: ${item.decisions[1].reason}">
       <td class="mono">${String(item.round).padStart(2, '0')}</td>
       <td>${actionLabel(item.actions[0])}</td><td>${actionLabel(item.actions[1])}</td>
       <td>+${item.increments[0].toFixed(1)} / +${item.increments[1].toFixed(1)}</td>
@@ -128,13 +286,12 @@
   function renderChart() {
     const svg = $('#progressChart');
     const width = 760, height = 230, left = 36, right = 12, top = 12, bottom = 28;
-    const rounds = Math.max(5, state.history.length);
-    const maxProgress = Math.max(6, ...state.progress) * 1.12;
+    const rounds = Math.max(5, game.history.length);
+    const maxProgress = Math.max(6, ...game.progress) * 1.12;
     const x = round => left + round / rounds * (width - left - right);
     const y = value => height - bottom - value / maxProgress * (height - top - bottom);
     const series = [[0], [0]];
-    const totals = [0, 0];
-    state.history.forEach(item => item.increments.forEach((value, player) => { totals[player] += value; series[player].push(totals[player]); }));
+    game.history.forEach(item => item.progressAfter.forEach((value, player) => series[player].push(value)));
     let markup = '';
     for (let i = 0; i <= 4; i += 1) {
       const value = maxProgress * i / 4;
@@ -145,50 +302,76 @@
       if (round === 0 || round === rounds || round % Math.ceil(rounds / 5) === 0) markup += `<text class="chart-label" text-anchor="middle" x="${x(round)}" y="${height - 5}">R${round}</text>`;
     }
     series.forEach((values, player) => {
+      const variant = player ? 'b' : 'a';
       const points = values.map((value, round) => `${x(round)},${y(value)}`).join(' ');
-      markup += `<polyline class="chart-line-${player ? 'b' : 'a'}" points="${points}"/>`;
-      values.forEach((value, round) => markup += `<circle class="chart-point-${player ? 'b' : 'a'}" cx="${x(round)}" cy="${y(value)}" r="${round === values.length - 1 ? 5 : 3}"/>`);
+      markup += `<polyline class="chart-line-${variant}" points="${points}"/>`;
+      values.forEach((value, round) => { markup += `<circle class="chart-point-${variant}" cx="${x(round)}" cy="${y(value)}" r="${round === values.length - 1 ? 5 : 3}"/>`; });
     });
     svg.innerHTML = markup;
   }
 
   function showResult() {
-    const outcomes = Math.abs(state.progress[0] - state.progress[1]) < 1e-9 ? ['tie', 'tie'] : state.progress[0] > state.progress[1] ? ['winner', 'loser'] : ['loser', 'winner'];
-    const draws = [seededRandom(), seededRandom()];
-    const risks = [privateRisk(0), privateRisk(1)];
-    const prizes = outcomes.map(outcome => outcome === 'tie' ? config.prize / 2 : outcome === 'winner' ? config.prize : 0);
-    const setbacks = outcomes.map((outcome, player) => outcome !== 'loser' && draws[player] < risks[player]);
-    const finals = state.payoffs.map((payoff, player) => setbacks[player] ? 0 : payoff + prizes[player]);
-    const winner = outcomes[0] === 'tie' ? null : outcomes.indexOf('winner');
+    const result = game.terminal;
+    const winner = result.outcomes[0] === 'tie' ? null : result.outcomes.indexOf('winner');
     $('#resultTitle').textContent = winner === null ? 'The race ends in a tie' : `Company ${winner ? 'B' : 'A'} reaches the frontier first`;
-    $('#resultSubtitle').textContent = `${state.history.length} rounds completed. Terminal setback draws are applied only to the winner or tied winners.`;
-    $('#resultCards').innerHTML = [0, 1].map(player => `<article><small>COMPANY ${player ? 'B' : 'A'} · ${outcomes[player].toUpperCase()}</small><strong>${finals[player].toFixed(1)} ECU</strong><small>${Math.round(risks[player] * 100)}% risk · draw ${draws[player].toFixed(3)} · ${setbacks[player] ? 'SETBACK' : 'NO SETBACK'}</small></article>`).join('');
+    $('#resultSubtitle').textContent = `${game.history.length} rounds completed with seed ${game.seed}. Terminal risk applies only to the winner or tied winners.`;
+    $('#resultCards').innerHTML = [0, 1].map(player => `<article class="${result.setbacks[player] ? 'setback-card' : ''}">
+      <small>COMPANY ${player ? 'B' : 'A'} · ${result.outcomes[player].toUpperCase()}</small>
+      <strong>${result.finalPayoffs[player].toFixed(1)} ECU</strong>
+      <small>Stage ${game.payoffs[player].toFixed(1)} + prize ${result.prizes[player].toFixed(1)}</small>
+      <small>${(result.risks[player] * 100).toFixed(1)}% risk · draw ${result.setbackDraws[player].toFixed(3)} · ${result.setbacks[player] ? 'SETBACK' : 'NO SETBACK'}</small>
+    </article>`).join('');
     $('#resultDialog').showModal();
   }
 
   function reset() {
-    randomState = 20260731;
+    const config = readConfig();
+    let nextGame;
+    try {
+      nextGame = new AIRaceSimulation({
+        seed: Number($('#gameSeed').value),
+        maxRisk: Number($('#riskCap').value) / 100,
+        policies: [policyValue(0), policyValue(1)],
+        config
+      });
+    } catch (error) {
+      $('#parameterError').textContent = error.message;
+      return;
+    }
+    $('#parameterError').textContent = '';
+    autoRunning = false;
+    phaseBusy = false;
     selected = [null, null];
-    state = initialState();
+    game = nextGame;
     $$('.action-buttons button').forEach(button => button.classList.remove('selected'));
     $$('.player-card').forEach(card => card.classList.remove('selected-safe', 'selected-unsafe'));
+    [0, 1].forEach(player => {
+      const suffix = player ? 'B' : 'A';
+      const policy = policyValue(player);
+      $(`#decision${suffix}`).textContent = policy === 'manual' ? 'Choose a manual action for round 1.' : `${POLICIES[policy]} is ready to evaluate the shared pre-round state.`;
+    });
+    setPhase(null, 'The next round is ready', 'Run one round to see the complete decision cycle explained here.', ['Same snapshot', 'Hidden choices', 'Exact arithmetic']);
     render();
   }
 
   $$('.action-buttons button').forEach(button => button.addEventListener('click', () => selectAction(Number(button.closest('.action-buttons').dataset.player), button.dataset.action, button)));
-  $('#commitRound').addEventListener('click', commitRound);
+  $('#commitRound').addEventListener('click', runRound);
+  $('#autoRun').addEventListener('click', () => autoRunning ? stopAutoRun() : autoRun());
   $('#resetGame').addEventListener('click', reset);
   $('#riskCap').addEventListener('input', event => {
     const value = Number(event.target.value);
     $('#riskValue').textContent = `${value}%`;
-    state.maxRisk = value / 100;
     $$('.presets button').forEach(button => button.classList.toggle('active', Number(button.dataset.risk) === value));
-    render();
+    reset();
   });
   $$('.presets button').forEach(button => button.addEventListener('click', () => {
     $('#riskCap').value = button.dataset.risk;
     $('#riskCap').dispatchEvent(new Event('input'));
   }));
+  $$('.policy-select').forEach(select => select.addEventListener('change', reset));
+  $$('.mode-switch button').forEach(button => button.addEventListener('click', () => switchMode(button.dataset.mode)));
+  $$('[data-parameter]').forEach(input => input.addEventListener('change', reset));
+  $('#gameSeed').addEventListener('change', reset);
   $('.dialog-close').addEventListener('click', () => $('#resultDialog').close());
   $('#playAgain').addEventListener('click', () => { $('#resultDialog').close(); reset(); });
   reset();

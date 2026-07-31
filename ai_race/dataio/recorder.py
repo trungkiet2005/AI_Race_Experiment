@@ -46,6 +46,9 @@ def race_row(result: Any) -> dict[str, Any]:
         "max_private_risk": result.max_private_risk,
         "prompt_version": (result.config or {}).get("prompt_version", ""),
         "run_phase": result.run_phase,
+        "persona_condition": result.persona_condition,
+        "player_1_persona_role": result.persona_roles[0],
+        "player_2_persona_role": result.persona_roles[1],
         "rep": result.rep,
         "game_seed": result.game_seed,
         "n_rounds": result.n_rounds,
@@ -85,6 +88,8 @@ def player_rows(result: Any) -> list[dict[str, Any]]:
                 "max_private_risk": result.max_private_risk,
                 "prompt_version": (result.config or {}).get("prompt_version", ""),
                 "run_phase": result.run_phase,
+                "persona_condition": result.persona_condition,
+                "persona_role": result.persona_roles[player_index],
                 "rep": result.rep,
                 "game_seed": result.game_seed,
                 "n_rounds": result.n_rounds,
@@ -125,6 +130,10 @@ def all_results_row(result: Any) -> dict[str, Any]:
         "model": result.model,
         "language": cfg.get("language", ""),
         "run_phase": result.run_phase,
+        # Carried here too: a reader skimming outcomes must be able to tell a
+        # persona cell from the neutral baseline, and persona leaves no trace in
+        # the prompt hash.
+        "persona_condition": result.persona_condition,
         "rep": result.rep,
         "game_seed": result.game_seed,
         "n_rounds": result.n_rounds,
@@ -144,6 +153,7 @@ def all_results_row(result: Any) -> dict[str, Any]:
             round_record[player_index] for round_record in result.per_round_payoffs
         ]
         row[f"{prefix}_name"] = name
+        row[f"{prefix}_persona_role"] = result.persona_roles[player_index]
         row[f"{prefix}_actions"] = json.dumps(actions)
         row[f"{prefix}_round_payoffs"] = json.dumps(payoffs)
         row[f"{prefix}_progress"] = result.progress[player_index]

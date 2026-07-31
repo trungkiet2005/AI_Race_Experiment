@@ -2,7 +2,7 @@
 
 ## Built artifacts
 
-- `ai_race_research_deck.tex` is the canonical 16:9 LaTeX Beamer source.
+- `ai_race_research_deck.tex` is the canonical 21-slide, 16:9 LaTeX Beamer source.
 - `../output/pdf/ai_race_research_deck.pdf` is the compiled presentation.
 - `index.html` is an optional browser-based companion deck.
 

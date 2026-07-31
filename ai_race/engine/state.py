@@ -58,9 +58,15 @@ class GameConfig:
     reveal_opponent_persona_prior: bool = False
     language: str = "en"
     prompt_template: str = "ai_race_en"
-    prompt_version: str = "ai-race-paper-v2"
+    prompt_version: str = "ai-race-fairgame-v3"
     run_phase: str = "pilot"
     agents_ref: str = "companies_default"
+    # Persona is an agents-configuration factor, not a prompt version: the frozen
+    # template already contains the optional persona block, so injecting a persona
+    # leaves the template hash untouched. Recording the condition here is what
+    # stops persona and non-persona runs from being pooled silently downstream.
+    persona_condition: str = "none"
+    persona_sha256: str = ""
     model: str = "LocalQwen"
     sampling_seed_applied: bool = True
 
@@ -85,6 +91,11 @@ class GameConfig:
             raise ValueError("history_mode must be 'previous_round' or 'full'")
         if self.run_phase not in {"pilot", "confirmatory"}:
             raise ValueError("run_phase must be 'pilot' or 'confirmatory'")
+        if not str(self.persona_condition).strip():
+            raise ValueError(
+                "persona_condition must be a non-empty label; use 'none' for the "
+                "neutral baseline so an unlabelled run cannot be pooled with it"
+            )
 
     @classmethod
     def from_dict(
@@ -95,6 +106,8 @@ class GameConfig:
         model: Optional[str] = None,
         sampling_seed_applied: Optional[bool] = None,
         run_phase: Optional[str] = None,
+        persona_condition: Optional[str] = None,
+        persona_sha256: Optional[str] = None,
     ) -> "GameConfig":
         payoffs = data.get("stagePayoffs", {}) or {}
         return cls(
@@ -117,9 +130,13 @@ class GameConfig:
             reveal_opponent_persona_prior=bool(data.get("revealOpponentPersonaPrior", False)),
             language=language or str(data.get("language", "en")),
             prompt_template=str(data.get("promptTemplate", "ai_race_en")),
-            prompt_version=str(data.get("promptVersion", "ai-race-paper-v2")),
+            prompt_version=str(data.get("promptVersion", "ai-race-fairgame-v3")),
             run_phase=run_phase or str(data.get("runPhase", "pilot")),
             agents_ref=str(data.get("agents", "companies_default")),
+            # Persona lives in the agents configuration, so the caller supplies it;
+            # a game JSON never carries it.
+            persona_condition=str(persona_condition or "none"),
+            persona_sha256=str(persona_sha256 or ""),
             model=model or str(data.get("model", "LocalQwen")),
             sampling_seed_applied=(
                 bool(data.get("samplingSeedApplied", True))
@@ -155,6 +172,8 @@ class TurnRecord:
     max_private_risk: float
     prompt_version: str
     run_phase: str
+    persona_condition: str
+    seat_persona_role: str
     rep: int
     game_seed: int
     sampling_seed: Optional[int]
@@ -207,6 +226,8 @@ class GameResult:
     model: str
     max_private_risk: float
     run_phase: str
+    persona_condition: str
+    persona_roles: list[str]
     rep: int
     game_seed: int
     n_rounds: int

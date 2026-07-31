@@ -96,15 +96,11 @@ def build_prompt(
         if completed_rounds
         else 0.0
     )
-    persona_block = (
-        f"\nAdditional role instruction:\n{persona_text.strip()}\n"
-        if persona_text.strip()
-        else ""
-    )
+    # Persona no longer has its own placeholder: the FAIRGAME template renders it
+    # through the optional ``{intro}`` block and ``{personality}`` below.
     values = {
         "player_name": player_name,
         "opponent_name": player_names[opponent_index],
-        "persona_block": persona_block,
         "round_number": round_number,
         "max_private_risk_percent": _fmt(config.max_private_risk * 100),
         "safe_progress": _fmt(config.safe_progress),
