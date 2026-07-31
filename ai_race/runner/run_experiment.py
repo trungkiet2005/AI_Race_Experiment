@@ -72,7 +72,11 @@ def build_games_for_model(
                 game_data,
                 language=str(language),
                 model=str(model),
-                sampling_seed_applied=bool(exp.get("useOffline", True)),
+                # Hosted routes may forward a seed without confirming it was applied,
+                # so the claim is an explicit configuration choice, not a default.
+                sampling_seed_applied=bool(
+                    exp.get("samplingSeedApplied", exp.get("useOffline", True))
+                ),
                 run_phase=str(exp.get("runPhase", "pilot")),
             )
             template_name = config.prompt_template.format(language=language)
@@ -194,8 +198,13 @@ def run_experiment(
                     )
                 )
             else:
-                send_batch = get_send_batch(str(model), offline=False)
-                max_retries = int(exp.get("maxParseRetries", 1))
+                send_batch = get_send_batch(
+                    str(model),
+                    offline=False,
+                    backend=str(exp.get("backend", "api")),
+                    proxy_options=dict(exp.get("proxyOptions", {}) or {}),
+                )
+                max_retries = int(exp.get("maxParseRetries", 3))
 
             results = run_games_batched(
                 games,

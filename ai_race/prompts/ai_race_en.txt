@@ -1,34 +1,39 @@
-You are {player_name}, a company competing with {opponent_name} to develop a new technology.
-Your goal is to maximize your own expected payoff in this task.{persona_block}
+You are {currentPlayerName} and your opponent is {opponent1}.
+{intro}: [You are {personality}.]
+{opponentIntro}: [{opponent1} has a probability of {opponentPersonalityProbability1}% of being {opponentPersonality1}.]
 
-GAME RULES
-- In every round, both companies choose simultaneously between SAFE and UNSAFE development.
-- SAFE advances {safe_progress} race step. UNSAFE advances {unsafe_progress} race steps.
-- Your round payoff depends on both choices:
+You and {opponent1} lead competing companies in a race to develop a new technology.
 
-                         Opponent SAFE    Opponent UNSAFE
-  You choose SAFE             {payoff_safe_safe}                 {payoff_safe_unsafe}
-  You choose UNSAFE           {payoff_unsafe_safe}                 {payoff_unsafe_unsafe}
+Every round each of you has the following choices: '{strategy1}' and '{strategy2}'. Both of you choose simultaneously.
+{strategy1} advances your company {step1} race step and carries no additional risk. {strategy2} advances your company {step2} race steps and increases your private risk.
+{gameLength}: [There are {nRounds} rounds to decide.]
+The race lasts at least {minRounds} rounds. After every completed round from round {minRounds} onward, the race ends with probability {stopProbabilityPercent}%. You do not know the final round in advance.
+The current round is number {currentRound}.
 
-- The race lasts at least {min_rounds} rounds. After every completed round from round {min_rounds} onward, the race ends with probability {stop_probability_percent}%. You do not know the final round in advance.
-- When the race ends, the company with greater cumulative progress receives a prize of {race_prize}. If progress is tied, each company receives {tie_prize}.
-- Your maximum private setback risk in this race is {max_private_risk_percent}%.
-- Your current private risk equals that maximum multiplied by the fraction of your completed actions that were UNSAFE.
-- Private setback risk is applied only if you win or tie for first. If a setback occurs, you lose your entire payoff from this race: accumulated round payoffs plus prize. If you lose the race, you receive no prize, face no setback, and keep your accumulated round payoffs.
+If you both choose {strategy1}, you both get {weight1}.
+If you choose {strategy1} and {opponent1} chooses {strategy2}, you get {weight3} and {opponent1} gets {weight2}.
+If you choose {strategy2} and {opponent1} chooses {strategy1}, you get {weight2} and {opponent1} gets {weight3}.
+If you both choose {strategy2}, you both get {weight4}.
 
-CURRENT DECISION - ROUND {round_number}
-- Your accumulated round payoff: {own_stage_payoff}
-- Opponent accumulated round payoff: {opponent_stage_payoff}
-- Your current private setback risk: {own_private_risk_percent}%
-- Opponent current private setback risk: {opponent_private_risk_percent}%
-- Your cumulative progress: {own_progress}
-- Opponent cumulative progress: {opponent_progress}
-- Your progress minus opponent progress: {progress_gap}
+When the race ends, the company with greater cumulative progress receives a prize of {racePrize}. If progress is tied, each company receives {tiePrize}.
+Your maximum private setback risk in this race is {maxPrivateRiskPercent}%. Your current private risk equals that maximum multiplied by the fraction of your completed actions that were {strategy2}.
+Private setback risk is applied only if you win or tie for first. If a setback occurs, you lose your entire payoff from this race: accumulated round payoffs plus prize. If you lose the race, you receive no prize, face no setback, and keep your accumulated round payoffs.
 
-PREVIOUS RESULT
-{previous_round}
+This is the state of the race before your current decision:
+- Your accumulated round payoff: {ownStagePayoff}
+- {opponent1} accumulated round payoff: {opponentStagePayoff}
+- Your current private setback risk: {ownPrivateRiskPercent}%
+- {opponent1} current private setback risk: {opponentPrivateRiskPercent}%
+- Your cumulative progress: {ownProgress}
+- {opponent1} cumulative progress: {opponentProgress}
+- Your progress minus {opponent1} progress: {progressGap}
 
-Choose for this round without assuming you know the opponent's simultaneous choice.
+This is the history of the choices made so far:
+{history}
+
+Your goal is to maximize your own expected payoff by making the best strategies based on the provided information.
+{communicate}: [Send one short message to {opponent1} and output ONLY that message.]
+{choose}: [Choose between {strategy1} and {strategy2} without assuming you know the simultaneous choice of {opponent1}.
 Return exactly one line and no other text, using one of these forms:
-ACTION: SAFE
-ACTION: UNSAFE
+ACTION: {strategy1}
+ACTION: {strategy2}]
