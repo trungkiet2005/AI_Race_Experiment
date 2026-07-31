@@ -1,0 +1,508 @@
+\documentclass[aspectratio=169,11pt]{beamer}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{helvet}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc,shapes.geometric}
+
+\definecolor{RaceInk}{HTML}{07111F}
+\definecolor{RaceNavy}{HTML}{0E1B2D}
+\definecolor{RacePaper}{HTML}{F3F1EB}
+\definecolor{RaceCyan}{HTML}{28D7DC}
+\definecolor{RaceCyanDark}{HTML}{007E89}
+\definecolor{RaceAmber}{HTML}{FFB547}
+\definecolor{RaceLime}{HTML}{D8FF55}
+\definecolor{RaceMuted}{HTML}{697586}
+\definecolor{RaceRed}{HTML}{FF795F}
+
+\renewcommand{\familydefault}{\sfdefault}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{itemize item}{\color{RaceCyanDark}$\blacktriangleright$}
+\setbeamertemplate{itemize subitem}{\color{RaceAmber}$\bullet$}
+\setbeamercolor{normal text}{fg=RaceInk,bg=RacePaper}
+\setbeamercolor{frametitle}{fg=RaceInk,bg=RacePaper}
+\setbeamerfont{frametitle}{size=\fontsize{26}{28},series=\bfseries}
+\setbeamerfont{title}{size=\fontsize{34}{37},series=\bfseries}
+\setbeamersize{text margin left=0.65cm,text margin right=0.65cm}
+
+\newcommand{\eyebrow}[1]{\textcolor{RaceCyanDark}{\scriptsize\bfseries\MakeUppercase{#1}}}
+\newcommand{\pending}{\tikz[baseline=-0.5ex]\node[fill=RaceInk,text=RaceLime,rounded corners=3pt,inner xsep=6pt,inner ysep=3pt,font=\tiny\bfseries]{RESULTS PENDING};}
+\newcommand{\sourcechip}{\tikz[baseline=-0.5ex]\node[draw=RaceCyanDark,text=RaceCyanDark,rounded corners=3pt,inner xsep=6pt,inner ysep=3pt,font=\tiny\bfseries]{SOURCE STUDY - HUMAN PARTICIPANTS};}
+\newcommand{\projectchip}{\tikz[baseline=-0.5ex]\node[draw=RaceInk,text=RaceInk,rounded corners=3pt,inner xsep=6pt,inner ysep=3pt,font=\tiny\bfseries]{LLM EXPERIMENT - THIS PROJECT};}
+
+\setbeamertemplate{footline}{%
+  \leavevmode\hbox{%
+  \begin{beamercolorbox}[wd=.82\paperwidth,ht=3.4ex,dp=1.4ex,leftskip=.65cm]{normal text}%
+    \color{RaceMuted}\tiny\bfseries AI RACE LAB \hspace{0.5em}|\hspace{0.5em} RESEARCH PROTOCOL
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.18\paperwidth,ht=3.4ex,dp=1.4ex,rightskip=.65cm plus1fil]{normal text}%
+    \color{RaceMuted}\tiny\bfseries \insertframenumber\ / \inserttotalframenumber
+  \end{beamercolorbox}}}
+
+\newenvironment{darkframe}[1]{%
+  \setbeamercolor{background canvas}{bg=RaceInk}%
+  \setbeamercolor{normal text}{fg=white,bg=RaceInk}%
+  \setbeamercolor{frametitle}{fg=white,bg=RaceInk}%
+  \setbeamercolor{footline}{fg=white,bg=RaceInk}%
+  \setbeamercolor{block title}{fg=RaceCyan,bg=RaceNavy}%
+  \setbeamercolor{block body}{fg=white,bg=RaceNavy}%
+  \begin{frame}{#1}%
+}{%
+  \end{frame}%
+  \setbeamercolor{background canvas}{bg=RacePaper}%
+  \setbeamercolor{normal text}{fg=RaceInk,bg=RacePaper}%
+  \setbeamercolor{frametitle}{fg=RaceInk,bg=RacePaper}%
+  \setbeamercolor{block title}{fg=RaceCyanDark,bg=white}%
+  \setbeamercolor{block body}{fg=RaceInk,bg=white}%
+}
+
+\title{LLM agents in an\\idealised AI race}
+\subtitle{When speed wins now, who still chooses safety?}
+\date{Research protocol - results pending}
+
+\begin{document}
+
+% 1
+\begin{frame}[plain]
+\begin{tikzpicture}[remember picture,overlay]
+  \fill[RaceInk] (current page.south west) rectangle (current page.north east);
+  \fill[RaceCyan] ([xshift=10.8cm]current page.south west) rectangle (current page.north east);
+  \draw[white!18,line width=.5pt] ([xshift=.8cm,yshift=1.3cm]current page.south west) -- ([xshift=9.7cm,yshift=1.3cm]current page.south west);
+  \draw[RaceAmber,line width=4pt] ([xshift=11.5cm,yshift=2.2cm]current page.south west) -- ([xshift=15.0cm,yshift=2.2cm]current page.south west);
+  \draw[RaceInk,line width=4pt] ([xshift=11.5cm,yshift=1.25cm]current page.south west) -- ([xshift=13.9cm,yshift=1.25cm]current page.south west);
+  \node[fill=RaceAmber,text=RaceInk,rounded corners=4pt,font=\bfseries] at ([xshift=15.0cm,yshift=2.2cm]current page.south west) {B};
+  \node[fill=RaceInk,text=RaceLime,rounded corners=4pt,font=\bfseries] at ([xshift=13.9cm,yshift=1.25cm]current page.south west) {A};
+\end{tikzpicture}
+\vspace{0.55cm}
+{\color{RaceCyan}\scriptsize\bfseries LLM BEHAVIOR $\times$ STRATEGIC SAFETY}\par
+\vspace{0.5cm}
+{\color{white}\fontsize{35}{38}\selectfont\bfseries LLM agents in an\\idealised AI race.}\par
+\vspace{0.4cm}
+{\color{white!65}\large When speed wins now, who still chooses safety?}\par
+\vfill
+\pending\hspace{0.4cm}{\color{white!55}\small Controlled two-agent experiment}
+\end{frame}
+
+% 2
+\begin{darkframe}{Competition changes the decision.}
+\eyebrow{The strategic tension}
+\vspace{0.3cm}
+\begin{columns}[T,onlytextwidth]
+\column{.45\textwidth}
+\begin{tikzpicture}
+\node[fill=RaceNavy,draw=white!15,rounded corners=10pt,minimum width=6.6cm,minimum height=4.4cm,inner sep=15pt] (s) {};
+\node[fill=RaceCyan,text=RaceInk,rounded corners=6pt,font=\fontsize{22}{22}\selectfont\bfseries,minimum size=1.1cm] at ($(s.north west)+(1.1,-1.05)$) {S};
+\node[anchor=west,text=RaceCyan,font=\small\bfseries] at ($(s.north west)+(1.9,-.75)$) {SAFE};
+\node[anchor=west,text=white,font=\fontsize{25}{26}\selectfont\bfseries] at ($(s.north west)+(1.9,-1.35)$) {$+1.0$};
+\node[anchor=west,align=left,text=white!60,font=\small] at ($(s.south west)+(.6,.8)$) {Steady progress\\No added risk};
+\end{tikzpicture}
+\column{.1\textwidth}\centering\vspace{1.7cm}{\color{white!35}\bfseries OR}
+\column{.45\textwidth}
+\begin{tikzpicture}
+\node[fill=RaceNavy,draw=RaceAmber,rounded corners=10pt,minimum width=6.6cm,minimum height=4.4cm,inner sep=15pt] (u) {};
+\node[fill=RaceAmber,text=RaceInk,rounded corners=6pt,font=\fontsize{22}{22}\selectfont\bfseries,minimum size=1.1cm] at ($(u.north west)+(1.1,-1.05)$) {U};
+\node[anchor=west,text=RaceAmber,font=\small\bfseries] at ($(u.north west)+(1.9,-.75)$) {UNSAFE};
+\node[anchor=west,text=white,font=\fontsize{25}{26}\selectfont\bfseries] at ($(u.north west)+(1.9,-1.35)$) {$+1.5$};
+\node[anchor=west,align=left,text=white!60,font=\small] at ($(u.south west)+(.6,.8)$) {Faster progress\\Risk accumulates};
+\end{tikzpicture}
+\end{columns}
+\vfill
+\centering{\color{white!70}\small The question is whether \textbf{competition changes} the model's action.}
+\end{darkframe}
+
+% 3
+\begin{frame}{Adapt the mechanics. Test the agents anew.}
+\eyebrow{Evidence boundary}\hfill\pending
+\vspace{0.45cm}
+\begin{columns}[onlytextwidth]
+\column{.41\textwidth}
+\begin{beamercolorbox}[sep=0.45cm,rounded=true,shadow=false]{normal text}
+\sourcechip\par\vspace{0.35cm}
+{\Large\bfseries Human participants}\par\vspace{0.15cm}
+{\color{RaceMuted}\small Paired online repeated race with an evolutionary interpretation.}\par\vspace{0.6cm}
+{\scriptsize Fernández Domingos \& Han, 2026}
+\end{beamercolorbox}
+\column{.18\textwidth}
+\centering
+\begin{tikzpicture}
+\draw[-{Stealth[length=4mm]},line width=1.2pt,RaceCyanDark] (0,0)--(1.8,0);
+\node[align=center,font=\tiny\bfseries,text=RaceMuted] at (.9,.6) {ADAPT\\MECHANICS};
+\node[align=center,font=\tiny\bfseries,text=RaceMuted] at (.9,-.6) {TEST\\ANEW};
+\end{tikzpicture}
+\column{.41\textwidth}
+\begin{beamercolorbox}[sep=0.45cm,rounded=true,shadow=false]{normal text}
+\projectchip\par\vspace{0.35cm}
+{\Large\bfseries LLM agents}\par\vspace{0.15cm}
+{\color{RaceMuted}\small Config-driven model behavior experiment executed on Kaggle.}\par\vspace{0.55cm}
+\pending
+\end{beamercolorbox}
+\end{columns}
+\vfill
+{\color{RaceMuted}\scriptsize The human findings motivate hypotheses; they are not evidence about LLM behavior.}
+\end{frame}
+
+% 4
+\begin{darkframe}{One round, five exact steps.}
+\eyebrow{Canonical game}
+\vspace{0.45cm}
+\begin{tikzpicture}[node distance=.34cm]
+\tikzset{roundstep/.style={fill=RaceNavy,draw=white!16,rounded corners=7pt,minimum width=2.55cm,minimum height=2.65cm,align=center,text=white,inner sep=7pt},arr/.style={-{Stealth},white!35,thick}}
+\node[roundstep] (a) {\textcolor{RaceCyan}{\scriptsize\bfseries 01 OBSERVE}\\[.25cm]\small Same prior state};
+\node[roundstep,right=of a] (b) {\textcolor{RaceCyan}{\scriptsize\bfseries 02 CHOOSE}\\[.25cm]\small Safe or Unsafe};
+\node[roundstep,right=of b] (c) {\textcolor{RaceCyan}{\scriptsize\bfseries 03 COMMIT}\\[.25cm]\small Actions hidden};
+\node[roundstep,right=of c] (d) {\textcolor{RaceCyan}{\scriptsize\bfseries 04 UPDATE}\\[.25cm]\small Payoff + state};
+\node[roundstep,right=of d,draw=RaceAmber] (e) {\textcolor{RaceAmber}{\scriptsize\bfseries 05 STOP?}\\[.25cm]\small After round 5};
+\draw[arr] (a)--(b);\draw[arr] (b)--(c);\draw[arr] (c)--(d);\draw[arr] (d)--(e);
+\end{tikzpicture}
+\vspace{0.55cm}
+\begin{columns}[onlytextwidth]
+\column{.25\textwidth}\centering{\color{RaceLime}\LARGE\bfseries 5}\par{\color{white!55}\scriptsize minimum rounds}
+\column{.25\textwidth}\centering{\color{RaceLime}\LARGE\bfseries 20\%}\par{\color{white!55}\scriptsize stop probability}
+\column{.25\textwidth}\centering{\color{RaceLime}\LARGE\bfseries 9}\par{\color{white!55}\scriptsize expected rounds}
+\column{.25\textwidth}\centering{\color{RaceLime}\LARGE\bfseries 100}\par{\color{white!55}\scriptsize ECU winner prize}
+\end{columns}
+\end{darkframe}
+
+% 5
+\begin{frame}{Payoff now. Private risk later.}
+\eyebrow{Incentive structure}
+\vspace{0.3cm}
+\begin{columns}[T,onlytextwidth]
+\column{.47\textwidth}
+{\scriptsize\bfseries STAGE PAYOFF MATRIX $\pi_i$}\par\vspace{0.2cm}
+{\centering
+\renewcommand{\arraystretch}{1.55}\begin{tabular}{lcc}
+\toprule
+ & Rival S & Rival U\\
+\midrule
+You S & 1.0 & 0.6\\
+\rowcolor{RaceAmber!25}You U & \textbf{2.4} & \textbf{2.0}\\
+\bottomrule
+\end{tabular}\par}
+\vspace{0.3cm}
+{\color{RaceMuted}\small Unsafe strictly dominates in immediate payoff.}
+\column{.49\textwidth}
+\begin{beamercolorbox}[sep=.38cm,rounded=true]{normal text}
+{\scriptsize\bfseries EFFECTIVE SETBACK PROBABILITY}\par\vspace{0.4cm}
+{\Large\centering $q_i=p_{\mathrm{risk}}^{\max}\,\dfrac{n_i^U}{T}$\par}
+\vspace{0.45cm}
+{\color{RaceMuted}\small Applied only to a winner or tied winner at termination.}\par
+\vspace{0.4cm}
+\begin{columns}
+\column{.3\textwidth}\centering\textbf{10\%}\\[-1mm]{\tiny LOW}
+\column{.3\textwidth}\centering\textbf{60\%}\\[-1mm]{\tiny MEDIUM}
+\column{.3\textwidth}\centering\textbf{90\%}\\[-1mm]{\tiny HIGH}
+\end{columns}
+\end{beamercolorbox}
+\end{columns}
+\vfill
+{\color{RaceMuted}\scriptsize Source mechanics: Fernández Domingos \& Han (2026), Methods Sec. 6.2.}
+\end{frame}
+
+% 6
+\begin{frame}{What the source study found.}
+\sourcechip
+\vspace{0.4cm}
+\begin{columns}[T,onlytextwidth]
+\column{.32\textwidth}
+\begin{beamercolorbox}[sep=.32cm,rounded=true]{normal text}
+{\scriptsize\color{RaceCyanDark}\bfseries PREREGISTERED}\par\vspace{.25cm}
+{\large\bfseries 60\% vs 90\%}\par
+{\small\color{RaceMuted}Negligible risk-cap difference.}\par\vspace{.45cm}
+{\color{RaceMuted}\bfseries NULL}
+\end{beamercolorbox}
+\column{.32\textwidth}
+\begin{beamercolorbox}[sep=.32cm,rounded=true]{normal text}
+{\scriptsize\color{RaceCyanDark}\bfseries PREREGISTERED}\par\vspace{.25cm}
+{\large\bfseries Risk preference}\par
+{\small\color{RaceMuted}Did not predict Unsafe choice.}\par\vspace{.45cm}
+{\color{RaceMuted}\bfseries NULL}
+\end{beamercolorbox}
+\column{.32\textwidth}
+\begin{beamercolorbox}[sep=.32cm,rounded=true]{normal text}
+{\scriptsize\color{RaceAmber}\bfseries EXPLORATORY}\par\vspace{.25cm}
+{\large\bfseries Dynamic signals}\par
+{\small\color{RaceMuted}Opponent action, position and first move mattered.}\par\vspace{.35cm}
+{\scriptsize Associations, not causal effects}
+\end{beamercolorbox}
+\end{columns}
+\vfill
+{\color{RaceMuted}\scriptsize Fernández Domingos \& Han (2026), Results Secs. 2.1--2.3 and Limitations.}
+\end{frame}
+
+% 7
+\begin{darkframe}{Same game. Different kind of agent.}
+\eyebrow{The adaptation gap}
+\vspace{0.35cm}
+\centering
+\begin{tikzpicture}[remember picture]
+\node[draw=white!20,rounded corners=8pt,text=white,minimum width=2.6cm,minimum height=2cm,align=center,font=\bfseries] (h) {HUMAN\\STUDY};
+\node[fill=RaceAmber,text=RaceInk,rounded corners=8pt,minimum width=2.6cm,minimum height=2cm,align=center,font=\bfseries,right=9.0cm of h] (m) {LLM\\AGENT};
+\draw[white!30,line width=2pt] (h)--(m);
+\foreach \x/\lab in {2/CHECKPOINT,4/PROMPT,6/MEMORY,8/DECODING}{
+  \node[fill=RaceInk,text=white!58,font=\tiny\bfseries] at ($(h.east)!\x/10!(m.west)$) {\lab};}
+\end{tikzpicture}
+\vspace{0.45cm}
+\begin{tikzpicture}
+\node[fill=RaceLime,text=RaceInk,rounded corners=5pt,minimum width=13.4cm,minimum height=.75cm,font=\small\bfseries] {OBSERVABLE CONDITIONING $\neq$ SUBJECTIVE FEAR OR PREFERENCE};
+\end{tikzpicture}
+\vspace{0.25cm}
+\begin{columns}[onlytextwidth]
+\column{.48\textwidth}{\color{white!60}\scriptsize Temperature is not psychological risk tolerance.}
+\column{.48\textwidth}{\color{white!60}\scriptsize Behavior in this task is not evidence of experience.}
+\end{columns}
+\end{darkframe}
+
+% 8
+\begin{frame}{What predicts Unsafe?}
+\eyebrow{Prespecified research questions}
+\vspace{0.25cm}
+\centering
+\begin{tikzpicture}
+\tikzset{q/.style={draw=RaceInk!18,fill=white,rounded corners=7pt,minimum width=3.7cm,minimum height=1.05cm,align=center},link/.style={RaceInk!25,dashed,thick}}
+\node[q,fill=RaceInk,text=white,minimum width=4.3cm,minimum height=1.4cm] (c) at (0,0) {\scriptsize OUTCOME\\[1mm]\Large\bfseries $P(U_{i,t}=1)$};
+\node[q] (q1) at (-4.5,1.45) {\textcolor{RaceCyanDark}{\scriptsize 01}\quad\textbf{Risk cap}\\{\scriptsize 10 / 60 / 90 percent}};
+\node[q] (q2) at (4.5,1.45) {\textcolor{RaceCyanDark}{\scriptsize 02}\quad\textbf{Opponent $U_{t-1}$}\\{\scriptsize response to rivalry}};
+\node[q] (q3) at (-4.5,-1.45) {\textcolor{RaceCyanDark}{\scriptsize 03}\quad\textbf{Progress gap}\\{\scriptsize ahead / tied / behind}};
+\node[q] (q4) at (4.5,-1.45) {\textcolor{RaceCyanDark}{\scriptsize 04}\quad\textbf{Round 1}\\{\scriptsize behavioral momentum}};
+\draw[link] (q1)--(c);\draw[link] (q2)--(c);\draw[link] (q3)--(c);\draw[link] (q4)--(c);
+\end{tikzpicture}
+\vfill
+{\color{RaceMuted}\scriptsize Directional effects remain unestimated until validated runs.}
+\end{frame}
+
+% 9
+\begin{darkframe}{Every decision leaves an audit trail.}
+\eyebrow{One race, end to end}
+\vspace{0.45cm}
+\begin{tikzpicture}[node distance=.35cm]
+\tikzset{audit/.style={fill=RaceNavy,draw=white!15,rounded corners=6pt,minimum width=2.65cm,minimum height=2.1cm,text=white,align=center},arrow/.style={-{Stealth},white!35}}
+\node[audit] (a) {\textcolor{RaceCyan}{\scriptsize CONFIG}\\\bfseries Seed + manifest\\{\tiny model / prompt / risk}};
+\node[audit,right=of a] (b) {\textcolor{RaceCyan}{\scriptsize ISOLATE}\\\bfseries Two prompts\\{\tiny same state snapshot}};
+\node[audit,right=of b,draw=RaceAmber] (c) {\textcolor{RaceAmber}{\scriptsize REVEAL GATE}\\\bfseries S/U $\times$ S/U\\{\tiny simultaneous commit}};
+\node[audit,right=of c] (d) {\textcolor{RaceCyan}{\scriptsize ENGINE}\\\bfseries Exact update\\{\tiny payoff / progress / risk}};
+\node[audit,right=of d] (e) {\textcolor{RaceCyan}{\scriptsize LOG}\\\bfseries Append only\\{\tiny response / state / draws}};
+\draw[arrow] (a)--(b);\draw[arrow] (b)--(c);\draw[arrow] (c)--(d);\draw[arrow] (d)--(e);
+\end{tikzpicture}
+\vspace{0.55cm}
+{\color{white!55}\scriptsize\ttfamily game\_id \quad round \quad prompt \quad raw\_response \quad action \quad progress\_gap \quad stop\_draw \quad setback\_draw}
+\vfill
+\centering{\color{RaceLime}\small\bfseries THE ENVIRONMENT - NOT THE LLM - PERFORMS THE ARITHMETIC}
+\end{darkframe}
+
+% 10
+\begin{frame}{Freeze before you look.}
+\eyebrow{Reproducibility}
+\vspace{0.3cm}
+\begin{columns}[T,onlytextwidth]
+\column{.62\textwidth}
+\begin{beamercolorbox}[sep=.35cm,rounded=true]{normal text}
+{\scriptsize\bfseries\texttt{RUN\_MANIFEST.JSON}}\hfill\textcolor{RaceCyanDark}{\scriptsize\bfseries LOCKED}
+\vspace{0.25cm}
+\begin{tabular}{@{}ll@{}}
+\textcolor{RaceMuted}{model revision} & \texttt{sha256:c8...}\\[2mm]
+\textcolor{RaceMuted}{prompt hash} & \texttt{sha256:71...}\\[2mm]
+\textcolor{RaceMuted}{decoding} & temperature / max tokens / seed\\[2mm]
+\textcolor{RaceMuted}{pairing} & model / treatment / repetition\\[2mm]
+\textcolor{RaceMuted}{retry policy} & strict parser / bounded retries
+\end{tabular}
+\end{beamercolorbox}
+\column{.34\textwidth}
+\begin{beamercolorbox}[sep=.38cm,rounded=true]{alerted text}
+{\large\bfseries Hosted endpoints can drift.}\par\vspace{.2cm}
+{\small Balance treatment allocation, block run order, and never pool pilot with confirmatory runs.}
+\end{beamercolorbox}
+\end{columns}
+\vfill
+\begin{center}\pending\end{center}
+\end{frame}
+
+% 11
+\begin{frame}{Kaggle-only model runs.}
+\eyebrow{Execution environment}
+\vspace{0.45cm}
+\begin{tikzpicture}[node distance=.55cm]
+\tikzset{box/.style={draw=RaceInk!18,fill=white,rounded corners=7pt,minimum width=3.7cm,minimum height=2.2cm,align=center},arrow/.style={-{Stealth},RaceMuted,thick}}
+\node[box] (l) {\textcolor{RaceCyanDark}{\scriptsize\bfseries LOCAL}\\[2mm]\textbf{Code + static review}\\{\scriptsize No behavioral runs}};
+\node[box,fill=RaceInk,text=white,right=of l,minimum width=4.4cm] (k) {\textcolor{RaceAmber}{\scriptsize\bfseries KAGGLE GPU}\\[2mm]\textbf{Inference + checkpoints}\\{\scriptsize Deterministic resume}};
+\node[box,right=of k] (o) {\scriptsize\ttfamily turns.jsonl\\races.csv\\players.csv\\run\_manifest.json};
+\draw[arrow] (l)--(k);\draw[arrow] (k)--(o);
+\end{tikzpicture}
+\vspace{0.65cm}
+\begin{tikzpicture}
+\draw[RaceMuted,line width=1pt] (0,0)--(13.8,0);
+\foreach \x/\lab in {0/START,4.6/CHECKPOINT,9.2/RESUME,13.8/EXPORT}{
+  \fill[RaceCyanDark] (\x,0) circle (2.5pt);
+  \node[above=4pt,font=\tiny\bfseries,text=RaceMuted] at (\x,0) {\lab};}
+\end{tikzpicture}
+\vfill
+\centering{\color{RaceMuted}\small Notebook console text is not the dataset.}
+\end{frame}
+
+% 12
+\begin{darkframe}{Respect the repeated structure.}
+\eyebrow{Planned analysis}
+\vspace{0.3cm}
+\begin{columns}[onlytextwidth]
+\column{.46\textwidth}
+\begin{tikzpicture}
+\node[draw=white!18,rounded corners=8pt,minimum width=6.2cm,minimum height=4.3cm,text=white!55,font=\scriptsize] (a) at (0,0) {MODEL $\times$ TREATMENT};
+\node[draw=white!25,rounded corners=7pt,minimum width=5.2cm,minimum height=3.1cm,text=white!70,font=\scriptsize] (b) at (0,-.25) {SEEDED RACE / DYAD};
+\node[draw=RaceCyan,rounded corners=6pt,minimum width=4.2cm,minimum height=2cm,text=RaceCyan,font=\scriptsize] (c) at (0,-.5) {AGENT};
+\node[fill=RaceCyan,rounded corners=4pt,minimum width=3.1cm,minimum height=.8cm,text=RaceInk,font=\scriptsize\bfseries] at (0,-.85) {ROUND DECISION};
+\end{tikzpicture}
+\column{.5\textwidth}
+\begin{beamercolorbox}[sep=.35cm,rounded=true]{normal text}
+{\color{RaceAmber}\scriptsize\bfseries PRIMARY PANEL MODEL - $t\geq2$}\par\vspace{.25cm}
+{\small\ttfamily unsafe $\sim$ C(max\_private\_risk)\\
++ first\_round\_unsafe\\
++ own\_prev\_unsafe\\
+\phantom{+}* opponent\_prev\_unsafe\\
+\phantom{+}* progress\_gap\_before}\par\vspace{.25cm}
+{\color{white!55}\scriptsize Cluster by common-random-number block.}
+\end{beamercolorbox}
+\end{columns}
+\vfill
+\centering{\color{white!60}\small A round is a decision unit - \textcolor{RaceLime}{\bfseries not an independent replicate}.}
+\end{darkframe}
+
+% 13
+\begin{frame}{Validate mechanics before behavior.}
+\eyebrow{Validation gates}
+\vspace{0.25cm}
+\begin{columns}[T,onlytextwidth]
+\column{.32\textwidth}
+\begin{block}{01 Payoff fixtures}\small All four joint action profiles.\end{block}
+\begin{block}{04 Risk draw audit}\small Fixed-seat deterministic streams.\end{block}
+\column{.32\textwidth}
+\begin{block}{02 Winner + tie cases}\small Prize allocation and eligibility.\end{block}
+\begin{block}{05 Parser visibility}\small Retries and failures stay logged.\end{block}
+\column{.32\textwidth}
+\begin{block}{03 Horizon simulation}\small Minimum 5; mean approaches 9.\end{block}
+\begin{block}{06 Stable joins}\small Race, player and turn IDs.\end{block}
+\end{columns}
+\vfill
+\begin{beamercolorbox}[sep=.25cm,rounded=true]{normal text}
+\scriptsize\bfseries RUNTIME STATUS\hfill\textcolor{RaceCyanDark}{PENDING KAGGLE SMOKE RUN}
+\end{beamercolorbox}
+\end{frame}
+
+% 14
+\begin{frame}{Results template.}
+\projectchip\hfill\pending
+\vspace{0.35cm}
+\begin{columns}[T,onlytextwidth]
+\column{.49\textwidth}
+\begin{beamercolorbox}[sep=.23cm,rounded=true]{normal text}
+{\scriptsize\bfseries RUN ACCOUNTING}\par\vspace{.15cm}
+\begin{tikzpicture}\draw[RaceInk!18,dashed] (0,0) rectangle (6.2,1.35);\node[text=RaceMuted,font=\scriptsize\bfseries] at (3.1,.67) {PENDING};\end{tikzpicture}
+\end{beamercolorbox}
+\vspace{.18cm}
+\begin{beamercolorbox}[sep=.23cm,rounded=true]{normal text}
+{\scriptsize\bfseries DYNAMIC EFFECTS}\par\vspace{.15cm}
+\begin{tikzpicture}\draw[RaceInk!18,dashed] (0,0) rectangle (6.2,1.35);\node[text=RaceMuted,font=\scriptsize\bfseries] at (3.1,.67) {PENDING};\end{tikzpicture}
+\end{beamercolorbox}
+\column{.49\textwidth}
+\begin{beamercolorbox}[sep=.23cm,rounded=true]{normal text}
+{\scriptsize\bfseries TREATMENT EFFECTS}\par\vspace{.15cm}
+\begin{tikzpicture}\draw[RaceInk!18,dashed] (0,0) rectangle (6.2,1.35);\node[text=RaceMuted,font=\scriptsize\bfseries] at (3.1,.67) {PENDING};\end{tikzpicture}
+\end{beamercolorbox}
+\vspace{.18cm}
+\begin{beamercolorbox}[sep=.23cm,rounded=true]{normal text}
+{\scriptsize\bfseries HETEROGENEITY}\par\vspace{.15cm}
+\begin{tikzpicture}\draw[RaceInk!18,dashed] (0,0) rectangle (6.2,1.35);\node[text=RaceMuted,font=\scriptsize\bfseries] at (3.1,.67) {PENDING};\end{tikzpicture}
+\end{beamercolorbox}
+\end{columns}
+\vfill
+{\color{RaceMuted}\scriptsize Populate only from a frozen analysis snapshot with units, intervals, exclusions and snapshot ID.}
+\end{frame}
+
+% 15
+\begin{darkframe}{Similarity is behavioral, not psychological.}
+\eyebrow{Bounded conclusions}
+\vspace{0.35cm}
+\centering
+\begin{tikzpicture}
+\tikzset{cell/.style={fill=RaceNavy,draw=white!15,text=white,rounded corners=5pt,minimum width=5.1cm,minimum height=1.75cm,align=left,text width=4.45cm,inner sep=8pt},head/.style={font=\scriptsize\bfseries,align=center}}
+\node[head,text=RaceCyan] at (-2.7,2.25) {LLM MATCHES DIRECTION};
+\node[head,text=RaceAmber] at (2.7,2.25) {LLM DIFFERS};
+\node[rotate=90,text=white!48,font=\tiny\bfseries] at (-5.65,1.0) {HUMAN SIGNAL};
+\node[rotate=90,text=white!48,font=\tiny\bfseries] at (-5.65,-1.0) {CONCLUSION};
+\node[cell] at (-2.7,1.0) {\textbf{Task-level alignment}\\[1mm]{\scriptsize\color{white!55} Similar conditioning under a shared game.}};
+\node[cell] at (2.7,1.0) {\textbf{Population difference}\\[1mm]{\scriptsize\color{white!55} Different behavior across agents or protocol.}};
+\node[cell] at (-2.7,-1.0) {\textbf{Behavior in this task}\\[1mm]{\scriptsize\color{white!55} Not evidence of human-like fear or preference.}};
+\node[cell] at (2.7,-1.0) {\textbf{Behavior in this task}\\[1mm]{\scriptsize\color{white!55} Does not invalidate the human result.}};
+\end{tikzpicture}
+\vfill
+{\color{RaceLime}\small\bfseries EXTERNAL VALIDITY REMAINS LIMITED}
+\end{darkframe}
+
+% 16
+\begin{frame}[plain]
+\begin{tikzpicture}[remember picture,overlay]\fill[RaceCyan] (current page.south west) rectangle (current page.north east);\end{tikzpicture}
+\vspace{0.5cm}
+{\scriptsize\bfseries THE CONTRIBUTION, FOR NOW}\par\vspace{0.35cm}
+{\fontsize{30}{32}\selectfont\bfseries A faithful environment.\\An auditable protocol.\\\textcolor{RaceInk!55}{Evidence comes next.}}\par
+\vspace{0.55cm}
+\begin{tikzpicture}[node distance=.35cm]
+\tikzset{node/.style={draw=RaceInk,rounded corners=7pt,minimum width=2.45cm,minimum height=.85cm,font=\scriptsize\bfseries},arr/.style={-{Stealth},RaceInk}}
+\node[node] (a) {SPECIFICATION};\node[node,right=of a] (b) {ENGINE};\node[node,right=of b] (c) {LOGS};\node[node,right=of c] (d) {ESTIMATES};\node[node,fill=RaceInk,text=RaceLime,right=of d,minimum width=3cm] (e) {KAGGLE RUNS PENDING};
+\draw[arr](a)--(b);\draw[arr](b)--(c);\draw[arr](c)--(d);\draw[arr](d)--(e);
+\end{tikzpicture}
+\vfill
+{\small Exact mechanics \quad $\bullet$ \quad Reproducible evaluation \quad $\bullet$ \quad Prespecified tests}
+\end{frame}
+
+% 17
+\begin{frame}{Exact source-study accounting.}
+\sourcechip\hfill{\scriptsize\bfseries BACKUP 1}
+\vspace{0.35cm}
+\centering
+\begin{tikzpicture}
+\foreach \y/\w/\n/\lab in {0/13.2/471/recruited,-1/11.5/340/full completers,-2/10.0/338/covariate-complete panel,-3/8.5/{2,888}/post-round-1 decisions,-4/7.0/172/pair clusters}{
+  \path[fill=white,draw=RaceInk!18,rounded corners=3pt] (-\w/2,\y) rectangle (\w/2,\y-.72);
+  \node[font=\large\bfseries] at (-1.1,\y-.36) {\n};
+  \node[anchor=west,text=RaceMuted,font=\scriptsize] at (-.35,\y-.36) {\lab};}
+\end{tikzpicture}
+\vfill
+{\color{RaceMuted}\scriptsize Fernández Domingos \& Han (2026), Supplement Sec. S1.2.}
+\end{frame}
+
+% 18
+\begin{darkframe}{Four canonical trajectory classes.}
+\eyebrow{Backup 2 - reduced strategies}
+\vspace{0.35cm}
+\begin{columns}[T,onlytextwidth]
+\column{.49\textwidth}
+\begin{block}{AS - Always Safe}\centering\ttfamily S $\to$ S $\to$ S $\to$ S\end{block}
+\begin{block}{CS - Conditional Safe}\centering\ttfamily S $\to$ copy rival$_{t-1}$\end{block}
+\column{.49\textwidth}
+\begin{block}{AU - Always Unsafe}\centering\ttfamily U $\to$ U $\to$ U $\to$ U\end{block}
+\begin{block}{CAS - Conditional Unsafe}\centering\ttfamily U $\to$ copy rival$_{t-1}$\end{block}
+\end{columns}
+\vfill
+\begin{beamercolorbox}[sep=.28cm,rounded=true]{normal text}
+\small ``Play Unsafe when behind'' is relevant but exploratory - not one of the four source-paper strategies.
+\end{beamercolorbox}
+\end{darkframe}
+
+% 19
+\begin{frame}{Primary reference.}
+\eyebrow{Reference}\hfill\pending
+\vspace{0.35cm}
+\begin{beamercolorbox}[sep=.55cm,rounded=true]{normal text}
+{\scriptsize\color{RaceCyanDark}\bfseries 2026 - ARXIV:2607.26034}\par\vspace{.3cm}
+{\LARGE\bfseries Falling Behind Drives Unsafe Development in an Idealised AI Race Experiment}\par\vspace{.25cm}
+{\large E. Fernández Domingos \& T. A. Han}\par\vspace{.45cm}
+{\color{RaceCyanDark}\texttt{https://arxiv.org/abs/2607.26034}}
+\end{beamercolorbox}
+\vspace{0.55cm}
+{\small\bfseries PROJECT MATERIALS}\par
+{\color{RaceMuted}\small Engine, prompts, configurations, tests and analysis plan are maintained in this repository.}
+\end{frame}
+
+\end{document}
