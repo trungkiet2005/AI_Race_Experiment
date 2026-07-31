@@ -156,6 +156,6 @@ ledger.
 
 The canonical presentation source is
 [`slides/ai_race_research_deck.tex`](slides/ai_race_research_deck.tex). The compiled
-19-slide PDF is written to `output/pdf/ai_race_research_deck.pdf`; see
+21-slide PDF is written to `output/pdf/ai_race_research_deck.pdf`; see
 [`slides/README.md`](slides/README.md) for build commands. A browser-based companion
 deck is also available at `http://localhost:8000/slides/`.
