@@ -22,8 +22,8 @@ phase, counts, and joins can be audited.
 the following analysis fields:
 
 - identifiers/context: `game_id`, `model`, `max_private_risk`,
-  `prompt_version`, `run_phase`, `rep`, `round`, `player`, `player_index`, and
-  `opponent`;
+  `prompt_version`, `run_phase`, `persona_condition`, `seat_persona_role`, `rep`,
+  `round`, `player`, `player_index`, and `opponent`;
 - action/protocol health: `action` (`"safe"` or `"unsafe"`), `unsafe` (`0` or
   `1`), `parse_failed`, and `retry_count`;
 - dynamic state: `own_prev_action`, `opponent_prev_action`,
@@ -41,17 +41,28 @@ logs for reproducibility but are not copied into descriptive tables.
 before the simultaneous round decision.
 
 `races.csv` has one row per race and includes at least `game_id`, `model`,
-`max_private_risk`, `prompt_version`, `run_phase`, `rep`, `n_rounds`, and
+`max_private_risk`, `prompt_version`, `run_phase`, `persona_condition`,
+`player_1_persona_role`, `player_2_persona_role`, `rep`, `n_rounds`, and
 `parse_failures`. `stop_forced` and `tie` are required audit fields. The canonical
 file also records seeds, final progress, Unsafe frequencies, setbacks, and final
 payoffs.
 
 `players.csv` has one row per player-race and includes at least `game_id`, `model`,
-`max_private_risk`, `prompt_version`, `run_phase`, `rep`, `player`, and `outcome`
+`max_private_risk`, `prompt_version`, `run_phase`, `persona_condition`,
+`persona_role`, `rep`, `player`, and `outcome`
 (`winner`, `loser`, or `tie`). `risk` is accepted as a legacy alias for
 `max_private_risk`. The terminal audit fields are required: rounds, progress, stage
 payoff, Unsafe count/frequency, private risk, prize, setback
 eligibility/draw/outcome, and final payoff.
+
+`persona_condition` labels the seat/persona cell (`none` for the neutral baseline).
+Injecting a persona fills an optional block that is already part of the frozen
+template, so it leaves `prompt_version`, the prompt hash, and `protocol_signature`
+completely unchanged. `persona_condition` is therefore the only thing separating a
+persona race from a neutral one, and the analyser stratifies every table by it and
+refuses unlabelled races unless `--allow-missing-persona-condition` is supplied.
+`seat_persona_role`/`persona_role` name the role of that specific seat, so an
+asymmetric cell such as adversarial-versus-cooperative can be split by seat.
 
 `run_manifest.json` must report `status`, `run_phase`, and output counts.
 `status="completed"` is required for primary analysis. Completed manifests must
@@ -148,11 +159,25 @@ A conflicting version within one race is always an error. By default, missing
 versions or multiple versions across pooled inputs are also errors, so incompatible
 protocols cannot be combined silently.
 
-The canonical primary prompt is `ai-race-paper-v2`, SHA-256
-`6180d4f699813a602a53cf4290b972aa4df4bf02ff1c646a85ab09d80d7729ff`.
-Both Kaggle paths hash the same prompt text. A different version or hash—including
-modified text relabelled as v2—is rejected from primary analysis and requires the
-explicit mixed-protocol sensitivity override below.
+The canonical primary prompt version is `ai-race-fairgame-v3`. One template file per
+language carries that label, so the analyser accepts any of the frozen template
+hashes:
+
+| template | SHA-256 |
+|---|---|
+| `ai_race/prompts/ai_race_en.txt` | `27086bd80378c25e859d03527a5ae55c1046f231ef7b914db9cb3c3b4fb2df3e` |
+| `ai_race/prompts/ai_race_vi.txt` | `a6d3f738cf58043ae0dadc351cac12da07bd60778317b0566d743f5e40a77510` |
+
+A different version, or a hash outside that set—including modified text relabelled
+as v3—is rejected from primary analysis and requires the explicit mixed-protocol
+sensitivity override below.
+
+Both Kaggle paths hash the same prompt text. `kaggle/benchmarks/ai_race_baseline.py`
+is self-contained by design and does not import the package, so it holds a
+byte-for-byte copy of `ai_race_en.txt`; `ai_race/tests/test_prompt_contract.py`
+compares that copy against the shipped file, because a copy that drifted by one
+character would record a hash outside the canonical set and lose every race to the
+prompt gate.
 
 The analyser also canonicalises the complete manifest protocol payload and hashes
 it as `protocol_signature`. The payload covers the manifest schema, exact source

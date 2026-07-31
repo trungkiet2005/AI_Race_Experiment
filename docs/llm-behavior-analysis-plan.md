@@ -2,6 +2,9 @@
 
 Plan kỹ thuật. Mỗi mục ghi rõ **sửa file nào, thêm hàm gì, sinh ra output gì, xong khi nào**.
 
+**Tiến độ:** WS0–WS3 đã implement và test (89 test xanh). WS4 là phần chạy trên Kaggle,
+chưa thực hiện. Xem `docs/implementation-status.md` cho chi tiết từng task.
+
 Trạng thái code tham chiếu: sau merge `55f34a6` (FAIRGAME prompt template + proxy backend).
 
 | Thông số hiện tại | Giá trị |

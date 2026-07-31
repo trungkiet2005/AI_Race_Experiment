@@ -109,11 +109,17 @@ Unsafe frequency.
 
 ## Run policy
 
+Step-by-step commands for every path — staging the dataset, the two Kaggle routes,
+the local proxy route, and the local analysis — are in
+[`docs/running-the-experiment.md`](docs/running-the-experiment.md).
+
 The current workstation is not used to execute experiments. Run the offline baseline
 from [`kaggle/experiments/baseline.py`](kaggle/experiments/baseline.py) on Kaggle
 with GPU enabled. The script is organized with `# %%` cells, copies the read-only
 input repository to `/kaggle/working`, loads model inputs sequentially, and writes a
-zip archive to Kaggle Output.
+zip archive to Kaggle Output. It imports `ai_race` and `FAIRGAME` from that input, so
+the repository must be staged as a Kaggle Dataset and added as an input; the Kaggle
+Benchmark task is self-contained and is pushed as a single file instead.
 
 Kaggle Benchmark publication and remote runs are checkpointed operations. See
 [`kaggle/benchmarks/README.md`](kaggle/benchmarks/README.md) for the exact

@@ -1,0 +1,24 @@
+{
+  "name": "persona_neutral",
+  "nPlayers": 2,
+  "names": [
+    "Company_1",
+    "Company_2"
+  ],
+  "personaCondition": "R0",
+  "personaRoles": [
+    "neutral",
+    "neutral"
+  ],
+  "personas": {
+    "en": [
+      "the executive who signs off on this company's development schedule, having joined from another firm in the same industry last year, and who reports to a board that meets once every quarter",
+      "the executive who signs off on this company's development schedule, having joined from another firm in the same industry last year, and who reports to a board that meets once every quarter"
+    ],
+    "vi": [
+      "giám đốc phụ trách phê duyệt lịch phát triển của công ty này, mới chuyển sang từ một doanh nghiệp khác cùng ngành hồi năm ngoái, và báo cáo cho một hội đồng họp mỗi quý một lần",
+      "giám đốc phụ trách phê duyệt lịch phát triển của công ty này, mới chuyển sang từ một doanh nghiệp khác cùng ngành hồi năm ngoái, và báo cáo cho một hội đồng họp mỗi quý một lần"
+    ]
+  },
+  "description": "Length-matched placebo: separates the effect of persona content from the effect of simply adding a role sentence to the prompt."
+}

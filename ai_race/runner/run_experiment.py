@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import random
 import re
@@ -9,7 +10,13 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Optional
 
-from ai_race.dataio.config_loader import load_json, validate_experiment, validate_game
+from ai_race.dataio.config_loader import (
+    load_json,
+    personas_sha256,
+    validate_agents,
+    validate_experiment,
+    validate_game,
+)
 from ai_race.dataio.recorder import RunJournal
 from ai_race.engine.agent import RaceAgent
 from ai_race.engine.game import AIRaceGame
@@ -31,16 +38,28 @@ def _load_agents(exp: dict[str, Any], agents_name: Optional[str]) -> tuple[str, 
 
 
 def _agents_for_language(agents_cfg: dict, language: str) -> list[RaceAgent]:
+    validate_agents(agents_cfg)
     names = list(agents_cfg.get("names", []))
-    if len(names) != 2:
-        raise ValueError("Agent configuration must define exactly two names")
     personas_by_language = agents_cfg.get("personas", {}) or {}
     personas = list(personas_by_language.get(language, ["", ""]))
     if len(personas) != 2:
         raise ValueError(f"Agent configuration must define two {language!r} personas")
+    condition = str(agents_cfg.get("personaCondition", "none")).strip()
+    if condition != "none" and not all(str(text).strip() for text in personas):
+        # Otherwise a run labelled with a persona condition would render neutral
+        # prompts, and its rows would claim a manipulation that never happened.
+        raise ValueError(
+            f"personaCondition={condition!r} has no {language!r} persona text; "
+            "translate the personas before running that language"
+        )
+    roles = list(agents_cfg.get("personaRoles", ["", ""]))
     return [
-        RaceAgent(name=str(name), persona_text=str(persona))
-        for name, persona in zip(names, personas)
+        RaceAgent(
+            name=str(name),
+            persona_text=str(persona),
+            persona_role=str(role),
+        )
+        for name, persona, role in zip(names, personas, roles)
     ]
 
 
@@ -58,6 +77,10 @@ def build_games_for_model(
         resolved_agents_name = agents_name or str(
             agents_cfg.get("name", exp.get("agents", "companies_default"))
         )
+
+    validate_agents(agents_cfg)
+    persona_condition = str(agents_cfg.get("personaCondition", "none")).strip()
+    persona_hash = personas_sha256(agents_cfg.get("personas", {}) or {})
 
     repetitions = int(exp["repetitions"])
     base_seed = int(exp["seed"])
@@ -78,6 +101,8 @@ def build_games_for_model(
                     exp.get("samplingSeedApplied", exp.get("useOffline", True))
                 ),
                 run_phase=str(exp.get("runPhase", "pilot")),
+                persona_condition=persona_condition,
+                persona_sha256=persona_hash,
             )
             template_name = config.prompt_template.format(language=language)
             template_path = PROMPTS_DIR / f"{template_name}.txt"
@@ -123,6 +148,21 @@ def make_mock_send_batch(strategy: str) -> Any:
     return send
 
 
+def _agents_provenance(exp: dict[str, Any]) -> dict[str, Any]:
+    """Describe the seat/persona configuration a run actually used."""
+
+    name = str(exp.get("agents", "companies_default"))
+    path = CONFIGS_DIR / "agents" / f"{name}.json"
+    agents_cfg = validate_agents(load_json(path))
+    return {
+        "agents_name": name,
+        "agents_config_sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
+        "persona_condition": str(agents_cfg.get("personaCondition", "none")).strip(),
+        "persona_roles": [str(role) for role in agents_cfg.get("personaRoles", ["", ""])],
+        "persona_sha256": personas_sha256(agents_cfg.get("personas", {}) or {}),
+    }
+
+
 def _write_manifest(
     path: Path,
     *,
@@ -139,6 +179,7 @@ def _write_manifest(
         "experiment": experiment,
         "model": model,
         "run_phase": str(experiment.get("runPhase", "pilot")),
+        **_agents_provenance(experiment),
         "status": status,
         "n_races": n_races,
         "n_turns": n_turns,

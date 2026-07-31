@@ -24,18 +24,57 @@ import pandas as pd
 
 REPOSITORY_ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_OUTPUT = REPOSITORY_ROOT / "results" / "derived" / "ai_race_analysis"
+# Frozen before any model output is inspected, so scoring the LLM against the
+# human effects stays mechanical rather than chosen after seeing the estimates.
+HUMAN_REFERENCE_PATH = Path(__file__).resolve().parent / "human_reference.json"
 LOGIT_FORMULA = (
     "unsafe ~ C(max_private_risk) + first_round_unsafe + "
     "own_prev_unsafe * opponent_prev_unsafe * progress_gap_before"
 )
+# The six nested specifications of Table 1 in the source paper. Reporting only the
+# saturated model would hide how unstable a coefficient is across specifications —
+# in the human data the race-position term is significant in the interaction model
+# and not in the additive one, and that instability is itself a finding.
+LOGIT_SPECIFICATIONS: tuple[tuple[str, str], ...] = (
+    ("1", "unsafe ~ C(max_private_risk)"),
+    (
+        "2",
+        "unsafe ~ C(max_private_risk) + own_prev_unsafe + opponent_prev_unsafe "
+        "+ progress_gap_before",
+    ),
+    (
+        "3",
+        "unsafe ~ C(max_private_risk) + own_prev_unsafe * opponent_prev_unsafe "
+        "* progress_gap_before",
+    ),
+    ("4", "unsafe ~ C(max_private_risk) + first_round_unsafe"),
+    (
+        "5",
+        "unsafe ~ C(max_private_risk) + first_round_unsafe + own_prev_unsafe "
+        "+ opponent_prev_unsafe + progress_gap_before",
+    ),
+    ("6", LOGIT_FORMULA),
+)
 MISSING_PROMPT_VERSION = "__MISSING_PROMPT_VERSION__"
 MISSING_RUN_PHASE = "__MISSING_RUN_PHASE__"
 MISSING_RUN_STATUS = "__MISSING_RUN_STATUS__"
+MISSING_PERSONA_CONDITION = "__MISSING_PERSONA_CONDITION__"
 PROTOCOL_SIGNATURE_SCHEMA = "ai-race-analysis-protocol-signature-v1"
-CANONICAL_PROMPT_VERSION = "ai-race-paper-v2"
-CANONICAL_PROMPT_SHA256 = (
-    "6180d4f699813a602a53cf4290b972aa4df4bf02ff1c646a85ab09d80d7729ff"
-)
+CANONICAL_PROMPT_VERSION = "ai-race-fairgame-v3"
+# One template file per language carries the same promptVersion label, so the
+# canonical check accepts any of the frozen template hashes rather than a single
+# scalar. Editing a template — including whitespace — still requires a new
+# promptVersion and a new entry here; the gate never accepts modified text
+# relabelled as an existing version.
+CANONICAL_PROMPT_SHA256_BY_TEMPLATE: dict[str, str] = {
+    "ai_race_en": (
+        "27086bd80378c25e859d03527a5ae55c1046f231ef7b914db9cb3c3b4fb2df3e"
+    ),
+    "ai_race_vi": (
+        "a6d3f738cf58043ae0dadc351cac12da07bd60778317b0566d743f5e40a77510"
+    ),
+}
+CANONICAL_PROMPT_SHA256S = frozenset(CANONICAL_PROMPT_SHA256_BY_TEMPLATE.values())
 SUPPORTED_PROTOCOL_MANIFEST_SCHEMAS = {
     "ai-race-kaggle-run-v1",
     "ai-race-kbench-run-v1",
@@ -107,6 +146,10 @@ TURN_KEY = [*PLAYER_KEY, "round"]
 BASE_CONTEXT = ["model", "max_private_risk"]
 CONTEXT = [
     *BASE_CONTEXT,
+    # Persona does not change the prompt template, so it never shows up in
+    # prompt_version or protocol_signature. It has to stratify every table on its
+    # own, or a persona run and the neutral baseline would be averaged together.
+    "persona_condition",
     "prompt_version",
     "protocol_signature",
     "run_phase",
@@ -321,6 +364,16 @@ def _require_mapping_keys(
         )
 
 
+def _is_canonical_prompt(version: Any, sha256: Any) -> bool:
+    """Accept only a frozen template hash under the canonical version label."""
+
+    return (
+        version == CANONICAL_PROMPT_VERSION
+        and isinstance(sha256, str)
+        and sha256 in CANONICAL_PROMPT_SHA256S
+    )
+
+
 def _canonical_protocol_signature(payload: dict[str, Any], *, path: Path) -> str:
     try:
         canonical = json.dumps(
@@ -516,11 +569,10 @@ def _verified_protocol_payload(
             "version": prompt_version,
             "sha256": prompt_sha256,
             "canonical_version": CANONICAL_PROMPT_VERSION,
-            "canonical_sha256": CANONICAL_PROMPT_SHA256,
-            "canonical_match": (
-                prompt_version == CANONICAL_PROMPT_VERSION
-                and prompt_sha256 == CANONICAL_PROMPT_SHA256
-            ),
+            # The accepted hash set is deliberately not part of the signature: it
+            # is analyser configuration, and adding a language later must not
+            # silently rewrite the signatures of already-analysed runs.
+            "canonical_match": _is_canonical_prompt(prompt_version, prompt_sha256),
         },
         "model": model_identity,
         "decoding": decoding,
@@ -707,6 +759,8 @@ def _read_run_tables(
             table["run_status"] = run_status
             table["manifest_run_phase"] = manifest_run_phase
             table["manifest_prompt_version"] = manifest.get("prompt_version")
+            table["manifest_persona_condition"] = manifest.get("persona_condition")
+            table["manifest_base_seed"] = (manifest.get("experiment") or {}).get("seed")
             table["manifest_model_label"] = manifest_model_label
             table["protocol_signature"] = protocol_signature
             table["manifest_counts_verified"] = manifest_counts_verified
@@ -1188,6 +1242,102 @@ def _resolve_prompt_versions(
     return (*resolved_tables, versions)
 
 
+def _resolve_persona_conditions(
+    turns: pd.DataFrame,
+    races: pd.DataFrame,
+    players: pd.DataFrame,
+    *,
+    allow_missing_persona_condition: bool,
+) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, list[str]]:
+    """Resolve one persona condition per race from the tables and the manifest.
+
+    Unlike prompt version or run phase, multiple persona conditions in one input
+    set are expected: the persona study compares them. What must never happen is
+    an *unlabelled* race silently joining a labelled one, so a missing condition
+    is an error rather than a sentinel fill.
+    """
+
+    cleaned_tables: list[pd.DataFrame] = []
+    candidates: list[pd.DataFrame] = []
+    for table in (turns, races, players):
+        table = table.copy()
+        for column in ("persona_condition", "manifest_persona_condition"):
+            if column not in table:
+                table[column] = pd.Series(pd.NA, index=table.index, dtype="string")
+            else:
+                value = table[column].astype("string").str.strip()
+                table[column] = value.mask(value.eq(""))
+        cleaned_tables.append(table)
+        candidates.extend(
+            [
+                table[[*RACE_KEY, "persona_condition"]]
+                .dropna(subset=["persona_condition"])
+                .rename(columns={"persona_condition": "candidate_condition"}),
+                table[[*RACE_KEY, "manifest_persona_condition"]]
+                .dropna(subset=["manifest_persona_condition"])
+                .rename(
+                    columns={"manifest_persona_condition": "candidate_condition"}
+                ),
+            ]
+        )
+
+    candidate_conditions = pd.concat(candidates, ignore_index=True)
+    if candidate_conditions.empty:
+        condition_lookup = pd.DataFrame(columns=[*RACE_KEY, "persona_condition"])
+    else:
+        condition_counts = candidate_conditions.groupby(
+            RACE_KEY,
+            observed=True,
+        )["candidate_condition"].nunique()
+        conflicts = condition_counts.loc[condition_counts.gt(1)]
+        if not conflicts.empty:
+            raise ValueError(
+                "persona_condition conflicts across rows/manifest for race "
+                f"{conflicts.index[0]}; a race has exactly one persona condition"
+            )
+        condition_lookup = candidate_conditions.rename(
+            columns={"candidate_condition": "persona_condition"}
+        )[[*RACE_KEY, "persona_condition"]].drop_duplicates(RACE_KEY)
+
+    resolved_lookup = races[RACE_KEY].merge(
+        condition_lookup,
+        on=RACE_KEY,
+        how="left",
+        validate="one_to_one",
+    )
+    n_missing = int(resolved_lookup["persona_condition"].isna().sum())
+    if n_missing and not allow_missing_persona_condition:
+        raise ValueError(
+            f"persona_condition is missing for {n_missing} race(s). A run recorded "
+            "before persona labelling cannot be distinguished from the neutral "
+            "baseline, and persona changes behaviour without changing the prompt "
+            "hash. Re-run with a labelled agents configuration, or pass "
+            "--allow-missing-persona-condition for an explicitly labelled audit."
+        )
+    if n_missing:
+        resolved_lookup["persona_condition"] = resolved_lookup[
+            "persona_condition"
+        ].fillna(MISSING_PERSONA_CONDITION)
+
+    conditions = sorted(
+        str(value)
+        for value in resolved_lookup["persona_condition"].dropna().unique().tolist()
+    )
+
+    resolved_tables: list[pd.DataFrame] = []
+    for table in cleaned_tables:
+        resolved = table.drop(
+            columns=["persona_condition", "manifest_persona_condition"],
+        ).merge(
+            resolved_lookup,
+            on=RACE_KEY,
+            how="left",
+            validate="many_to_one",
+        )
+        resolved_tables.append(resolved)
+    return (*resolved_tables, conditions)
+
+
 def _resolve_run_phases(
     turns: pd.DataFrame,
     races: pd.DataFrame,
@@ -1412,10 +1562,9 @@ def _resolve_protocol_signatures(
     for signature in observed_signatures:
         payload = protocol_payloads[signature]
         prompt = payload.get("prompt")
-        if (
-            not isinstance(prompt, dict)
-            or prompt.get("version") != CANONICAL_PROMPT_VERSION
-            or prompt.get("sha256") != CANONICAL_PROMPT_SHA256
+        if not isinstance(prompt, dict) or not _is_canonical_prompt(
+            prompt.get("version"),
+            prompt.get("sha256"),
         ):
             noncanonical_prompts[signature] = (
                 prompt
@@ -1425,8 +1574,9 @@ def _resolve_protocol_signatures(
     if noncanonical_prompts and not allow_mixed_protocols:
         raise ValueError(
             "primary analysis requires canonical prompt "
-            f"{CANONICAL_PROMPT_VERSION!r} with SHA-256 "
-            f"{CANONICAL_PROMPT_SHA256}; found noncanonical protocol signatures "
+            f"{CANONICAL_PROMPT_VERSION!r} with one of the frozen template "
+            f"SHA-256 values {sorted(CANONICAL_PROMPT_SHA256S)}; found "
+            f"noncanonical protocol signatures "
             f"{noncanonical_prompts}. Pass --allow-mixed-protocols only for an "
             "explicit prompt/signature-stratified sensitivity audit."
         )
@@ -1454,10 +1604,34 @@ def _resolve_protocol_signatures(
     return resolved_tables[0], resolved_tables[1], resolved_tables[2]
 
 
+def _shared_base_seed(races: pd.DataFrame) -> bool:
+    """Report whether every run drew its horizons from the same base seed.
+
+    ``game_seed = base_seed + rep`` is independent of both the risk treatment and
+    the agents configuration, so when the base seed is shared a repetition index
+    identifies one horizon/setback draw across every run directory — including
+    persona cells, which live in separate directories and therefore have separate
+    ``source_run`` values. Widening the cluster in that case keeps one random draw
+    in one block instead of splitting it. The base seed is deliberately not part
+    of the protocol signature (independent replication batches may reseed), so it
+    is read from the manifest here rather than from the run contract.
+    """
+
+    if "manifest_base_seed" not in races:
+        return False
+    seeds = races["manifest_base_seed"]
+    if seeds.empty or seeds.isna().any():
+        # One unlabelled run is enough to make a shared draw unverifiable.
+        return False
+    return int(seeds.nunique()) == 1
+
+
 def _resolve_repetition_blocks(
     turns: pd.DataFrame,
     races: pd.DataFrame,
     players: pd.DataFrame,
+    *,
+    share_blocks_across_runs: bool = False,
 ) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
     """Derive the CRN repetition index and block ID from any logged table."""
 
@@ -1507,9 +1681,13 @@ def _resolve_repetition_blocks(
             dtype="string",
         )
         has_rep = resolved["rep"].notna()
+        prefix = (
+            ""
+            if share_blocks_across_runs
+            else resolved.loc[has_rep, "source_run"] + "::"
+        )
         resolved.loc[has_rep, "randomization_block_id"] = (
-            resolved.loc[has_rep, "source_run"]
-            + "::"
+            prefix
             + resolved.loc[has_rep, "model"]
             + "::rep"
             + resolved.loc[has_rep, "rep"].astype(str)
@@ -1762,11 +1940,50 @@ def _add_dynamic_columns(turns: pd.DataFrame) -> pd.DataFrame:
                 "disagrees with the previous-round trajectory"
             )
 
+    # Unsafe counts entering the decision, and their difference. In this mechanism
+    # progress = round + 0.5 * unsafe_count for both seats, so the race gap is
+    # exactly half this difference. Recording it makes that identity checkable and
+    # lets the collinearity between "being behind" and "having been safer than the
+    # opponent" be reported rather than hidden inside the gap coefficient.
+    paired["own_unsafe_count_before"] = (
+        grouped["valid_unsafe"].cumsum().sub(paired["valid_unsafe"]).astype("Float64")
+    )
+    paired["opponent_unsafe_count_before"] = (
+        grouped["opponent_current_unsafe"]
+        .cumsum()
+        .sub(paired["opponent_current_unsafe"])
+        .astype("Float64")
+    )
+    paired["unsafe_count_diff_before"] = (
+        paired["own_unsafe_count_before"] - paired["opponent_unsafe_count_before"]
+    )
+
     gap = paired["progress_gap_before"]
     paired["race_state"] = np.select(
         [gap < -1e-9, gap > 1e-9, gap.notna()],
         ["behind", "ahead", "tied"],
         default=None,
+    )
+    # The gap moves in steps of 0.5 and rarely leaves [-2, 2] over a nine-round
+    # race, so a magnitude bin separates "one round behind" from "well behind"
+    # without inventing empty cells.
+    paired["gap_bin"] = np.select(
+        [
+            gap <= -1.0 + 1e-9,
+            gap < -1e-9,
+            gap.abs() <= 1e-9,
+            gap < 1.0 - 1e-9,
+            gap.notna(),
+        ],
+        ["<=-1.0", "-0.5", "0.0", "+0.5", ">=+1.0"],
+        default=None,
+    )
+    # Named seat_index rather than seat: "seat" is a documented input alias for
+    # player_id, and reusing it here would be ambiguous in the emitted tables.
+    paired["seat_index"] = (
+        _normalise_numeric(paired["player_index"], name="turns.jsonl.player_index")
+        if "player_index" in paired
+        else pd.Series(pd.NA, index=paired.index, dtype="Float64")
     )
     return paired
 
@@ -2582,6 +2799,163 @@ def _classify_player_trajectories(
     return pd.DataFrame.from_records(rows)
 
 
+def _welch_contrast(left: pd.Series, right: pd.Series) -> dict[str, float]:
+    """Welch t, Cohen's d, and (when SciPy is available) a two-sided p-value.
+
+    Reported alongside the raw group means so a contrast can still be read when
+    the optional analysis extra is not installed.
+    """
+
+    left = left.dropna().astype(float)
+    right = right.dropna().astype(float)
+    n_left, n_right = len(left), len(right)
+    result: dict[str, float] = {
+        "n_left": n_left,
+        "n_right": n_right,
+        "mean_left": float(left.mean()) if n_left else float("nan"),
+        "mean_right": float(right.mean()) if n_right else float("nan"),
+        "t": float("nan"),
+        "df": float("nan"),
+        "p_value": float("nan"),
+        "cohens_d": float("nan"),
+    }
+    if n_left < 2 or n_right < 2:
+        return result
+
+    var_left = float(left.var(ddof=1))
+    var_right = float(right.var(ddof=1))
+    standard_error = math.sqrt(var_left / n_left + var_right / n_right)
+    if standard_error <= 0:
+        return result
+    result["t"] = (result["mean_left"] - result["mean_right"]) / standard_error
+    numerator = (var_left / n_left + var_right / n_right) ** 2
+    denominator = (var_left / n_left) ** 2 / (n_left - 1) + (
+        var_right / n_right
+    ) ** 2 / (n_right - 1)
+    result["df"] = numerator / denominator if denominator > 0 else float("nan")
+
+    pooled_variance = (
+        (n_left - 1) * var_left + (n_right - 1) * var_right
+    ) / (n_left + n_right - 2)
+    if pooled_variance > 0:
+        result["cohens_d"] = (
+            result["mean_left"] - result["mean_right"]
+        ) / math.sqrt(pooled_variance)
+
+    try:
+        from scipy import stats
+    except ImportError:
+        # p stays NaN: t and d are still informative, and refusing to emit the
+        # table at all would hide the descriptive contrast.
+        return result
+    if math.isfinite(result["df"]):
+        result["p_value"] = float(
+            2.0 * stats.t.sf(abs(result["t"]), result["df"])
+        )
+    return result
+
+
+def _pairwise_contrasts(
+    frame: pd.DataFrame,
+    *,
+    strata: Sequence[str],
+    factor: str,
+    value: str,
+) -> pd.DataFrame:
+    """Every within-stratum pairwise contrast of ``factor`` levels on ``value``.
+
+    Bonferroni correction uses the number of comparisons inside one stratum, which
+    is what the source paper reports for its three treatment contrasts.
+    """
+
+    rows: list[dict[str, Any]] = []
+    usable = frame.loc[frame[value].notna()]
+    strata = [column for column in strata if column in usable.columns]
+    for stratum, group in usable.groupby(list(strata), dropna=False, observed=True):
+        levels = sorted(group[factor].dropna().unique().tolist())
+        pairs = [
+            (left, right)
+            for index, left in enumerate(levels)
+            for right in levels[index + 1 :]
+        ]
+        for left, right in pairs:
+            contrast = _welch_contrast(
+                group.loc[group[factor].eq(left), value],
+                group.loc[group[factor].eq(right), value],
+            )
+            corrected = contrast["p_value"] * len(pairs)
+            rows.append(
+                {
+                    **dict(zip(strata, stratum if isinstance(stratum, tuple) else (stratum,))),
+                    "factor": factor,
+                    "level_left": left,
+                    "level_right": right,
+                    "n_comparisons_in_stratum": len(pairs),
+                    **contrast,
+                    "p_value_bonferroni": min(corrected, 1.0)
+                    if math.isfinite(corrected)
+                    else float("nan"),
+                }
+            )
+    if not rows:
+        return pd.DataFrame(
+            columns=[
+                *strata,
+                "factor",
+                "level_left",
+                "level_right",
+                "n_comparisons_in_stratum",
+                "n_left",
+                "n_right",
+                "mean_left",
+                "mean_right",
+                "t",
+                "df",
+                "p_value",
+                "cohens_d",
+                "p_value_bonferroni",
+            ]
+        )
+    return pd.DataFrame.from_records(rows)
+
+
+def _winner_loser_pairs(player_metrics: pd.DataFrame) -> pd.DataFrame:
+    """One row per decided race: the winner's and the loser's Unsafe frequency.
+
+    Ties are excluded because the paper's winner/loser comparison is undefined for
+    them; they are counted separately in the correlation table.
+    """
+
+    columns = [*RACE_KEY, *CONTEXT, "player_id", "outcome", "unsafe_rate"]
+    usable = player_metrics.loc[
+        player_metrics["outcome"].isin(["winner", "loser"]),
+        [column for column in columns if column in player_metrics],
+    ].copy()
+    if usable.empty:
+        return pd.DataFrame(columns=[*RACE_KEY, *CONTEXT, "winner_unsafe_rate", "loser_unsafe_rate"])
+
+    wide = usable.pivot_table(
+        index=[*RACE_KEY, *CONTEXT],
+        columns="outcome",
+        values="unsafe_rate",
+        aggfunc="first",
+        observed=True,
+    ).reset_index()
+    wide = wide.rename(
+        columns={"winner": "winner_unsafe_rate", "loser": "loser_unsafe_rate"}
+    )
+    for column in ("winner_unsafe_rate", "loser_unsafe_rate"):
+        if column not in wide:
+            wide[column] = np.nan
+    complete = wide.loc[
+        wide["winner_unsafe_rate"].notna() & wide["loser_unsafe_rate"].notna()
+    ].copy()
+    complete["winner_minus_loser"] = (
+        complete["winner_unsafe_rate"] - complete["loser_unsafe_rate"]
+    )
+    return complete.sort_values([*RACE_KEY]).reset_index(drop=True)
+
+
 def _build_tables(
     turns: pd.DataFrame,
     player_metrics: pd.DataFrame,
@@ -2769,6 +3143,171 @@ def _build_tables(
         )
     tables["strategy_summary_player.csv"] = strategy_summary
     tables["player_metrics.csv"] = player_metrics
+
+    # --- Figure-2A analogue: pairwise treatment contrasts -------------------
+    risk_strata = [column for column in by_context if column != "max_private_risk"]
+    tables["treatment_contrasts.csv"] = _pairwise_contrasts(
+        player_metrics,
+        strata=risk_strata,
+        factor="max_private_risk",
+        value="unsafe_rate",
+    )
+    persona_strata = [column for column in by_context if column != "persona_condition"]
+    tables["persona_contrasts.csv"] = _pairwise_contrasts(
+        player_metrics,
+        strata=persona_strata,
+        factor="persona_condition",
+        value="unsafe_rate",
+    )
+
+    # --- Figure-2B analogue: lagged action profile and race position --------
+    lagged = turns.loc[
+        turns["round"].ge(2)
+        & turns["valid_unsafe"].notna()
+        & turns["own_prev_unsafe"].notna()
+        & turns["opponent_prev_unsafe"].notna()
+    ].copy()
+    lagged["own_previous_action"] = lagged["own_prev_unsafe"].map(
+        {0.0: "safe", 1.0: "unsafe"}
+    )
+    lagged["opponent_previous_action"] = lagged["opponent_prev_unsafe"].map(
+        {0.0: "safe", 1.0: "unsafe"}
+    )
+    # This is also the empirical transition matrix P(Unsafe_t | own_{t-1},
+    # opponent_{t-1}); a separate transition table would repeat these numbers.
+    tables["unsafe_by_lag_profile_turn.csv"] = _binary_summary(
+        lagged,
+        groups=[*by_context, "own_previous_action", "opponent_previous_action"],
+        value="valid_unsafe",
+    )
+    binned = turns.loc[turns["valid_unsafe"].notna() & turns["gap_bin"].notna()]
+    tables["unsafe_by_gap_bin_turn.csv"] = _binary_summary(
+        binned,
+        groups=[*by_context, "gap_bin"],
+        value="valid_unsafe",
+    )
+    tables["unsafe_by_gap_lag_turn.csv"] = _binary_summary(
+        lagged.loc[lagged["gap_bin"].notna()],
+        groups=[
+            *by_context,
+            "gap_bin",
+            "own_previous_action",
+            "opponent_previous_action",
+        ],
+        value="valid_unsafe",
+    )
+
+    # --- Figure-2C analogue: winner versus loser Unsafe frequency -----------
+    pairs = _winner_loser_pairs(player_metrics)
+    tables["winner_loser_pairs.csv"] = pairs
+    if pairs.empty:
+        tables["winner_loser_correlation.csv"] = pd.DataFrame(
+            columns=[
+                *by_context,
+                "n_decided_races",
+                "mean_winner_unsafe_rate",
+                "mean_loser_unsafe_rate",
+                "mean_winner_minus_loser",
+                "pearson_r",
+            ]
+        )
+    else:
+        correlation = (
+            pairs.groupby(by_context, observed=True)
+            .apply(
+                lambda group: pd.Series(
+                    {
+                        "n_decided_races": int(len(group)),
+                        "mean_winner_unsafe_rate": group[
+                            "winner_unsafe_rate"
+                        ].mean(),
+                        "mean_loser_unsafe_rate": group["loser_unsafe_rate"].mean(),
+                        "mean_winner_minus_loser": group[
+                            "winner_minus_loser"
+                        ].mean(),
+                        "pearson_r": (
+                            group["winner_unsafe_rate"].corr(
+                                group["loser_unsafe_rate"]
+                            )
+                            if len(group) > 1
+                            else float("nan")
+                        ),
+                    }
+                ),
+                include_groups=False,
+            )
+            .reset_index()
+        )
+        tables["winner_loser_correlation.csv"] = correlation
+
+    # --- Figure-S1 analogue: realised horizon -------------------------------
+    horizon_source = race_quality.loc[
+        race_quality["behavioral_exclusion_reason"].eq("included")
+        if "behavioral_exclusion_reason" in race_quality
+        else slice(None)
+    ]
+    if "n_rounds" in horizon_source and not horizon_source.empty:
+        horizon_groups = [
+            column for column in by_context if column in horizon_source.columns
+        ]
+        tables["horizon_distribution.csv"] = (
+            horizon_source.groupby([*horizon_groups, "n_rounds"], observed=True)
+            .size()
+            .reset_index(name="n_races")
+            .sort_values([*horizon_groups, "n_rounds"])
+            .reset_index(drop=True)
+        )
+    else:
+        tables["horizon_distribution.csv"] = pd.DataFrame(
+            columns=[*by_context, "n_rounds", "n_races"]
+        )
+
+    # --- LLM-only diagnostics -----------------------------------------------
+    seat_rows = turns.loc[turns["valid_unsafe"].notna() & turns["seat_index"].notna()]
+    tables["seat_balance.csv"] = _binary_summary(
+        seat_rows,
+        groups=[*by_context, "seat_index"],
+        value="valid_unsafe",
+    )
+
+    # progress_gap_before is 0.5 * (own Unsafe count - opponent Unsafe count) by
+    # construction, so "being behind" and "having been safer than the opponent"
+    # are one variable. Emitting the identity residual and the correlation keeps
+    # that from being read as two independent predictors.
+    collinearity_rows: list[dict[str, Any]] = []
+    gap_source = turns.loc[
+        turns["progress_gap_before"].notna()
+        & turns["unsafe_count_diff_before"].notna()
+    ]
+    for key, group in gap_source.groupby(by_context, observed=True):
+        implied = 0.5 * group["unsafe_count_diff_before"].astype(float)
+        residual = (group["progress_gap_before"].astype(float) - implied).abs()
+        collinearity_rows.append(
+            {
+                **dict(zip(by_context, key if isinstance(key, tuple) else (key,))),
+                "n_decisions": int(len(group)),
+                "max_abs_identity_residual": float(residual.max()),
+                "pearson_r_gap_vs_unsafe_diff": float(
+                    group["progress_gap_before"].corr(
+                        group["unsafe_count_diff_before"]
+                    )
+                )
+                if len(group) > 1
+                else float("nan"),
+            }
+        )
+    tables["gap_collinearity.csv"] = (
+        pd.DataFrame.from_records(collinearity_rows)
+        if collinearity_rows
+        else pd.DataFrame(
+            columns=[
+                *by_context,
+                "n_decisions",
+                "max_abs_identity_residual",
+                "pearson_r_gap_vs_unsafe_diff",
+            ]
+        )
+    )
     return tables
 
 
@@ -2800,13 +3339,57 @@ def _logit_formula_for(frame: pd.DataFrame) -> str:
         formula += " + C(run_phase)"
     if run_statuses > 1:
         formula += " + C(run_status)"
+    # Persona leaves prompt_version and protocol_signature untouched, so pooling
+    # persona cells without a control would load the persona effect onto the
+    # treatment and lagged-action coefficients. It is only added when it is
+    # identified; see _persona_identification for what "absorbed" means here.
+    identification = _persona_identification(frame)
+    if identification["identified"]:
+        formula += " + C(persona_condition)"
     return formula
+
+
+def _persona_identification(frame: pd.DataFrame) -> dict[str, Any]:
+    """Decide whether a persona effect is separable from the protocol signature.
+
+    Each persona cell is its own experiment configuration and therefore its own
+    run directory. If those runs also differ in source revision, decoding, or
+    package versions — anything the protocol signature covers — then persona
+    varies *between* signatures and never within one. The two sets of dummies are
+    then identical columns: the fit is singular, and even where it is not, no
+    contrast can attribute a difference to persona rather than to the batch.
+
+    The only way to identify a persona effect is to run every cell in one batch,
+    so that the cells share a signature and persona varies inside it.
+    """
+
+    conditions = sorted(frame["persona_condition"].astype(str).unique().tolist())
+    within_signature = frame.groupby(
+        "protocol_signature",
+        observed=True,
+    )["persona_condition"].nunique()
+    varies_within_signature = bool(within_signature.gt(1).any())
+    return {
+        "persona_conditions": conditions,
+        "n_persona_conditions": len(conditions),
+        "varies_within_protocol_signature": varies_within_signature,
+        "confounded_with_protocol_signature": (
+            len(conditions) > 1 and not varies_within_signature
+        ),
+        "identified": len(conditions) > 1 and varies_within_signature,
+        "remedy": (
+            "Run every persona cell in one batch so they share source revision, "
+            "decoding, and package versions; persona then varies inside a single "
+            "protocol signature and its coefficient is estimable."
+        ),
+    }
 
 
 def _fit_clustered_logit(
     turns: pd.DataFrame,
     *,
     output_directory: Path,
+    allow_mixed_protocols: bool = False,
 ) -> list[str]:
     try:
         import statsmodels.formula.api as smf
@@ -2871,44 +3454,82 @@ def _fit_clustered_logit(
     )
     run_phases = sorted(model_data["run_phase"].astype(str).unique())
     run_statuses = sorted(model_data["run_status"].astype(str).unique())
-    fitted_formula = _logit_formula_for(model_data)
+    persona_identification = _persona_identification(model_data)
+    if persona_identification["confounded_with_protocol_signature"]:
+        message = (
+            "persona_condition varies across "
+            f"{persona_identification['n_persona_conditions']} cells "
+            f"({persona_identification['persona_conditions']}) but never within a "
+            "protocol signature, so persona is perfectly confounded with the run "
+            "batch. Its coefficient is not estimable and the treatment and "
+            "lagged-action coefficients carry any persona difference. "
+            + persona_identification["remedy"]
+        )
+        if not allow_mixed_protocols:
+            raise ValueError(message)
+        print(f"WARNING: {message}", file=sys.stderr)
 
-    result = smf.logit(fitted_formula, data=model_data).fit(
-        disp=False,
-        cov_type="cluster",
-        cov_kwds={"groups": model_data["randomization_block_id"]},
-    )
-    confidence = result.conf_int()
-    coefficients = pd.DataFrame(
-        {
-            "term": result.params.index,
-            "coefficient": result.params.values,
-            "cluster_robust_se": result.bse.values,
-            "z": result.tvalues.values,
-            "p_value": result.pvalues.values,
-            "ci_95_low": confidence.iloc[:, 0].values,
-            "ci_95_high": confidence.iloc[:, 1].values,
-        }
-    )
-    coefficients["odds_ratio"] = np.exp(coefficients["coefficient"])
-    coefficients["odds_ratio_ci_95_low"] = np.exp(coefficients["ci_95_low"])
-    coefficients["odds_ratio_ci_95_high"] = np.exp(coefficients["ci_95_high"])
+    protocol_controls = _logit_formula_for(model_data).removeprefix(LOGIT_FORMULA)
+
+    coefficient_frames: list[pd.DataFrame] = []
+    specification_fits: list[dict[str, Any]] = []
+    for specification, base_formula in LOGIT_SPECIFICATIONS:
+        fitted_formula = base_formula + protocol_controls
+        result = smf.logit(fitted_formula, data=model_data).fit(
+            disp=False,
+            cov_type="cluster",
+            cov_kwds={"groups": model_data["randomization_block_id"]},
+        )
+        confidence = result.conf_int()
+        coefficients = pd.DataFrame(
+            {
+                "specification": specification,
+                "term": result.params.index,
+                "coefficient": result.params.values,
+                "cluster_robust_se": result.bse.values,
+                "z": result.tvalues.values,
+                "p_value": result.pvalues.values,
+                "ci_95_low": confidence.iloc[:, 0].values,
+                "ci_95_high": confidence.iloc[:, 1].values,
+            }
+        )
+        coefficients["odds_ratio"] = np.exp(coefficients["coefficient"])
+        coefficients["odds_ratio_ci_95_low"] = np.exp(coefficients["ci_95_low"])
+        coefficients["odds_ratio_ci_95_high"] = np.exp(coefficients["ci_95_high"])
+        coefficient_frames.append(coefficients)
+        specification_fits.append(
+            {
+                "specification": specification,
+                "formula": fitted_formula,
+                "converged": bool(result.mle_retvals.get("converged", False)),
+                "log_likelihood": float(result.llf),
+                "pseudo_r_squared": float(result.prsquared),
+            }
+        )
+
     coefficient_name = "clustered_logit_coefficients.csv"
-    coefficients.to_csv(output_directory / coefficient_name, index=False)
+    pd.concat(coefficient_frames, ignore_index=True).to_csv(
+        output_directory / coefficient_name,
+        index=False,
+    )
 
     metadata = {
-        "formula": fitted_formula,
-        "n_observations": int(result.nobs),
+        "specifications": specification_fits,
+        "specification_rationale": (
+            "The six nested specifications of Table 1 in the source paper. "
+            "Comparing them shows whether a coefficient is stable or an artefact "
+            "of one particular specification."
+        ),
+        "protocol_controls": protocol_controls or "(none required)",
+        "n_observations": int(len(model_data)),
         "n_games": int(model_data[[*RACE_KEY]].drop_duplicates().shape[0]),
         "n_crn_repetition_blocks": int(n_clusters),
         "prompt_versions": prompt_versions,
+        "persona_identification": persona_identification,
         "models": models,
         "protocol_signatures": protocol_signatures,
         "run_phases": run_phases,
         "run_statuses": run_statuses,
-        "converged": bool(result.mle_retvals.get("converged", False)),
-        "log_likelihood": float(result.llf),
-        "pseudo_r_squared": float(result.prsquared),
         "covariance": "cluster-robust by source_run::model::rep",
         "cluster_rationale": (
             "The same repetition reuses horizon/setback random streams across risk "
@@ -2931,6 +3552,201 @@ def _fit_clustered_logit(
     return [coefficient_name, metadata_name]
 
 
+def _tost_equivalent(
+    estimate: float,
+    standard_error: float,
+    bound: float,
+    alpha: float,
+) -> tuple[bool, float]:
+    """Two one-sided tests for equivalence to zero within +/- ``bound``.
+
+    A null result in the human data must be matched by evidence of a *small*
+    effect, not by a failure to reject. Returns the decision and the larger of the
+    two one-sided p-values.
+    """
+
+    if not (math.isfinite(estimate) and math.isfinite(standard_error)):
+        return False, float("nan")
+    if standard_error <= 0:
+        return abs(estimate) < bound, 0.0 if abs(estimate) < bound else 1.0
+    try:
+        from scipy import stats
+    except ImportError:
+        return False, float("nan")
+    lower_p = float(stats.norm.sf((estimate - (-bound)) / standard_error))
+    upper_p = float(stats.norm.cdf((estimate - bound) / standard_error))
+    p_value = max(lower_p, upper_p)
+    return p_value < alpha, p_value
+
+
+def _build_human_comparison(
+    *,
+    coefficients: pd.DataFrame | None,
+    treatment_contrasts: pd.DataFrame,
+    player_metrics: pd.DataFrame,
+    reference_path: Path,
+) -> tuple[pd.DataFrame, dict[str, Any]]:
+    """Score each preregistered human effect against the LLM estimate.
+
+    The criteria live in ``human_reference.json`` rather than in this function so
+    they can be frozen before any model output is inspected; scoring them here
+    afterwards is then mechanical.
+    """
+
+    reference = json.loads(reference_path.read_text(encoding="utf-8"))
+    rows: list[dict[str, Any]] = []
+
+    def coefficient_for(term: str, specification: str) -> tuple[float, float, float]:
+        if coefficients is None or coefficients.empty:
+            return float("nan"), float("nan"), float("nan")
+        match = coefficients.loc[
+            coefficients["term"].eq(term)
+            & coefficients["specification"].astype(str).eq(specification)
+        ]
+        if match.empty:
+            return float("nan"), float("nan"), float("nan")
+        row = match.iloc[0]
+        return (
+            float(row["coefficient"]),
+            float(row["cluster_robust_se"]),
+            float(row["p_value"]),
+        )
+
+    for effect in reference["effects"]:
+        row: dict[str, Any] = {
+            "effect_id": effect["id"],
+            "name": effect["name"],
+            "kind": effect["kind"],
+            "test": effect["test"],
+            "human_value": effect.get("human_value"),
+            "llm_value": float("nan"),
+            "llm_se": float("nan"),
+            "llm_p_value": float("nan"),
+            "criterion": "",
+            "verdict": "inconclusive",
+            "description": effect["description"],
+        }
+
+        if effect["kind"] == "coefficient":
+            estimate, standard_error, p_value = coefficient_for(
+                effect["term"],
+                str(effect["specification"]),
+            )
+            row.update(llm_value=estimate, llm_se=standard_error, llm_p_value=p_value)
+            if effect["test"] == "directional":
+                sign_ok = (
+                    estimate > 0
+                    if effect["expected_sign"] == "positive"
+                    else estimate < 0
+                )
+                row["criterion"] = (
+                    f"{effect['expected_sign']} and p < {effect['alpha']}"
+                )
+                if math.isfinite(estimate) and math.isfinite(p_value):
+                    row["verdict"] = (
+                        "replicated"
+                        if sign_ok and p_value < effect["alpha"]
+                        else "not_replicated"
+                    )
+            else:
+                bound = float(effect["equivalence_bound"])
+                equivalent, tost_p = _tost_equivalent(
+                    estimate,
+                    standard_error,
+                    bound,
+                    float(effect["alpha"]),
+                )
+                row["criterion"] = f"TOST |beta| < {bound}"
+                row["llm_p_value"] = tost_p
+                if math.isfinite(tost_p):
+                    row["verdict"] = (
+                        "replicated" if equivalent else "not_replicated"
+                    )
+
+        elif effect["kind"] == "contrast":
+            match = treatment_contrasts.loc[
+                treatment_contrasts["factor"].eq(effect["factor"])
+                & treatment_contrasts["level_left"].astype(float).eq(
+                    float(effect["level_left"])
+                )
+                & treatment_contrasts["level_right"].astype(float).eq(
+                    float(effect["level_right"])
+                )
+            ]
+            if not match.empty:
+                # Pool the strata by averaging Cohen's d: the criteria are stated
+                # for one overall contrast, and per-stratum rows stay available in
+                # treatment_contrasts.csv.
+                effect_size = float(match["cohens_d"].mean())
+                row["llm_value"] = effect_size
+                if effect["test"] == "equivalence":
+                    row["criterion"] = f"|d| < {effect['equivalence_bound']}"
+                    if math.isfinite(effect_size):
+                        row["verdict"] = (
+                            "replicated"
+                            if abs(effect_size) < float(effect["equivalence_bound"])
+                            else "not_replicated"
+                        )
+                else:
+                    minimum = float(effect["minimum_absolute_effect"])
+                    sign_ok = (
+                        effect_size > 0
+                        if effect["expected_sign"] == "positive"
+                        else effect_size < 0
+                    )
+                    row["criterion"] = (
+                        f"{effect['expected_sign']} and |d| > {minimum}"
+                    )
+                    if math.isfinite(effect_size):
+                        row["verdict"] = (
+                            "replicated"
+                            if sign_ok and abs(effect_size) > minimum
+                            else "not_replicated"
+                        )
+
+        elif effect["kind"] == "level":
+            observed = float(player_metrics["unsafe_rate"].mean())
+            low, high = effect["interval"]
+            row["llm_value"] = observed
+            row["criterion"] = f"within [{low}, {high}]"
+            if math.isfinite(observed):
+                row["verdict"] = (
+                    "replicated" if low <= observed <= high else "not_replicated"
+                )
+
+        elif effect["kind"] == "strategy_share":
+            unique = player_metrics.loc[player_metrics["strategy_best"].notna()]
+            if len(unique):
+                share = float(unique["strategy_best"].eq(effect["strategy"]).mean())
+                row["llm_value"] = share
+                row["criterion"] = f"share < {effect['maximum']}"
+                row["verdict"] = (
+                    "replicated"
+                    if share < float(effect["maximum"])
+                    else "not_replicated"
+                )
+
+        rows.append(row)
+
+    metadata = {
+        "reference_source": reference["source"],
+        "reference_schema": reference["schema_version"],
+        "human_sample": reference["human_sample"],
+        "notes": reference["notes"],
+        "scoring": (
+            "Criteria are frozen in human_reference.json and applied mechanically. "
+            "'inconclusive' means the LLM estimate was unavailable, not that the "
+            "effect was absent."
+        ),
+        "pooling_warning": (
+            "Verdicts pool every persona condition, model, and treatment present "
+            "in the input. Score one condition at a time when the comparison is "
+            "meant to be about a specific cell."
+        ),
+    }
+    return pd.DataFrame.from_records(rows), metadata
+
+
 def _write_outputs(
     *,
     tables: dict[str, pd.DataFrame],
@@ -2943,6 +3759,7 @@ def _write_outputs(
     players: pd.DataFrame,
     fit_logit: bool,
     prompt_versions: Sequence[str],
+    persona_conditions: Sequence[str],
     protocol_payloads: dict[str, dict[str, Any]],
     allow_mixed_protocols: bool,
     allow_nonconfirmatory_runs: bool,
@@ -2974,10 +3791,32 @@ def _write_outputs(
         table.to_csv(output_directory / filename, index=False)
         written.append(filename)
 
+    fitted_coefficients: pd.DataFrame | None = None
     if fit_logit:
         written.extend(
-            _fit_clustered_logit(turns, output_directory=output_directory)
+            _fit_clustered_logit(
+                turns,
+                output_directory=output_directory,
+                allow_mixed_protocols=allow_mixed_protocols,
+            )
         )
+        fitted_coefficients = pd.read_csv(
+            output_directory / "clustered_logit_coefficients.csv"
+        )
+
+    comparison, comparison_metadata = _build_human_comparison(
+        coefficients=fitted_coefficients,
+        treatment_contrasts=tables["treatment_contrasts.csv"],
+        player_metrics=tables["player_metrics.csv"],
+        reference_path=HUMAN_REFERENCE_PATH,
+    )
+    comparison.to_csv(output_directory / "human_comparison.csv", index=False)
+    written.append("human_comparison.csv")
+    (output_directory / "human_comparison_metadata.json").write_text(
+        json.dumps(comparison_metadata, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
+    written.append("human_comparison_metadata.json")
 
     manifest = {
         "source_runs": [path.resolve().as_posix() for path in run_directories],
@@ -3017,6 +3856,14 @@ def _write_outputs(
         ),
         "prompt_versions": list(prompt_versions),
         "behavioral_prompt_versions": behavioral_prompt_versions,
+        "persona_conditions": list(persona_conditions),
+        "behavioral_persona_conditions": sorted(
+            turns["persona_condition"].astype(str).unique().tolist()
+        ),
+        # Recorded whether or not the logit ran: a reader must be able to see that
+        # a persona comparison in the descriptive tables is confounded with the
+        # run batch without having to notice a missing regression term.
+        "persona_identification": _persona_identification(turns),
         "behavioral_models": behavioral_models,
         "protocol_signatures": protocol_signatures,
         "behavioral_protocol_signatures": behavioral_protocol_signatures,
@@ -3104,6 +3951,15 @@ def main(argv: Sequence[str] | None = None) -> int:
         ),
     )
     parser.add_argument(
+        "--allow-missing-persona-condition",
+        action="store_true",
+        help=(
+            "explicit audit opt-in for runs recorded before persona labelling; "
+            "unlabelled races are kept in a separate persona_condition stratum "
+            "and never merged into the neutral baseline"
+        ),
+    )
+    parser.add_argument(
         "--allow-nonconfirmatory-runs",
         action="store_true",
         help=(
@@ -3160,6 +4016,12 @@ def main(argv: Sequence[str] | None = None) -> int:
         players,
         allow_nonconfirmatory_runs=args.allow_nonconfirmatory_runs,
     )
+    turns, races, players, persona_conditions = _resolve_persona_conditions(
+        turns,
+        races,
+        players,
+        allow_missing_persona_condition=args.allow_missing_persona_condition,
+    )
     turns, races, players = _resolve_protocol_signatures(
         turns,
         races,
@@ -3167,7 +4029,12 @@ def main(argv: Sequence[str] | None = None) -> int:
         protocol_payloads=protocol_payloads,
         allow_mixed_protocols=args.allow_mixed_protocols,
     )
-    turns, races, players = _resolve_repetition_blocks(turns, races, players)
+    turns, races, players = _resolve_repetition_blocks(
+        turns,
+        races,
+        players,
+        share_blocks_across_runs=_shared_base_seed(races),
+    )
     _validate_join_keys(turns, races, players)
     turns, race_quality = _add_race_quality(turns, races)
     turns = _add_dynamic_columns(turns)
@@ -3201,6 +4068,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         players=players,
         fit_logit=args.fit_logit,
         prompt_versions=prompt_versions,
+        persona_conditions=persona_conditions,
         protocol_payloads=protocol_payloads,
         allow_mixed_protocols=args.allow_mixed_protocols,
         allow_nonconfirmatory_runs=args.allow_nonconfirmatory_runs,

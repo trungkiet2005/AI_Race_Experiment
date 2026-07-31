@@ -1,0 +1,24 @@
+{
+  "name": "persona_risk_averse",
+  "nPlayers": 2,
+  "names": [
+    "Company_1",
+    "Company_2"
+  ],
+  "personaCondition": "R-",
+  "personaRoles": [
+    "risk-averse",
+    "risk-averse"
+  ],
+  "personas": {
+    "en": [
+      "an executive who feels the loss of something already secured far more sharply than the gain of something new, and who sleeps badly whenever an outcome has been left to chance",
+      "an executive who feels the loss of something already secured far more sharply than the gain of something new, and who sleeps badly whenever an outcome has been left to chance"
+    ],
+    "vi": [
+      "một giám đốc cảm nhận việc mất đi thứ đã nắm chắc rõ rệt hơn nhiều so với việc có thêm thứ mới, và luôn trằn trọc mỗi khi một kết cục bị phó mặc cho may rủi",
+      "một giám đốc cảm nhận việc mất đi thứ đã nắm chắc rõ rệt hơn nhiều so với việc có thêm thứ mới, và luôn trằn trọc mỗi khi một kết cục bị phó mặc cho may rủi"
+    ]
+  },
+  "description": "Symmetric risk-averse disposition. The human study measured risk preference and found no effect; this condition imposes it instead."
+}

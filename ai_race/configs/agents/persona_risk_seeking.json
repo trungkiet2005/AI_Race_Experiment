@@ -1,0 +1,24 @@
+{
+  "name": "persona_risk_seeking",
+  "nPlayers": 2,
+  "names": [
+    "Company_1",
+    "Company_2"
+  ],
+  "personaCondition": "R+",
+  "personaRoles": [
+    "risk-seeking",
+    "risk-seeking"
+  ],
+  "personas": {
+    "en": [
+      "an executive who feels the gain of something new far more sharply than the loss of something already secured, and who is energised whenever an outcome has been left to chance",
+      "an executive who feels the gain of something new far more sharply than the loss of something already secured, and who is energised whenever an outcome has been left to chance"
+    ],
+    "vi": [
+      "một giám đốc cảm nhận việc có thêm thứ mới rõ rệt hơn nhiều so với việc mất đi thứ đã nắm chắc, và luôn hào hứng mỗi khi một kết cục bị phó mặc cho may rủi",
+      "một giám đốc cảm nhận việc có thêm thứ mới rõ rệt hơn nhiều so với việc mất đi thứ đã nắm chắc, và luôn hào hứng mỗi khi một kết cục bị phó mặc cho may rủi"
+    ]
+  },
+  "description": "Symmetric risk-seeking disposition, the mirror of persona_risk_averse."
+}

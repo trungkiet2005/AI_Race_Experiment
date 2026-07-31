@@ -33,8 +33,29 @@ MODELS = [
     # Thêm model khác tại đây; notebook sẽ chạy lần lượt, không nạp đồng thời.
 ]
 
-EXPERIMENTS = ["baseline"]
-REPETITIONS_OVERRIDE = None  # ví dụ 3 để chạy pilot; None = dùng config
+# Dataset đã stage: https://www.kaggle.com/datasets/nguyenlamphuquy/ai-race-experiment
+# Kaggle mount dataset theo *slug*, không kèm username, nên path là
+# /kaggle/input/ai-race-experiment. Username chỉ nằm trong dataset id dùng cho CLI
+# (nguyenlamphuquy/ai-race-experiment). Để None thì notebook tự dò input nào có
+# đồng thời ai_race/ và FAIRGAME/.
+REPO_INPUT_DIR = "/kaggle/input/ai-race-experiment"
+
+# Mọi cell persona phải chạy trong CÙNG một session. protocol_signature gồm source
+# revision, decoding và package versions; chạy lệch session thì persona trùng khít
+# với batch và analyser sẽ từ chối ước lượng hệ số persona.
+EXPERIMENTS = [
+    "baseline",                       # none  — đối chứng trung tính
+    # "baseline_swapped",             # none  — đảo ghế, đo artefact vị trí
+    # "persona_baseline_neutral",     # R0    — placebo cùng độ dài
+    # "persona_baseline_risk_averse", # R-
+    # "persona_baseline_risk_seeking",# R+
+    # "persona_baseline_coop_coop",   # S_CC
+    # "persona_baseline_adv_adv",     # S_AA
+    # "persona_baseline_adv_coop",    # S_AC  — cell bất đối xứng
+    # "persona_baseline_coop_adv",    # S_CA  — mirror bắt buộc của S_AC
+]
+REPETITIONS_OVERRIDE = 10  # pilot; None = dùng config (50). Chạy check_symmetry.py
+# trên output pilot trước khi bỏ override này.
 RUN_PHASE_OVERRIDE = None  # "pilot" hoặc "confirmatory"; None = dùng config
 
 DEFAULT_ENGINE = "vllm"
@@ -90,12 +111,37 @@ def find_directory(root, predicate, max_depth=6):
     return None
 
 
+def is_repo_input(directory):
+    directory = Path(directory)
+    return (directory / "ai_race").is_dir() and (directory / "FAIRGAME").is_dir()
+
+
 def find_repo_input(root="/kaggle/input"):
-    return find_directory(
-        root,
-        lambda directory: (directory / "ai_race").is_dir()
-        and (directory / "FAIRGAME").is_dir(),
-    )
+    """Prefer the configured dataset mount, then fall back to discovery.
+
+    Naming the expected path turns "wrong dataset added" into an explicit error
+    instead of a silent fallback onto some other input that happens to contain the
+    two marker directories — which would run a different source revision than the
+    one the manifest is about to claim.
+    """
+    configured = globals().get("REPO_INPUT_DIR")
+    if configured:
+        configured = Path(configured)
+        if is_repo_input(configured):
+            return configured.resolve()
+        discovered = find_directory(root, is_repo_input)
+        raise FileNotFoundError(
+            f"REPO_INPUT_DIR={configured} does not contain both ai_race/ and "
+            "FAIRGAME/. Add the dataset "
+            "'nguyenlamphuquy/ai-race-experiment' as a notebook input, or set "
+            "REPO_INPUT_DIR=None to auto-discover. "
+            + (
+                f"A usable repo input was found at {discovered}."
+                if discovered
+                else "No usable repo input was found under /kaggle/input."
+            )
+        )
+    return find_directory(root, is_repo_input)
 
 
 # %%
@@ -358,6 +404,9 @@ def run_one_experiment(model, experiment_name, send_batch):
     }
     prompt_path = REPO_ROOT / "ai_race" / "prompts" / "ai_race_en.txt"
     model_config_path = Path(model["path"]) / "config.json"
+    agents_name = str(experiment.get("agents", "companies_default"))
+    agents_path = CONFIG_DIR / "agents" / f"{agents_name}.json"
+    agents_cfg = json.loads(agents_path.read_text(encoding="utf-8"))
     run_manifest = {
         "schema_version": "ai-race-kaggle-run-v1",
         "status": "running",
@@ -377,7 +426,22 @@ def run_one_experiment(model, experiment_name, send_batch):
             ).encode("utf-8")
         ).hexdigest(),
         "game_config_sha256": game_config_hashes,
-        "prompt_version": "ai-race-paper-v2",
+        # Persona is an agents-configuration factor, so it never shows up in the
+        # prompt hash. Without these fields a persona run and the neutral baseline
+        # are indistinguishable to the analyser.
+        "agents_name": agents_name,
+        "agents_config_sha256": sha256_file(agents_path),
+        "persona_condition": str(agents_cfg.get("personaCondition", "none")).strip(),
+        "persona_roles": [str(role) for role in agents_cfg.get("personaRoles", ["", ""])],
+        "persona_sha256": hashlib.sha256(
+            json.dumps(
+                agents_cfg.get("personas", {}) or {},
+                sort_keys=True,
+                separators=(",", ":"),
+                ensure_ascii=False,
+            ).encode("utf-8")
+        ).hexdigest(),
+        "prompt_version": "ai-race-fairgame-v3",
         "prompt_sha256": sha256_file(prompt_path),
         "model": {
             "short_name": model["short_name"],

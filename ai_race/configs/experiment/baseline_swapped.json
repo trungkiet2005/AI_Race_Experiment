@@ -1,0 +1,19 @@
+{
+  "name": "baseline_swapped",
+  "runPhase": "pilot",
+  "description": "Seat-counterbalanced twin of the neutral baseline: identical mechanism, prompt, seed, and repetitions, with only the two company names exchanged. Comparing it with 'baseline' measures the seat-position artefact that every persona contrast has to be corrected for.",
+  "games": [
+    "ai_race_risk_10",
+    "ai_race_risk_60",
+    "ai_race_risk_90"
+  ],
+  "agents": "companies_swapped",
+  "languages": ["en"],
+  "models": ["LocalQwen"],
+  "useOffline": true,
+  "offlineSettings": "offline_settings",
+  "repetitions": 50,
+  "seed": 260726,
+  "maxParseRetries": 3,
+  "verbose": true
+}
