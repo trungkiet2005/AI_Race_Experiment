@@ -1,0 +1,662 @@
+%% BioMed_Central_Bib_Style_v1.01
+
+\begin{thebibliography}{40}
+% BibTex style file: bmc-mathphys.bst (version 2.1), 2014-07-24
+\ifx \bisbn   \undefined \def \bisbn  #1{ISBN #1}\fi
+\ifx \binits  \undefined \def \binits#1{#1}\fi
+\ifx \bauthor  \undefined \def \bauthor#1{#1}\fi
+\ifx \batitle  \undefined \def \batitle#1{#1}\fi
+\ifx \bjtitle  \undefined \def \bjtitle#1{#1}\fi
+\ifx \bvolume  \undefined \def \bvolume#1{\textbf{#1}}\fi
+\ifx \byear  \undefined \def \byear#1{#1}\fi
+\ifx \bissue  \undefined \def \bissue#1{#1}\fi
+\ifx \bfpage  \undefined \def \bfpage#1{#1}\fi
+\ifx \blpage  \undefined \def \blpage #1{#1}\fi
+\ifx \burl  \undefined \def \burl#1{\textsf{#1}}\fi
+\ifx \doiurl  \undefined \def \doiurl#1{\url{https://doi.org/#1}}\fi
+\ifx \betal  \undefined \def \betal{\textit{et al.}}\fi
+\ifx \binstitute  \undefined \def \binstitute#1{#1}\fi
+\ifx \binstitutionaled  \undefined \def \binstitutionaled#1{#1}\fi
+\ifx \bctitle  \undefined \def \bctitle#1{#1}\fi
+\ifx \beditor  \undefined \def \beditor#1{#1}\fi
+\ifx \bpublisher  \undefined \def \bpublisher#1{#1}\fi
+\ifx \bbtitle  \undefined \def \bbtitle#1{#1}\fi
+\ifx \bedition  \undefined \def \bedition#1{#1}\fi
+\ifx \bseriesno  \undefined \def \bseriesno#1{#1}\fi
+\ifx \blocation  \undefined \def \blocation#1{#1}\fi
+\ifx \bsertitle  \undefined \def \bsertitle#1{#1}\fi
+\ifx \bsnm \undefined \def \bsnm#1{#1}\fi
+\ifx \bsuffix \undefined \def \bsuffix#1{#1}\fi
+\ifx \bparticle \undefined \def \bparticle#1{#1}\fi
+\ifx \barticle \undefined \def \barticle#1{#1}\fi
+\bibcommenthead
+\ifx \bconfdate \undefined \def \bconfdate #1{#1}\fi
+\ifx \botherref \undefined \def \botherref #1{#1}\fi
+\ifx \url \undefined \def \url#1{\textsf{#1}}\fi
+\ifx \bchapter \undefined \def \bchapter#1{#1}\fi
+\ifx \bbook \undefined \def \bbook#1{#1}\fi
+\ifx \bcomment \undefined \def \bcomment#1{#1}\fi
+\ifx \oauthor \undefined \def \oauthor#1{#1}\fi
+\ifx \citeauthoryear \undefined \def \citeauthoryear#1{#1}\fi
+\ifx \endbibitem  \undefined \def \endbibitem {}\fi
+\ifx \bconflocation  \undefined \def \bconflocation#1{#1}\fi
+\ifx \arxivurl  \undefined \def \arxivurl#1{\textsf{#1}}\fi
+\csname PreBibitemsHook\endcsname
+
+%%% 1
+\bibitem[\protect\citeauthoryear{Aghion
+  et~al.}{2005}]{AghionEtAl2005CompetitionInnovation}
+\begin{barticle}
+\bauthor{\bsnm{Aghion}, \binits{P.}},
+\bauthor{\bsnm{Bloom}, \binits{N.}},
+\bauthor{\bsnm{Blundell}, \binits{R.}},
+\bauthor{\bsnm{Griffith}, \binits{R.}},
+\bauthor{\bsnm{Howitt}, \binits{P.}}:
+\batitle{Competition and innovation: An inverted-u relationship}.
+\bjtitle{The Quarterly Journal of Economics}
+\bvolume{120}(\bissue{2}),
+\bfpage{701}--\blpage{728}
+(\byear{2005})
+\doiurl{10.1162/0033553053970214}
+\end{barticle}
+\endbibitem
+
+%%% 2
+\bibitem[\protect\citeauthoryear{Askell
+  et~al.}{2019}]{AskellBrundageHadfield2019CooperationResponsibleAI}
+\begin{barticle}
+\bauthor{\bsnm{Askell}, \binits{A.}},
+\bauthor{\bsnm{Brundage}, \binits{M.}},
+\bauthor{\bsnm{Hadfield}, \binits{G.K.}}:
+\batitle{The role of cooperation in responsible {AI} development}.
+\bjtitle{arXiv preprint arXiv:1907.04534}
+(\byear{2019})
+\doiurl{10.48550/arXiv.1907.04534}
+{\href{https://arxiv.org/abs/1907.04534}{{arXiv:1907.04534}}}
+{[cs.CY]}
+\end{barticle}
+\endbibitem
+
+%%% 3
+\bibitem[\protect\citeauthoryear{Armstrong
+  et~al.}{2016}]{ArmstrongBostromShulman2016RacingPrecipice}
+\begin{barticle}
+\bauthor{\bsnm{Armstrong}, \binits{S.}},
+\bauthor{\bsnm{Bostrom}, \binits{N.}},
+\bauthor{\bsnm{Shulman}, \binits{C.}}:
+\batitle{Racing to the precipice: A model of artificial intelligence
+  development}.
+\bjtitle{AI \& Society}
+\bvolume{31}(\bissue{2}),
+\bfpage{201}--\blpage{206}
+(\byear{2016})
+\doiurl{10.1007/s00146-015-0590-y}
+\end{barticle}
+\endbibitem
+
+%%% 4
+\bibitem[\protect\citeauthoryear{{Bueno de Mesquita}
+  et~al.}{2026}]{BuenoDeMesquitaDziudaPolborn2026AGIRace}
+\begin{botherref}
+\oauthor{\bsnm{{Bueno de Mesquita}}, \binits{E.}},
+\oauthor{\bsnm{Dziuda}, \binits{W.}},
+\oauthor{\bsnm{Polborn}, \binits{M.}}:
+The {AGI} race and existential risk.
+Technical Report 35276,
+National Bureau of Economic Research
+(May 2026).
+\doiurl{10.3386/w35276}
+\end{botherref}
+\endbibitem
+
+%%% 5
+\bibitem[\protect\citeauthoryear{Bengio et~al.}{2024}]{bengio2024managing}
+\begin{barticle}
+\bauthor{\bsnm{Bengio}, \binits{Y.}},
+\bauthor{\bsnm{Hinton}, \binits{G.}},
+\bauthor{\bsnm{Yao}, \binits{A.}},
+\bauthor{\bsnm{Song}, \binits{D.}},
+\bauthor{\bsnm{Abbeel}, \binits{P.}},
+\bauthor{\bsnm{Darrell}, \binits{T.}},
+\bauthor{\bsnm{Harari}, \binits{Y.N.}},
+\bauthor{\bsnm{Zhang}, \binits{Y.-Q.}},
+\bauthor{\bsnm{Xue}, \binits{L.}},
+\bauthor{\bsnm{Shalev-Shwartz}, \binits{S.}}, \betal:
+\batitle{Managing extreme {AI} risks amid rapid progress}.
+\bjtitle{Science}
+\bvolume{384}(\bissue{6698}),
+\bfpage{842}--\blpage{845}
+(\byear{2024})
+\end{barticle}
+\endbibitem
+
+%%% 6
+\bibitem[\protect\citeauthoryear{Brown}{2021}]{brown2021linearMixedEffectsR}
+\begin{barticle}
+\bauthor{\bsnm{Brown}, \binits{V.A.}}:
+\batitle{An introduction to linear mixed-effects modeling in {R}}.
+\bjtitle{Advances in Methods and Practices in Psychological Science}
+\bvolume{4}(\bissue{1}),
+\bfpage{2515245920960351}
+(\byear{2021})
+\doiurl{10.1177/2515245920960351}
+\end{barticle}
+\endbibitem
+
+%%% 7
+\bibitem[\protect\citeauthoryear{Barnett and
+  Scher}{2025}]{BarnettScher2025AIGovernanceExtinction}
+\begin{botherref}
+\oauthor{\bsnm{Barnett}, \binits{P.}},
+\oauthor{\bsnm{Scher}, \binits{A.}}:
+{AI} governance to avoid extinction: The strategic landscape and actionable
+  research questions.
+arXiv preprint arXiv:2505.04592
+(2025)
+\end{botherref}
+\endbibitem
+
+%%% 8
+\bibitem[\protect\citeauthoryear{Bull
+  et~al.}{1987}]{BullSchotterWeigelt1987TournamentsPieceRates}
+\begin{barticle}
+\bauthor{\bsnm{Bull}, \binits{C.}},
+\bauthor{\bsnm{Schotter}, \binits{A.}},
+\bauthor{\bsnm{Weigelt}, \binits{K.}}:
+\batitle{Tournaments and piece rates: An experimental study}.
+\bjtitle{Journal of Political Economy}
+\bvolume{95}(\bissue{1}),
+\bfpage{1}--\blpage{33}
+(\byear{1987})
+\doiurl{10.1086/261439}
+\end{barticle}
+\endbibitem
+
+%%% 9
+\bibitem[\protect\citeauthoryear{Cave and
+  {\'{O}}h{\'{E}}igeartaigh}{2018}]{CaveOHeigeartaigh2018AIRace}
+\begin{bchapter}
+\bauthor{\bsnm{Cave}, \binits{S.}},
+\bauthor{\bsnm{{\'{O}}h{\'{E}}igeartaigh}, \binits{S.S.}}:
+\bctitle{An {AI} race for strategic advantage: Rhetoric and risks}.
+In: \bbtitle{Proceedings of the 2018 AAAI/ACM Conference on AI, Ethics, and
+  Society},
+pp. \bfpage{36}--\blpage{40}.
+\bpublisher{Association for Computing Machinery},
+\blocation{New York, NY, USA}
+(\byear{2018}).
+\doiurl{10.1145/3278721.3278780}
+\end{bchapter}
+\endbibitem
+
+%%% 10
+\bibitem[\protect\citeauthoryear{Cimpeanu
+  et~al.}{2022}]{CimpeanuEtAl2022AIRacesHeterogeneous}
+\begin{barticle}
+\bauthor{\bsnm{Cimpeanu}, \binits{T.}},
+\bauthor{\bsnm{Santos}, \binits{F.C.}},
+\bauthor{\bsnm{Pereira}, \binits{L.M.}},
+\bauthor{\bsnm{Lenaerts}, \binits{T.}},
+\bauthor{\bsnm{Han}, \binits{T.A.}}:
+\batitle{Artificial intelligence development races in heterogeneous settings}.
+\bjtitle{Scientific Reports}
+\bvolume{12},
+\bfpage{1723}
+(\byear{2022})
+\doiurl{10.1038/s41598-022-05729-3}
+\end{barticle}
+\endbibitem
+
+%%% 11
+\bibitem[\protect\citeauthoryear{Chen et~al.}{2016}]{chen2016otree}
+\begin{barticle}
+\bauthor{\bsnm{Chen}, \binits{D.L.}},
+\bauthor{\bsnm{Schonger}, \binits{M.}},
+\bauthor{\bsnm{Wickens}, \binits{C.}}:
+\batitle{otree—an open-source platform for laboratory, online, and field
+  experiments}.
+\bjtitle{Journal of Behavioral and Experimental Finance}
+\bvolume{9},
+\bfpage{88}--\blpage{97}
+(\byear{2016})
+\end{barticle}
+\endbibitem
+
+%%% 12
+\bibitem[\protect\citeauthoryear{Dal~B{\'o} and
+  Fr{\'e}chette}{2018}]{dal2018determinants}
+\begin{barticle}
+\bauthor{\bsnm{Dal~B{\'o}}, \binits{P.}},
+\bauthor{\bsnm{Fr{\'e}chette}, \binits{G.R.}}:
+\batitle{On the determinants of cooperation in infinitely repeated games: A
+  survey}.
+\bjtitle{Journal of Economic Literature}
+\bvolume{56}(\bissue{1}),
+\bfpage{60}--\blpage{114}
+(\byear{2018})
+\end{barticle}
+\endbibitem
+
+%%% 13
+\bibitem[\protect\citeauthoryear{Dave
+  et~al.}{2010}]{dave2010elicitingRiskPreferences}
+\begin{barticle}
+\bauthor{\bsnm{Dave}, \binits{C.}},
+\bauthor{\bsnm{Eckel}, \binits{C.C.}},
+\bauthor{\bsnm{Johnson}, \binits{C.A.}},
+\bauthor{\bsnm{Rojas}, \binits{C.}}:
+\batitle{Eliciting risk preferences: When is simple better?}
+\bjtitle{Journal of Risk and Uncertainty}
+\bvolume{41}(\bissue{3}),
+\bfpage{219}--\blpage{243}
+(\byear{2010})
+\doiurl{10.1007/s11166-010-9103-z}
+\end{barticle}
+\endbibitem
+
+%%% 14
+\bibitem[\protect\citeauthoryear{Domingos et~al.}{2023}]{domingos2023egttools}
+\begin{botherref}
+\oauthor{\bsnm{Domingos}, \binits{E.F.}},
+\oauthor{\bsnm{Santos}, \binits{F.C.}},
+\oauthor{\bsnm{Lenaerts}, \binits{T.}}:
+Egttools: Evolutionary game dynamics in python.
+Iscience
+\textbf{26}(4)
+(2023)
+\end{botherref}
+\endbibitem
+
+%%% 15
+\bibitem[\protect\citeauthoryear{Eckel and
+  Grossman}{2008}]{eckel2008forecastingRiskAttitudes}
+\begin{barticle}
+\bauthor{\bsnm{Eckel}, \binits{C.C.}},
+\bauthor{\bsnm{Grossman}, \binits{P.J.}}:
+\batitle{Forecasting risk attitudes: An experimental study using actual and
+  forecast gamble choices}.
+\bjtitle{Journal of Economic Behavior \& Organization}
+\bvolume{68}(\bissue{1}),
+\bfpage{1}--\blpage{17}
+(\byear{2008})
+\doiurl{10.1016/j.jebo.2008.04.006}
+\end{barticle}
+\endbibitem
+
+%%% 16
+\bibitem[\protect\citeauthoryear{Eriksen and
+  Kval{\o}y}{2014}]{EriksenKvaloy2014MyopicRiskTaking}
+\begin{barticle}
+\bauthor{\bsnm{Eriksen}, \binits{K.W.}},
+\bauthor{\bsnm{Kval{\o}y}, \binits{O.}}:
+\batitle{Myopic risk-taking in tournaments}.
+\bjtitle{Journal of Economic Behavior \& Organization}
+\bvolume{97},
+\bfpage{37}--\blpage{46}
+(\byear{2014})
+\doiurl{10.1016/j.jebo.2013.10.004}
+\end{barticle}
+\endbibitem
+
+%%% 17
+\bibitem[\protect\citeauthoryear{Emery-Xu
+  et~al.}{2024}]{EmeryXuParkTrager2024TechnologyRaces}
+\begin{barticle}
+\bauthor{\bsnm{Emery-Xu}, \binits{N.}},
+\bauthor{\bsnm{Park}, \binits{A.}},
+\bauthor{\bsnm{Trager}, \binits{R.}}:
+\batitle{Uncertainty, information, and risk in international technology races}.
+\bjtitle{Journal of Conflict Resolution}
+\bvolume{68}(\bissue{10}),
+\bfpage{2019}--\blpage{2047}
+(\byear{2024})
+\doiurl{10.1177/00220027231214996}
+\end{barticle}
+\endbibitem
+
+%%% 18
+\bibitem[\protect\citeauthoryear{Filippin and
+  Gioia}{2018}]{FilippinGioia2018CompetitionSubsequentRiskTaking}
+\begin{barticle}
+\bauthor{\bsnm{Filippin}, \binits{A.}},
+\bauthor{\bsnm{Gioia}, \binits{F.}}:
+\batitle{Competition and subsequent risk-taking behaviour: Heterogeneity across
+  gender and outcomes}.
+\bjtitle{Journal of Behavioral and Experimental Economics}
+\bvolume{75},
+\bfpage{84}--\blpage{94}
+(\byear{2018})
+\doiurl{10.1016/j.socec.2018.05.003}
+\end{barticle}
+\endbibitem
+
+%%% 19
+\bibitem[\protect\citeauthoryear{Fudenberg and
+  Tirole}{1985}]{FudenbergTirole1985Preemption}
+\begin{barticle}
+\bauthor{\bsnm{Fudenberg}, \binits{D.}},
+\bauthor{\bsnm{Tirole}, \binits{J.}}:
+\batitle{Preemption and rent equalization in the adoption of new technology}.
+\bjtitle{The Review of Economic Studies}
+\bvolume{52}(\bissue{3}),
+\bfpage{383}--\blpage{401}
+(\byear{1985})
+\doiurl{10.2307/2297660}
+\end{barticle}
+\endbibitem
+
+%%% 20
+\bibitem[\protect\citeauthoryear{Gruetzemacher
+  et~al.}{2025}]{gruetzemacher2025strategic}
+\begin{barticle}
+\bauthor{\bsnm{Gruetzemacher}, \binits{R.}},
+\bauthor{\bsnm{Avin}, \binits{S.}},
+\bauthor{\bsnm{Fox}, \binits{J.}},
+\bauthor{\bsnm{Saeri}, \binits{A.K.}}:
+\batitle{Strategic insights from simulation gaming of {AI} race dynamics}.
+\bjtitle{Futures}
+\bvolume{167},
+\bfpage{103563}
+(\byear{2025})
+\end{barticle}
+\endbibitem
+
+%%% 21
+\bibitem[\protect\citeauthoryear{Genakos and
+  Pagliero}{2012}]{GenakosPagliero2012InterimRankRiskTaking}
+\begin{barticle}
+\bauthor{\bsnm{Genakos}, \binits{C.}},
+\bauthor{\bsnm{Pagliero}, \binits{M.}}:
+\batitle{Interim rank, risk taking, and performance in dynamic tournaments}.
+\bjtitle{Journal of Political Economy}
+\bvolume{120}(\bissue{4}),
+\bfpage{782}--\blpage{813}
+(\byear{2012})
+\doiurl{10.1086/668502}
+\end{barticle}
+\endbibitem
+
+%%% 22
+\bibitem[\protect\citeauthoryear{G{\"u}rtler
+  et~al.}{2023}]{GuertlerStruthThon2023CompetitionRiskTaking}
+\begin{barticle}
+\bauthor{\bsnm{G{\"u}rtler}, \binits{O.}},
+\bauthor{\bsnm{Struth}, \binits{L.}},
+\bauthor{\bsnm{Thon}, \binits{M.}}:
+\batitle{Competition and risk-taking}.
+\bjtitle{European Economic Review}
+\bvolume{160},
+\bfpage{104592}
+(\byear{2023})
+\doiurl{10.1016/j.euroecorev.2023.104592}
+\end{barticle}
+\endbibitem
+
+%%% 23
+\bibitem[\protect\citeauthoryear{Hoenig and Heisey}{2001}]{hoenig2001abuse}
+\begin{barticle}
+\bauthor{\bsnm{Hoenig}, \binits{J.M.}},
+\bauthor{\bsnm{Heisey}, \binits{D.M.}}:
+\batitle{The abuse of power: The pervasive fallacy of power calculations for
+  data analysis}.
+\bjtitle{The American Statistician}
+\bvolume{55}(\bissue{1}),
+\bfpage{19}--\blpage{24}
+(\byear{2001})
+\doiurl{10.1198/000313001300339897}
+\end{barticle}
+\endbibitem
+
+%%% 24
+\bibitem[\protect\citeauthoryear{Han et~al.}{2022}]{han2022voluntary}
+\begin{barticle}
+\bauthor{\bsnm{Han}, \binits{T.A.}},
+\bauthor{\bsnm{Lenaerts}, \binits{T.}},
+\bauthor{\bsnm{Santos}, \binits{F.C.}},
+\bauthor{\bsnm{Pereira}, \binits{L.M.}}:
+\batitle{Voluntary safety commitments provide an escape from over-regulation in
+  {AI} development}.
+\bjtitle{Technology in Society}
+\bvolume{68},
+\bfpage{101843}
+(\byear{2022})
+\end{barticle}
+\endbibitem
+
+%%% 25
+\bibitem[\protect\citeauthoryear{Han et~al.}{2020}]{han2020toRegulateOrNot}
+\begin{barticle}
+\bauthor{\bsnm{Han}, \binits{T.A.}},
+\bauthor{\bsnm{Moniz~Pereira}, \binits{L.}},
+\bauthor{\bsnm{Santos}, \binits{F.C.}},
+\bauthor{\bsnm{Lenaerts}, \binits{T.}}:
+\batitle{To regulate or not: A social dynamics analysis of an idealised {AI}
+  race}.
+\bjtitle{Journal of Artificial Intelligence Research}
+\bvolume{69},
+\bfpage{881}--\blpage{921}
+(\byear{2020})
+\doiurl{10.1613/jair.1.12225}
+\end{barticle}
+\endbibitem
+
+%%% 26
+\bibitem[\protect\citeauthoryear{Hendrycks
+  et~al.}{2023}]{hendrycks2023overview}
+\begin{botherref}
+\oauthor{\bsnm{Hendrycks}, \binits{D.}},
+\oauthor{\bsnm{Mazeika}, \binits{M.}},
+\oauthor{\bsnm{Woodside}, \binits{T.}}:
+An overview of catastrophic {AI} risks.
+arXiv preprint arXiv:2306.12001
+(2023)
+\end{botherref}
+\endbibitem
+
+%%% 27
+\bibitem[\protect\citeauthoryear{Han et~al.}{2021}]{HanEtAl2021MediatingAI}
+\begin{barticle}
+\bauthor{\bsnm{Han}, \binits{T.A.}},
+\bauthor{\bsnm{Pereira}, \binits{L.M.}},
+\bauthor{\bsnm{Lenaerts}, \binits{T.}},
+\bauthor{\bsnm{Santos}, \binits{F.C.}}:
+\batitle{Mediating artificial intelligence developments through negative and
+  positive incentives}.
+\bjtitle{PLOS ONE}
+\bvolume{16}(\bissue{1}),
+\bfpage{0244592}
+(\byear{2021})
+\doiurl{10.1371/journal.pone.0244592}
+\end{barticle}
+\endbibitem
+
+%%% 28
+\bibitem[\protect\citeauthoryear{Loury}{1979}]{Loury1979MarketStructureInnovation}
+\begin{barticle}
+\bauthor{\bsnm{Loury}, \binits{G.C.}}:
+\batitle{Market structure and innovation}.
+\bjtitle{The Quarterly Journal of Economics}
+\bvolume{93}(\bissue{3}),
+\bfpage{395}--\blpage{410}
+(\byear{1979})
+\end{barticle}
+\endbibitem
+
+%%% 29
+\bibitem[\protect\citeauthoryear{McFadden}{1974}]{mcfadden1974conditional}
+\begin{bchapter}
+\bauthor{\bsnm{McFadden}, \binits{D.}}:
+\bctitle{Conditional logit analysis of qualitative choice behavior}.
+In: \beditor{\bsnm{Zarembka}, \binits{P.}} (ed.)
+\bbtitle{Frontiers in Econometrics},
+pp. \bfpage{105}--\blpage{142}.
+\bpublisher{Academic Press},
+\blocation{New York}
+(\byear{1974})
+\end{bchapter}
+\endbibitem
+
+%%% 30
+\bibitem[\protect\citeauthoryear{Montero-Porras
+  et~al.}{2022}]{monteroPorras2022inferringStrategies}
+\begin{barticle}
+\bauthor{\bsnm{Montero-Porras}, \binits{E.}},
+\bauthor{\bsnm{Gruji{\'c}}, \binits{J.}},
+\bauthor{\bsnm{Fern{\'a}ndez~Domingos}, \binits{E.}},
+\bauthor{\bsnm{Lenaerts}, \binits{T.}}:
+\batitle{Inferring strategies from observations in long iterated prisoner's
+  dilemma experiments}.
+\bjtitle{Scientific Reports}
+\bvolume{12}(\bissue{1}),
+\bfpage{7589}
+(\byear{2022})
+\doiurl{10.1038/s41598-022-11654-2}
+\end{barticle}
+\endbibitem
+
+%%% 31
+\bibitem[\protect\citeauthoryear{M{\"u}ller et~al.}{2026}]{muller2026evolvable}
+\begin{barticle}
+\bauthor{\bsnm{M{\"u}ller}, \binits{V.}},
+\bauthor{\bsnm{Steels}, \binits{L.}},
+\bauthor{\bsnm{Szathm{\'a}ry}, \binits{E.}}:
+\batitle{Evolvable {AI}: Threats of a new major transition in evolution}.
+\bjtitle{Proceedings of the National Academy of Sciences}
+\bvolume{123}(\bissue{17}),
+\bfpage{2527700123}
+(\byear{2026})
+\doiurl{10.1073/pnas.2527700123}
+\end{barticle}
+\endbibitem
+
+%%% 32
+\bibitem[\protect\citeauthoryear{Nieken and
+  Sliwka}{2010}]{NiekenSliwka2010RiskTakingTournaments}
+\begin{barticle}
+\bauthor{\bsnm{Nieken}, \binits{P.}},
+\bauthor{\bsnm{Sliwka}, \binits{D.}}:
+\batitle{Risk-taking tournaments: Theory and experimental evidence}.
+\bjtitle{Journal of Economic Psychology}
+\bvolume{31}(\bissue{3}),
+\bfpage{254}--\blpage{268}
+(\byear{2010})
+\doiurl{10.1016/j.joep.2009.03.009}
+\end{barticle}
+\endbibitem
+
+%%% 33
+\bibitem[\protect\citeauthoryear{Ord}{2020}]{ord2020precipice}
+\begin{bbook}
+\bauthor{\bsnm{Ord}, \binits{T.}}:
+\bbtitle{The Precipice: Existential Risk and the Future of Humanity}.
+\bpublisher{Hachette UK},
+\blocation{London}
+(\byear{2020})
+\end{bbook}
+\endbibitem
+
+%%% 34
+\bibitem[\protect\citeauthoryear{Polborn}{2025}]{Polborn2025CompetitiveDevelopmentDangerousTechnologies}
+\begin{botherref}
+\oauthor{\bsnm{Polborn}, \binits{M.K.}}:
+Competitive development of dangerous technologies.
+Technical report,
+Vanderbilt University
+(April 2025)
+\end{botherref}
+\endbibitem
+
+%%% 35
+\bibitem[\protect\citeauthoryear{Palan and Schitter}{2018}]{palan2018prolific}
+\begin{barticle}
+\bauthor{\bsnm{Palan}, \binits{S.}},
+\bauthor{\bsnm{Schitter}, \binits{C.}}:
+\batitle{Prolific.ac—a subject pool for online experiments}.
+\bjtitle{Journal of Behavioral and Experimental Finance}
+\bvolume{17},
+\bfpage{22}--\blpage{27}
+(\byear{2018})
+\doiurl{10.1016/j.jbef.2017.12.004}
+\end{barticle}
+\endbibitem
+
+%%% 36
+\bibitem[\protect\citeauthoryear{Saeri et~al.}{2026}]{saeri2026prioritization}
+\begin{botherref}
+\oauthor{\bsnm{Saeri}, \binits{A.K.}},
+\oauthor{\bsnm{Graham}, \binits{J.}},
+\oauthor{\bsnm{Noetel}, \binits{M.}},
+\oauthor{\bsnm{Slattery}, \binits{P.}},
+\oauthor{\bsnm{Ah-King}, \binits{D.}},
+\oauthor{\bsnm{Aittokallio}, \binits{E.}},
+\oauthor{\bsnm{Akindehin}, \binits{I.}},
+\oauthor{\bsnm{Mahdi}, \binits{A.A.}},
+\oauthor{\bsnm{Alhajjar}, \binits{E.}},
+\oauthor{\bsnm{Lipcsey}, \binits{R.A.}}, et al.:
+Prioritization of risks from artificial intelligence: A delphi study of 272
+  international experts.
+arXiv preprint arXiv:2606.04490
+(2026)
+\end{botherref}
+\endbibitem
+
+%%% 37
+\bibitem[\protect\citeauthoryear{Schedlinsky
+  et~al.}{2016}]{SchedlinskySommerWoehrmann2016RiskTakingTournaments}
+\begin{barticle}
+\bauthor{\bsnm{Schedlinsky}, \binits{I.}},
+\bauthor{\bsnm{Sommer}, \binits{F.}},
+\bauthor{\bsnm{W{\"o}hrmann}, \binits{A.}}:
+\batitle{Risk-taking in tournaments: an experimental analysis}.
+\bjtitle{Journal of Business Economics}
+\bvolume{86}(\bissue{8}),
+\bfpage{837}--\blpage{866}
+(\byear{2016})
+\doiurl{10.1007/s11573-016-0813-9}
+\end{barticle}
+\endbibitem
+
+%%% 38
+\bibitem[\protect\citeauthoryear{Stafford
+  et~al.}{2022}]{StaffordTragerDafoe2022SafetyNotGuaranteed}
+\begin{botherref}
+\oauthor{\bsnm{Stafford}, \binits{E.}},
+\oauthor{\bsnm{Trager}, \binits{R.F.}},
+\oauthor{\bsnm{Dafoe}, \binits{A.}}:
+Safety not guaranteed: International races for risky technologies.
+Technical report,
+Centre for the Governance of AI
+(November 2022)
+\end{botherref}
+\endbibitem
+
+%%% 39
+\bibitem[\protect\citeauthoryear{Spadoni
+  et~al.}{2018}]{Spadoni2018CompetitionRiskTakingContests}
+\begin{barticle}
+\bauthor{\bsnm{Spadoni}, \binits{L.}},
+\bauthor{\bsnm{Ven}, \binits{J.}},
+\bauthor{\bsnm{Willems}, \binits{T.}}:
+\batitle{The effect of competition on risk taking in contests}.
+\bjtitle{Games}
+\bvolume{9}(\bissue{3}),
+\bfpage{72}
+(\byear{2018})
+\doiurl{10.3390/g9030072}
+\end{barticle}
+\endbibitem
+
+%%% 40
+\bibitem[\protect\citeauthoryear{Zizzo}{2002}]{Zizzo2002RacingWithUncertainty}
+\begin{barticle}
+\bauthor{\bsnm{Zizzo}, \binits{D.J.}}:
+\batitle{Racing with uncertainty: a patent race experiment}.
+\bjtitle{International Journal of Industrial Organization}
+\bvolume{20},
+\bfpage{877}--\blpage{902}
+(\byear{2002})
+\doiurl{10.1016/S0167-7187(01)00087-X}
+\end{barticle}
+\endbibitem
+
+\end{thebibliography}
