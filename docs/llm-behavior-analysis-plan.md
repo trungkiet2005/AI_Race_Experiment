@@ -1,506 +1,328 @@
-# Plan phân tích hành vi LLM trong AI Race
+# Plan triển khai: phân tích hành vi LLM trong AI Race
 
-**Trạng thái:** bản nháp đề xuất, chưa được phê duyệt. Chưa phải preregistration.
-**Quan hệ với tài liệu khác:** [PROJECT.md](../PROJECT.md) là protocol nghiên cứu đang có hiệu lực;
-tài liệu này đề xuất mở rộng nó theo ba trục. Mọi mâu thuẫn giữa hai file phải được
-giải quyết về phía `PROJECT.md` cho tới khi plan này được duyệt và merge vào đó.
+Plan kỹ thuật. Mỗi mục ghi rõ **sửa file nào, thêm hàm gì, sinh ra output gì, xong khi nào**.
 
-**Paper nguồn:** Fernández Domingos & Han (2026), *Falling Behind Drives Unsafe
-Development in an Idealised AI Race Experiment* (`arXiv-2607.26034v1/paper.tex`).
+Trạng thái code tham chiếu: sau merge `55f34a6` (FAIRGAME prompt template + proxy backend).
 
----
-
-## §0. Bốn phát hiện từ code quyết định toàn bộ thiết kế
-
-Plan này được viết sau khi đọc engine, runner, recorder, analyser (~3.2k dòng),
-classifier và Kaggle manifest. Bốn quan sát dưới đây thay đổi cách thiết kế phải viết.
-
-### (1) Persona đã plumb sẵn end-to-end, và KHÔNG đụng vào prompt hash
-
-- [`ai_race/prompts/ai_race_en.txt`](../ai_race/prompts/ai_race_en.txt) dòng 2 có sẵn
-  placeholder `{persona_block}`.
-- [`ai_race/engine/prompt.py`](../ai_race/engine/prompt.py) dòng 71–74 render nó thành
-  `"\nAdditional role instruction:\n<text>\n"`, và bỏ trống khi persona rỗng.
-- [`ai_race/runner/run_experiment.py`](../ai_race/runner/run_experiment.py) dòng 37–44
-  đọc `personas[language][seat]` từ agents config.
-
-Nghĩa là **persona là một trục agents-config, không phải một prompt version mới**.
-File template không đổi một byte, hash `6180d4f6…` giữ nguyên, invariant trong
-`CLAUDE.md` không bị vi phạm. Đây là ý đồ thiết kế có sẵn:
-[`companies_default.json`](../ai_race/configs/agents/companies_default.json) cố ý set
-`personas: {"en": ["", ""]}` và mô tả mình là "no safety or risk persona is injected".
-
-**Hệ quả cho plan:** không cần bump `promptVersion` cho các arm persona. Bump
-`promptVersion` thực ra là *phản tác dụng*, vì nó làm analyser hard-fail ở gate
-canonical-prompt (`analyze_ai_race.py:1411-1432`) và ép mọi output xuống nhãn
-"sensitivity audit".
-
-### (2) Nhưng persona hiện KHÔNG được ghi vào bất kỳ output nào → nguy cơ pooling ngầm
-
-- `TurnRecord` trong [`state.py`](../ai_race/engine/state.py) không có trường persona.
-- `race_row` và `player_rows` trong [`recorder.py`](../ai_race/dataio/recorder.py) không có.
-- `CONTEXT` của analyser (`analyze_ai_race.py:104-111`) chỉ gồm
-  `model, max_private_risk, prompt_version, protocol_signature, run_phase, run_status`.
-- Protocol signature (`analyze_ai_race.py:510-534`) gồm prompt / model / decoding /
-  seed_contract / mechanism / runtime — **không có agents**.
-
-Hệ quả: chạy persona và non-persona rồi phân tích chung thì analyser **không phát hiện
-được**, gộp im lặng, mọi bảng sai. Đây là bug chờ xảy ra và phải vá **trước** khi chạy
-run persona đầu tiên (§4.1).
-
-Thông tin persona hiện chỉ tồn tại gián tiếp trong `game_id`, có dạng
-`{game}__{model}__{lang}__{agents}__rep{NNNN}` (`run_experiment.py:82-85`). Phục hồi
-bằng cách parse string là fragile và không được dùng làm nguồn chính thức.
-
-### (3) CRN mạnh hơn dự kiến — và trải cả sang trục persona
-
-`game_seed = base_seed + rep` (`run_experiment.py:79-81`), cố ý độc lập với tên
-treatment **và cũng độc lập với agents config**. Nên nếu mọi experiment config
-(baseline + tất cả persona cell) dùng chung `"seed": 260726`, thì **rep k trong mọi
-điều kiện có cùng horizon và cùng setback draw**.
-
-Đây là matched-pairs design gần như miễn phí, mạnh hơn hẳn thí nghiệm người — nơi mỗi
-cặp participant chỉ chơi một treatment duy nhất.
-
-- **Điều kiện bắt buộc:** không được đổi `seed` giữa các config.
-- **Vấn đề cần vá:** `randomization_block_id = source_run::model::rep`
-  (`analyze_ai_race.py:1510-1515`). Persona ở run directory khác → `source_run` khác →
-  block bị tách sai. Xem §4.3.
-
-### (4) ΔS không phải biến độc lập — nó là hiệu số hành vi Unsafe, đổi đơn vị
-
-Đây là điểm phân tích sâu nhất trong toàn bộ plan. Trong cơ chế này:
-
-```
-progress_i(t) = 1·n_S + 1.5·n_U = (t − n_U) + 1.5·n_U = t + 0.5·n_U
-
-⟹  ΔS(t) = progress_own − progress_opp = 0.5 · (n_U^own − n_U^opp)
-```
-
-**ΔS đúng bằng một nửa hiệu số lần chọn Unsafe.** Nó không phải "vị trí trong cuộc đua"
-theo nghĩa một biến độc lập — nó *là* "tôi đã liều hơn đối thủ bao nhiêu lần". Hệ quả
-dây chuyền:
-
-- "Đang bị bỏ lại" ⟺ "tôi đã an toàn hơn nó" ⟺ "risk tích luỹ của tôi thấp hơn nó"
-  ⟺ "payoff tích luỹ của tôi thấp hơn nó". Bốn thứ này **hoàn toàn collinear** trong
-  cơ chế gốc.
-- Vậy hệ số `ΔS_{t-1} = −0.296` của paper người **không phân biệt được** giữa hai
-  câu chuyện:
-  - **(a) Áp lực vị trí** — "tôi dẫn trước nên không cần liều nữa";
-  - **(b) Ngân sách rủi ro** — "tôi đã liều nhiều nên risk cao, giờ phải phanh".
-- Paper kể câu chuyện (a) trong Discussion và đặt tên nó là *fear of falling behind*,
-  nhưng dữ liệu không loại được (b).
-
-Với LLM ta **có thể** tách được, vì ta điều khiển được cơ chế. Đây là đóng góp khoa học
-lớn nhất mà plan này có thể tạo ra, và nó nằm ở Arm D (§1.4).
+| Thông số hiện tại | Giá trị |
+|---|---|
+| Prompt template | `ai_race/prompts/ai_race_en.txt`, `ai_race_vi.txt` (kiểu FAIRGAME có block điều kiện) |
+| `promptVersion` | `ai-race-fairgame-v3` |
+| SHA-256 của `ai_race_en.txt` | `27086bd80378c25e859d03527a5ae55c1046f231ef7b914db9cb3c3b4fb2df3e` |
+| Persona đi vào prompt qua | block `{intro}: [You are {personality}.]`, bật bởi `apply_optional_blocks(..., {"intro": bool(persona_text.strip())})` — `prompt.py:165-175` |
+| Backend | offline vLLM, hoặc proxy (`api_baseline.json`) |
 
 ---
 
-## §1. TRỤC 1 — Two-player non-persona (baseline)
+## WS0 — Sửa hai chỗ hỏng do merge (chặn mọi việc khác)
 
-### 1.1 Trạng thái: đã implement xong, chỉ cần freeze + scale
+### T0.1 Analyser đang từ chối mọi run mới
 
-[`baseline.json`](../ai_race/configs/experiment/baseline.json) +
-[`companies_default.json`](../ai_race/configs/agents/companies_default.json) đã đúng:
-hai seat trung tính, persona rỗng, ba treatment 0.1/0.6/0.9, `runPhase: "pilot"`.
-**Không cần đổi code cho arm này.** Chỉ cần tăng `repetitions` và freeze.
+`results/scripts/analyze_ai_race.py` dòng 35–38 vẫn giữ:
 
-### 1.2 Vấn đề chí mạng #1 — Symmetry collapse
+```python
+CANONICAL_PROMPT_VERSION = "ai-race-paper-v2"
+CANONICAL_PROMPT_SHA256 = "6180d4f6...29ff"
+```
 
-Prompt của seat 0 và seat 1 ở vòng 1 chỉ khác nhau ở `Company_1` / `Company_2`. Cùng
-model, temperature = 0 → **hai seat gần chắc chắn cho cùng một action**. Nếu model lại
-có xu hướng copy đối thủ (như người), race khoá vào mirror play vĩnh viễn:
+Configs giờ ghi `ai-race-fairgame-v3` / hash `27086bd8…`. Gate ở dòng 1411–1432 sẽ raise
+`"primary analysis requires canonical prompt 'ai-race-paper-v2'"` cho **mọi** run mới.
+
+- **Sửa:** cập nhật hai hằng số sang `ai-race-fairgame-v3` / `27086bd8…`.
+- **Thêm:** hằng số cho `ai_race_vi.txt` nếu định chạy tiếng Việt (gate hiện chỉ biết một
+  prompt duy nhất — cần map `{version: sha}` thay vì một cặp scalar).
+- **Cập nhật:** `CLAUDE.md` mục "Invariants" đang ghi hash cũ.
+- **Xong khi:** chạy analyser trên output mock không còn lỗi prompt gate.
+
+### T0.2 Dọn key chết trong `prompt.py`
+
+`persona_block` (dòng 97–101, 105) không còn placeholder nào dùng — template mới dùng
+`{intro}`/`{personality}`. Không gây lỗi (`str.format` bỏ qua key thừa) nhưng gây hiểu
+nhầm là persona vẫn đi lối cũ. Xoá, hoặc thêm comment giải thích nó được giữ cho template
+cũ.
+
+---
+
+## WS1 — Trục 1: game hai người, non-persona
+
+Code đã đủ. Chỉ là config + kiểm chứng.
+
+### T1.1 Config
+
+- `ai_race/configs/experiment/baseline.json`: `repetitions: 3` → **50**.
+  50 rep × 3 treatment = 150 race = 300 trajectory ≈ 2.700 player-round, xấp xỉ cỡ mẫu
+  phân tích của paper (2.888).
+- Giữ nguyên `seed: 260726` ở **mọi** experiment config. `game_seed = base_seed + rep`
+  (`run_experiment.py:79-81`) độc lập với treatment **và** với agents config, nên cùng
+  `rep` sẽ có cùng horizon ở mọi điều kiện — matched-pairs miễn phí. Đổi seed là mất.
+- Temperature: dùng 0.7 (`proxyOptions.temperature` đã set sẵn ở `api_baseline.json`).
+  **Không dùng 0** cho arm hành vi, lý do ở T1.3.
+
+### T1.2 Thêm config đảo tên để đo seat effect
+
+`ai_race/configs/agents/companies_swapped.json`: y hệt `companies_default` nhưng
+`"names": ["Company_2", "Company_1"]`. Thêm `ai_race/configs/experiment/baseline_swapped.json`
+trỏ vào nó. Chạy song song để tách hiệu ứng ghế khỏi hiệu ứng persona sau này.
+
+### T1.3 Script kiểm tra symmetry collapse (bắt buộc chạy trước khi scale)
+
+Hai seat cùng model, prompt gần đối xứng → nếu temperature thấp, cả hai chọn giống nhau
+mọi vòng. Khi đó:
 
 ```
 ΔS(t) = 0.5·(n_U^own − n_U^opp) = 0  với mọi t
 ```
 
-→ `race_state` luôn `"tied"` → **toàn bộ trục distance biến mất**;
-`unsafe_by_race_state_turn.csv` chỉ còn một dòng; hệ số `progress_gap_before` không ước
-lượng được. Và `_fit_clustered_logit` sẽ raise
-`"clustered logit requires both Safe and Unsafe outcomes"` (`analyze_ai_race.py:2851`)
-nếu model quá đơn điệu.
+→ `race_state` luôn `"tied"` → **trục distance biến mất hoàn toàn**, và
+`_fit_clustered_logit` raise `"clustered logit requires both Safe and Unsafe outcomes"`
+(dòng 2851).
 
-**Đây là kịch bản thất bại có xác suất cao nhất của cả nghiên cứu.** Ba lớp phòng vệ,
-áp dụng đồng thời:
+- **Thêm:** `results/scripts/check_symmetry.py` — đọc `turns.jsonl`, in ra: tỉ lệ race có
+  `progress_gap_before ≡ 0` xuyên suốt, tỉ lệ vòng hai seat chọn giống nhau, phân bố
+  `|ΔS|` cuối race.
+- **Gate:** pilot 10 rep trước; nếu tỉ lệ race degenerate > 40% → không scale lên 50 rep,
+  tăng temperature hoặc chuyển trọng tâm sang WS1.4.
+- **Xong khi:** có số liệu, và quyết định scale/không được ghi lại.
 
-| Lớp | Biện pháp | Ghi chú |
-|---|---|---|
-| L1 | `temperature ∈ {0.7, 1.0}`, per-decision `sampling_seed` (đã có qua `game.sampling_seed()`) | Không dùng temp = 0 cho arm hành vi. Temp = 0 chỉ dùng cho một run *determinism check* riêng |
-| L2 | **Arm B — đối thủ ngoại sinh** (§1.3) | Bẻ đối xứng bằng thiết kế, không dựa vào noise |
-| L3 | Gate tiền nghiệm: pilot 10 rep; nếu tỉ lệ race có `ΔS ≡ 0` xuyên suốt > 40% → **dừng, không scale**, dồn nguồn lực sang Arm B/C | Ghi ngưỡng này vào preregistration trước khi chạy |
+### T1.4 (tùy chọn, giá trị cao) Đối thủ script — `ai_race/models/scripted.py`
 
-**Bổ sung — name-permutation check.** Cho 50% số race hoán vị thứ tự tên thành
-`["Company_2", "Company_1"]` để đo seat effect thuần tuý. Nếu φ_U của seat 0 ≠ seat 1
-khi persona rỗng, đó là artifact vị trí và mọi kết luận persona sau này bắt buộc phải
-counterbalance.
+Thay một seat bằng chiến lược cứng: `AS`, `AU`, `CS`, `CAS`, `RANDOM(p=0.5)`.
 
-### 1.3 Arm B — Đối thủ ngoại sinh (giải quyết Limitation 6 của paper)
+Lợi ích kép: bẻ đối xứng theo thiết kế (giải quyết T1.3), và làm `opponent_prev` trở
+thành **ngoại sinh** → hệ số của nó là hiệu ứng nhân quả chứ không phải association.
+Paper người tự thừa nhận không làm được điều này (Limitations, điểm 6).
 
-Paper thừa nhận (§Limitations, điểm 6): `a_{-i}^{t-1}` **không ngoại sinh**, nên hệ số
-+0.607 chỉ là tương quan có điều kiện, không phải nhân quả. Với LLM ta sửa được: **thay
-một seat bằng chiến lược lập trình cứng.**
-
-- Seat 1 = một trong `AS`, `AU`, `CS`, `CAS`, `BEHIND_UNSAFE`, `RANDOM(p=0.5)`.
-- Seat 0 = LLM.
-- Chiến lược script không "nhìn" LLM theo nghĩa chiến lược, chỉ theo luật của nó →
-  `a_{-i}^{t-1}` trở thành **ngoại sinh thật sự** → hệ số của nó là **hiệu ứng nhân
-  quả**, không phải association.
-
-Hai contrast quan trọng nhất:
-
-- **`AS` vs `AU`**: cùng một LLM, đối thủ luôn-Safe vs luôn-Unsafe. Hiệu số φ_U là ước
-  lượng nhân quả sạch của "reciprocal unsafe" — con số paper người không thể có.
-- **`RANDOM(0.5)`**: arm tốt nhất về mặt thống kê, vì nó cho variance tối đa trên cả
-  `opp_prev` lẫn ΔS mà vẫn ngoại sinh hoàn toàn.
-
-Engine hiện chưa có backend "scripted player" — cần thêm, chi tiết ở §4.2. Đây là **arm
-có giá trị khoa học cao nhất trên mỗi đồng chi phí** trong toàn bộ plan.
-
-### 1.4 Arm D — Tách ΔS khỏi lịch sử Unsafe (exploratory, non-canonical)
-
-Từ §0(4): trong cơ chế gốc không thể tách. Cách rẻ nhất để tách: **handicap ngoại
-sinh** — cho seat 0 một `initialProgress` ≠ 0, bốc theo rep từ
-`{−1.5, −1, 0, +1, +1.5}`.
-
-Khi đó:
-
-```
-ΔS(t) = handicap + 0.5·Δn_U
-```
-
-Hai nguồn biến thiên tách rời, và ta hồi quy đồng thời **cả `ΔS` lẫn `Δn_U`** — điều
-paper người không làm được:
-
-- Nếu hệ số `ΔS` sống sót khi kiểm soát `Δn_U` → **câu chuyện vị trí đúng**, "fear of
-  falling behind" là hiệu ứng thật.
-- Nếu chỉ `Δn_U` sống sót → hiệu ứng thật là **ngân sách rủi ro**, và cách paper diễn
-  giải cần được đặt lại.
-
-Ràng buộc thủ tục: đây là mechanism change → cần trường `initialProgress` trong
-`GameConfig`, config game riêng, `run_phase` riêng, và **bắt buộc chạy analyser với
-`--allow-noncanonical-mechanism`**. Không bao giờ gộp vào primary analysis.
-
-### 1.5 Cỡ mẫu
-
-Baseline hiện `repetitions: 3` → 3 rep × 3 treatment = 9 race/model = 18 trajectory.
-**Quá nhỏ, không dùng được cho bất kỳ inference nào.**
-
-Mục tiêu: **khớp cỡ mẫu phân tích của paper người** (2.888 quan sát, 172 cụm).
-
-```
-50 rep × 3 treatment = 150 race / model / điều kiện
-                     = 300 trajectory
-                     ≈ 2.700 player-round (sau khi bỏ vòng 1)
-                     = 50 CRN block, mỗi block trải đủ 3 treatment ✓
-                       (thoả gate ở analyze_ai_race.py:2856)
-                     ≈ 2.700 lệnh gọi LLM / model / điều kiện
-```
-
-Quy trình hai bước, tránh đốt compute mù:
-
-1. **Pilot 10 rep** → đo ICC trong CRN block, tỉ lệ degenerate, parse-failure rate,
-   phân bố ΔS thực tế.
-2. Tính lại N từ design effect quan sát được. **50 rep là sàn, không phải mục tiêu.**
-   Nếu ICC cao (LLM đồng nhất, mirror nhiều) có thể cần 100+ rep, hoặc kết luận rằng
-   arm này không informative và dồn sang Arm B.
+Kiến trúc: `send_batch(prompts, seeds)` chỉ nhận string, không nhận state. Đừng parse
+state từ prompt. Thay vào đó cho `run_games_batched` route theo seat, seat script đọc
+`game` object trực tiếp. Ghi `model = "scripted:AU"` để analyser không gộp nhầm vào
+thống kê LLM.
 
 ---
 
-## §2. TRỤC 2 — Persona
+## WS2 — Trục 2: persona
 
-### 2.1 Nguyên tắc viết persona (quan trọng hơn nội dung persona)
+### T2.1 Viết các file agents config
 
-Persona là **manipulation**, không phải **instruction**. Nếu viết "hãy chọn UNSAFE
-nhiều hơn" thì ta chỉ đo khả năng tuân lệnh, không đo hành vi chiến lược. Bốn ràng buộc
-bắt buộc, tất cả đều kiểm tra được bằng test tự động:
+Mỗi file `ai_race/configs/agents/*.json` theo khuôn hiện có, thêm hai trường mới
+`personaCondition` và `personaRoles`:
 
-1. **Không nhắc chữ SAFE/UNSAFE**, không nhắc bất kỳ hành động cụ thể nào.
-2. **Không nhắc lại payoff, risk number, hay luật chơi** — không được thêm thông tin
-   chiến lược mà baseline không có. Đây chính là cảnh báo trong
-   [`references/papers/markdown/falling-behind-ai-race.md`](../references/papers/markdown/falling-behind-ai-race.md)
-   dòng 83: personas là *experimental factor* vì chúng có thể thêm thông tin chiến lược
-   không có trong task gốc.
-3. **Cân độ dài** — mọi persona nằm trong ±10% số token của nhau, và có một persona
-   `neutral` cùng độ dài làm placebo, để tách "hiệu ứng persona" khỏi "hiệu ứng có thêm
-   một đoạn text".
-4. **Hash và ghi lại** — `persona_sha256` vào run manifest.
+```json
+{
+  "name": "persona_adv_coop",
+  "nPlayers": 2,
+  "names": ["Company_1", "Company_2"],
+  "personaCondition": "S_AC",
+  "personaRoles": ["adversarial", "cooperative"],
+  "personas": { "en": ["<text A>", "<text C>"], "vi": ["...", "..."] }
+}
+```
 
-Test cho (1) và (3) đặt ở `ai_race/tests/test_personas.py`.
+Tám file cần tạo:
 
-### 2.2 Lưới điều kiện
-
-Hai họ persona: risk preference (trục *dispositional*) và social orientation (trục
-*chiến lược*).
-
-**Họ R — Risk preference** (đối xứng, cả hai seat cùng persona):
-
-| Cell | Seat 0 | Seat 1 | Vai trò |
+| File | `personaCondition` | Seat 0 | Seat 1 |
 |---|---|---|---|
-| `R0` | neutral placebo | neutral placebo | Placebo cùng độ dài |
-| `R−` | risk-averse | risk-averse | |
-| `R+` | risk-seeking | risk-seeking | |
+| `companies_default.json` (đã có) | `none` | — | — |
+| `persona_neutral.json` | `R0` | neutral placebo | neutral placebo |
+| `persona_risk_averse.json` | `R-` | risk-averse | risk-averse |
+| `persona_risk_seeking.json` | `R+` | risk-seeking | risk-seeking |
+| `persona_coop_coop.json` | `S_CC` | cooperative | cooperative |
+| `persona_adv_adv.json` | `S_AA` | adversarial | adversarial |
+| `persona_adv_coop.json` | `S_AC` | adversarial | cooperative |
+| `persona_coop_adv.json` | `S_CA` | cooperative | adversarial |
 
-**Họ S — Social orientation** (cả đối xứng lẫn bất đối xứng):
+`S_AC` là cell quan trọng nhất (hợp tác có sống sót trước đối kháng không).
+`S_CA` là bản mirror bắt buộc — nếu thiếu, hiệu ứng persona lẫn với hiệu ứng ghế.
+`R0` là placebo cùng độ dài, để tách "hiệu ứng persona" khỏi "hiệu ứng có thêm text".
 
-| Cell | Seat 0 | Seat 1 | Vai trò |
-|---|---|---|---|
-| `S_CC` | cooperative | cooperative | Cả hai hợp tác |
-| `S_AA` | adversarial | adversarial | Cả hai đối kháng |
-| `S_AC` | adversarial | cooperative | **Bất đối xứng — cell quan trọng nhất** |
-| `S_CA` | cooperative | adversarial | Counterbalance seat cho `S_AC` |
+Cộng 8 file experiment tương ứng trong `configs/experiment/`, mỗi file trỏ `agents` sang
+một agents config, giữ nguyên `games`, `seed`, `repetitions`.
 
-`S_AC`/`S_CA` là cell có giá trị nhất: nó đo **hợp tác có sống sót được trước đối kháng
-không**, và nó bẻ đối xứng theo thiết kế nên né được vấn đề §1.2. Bắt buộc có cả hai
-chiều, nếu không hiệu ứng persona lẫn với hiệu ứng seat.
+### T2.2 Luật viết text persona (kiểm được bằng test)
 
-Cộng baseline `none` → **8 điều kiện persona × 3 treatment risk = 24 cell**.
+Persona là *manipulation*, không phải *instruction*. Viết "hãy chọn UNSAFE nhiều hơn" thì
+chỉ đo khả năng tuân lệnh.
 
-Nếu ngân sách chặt, cắt theo thứ tự ưu tiên: **giảm số model trước, không giảm số
-cell**. Trong trường hợp buộc phải cắt cell, thứ tự bỏ là `R0` (mất placebo — chấp nhận
-được nếu báo cáo rõ), rồi `S_CC`. Không bao giờ bỏ `S_CA` (mất counterbalance) hay bỏ cả
-họ R (mất phần trả lời trực tiếp H2 của paper).
+1. Không chứa chuỗi `SAFE` / `UNSAFE`.
+2. Không nhắc lại payoff, con số risk, hay luật chơi — không thêm thông tin chiến lược mà
+   baseline không có.
+3. Độ dài trong khoảng ±10% giữa mọi persona.
+4. Câu phải ghép được vào khuôn `"You are {personality}."` (template dòng 2).
 
-### 2.3 Vì sao trục risk-preference là đóng góp thật, không phải làm cho đủ
+**Thêm:** `ai_race/tests/test_personas.py` — load toàn bộ `configs/agents/*.json`, assert
+4 luật trên, assert `personaCondition == "none"` ⟺ cả hai persona rỗng.
 
-Paper người **đo** risk preference bằng Eckel–Grossman và ra null (hệ số −0.012 đến
-−0.027, p > 0.1 ở mọi đặc tả). Nhưng đo lường có sai số, task elicitation có thể không
-valid, và null của một biến *đo được* là bằng chứng yếu.
+### T2.3 Ghi persona vào output — **làm trước khi chạy run persona đầu tiên**
 
-Với LLM ta **áp đặt** risk preference thay vì đo. Ba kết cục, cả ba đều báo cáo được:
+Hiện `TurnRecord`, `race_row`, `player_rows`, `CONTEXT` của analyser, và protocol
+signature đều **không có** trường persona. Chạy persona rồi phân tích chung với baseline
+→ analyser gộp im lặng, mọi bảng sai.
 
-- Persona risk-seeking/averse **không** dịch chuyển φ_U, nhưng persona
-  adversarial/cooperative **có** → bằng chứng mạnh hơn paper gốc cho chính luận điểm của
-  paper gốc: kênh chiến lược lấn át kênh khuynh hướng cá nhân. Manipulation > measurement.
-- **Cả hai** đều dịch chuyển → LLM khác người ở chỗ nó phản ứng với framing tính cách, và
-  đây là giới hạn của LLM như một mô hình cho hành vi người — phải nói rõ.
-- Persona risk **có** dịch chuyển còn adversarial **không** → kết quả ngược paper, và cực
-  kỳ đáng báo cáo.
-
-Một thiết kế mà mọi kết cục đều informative là một thiết kế tốt.
-
-### 2.4 Manipulation check
-
-Không có kiểm tra này thì mọi null của trục persona đều vô nghĩa: không phân biệt được
-"persona không ảnh hưởng hành vi" với "model không đọc persona". Hai check, chạy tách
-khỏi game:
-
-1. **Free-text probe** — cùng prompt, thay phần `CURRENT DECISION` bằng
-   *"Describe your development philosophy in one sentence."* → coder mù (hoặc LLM judge
-   với rubric cố định, ghi rõ rubric) phân loại về đúng persona. Yêu cầu ≥ 80% accuracy.
-2. **Behavioural probe ngoài game** — một quyết định rủi ro đơn giản không liên quan đến
-   race (bản LLM của Eckel–Grossman). Đây chính là bản LLM của Task 1 trong paper, và cho
-   phép so trực tiếp: *khẩu vị rủi ro đo được* của LLM có dự báo φ_U không — song song
-   hoàn hảo với H2 của paper.
-
-### 2.5 Ba confound phải xử lý trước khi chạy
-
-| Confound | Xử lý |
+| File | Sửa |
 |---|---|
-| Persona gắn với seat index | Counterbalance đầy đủ: mọi cell bất đối xứng có bản mirror (`S_AC` ↔ `S_CA`); đưa `seat` vào model như fixed effect |
-| Persona = "thêm text" chứ không phải nội dung | Placebo `R0` cùng độ dài, cùng cấu trúc câu, nội dung vô thưởng vô phạt |
-| Persona của đối thủ bị rò rỉ sang seat kia | Kiểm tra `build_prompt`: persona chỉ vào prompt của chính seat đó (đúng theo `prompt.py:71-79`), nhưng phải có test khẳng định — nếu rò rỉ thì `S_AC` biến thành trò chơi thông tin hoàn hảo và không còn so được với người |
+| `ai_race/engine/state.py` | `GameConfig`: `+ persona_condition: str = "none"`, `+ persona_sha256: str = ""`; `from_dict` đọc từ agents config. `TurnRecord`: `+ persona_condition`, `+ seat_persona_role` |
+| `ai_race/engine/agent.py` | `RaceAgent`: `+ persona_role: str = ""` |
+| `ai_race/dataio/recorder.py` | `race_row`: `+ persona_condition`, `+ player_1_persona_role`, `+ player_2_persona_role`. `player_rows`: `+ persona_condition`, `+ persona_role` |
+| `ai_race/runner/run_experiment.py` | `_agents_for_language` đọc `personaRoles`; `_write_manifest` thêm `agents_name`, `agents_config_sha256`, `persona_condition`, `persona_sha256` |
+| `kaggle/experiments/baseline.py` (dòng ~361) | thêm 4 trường trên vào `run_manifest` |
+| `results/scripts/analyze_ai_race.py` | `CONTEXT` (dòng 105) `+ "persona_condition"`; thêm gate từ chối khi thiếu, kèm flag `--allow-missing-persona-condition` |
+| `results/README.md` | cập nhật mục "Expected schema" — `CLAUDE.md` bắt buộc, nếu không run đã hoàn thành sẽ fail audit |
+
+### T2.4 Manipulation check
+
+Không có bước này thì null của trục persona vô nghĩa — không phân biệt được "persona
+không ảnh hưởng hành vi" với "model không đọc persona".
+
+**Thêm:** `results/scripts/persona_probe.py` — render prompt như thường nhưng thay khối
+quyết định bằng *"Describe your development philosophy in one sentence."*, gọi model, lưu
+`persona_probe.jsonl`. Phân loại lại (thủ công hoặc LLM judge với rubric cố định trong
+script). Ngưỡng chấp nhận: ≥ 80% đúng persona.
 
 ---
 
-## §3. TRỤC 3 — Analysis
+## WS3 — Trục 3: code phân tích
 
-### 3.1 Bản đồ paper → LLM → file analyser đã có
+Toàn bộ nằm trong `results/scripts/analyze_ai_race.py` trừ khi ghi khác.
 
-| Paper | Nội dung | Output analyser đã có | Còn thiếu |
-|---|---|---|---|
-| Fig 2A | φ_U theo treatment | `unsafe_by_risk_model_player.csv` | Không thiếu — nhưng **dùng Bảng S3 làm chuẩn so sánh, không dùng caption Fig 2A** (caption ghi ngược dấu, xem §3.4) |
-| Fig 2B | Unsafe ~ ΔS × own_prev × opp_prev | `unsafe_by_race_state_turn.csv`, `opponent_response_turn.csv` | Thiếu **cell chéo 3 chiều** trong một bảng |
-| Fig 2C | φ_U winner vs loser, tương quan trong cặp | `outcome_player.csv` | Thiếu **hệ số tương quan trong cặp** theo treatment |
-| Table 1 | 6 model logit lồng nhau | `clustered_logit_coefficients.csv` — **chỉ 1 đặc tả** | Thiếu 5 đặc tả còn lại |
-| Fig S1 | Phân bố số vòng | `race_quality.csv` | Cần histogram + kiểm tra mean ≈ 9 |
-| Fig S5 | Phân bố chiến lược theo p_r^max | `strategy_summary_player.csv` | Đủ |
+### T3.1 Thêm cột dẫn xuất — `_add_dynamic_columns` (dòng 1700)
 
-`LOGIT_FORMULA` hiện tại (`analyze_ai_race.py:27-30`) đúng bằng **model (6)** của paper.
-Cần thêm 5 đặc tả kia để tái tạo cấu trúc nested và cho thấy hệ số ổn định hay không —
-đây chính là chỗ paper người bộc lộ điểm yếu (`ΔS` chỉ significant ở model 6, không ở
-model 3).
+Hàm đã tạo sẵn `own_prev_unsafe`, `opponent_prev_unsafe`, `first_round_unsafe`,
+`race_state`. Thêm:
 
-### 3.2 Xử lý ΔS: bin, centering, và bẫy collinearity
-
-ΔS là **lattice**, chỉ nhận bội của 0.5, và với horizon trung bình 9 thì thực tế nằm
-trong `[−4.5, +4.5]`, tập trung dày ở `{−1, −0.5, 0, +0.5, +1}`.
-
-- Báo cáo **cả hai** dạng: ΔS liên tục (centered theo mean của **mẫu LLM**, ghi rõ giá
-  trị centering — không dùng mean của mẫu người) và ΔS phân loại
-  `{behind / tied / ahead}` (analyser đã tạo `race_state` ở `analyze_ai_race.py:1766-1770`).
-- Thêm bin theo độ lớn: `{≤−1, −0.5, 0, +0.5, ≥+1}`. "Bị bỏ lại 0.5 bước" (lệch 1 vòng)
-  khác về chất so với "bị bỏ lại 2 bước".
-- **Bắt buộc report VIF** giữa `ΔS_{t-1}`, `own_prev_unsafe`, và risk tích luỹ. Từ
-  §0(4), ΔS = 0.5·Δn_U nên ΔS tương quan cơ học với lịch sử Unsafe. Paper không report
-  chỉ số này; ta nên.
-
-### 3.3 Đơn vị cụm và multiplicity
-
-- **Cụm:** `randomization_block_id` (`source_run::model::rep`). Analyser đã ép mỗi block
-  phải trải ≥ 2 treatment (`analyze_ai_race.py:2856-2864`) — đúng, giữ nguyên. Khi pool
-  cross-persona phải mở rộng, xem §4.3.
-- **Primary vs secondary:** khai báo trước khi chạy. Đề xuất primary = ba hệ số
-  `{opponent_prev, progress_gap, first_round}` trong đặc tả đầy đủ; Holm–Bonferroni trên
-  3. Mọi thứ khác là exploratory và phải ghi nhãn rõ trong mọi bảng.
-- **Loại trừ:** giữ nguyên luật của repo — một `parse_failed` là **loại cả race**, vì
-  Safe fallback lan vào state các vòng sau. Không nới lỏng `parse_action` để làm đẹp tỉ
-  lệ thành công.
-
-### 3.4 Tiêu chí "replicate" — định nghĩa TRƯỚC khi nhìn kết quả
-
-Đây là phần quyết định nghiên cứu có nói được gì hay không. Không có tiêu chí định trước
-thì mọi kết quả đều trở thành "một phần giống người".
-
-| # | Hiệu ứng người | Chuẩn người | Replicate nếu |
-|---|---|---|---|
-| E1 | Opponent prev Unsafe → Unsafe ↑ | β = +0.607, p = 0.002 | β > 0 và p < 0.05 sau Holm |
-| E2 | Dẫn trước → Unsafe ↓ | β = −0.296, p = 0.048 | β < 0 và p < 0.05 |
-| E3 | Vòng 1 Unsafe → sau Unsafe ↑ | β = +0.217, p < 0.1 | β > 0 và p < 0.10 |
-| E4 | Own prev **không** dự báo | β = −0.193, n.s. | \|β\| < 0.3 **và** TOST kết luận tương đương |
-| E5 | Treatment 0.6 vs 0.9 **không** khác | d = −0.027 | \|d\| < 0.2 qua TOST |
-| E6 | 0.1 có φ_U **cao hơn** 0.6/0.9 | d ≈ +0.33 | d > 0.2, cùng dấu |
-| E7 | φ_U tổng thể | 0.584 | Nằm trong [0.40, 0.75] |
-| E8 | AS gần như không tồn tại | AS không là Nash ở mọi treatment | tỉ lệ trajectory phân loại AS < 10% |
-
-**E4 và E5 là null replication** — phải dùng equivalence test (TOST), không phải
-"p > 0.05 nên giống nhau". Đây là chỗ đa số paper LLM-replication làm sai.
-
-**Cảnh báo về E6.** Caption Fig 2A của paper viết *"Unsafe play is significantly higher
-in the 0.6 and 0.9 treatments than in the 0.1 treatment"*, nhưng Bảng S3 cho
-mean φ_U = 0.640 (ở 0.1) vs 0.558 / 0.564; Cohen's d cho "0.1 vs 0.6" là **+0.341**
-(dương ⇒ nhóm 0.1 cao hơn); hệ số hồi quy của 0.6/0.9 đều âm so với 0.1; và mô hình tiến
-hoá cũng dự báo Unsafe cao nhất ở rủi ro thấp. Hướng đúng là **0.1 có Unsafe CAO hơn**.
-Dùng Bảng S2/S3 làm chuẩn, không dùng câu văn trong caption.
-
-Deliverable cuối cùng của trục này là **một bảng 8 dòng**: replicate / không / không kết
-luận được, kèm hướng lệch. Rõ ràng hơn nhiều so với "LLM behaves similarly to humans".
-
-### 3.5 Estimand chỉ LLM mới có (không có đối chứng người — báo cáo ở mục riêng)
-
-- **Nhân quả thật của opponent action** (Arm B):
-  `E[unsafe | opp = AU] − E[unsafe | opp = AS]`. Paper người không có con số này.
-- **Tách vị trí vs ngân sách rủi ro** (Arm D): hệ số `ΔS` khi kiểm soát `Δn_U`.
-- **Determinism / repeatability:** cùng seed, cùng prompt, chạy lại → tỉ lệ action trùng.
-  Đây là **cận trên** của mọi hiệu ứng đo được và phải báo cáo trước mọi hệ số khác.
-- **Tỉ số disposition/strategy:** effect size của persona chia cho effect size của
-  opponent action. Đây là câu trả lời định lượng cho câu hỏi trung tâm của paper.
-- **Sensitivity to seat/name:** artifact thuần, phải report để người sau biết.
-
-### 3.6 Bảng mô tả tối thiểu phải sinh ra
-
-Mọi bảng stratify theo `persona_condition × max_private_risk × model`:
-
-1. φ_U theo treatment (turn-level và player-level) + t-test cặp + Cohen's d — bản LLM
-   của Fig 2A / Bảng S2.
-2. φ_U theo `opp_prev × own_prev` (4 ô) — bản LLM của Fig 2B.
-3. φ_U theo `race_state × opp_prev` (6 ô) và theo bin ΔS 5 mức.
-4. φ_U winner vs loser + tương quan trong cặp theo treatment — Fig 2C.
-5. Ma trận chuyển trạng thái `P(action_t | own_{t−1}, opp_{t−1})` — 4×2, bản mô tả thuần
-   của reciprocity, không cần model.
-6. Phân bố nhãn chiến lược AS/AU/CS/CAS + tỉ lệ tie + mismatch rate — Fig S5. Giữ
-   nguyên nguyên tắc của [`strategy_analysis/`](../strategy_analysis/README.md): không ép
-   tie thành nhãn duy nhất, và `BEHIND_UNSAFE_EXPLORATORY` không bao giờ gộp với 4 nhãn
-   canonical trong bảng confirmatory.
-7. Phân bố horizon + kiểm tra mean ≈ 9 — Fig S1.
-8. Protocol health: parse-failure rate, retry count, refusal rate, độ dài response.
-
----
-
-## §4. Thay đổi code cần thiết (theo thứ tự bắt buộc)
-
-### 4.1 Ghi persona vào output — chặn mọi run persona cho tới khi xong
-
-| File | Thay đổi |
+| Cột mới | Công thức |
 |---|---|
-| [`state.py`](../ai_race/engine/state.py) | `GameConfig`: thêm `persona_condition: str = "none"`, `persona_sha256: str = ""`. `TurnRecord`: thêm `persona_condition`, `seat_persona_role` |
-| [`recorder.py`](../ai_race/dataio/recorder.py) | `race_row` + `player_rows`: thêm `persona_condition` và `player_N_persona_role` / `persona_role` |
-| [`run_experiment.py`](../ai_race/runner/run_experiment.py) | Đọc `personaCondition` + `personaRoles` từ agents config; hash nội dung persona |
-| `analyze_ai_race.py:104` | Thêm `persona_condition` vào `CONTEXT` |
-| `analyze_ai_race.py` | Gate mới: nếu `persona_condition` thiếu ở bất kỳ race nào → refuse, trừ khi có flag mới `--allow-missing-persona-condition`. Dùng cùng khuôn với `_resolve_prompt_versions` |
-| [`kaggle/experiments/baseline.py`](../kaggle/experiments/baseline.py) (dòng 361) | Manifest: thêm `agents_name`, `agents_config_sha256`, `persona_condition`, `persona_sha256` |
-| [`results/README.md`](../results/README.md) | Cập nhật mục "Expected schema" — `CLAUDE.md` yêu cầu, nếu không thì completed run sẽ fail audit |
+| `own_unsafe_count_before` | cumsum `valid_unsafe` shift 1 trong `PLAYER_KEY` |
+| `opponent_unsafe_count_before` | tương tự trên `opponent_current_unsafe` |
+| `unsafe_count_diff_before` | own − opponent |
+| `gap_bin` | cắt `progress_gap_before` thành `{≤−1, −0.5, 0, +0.5, ≥+1}` |
+| `seat` | `player_index` (để đo hiệu ứng ghế) |
 
-**Gate consistency bắt buộc:** `persona_condition == "none"` ⟺ cả hai persona rỗng. Vi
-phạm → raise. Đây là thứ ngăn được lỗi tệ nhất có thể xảy ra: chạy persona rồi báo cáo
-như baseline.
+`unsafe_count_diff_before` cần có vì trong cơ chế này
+`progress = t + 0.5·n_U`, nên `ΔS = 0.5·(n_U^own − n_U^opp)` — **ΔS đúng bằng một nửa hiệu
+số lần chọn Unsafe, không phải một biến độc lập**. Hệ quả: "đang bị bỏ lại", "tôi đã an
+toàn hơn nó", và "risk tích luỹ của tôi thấp hơn" là **cùng một biến**. Phải report VIF
+giữa `progress_gap_before`, `own_prev_unsafe`, `unsafe_count_diff_before` và ghi rõ trong
+Results rằng hệ số ΔS không tách được "áp lực vị trí" khỏi "ngân sách rủi ro".
 
-### 4.2 Backend chiến lược script (cho Arm B)
+### T3.2 Bảng mô tả — thêm vào `_build_tables` (dòng 2585)
 
-`ai_race/models/scripted.py`: một callable tương thích `send_batch` trả
-`ACTION: SAFE|UNSAFE` theo AS / AU / CS / CAS / BEHIND / RANDOM(seed).
+Mọi bảng nhóm theo `CONTEXT` (đã gồm `persona_condition` sau T2.3).
 
-Vấn đề kiến trúc: `send_batch(prompts, seeds)` chỉ nhận prompt string, không nhận state.
-Hai lựa chọn:
+| Output mới | Nội dung | Tương ứng trong paper |
+|---|---|---|
+| `treatment_contrasts.csv` | 3 cặp t-test độc lập + Bonferroni + Cohen's d trên φ_U cấp player | Fig 2A / Bảng S2 |
+| `unsafe_by_lag_profile_turn.csv` | φ_U theo 4 ô `own_prev × opp_prev` | Fig 2B (một phần) |
+| `unsafe_by_gap_bin_turn.csv` | φ_U theo 5 bin `gap_bin` | Fig 2B (một phần) |
+| `unsafe_by_gap_lag_turn.csv` | φ_U theo `gap_bin × own_prev × opp_prev` | Fig 2B đầy đủ |
+| `transition_matrix.csv` | `P(unsafe_t \| own_{t−1}, opp_{t−1})` | mô tả thuần reciprocity |
+| `winner_loser_pairs.csv` | mỗi race một dòng: `φ_U` của winner và loser | Fig 2C (điểm) |
+| `winner_loser_correlation.csv` | Pearson r giữa hai cột trên, theo treatment | Fig 2C (kết luận) |
+| `horizon_distribution.csv` | histogram `n_rounds` + mean, so với E[T]=9 | Fig S1 |
+| `seat_balance.csv` | φ_U theo `seat`, cho cả run thường và run đảo tên | chỉ LLM |
+| `persona_contrasts.csv` | φ_U theo `persona_condition`, kèm contrast so với `none` | chỉ LLM |
 
-- **(a)** parse state từ prompt — fragile, không nên;
-- **(b)** cho `run_games_batched` route theo seat; seat scripted đọc `game` object trực
-  tiếp.
+Bảng đã có, giữ nguyên: `unsafe_by_risk_model_turn/player.csv`,
+`opponent_response_turn/player.csv`, `unsafe_by_race_state_turn.csv`,
+`race_state_player.csv`, `first_round_persistence_*.csv`, `outcome_player.csv`,
+`strategy_summary_player.csv`, `parse_failures.csv`, `race_quality.csv`.
 
-**Chọn (b).** Và ghi `model = "scripted:AU"` để analyser thấy rõ đây không phải LLM và
-không gộp nhầm vào thống kê model.
+### T3.3 Sáu đặc tả logit — sửa `_fit_clustered_logit` (dòng 2806)
 
-### 4.3 CRN block khi pool cross-persona
+Hiện chỉ chạy một công thức (`LOGIT_FORMULA`, dòng 27–30), đúng bằng **model (6)** của
+paper. Đổi thành list 6 công thức, xuất `clustered_logit_coefficients.csv` có thêm cột
+`specification ∈ {1..6}`:
 
-`randomization_block_id` hiện là `source_run::model::rep`. Khi pool nhiều persona run
-directory, cùng `rep` chia sẻ horizon nhưng khác `source_run` → block bị tách sai.
+| Spec | Công thức |
+|---|---|
+| 1 | `unsafe ~ C(max_private_risk)` |
+| 2 | 1 + `own_prev + opp_prev + gap` (cộng tính) |
+| 3 | 1 + `own_prev * opp_prev * gap` (tương tác 3 chiều) |
+| 4 | 1 + `first_round_unsafe` |
+| 5 | 4 + cộng tính |
+| 6 | 4 + tương tác 3 chiều (= công thức hiện tại) |
 
-Sửa: khi mọi run có cùng `experiment.seed` (đọc được từ manifest), block trở thành
-`model::rep`; nếu seed khác nhau thì giữ nguyên và **cảnh báo rõ rằng CRN không trải qua
-persona**. Điều kiện tiên quyết: **mọi experiment config dùng chung `"seed": 260726`**.
+Có 6 spec mới thấy được hệ số ổn định hay không — đây đúng là chỗ paper người lộ điểm
+yếu (`ΔS` chỉ significant ở model 6, không ở model 3).
 
-### 4.4 Sáu đặc tả logit lồng nhau
+Cụm giữ nguyên `randomization_block_id`. **Nhưng** khi pool nhiều persona run directory,
+block hiện là `source_run::model::rep` (dòng 1510–1515) → persona ở dir khác → block bị
+tách sai dù cùng `rep` chia sẻ horizon. Sửa: nếu mọi manifest có cùng `experiment.seed`
+thì block thành `model::rep`; nếu không, giữ nguyên và in cảnh báo rõ.
 
-Đổi `_fit_clustered_logit` để chạy một list công thức thay vì một công thức duy nhất,
-xuất `clustered_logit_coefficients.csv` có thêm cột `specification ∈ {1..6}`, khớp
-Table 1 của paper.
+### T3.4 Bảng so sánh với người — mới
+
+**Thêm:** `results/scripts/human_reference.json` — chuẩn từ paper, dạng dữ liệu chứ không
+hardcode trong prose:
+
+```json
+{
+  "source": "Fernández Domingos & Han (2026), Table 1 model 6 + Table S3",
+  "effects": [
+    {"id":"E1","name":"opponent_prev_unsafe","beta":0.607,"p":0.002,"rule":"beta>0 & p<0.05"},
+    {"id":"E2","name":"progress_gap_before","beta":-0.296,"p":0.048,"rule":"beta<0 & p<0.05"},
+    {"id":"E3","name":"first_round_unsafe","beta":0.217,"p":0.06,"rule":"beta>0 & p<0.10"},
+    {"id":"E4","name":"own_prev_unsafe","beta":-0.193,"p":null,"rule":"TOST equivalence |beta|<0.3"},
+    {"id":"E5","name":"contrast_0.6_vs_0.9","d":-0.027,"rule":"TOST |d|<0.2"},
+    {"id":"E6","name":"contrast_0.1_vs_rest","d":0.332,"rule":"d>0.2 same sign"},
+    {"id":"E7","name":"phi_U_overall","value":0.584,"rule":"within [0.40,0.75]"},
+    {"id":"E8","name":"share_AS","value":0.0,"rule":"share<0.10"}
+  ]
+}
+```
+
+**Thêm hàm:** `_build_human_comparison()` → `human_comparison.csv`, mỗi dòng một effect,
+cột `llm_value / human_value / rule / verdict ∈ {replicated, not_replicated, inconclusive}`.
+
+Hai lưu ý bắt buộc:
+
+- **E4 và E5 là null replication.** Phải dùng equivalence test (TOST), không được kết luận
+  "p > 0.05 nên giống nhau". Đây là chỗ đa số nghiên cứu LLM-replication làm sai.
+- **E6 lấy chuẩn từ Bảng S2/S3, KHÔNG lấy từ caption Fig 2A.** Caption viết "Unsafe cao
+  hơn ở 0.6/0.9 so với 0.1", nhưng Bảng S3 cho mean φ_U = 0.640 ở 0.1 so với 0.558/0.564,
+  Cohen's d dương cho "0.1 vs 0.6", hệ số hồi quy của 0.6/0.9 đều âm, và mô hình tiến hoá
+  cũng dự báo Unsafe cao nhất ở rủi ro thấp. Caption ghi ngược dấu.
 
 ---
 
-## §5. Trình tự thực thi
+## WS4 — Trình tự chạy
 
-Kaggle push/run/download là **checkpointed**: chạy một lệnh, hiện output, dừng, chờ
-người dùng trước lệnh kế tiếp (theo `CLAUDE.md` và
-[`kaggle/benchmarks/README.md`](../kaggle/benchmarks/README.md)).
+Kaggle push/run/download là thao tác **checkpointed**: chạy một lệnh, xem output, dừng,
+chờ xác nhận trước lệnh kế (theo `CLAUDE.md` và `kaggle/benchmarks/README.md`).
 
-| # | Bước | Gate để đi tiếp |
+| # | Việc | Xong khi |
 |---|---|---|
-| 0 | Viết preregistration: primary estimand, tiêu chí §3.4, luật loại trừ, N, ngưỡng degenerate | Đóng băng **trước** khi nhìn output AI Race đầu tiên |
-| 1 | Code §4.1 + §4.4 + tests; `pytest` xanh | Test persona-consistency và length-balance pass |
-| 2 | Smoke local `--mock random`, 2 rep; kiểm tra cột persona xuất hiện đúng | Analyser chạy sạch trên output mock |
-| 3 | **Kaggle pilot:** 1 model open-weight, điều kiện `none` + `S_AA`, 10 rep, temp 0.7 | 7 validation gate trong [PROJECT.md](../PROJECT.md) đều pass; tỉ lệ `ΔS ≡ 0` < 40%; parse-failure < 5% |
-| 4 | Tính lại N từ ICC quan sát được ở pilot | Chốt số rep cuối cùng |
-| 5 | Freeze prompt / config / agents / analysis plan; lật `runPhase` → `confirmatory` | Không sửa gì sau bước này |
-| 6 | Chạy full lưới: 8 điều kiện × 3 treatment × N rep, 1–2 model open-weight | Manifest `status = completed` cho mọi run |
-| 7 | Code §4.2, chạy Arm B (đối thủ ngoại sinh) | |
-| 8 | Chạy analyser **một lần**, không đổi định nghĩa outcome sau khi thấy kết quả | |
-| 9 | Arm D (non-canonical, `--allow-noncanonical-mechanism`), báo cáo tách riêng | |
-| 10 | Điền Results vào `paper/` và figure vào `slides/` | Chỉ sau khi bước 8 xong |
+| 1 | WS0 (T0.1, T0.2) | Analyser chạy sạch trên output mock |
+| 2 | WS2 T2.3 + T2.2 test | `pytest` xanh, cột persona có trong turns/races/players |
+| 3 | WS3 T3.1–T3.4 | Analyser sinh đủ bảng mới trên output mock |
+| 4 | Smoke local: `python -m ai_race.runner.run_experiment ai_race/configs/experiment/baseline.json --mock random --output /tmp/smoke` | Không lỗi, schema đúng |
+| 5 | Kaggle pilot: 1 model, `none` + `S_AA`, 10 rep | 7 validation gate trong `PROJECT.md` pass; `check_symmetry.py` cho tỉ lệ degenerate < 40%; parse-failure < 5% |
+| 6 | Chốt số rep từ ICC quan sát ở pilot | |
+| 7 | Freeze prompt / config / persona text / analysis plan; lật `runPhase` → `confirmatory` | Sau bước này không sửa gì |
+| 8 | Chạy full: 8 điều kiện × 3 treatment × N rep | Mọi manifest `status = completed` |
+| 9 | Chạy analyser **một lần**, không đổi định nghĩa outcome sau khi thấy kết quả | |
+| 10 | Điền `paper/` và `slides/` | Chỉ sau bước 9 |
 
-Về chi phí: full lưới ≈ 2.700 call × 8 điều kiện ≈ 21.6k call / model. Với open-weight
-trên GPU Kaggle là khả thi. Với frontier API, chạy lưới rút gọn (`none`, `S_AA`, `S_AC`,
-`R+`) và nói rõ trong Methods rằng lưới bị cắt vì chi phí.
+Chi phí ước tính: 2.700 call/model/điều kiện × 8 điều kiện ≈ 21.6k call/model. Open-weight
+trên GPU Kaggle khả thi. Với model hosted qua proxy, chạy lưới rút gọn
+(`none`, `S_AA`, `S_AC`, `R+`) và ghi rõ trong Methods là lưới bị cắt vì chi phí.
 
 ---
 
-## §6. Danh sách freeze (không được đổi sau bước 5)
+## Danh sách freeze (không đổi sau bước 7)
 
-- `ai_race/prompts/ai_race_en.txt` — hash `6180d4f699813a602a53cf4290b972aa4df4bf02ff1c646a85ab09d80d7729ff`
-- Nội dung mọi persona (+ `persona_sha256`)
-- `seed: 260726` cho **mọi** experiment config (điều kiện để CRN trải qua persona)
-- Temperature, max_tokens, decoding params
-- Luật loại trừ (parse-failure loại cả race)
-- Tiêu chí replicate §3.4 và bộ primary estimand §3.3
-- Số rep
+- `ai_race/prompts/ai_race_en.txt` — hash `27086bd8…`, `promptVersion` `ai-race-fairgame-v3`
+- Toàn bộ text persona (+ `persona_sha256`)
+- `seed: 260726` ở **mọi** experiment config
+- `temperature`, `max_tokens`, decoding params
+- Luật loại trừ: một `parse_failed` loại **cả race** (Safe fallback lan vào state vòng sau)
+- `human_reference.json` và bộ primary estimand
 
-## §7. Rủi ro đã biết
+## Rủi ro
 
-| Rủi ro | Xác suất | Giảm thiểu |
-|---|---|---|
-| Symmetry collapse, ΔS ≡ 0 | **Cao** | §1.2 ba lớp L1/L2/L3 |
-| Model quá đơn điệu (toàn AU hoặc toàn AS) → logit không fit | Trung bình | Report φ_U mô tả kể cả khi logit fail; Arm B cứu variance |
-| Persona bị pool ngầm với baseline | Cao nếu không vá §4.1 | Gate consistency, bắt buộc trước run persona |
-| Persona không được đọc → null giả | Trung bình | Manipulation check §2.4 |
-| Persona confound với seat | Cao nếu không counterbalance | Mirror cell `S_AC` ↔ `S_CA` |
-| Diễn giải ΔS sai vì collinearity | **Chắc chắn xảy ra nếu không xử lý** | §0(4), VIF ở §3.2, Arm D |
-| Chi phí frontier API vượt ngân sách | Trung bình | Lưới rút gọn, khai báo rõ |
+| Rủi ro | Giảm thiểu |
+|---|---|
+| Symmetry collapse, ΔS ≡ 0 | T1.3 gate + temperature > 0 + T1.4 |
+| Model đơn điệu → logit không fit | Vẫn report bảng mô tả; T1.4 cứu variance |
+| Persona bị pool ngầm với baseline | T2.3, làm trước mọi run persona |
+| Persona không được đọc → null giả | T2.4 manipulation check |
+| Persona lẫn với hiệu ứng ghế | Cell mirror `S_AC` ↔ `S_CA` + T1.2 |
+| Diễn giải ΔS sai vì collinearity | T3.1 (`unsafe_count_diff_before` + VIF) |
