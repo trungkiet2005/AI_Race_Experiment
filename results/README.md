@@ -20,6 +20,12 @@ directories. Run `python results/scripts/audit_gpu_archives.py --archive-dir
 results/open_source/gpu_run_archive` to verify all archive hashes and metadata
 from a clean clone.
 
+## Consolidated visual output & insight snapshot
+
+For this workspace, keep one canonical visualization-insight report here:
+
+- [results/visualization_insight_full.md](/AI_Race_Experiment/results/visualization_insight_full.md)
+
 Keep one self-contained directory per run. A run directory must contain
 `turns.jsonl`, `races.csv`, `players.csv`, and `run_manifest.json` so completion,
 phase, counts, and joins can be audited.

@@ -5,7 +5,10 @@ This folder stores the generated outputs for the pilot-analytics visualization p
 ## Files
 
 - `artifact.json`: machine-readable source for portable report rendering
-- `visualization_audit.md`: human-readable audit notes and findings for this run
+- `visualization_audit.md`: pointer to the canonical consolidated audit file
+
+Core consolidated visualization insight log:
+- [results/visualization_insight_full.md](/AI_Race_Experiment/results/visualization_insight_full.md)
 
 ## Rebuild command
 
