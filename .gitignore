@@ -20,6 +20,7 @@ kaggle.json
 /results/**
 !/results/frontier/
 !/results/frontier/.gitkeep
+!/results/frontier/**
 !/results/open_source/
 !/results/open_source/.gitkeep
 !/results/open_source/*_manifest.json
