@@ -51,6 +51,9 @@ slides/*.snm
 slides/*.toc
 slides/*.vrb
 slides/*.xdv
+/tmp/
+/output/pdf/*
+!/output/pdf/*.pdf
 
 # OS
 .DS_Store

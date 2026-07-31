@@ -55,6 +55,13 @@ payoffs.
 payoff, Unsafe count/frequency, private risk, prize, setback
 eligibility/draw/outcome, and final payoff.
 
+`all_results.csv` has one row per race in the FAIRGAME `all_results` shape: the
+per-round action and payoff sequences as JSON list columns, plus terminal progress,
+Unsafe counts, private risk, prize, setback, and final payoff for each seat. It also
+carries `persona_condition` and `playerN_persona_role`. It is a convenience view for
+skimming outcomes and is not read by the analyser; prompts and raw responses stay in
+`turns.jsonl`, which remains the audit surface.
+
 `persona_condition` labels the seat/persona cell (`none` for the neutral baseline).
 Injecting a persona fills an optional block that is already part of the frozen
 template, so it leaves `prompt_version`, the prompt hash, and `protocol_signature`

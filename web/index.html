@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Interactive visual explainer for the AI Race LLM experiment.">
+  <title>AI Race Lab — Interactive Protocol</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="AI Race Lab home">
+      <span class="brand-mark" aria-hidden="true">AR</span>
+      <span>AI RACE <b>LAB</b></span>
+    </a>
+    <nav aria-label="Primary navigation">
+      <a href="#mechanics">Mechanics</a>
+      <a href="#simulator">Simulator</a>
+      <a href="#protocol">Protocol</a>
+      <a class="nav-cta" href="../slides/index.html">Open deck <span>↗</span></a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="top">
+      <div class="hero-copy">
+        <div class="eyebrow"><span class="pulse"></span> Research protocol · Results pending</div>
+        <h1>When speed wins now,<br><em>who still chooses safety?</em></h1>
+        <p class="hero-lede">A controlled two-agent experiment testing how LLMs behave when unsafe development is faster and more profitable—but creates a private chance of losing everything.</p>
+        <div class="hero-actions">
+          <a class="button primary" href="#simulator">Run a live round <span>↓</span></a>
+          <a class="button secondary" href="#mechanics">Explore the mechanism</a>
+        </div>
+        <div class="hero-meta" aria-label="Key protocol facts">
+          <span><strong>2</strong> agents</span>
+          <span><strong>3</strong> risk treatments</span>
+          <span><strong>5+</strong> rounds</span>
+          <span><strong>100</strong> ECU prize</span>
+        </div>
+      </div>
+
+      <div class="race-visual" aria-label="Illustration of two companies racing on safe and unsafe tracks">
+        <div class="visual-topline"><span>LIVE MECHANISM</span><span class="mono">ROUND 07</span></div>
+        <div class="track-grid" aria-hidden="true">
+          <div class="finish-line"></div>
+          <div class="lane lane-a">
+            <div class="company-token token-cyan" style="--position: 58%"><span>A</span></div>
+          </div>
+          <div class="lane lane-b">
+            <div class="company-token token-amber" style="--position: 72%"><span>B</span></div>
+          </div>
+        </div>
+        <div class="race-stats">
+          <div><span>Company A</span><strong class="safe-text">SAFE</strong><small>+1.0 progress</small></div>
+          <div><span>Company B</span><strong class="unsafe-text">UNSAFE</strong><small>+1.5 progress</small></div>
+        </div>
+        <div class="risk-banner"><span>Private setback risk</span><strong>Unsafe frequency × risk cap</strong></div>
+      </div>
+    </section>
+
+    <section class="ticker" aria-label="Experiment principles">
+      <div>SIMULTANEOUS CHOICES <span>◆</span> HIDDEN HORIZON <span>◆</span> AUDITABLE STATE <span>◆</span> PRIVATE TERMINAL RISK <span>◆</span> NO RESULTS CLAIMED</div>
+    </section>
+
+    <section class="section" id="mechanics">
+      <div class="section-heading">
+        <div><span class="kicker">01 / MECHANICS</span><h2>A simple choice.<br>A strategic trap.</h2></div>
+        <p>Each round, both agents act from the same pre-decision snapshot. Neither sees the rival’s current move until both actions are committed.</p>
+      </div>
+
+      <div class="mechanics-grid">
+        <article class="choice-card safe-card">
+          <div class="choice-index">S</div>
+          <span class="choice-label">SAFE DEVELOPMENT</span>
+          <h3>Steady progress.<br>No added risk.</h3>
+          <div class="metric-row"><span>Race progress</span><strong>+1.0</strong></div>
+          <div class="metric-row"><span>Risk contribution</span><strong>0%</strong></div>
+          <div class="mini-track"><i style="width:66.67%"></i></div>
+        </article>
+        <article class="choice-card unsafe-card">
+          <div class="choice-index">U</div>
+          <span class="choice-label">UNSAFE DEVELOPMENT</span>
+          <h3>Move faster.<br>Carry the downside.</h3>
+          <div class="metric-row"><span>Race progress</span><strong>+1.5</strong></div>
+          <div class="metric-row"><span>Risk contribution</span><strong>Accumulates</strong></div>
+          <div class="mini-track"><i style="width:100%"></i></div>
+        </article>
+        <article class="matrix-card">
+          <div class="card-top"><span class="choice-label">IMMEDIATE PAYOFF</span><span class="mono">πᵢ</span></div>
+          <h3>Unsafe dominates now.</h3>
+          <div class="matrix" role="table" aria-label="Stage payoff matrix">
+            <div></div><div>Rival S</div><div>Rival U</div>
+            <div>You S</div><strong>1.0</strong><strong>0.6</strong>
+            <div>You U</div><strong>2.4</strong><strong>2.0</strong>
+          </div>
+          <p>Rows are your action; columns are the opponent’s action.</p>
+        </article>
+      </div>
+
+      <div class="formula-strip">
+        <div><span class="kicker">TERMINAL RISK</span><p>Only a winner or tied winner faces the private setback draw.</p></div>
+        <div class="formula">q<sub>i</sub> = p<sup>max</sup><sub>risk</sub> × <span>unsafe actions<sub>i</sub></span> / <span>rounds played</span></div>
+        <div class="risk-caps"><span>10%</span><span>60%</span><span>90%</span><small>TREATMENTS</small></div>
+      </div>
+    </section>
+
+    <section class="simulator-section" id="simulator">
+      <div class="section-heading light-heading">
+        <div><span class="kicker">02 / INTERACTIVE SIMULATOR</span><h2>Play both sides.<br>See every consequence.</h2></div>
+        <p>Select an action for each company. Choices reveal simultaneously, just like the experiment. The environment performs all arithmetic.</p>
+      </div>
+
+      <div class="sim-shell">
+        <aside class="control-panel">
+          <div class="panel-head"><div><span class="status-dot"></span> Simulation ready</div><button id="resetGame" class="icon-button" type="button" title="Reset simulation" aria-label="Reset simulation">↻</button></div>
+          <label for="riskCap">Maximum private risk <output id="riskValue" for="riskCap">60%</output></label>
+          <input id="riskCap" type="range" min="10" max="90" step="10" value="60">
+          <div class="presets" aria-label="Risk treatment presets">
+            <button type="button" data-risk="10">10% LOW</button>
+            <button class="active" type="button" data-risk="60">60% MED</button>
+            <button type="button" data-risk="90">90% HIGH</button>
+          </div>
+          <div class="rule-list">
+            <div><span>Stop chance</span><strong>20% after R5</strong></div>
+            <div><span>Race prize</span><strong>100 ECU</strong></div>
+            <div><span>Decision mode</span><strong>Simultaneous</strong></div>
+          </div>
+          <p class="control-note">This is a deterministic educational simulator. It does not query an LLM or create research data.</p>
+        </aside>
+
+        <div class="game-board">
+          <div class="round-header">
+            <div><span class="kicker">CURRENT STATE</span><h3>Round <span id="roundNumber">1</span></h3></div>
+            <div class="stop-state"><span id="stopLabel">Guaranteed to continue</span><small id="stopDetail">Stop draws begin after round 5</small></div>
+          </div>
+
+          <div class="players-grid">
+            <article class="player-card player-a">
+              <div class="player-title"><span class="avatar">A</span><div><strong>Company A</strong><small>Model agent · Seat 0</small></div><span class="lead-badge" id="leadA">TIED</span></div>
+              <div class="player-metrics">
+                <div><small>PROGRESS</small><strong id="progressA">0.0</strong></div>
+                <div><small>STAGE PAYOFF</small><strong id="payoffA">0.0</strong></div>
+                <div><small>PRIVATE RISK</small><strong id="riskA">0%</strong></div>
+              </div>
+              <div class="action-label">Choose action</div>
+              <div class="action-buttons" data-player="0">
+                <button type="button" data-action="safe"><span>S</span><strong>SAFE</strong><small>+1.0 progress</small></button>
+                <button type="button" data-action="unsafe"><span>U</span><strong>UNSAFE</strong><small>+1.5 progress</small></button>
+              </div>
+            </article>
+
+            <div class="versus" aria-hidden="true"><span>VS</span></div>
+
+            <article class="player-card player-b">
+              <div class="player-title"><span class="avatar">B</span><div><strong>Company B</strong><small>Model agent · Seat 1</small></div><span class="lead-badge" id="leadB">TIED</span></div>
+              <div class="player-metrics">
+                <div><small>PROGRESS</small><strong id="progressB">0.0</strong></div>
+                <div><small>STAGE PAYOFF</small><strong id="payoffB">0.0</strong></div>
+                <div><small>PRIVATE RISK</small><strong id="riskB">0%</strong></div>
+              </div>
+              <div class="action-label">Choose action</div>
+              <div class="action-buttons" data-player="1">
+                <button type="button" data-action="safe"><span>S</span><strong>SAFE</strong><small>+1.0 progress</small></button>
+                <button type="button" data-action="unsafe"><span>U</span><strong>UNSAFE</strong><small>+1.5 progress</small></button>
+              </div>
+            </article>
+          </div>
+
+          <button id="commitRound" class="commit-button" type="button" disabled><span>Commit both actions</span><small>Waiting for Company A and Company B</small></button>
+
+          <div class="chart-card">
+            <div class="chart-head"><div><strong>Race progress</strong><small>Accumulated by round</small></div><div class="legend"><span><i class="dot-a"></i>Company A</span><span><i class="dot-b"></i>Company B</span></div></div>
+            <svg id="progressChart" viewBox="0 0 760 230" role="img" aria-label="Progress chart for both companies"></svg>
+          </div>
+
+          <div class="history-card">
+            <div class="chart-head"><div><strong>Decision ledger</strong><small>Every committed state transition</small></div><span id="historyCount" class="mono">0 ROUNDS</span></div>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Round</th><th>Company A</th><th>Company B</th><th>Δ progress</th><th>Stage payoff</th><th>Stop draw</th></tr></thead>
+                <tbody id="historyBody"><tr class="empty-row"><td colspan="6">Choose two actions to begin the race.</td></tr></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="protocol">
+      <div class="section-heading">
+        <div><span class="kicker">03 / RESEARCH PROTOCOL</span><h2>Evidence before<br>interpretation.</h2></div>
+        <p>The project separates game mechanics, model behavior and source-study findings. Every model response and stochastic draw remains auditable.</p>
+      </div>
+      <div class="pipeline" aria-label="Experiment pipeline">
+        <article><span>01</span><div class="pipeline-icon">⌘</div><h3>Configure</h3><p>Freeze model, prompt, treatment, seeds and retry policy.</p></article>
+        <i>→</i>
+        <article><span>02</span><div class="pipeline-icon">◫</div><h3>Query</h3><p>Render both prompts from one immutable pre-action state.</p></article>
+        <i>→</i>
+        <article><span>03</span><div class="pipeline-icon">◇</div><h3>Commit</h3><p>Parse and reveal simultaneous Safe or Unsafe actions.</p></article>
+        <i>→</i>
+        <article><span>04</span><div class="pipeline-icon">↗</div><h3>Measure</h3><p>Estimate treatment and dynamic associations with uncertainty.</p></article>
+      </div>
+
+      <div class="questions-grid">
+        <div class="questions-copy"><span class="kicker">PRESPECIFIED QUESTIONS</span><h3>What could make an agent choose Unsafe?</h3><p>The primary outcome is the probability of an Unsafe action. Repeated rounds are nested within seeded two-agent races.</p><a href="../PROJECT.md">Read the full protocol →</a></div>
+        <ol>
+          <li><span>01</span><div><strong>Risk treatment</strong><p>Does a 10%, 60% or 90% private risk cap change Unsafe frequency?</p></div></li>
+          <li><span>02</span><div><strong>Opponent behavior</strong><p>Does the rival’s previous Unsafe action predict the next choice?</p></div></li>
+          <li><span>03</span><div><strong>Relative position</strong><p>Does falling behind increase Unsafe play—and being ahead reduce it?</p></div></li>
+          <li><span>04</span><div><strong>First-round momentum</strong><p>Does the opening action predict behavior later in the race?</p></div></li>
+        </ol>
+      </div>
+
+      <div class="boundary-card">
+        <div class="source-side"><span class="boundary-label">SOURCE STUDY</span><h3>Human participants</h3><p>Motivates hypotheses and supplies the canonical game mechanics.</p><small>Fernández Domingos & Han, 2026</small></div>
+        <div class="boundary-arrow"><span>ADAPT<br>MECHANICS</span><i>→</i><span>TEST<br>ANEW</span></div>
+        <div class="project-side"><span class="boundary-label">THIS PROJECT</span><h3>LLM agents</h3><p>Produces new behavioral evidence only after validated Kaggle runs.</p><small class="pending-chip">RESULTS PENDING</small></div>
+      </div>
+    </section>
+
+    <section class="closing">
+      <span class="kicker">THE CONTRIBUTION, FOR NOW</span>
+      <h2>A faithful environment.<br>An auditable protocol.<br><em>Evidence comes next.</em></h2>
+      <div><a class="button primary" href="../slides/index.html">Present the research deck <span>↗</span></a><a class="button secondary" href="../README.md">View repository guide</a></div>
+    </section>
+  </main>
+
+  <footer><div class="brand"><span class="brand-mark">AR</span><span>AI RACE <b>LAB</b></span></div><p>Interactive protocol companion · No experiment results are represented.</p><span class="mono">v0.2 · 2026</span></footer>
+
+  <dialog id="resultDialog">
+    <div class="result-orbit" aria-hidden="true"></div>
+    <button class="dialog-close" type="button" aria-label="Close result">×</button>
+    <span class="kicker">RACE COMPLETE</span>
+    <h2 id="resultTitle">Company A wins</h2>
+    <p id="resultSubtitle"></p>
+    <div id="resultCards" class="result-cards"></div>
+    <button id="playAgain" class="button primary" type="button">Run another simulation</button>
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>

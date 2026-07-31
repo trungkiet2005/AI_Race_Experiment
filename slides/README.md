@@ -1,5 +1,20 @@
 # AI Race presentation assets
 
+## Built artifacts
+
+- `ai_race_research_deck.tex` is the canonical 16:9 LaTeX Beamer source.
+- `../output/pdf/ai_race_research_deck.pdf` is the compiled presentation.
+- `index.html` is an optional browser-based companion deck.
+
+Compile from the repository root (run twice so Beamer resolves page metadata):
+
+```bash
+pdflatex -interaction=nonstopmode -halt-on-error \
+  -output-directory=output/pdf slides/ai_race_research_deck.tex
+pdflatex -interaction=nonstopmode -halt-on-error \
+  -output-directory=output/pdf slides/ai_race_research_deck.tex
+```
+
 This directory contains a research-talk outline for the **LLM AI Race experiment**.
 
 - [`ai_race_project.md`](ai_race_project.md) is a visual-first, 15-minute project deck plan.

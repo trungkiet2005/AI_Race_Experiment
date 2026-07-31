@@ -138,3 +138,24 @@ push/status/log commands; do not invent a kernel slug when no
 
 See [`PROJECT.md`](PROJECT.md) for research questions, estimands, and validation
 criteria.
+
+## Interactive visualization and presentation
+
+The repository includes a responsive protocol website with a deterministic,
+educational AI Race simulator. It does not call a model and does not create research
+data. Start a local server from the repository root:
+
+```bash
+python -m http.server 8000
+```
+
+Then open `http://localhost:8000/web/`. The simulator implements simultaneous
+Safe/Unsafe decisions, the exact payoff matrix, progress updates, the hidden
+stochastic horizon, private terminal risk, a progress chart, and an auditable round
+ledger.
+
+The canonical presentation source is
+[`slides/ai_race_research_deck.tex`](slides/ai_race_research_deck.tex). The compiled
+19-slide PDF is written to `output/pdf/ai_race_research_deck.pdf`; see
+[`slides/README.md`](slides/README.md) for build commands. A browser-based companion
+deck is also available at `http://localhost:8000/slides/`.
