@@ -35,16 +35,16 @@
 
   function validateConfig(config, maxRisk) {
     const errors = [];
-    if (!(config.safeProgress > 0)) errors.push('Safe progress must be positive.');
-    if (!(config.unsafeProgress > config.safeProgress)) errors.push('Unsafe progress must exceed Safe progress.');
+    if (!(Number.isFinite(config.safeProgress) && config.safeProgress > 0)) errors.push('Safe progress must be finite and positive.');
+    if (!(Number.isFinite(config.unsafeProgress) && config.unsafeProgress > config.safeProgress)) errors.push('Unsafe progress must be finite and exceed Safe progress.');
     if (!(config.stopProbability > 0 && config.stopProbability <= 1)) errors.push('Stop probability must be in (0, 1].');
     if (!(Number.isInteger(config.minRounds) && config.minRounds >= 1)) errors.push('Minimum rounds must be a positive integer.');
     if (!(Number.isInteger(config.maxRounds) && config.maxRounds >= config.minRounds)) errors.push('Safety cap must be an integer at least as large as minimum rounds.');
-    if (!(config.prize >= 0)) errors.push('Race prize cannot be negative.');
+    if (!(Number.isFinite(config.prize) && config.prize >= 0)) errors.push('Race prize must be finite and non-negative.');
     const payoffs = config.payoffs || DEFAULT_CONFIG.payoffs;
     const payoffValues = [payoffs.safe.safe, payoffs.safe.unsafe, payoffs.unsafe.safe, payoffs.unsafe.unsafe];
     if (payoffValues.some(value => !Number.isFinite(value))) errors.push('Every stage payoff must be a finite number.');
-    if (!(maxRisk >= 0 && maxRisk <= 1)) errors.push('Maximum private risk must be between 0 and 1.');
+    if (!(Number.isFinite(maxRisk) && maxRisk >= 0 && maxRisk <= 1)) errors.push('Maximum private risk must be finite and between 0 and 1.');
     if (errors.length) throw new Error(errors.join(' '));
     return true;
   }
@@ -86,11 +86,29 @@
   }
 
   function raceOutcomes(progress) {
+    if (!Array.isArray(progress) || progress.length !== 2) throw new Error('Exactly two progress values are required');
+    if (progress.some(value => !Number.isFinite(value))) throw new Error('Progress values must be finite');
     if (Math.abs(progress[0] - progress[1]) <= 1e-9) return ['tie', 'tie'];
     return progress[0] > progress[1] ? ['winner', 'loser'] : ['loser', 'winner'];
   }
 
   function terminalScoring({ payoffs, progress, unsafeCounts, roundsPlayed, maxRisk, prize, setbackDraws }) {
+    const vectors = [payoffs, progress, unsafeCounts, setbackDraws];
+    if (vectors.some(values => !Array.isArray(values) || values.length !== 2)) {
+      throw new Error('Terminal scoring requires exactly two values for every player field');
+    }
+    if (!(Number.isInteger(roundsPlayed) && roundsPlayed >= 1)) throw new Error('Rounds played must be a positive integer');
+    if (!(Number.isFinite(maxRisk) && maxRisk >= 0 && maxRisk <= 1)) throw new Error('Maximum private risk must be finite and in [0, 1]');
+    if (!(Number.isFinite(prize) && prize >= 0)) throw new Error('Race prize must be finite and non-negative');
+    if (payoffs.some(value => !Number.isFinite(value)) || progress.some(value => !Number.isFinite(value))) {
+      throw new Error('Terminal payoff and progress values must be finite');
+    }
+    if (unsafeCounts.some(count => !Number.isInteger(count) || count < 0 || count > roundsPlayed)) {
+      throw new Error('Unsafe counts must be integers in [0, rounds played]');
+    }
+    if (setbackDraws.some(value => !Number.isFinite(value) || value < 0 || value > 1)) {
+      throw new Error('Setback draws must be finite and in [0, 1]');
+    }
     const outcomes = raceOutcomes(progress);
     const tied = outcomes.every(outcome => outcome === 'tie');
     const prizes = outcomes.map(outcome => tied ? prize / 2 : outcome === 'winner' ? prize : 0);

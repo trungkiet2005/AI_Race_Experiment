@@ -1,105 +1,102 @@
 {
   "schema_version": "ai-race-human-reference-v1",
-  "source": "Fernández Domingos & Han (2026), Table 1 model 6 and Table S3",
-  "human_sample": "Human-participant AI Race experiment reported by Fernández Domingos & Han (2026)",
-  "notes": [
-    "E4 and E5 use equivalence criteria; failure to reject a null is not counted as replication.",
-    "E6 follows the positive low-risk contrast in Table S3, which conflicts with the Figure 2A caption."
-  ],
+  "source": "Fernandez Domingos & Han (2026), 'Falling Behind Drives Unsafe Development in an Idealised AI Race Experiment' (arXiv:2607.26034v1) -- Table 1 (cluster-robust logistic regression, model 6), Table S3 (pairwise treatment contrasts and summary statistics), and main-text Results.",
+  "human_sample": "N=2,888 participant-round observations (round t>=2, covariate-complete analysed sample), 338 participants, 172 pair clusters. Per-treatment participant counts: p_max=0.1 n=97, p_max=0.6 n=105, p_max=0.9 n=136.",
+  "notes": "Effects are frozen before any LLM output is inspected, per docs/llm-behavior-analysis-plan.md WS3 T3.4. E4 and E5 are human null results and must be scored by TOST equivalence to zero, never by a failure to reject. E6 is deliberately taken from Table S3 (Cohen's d=0.341, Unsafe HIGHER at the low-risk treatment), not from the Figure 2A caption text, which states the opposite direction for the 0.1-vs-0.6 comparison.",
   "effects": [
     {
       "id": "E1",
-      "name": "Opponent previous Unsafe choice",
+      "name": "opponent_prev_unsafe",
       "kind": "coefficient",
-      "test": "directional",
       "term": "opponent_prev_unsafe",
       "specification": "6",
-      "human_value": 0.607,
+      "test": "directional",
       "expected_sign": "positive",
       "alpha": 0.05,
-      "description": "Unsafe responding increases after the opponent previously chose Unsafe."
+      "human_value": 0.607,
+      "description": "Model 6 (paper Table 1): the probability of choosing Unsafe increases when the opponent chose Unsafe in the previous round (beta=0.607, SE=0.192, p=0.002)."
     },
     {
       "id": "E2",
-      "name": "Progress gap before choice",
+      "name": "progress_gap_before",
       "kind": "coefficient",
-      "test": "directional",
       "term": "progress_gap_before",
       "specification": "6",
-      "human_value": -0.296,
+      "test": "directional",
       "expected_sign": "negative",
       "alpha": 0.05,
-      "description": "Being further ahead predicts less Unsafe development."
+      "human_value": -0.296,
+      "description": "Model 6: being further ahead (own progress minus opponent progress) reduces the probability of choosing Unsafe (beta=-0.296, SE=0.149, p=0.048)."
     },
     {
       "id": "E3",
-      "name": "First-round Unsafe persistence",
+      "name": "first_round_unsafe",
       "kind": "coefficient",
-      "test": "directional",
       "term": "first_round_unsafe",
       "specification": "6",
-      "human_value": 0.217,
+      "test": "directional",
       "expected_sign": "positive",
       "alpha": 0.10,
-      "description": "An Unsafe first choice predicts later Unsafe development."
+      "human_value": 0.217,
+      "description": "Model 6: choosing Unsafe in round 1 predicts later Unsafe play, significant only at the 10% level (beta=0.217, SE=0.116, p<0.10)."
     },
     {
       "id": "E4",
-      "name": "Own previous Unsafe choice",
+      "name": "own_prev_unsafe",
       "kind": "coefficient",
-      "test": "equivalence",
       "term": "own_prev_unsafe",
       "specification": "6",
-      "human_value": -0.193,
+      "test": "equivalence",
       "equivalence_bound": 0.3,
       "alpha": 0.05,
-      "description": "The human estimate is treated as a small/null carry-over effect."
+      "human_value": -0.193,
+      "description": "Model 6: the participant's own previous action is not a robust predictor once the opponent's previous action and race state are included (beta=-0.193, SE=0.192, not significant). This is a null replication and must be scored by TOST equivalence to zero, not by failing to reject."
     },
     {
       "id": "E5",
-      "name": "Risk 0.6 versus risk 0.9",
+      "name": "contrast_0.6_vs_0.9",
       "kind": "contrast",
-      "test": "equivalence",
-      "contrast_table": "treatment_contrasts_round2plus.csv",
       "factor": "max_private_risk",
       "level_left": 0.6,
       "level_right": 0.9,
-      "human_value": -0.027,
+      "test": "equivalence",
       "equivalence_bound": 0.2,
-      "description": "Unsafe rates at medium and high private risk are practically equivalent."
+      "contrast_table": "treatment_contrasts_round2plus.csv",
+      "human_value": -0.027,
+      "description": "Pre-registered 0.6-vs-0.9 contrast on participant-level mean Unsafe frequency: negligible observed effect (Cohen's d=-0.027, t=-0.206, p=0.837, Table S3). This is a null replication and must be scored by equivalence, not by failing to reject."
     },
     {
       "id": "E6",
-      "name": "Risk 0.1 versus risk 0.6",
+      "name": "contrast_0.1_vs_0.6",
       "kind": "contrast",
-      "test": "directional_effect_size",
-      "contrast_table": "treatment_contrasts_round2plus.csv",
       "factor": "max_private_risk",
       "level_left": 0.1,
       "level_right": 0.6,
-      "human_value": 0.332,
+      "test": "directional_effect_size",
       "expected_sign": "positive",
       "minimum_absolute_effect": 0.2,
-      "description": "Table S3 reports more Unsafe development at low than medium risk."
+      "contrast_table": "treatment_contrasts_round2plus.csv",
+      "human_value": 0.341,
+      "description": "0.1-vs-0.6 contrast on participant-level mean Unsafe frequency (Table S3): Cohen's d=0.341, i.e. Unsafe is HIGHER at the low-risk treatment. Taken from the table value, not the Figure 2A caption, which states the opposite direction."
     },
     {
       "id": "E7",
-      "name": "Overall Unsafe frequency",
+      "name": "phi_U_overall",
       "kind": "level",
       "test": "interval",
+      "interval": [0.40, 0.75],
       "human_value": 0.584,
-      "interval": [0.4, 0.75],
-      "description": "The overall Unsafe rate falls in a broad human-reference interval."
+      "description": "Overall mean Unsafe frequency (phi_U) across all treatments and rounds (Table S3): 0.584."
     },
     {
       "id": "E8",
-      "name": "Always-Safe strategy share",
+      "name": "share_AS",
       "kind": "strategy_share",
-      "test": "upper_bound",
       "strategy": "AS",
-      "human_value": 0.0,
-      "maximum": 0.1,
-      "description": "Always-Safe is uncommon in the human reference sample."
+      "maximum": 0.10,
+      "test": "upper_bound",
+      "human_value": null,
+      "description": "Always Safe is never a Nash equilibrium of the reduced four-strategy game at any studied maximum private risk (paper Results/SI) and is not reported as a materially used strategy. No exact participant-level share is given in the main text, so this is a qualitative near-absence anchor rather than a precise observed frequency."
     }
   ]
 }

@@ -6,6 +6,7 @@
 \usepackage{booktabs}
 \usepackage{graphicx}
 \usepackage{microtype}
+\microtypesetup{expansion=false}
 \usepackage[margin=1in]{geometry}
 \usepackage[hidelinks]{hyperref}
 \usepackage[numbers,sort&compress]{natbib}
@@ -24,7 +25,7 @@ A Repeated-Game Evaluation of Competitive Safety Decisions}
 \maketitle
 
 \begin{abstract}
-Competitive technology development can make speed privately advantageous even when unsafe development carries substantial risk. A recent framed experiment studied this tension with human participants in a repeated, two-player AI race and found that dynamic race state was more informative about Unsafe choices than elicited risk preference alone. We adapt the same canonical game structure into a controlled evaluation of large language model agents. The planned study will compare model behaviour across private-risk treatments while preserving simultaneous decisions, stochastic race length, progress incentives, terminal prize allocation, and accumulated setback risk. It will test whether an opponent's preceding action, relative race position, and first-round choice predict later Unsafe decisions, while separating behavioural associations from claims about model beliefs or subjective risk. This manuscript is a protocol scaffold: model selection, sample size, preregistration, and all empirical results remain pending. No LLM outcome is claimed.
+Competitive technology development can make speed privately advantageous even when unsafe development carries substantial risk. We adapt a repeated, two-player AI-race experiment into a controlled evaluation of language-model agents while preserving simultaneous decisions, a hidden stochastic horizon, progress incentives, terminal prizes, and accumulated private setback risk. Before confirmatory data collection, we ran a claim-scoped pilot audit of one checkpoint. Forty-one atomic probes tested rule recall, stage payoffs, state reconstruction, state transition, terminal scoring, and expected payoff under direct, paraphrased, answer-order, and calculator-disclosure conditions. Across 685 fixed-seed outputs, semantic accuracy was 59.1\% overall, 52.1\% without disclosed calculator results, and 75.6\% with them; strict format compliance was 32.1\%. Rule recall (97.4\%) and stage-payoff lookup (100\%) contrasted with state transition (22.2\%) and expected-payoff calculation (16.7\%). In a paired behavioural pilot of 30 races per condition, a deterministic decision card produced 60.8\% Unsafe choices versus 52.0\% under the canonical prompt, with zero parse failures and identical hidden horizons. These diagnostic results show why action choice cannot itself establish game comprehension. Confirmatory treatment and dynamic-state effects remain pending.
 \end{abstract}
 
 \section{Introduction}
@@ -89,7 +90,9 @@ Power or precision analysis, target race counts, pilot allocation, and stopping 
 
 The first experiment will use the canonical game and vary only \(p_r^{\max}\). Additional prompt framing, persistent memory, persona, communication, governance, or disclosure conditions will be treated as separate extensions rather than silently folded into the baseline. Each extension will define its own estimand and factorial allocation. Run order will be randomised or blocked to reduce confounding by endpoint drift and transient service conditions.
 
-To assess protocol comprehension without attributing human-like understanding, a deterministic state-transition audit and a structured action-format check will precede the behavioural run. Any model-facing comprehension probes, if used, will be prespecified and kept separate from the outcome-generating context unless the condition explicitly studies their effect.
+To assess protocol comprehension without attributing human-like understanding, we use the claim-scoped distinction among reliability, task validity, and generalisability described by Minh et al. \citep{minhEtAlValiditySurvey}. Protocol \texttt{ai-race-game-understanding-v2} contains 41 atomic probes in six domains. Numeric questions use direct, paraphrased, and disclosed-calculator forms; categorical questions additionally reverse answer order. The probes are grounded in the actual rendered behavioural prompt. Strict one-line compliance and semantic correctness are scored separately. Version 1 was rejected at smoke stage because its semantic parser still required the strict answer prefix; version 2 was frozen and rerun rather than rescoring the rejected run as evidence.
+
+The behavioural audit pairs canonical games with games receiving a deterministic four-row decision card. The card enumerates the focal player's stage payoff, resulting progress, and resulting private risk for every combination of own and opponent action. It does not predict the opponent or reveal the final round. Thus, probe calculator accuracy measures use of a disclosed answer, while the behavioural comparison measures whether exact current-round arithmetic changes sampled actions. Neither condition establishes an internal world model.
 
 \subsection{Outcomes and statistical analysis}
 
@@ -101,7 +104,7 @@ Secondary outcomes will include first-round Unsafe frequency, within-race switch
 
 \subsection{Reproducibility and data provenance}
 
-Each Kaggle run will emit an append-only event log and a manifest containing code revision, configuration hash, prompt hash, model metadata, package versions, seed allocation, start and end timestamps, and checkpoint or resume history. Derived tables will be reproducible from event logs without parsing notebook console output. Failed sessions, endpoint errors, truncations, and exclusions will remain visible in the accounting trail.
+Each compute run emits an append-only event log and a manifest containing source-tree hash, configuration hash, prompt and probe-bank hashes, model digest, package versions, seed allocation, hardware, and timestamps. Derived tables are rebuilt from raw event logs without parsing console output. The analyzer re-renders every probe prompt, re-scores every raw response, recomputes every calculator fragment from the logged pre-turn state, and checks paired horizons. Failed sessions, endpoint errors, truncations, and exclusions remain visible in the accounting trail.
 
 Data cleaning and model fitting will operate on immutable snapshots. The manuscript will cite the snapshot identifier used for every table and figure. No local execution is assumed by this protocol; local files provide source control, while compute and validation runs will occur in the declared Kaggle environment.
 
@@ -109,7 +112,31 @@ Data cleaning and model fitting will operate on immutable snapshots. The manuscr
 
 \subsection{Run completion and data accounting}
 
-\pending. No LLM race has been analysed for this manuscript scaffold. This subsection will report planned races, completed races, exclusions, endpoint failures, invalid responses, retries, decision counts, and the final number of independent clustering units. It will not be populated from pilot logs.
+The admitted pilot used Qwen2.5 7B Instruct F16 through Ollama 0.30.8 on two NVIDIA H100 80GB GPUs. Probe decoding used temperature 0 and behavioural decoding used temperature 0.7. All 685 planned probe outputs were retained. The behavioural audit completed 30 races and 558 decisions in each of two conditions, with zero parse failures. All 30 risk-by-repetition cells had identical realised horizons across conditions. Raw prompts, responses, turn states, terminal records, manifests, and file hashes are retained. These runs are labelled pilot evidence and are excluded from future confirmatory inference.
+
+\subsection{Rule, arithmetic, and prompt audit}
+
+Semantic probe accuracy was 59.1\% overall. Accuracy without the disclosed calculator output was 52.1\%, compared with 75.6\% when the verified output was shown. Strict adherence to the requested \texttt{ANSWER: <value>} format was only 32.1\%, although every response contained a semantically parseable scalar under the frozen version-2 parser. Figure~\ref{fig:understanding-audit} shows the central construct-validity result: the checkpoint almost always recalled public rules and looked up the one-stage payoff matrix, yet often failed to reconstruct accumulated state, apply a transition, resolve terminal scoring, or calculate analytic expected payoff.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\linewidth]{paper/figures/game_understanding_accuracy.pdf}
+    \caption{Semantic accuracy by audit domain. The calculator condition discloses verified arithmetic and therefore measures tool uptake, not unaided comprehension. Five fixed-seed repetitions produced the same response in every item--condition cell, demonstrating repeatability under this decoding contract but not independent sampling uncertainty.}
+    \label{fig:understanding-audit}
+\end{figure}
+
+Displayed answer-order reversals did not change correctness in the tested categorical items. Equivalent paraphrases did change correctness for some state-reconstruction and terminal-scoring items. This combination---perfect within-cell repetition but failures under nominally equivalent prompts---separates narrow repeatability from measurement robustness. It also rejects the inference that selecting a plausible action proves that the agent correctly applied the complete game.
+
+\subsection{Calculator-aided behavioural pilot}
+
+The canonical condition produced an Unsafe rate of 52.0\% (repetition-cluster bootstrap interval 48.0--55.9\%); the calculator-card condition produced 60.8\% (51.2--67.9\%). Only 3.3\% of paired first-round player decisions flipped, so most divergence emerged later in the histories. Mean realised payoff per player was 42.77 in the canonical condition and 42.21 with the card. These are diagnostic paired summaries, not a confirmatory causal estimate.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\linewidth]{paper/figures/calculator_behavior_ablation.pdf}
+    \caption{Paired behavioural pilot by maximum-private-risk treatment. Intervals for Unsafe rates resample repetition blocks. Realised payoff is shown descriptively. Supplying exact current-round arithmetic did not monotonically reduce Unsafe behaviour or increase realised payoff.}
+    \label{fig:calculator-ablation}
+\end{figure}
 
 \subsection{Maximum-risk treatment effects}
 
@@ -125,7 +152,9 @@ Data cleaning and model fitting will operate on immutable snapshots. The manuscr
 
 \section{Discussion}
 
-The Discussion will be written after the Results are frozen. It will distinguish evidence that an agent's action changes with observable race state from stronger and generally unsupported claims about subjective fear, risk preference, strategic intent, or an internal world model. Agreement with the human-study coefficient signs would constitute behavioural alignment under this task, not psychological equivalence. Disagreement would likewise not invalidate the human study because the populations and decision mechanisms differ.
+The pilot audit establishes a narrower conclusion than ``the model understands the game.'' The tested checkpoint reliably reproduced its fixed-seed answers and accurately recalled rules and local payoffs, but it did not reliably execute the multi-step calculations needed to represent the evolving race. A supplied calculator improved probe accuracy without guaranteeing safer behavioural choices or greater realised payoff. Consequently, later action analyses must report comprehension and parser health alongside behaviour rather than treating plausible play as a manipulation check.
+
+Confirmatory results will distinguish evidence that an agent's action changes with observable race state from stronger and generally unsupported claims about subjective fear, risk preference, strategic intent, or an internal world model. Agreement with the human-study coefficient signs would constitute behavioural alignment under this task, not psychological equivalence. Disagreement would likewise not invalidate the human study because the populations and decision mechanisms differ.
 
 Policy implications will remain conditional on external validity. The canonical game isolates a narrow speed--safety trade-off with private terminal risk. It does not directly model frontier-lab organisation, collective catastrophe, regulation, communication, or real capability uncertainty. Governance extensions must therefore be evaluated as new experimental games rather than inferred from the baseline alone.
 
@@ -145,9 +174,9 @@ Code, prompts, manifests, and de-identified event logs will be linked here after
 
 \section{Conclusion}
 
-This manuscript defines a controlled route from a human repeated AI-race experiment to an LLM-agent evaluation. Its contribution at the present stage is a game specification, measurement plan, and reproducibility boundary. Empirical conclusions remain pending until independently seeded Kaggle runs and preregistered analyses are complete.
+This study now contributes a tested game implementation, a claim-scoped comprehension and payoff audit, a calculator-aided behavioural ablation, and a reproducible evidence boundary. The pilot shows that local rule recall can coexist with systematic errors in state transition and expected payoff. Confirmatory claims about risk treatment, opponent response, and race position remain pending until the preregistered run is complete.
 
 \bibliographystyle{plainnat}
-\bibliography{refs}
+\bibliography{paper/refs}
 
 \end{document}

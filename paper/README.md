@@ -1,17 +1,18 @@
 # LLM AI Race manuscript
 
-This directory contains the manuscript scaffold for the project’s **LLM-agent AI Race experiment**.
+This directory contains the manuscript for the project’s **LLM-agent AI Race experiment**.
 
 ## Current status
 
-The manuscript is a protocol-oriented draft. No project experiment has been run for this clean-up, and no LLM results are reported. Every result-bearing section in [`main.tex`](main.tex) is explicitly marked **pending**.
+The manuscript reports a bounded, diagnostic game-understanding and calculator-aided behavioral pilot. Confirmatory risk-treatment and dynamic-state analyses remain pending. Pilot evidence is explicitly excluded from later confirmatory pooling.
 
 The focal prior work—Fernández Domingos and Han (2026), arXiv:2607.26034—is a study of **human participants** plus an evolutionary model. It motivates the environment and planned analyses but is not evidence about LLM behaviour. See the project’s [AI-readable source note](../references/papers/markdown/falling-behind-ai-race.md).
 
 ## Files
 
-- [`main.tex`](main.tex): article scaffold with introduction, canonical game specification, LLM protocol, analysis plan, pending Results, and limitations.
-- [`refs.bib`](refs.bib): verified citation for the focal human-study preprint.
+- [`main.tex`](main.tex): article with the canonical game, validation protocol, admitted pilot audit, analysis plan, and limitations.
+- [`refs.bib`](refs.bib): focal human-study citation and the supplied validity-survey manuscript citation.
+- [`figures/`](figures/): reproducibly generated pilot figures.
 
 ## Evidence rules
 
@@ -25,9 +26,9 @@ Record the exact model and endpoint revision, prompt hash, game configuration, d
 
 The analysis should first reproduce a deterministic validation suite for payoff, progress, stopping, prize, tie, and setback calculations. It should then generate a dataset-accounting table before any behavioural estimate is interpreted.
 
-## Planned visual backbone
+## Visual backbone
 
-No figure or build artifact is created during this clean-up. Once validated data exist, the manuscript should add:
+The pilot includes rule/arithmetic accuracy and calculator-ablation figures. Later confirmatory work should add:
 
 1. a graphical abstract showing `LLM dyad → repeated AI race → logged state/action dynamics → preregistered estimates`;
 2. a canonical game schematic with simultaneous choices, progress, payoff, stopping, and terminal risk;
@@ -40,10 +41,13 @@ All figures must distinguish source-study values from this project’s estimates
 
 ## Build policy
 
-No PDF is stored here. Compilation was intentionally not run on the local machine. If a manuscript preview is needed, build it in the Kaggle environment after the project dependencies are prepared, for example with:
+The stable manuscript preview is written to `output/pdf/ai_race_paper.pdf`. From the repository root, build with:
 
 ```bash
-latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex
+pdflatex -output-directory=output/pdf -jobname=ai_race_paper paper/main.tex
+bibtex output/pdf/ai_race_paper
+pdflatex -output-directory=output/pdf -jobname=ai_race_paper paper/main.tex
+pdflatex -output-directory=output/pdf -jobname=ai_race_paper paper/main.tex
 ```
 
-Generated `.aux`, `.bbl`, `.blg`, `.log`, `.out`, and `.pdf` files should remain untracked.
+Generated auxiliary files remain untracked; the named PDF preview is tracked.

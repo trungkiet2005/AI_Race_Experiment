@@ -23,11 +23,15 @@ kaggle.json
 !/results/open_source/
 !/results/open_source/.gitkeep
 !/results/open_source/*_manifest.json
+!/results/open_source/game_understanding_pilot/
+!/results/open_source/game_understanding_pilot/*.csv
+!/results/open_source/game_understanding_pilot/admission.json
 !/results/scripts/
 !/results/scripts/*.py
 !/results/scripts/*.json
 !/results/README.md
 /ai_race_results/
+/output/game_understanding/
 /models/
 FAIRGAME/resources/results/
 *.safetensors

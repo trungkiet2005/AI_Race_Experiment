@@ -3,6 +3,7 @@ from __future__ import annotations
 
 from dataclasses import asdict, dataclass, field
 from enum import Enum
+import math
 from typing import Any, Optional
 
 
@@ -75,6 +76,23 @@ class GameConfig:
             raise ValueError(f"Unsupported engine {self.engine!r}; expected 'ai_race'")
         if self.n_players != 2:
             raise ValueError("The paper-faithful AI Race requires exactly two players")
+        mechanism_values = {
+            "safe_progress": self.safe_progress,
+            "unsafe_progress": self.unsafe_progress,
+            "payoff_safe_safe": self.payoff_safe_safe,
+            "payoff_safe_unsafe": self.payoff_safe_unsafe,
+            "payoff_unsafe_safe": self.payoff_unsafe_safe,
+            "payoff_unsafe_unsafe": self.payoff_unsafe_unsafe,
+            "race_prize": self.race_prize,
+            "max_private_risk": self.max_private_risk,
+            "stop_probability": self.stop_probability,
+        }
+        nonfinite = [
+            name for name, value in mechanism_values.items()
+            if not math.isfinite(float(value))
+        ]
+        if nonfinite:
+            raise ValueError(f"Game mechanism values must be finite: {nonfinite}")
         if self.safe_progress <= 0 or self.unsafe_progress <= self.safe_progress:
             raise ValueError("Unsafe progress must be greater than positive Safe progress")
         if self.min_rounds < 1:

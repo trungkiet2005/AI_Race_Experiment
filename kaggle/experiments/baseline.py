@@ -12,11 +12,15 @@ Repo input được tự dò bằng hai marker ``ai_race/`` và ``FAIRGAME/``, s
 vào ``/kaggle/working/ai_race_repo`` để Python có thể import và ghi cache. Các
 model được nạp, chạy, giải phóng tuần tự.
 
-Cấu hình mặc định dùng **transformers có sẵn trong image Kaggle**: không cài gì,
-không cần wheelhouse, Internet OFF. Backend nạp bf16 với ``device_map="auto"`` và
-flash-attention-2 nếu có (tự lùi về SDPA nếu không). Đổi ``engine`` của từng model
-sang ``"vllm"`` khi cần throughput — mọi hằng cấu hình của vLLM vẫn còn nguyên bên
-dưới.
+Hai chế độ chạy được gói vào một switch duy nhất, ``ENGINE_PROFILE`` ngay dưới đây —
+đổi máy/teammate thì chỉ sửa một dòng, không phải lục lại từng model:
+
+* ``"vllm"``         — cần wheelhouse offline đã audit (``VLLM_WHEELS_DIR``), batch
+  thật (``BATCH_SIZE`` prompt/lượt), throughput cao. Dùng khi đã có wheelhouse.
+* ``"transformers"`` — dùng thẳng image Kaggle, không cài gì, không cần wheelhouse.
+  Vì runner LUÔN truyền seed riêng cho mỗi quyết định (invariant của repo), backend
+  này buộc phải sinh TỪNG PROMPT MỘT — chậm hơn vllm rất nhiều (~1 generation/lượt,
+  không phải ``BATCH_SIZE``). Dùng khi chưa có wheelhouse hoặc máy không có vLLM.
 """
 
 # %%
@@ -24,19 +28,26 @@ dưới.
 import os
 from pathlib import Path
 
+# Switch duy nhất giữa 2 chế độ — xem so sánh ở docstring trên đầu file.
+ENGINE_PROFILE = "vllm"  # đổi thành "transformers" nếu chưa có wheelhouse vLLM
+
 MODELS = [
     {
         "path": "/kaggle/input/models/qwen-lm/qwen2.5/transformers/72b-instruct/1",
         "short_name": "qwen2.5-72b-instruct",
-        "engine": "transformers",
+        "engine": ENGINE_PROFILE,
         # 72B KHÔNG vừa bf16: 72,7 tỉ tham số × 2 byte ≈ 145 GB, trong khi RTX PRO
-        # 6000 có 96 GB. Bắt buộc quantize. NF4 ≈ 0,55 byte/tham số → ≈ 40 GB, còn
-        # dư chỗ cho KV cache. bnb-8bit (≈ 73 GB) cũng vừa nhưng sát trần.
+        # 6000 có 96 GB. Nếu chạy bằng "transformers" thì bắt buộc quantize. NF4 ≈
+        # 0,55 byte/tham số → ≈ 40 GB, còn dư chỗ cho KV cache. bnb-8bit (≈ 73 GB)
+        # cũng vừa nhưng sát trần. Khi ENGINE_PROFILE="vllm" thì bỏ qua engine_overrides
+        # này (vLLM tự đọc quantization_config trong checkpoint nếu có, hoặc set
+        # "quantization" tường minh trong engine_overrides theo format vLLM: awq/gptq/
+        # fp8/bitsandbytes — KHÔNG dùng "bnb-4bit" ở đây, đó là tên riêng của transformers).
         #
         # LƯU Ý: quantization phải nằm trong engine_overrides. Đặt "quantization" ở
         # cấp trên cùng của dict này sẽ bị BỎ QUA IM LẶNG — offline_settings_for()
         # chỉ đọc engine_overrides, và model sẽ cố nạp bf16 rồi OOM.
-        "engine_overrides": {"quantization": "bnb-4bit"},
+        "engine_overrides": {"quantization": "bnb-4bit"} if ENGINE_PROFILE == "transformers" else {},
         # Các override tùy chọn khác:
         # "temperature": 0.7,
         # "max_tokens": 256,
@@ -44,9 +55,10 @@ MODELS = [
     # Thêm model khác tại đây; notebook sẽ chạy lần lượt, không nạp đồng thời
     # (mỗi model được free_model() giải phóng VRAM trước khi nạp checkpoint kế tiếp).
     #
-    # Muốn chạy lại bằng vLLM thì đổi "engine" ở trên, ĐỪNG thêm một entry thứ hai
-    # cho cùng checkpoint: short_name quyết định thư mục output, nên hai entry trùng
-    # short_name sẽ ghi đè lên nhau (RunJournal mở với reset=True).
+    # ĐỪNG thêm một entry thứ hai cho cùng checkpoint: short_name quyết định thư mục
+    # output, nên hai entry trùng short_name sẽ ghi đè lên nhau (RunJournal mở với
+    # reset=True). Một entry riêng có thể override "engine" khác ENGINE_PROFILE nếu
+    # cần trộn 2 backend trong cùng lần chạy.
 ]
 
 # Dataset đã stage: https://www.kaggle.com/datasets/nguyenlamphuquy/ai-race-experiment
@@ -109,9 +121,9 @@ RUN_PHASE_OVERRIDE = None  # "pilot" hoặc "confirmatory"; None = dùng config
 REQUIRED_GPU_NAME = os.environ.get("AI_RACE_REQUIRED_GPU", "").strip()
 MIN_GPU_VRAM_GIB = float(os.environ.get("AI_RACE_MIN_GPU_VRAM_GIB", "0"))
 
-# Dùng transformers có sẵn trong image Kaggle. Không cần cài vLLM, không cần
-# wheelhouse, và Internet vẫn OFF. Đổi lại là chậm hơn nhiều — xem BATCH_SIZE.
-DEFAULT_ENGINE = "transformers"
+# Cùng switch với ENGINE_PROFILE ở trên — model nào không khai "engine" riêng sẽ
+# dùng giá trị này.
+DEFAULT_ENGINE = ENGINE_PROFILE
 TEMPERATURE = 0.7
 MAX_TOKENS = 256
 LOGPROBS = 0  # Backend transformers không hỗ trợ; >0 sẽ raise ngay khi build config.
@@ -138,10 +150,11 @@ FAIL_ON_INCOMPLETE_RUN = True
 # Chỉ chạy khi có model nào khai engine="vllm". Với cấu hình transformers hiện tại
 # thì cell cài vLLM tự bỏ qua.
 INSTALL_VLLM_IF_MISSING = True
-# Dataset wheelhouse đã audit: vllm==0.11.0, build bởi kaggle/setup/build_quant_wheels.py
-# trên cùng image RTX Pro 6000, xem foundnotkiet/ai-race-wheelhouse (145 wheels, manifest
-# SHA-256 tại vllm_wheels/manifest.json).
-VLLM_WHEELS_DIR = "/kaggle/input/ai-race-vllm-wheels/vllm_wheels"
+# Dataset wheelhouse đã audit: vllm==0.26.0, build bởi pip download (cp312,
+# manylinux_2_28_x86_64, cu130) từ máy local, xem
+# nguyenlamphuquy/vllm-0-26-0-wheelhouse-cu130-py312 (184 wheels, manifest
+# SHA-256 tại manifest.json).
+VLLM_WHEELS_DIR = "/kaggle/input/datasets/nguyenlamphuquy/vllm-0-26-0-wheelhouse-cu130-py312"
 
 # Wheelhouse bitsandbytes cho quantization bnb-4bit/bnb-8bit ở backend transformers.
 # Dataset: nguyenlamphuquy/ai-race-bnb-wheels (private) — bitsandbytes==0.50.0,
