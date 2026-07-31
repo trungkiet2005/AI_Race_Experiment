@@ -5,6 +5,9 @@
   "personas": {
     "en": ["", ""]
   },
-  "description": "Neutral company seats for the paper-faithful baseline; no safety or risk persona is injected."
+  "personaProbabilities": {
+    "en": [100.0, 100.0]
+  },
+  "description": "Neutral company seats for the paper-faithful baseline; no safety or risk persona is injected. personaProbabilities is only rendered when the game config sets revealOpponentPersonaPrior=true."
 }
 

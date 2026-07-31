@@ -30,7 +30,17 @@ MODELS = [
         # "max_model_len": 4096,
         # "engine_overrides": {"quantization": "awq", "dtype": "auto"},
     },
-    # Thêm model khác tại đây; notebook sẽ chạy lần lượt, không nạp đồng thời.
+    {
+        "path": "/kaggle/input/models/qwen-lm/qwen2.5/transformers/14b-instruct/1",
+        "short_name": "qwen2.5-14b-instruct",
+        "engine": "vllm",
+        # 14B nặng hơn 7B đáng kể — nếu OOM trên GPU đang dùng, hạ GPU_MEMORY_UTILIZATION
+        # toàn cục hoặc set riêng ở đây, vd:
+        # "gpu_memory_utilization": 0.85,
+        # "engine_overrides": {"maxNumSeqs": 32},
+    },
+    # Thêm model khác tại đây; notebook sẽ chạy lần lượt, không nạp đồng thời
+    # (mỗi model được free_model() giải phóng VRAM trước khi nạp checkpoint kế tiếp).
 ]
 
 EXPERIMENTS = ["baseline"]
@@ -50,7 +60,10 @@ MAX_PARSE_RETRIES_OVERRIDE = None  # None = dùng maxParseRetries trong experime
 FAIL_ON_INCOMPLETE_RUN = True
 
 INSTALL_VLLM_IF_MISSING = True
-VLLM_WHEELS_DIR = None  # Bắt buộc điền Dataset wheelhouse đã audit nếu cần cài.
+# Dataset wheelhouse đã audit: vllm==0.11.0, build bởi kaggle/setup/build_quant_wheels.py
+# trên cùng image RTX Pro 6000, xem foundnotkiet/ai-race-wheelhouse (145 wheels, manifest
+# SHA-256 tại vllm_wheels/manifest.json).
+VLLM_WHEELS_DIR = "/kaggle/input/ai-race-vllm-wheels/vllm_wheels"
 
 WORK_COPY = Path("/kaggle/working/ai_race_repo")
 OUTPUT_DIR = Path("/kaggle/working/ai_race_results")

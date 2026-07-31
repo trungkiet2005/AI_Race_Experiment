@@ -38,9 +38,13 @@ def _agents_for_language(agents_cfg: dict, language: str) -> list[RaceAgent]:
     personas = list(personas_by_language.get(language, ["", ""]))
     if len(personas) != 2:
         raise ValueError(f"Agent configuration must define two {language!r} personas")
+    probabilities_by_language = agents_cfg.get("personaProbabilities", {}) or {}
+    probabilities = list(probabilities_by_language.get(language, [100.0, 100.0]))
+    if len(probabilities) != 2:
+        raise ValueError(f"Agent configuration must define two {language!r} personaProbabilities")
     return [
-        RaceAgent(name=str(name), persona_text=str(persona))
-        for name, persona in zip(names, personas)
+        RaceAgent(name=str(name), persona_text=str(persona), persona_probability=float(probability))
+        for name, persona, probability in zip(names, personas, probabilities)
     ]
 
 

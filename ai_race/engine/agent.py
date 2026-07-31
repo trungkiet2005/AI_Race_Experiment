@@ -10,4 +10,5 @@ class RaceAgent:
 
     name: str
     persona_text: str = ""
+    persona_probability: float = 100.0
 
