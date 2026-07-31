@@ -6,9 +6,14 @@ import csv
 import hashlib
 import json
 import random
+import sys
 from collections import defaultdict
 from pathlib import Path
 from typing import Any, Callable, Iterable
+
+REPOSITORY_ROOT = Path(__file__).resolve().parents[2]
+if str(REPOSITORY_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPOSITORY_ROOT))
 
 from ai_race.audit.game_understanding import (
     AUDIT_PROTOCOL,
@@ -227,7 +232,13 @@ def _verify_aid_prompt(row: dict[str, Any]) -> None:
         raise ValueError("Calculator prompt leaked a hidden environment event")
 
 
-def validate_behavior(root: Path) -> tuple[dict[str, list[dict[str, Any]]], dict[str, Any]]:
+def validate_behavior(
+    root: Path,
+) -> tuple[
+    dict[str, list[dict[str, Any]]],
+    dict[str, list[dict[str, str]]],
+    dict[str, Any],
+]:
     conditions = ("canonical", "calculator_decision_card")
     turns: dict[str, list[dict[str, Any]]] = {}
     races: dict[str, list[dict[str, Any]]] = {}
@@ -283,10 +294,17 @@ def validate_behavior(root: Path) -> tuple[dict[str, list[dict[str, Any]]], dict
     mismatched = {key: value for key, value in horizons.items() if len(value) != 1}
     if mismatched:
         raise ValueError(f"Behavior paired horizons differ: {mismatched}")
-    return turns, {"manifests": manifests, "files": files, "horizon_cells": len(horizons)}
+    return turns, races, {
+        "manifests": manifests,
+        "files": files,
+        "horizon_cells": len(horizons),
+    }
 
 
-def behavior_summary(turns: dict[str, list[dict[str, Any]]]) -> list[dict[str, Any]]:
+def behavior_summary(
+    turns: dict[str, list[dict[str, Any]]],
+    races: dict[str, list[dict[str, str]]],
+) -> list[dict[str, Any]]:
     canonical_first = {
         (float(row["max_private_risk"]), int(row["rep"]), int(row["player_index"])):
         int(row["unsafe"])
@@ -295,6 +313,7 @@ def behavior_summary(turns: dict[str, list[dict[str, Any]]]) -> list[dict[str, A
     }
     result: list[dict[str, Any]] = []
     for condition, rows in turns.items():
+        race_rows = races[condition]
         unsafe = sum(int(row["unsafe"]) for row in rows)
         by_rep: dict[int, tuple[int, int]] = {}
         for rep in sorted({int(row["rep"]) for row in rows}):
@@ -314,15 +333,99 @@ def behavior_summary(turns: dict[str, list[dict[str, Any]]]) -> list[dict[str, A
         result.append(
             {
                 "condition": condition,
+                "n_races": len(race_rows),
                 "n_decisions": len(rows),
                 "unsafe_rate": unsafe / len(rows),
                 "unsafe_rate_cluster_ci95_low": low,
                 "unsafe_rate_cluster_ci95_high": high,
                 "first_round_flip_rate_vs_canonical": flips / len(first),
+                "mean_rounds": sum(float(row["n_rounds"]) for row in race_rows)
+                / len(race_rows),
+                "mean_final_payoff": sum(
+                    float(row[field])
+                    for row in race_rows
+                    for field in ("player_1_final_payoff", "player_2_final_payoff")
+                )
+                / (2 * len(race_rows)),
+                "setback_rate": sum(
+                    int(row[field])
+                    for row in race_rows
+                    for field in ("player_1_setback", "player_2_setback")
+                )
+                / (2 * len(race_rows)),
+                "tie_rate": sum(int(row["tie"]) for row in race_rows) / len(race_rows),
                 "parse_failures": sum(int(bool(row["parse_failed"])) for row in rows),
             }
         )
     return result
+
+
+def behavior_by_risk(
+    turns: dict[str, list[dict[str, Any]]],
+    races: dict[str, list[dict[str, str]]],
+) -> list[dict[str, Any]]:
+    """Condition-by-treatment audit without treating turns as independent."""
+    canonical_first = {
+        (float(row["max_private_risk"]), int(row["rep"]), int(row["player_index"])):
+        int(row["unsafe"])
+        for row in turns["canonical"]
+        if int(row["round"]) == 1
+    }
+    output: list[dict[str, Any]] = []
+    for condition, all_turns in turns.items():
+        for maximum in sorted({float(row["max_private_risk"]) for row in all_turns}):
+            cell = [
+                row for row in all_turns
+                if float(row["max_private_risk"]) == maximum
+            ]
+            cell_races = [
+                row for row in races[condition]
+                if float(row["max_private_risk"]) == maximum
+            ]
+            by_rep = {
+                rep: (
+                    sum(int(row["unsafe"]) for row in cell if int(row["rep"]) == rep),
+                    sum(1 for row in cell if int(row["rep"]) == rep),
+                )
+                for rep in sorted({int(row["rep"]) for row in cell})
+            }
+            low, high = clustered_rate_ci(
+                by_rep, label=f"behavior-risk:{condition}:{maximum:g}"
+            )
+            first = [row for row in cell if int(row["round"]) == 1]
+            flips = sum(
+                int(
+                    int(row["unsafe"])
+                    != canonical_first[(maximum, int(row["rep"]), int(row["player_index"]))]
+                )
+                for row in first
+            )
+            output.append(
+                {
+                    "condition": condition,
+                    "max_private_risk": maximum,
+                    "n_races": len(cell_races),
+                    "n_decisions": len(cell),
+                    "unsafe_rate": sum(int(row["unsafe"]) for row in cell) / len(cell),
+                    "unsafe_rate_cluster_ci95_low": low,
+                    "unsafe_rate_cluster_ci95_high": high,
+                    "first_round_flip_rate_vs_canonical": flips / len(first),
+                    "mean_final_payoff": sum(
+                        float(row[field])
+                        for row in cell_races
+                        for field in ("player_1_final_payoff", "player_2_final_payoff")
+                    )
+                    / (2 * len(cell_races)),
+                    "setback_rate": sum(
+                        int(row[field])
+                        for row in cell_races
+                        for field in ("player_1_setback", "player_2_setback")
+                    )
+                    / (2 * len(cell_races)),
+                    "parse_failures": sum(int(bool(row["parse_failed"])) for row in cell),
+                }
+            )
+    return output
 
 
 def main() -> None:
@@ -333,7 +436,7 @@ def main() -> None:
     args = parser.parse_args()
     probe_rows, probe_audit = validate_probes(args.probe_root)
     probe_summary, pair_summary = probe_summaries(probe_rows)
-    behavior_turns, behavior_audit = validate_behavior(args.behavior_root)
+    behavior_turns, behavior_races, behavior_audit = validate_behavior(args.behavior_root)
     probe_manifest = probe_audit["manifest"]
     behavior_manifests = behavior_audit["manifests"]
     for label, probe_value, behavior_values in (
@@ -361,11 +464,13 @@ def main() -> None:
                 f"Probe/behavior {label} contract mismatch: "
                 f"probe={probe_value!r}, behavior={behavior_values!r}"
             )
-    behavioral = behavior_summary(behavior_turns)
+    behavioral = behavior_summary(behavior_turns, behavior_races)
+    behavioral_by_risk = behavior_by_risk(behavior_turns, behavior_races)
     args.output_dir.mkdir(parents=True, exist_ok=True)
     write_csv(args.output_dir / "probe_summary.csv", probe_summary)
     write_csv(args.output_dir / "probe_pair_stability.csv", pair_summary)
     write_csv(args.output_dir / "behavior_summary.csv", behavioral)
+    write_csv(args.output_dir / "behavior_by_risk.csv", behavioral_by_risk)
     admission = {
         "schema_version": "ai-race-game-understanding-analysis-v2",
         "status": "completed",
@@ -387,6 +492,7 @@ def main() -> None:
             "semantic_correct",
         ),
         "behavior": behavioral,
+        "behavior_by_risk": behavioral_by_risk,
         "behavior_paired_horizon_cells": behavior_audit["horizon_cells"],
         "claim_boundary": (
             "Probe accuracy supports rule/arithmetic performance under the tested "
@@ -395,6 +501,7 @@ def main() -> None:
         ),
         "probe_audit": probe_audit,
         "behavior_audit": behavior_audit,
+        "analyzer_sha256": sha256_file(Path(__file__).resolve()),
     }
     (args.output_dir / "admission.json").write_text(
         json.dumps(admission, indent=2, ensure_ascii=False), encoding="utf-8"

@@ -273,10 +273,14 @@ def test_analyzer_recomputes_raw_scores_and_calculator_arithmetic(tmp_path):
     analyzer = _load_analyzer()
     probes, _ = analyzer.validate_probes(tmp_path)
     summaries, stability = analyzer.probe_summaries(probes)
-    turns, audit = analyzer.validate_behavior(tmp_path)
-    behavior = analyzer.behavior_summary(turns)
+    turns, races, audit = analyzer.validate_behavior(tmp_path)
+    behavior = analyzer.behavior_summary(turns, races)
+    by_risk = analyzer.behavior_by_risk(turns, races)
     assert summaries and stability
     assert audit["horizon_cells"] == 3
     assert {row["condition"] for row in behavior} == {
         "canonical", "calculator_decision_card"
     }
+    assert len(by_risk) == 6
+    assert all(row["n_races"] == 1 for row in by_risk)
+    assert all(row["mean_final_payoff"] >= 0 for row in by_risk)
