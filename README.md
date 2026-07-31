@@ -159,3 +159,8 @@ The canonical presentation source is
 21-slide PDF is written to `output/pdf/ai_race_research_deck.pdf`; see
 [`slides/README.md`](slides/README.md) for build commands. A browser-based companion
 deck is also available at `http://localhost:8000/slides/`.
+The versioned multi-prompt robustness protocol, evidence survey, treatment
+taxonomy, and paired estimands are documented in
+[`docs/prompt-sensitivity-survey.md`](docs/prompt-sensitivity-survey.md). Surface
+variants are deliberately excluded from the canonical primary-mechanism pool and
+are analyzed with `results/scripts/analyze_surface_sensitivity.py`.

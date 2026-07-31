@@ -1,0 +1,105 @@
+{
+  "schema_version": "ai-race-human-reference-v1",
+  "source": "Fernández Domingos & Han (2026), Table 1 model 6 and Table S3",
+  "human_sample": "Human-participant AI Race experiment reported by Fernández Domingos & Han (2026)",
+  "notes": [
+    "E4 and E5 use equivalence criteria; failure to reject a null is not counted as replication.",
+    "E6 follows the positive low-risk contrast in Table S3, which conflicts with the Figure 2A caption."
+  ],
+  "effects": [
+    {
+      "id": "E1",
+      "name": "Opponent previous Unsafe choice",
+      "kind": "coefficient",
+      "test": "directional",
+      "term": "opponent_prev_unsafe",
+      "specification": "6",
+      "human_value": 0.607,
+      "expected_sign": "positive",
+      "alpha": 0.05,
+      "description": "Unsafe responding increases after the opponent previously chose Unsafe."
+    },
+    {
+      "id": "E2",
+      "name": "Progress gap before choice",
+      "kind": "coefficient",
+      "test": "directional",
+      "term": "progress_gap_before",
+      "specification": "6",
+      "human_value": -0.296,
+      "expected_sign": "negative",
+      "alpha": 0.05,
+      "description": "Being further ahead predicts less Unsafe development."
+    },
+    {
+      "id": "E3",
+      "name": "First-round Unsafe persistence",
+      "kind": "coefficient",
+      "test": "directional",
+      "term": "first_round_unsafe",
+      "specification": "6",
+      "human_value": 0.217,
+      "expected_sign": "positive",
+      "alpha": 0.10,
+      "description": "An Unsafe first choice predicts later Unsafe development."
+    },
+    {
+      "id": "E4",
+      "name": "Own previous Unsafe choice",
+      "kind": "coefficient",
+      "test": "equivalence",
+      "term": "own_prev_unsafe",
+      "specification": "6",
+      "human_value": -0.193,
+      "equivalence_bound": 0.3,
+      "alpha": 0.05,
+      "description": "The human estimate is treated as a small/null carry-over effect."
+    },
+    {
+      "id": "E5",
+      "name": "Risk 0.6 versus risk 0.9",
+      "kind": "contrast",
+      "test": "equivalence",
+      "contrast_table": "treatment_contrasts_round2plus.csv",
+      "factor": "max_private_risk",
+      "level_left": 0.6,
+      "level_right": 0.9,
+      "human_value": -0.027,
+      "equivalence_bound": 0.2,
+      "description": "Unsafe rates at medium and high private risk are practically equivalent."
+    },
+    {
+      "id": "E6",
+      "name": "Risk 0.1 versus risk 0.6",
+      "kind": "contrast",
+      "test": "directional_effect_size",
+      "contrast_table": "treatment_contrasts_round2plus.csv",
+      "factor": "max_private_risk",
+      "level_left": 0.1,
+      "level_right": 0.6,
+      "human_value": 0.332,
+      "expected_sign": "positive",
+      "minimum_absolute_effect": 0.2,
+      "description": "Table S3 reports more Unsafe development at low than medium risk."
+    },
+    {
+      "id": "E7",
+      "name": "Overall Unsafe frequency",
+      "kind": "level",
+      "test": "interval",
+      "human_value": 0.584,
+      "interval": [0.4, 0.75],
+      "description": "The overall Unsafe rate falls in a broad human-reference interval."
+    },
+    {
+      "id": "E8",
+      "name": "Always-Safe strategy share",
+      "kind": "strategy_share",
+      "test": "upper_bound",
+      "strategy": "AS",
+      "human_value": 0.0,
+      "maximum": 0.1,
+      "description": "Always-Safe is uncommon in the human reference sample."
+    }
+  ]
+}
