@@ -54,9 +54,10 @@ Python cần chỗ ghi `__pycache__`). Không có input đó thì notebook dừn
 **Đã stage sẵn:** <https://www.kaggle.com/datasets/nguyenlamphuquy/ai-race-experiment>
 (private, ~4.9 MB, 205 file).
 
-Đường mount trong notebook là **`/kaggle/input/ai-race-experiment`** — Kaggle mount theo
-*slug*, **không kèm username**. Username chỉ nằm trong dataset id dùng cho CLI
-(`nguyenlamphuquy/ai-race-experiment`).
+Đường mount trong notebook là **`/kaggle/input/datasets/nguyenlamphuquy/ai-race-experiment`**
+hoặc **`/kaggle/input/ai-race-experiment`** (slug trần, không kèm username) tuỳ
+notebook. Notebook khai cả hai và lấy cái nào có thật; xem [A3](#a3-inputs-cần-add-vào-notebook).
+Username chỉ bắt buộc trong dataset id dùng cho CLI (`nguyenlamphuquy/ai-race-experiment`).
 
 Script tái tạo / cập nhật:
 
@@ -102,13 +103,16 @@ kaggle datasets files nguyenlamphuquy/ai-race-experiment -v | head
 
 | Input | Bắt buộc | Mount path |
 |---|---|---|
-| Dataset `nguyenlamphuquy/ai-race-experiment` | có | `/kaggle/input/ai-race-experiment` |
+| Dataset `nguyenlamphuquy/ai-race-experiment` | có | `/kaggle/input/datasets/nguyenlamphuquy/ai-race-experiment` hoặc `/kaggle/input/ai-race-experiment` |
 | Kaggle Model (ví dụ `qwen-lm/qwen2.5/transformers/7b-instruct`) | có | `/kaggle/input/models/qwen-lm/qwen2.5/transformers/7b-instruct/1` |
 | Dataset wheelhouse vLLM | chỉ khi image chưa có vLLM | điền `VLLM_WHEELS_DIR`; phải có `manifest.json` liệt kê SHA-256 từng wheel |
 
-Notebook đã pin `REPO_INPUT_DIR = "/kaggle/input/ai-race-experiment"`. Nếu add nhầm
-dataset, nó raise kèm gợi ý nơi tìm thấy repo thật, thay vì âm thầm dùng input khác —
-chạy nhầm source revision là lỗi mà manifest sẽ ghi lại sai.
+Notebook pin `REPO_INPUT_DIRS` là **danh sách** cả hai path trên và lấy cái nào tồn
+tại. Kaggle mount dataset lúc theo slug trần, lúc theo `datasets/<owner>/<slug>` tuỳ
+notebook — pin đúng một chuỗi thì đổi notebook là hỏng. Nếu không path nào khớp, nó
+raise kèm gợi ý nơi tìm thấy repo thật, thay vì âm thầm dùng input khác: chạy nhầm
+source revision là lỗi mà manifest sẽ ghi lại sai. Đặt `REPO_INPUT_DIRS = None` để bỏ
+chốt chặn và tự dò (tìm tới độ sâu 6, đủ cho cả hai layout).
 
 Internet OFF. Auto-discovery wheel bị tắt cố ý — phải chỉ đúng path wheelhouse đã audit.
 

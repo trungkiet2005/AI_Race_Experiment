@@ -34,11 +34,18 @@ MODELS = [
 ]
 
 # Dataset đã stage: https://www.kaggle.com/datasets/nguyenlamphuquy/ai-race-experiment
-# Kaggle mount dataset theo *slug*, không kèm username, nên path là
-# /kaggle/input/ai-race-experiment. Username chỉ nằm trong dataset id dùng cho CLI
-# (nguyenlamphuquy/ai-race-experiment). Để None thì notebook tự dò input nào có
-# đồng thời ai_race/ và FAIRGAME/.
-REPO_INPUT_DIR = "/kaggle/input/ai-race-experiment"
+#
+# Kaggle dùng hai layout mount tuỳ notebook: chỉ *slug* (không kèm username), hoặc
+# datasets/<owner>/<slug>. Liệt kê cả hai và lấy cái nào tồn tại — pin đúng một
+# chuỗi thì đổi notebook là hỏng, còn bỏ trống hoàn toàn thì mất cái chốt chặn
+# "add nhầm dataset". Ứng viên đầu tiên khớp sẽ được dùng.
+#
+# Username chỉ nằm trong dataset id dùng cho CLI (nguyenlamphuquy/ai-race-experiment).
+# Đặt REPO_INPUT_DIRS = None để bỏ chốt chặn và tự dò mọi input.
+REPO_INPUT_DIRS = [
+    "/kaggle/input/datasets/nguyenlamphuquy/ai-race-experiment",
+    "/kaggle/input/ai-race-experiment",
+]
 
 # Mọi cell persona phải chạy trong CÙNG một session. protocol_signature gồm source
 # revision, decoding và package versions; chạy lệch session thì persona trùng khít
@@ -117,26 +124,35 @@ def is_repo_input(directory):
 
 
 def find_repo_input(root="/kaggle/input"):
-    """Prefer the configured dataset mount, then fall back to discovery.
+    """Prefer a configured dataset mount, then fall back to discovery.
 
-    Naming the expected path turns "wrong dataset added" into an explicit error
+    Naming the expected paths turns "wrong dataset added" into an explicit error
     instead of a silent fallback onto some other input that happens to contain the
     two marker directories — which would run a different source revision than the
     one the manifest is about to claim.
+
+    Several candidates are allowed because Kaggle mounts a dataset either under its
+    bare slug or under datasets/<owner>/<slug> depending on the notebook. Both name
+    the same dataset, so trying them in order costs nothing and keeps the guard.
     """
-    configured = globals().get("REPO_INPUT_DIR")
+    configured = globals().get("REPO_INPUT_DIRS")
     if configured:
-        configured = Path(configured)
-        if is_repo_input(configured):
-            return configured.resolve()
+        if isinstance(configured, (str, Path)):
+            configured = [configured]
+        candidates = [Path(candidate) for candidate in configured]
+        for candidate in candidates:
+            if is_repo_input(candidate):
+                return candidate.resolve()
         discovered = find_directory(root, is_repo_input)
+        listed = ", ".join(str(candidate) for candidate in candidates)
         raise FileNotFoundError(
-            f"REPO_INPUT_DIR={configured} does not contain both ai_race/ and "
+            f"None of REPO_INPUT_DIRS ({listed}) contains both ai_race/ and "
             "FAIRGAME/. Add the dataset "
             "'nguyenlamphuquy/ai-race-experiment' as a notebook input, or set "
-            "REPO_INPUT_DIR=None to auto-discover. "
+            "REPO_INPUT_DIRS=None to auto-discover. "
             + (
-                f"A usable repo input was found at {discovered}."
+                f"A usable repo input was found at {discovered}; add it to "
+                "REPO_INPUT_DIRS if that is the intended dataset."
                 if discovered
                 else "No usable repo input was found under /kaggle/input."
             )
