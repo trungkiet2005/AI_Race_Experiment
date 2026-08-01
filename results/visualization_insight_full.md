@@ -103,8 +103,8 @@ interpretability artifacts for every requested run.
 | Text-free prompt-only vectorization | `results/open_source/prompt_sensitivity_pilot/xai_auto_vector_encoder_no_response` | does not include `raw_response` | production-safe diagnostic baseline |
 | Full prompt+response vectorization | `results/open_source/prompt_sensitivity_pilot/xai_auto_vector_encoder` | includes `raw_response`; high predictive performance can become proxy-to-leak driven | experimental/checking-only |
 
-Both variants currently use the same 5,958 cleaned decision rows and share identical
-unsafe rate (59.68%).
+Both variants currently use the same **8,190 cleaned decision rows** and share an
+unsafe rate of **56.45%**.
 
 ### 7.3 Key quantified findings
 
@@ -134,9 +134,14 @@ unsafe rate (59.68%).
 
 ### 7.5 Recommended next step
 
-- Add a protocol-level aggregation pass before plotting (`run_treatment` + `persona_condition`
-  + coarse text family), then regenerate top-attribution figures with fixed tokens to produce
-  stable dashboard-grade visuals.
+- Add a protocol-level aggregation pass before plotting (`run_treatment` +
+  `persona_condition` + coarse text family), then regenerate top-attribution figures
+  with fixed token settings to produce stable dashboard-grade visuals.
+- Add an additional constrained-XAI variant that excludes post-decision fields
+  (`round_payoff`, `step_increment`, `response_chars`, etc.) to test how much of the
+  signal is mechanistic vs. pure policy understanding.
+- Report model-strata separately (qwen2.5 + each Gemini variant) before aggregating
+  to avoid cross-model mixing when attributing text-format effects.
 
 ### 7.6 Visual artifacts generated
 

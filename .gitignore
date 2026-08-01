@@ -42,6 +42,8 @@ kaggle.json
 !/results/scripts/*.json
 !/results/README.md
 !/results/visualization_insight_full.md
+!/results/visualization_output_archive/
+!/results/visualization_output_archive/**
 /ai_race_results/
 /output/game_understanding/
 /models/
