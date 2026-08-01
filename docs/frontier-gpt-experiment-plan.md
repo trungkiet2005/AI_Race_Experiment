@@ -26,6 +26,34 @@ Vậy có hai việc: (1) vá một khoảng hở nhỏ trong `factory.py` để
 vendor cho mỗi model GPT mới, và (2) thực sự chạy pilot → confirmatory theo đúng
 trình tự ở [PROJECT.md](../PROJECT.md).
 
+## Phạm vi cấu hình game
+
+`ai_race/configs/experiment/` hiện có **46 tổ hợp** treatment × persona (3 mức risk
+0,1/0,6/0,9 là cố định trong mọi config; cái thay đổi là `agents`):
+
+| Tầng | Số config | Đã từng chạy qua đường hosted/API nào chưa? |
+|---|---|---|
+| Baseline neutral (`agents: "companies_default"`, persona="none") | 1 | Có — `api_baseline_crossmodel.json` (qua proxy) |
+| Seat-swap check (`baseline_swapped`) | 1 | Chưa — chỉ có bản offline |
+| 8 persona core (R0, R-, R+, S_CC, S_AA, S_AC, S_CA + neutral kể trên) | 7 file `api_persona_baseline_*.json` | Có — qua proxy |
+| Ma trận persona rủi ro 6×6 (`persona_baseline_risk_1_1` … `risk_6_6`) | 36 | **Chưa bao giờ**, kể cả qua proxy — chỉ tồn tại bản offline (`LocalQwen`) |
+
+[docs/running-proxy-pilots.md](running-proxy-pilots.md) là tiền lệ đã thiết lập cho
+các lần chạy hosted trước đây (Gemini qua proxy): phạm vi thực tế ở đó là **baseline
++ 8 persona core**, chạy bằng một script `JOBS` tuần tự, tự bỏ qua config đã
+`completed`. Ma trận 6×6 chưa từng được đưa vào bất kỳ lần chạy hosted nào.
+
+**Plan này mặc định theo đúng phạm vi tiền lệ đó — baseline + 7 persona core (8
+config) — và để ngoài phạm vi:**
+
+- Ma trận rủi ro 6×6 (36 config): giữ nguyên là local-only như hiện trạng, trừ khi
+  bạn nói rõ muốn mở rộng đường API cho phần này (khối lượng request gấp ~5 lần).
+- `baseline_swapped`: dễ thêm (chỉ đổi tên công ty), nhưng cần bạn xác nhận có muốn
+  đo seat-position artefact cho GPT hay không — không tự động thêm vào scope.
+
+Nếu bạn muốn phạm vi khác (chỉ baseline, hoặc mở rộng cả ma trận 6×6), báo lại và
+tôi sửa phần "full grid" bên dưới.
+
 ## Việc cần làm ngay — không cần API key
 
 ### 1. Thêm nhánh backend nhận model id trực tiếp
@@ -72,14 +100,30 @@ thay vì phải đăng ký từng abstract name trong file vendor.
 - **Không sửa gì trong `FAIRGAME/`** — đúng nguyên tắc "treat FAIRGAME as a
   dependency" trong [CLAUDE.md](../CLAUDE.md).
 
-### 2. Tạo experiment config mới
+### 2. Tạo 8 experiment config (baseline + 7 persona core)
 
-Nhân bản [api_baseline_crossmodel.json](../ai_race/configs/experiment/api_baseline_crossmodel.json)
-thành `ai_race/configs/experiment/openai_frontier_baseline.json`:
+Nhân bản từng file `api_baseline_crossmodel.json` và 7 file
+`api_persona_baseline_*.json` thành 8 file `openai_*.json` tương ứng, chỉ đổi
+`backend` từ `"proxy"` sang `"openai"`, đổi `proxyOptions` thành chỉ còn
+`temperature`, và để `"models"` là danh sách model id GPT thật (điền ở bước 3).
+`"agents"` giữ nguyên như bản gốc — đó chính là cái phân biệt 8 config này:
+
+| File mới | `agents` (copy từ bản proxy tương ứng) | Persona |
+|---|---|---|
+| `openai_baseline.json` | `companies_default` | none |
+| `openai_persona_baseline_neutral.json` | `persona_neutral` | R0 |
+| `openai_persona_baseline_risk_averse.json` | `persona_risk_averse` | R- |
+| `openai_persona_baseline_risk_seeking.json` | `persona_risk_seeking` | R+ |
+| `openai_persona_baseline_coop_coop.json` | `persona_coop_coop` | S_CC |
+| `openai_persona_baseline_adv_adv.json` | `persona_adv_adv` | S_AA |
+| `openai_persona_baseline_adv_coop.json` | `persona_adv_coop` | S_AC |
+| `openai_persona_baseline_coop_adv.json` | `persona_coop_adv` | S_CA |
+
+Mẫu cho `openai_baseline.json`:
 
 ```json
 {
-  "name": "openai_frontier_baseline",
+  "name": "openai_baseline",
   "runPhase": "pilot",
   "description": "Frontier GPT models via direct OpenAI API (own key), neutral baseline, persona=none.",
   "games": ["ai_race_risk_10", "ai_race_risk_60", "ai_race_risk_90"],
@@ -98,7 +142,14 @@ thành `ai_race/configs/experiment/openai_frontier_baseline.json`:
 ```
 
 `seed` giữ nguyên `260726` như mọi config khác — đây là điều kiện để CRN của
-horizon/setback khớp với các run model khác, cho phép so sánh across-model (RQ6).
+horizon/setback khớp với các run model khác, cho phép so sánh across-model (RQ6)
+**và** giữa các persona cell (matched-pairs). **Persona đầy đủ phải chạy trong
+cùng một session/batch** — xem cảnh báo `protocol_signature` ở
+[running-the-experiment.md](running-the-experiment.md#a5-persona-chạy-tất-cả-cell-trong-cùng-một-session):
+chạy `openai_baseline` hôm nay và `openai_persona_baseline_adv_adv` tuần sau (khác
+package version SDK OpenAI chẳng hạn) sẽ làm persona trùng khít với run batch,
+analyser sẽ từ chối join. Dùng script `JOBS` tuần tự ở mục kế tiếp để đảm bảo cả 9
+config chạy liền nhau.
 
 ### 3. Danh sách model GPT cụ thể — **cần bạn xác nhận, không đoán**
 
@@ -124,26 +175,42 @@ pytest                        # đảm bảo chưa gãy gì trước khi đụng
 2. **Smoke test rẻ trước khi tốn tiền cho pilot thật:** 1 model, 1 risk treatment,
    `repetitions: 1`, xem log thô — xác nhận connectivity, format response, và
    `ACTION: SAFE|UNSAFE` có parse được không trước khi commit đến pilot 10 rep ×
-   3 treatment.
-3. Chạy pilot đầy đủ:
-   ```bash
-   python3 -m ai_race.runner.run_experiment \
-     ai_race/configs/experiment/openai_frontier_baseline.json \
-     --output results/frontier/openai_pilot
+   3 treatment × 8 config.
+3. Chạy pilot cho cả 8 config bằng script `JOBS` tuần tự, theo đúng mẫu ở
+   [running-proxy-pilots.md](running-proxy-pilots.md#chạy-nhiều-config-nối-tiếp--sửa-jobs-rồi-chạy) —
+   khác biệt duy nhất so với mẫu proxy là **không cần** dòng `kaggle benchmarks auth`
+   (backend `openai` không qua Kaggle proxy, không có token hết hạn):
+   ```python
+   JOBS = [
+       ("ai_race/configs/experiment/openai_baseline.json", "results/frontier/openai/baseline"),
+       ("ai_race/configs/experiment/openai_persona_baseline_neutral.json", "results/frontier/openai/persona/R0_neutral"),
+       ("ai_race/configs/experiment/openai_persona_baseline_risk_averse.json", "results/frontier/openai/persona/Rminus_risk_averse"),
+       ("ai_race/configs/experiment/openai_persona_baseline_risk_seeking.json", "results/frontier/openai/persona/Rplus_risk_seeking"),
+       ("ai_race/configs/experiment/openai_persona_baseline_coop_coop.json", "results/frontier/openai/persona/S_CC_coop_coop"),
+       ("ai_race/configs/experiment/openai_persona_baseline_adv_adv.json", "results/frontier/openai/persona/S_AA_adv_adv"),
+       ("ai_race/configs/experiment/openai_persona_baseline_adv_coop.json", "results/frontier/openai/persona/S_AC_adv_coop"),
+       ("ai_race/configs/experiment/openai_persona_baseline_coop_adv.json", "results/frontier/openai/persona/S_CA_coop_adv"),
+   ]
    ```
-4. `python3 results/scripts/check_symmetry.py --input results/frontier/openai_pilot`
-   — dừng và chỉnh nếu >40% race bị symmetry collapse (đúng bẫy nhiệt độ ở mục 1).
-5. Audit bằng analyser với ba flag `--allow-*` (pilot, không phải kết quả cuối):
+   Script tự bỏ qua config đã `completed` — chạy lại an toàn nếu bị đứt giữa chừng
+   (hết quota, mất mạng), không tốn tiền chạy lại phần đã xong.
+4. `python3 results/scripts/check_symmetry.py --input results/frontier/openai/baseline`
+   (và các thư mục persona) — dừng và chỉnh nếu >40% race bị symmetry collapse
+   (đúng bẫy nhiệt độ ở mục 1).
+5. Audit bằng analyser với các flag `--allow-*` (pilot, không phải kết quả cuối) —
+   xem đúng bộ flag ở [running-proxy-pilots.md](running-proxy-pilots.md#sau-khi-chạy-phân-tích):
    ```bash
    python3 results/scripts/analyze_ai_race.py \
-     --input results/frontier/openai_pilot --output /tmp/derived_openai --fit-logit \
-     --allow-mixed-protocols --allow-nonfinal-runs --allow-nonconfirmatory-runs
+     --input results/frontier/openai --output /tmp/derived_openai --fit-logit \
+     --allow-mixed-protocols --allow-nonfinal-runs --allow-nonconfirmatory-runs \
+     --allow-missing-persona-condition
    ```
    Đọc `parse_failures.csv` trước tiên — khác 0 thì dừng, đừng diễn giải hành vi.
 6. Freeze: model list, prompt/config version, số rep, rồi đổi `runPhase` →
-   `"confirmatory"` trong config.
-7. Chạy full grid (tất cả model GPT đã chọn, ba treatment, số rep đã freeze) —
-   mỗi model một thư mục con dưới `results/frontier/`.
+   `"confirmatory"` trong cả 8 config.
+7. Chạy full grid (tất cả model GPT đã chọn × 8 config, ba treatment, số rep đã
+   freeze) bằng cùng script `JOBS`, chỉ đổi `repetitions` trong config và thư mục
+   output.
 8. Chạy analyser **một lần**, không đổi định nghĩa outcome sau khi đã thấy kết quả:
    ```bash
    python3 results/scripts/analyze_ai_race.py \
@@ -156,8 +223,11 @@ pytest                        # đảm bảo chưa gãy gì trước khi đụng
 - Danh sách model GPT cụ thể (xem mục 3 ở trên).
 - Số rep cho pilot (mặc định đề xuất 10, theo đúng trình tự PROJECT.md) và cho full
   grid (baseline hiện dùng 50 cho open-source; với API trả phí, có thể muốn ít hơn).
-- Có chạy các persona cell (`S_AA`, `S_AC`, …) cho GPT hay chỉ baseline neutral?
-  Ảnh hưởng trực tiếp số lượng request × tiền.
+- Có mở rộng thêm `baseline_swapped` (seat-position check) vào scope không? Mặc định
+  plan này **không** bao gồm.
+- Có mở rộng đường API cho ma trận persona rủi ro 6×6 (36 config, hiện chỉ chạy
+  local) không? Mặc định plan này **không** bao gồm — khối lượng request sẽ tăng
+  ~5 lần so với 8 config baseline+persona core.
 - Có cần giới hạn ngân sách/rate limit cứng (ví dụ dừng nếu vượt N request) trước
   khi chạy full grid không, vì đây là API trả phí thật chứ không phải Kaggle quota.
 
@@ -174,14 +244,17 @@ pytest                        # đảm bảo chưa gãy gì trước khi đụng
 
 ## Thứ tự thực hiện
 
-1. Vá `factory.py` (mục "Việc cần làm ngay" #1) + tạo config mới (#2) — làm ngay,
-   không cần key.
-2. Chờ API key + danh sách model GPT cụ thể từ bạn.
-3. Điền key vào `.env`, điền model id vào config.
-4. Smoke test 1 model/1 treatment/1 rep.
-5. Pilot 10 rep, 3 treatment, tất cả model đã chọn.
-6. `check_symmetry.py` → không đạt thì dừng, chỉnh temperature/prompt, chạy lại pilot.
+1. Vá `factory.py` (mục "Việc cần làm ngay" #1) + tạo 8 config `openai_*.json`
+   (#2) — làm ngay, không cần key.
+2. Chờ API key + danh sách model GPT cụ thể từ bạn (và xác nhận/điều chỉnh phạm vi
+   ở mục "Phạm vi cấu hình game" nếu muốn khác 8 config mặc định).
+3. Điền key vào `.env`, điền model id vào cả 8 config.
+4. Smoke test 1 model/1 treatment/1 rep trên `openai_baseline.json`.
+5. Pilot 10 rep × 3 treatment × 8 config, chạy bằng script `JOBS` tuần tự.
+6. `check_symmetry.py` cho từng thư mục output → không đạt thì dừng, chỉnh
+   temperature/prompt, chạy lại pilot.
 7. Analyser với flag audit; đọc theo đúng thứ tự ở
    [running-the-experiment.md](running-the-experiment.md#bước-3--đọc-output).
-8. Freeze, đổi `runPhase` → `confirmatory`, chạy full grid.
+8. Freeze cả 8 config, đổi `runPhase` → `confirmatory`, chạy lại full grid bằng
+   `JOBS`.
 9. Analyser một lần, cập nhật `paper/` và `slides/`.
