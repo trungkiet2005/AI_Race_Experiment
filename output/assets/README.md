@@ -2,8 +2,11 @@
 
 This folder stores a consolidated review set of visual artifacts.
 
-`tracked/` contains PNG assets that are already tracked in the repository.
-`source/` mirrors source PDFs for convenient grouping.
+`tracked/` contains project PNG assets that are already tracked in the repository.
+`source/` mirrors project PDFs for convenient grouping.
+
+Artifacts imported from external papers live only in `references/papers/`; they
+are intentionally not mirrored here.
 
 ## Why this exists
 
@@ -18,4 +21,3 @@ Copy-Item path\to\new\figure.png output/assets/images/tracked\
 ```
 
 or extend this folder with a tiny metadata table in this file.
-

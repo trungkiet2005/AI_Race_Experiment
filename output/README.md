@@ -25,7 +25,10 @@ Remove-Item -Recurse -Force output/game_understanding
 
 ## Centralized asset snapshot
 
-- [`output/assets/images/tracked/`](./assets/images/tracked): PNG figures currently
-  tracked in-repo (paper and web visuals).
-- [`output/assets/images/source/`](./assets/images/source): PDF and other source visuals
-  mirrored from canonical figure sources for one-stop review.
+- [`output/assets/images/tracked/`](./assets/images/tracked): project PNG figures
+  currently tracked in-repo (paper and web visuals).
+- [`output/assets/images/source/`](./assets/images/source): project PDFs and source
+  visuals mirrored for one-stop review.
+
+External-paper artifacts are stored canonically in [`references/papers/`](../references/papers/)
+instead of being duplicated under `output/`.

@@ -10,6 +10,9 @@ This directory is the project’s curated literature source for the AI Race expe
 - [`markdown/falling-behind-ai-race.md`](markdown/falling-behind-ai-race.md) — AI-readable research note covering the study’s mechanics, findings, and implementation caveats.
 - [`sources/arXiv-2607.26034v1/`](sources/arXiv-2607.26034v1/) — complete arXiv v1 LaTeX source bundle and figures.
 
+These are the canonical copies of the paper output and figures; they are not
+duplicated under the project-level `output/` directory.
+
 Elias Fernández Domingos and The Anh Han. “Falling Behind Drives Unsafe Development in an Idealised AI Race Experiment.” arXiv:2607.26034, 2026. <https://arxiv.org/abs/2607.26034>
 
 ### Han et al. (2020)
