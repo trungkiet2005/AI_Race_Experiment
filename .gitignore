@@ -45,6 +45,8 @@ kaggle.json
 /ai_race_results/
 /output/game_understanding/
 /models/
+/strategy_analysis/artifacts/
+/strategy_analysis/datasets/
 FAIRGAME/resources/results/
 *.safetensors
 *.gguf
