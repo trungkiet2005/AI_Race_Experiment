@@ -276,6 +276,7 @@ def coerce_action_history(row: pd.Series) -> float:
 
 def prepare_feature_frame(
     turns: pd.DataFrame,
+    include_response_text: bool = False,
 ) -> tuple[pd.DataFrame, pd.Series, pd.DataFrame]:
     turns = turns.copy()
     turns = turns[~turns["unsafe"].isna()].copy()
@@ -334,7 +335,17 @@ def prepare_feature_frame(
 
     target = turns["unsafe"].copy()
     turns["prev_signal"] = turns["prev_signal"].fillna(-1.0)
-    turns = turns[NUMERIC_FEATURES + ["prev_signal"] + BOOL_FEATURES + CATEGORICAL_FEATURES + TEXT_FEATURES].copy()
+    selected_features = (
+        NUMERIC_FEATURES
+        + ["prev_signal"]
+        + BOOL_FEATURES
+        + CATEGORICAL_FEATURES
+        + TEXT_FEATURES
+    )
+    if include_response_text:
+        selected_features = selected_features + [OPTIONAL_RESPONSE_TEXT_FEATURE]
+
+    turns = turns[selected_features].copy()
 
     return turns, target, context
 
@@ -605,7 +616,9 @@ def build_and_write(
     random_state: int,
     include_response_text: bool = False,
 ) -> dict[str, Any]:
-    features, target, context = prepare_feature_frame(turns)
+    features, target, context = prepare_feature_frame(
+        turns, include_response_text=include_response_text
+    )
     model, X_train, X_test, y_train, y_test = build_models(
         features,
         target,
