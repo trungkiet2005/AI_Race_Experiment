@@ -2,7 +2,7 @@
 
 Generalises ``ai_race.engine.scoring`` from exactly two players to any
 ``n_players >= 2``, following the group payoff of Appendix B in the reference
-paper (``jair-12225/...md``, "N-player AI Race Definition") with the
+paper (``references/papers/sources/jair-12225/...md``, "N-player AI Race Definition") with the
 found-out term ``p_fo`` dropped. Race outcome and terminal scoring generalise
 by comparing each player's progress against the group maximum instead of
 against the one other player.

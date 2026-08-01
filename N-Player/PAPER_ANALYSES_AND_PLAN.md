@@ -2,7 +2,7 @@
 
 Nguồn: Han, Pereira, Santos & Lenaerts, *"To Regulate or Not: A Social Dynamics
 Analysis of an Idealised AI Race"*, JAIR 69 (2020) 881-921
-([jair-12225/JAIR-12225-ArticlePDF-25030-1-10-20201122.md](../jair-12225/JAIR-12225-ArticlePDF-25030-1-10-20201122.md)).
+([JAIR-12225 source text](../references/papers/sources/jair-12225/JAIR-12225-ArticlePDF-25030-1-10-20201122.md)).
 
 Phạm vi: paper định nghĩa mô hình 2-player ở phần thân bài, rồi tổng quát hóa
 lên **N-player (N ≥ 2)** trong **Appendix B**, và mở rộng thêm trong Appendix C
