@@ -222,18 +222,28 @@ vắng mặt** (0–3%) — khớp kết luận lý thuyết "AS không bao gi�
 
 ## 7. Đối chiếu 8 hiệu ứng người–LLM (E1–E8)
 
-Từ `human_comparison.csv`, chấm tự động theo `results/scripts/human_reference.json`:
+Từ `human_comparison.csv`, chấm tự động theo `results/scripts/human_reference.json`.
 
-| ID | Hiệu ứng | Giá trị người | Giá trị LLM | Verdict |
-|---|---|---|---|---|
-| E1 | opponent_prev_unsafe (dấu + ý nghĩa) | 0,607 | 1,486 | **replicated** |
-| E2 | progress_gap_before (dấu + ý nghĩa) | −0,296 | −0,224 (p=0,47) | not replicated |
-| E3 | first_round_unsafe (dấu + ý nghĩa yếu) | 0,217 | 1,674 | **replicated** |
-| E4 | own_prev_unsafe ≈ 0 (equivalence/TOST) | −0,193 | −0,595 | not replicated |
-| E5 | contrast 0,6 vs 0,9 ≈ 0 (equivalence) | −0,027 | d = 1,085 | not replicated |
-| E6 | contrast 0,1 vs 0,6 > 0, |d| > 0,2 | d = 0,341 | d = 3,082 | **replicated** (hướng đúng, độ lớn vượt xa) |
-| E7 | φ_U tổng thể trong [0,4; 0,75] | 0,584 | 0,624 | **replicated** |
-| E8 | share AS < 0,1 | ~0,11 (near-absence) | 0,115 | not replicated (sát ngưỡng) |
+> **"Replicated" chỉ xét dấu (chiều hiệu ứng) và một ngưỡng ý nghĩa thống kê / effect size tối
+> thiểu — không xét con số LLM có gần con số người hay không** (cột "Tiêu chí chấm" dưới đây là
+> điều kiện thật sự dùng để chấm, lấy trực tiếp từ `human_comparison.csv:criterion`). Hệ số hồi
+> quy của hai nghiên cứu khác nhau (người thật vs LLM, cỡ mẫu khác, prompt khác) không nằm trên
+> cùng một thang đo tuyệt đối để so trực tiếp; cái so được là *có tồn tại cùng một quy luật hành
+> vi hay không*, không phải *độ mạnh của quy luật đó có bằng nhau không*. Vì vậy ở E1/E3/E6, hệ
+> số LLM lớn hơn hệ số người 2–9 lần **vẫn** được chấm "replicated" — khoảng cách độ lớn đó tự nó
+> là một phát hiện (LLM áp dụng đúng quy luật hành vi của người nhưng mạnh và máy móc hơn hẳn),
+> không phải lỗi chấm điểm.
+
+| ID | Hiệu ứng | Giá trị người | Giá trị LLM | Tiêu chí chấm | Verdict |
+|---|---|---|---|---|---|
+| E1 | opponent_prev_unsafe | 0,607 | 1,486 | dương và p < 0,05 | **replicated** |
+| E2 | progress_gap_before | −0,296 | −0,224 (p=0,47) | âm và p < 0,05 | not replicated |
+| E3 | first_round_unsafe | 0,217 | 1,674 | dương và p < 0,1 | **replicated** |
+| E4 | own_prev_unsafe ≈ 0 (equivalence/TOST) | −0,193 | −0,595 | TOST \|β\| < 0,3 | not replicated |
+| E5 | contrast 0,6 vs 0,9 ≈ 0 (equivalence) | −0,027 | d = 1,085 | \|d\| < 0,2 | not replicated |
+| E6 | contrast 0,1 vs 0,6 | d = 0,341 | d = 3,082 | dương và \|d\| > 0,2 | **replicated** (hướng đúng, độ lớn vượt xa) |
+| E7 | φ_U tổng thể | 0,584 | 0,624 | trong khoảng [0,4; 0,75] | **replicated** |
+| E8 | share AS | ~0,11 (near-absence) | 0,115 | share < 0,1 | not replicated (sát ngưỡng) |
 
 **4/8 replicated** — cùng nhóm hiệu ứng "hướng đối thủ chi phối, momentum vòng 1, mức φ_U tổng
 thể hợp lý" tái lập được ở LLM. **4/8 not replicated** — chủ yếu là các hiệu ứng null/equivalence
