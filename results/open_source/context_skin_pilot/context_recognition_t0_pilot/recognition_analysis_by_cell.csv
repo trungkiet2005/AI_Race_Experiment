@@ -1,0 +1,17 @@
+skin_id,mapping_id,n_rows,n_attempts,strict_valid_n,strict_valid_rate,retry_any_rate,retry_exhausted_rate,raw_json_valid_rate,raw_enum_schema_valid_rate,raw_candidate_contract_valid_rate,raw_specific_named_match_n,raw_specific_named_match_rate,raw_broad_resemblance_n,raw_broad_resemblance_rate,raw_no_recognition_n,raw_uncertain_n,raw_nonnull_candidate_n,raw_high_confidence_n,raw_high_confidence_rate,unique_final_raw_responses,dominant_official_parse_error
+technology_race,safe_p,20,60,0,0.000000,1.000000,1.000000,1.000000,1.000000,0.000000,0,0.000000,20,1.000000,0,0,0,20,1.000000,1,candidate_required
+technology_race,safe_q,20,60,0,0.000000,1.000000,1.000000,1.000000,1.000000,0.000000,0,0.000000,20,1.000000,0,0,0,20,1.000000,1,candidate_required
+logistics_contract,safe_p,20,60,0,0.000000,1.000000,1.000000,1.000000,1.000000,0.000000,0,0.000000,20,1.000000,0,0,0,20,1.000000,1,candidate_required
+logistics_contract,safe_q,20,60,0,0.000000,1.000000,1.000000,1.000000,1.000000,0.000000,0,0.000000,20,1.000000,0,0,0,20,1.000000,1,candidate_required
+crystal_guild_contract,safe_p,20,60,0,0.000000,1.000000,1.000000,1.000000,1.000000,0.000000,0,0.000000,20,1.000000,0,0,0,20,1.000000,1,candidate_required
+crystal_guild_contract,safe_q,20,60,0,0.000000,1.000000,1.000000,1.000000,1.000000,0.000000,0,0.000000,20,1.000000,0,0,0,20,1.000000,1,candidate_required
+hospital_deployment,safe_p,20,60,0,0.000000,1.000000,1.000000,1.000000,1.000000,0.000000,0,0.000000,20,1.000000,0,0,0,20,1.000000,1,candidate_required
+hospital_deployment,safe_q,20,60,0,0.000000,1.000000,1.000000,1.000000,1.000000,0.000000,0,0.000000,20,1.000000,0,0,0,20,1.000000,1,candidate_required
+colony_life_support,safe_p,20,60,0,0.000000,1.000000,1.000000,1.000000,1.000000,0.000000,0,0.000000,20,1.000000,0,0,0,20,1.000000,1,candidate_required
+colony_life_support,safe_q,20,60,0,0.000000,1.000000,1.000000,1.000000,1.000000,0.000000,0,0.000000,20,1.000000,0,0,0,20,1.000000,1,candidate_required
+robotic_expedition,safe_p,20,60,0,0.000000,1.000000,1.000000,1.000000,1.000000,0.000000,0,0.000000,20,1.000000,0,0,0,20,1.000000,1,candidate_required
+robotic_expedition,safe_q,20,60,0,0.000000,1.000000,1.000000,1.000000,1.000000,0.000000,0,0.000000,20,1.000000,0,0,0,20,1.000000,1,candidate_required
+fictional_cartography,safe_p,20,60,0,0.000000,1.000000,1.000000,1.000000,1.000000,0.000000,0,0.000000,20,1.000000,0,0,0,20,1.000000,1,candidate_required
+fictional_cartography,safe_q,20,60,0,0.000000,1.000000,1.000000,1.000000,1.000000,0.000000,0,0.000000,20,1.000000,0,0,0,20,1.000000,1,candidate_required
+abstract_contest,safe_p,20,60,0,0.000000,1.000000,1.000000,1.000000,1.000000,0.000000,0,0.000000,20,1.000000,0,0,0,20,1.000000,1,candidate_required
+abstract_contest,safe_q,20,60,0,0.000000,1.000000,1.000000,1.000000,1.000000,0.000000,0,0.000000,20,1.000000,0,0,0,20,1.000000,1,candidate_required

@@ -1,249 +1,252 @@
-# Sparse Autoencoder Action Audit
+# Sparse Dictionary Action Audit
 
+> Scope: this feature-space dictionary-learning surrogate uses logged prompts and states. It does not inspect model neurons or establish a causal mechanism.
+
+- Evaluation split: **race** (fit after split; group overlap: 0)
 - Samples: **8190**
 - Sparse code units: **16**
-- Test AUC: **1.0000**
-- Test accuracy: **1.0000**
-- Test log-loss: **0.0004**
-- Reconstruction MSE: **0.012646**
+- Test AUC: **0.9996**
+- Test accuracy: **0.9910**
+- Test log-loss: **0.0259**
+- Reconstruction MSE: **0.016309**
 
 ## Global code importance
 
 | rank | code | direction | coef | mean_abs_code | sparsity_ratio |
 |---:|---|---|---:|---:|---:|
-| 1 | `z008` | safe+ | -2.6336 | 1.6204 | 0.409 |
-| 2 | `z002` | safe+ | -1.1320 | 2.2632 | 0.472 |
-| 3 | `z014` | unsafe+ | 0.9415 | 0.9501 | 0.269 |
-| 4 | `z011` | safe+ | -0.8982 | 2.3376 | 0.579 |
-| 5 | `z006` | unsafe+ | 0.8085 | 2.1208 | 0.495 |
-| 6 | `z015` | unsafe+ | 0.5286 | 1.0372 | 0.316 |
-| 7 | `z009` | safe+ | -0.4685 | 1.9802 | 0.341 |
-| 8 | `z010` | unsafe+ | 0.4655 | 1.1644 | 0.311 |
-| 9 | `z000` | unsafe+ | 0.4610 | 2.8063 | 0.608 |
-| 10 | `z013` | safe+ | -0.4175 | 0.9869 | 0.242 |
-| 11 | `z007` | unsafe+ | 0.2921 | 2.0956 | 0.604 |
-| 12 | `z003` | unsafe+ | 0.2698 | 2.2526 | 0.486 |
-| 13 | `z012` | unsafe+ | 0.2550 | 1.6310 | 0.372 |
-| 14 | `z005` | unsafe+ | 0.2482 | 1.0790 | 0.305 |
-| 15 | `z001` | unsafe+ | 0.1865 | 2.1061 | 0.424 |
-| 16 | `z004` | unsafe+ | 0.0030 | 0.3288 | 0.020 |
+| 1 | `z014` | unsafe+ | 2.9204 | 0.8556 | 0.157 |
+| 2 | `z002` | safe+ | -2.2418 | 1.0338 | 0.245 |
+| 3 | `z001` | safe+ | -2.0215 | 0.6318 | 0.316 |
+| 4 | `z012` | unsafe+ | 1.4293 | 0.9492 | 0.134 |
+| 5 | `z006` | unsafe+ | 0.9879 | 0.9733 | 0.165 |
+| 6 | `z007` | safe+ | -0.7732 | 0.7922 | 0.207 |
+| 7 | `z009` | unsafe+ | 0.7316 | 0.7841 | 0.207 |
+| 8 | `z013` | safe+ | -0.5980 | 1.1632 | 0.276 |
+| 9 | `z008` | unsafe+ | 0.5793 | 0.6350 | 0.224 |
+| 10 | `z000` | unsafe+ | 0.5240 | 18.3362 | 0.994 |
+| 11 | `z010` | unsafe+ | 0.4780 | 0.4732 | 0.109 |
+| 12 | `z004` | unsafe+ | 0.4256 | 0.3148 | 0.020 |
+| 13 | `z003` | safe+ | -0.4097 | 1.2673 | 0.372 |
+| 14 | `z005` | unsafe+ | 0.2809 | 0.4491 | 0.284 |
+| 15 | `z011` | unsafe+ | 0.1695 | 1.2582 | 0.216 |
+| 16 | `z015` | unsafe+ | 0.0281 | 0.4418 | 0.073 |
 
 ## Top input features for each sparse code
 
 | code | rank | feature | weight |
 |---|---:|---|---:|
-| `z000` | 1 | `num__prompt_chars` | 0.7690 |
-| `z000` | 2 | `num__response_chars` | 0.4983 |
-| `z000` | 3 | `num__attempts` | 0.2315 |
-| `z000` | 4 | `num__step_increment` | 0.2122 |
-| `z000` | 5 | `num__max_private_risk` | -0.1367 |
-| `z000` | 6 | `num__round_payoff` | 0.1067 |
-| `z000` | 7 | `num__own_private_risk_before` | -0.0747 |
-| `z000` | 8 | `num__opponent_private_risk_before` | -0.0740 |
-| `z000` | 9 | `num__round` | 0.0528 |
-| `z000` | 10 | `num__own_stage_payoff_before` | 0.0508 |
-| `z000` | 11 | `num__opponent_stage_payoff_before` | 0.0500 |
-| `z000` | 12 | `num__own_progress_before` | 0.0496 |
-| `z001` | 1 | `num__prompt_chars` | 0.7074 |
-| `z001` | 2 | `num__response_chars` | 0.4440 |
-| `z001` | 3 | `num__attempts` | 0.2136 |
-| `z001` | 4 | `num__round` | 0.2048 |
-| `z001` | 5 | `num__opponent_progress_before` | 0.1984 |
-| `z001` | 6 | `num__own_progress_before` | 0.1973 |
-| `z001` | 7 | `num__opponent_stage_payoff_before` | 0.1892 |
-| `z001` | 8 | `num__own_stage_payoff_before` | 0.1860 |
-| `z001` | 9 | `num__step_increment` | 0.1811 |
-| `z001` | 10 | `num__rep` | 0.1262 |
-| `z001` | 11 | `num__round_payoff` | 0.0883 |
-| `z001` | 12 | `num__max_private_risk` | 0.0522 |
-| `z002` | 1 | `num__prompt_chars` | 0.8469 |
-| `z002` | 2 | `num__response_chars` | 0.4091 |
-| `z002` | 3 | `num__attempts` | 0.2441 |
-| `z002` | 4 | `num__step_increment` | 0.1078 |
-| `z002` | 5 | `num__max_private_risk` | 0.0805 |
-| `z002` | 6 | `num__round` | 0.0678 |
-| `z002` | 7 | `cat__model_google/gemini-3-flash-preview` | 0.0619 |
-| `z002` | 8 | `cat__lane_persona` | 0.0610 |
-| `z002` | 9 | `cat__run_group_persona` | 0.0610 |
-| `z002` | 10 | `cat__opponent_prev_action_safe` | 0.0528 |
-| `z002` | 11 | `cat__own_prev_action_safe` | 0.0481 |
-| `z002` | 12 | `cat__seat_persona_role_cooperative` | 0.0457 |
-| `z003` | 1 | `num__prompt_chars` | 0.7689 |
-| `z003` | 2 | `num__response_chars` | 0.4937 |
-| `z003` | 3 | `num__attempts` | 0.2381 |
-| `z003` | 4 | `num__step_increment` | 0.1999 |
-| `z003` | 5 | `num__stop_draw` | -0.1849 |
-| `z003` | 6 | `num__round_payoff` | 0.0997 |
-| `z003` | 7 | `num__max_private_risk` | 0.0740 |
-| `z003` | 8 | `num__own_private_risk_before` | 0.0641 |
-| `z003` | 9 | `num__opponent_private_risk_before` | 0.0632 |
-| `z003` | 10 | `num__own_progress_before` | -0.0341 |
-| `z003` | 11 | `num__opponent_progress_before` | -0.0334 |
-| `z003` | 12 | `num__own_stage_payoff_before` | -0.0312 |
-| `z004` | 1 | `num__prompt_chars` | 0.5871 |
-| `z004` | 2 | `num__attempts` | 0.5762 |
-| `z004` | 3 | `num__retry_count` | 0.4030 |
-| `z004` | 4 | `num__response_chars` | 0.3513 |
-| `z004` | 5 | `num__step_increment` | 0.1372 |
-| `z004` | 6 | `num__round_payoff` | 0.0635 |
-| `z004` | 7 | `num__max_private_risk` | 0.0456 |
-| `z004` | 8 | `num__rep` | 0.0438 |
-| `z004` | 9 | `num__round` | 0.0392 |
-| `z004` | 10 | `cat__model_google/gemini-3-flash-preview` | 0.0345 |
-| `z004` | 11 | `num__own_progress_before` | 0.0309 |
-| `z004` | 12 | `num__opponent_progress_before` | 0.0307 |
-| `z005` | 1 | `num__prompt_chars` | 0.7272 |
-| `z005` | 2 | `num__response_chars` | 0.4861 |
-| `z005` | 3 | `num__attempts` | 0.2238 |
-| `z005` | 4 | `num__step_increment` | 0.2092 |
-| `z005` | 5 | `num__progress_gap_before` | 0.1974 |
-| `z005` | 6 | `num__round_payoff` | 0.1391 |
-| `z005` | 7 | `num__own_stage_payoff_before` | 0.1288 |
-| `z005` | 8 | `num__own_private_risk_before` | 0.1079 |
-| `z005` | 9 | `num__own_progress_before` | 0.0984 |
-| `z005` | 10 | `num__round` | 0.0942 |
-| `z005` | 11 | `num__max_private_risk` | 0.0763 |
-| `z005` | 12 | `cat__opponent_prev_action_safe` | 0.0666 |
-| `z006` | 1 | `num__prompt_chars` | 0.7597 |
-| `z006` | 2 | `num__response_chars` | 0.4801 |
-| `z006` | 3 | `num__step_increment` | 0.2156 |
-| `z006` | 4 | `num__attempts` | 0.2145 |
-| `z006` | 5 | `num__own_private_risk_before` | 0.1274 |
-| `z006` | 6 | `num__opponent_private_risk_before` | 0.1271 |
-| `z006` | 7 | `num__round_payoff` | 0.1149 |
-| `z006` | 8 | `num__max_private_risk` | 0.1054 |
-| `z006` | 9 | `cat__model_google/gemini-3-flash-preview` | 0.0657 |
-| `z006` | 10 | `cat__run_group_persona` | 0.0654 |
-| `z006` | 11 | `cat__lane_persona` | 0.0654 |
-| `z006` | 12 | `num__own_stage_payoff_before` | 0.0566 |
-| `z007` | 1 | `num__prompt_chars` | 0.7500 |
-| `z007` | 2 | `num__response_chars` | 0.4858 |
-| `z007` | 3 | `num__rep` | 0.2924 |
-| `z007` | 4 | `num__attempts` | 0.2271 |
-| `z007` | 5 | `num__step_increment` | 0.2049 |
-| `z007` | 6 | `num__round_payoff` | 0.1092 |
-| `z007` | 7 | `num__max_private_risk` | 0.0511 |
-| `z007` | 8 | `num__stop_draw` | -0.0284 |
-| `z007` | 9 | `cat__model_qwen2.5:7b-instruct-fp16` | 0.0280 |
-| `z007` | 10 | `cat__run_group_lane_a` | 0.0270 |
-| `z007` | 11 | `cat__lane_lane_a` | 0.0270 |
-| `z007` | 12 | `num__opponent_private_risk_before` | 0.0228 |
-| `z008` | 1 | `num__prompt_chars` | 0.8536 |
-| `z008` | 2 | `num__response_chars` | 0.3657 |
-| `z008` | 3 | `num__attempts` | 0.2742 |
-| `z008` | 4 | `num__max_private_risk` | 0.0999 |
-| `z008` | 5 | `num__round_payoff` | -0.0946 |
-| `z008` | 6 | `num__own_private_risk_before` | 0.0878 |
-| `z008` | 7 | `num__opponent_private_risk_before` | 0.0828 |
-| `z008` | 8 | `num__rep` | 0.0702 |
-| `z008` | 9 | `cat__own_prev_action_unsafe` | 0.0628 |
-| `z008` | 10 | `num__round` | 0.0474 |
-| `z008` | 11 | `cat__model_qwen2.5:7b-instruct-fp16` | 0.0460 |
-| `z008` | 12 | `num__own_stage_payoff_before` | 0.0416 |
-| `z009` | 1 | `num__prompt_chars` | -0.7136 |
-| `z009` | 2 | `num__response_chars` | -0.5275 |
-| `z009` | 3 | `num__attempts` | -0.2406 |
-| `z009` | 4 | `num__step_increment` | -0.2300 |
-| `z009` | 5 | `num__round_payoff` | -0.1199 |
-| `z009` | 6 | `num__max_private_risk` | -0.0948 |
-| `z009` | 7 | `cat__lane_baseline` | -0.0910 |
-| `z009` | 8 | `cat__run_group_baseline` | -0.0910 |
-| `z009` | 9 | `num__own_private_risk_before` | -0.0848 |
-| `z009` | 10 | `num__opponent_private_risk_before` | -0.0848 |
-| `z009` | 11 | `cat__seat_persona_role_` | -0.0846 |
-| `z009` | 12 | `cat__persona_condition_none` | -0.0846 |
-| `z010` | 1 | `num__prompt_chars` | 0.7361 |
-| `z010` | 2 | `num__response_chars` | 0.4961 |
-| `z010` | 3 | `num__attempts` | 0.2280 |
-| `z010` | 4 | `num__step_increment` | 0.2139 |
-| `z010` | 5 | `num__round_payoff` | 0.1153 |
-| `z010` | 6 | `cat__lane_lane_b` | 0.1094 |
-| `z010` | 7 | `cat__run_group_lane_b` | 0.1094 |
-| `z010` | 8 | `num__opponent_private_risk_before` | 0.0991 |
-| `z010` | 9 | `num__own_private_risk_before` | 0.0973 |
-| `z010` | 10 | `num__max_private_risk` | 0.0961 |
-| `z010` | 11 | `cat__seat_persona_role_adversarial` | 0.0768 |
-| `z010` | 12 | `cat__persona_condition_S_AA` | 0.0754 |
-| `z011` | 1 | `num__prompt_chars` | -0.7485 |
-| `z011` | 2 | `num__response_chars` | -0.5104 |
-| `z011` | 3 | `num__step_increment` | -0.2321 |
-| `z011` | 4 | `num__attempts` | -0.2250 |
-| `z011` | 5 | `num__round_payoff` | -0.1390 |
-| `z011` | 6 | `num__max_private_risk` | -0.1097 |
-| `z011` | 7 | `num__round` | -0.0709 |
-| `z011` | 8 | `num__opponent_private_risk_before` | -0.0627 |
-| `z011` | 9 | `num__opponent_progress_before` | -0.0586 |
-| `z011` | 10 | `num__stop_draw` | -0.0575 |
-| `z011` | 11 | `num__own_private_risk_before` | -0.0563 |
-| `z011` | 12 | `num__own_progress_before` | -0.0560 |
-| `z012` | 1 | `num__prompt_chars` | 0.7236 |
-| `z012` | 2 | `num__response_chars` | 0.5427 |
-| `z012` | 3 | `num__attempts` | 0.2573 |
-| `z012` | 4 | `num__step_increment` | 0.2254 |
-| `z012` | 5 | `num__round_payoff` | 0.1166 |
-| `z012` | 6 | `num__stop_draw` | -0.1127 |
-| `z012` | 7 | `cat__own_prev_action_none` | 0.0741 |
-| `z012` | 8 | `cat__opponent_prev_action_none` | 0.0741 |
-| `z012` | 9 | `num__max_private_risk` | 0.0596 |
-| `z012` | 10 | `num__opponent_private_risk_before` | -0.0577 |
-| `z012` | 11 | `num__own_private_risk_before` | -0.0565 |
-| `z012` | 12 | `num__own_progress_before` | -0.0475 |
-| `z013` | 1 | `num__prompt_chars` | 0.8084 |
-| `z013` | 2 | `num__response_chars` | 0.4399 |
-| `z013` | 3 | `num__attempts` | 0.2410 |
-| `z013` | 4 | `num__step_increment` | 0.1424 |
-| `z013` | 5 | `cat__seat_persona_role_risk-averse` | 0.1168 |
-| `z013` | 6 | `cat__persona_condition_R-` | 0.1168 |
-| `z013` | 7 | `num__max_private_risk` | 0.0737 |
-| `z013` | 8 | `num__rep` | 0.0686 |
-| `z013` | 9 | `num__round` | 0.0653 |
-| `z013` | 10 | `cat__run_treatment_persona_baseline_risk_averse` | 0.0621 |
-| `z013` | 11 | `num__round_payoff` | 0.0549 |
-| `z013` | 12 | `cat__run_treatment_Rminus_risk_averse` | 0.0547 |
-| `z014` | 1 | `num__prompt_chars` | -0.7915 |
-| `z014` | 2 | `num__response_chars` | -0.4162 |
-| `z014` | 3 | `num__attempts` | -0.2439 |
-| `z014` | 4 | `num__progress_gap_before` | 0.2021 |
-| `z014` | 5 | `num__opponent_stage_payoff_before` | -0.1282 |
-| `z014` | 6 | `num__step_increment` | -0.1144 |
-| `z014` | 7 | `num__opponent_private_risk_before` | -0.1116 |
-| `z014` | 8 | `num__opponent_progress_before` | -0.0964 |
-| `z014` | 9 | `num__round` | -0.0920 |
-| `z014` | 10 | `num__max_private_risk` | -0.0790 |
-| `z014` | 11 | `cat__seat_persona_role_cooperative` | -0.0675 |
-| `z014` | 12 | `cat__own_prev_action_safe` | -0.0656 |
+| `z000` | 1 | `num__prompt_chars` | 0.7619 |
+| `z000` | 2 | `num__response_chars` | 0.5195 |
+| `z000` | 3 | `num__attempts` | 0.2384 |
+| `z000` | 4 | `num__step_increment` | 0.2197 |
+| `z000` | 5 | `num__round_payoff` | 0.1199 |
+| `z000` | 6 | `num__rep` | 0.0837 |
+| `z000` | 7 | `num__max_private_risk` | 0.0689 |
+| `z000` | 8 | `num__round` | 0.0611 |
+| `z000` | 9 | `num__own_progress_before` | 0.0477 |
+| `z000` | 10 | `num__opponent_progress_before` | 0.0464 |
+| `z000` | 11 | `num__own_stage_payoff_before` | 0.0443 |
+| `z000` | 12 | `num__opponent_stage_payoff_before` | 0.0408 |
+| `z001` | 1 | `num__response_chars` | -0.4881 |
+| `z001` | 2 | `num__prompt_chars` | -0.3709 |
+| `z001` | 3 | `cat__opponent_prev_action_none` | -0.2769 |
+| `z001` | 4 | `cat__own_prev_action_none` | -0.2769 |
+| `z001` | 5 | `num__attempts` | -0.2355 |
+| `z001` | 6 | `num__max_private_risk` | -0.2188 |
+| `z001` | 7 | `num__step_increment` | -0.1930 |
+| `z001` | 8 | `num__opponent_progress_before` | 0.1666 |
+| `z001` | 9 | `num__own_progress_before` | 0.1640 |
+| `z001` | 10 | `num__opponent_stage_payoff_before` | 0.1584 |
+| `z001` | 11 | `num__round` | 0.1577 |
+| `z001` | 12 | `num__opponent_private_risk_before` | 0.1572 |
+| `z002` | 1 | `num__prompt_chars` | 0.8547 |
+| `z002` | 2 | `num__attempts` | 0.2148 |
+| `z002` | 3 | `num__response_chars` | 0.1937 |
+| `z002` | 4 | `num__round_payoff` | -0.1455 |
+| `z002` | 5 | `cat__seat_persona_role_risk-averse` | 0.1341 |
+| `z002` | 6 | `cat__persona_condition_R-` | 0.1341 |
+| `z002` | 7 | `num__round` | 0.1164 |
+| `z002` | 8 | `num__max_private_risk` | 0.1076 |
+| `z002` | 9 | `cat__run_treatment_Rminus_risk_averse` | 0.1041 |
+| `z002` | 10 | `cat__opponent_prev_action_safe` | 0.0979 |
+| `z002` | 11 | `num__rep` | 0.0834 |
+| `z002` | 12 | `cat__lane_persona` | 0.0809 |
+| `z003` | 1 | `num__prompt_chars` | 0.6343 |
+| `z003` | 2 | `num__own_private_risk_before` | 0.4079 |
+| `z003` | 3 | `num__response_chars` | 0.3526 |
+| `z003` | 4 | `num__opponent_private_risk_before` | 0.3264 |
+| `z003` | 5 | `num__max_private_risk` | 0.2941 |
+| `z003` | 6 | `num__attempts` | 0.1997 |
+| `z003` | 7 | `cat__own_prev_action_unsafe` | 0.1095 |
+| `z003` | 8 | `num__rep` | 0.1049 |
+| `z003` | 9 | `num__step_increment` | 0.1031 |
+| `z003` | 10 | `cat__own_prev_action_safe` | -0.0646 |
+| `z003` | 11 | `num__progress_gap_before` | 0.0642 |
+| `z003` | 12 | `num__stop_draw` | -0.0574 |
+| `z004` | 1 | `num__attempts` | 0.6017 |
+| `z004` | 2 | `num__prompt_chars` | 0.5353 |
+| `z004` | 3 | `num__retry_count` | 0.4449 |
+| `z004` | 4 | `num__response_chars` | 0.3378 |
+| `z004` | 5 | `num__step_increment` | 0.1408 |
+| `z004` | 6 | `num__round_payoff` | 0.0734 |
+| `z004` | 7 | `num__rep` | 0.0486 |
+| `z004` | 8 | `num__max_private_risk` | 0.0462 |
+| `z004` | 9 | `num__round` | 0.0364 |
+| `z004` | 10 | `cat__model_google/gemini-3-flash-preview` | 0.0328 |
+| `z004` | 11 | `num__opponent_progress_before` | 0.0299 |
+| `z004` | 12 | `num__own_progress_before` | 0.0294 |
+| `z005` | 1 | `num__progress_gap_before` | 0.7967 |
+| `z005` | 2 | `num__own_stage_payoff_before` | 0.2695 |
+| `z005` | 3 | `num__own_private_risk_before` | 0.2324 |
+| `z005` | 4 | `num__opponent_stage_payoff_before` | -0.2077 |
+| `z005` | 5 | `num__prompt_chars` | 0.1693 |
+| `z005` | 6 | `num__max_private_risk` | 0.1584 |
+| `z005` | 7 | `cat__seat_persona_role_adversarial` | 0.1363 |
+| `z005` | 8 | `num__own_progress_before` | 0.1272 |
+| `z005` | 9 | `num__rep` | 0.1014 |
+| `z005` | 10 | `cat__opponent_prev_action_safe` | 0.0870 |
+| `z005` | 11 | `cat__run_treatment_persona_baseline_coop_adv` | 0.0848 |
+| `z005` | 12 | `cat__persona_condition_S_CA` | 0.0831 |
+| `z006` | 1 | `num__prompt_chars` | 0.7675 |
+| `z006` | 2 | `num__response_chars` | 0.4319 |
+| `z006` | 3 | `num__step_increment` | 0.2105 |
+| `z006` | 4 | `num__attempts` | 0.1777 |
+| `z006` | 5 | `cat__lane_persona` | 0.1374 |
+| `z006` | 6 | `cat__run_group_persona` | 0.1374 |
+| `z006` | 7 | `cat__model_google/gemini-3-flash-preview` | 0.1317 |
+| `z006` | 8 | `num__round_payoff` | 0.1120 |
+| `z006` | 9 | `cat__model_qwen2.5:7b-instruct-fp16` | -0.0837 |
+| `z006` | 10 | `cat__opponent_prev_action_unsafe` | 0.0773 |
+| `z006` | 11 | `num__opponent_stage_payoff_before` | 0.0742 |
+| `z006` | 12 | `cat__seat_persona_role_risk-seeking` | 0.0672 |
+| `z007` | 1 | `num__prompt_chars` | -0.7105 |
+| `z007` | 2 | `num__response_chars` | -0.4809 |
+| `z007` | 3 | `num__rep` | 0.2737 |
+| `z007` | 4 | `num__step_increment` | -0.2137 |
+| `z007` | 5 | `num__attempts` | -0.2134 |
+| `z007` | 6 | `num__round_payoff` | -0.1418 |
+| `z007` | 7 | `num__progress_gap_before` | -0.1291 |
+| `z007` | 8 | `cat__seat_persona_role_adversarial` | -0.0968 |
+| `z007` | 9 | `num__own_stage_payoff_before` | -0.0720 |
+| `z007` | 10 | `cat__model_qwen2.5:7b-instruct-fp16` | -0.0699 |
+| `z007` | 11 | `cat__own_prev_action_unsafe` | -0.0569 |
+| `z007` | 12 | `num__opponent_private_risk_before` | 0.0557 |
+| `z008` | 1 | `num__prompt_chars` | 0.6085 |
+| `z008` | 2 | `num__response_chars` | 0.4575 |
+| `z008` | 3 | `cat__run_group_baseline` | 0.2157 |
+| `z008` | 4 | `cat__lane_baseline` | 0.2157 |
+| `z008` | 5 | `num__attempts` | 0.2107 |
+| `z008` | 6 | `num__step_increment` | 0.1936 |
+| `z008` | 7 | `num__max_private_risk` | -0.1686 |
+| `z008` | 8 | `cat__persona_condition_none` | 0.1562 |
+| `z008` | 9 | `cat__seat_persona_role_` | 0.1562 |
+| `z008` | 10 | `cat__model_qwen2.5:7b-instruct-fp16` | -0.1353 |
+| `z008` | 11 | `cat__opponent_prev_action_unsafe` | 0.1184 |
+| `z008` | 12 | `cat__own_prev_action_unsafe` | 0.1084 |
+| `z009` | 1 | `num__prompt_chars` | 0.7122 |
+| `z009` | 2 | `num__response_chars` | 0.4693 |
+| `z009` | 3 | `num__rep` | 0.2393 |
+| `z009` | 4 | `num__attempts` | 0.2095 |
+| `z009` | 5 | `num__step_increment` | 0.2068 |
+| `z009` | 6 | `num__max_private_risk` | -0.1976 |
+| `z009` | 7 | `num__stop_draw` | -0.1255 |
+| `z009` | 8 | `num__round_payoff` | 0.1148 |
+| `z009` | 9 | `num__opponent_private_risk_before` | -0.0870 |
+| `z009` | 10 | `cat__run_group_lane_b` | 0.0768 |
+| `z009` | 11 | `cat__lane_lane_b` | 0.0768 |
+| `z009` | 12 | `cat__seat_persona_role_adversarial` | 0.0675 |
+| `z010` | 1 | `num__prompt_chars` | -0.7934 |
+| `z010` | 2 | `num__response_chars` | -0.3396 |
+| `z010` | 3 | `num__attempts` | -0.2090 |
+| `z010` | 4 | `cat__persona_condition_R0` | -0.1771 |
+| `z010` | 5 | `cat__seat_persona_role_neutral` | -0.1771 |
+| `z010` | 6 | `cat__run_treatment_persona_baseline_neutral` | -0.1339 |
+| `z010` | 7 | `cat__run_group_lane_a` | -0.1144 |
+| `z010` | 8 | `cat__lane_lane_a` | -0.1144 |
+| `z010` | 9 | `num__round` | -0.0996 |
+| `z010` | 10 | `num__own_progress_before` | -0.0942 |
+| `z010` | 11 | `num__own_stage_payoff_before` | -0.0928 |
+| `z010` | 12 | `num__opponent_progress_before` | -0.0918 |
+| `z011` | 1 | `num__prompt_chars` | 0.6111 |
+| `z011` | 2 | `num__response_chars` | 0.4057 |
+| `z011` | 3 | `num__round` | 0.2786 |
+| `z011` | 4 | `num__own_progress_before` | 0.2752 |
+| `z011` | 5 | `num__opponent_progress_before` | 0.2711 |
+| `z011` | 6 | `num__own_stage_payoff_before` | 0.2657 |
+| `z011` | 7 | `num__opponent_stage_payoff_before` | 0.2545 |
+| `z011` | 8 | `num__attempts` | 0.1889 |
+| `z011` | 9 | `num__step_increment` | 0.1694 |
+| `z011` | 10 | `num__rep` | 0.1362 |
+| `z011` | 11 | `num__round_payoff` | 0.0893 |
+| `z011` | 12 | `num__stop_draw` | 0.0634 |
+| `z012` | 1 | `num__prompt_chars` | -0.8652 |
+| `z012` | 2 | `num__response_chars` | -0.2972 |
+| `z012` | 3 | `num__attempts` | -0.2324 |
+| `z012` | 4 | `cat__seat_persona_role_cooperative` | -0.1123 |
+| `z012` | 5 | `cat__lane_persona` | -0.0973 |
+| `z012` | 6 | `cat__run_group_persona` | -0.0973 |
+| `z012` | 7 | `cat__model_google/gemini-3-flash-preview` | -0.0938 |
+| `z012` | 8 | `cat__persona_condition_S_CC` | -0.0920 |
+| `z012` | 9 | `cat__run_treatment_S_CC_coop_coop` | -0.0920 |
+| `z012` | 10 | `num__round_payoff` | 0.0737 |
+| `z012` | 11 | `num__stop_draw` | 0.0722 |
+| `z012` | 12 | `cat__own_prev_action_safe` | -0.0644 |
+| `z013` | 1 | `num__prompt_chars` | -0.6639 |
+| `z013` | 2 | `num__response_chars` | -0.5128 |
+| `z013` | 3 | `num__stop_draw` | 0.2879 |
+| `z013` | 4 | `num__attempts` | -0.2382 |
+| `z013` | 5 | `num__step_increment` | -0.2148 |
+| `z013` | 6 | `num__own_progress_before` | 0.1211 |
+| `z013` | 7 | `num__opponent_progress_before` | 0.1187 |
+| `z013` | 8 | `num__round_payoff` | -0.1168 |
+| `z013` | 9 | `num__own_stage_payoff_before` | 0.1157 |
+| `z013` | 10 | `num__max_private_risk` | -0.1145 |
+| `z013` | 11 | `num__round` | 0.1113 |
+| `z013` | 12 | `num__opponent_stage_payoff_before` | 0.1090 |
+| `z014` | 1 | `num__prompt_chars` | -0.8362 |
+| `z014` | 2 | `num__response_chars` | -0.3353 |
+| `z014` | 3 | `num__attempts` | -0.2865 |
+| `z014` | 4 | `num__round_payoff` | 0.1627 |
+| `z014` | 5 | `num__progress_gap_before` | 0.1200 |
+| `z014` | 6 | `cat__model_qwen2.5:7b-instruct-fp16` | -0.0948 |
+| `z014` | 7 | `cat__run_group_lane_a` | -0.0872 |
+| `z014` | 8 | `cat__lane_lane_a` | -0.0872 |
+| `z014` | 9 | `cat__opponent_prev_action_unsafe` | -0.0619 |
+| `z014` | 10 | `num__rep` | -0.0601 |
+| `z014` | 11 | `num__own_private_risk_before` | 0.0582 |
+| `z014` | 12 | `cat__seat_persona_role_cooperative` | -0.0508 |
 
 ## Representative local explanations
 
 | rank | game_id | round | prob_unsafe | top code contributions (code, signed) |
 |---:|---|---:|---:|---|
-| 1 | ai_race_risk_90__google-gemini-3-flash-preview__en__persona_risk_seeking__rep0004 | 1 | 0.770 | [["z012", 1.2275371067536844], ["z004", 0.08922136130603782]] |
-| 2 | ai_race_risk_90__google-gemini-3-flash-preview__en__persona_coop_adv__rep0002 | 5 | 0.064 | [["z008", -3.0160307970914864], ["z005", 0.3509462875595849], ["z004", 0.0937225573056181]] |
-| 3 | ai_race_risk_60__google-gemini-3-flash-preview__en__persona_neutral__rep0007 | 7 | 0.948 | [["z011", 2.0800768818510114], ["z001", 0.428837492247897], ["z006", 0.2531327420233201], ["z007", 0.1469497075028921], ["z004", 0.0930069111588456]] |
-| 4 | ai_race_risk_60__google-gemini-3-flash-preview__en__persona_coop_coop__rep0009 | 1 | 0.044 | [["z002", -3.464869127528454], ["z008", -2.1416973865563778], ["z012", 1.532059215531911], ["z007", 1.0646959845802673], ["z004", 0.04627141168530551]] |
-| 5 | ai_race_risk_60__google-gemini-3-flash-preview__en__persona_adv_coop__rep0000 | 5 | 0.985 | [["z002", -6.03730681299656], ["z011", 5.744738331981472], ["z006", 3.1627277810941483], ["z014", -1.9714030568249685], ["z000", 1.1286647380233625], ["z012", 1.002163583971796], ["z015", 0.9343112684538666], ["z003", 0.35068409555716895]] |
-| 6 | ai_race_risk_60__google-gemini-3-flash-preview__en__companies_default__rep0002 | 1 | 0.988 | [["z012", 2.6248457974712314], ["z009", 1.8104725363117773], ["z004", 0.04458534089034843]] |
-| 7 | ai_race_risk_10__qwen2.5-7b-instruct-fp16__en__companies_swapped__rep0009 | 1 | 0.011 | [["z008", -10.845184228058296], ["z012", 2.0830912305322733], ["z007", 1.7172126603348512], ["z015", 1.158712670267657], ["z000", 0.9999815801921494], ["z010", 0.5040154340175376]] |
-| 8 | ai_race_risk_90__qwen2.5-7b-instruct-fp16__en__persona_risk_averse__rep0009 | 2 | 0.991 | [["z013", -2.9137649150347116], ["z011", 2.314105899523018], ["z007", 2.3047511981496482], ["z015", 1.1583419123778922], ["z012", 1.0281100366297746], ["z003", 0.9561487286989032]] |
-| 9 | ai_race_risk_10__google-gemini-3-flash-preview__en__persona_risk_averse__rep0007 | 4 | 0.993 | [["z000", 2.9997328254409434], ["z006", 2.686202909457413], ["z013", -2.505053248658711], ["z007", 1.446503344233956], ["z002", -1.2563115247831653], ["z003", 0.9314171913977671], ["z012", 0.6764102377817941], ["z015", 0.04513183760611082]] |
-| 10 | ai_race_risk_90__google-gemini-3-flash-preview__en__persona_coop_adv__rep0002 | 4 | 0.994 | [["z002", -5.118019820123171], ["z006", 3.2105827901812987], ["z011", 2.5645125647553315], ["z012", 1.3796862820994567], ["z003", 1.2346635745509473], ["z005", 1.0216051074615384], ["z015", 0.6039298832568295], ["z010", 0.3560088459920688]] |
-| 11 | ai_race_risk_90__google-gemini-3-flash-preview__en__companies_default__rep0000 | 2 | 0.006 | [["z008", -14.016589984642403], ["z006", 3.61311255858359], ["z009", 3.18593361134527], ["z003", 2.171615338848054]] |
-| 12 | ai_race_risk_10__qwen2.5-7b-instruct-fp16__en__persona_risk_averse__rep0009 | 3 | 0.995 | [["z013", -2.362595235177116], ["z007", 2.360388690026633], ["z000", 2.118585954917976], ["z015", 1.131751438814122], ["z003", 1.0290681994980682], ["z012", 0.5500180503662555], ["z011", 0.5104351475453779], ["z005", 0.04244730804008627]] |
-| 13 | ai_race_risk_60__google-gemini-3-flash-preview__en__persona_adv_coop__rep0002 | 5 | 0.995 | [["z002", -6.308872120562865], ["z011", 4.454767249685399], ["z006", 3.3744362501498553], ["z005", 1.3008735320988984], ["z000", 1.0372565512286889], ["z012", 0.9889645930298038], ["z015", 0.48345962421366667], ["z010", 0.09009229298266083], ["z009", 0.010680296528787155]] |
-| 14 | ai_race_risk_10__qwen2.5-7b-instruct-fp16__en__persona_risk_averse__rep0000 | 2 | 0.005 | [["z008", -6.342350014577648], ["z013", -3.714293259375457], ["z000", 2.477247265693897], ["z003", 2.2252471588257228], ["z012", 0.10793781522121171]] |
-| 15 | ai_race_risk_60__qwen2.5-7b-instruct-fp16__en__persona_risk_averse__rep0009 | 13 | 0.996 | [["z011", 2.757198178462092], ["z013", -2.3193809933890543], ["z001", 1.8315314153410334], ["z015", 1.3031042170164344], ["z005", 1.06635332833894], ["z007", 0.9028603209316645]] |
-| 16 | ai_race_risk_10__qwen2.5-7b-instruct-fp16__en__companies_swapped__rep0007 | 13 | 0.004 | [["z008", -10.430550034502811], ["z001", 2.4348520597233483], ["z000", 2.287210829126821], ["z015", 1.1294507739481985], ["z014", -1.0147280585755953], ["z010", 0.19518369766953347]] |
-| 17 | ai_race_risk_60__google-gemini-3-flash-preview__en__persona_neutral__rep0008 | 3 | 0.996 | [["z002", -5.340925803846826], ["z006", 3.730242556857733], ["z011", 2.62890999663498], ["z007", 2.398069919834939], ["z003", 1.4540305507095816], ["z012", 0.4003137969404534], ["z000", 0.3857013468271826]] |
-| 18 | ai_race_risk_90__google-gemini-3-flash-preview__en__companies_default__rep0001 | 2 | 0.004 | [["z008", -14.388247671354522], ["z006", 3.5726555947840777], ["z009", 3.265459262434996], ["z003", 2.1054919469312123]] |
-| 19 | ai_race_risk_10__qwen2.5-7b-instruct-fp16__en__companies_swapped__rep0007 | 1 | 0.004 | [["z008", -11.987185408370841], ["z012", 2.2874660297402865], ["z015", 1.347194160523356], ["z000", 1.223728241076521], ["z007", 1.007582876881509], ["z010", 0.6518960571947612]] |
-| 20 | ai_race_risk_90__google-gemini-3-flash-preview__en__persona_neutral__rep0008 | 4 | 0.996 | [["z002", -5.772609634559055], ["z006", 3.8794942362632585], ["z011", 3.6041883404855057], ["z007", 2.263816246247615], ["z003", 1.2669340475766337], ["z012", 0.4045355891232259], ["z001", 0.0794427156832198]] |
-| 21 | ai_race_risk_60__qwen2.5-7b-instruct-fp16__en__persona_risk_averse__rep0007 | 15 | 0.996 | [["z011", 3.3236962041598592], ["z013", -2.2423204302768402], ["z001", 2.1822108308337587], ["z005", 1.4347010377629235], ["z015", 1.0416674164041535]] |
-| 22 | ai_race_risk_10__qwen2.5-7b-instruct-fp16__en__companies_swapped__rep0009 | 3 | 0.004 | [["z008", -13.054460234587564], ["z000", 2.6543118140545183], ["z007", 1.8806510916381074], ["z015", 1.4784422014553322], ["z010", 0.7561544985134414], ["z003", 0.5297377423284361], ["z012", 0.23268489426901318]] |
-| 23 | ai_race_risk_10__google-gemini-3-flash-preview__en__companies_default__rep0003 | 10 | 0.996 | [["z000", 2.2475132328300798], ["z009", 2.0763530708352], ["z001", 1.383136822020156], ["z004", 0.0443496754031843]] |
-| 24 | ai_race_risk_60__google-gemini-3-flash-preview__en__persona_coop_adv__rep0002 | 3 | 0.997 | [["z002", -4.1691352066493845], ["z006", 3.1195884523934563], ["z003", 1.5219935262975404], ["z011", 1.370912021903601], ["z012", 1.3540384978441364], ["z005", 0.9612045654260338], ["z000", 0.9069464391258228], ["z010", 0.35340040253874777], ["z015", 0.3498216000424249]] |
-| 25 | ai_race_risk_10__google-gemini-3-flash-preview__en__persona_risk_averse__rep0000 | 4 | 0.997 | [["z000", 3.6716932975718772], ["z006", 3.1345144685126334], ["z013", -2.3702963140588635], ["z003", 1.6980599881305163], ["z002", -1.6614329038741895], ["z011", 0.8042519907613294], ["z012", 0.46717025068605506], ["z015", 0.04509028565914756]] |
-| 26 | ai_race_risk_60__google-gemini-3-flash-preview__en__companies_default__rep0006 | 3 | 0.997 | [["z009", 3.8745489809382363], ["z002", -3.152424309474844], ["z003", 1.6378625999997496], ["z015", 1.280561078730601], ["z007", 1.251527219599756], ["z012", 0.4777688747220438], ["z011", 0.2913272542610185], ["z000", 0.266448110261102], ["z013", -0.10554992596526999]] |
-| 27 | ai_race_risk_60__qwen2.5-7b-instruct-fp16__en__persona_risk_averse__rep0008 | 4 | 0.997 | [["z011", 3.1419211699463125], ["z013", -2.8138185293966664], ["z007", 1.9623105612477796], ["z015", 1.4453595581263932], ["z012", 0.8294136461057723], ["z003", 0.7709311710022184], ["z000", 0.3242591197907971], ["z005", 0.18396191826223623]] |
-| 28 | ai_race_risk_10__qwen2.5-7b-instruct-fp16__en__persona_risk_averse__rep0008 | 3 | 0.003 | [["z008", -6.614596509657199], ["z013", -3.7193881561847624], ["z000", 1.8317536530307832], ["z007", 1.6963179792936276], ["z003", 1.1714160355209768], ["z012", 0.0013686079481633488]] |
-| 29 | ai_race_risk_10__qwen2.5-7b-instruct-fp16__en__persona_risk_averse__rep0008 | 4 | 0.997 | [["z013", -2.413580239859557], ["z000", 2.362857278145854], ["z007", 1.963342538336104], ["z015", 1.281708512648449], ["z011", 1.2005414000385592], ["z003", 1.0209924130322126], ["z012", 0.410763086775113], ["z005", 0.10011348600057678]] |
-| 30 | ai_race_risk_60__qwen2.5-7b-instruct-fp16__en__persona_risk_averse__rep0005 | 4 | 0.997 | [["z011", 3.9711442708946207], ["z013", -3.0854022128687157], ["z015", 1.4386435725854856], ["z003", 1.1357196739621216], ["z007", 0.9078571233543347], ["z012", 0.8416240276098936], ["z000", 0.6315365059311924], ["z005", 0.14232267063619403]] |
+| 1 | ai_race_risk_90__qwen2.5-7b-instruct-fp16__en__persona_coop_adv__rep0000 | 1 | 0.486 | [["z012", -9.4409550425941], ["z000", 7.035527743167376], ["z001", 6.329431848766571], ["z007", 2.951974180503702]] |
+| 2 | ai_race_risk_60__google-gemini-3.1-flash-lite-preview__en__companies_default__rep0006 | 9 | 0.460 | [["z000", 11.325126254520235], ["z001", -4.974017866229909], ["z008", 1.934451329902043], ["z003", -1.5124729251012312]] |
+| 3 | ai_race_risk_90__google-gemini-3-flash-preview__en__persona_risk_seeking__rep0003 | 11 | 0.459 | [["z000", 9.548168396360042], ["z003", -2.508288367676574], ["z001", -1.505380023686022], ["z011", 1.2334322982623276]] |
+| 4 | ai_race_risk_90__google-gemini-3-flash-preview__en__persona_risk_seeking__rep0003 | 11 | 0.459 | [["z000", 9.548168396360042], ["z003", -2.508288367676574], ["z001", -1.505380023686022], ["z011", 1.2334322982623276]] |
+| 5 | ai_race_risk_90__google-gemini-3.1-flash-lite-preview__en__companies_default__rep0007 | 14 | 0.453 | [["z000", 7.344669237982248], ["z003", -2.262144824595655], ["z011", 1.9438532891588254], ["z005", -0.28335282069051554]] |
+| 6 | ai_race_risk_90__google-gemini-3.1-flash-lite-preview__en__companies_default__rep0007 | 14 | 0.453 | [["z000", 7.344669237982248], ["z003", -2.262144824595655], ["z011", 1.9438532891588254], ["z005", -0.28335282069051554]] |
+| 7 | ai_race_risk_60__qwen2.5-7b-instruct-fp16__en__companies_swapped__rep0007 | 12 | 0.547 | [["z000", 7.812016402036445], ["z003", -1.5441768101867752], ["z011", 1.5110463547509612], ["z005", -0.6560454913813979]] |
+| 8 | ai_race_risk_90__google-gemini-3.1-flash-lite-preview__en__companies_default__rep0007 | 13 | 0.559 | [["z000", 7.978170480318294], ["z003", -2.2256884777756736], ["z011", 1.6992522182735261], ["z005", -0.2829918231154913]] |
+| 9 | ai_race_risk_90__google-gemini-3.1-flash-lite-preview__en__companies_default__rep0007 | 13 | 0.559 | [["z000", 7.978170480318294], ["z003", -2.2256884777756736], ["z011", 1.6992522182735261], ["z005", -0.2829918231154913]] |
+| 10 | ai_race_risk_90__qwen2.5-7b-instruct-fp16__en__persona_adv_adv__rep0005 | 10 | 0.417 | [["z000", 9.205558837846215], ["z001", -2.7539179032019816], ["z005", 0.4296394269434404], ["z015", -0.28495555745726997]] |
+| 11 | ai_race_risk_90__google-gemini-3-flash-preview__en__persona_risk_seeking__rep0003 | 9 | 0.606 | [["z000", 8.70649348929511], ["z004", 6.166680958516496], ["z001", -5.511059677642464], ["z003", -2.0004776086408005]] |
+| 12 | ai_race_risk_90__google-gemini-3.5-flash-lite__en__companies_default__rep0002 | 2 | 0.388 | [["z000", 7.851865878439371], ["z003", -3.26901495951239], ["z013", 2.2047209783515878], ["z005", -0.3095414716557069]] |
+| 13 | ai_race_risk_90__google-gemini-3.5-flash-lite__en__companies_default__rep0002 | 2 | 0.388 | [["z000", 7.851865878439371], ["z003", -3.26901495951239], ["z013", 2.2047209783515878], ["z005", -0.3095414716557069]] |
+| 14 | ai_race_risk_90__google-gemini-3.1-flash-lite-preview__en__companies_default__rep0007 | 15 | 0.378 | [["z000", 6.858591071138834], ["z003", -2.2913525707590785], ["z011", 2.152463598242535], ["z005", -0.28483699997753403]] |
+| 15 | ai_race_risk_90__google-gemini-3.1-flash-lite-preview__en__companies_default__rep0005 | 2 | 0.369 | [["z000", 8.0148639781261], ["z003", -3.310187527017221], ["z013", 1.990152659291019], ["z005", -0.29683723052742]] |
+| 16 | ai_race_risk_90__google-gemini-3.1-flash-lite-preview__en__companies_default__rep0005 | 2 | 0.369 | [["z000", 8.0148639781261], ["z003", -3.310187527017221], ["z013", 1.990152659291019], ["z005", -0.29683723052742]] |
+| 17 | ai_race_risk_60__google-gemini-3-flash-preview__en__companies_default__rep0009 | 11 | 0.632 | [["z000", 8.204668408353113], ["z003", -1.7168360083549947], ["z011", 1.401365995392197], ["z001", -0.4167833171859874]] |
+| 18 | ai_race_risk_90__google-gemini-3.1-flash-lite-preview__en__companies_default__rep0006 | 2 | 0.364 | [["z000", 8.073453951237386], ["z003", -3.3213423462476346], ["z013", 1.9160025689539821], ["z005", -0.29212202414600874]] |
+| 19 | ai_race_risk_90__google-gemini-3.1-flash-lite-preview__en__companies_default__rep0006 | 2 | 0.364 | [["z000", 8.073453951237386], ["z003", -3.3213423462476346], ["z013", 1.9160025689539821], ["z005", -0.29212202414600874]] |
+| 20 | ai_race_risk_60__qwen2.5-7b-instruct-fp16__en__persona_coop_adv__rep0007 | 10 | 0.359 | [["z000", 9.912292175011855], ["z001", -2.6832821565976075], ["z005", -0.6094009474904615], ["z015", -0.26438190293046315]] |
+| 21 | ai_race_risk_90__google-gemini-3.1-flash-lite-preview__en__companies_default__rep0007 | 2 | 0.359 | [["z000", 8.132042425308809], ["z003", -3.3324987284343646], ["z013", 1.8418523360346017], ["z005", -0.2874070522003545]] |
+| 22 | ai_race_risk_90__google-gemini-3.1-flash-lite-preview__en__companies_default__rep0007 | 2 | 0.359 | [["z000", 8.132042425308809], ["z003", -3.3324987284343646], ["z013", 1.8418523360346017], ["z005", -0.2874070522003545]] |
+| 23 | ai_race_risk_90__google-gemini-3.1-flash-lite-preview__en__companies_default__rep0007 | 16 | 0.340 | [["z000", 6.626166938838952], ["z011", 2.3133549851649713], ["z003", -2.194127505508314], ["z005", -0.47428446826255477]] |
+| 24 | ai_race_risk_60__google-gemini-3.5-flash-lite__en__companies_default__rep0007 | 12 | 0.661 | [["z000", 8.243099293364091], ["z003", -1.4994663933749184], ["z011", 1.490561749791464], ["z001", -0.6321926431684561]] |
+| 25 | ai_race_risk_60__qwen2.5-7b-instruct-fp16__en__persona_adv_adv__rep0007 | 15 | 0.337 | [["z000", 5.5461456926487145], ["z011", 1.7719359446707357], ["z001", -0.8338451505316323], ["z015", -0.22933398999890708]] |
+| 26 | ai_race_risk_60__qwen2.5-7b-instruct-fp16__en__persona_adv_adv__rep0007 | 16 | 0.673 | [["z000", 6.1095328430737155], ["z011", 1.9130109909727584], ["z015", -0.22373790629747986], ["z005", -0.14355442495869775]] |
+| 27 | ai_race_risk_60__google-gemini-3.5-flash-lite__en__companies_default__rep0007 | 11 | 0.677 | [["z000", 8.663892775060527], ["z003", -1.5353165085136613], ["z011", 1.3147658863496463], ["z001", -0.7706843366534845]] |
+| 28 | ai_race_risk_90__google-gemini-3.1-flash-lite-preview__en__companies_default__rep0007 | 12 | 0.679 | [["z000", 8.629701674466839], ["z003", -2.1400146365510793], ["z011", 1.4668121038543358], ["z005", -0.27264334318267613]] |
+| 29 | ai_race_risk_90__google-gemini-3.1-flash-lite-preview__en__companies_default__rep0007 | 12 | 0.679 | [["z000", 8.629701674466839], ["z003", -2.1400146365510793], ["z011", 1.4668121038543358], ["z005", -0.27264334318267613]] |
+| 30 | ai_race_risk_60__qwen2.5-7b-instruct-fp16__en__companies_swapped__rep0007 | 14 | 0.315 | [["z000", 6.653000252096803], ["z011", 1.9597246884208277], ["z003", -1.6462915842735142], ["z005", -0.8118786900601714]] |

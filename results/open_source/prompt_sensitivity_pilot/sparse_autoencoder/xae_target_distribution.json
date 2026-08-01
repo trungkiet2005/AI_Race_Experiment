@@ -2,5 +2,5 @@
   "n_unsafe": 4623,
   "n_safe": 3567,
   "unsafe_rate": 0.5644688644688645,
-  "method": "dictionary_learning_sparse_autoencoder"
+  "method": "feature_space_minibatch_dictionary_learning_surrogate"
 }

@@ -78,6 +78,31 @@ python strategy_analysis/classify.py trajectories.jsonl \
 
 Do not silently pool that rule with the canonical four in confirmatory summaries.
 
+## Evolutionary-model reconstruction
+
+`egt_reconstruction.py` reconstructs the reduced evolutionary game disclosed in
+arXiv:2607.26034v1.  It sums the geometric race horizon deterministically to form
+the ordered AS/AU/CS/CAS payoff and Unsafe-fraction matrices, then estimates the
+finite-population stationary distribution with the documented EGTtools
+pairwise-comparison transition rule.
+
+This is deliberately labelled a **faithful reconstruction**, not a bitwise
+reproduction.  The arXiv v1 paper does not release its model code, EGTtools
+version, generated payoff matrices, or Monte Carlo seeds.  The full audit runs
+both conflicting reference mutation settings stated in the paper: main-text
+`beta=2, mu=beta/Z=0.02` and Figure-S5 `beta=2, mu=1/Z=0.01`.
+
+Run the complete reconstruction, LLM trajectory comparison, and PNG/PDF figure
+export from the repository root:
+
+```bash
+python results/scripts/reproduce_egt_model.py
+```
+
+The immutable-style output bundle is written to
+`results/open_source/egt_reproduction/` with CSV tables, a JSON provenance
+manifest, independent-chain diagnostics, and a Markdown admission report.
+
 ## Synthetic dataset generation and classifier evaluation
 
 `generate_dataset.py` simulates every ordered AS/AU/CS/CAS matchup, reusing

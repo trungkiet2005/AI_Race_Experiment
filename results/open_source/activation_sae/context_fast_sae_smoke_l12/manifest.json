@@ -1,0 +1,200 @@
+{
+  "schema_version": "ai-race.context-fast-sae.v1",
+  "status": "complete",
+  "created_at_utc": "2026-08-01T09:09:44.750741+00:00",
+  "config": {
+    "schema_version": "ai-race.context-fast-sae.v1",
+    "model_repo": "Qwen/Qwen2.5-7B-Instruct",
+    "model_revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+    "sae_repo": "Geaming/Qwen2.5-7B-Instruct_SAEs",
+    "sae_revision": "5a7ecabe1401bf4de11a0e6da1f7c36bbb46a464",
+    "sae_lens_version": "5.3.3",
+    "sae_id": "FAST/blocks_12_hook_resid_post_8X_2048_jumprelu",
+    "layer": 12,
+    "hook_name": "blocks.12.hook_resid_post",
+    "capture_position": "final prompt token before ACTION:P/Q",
+    "action_policy": "argmax full-sequence likelihood over ACTION: P/Q including EOS",
+    "profile": "smoke",
+    "states_per_risk": 4,
+    "base_seed": 260726,
+    "eval_fraction": 0.34,
+    "discovery_context_pairs": [
+      [
+        "technology_race",
+        "abstract_contest"
+      ],
+      [
+        "logistics_contract",
+        "crystal_guild_contract"
+      ]
+    ],
+    "evaluation_context_pairs": [
+      [
+        "hospital_deployment",
+        "colony_life_support"
+      ],
+      [
+        "robotic_expedition",
+        "fictional_cartography"
+      ]
+    ],
+    "top_features": 3,
+    "min_feature_prevalence": 0.05,
+    "steering_alphas": [
+      -2.0,
+      -1.0,
+      1.0,
+      2.0
+    ],
+    "steering_max_rows": 32,
+    "score_replay_tolerance": 0.002,
+    "device": "cuda",
+    "dtype": "bfloat16"
+  },
+  "config_fingerprint": "e88817f546fc52fa23948dbd1e3059dada037385494dcb87ebf40170d4930233",
+  "git_revision": null,
+  "runner_sha256": "0bc64d4ea2c866b164c24d040b3d1cb824f7863dfea8e8b3b71f6720911167de",
+  "source_sha256": {
+    "ai_race/audit/context_replay.py": "05f005a1d0ca29210843a5913a6632e7bf3007dc6ef08e5b047bb01fa245b3de",
+    "ai_race/prompts/context_skins.py": "dcbd2dba273db22f1e9c3594596ed5bbe001fe00274fdb0366367426bb948ea2",
+    "ai_race/engine/game.py": "1dbb5bb22f1314f8d4597c2a8be57dcf16616611ca6db3cb3c458e2124db144a",
+    "ai_race/engine/prompt.py": "816c049acd930e03ef1fc6c0c9cf60126b1604f561c08d45c2a567780197c252",
+    "kaggle/interpretability/greennode_fast_sae_selfplay.py": "a08ab8fe1989e98d431ee253d298ded427cd7cdfa9b63fd9cb32749638af4eaa"
+  },
+  "environment": {
+    "hostname": "nb-17c64ac4-3f70-43b9-8d6f-579c209b038d-5d7d76f986-4vdvg",
+    "python": "3.10.12",
+    "torch": "2.4.0a0+07cecf4168.nv24.5",
+    "transformer_lens": "2.11.0",
+    "sae_lens": "5.3.3",
+    "scikit_learn": "1.7.2"
+  },
+  "label_provenance": "native pinned HF checkpoint full-sequence P/Q likelihood; no Ollama or historical labels",
+  "evidence_class": "exploratory-fixed-state-context-mediation",
+  "claim_boundary": "checkpoint-, SAE-, layer-, context-pair-, state-bank-, and intervention-specific",
+  "stages": {
+    "capture": {
+      "status": "complete",
+      "n_states": 12,
+      "n_rows": 192,
+      "n_contexts": 8,
+      "n_mappings": 2,
+      "state_split": {
+        "ai_race_risk_10|trajectory-0000260727": "evaluation",
+        "ai_race_risk_10|trajectory-0000260728": "discovery",
+        "ai_race_risk_60|trajectory-0000260728": "evaluation",
+        "ai_race_risk_60|trajectory-0000260727": "discovery",
+        "ai_race_risk_90|trajectory-0000260726": "evaluation",
+        "ai_race_risk_90|trajectory-0000260728": "discovery"
+      },
+      "state_shards": [
+        {
+          "state_id": "5c07a205454c4d0f01ec9de0",
+          "json_sha256": "b0e52face9f7312e005d4fd7d4f08e5da1d069e8a6a903065f6fd78f734b49c8",
+          "npz_sha256": "c2dc851e7d8984a82b12a774e49d2c07e56206c6b2ae59097ec58e5e749b4859"
+        },
+        {
+          "state_id": "82d1103d8535596b20303c63",
+          "json_sha256": "90d5659c5d27f7f6f51e79b2e3cf07a9241f1420a8d313595a72ed22e30be1d2",
+          "npz_sha256": "3692fb7c77580ceb10eb2a0ba105927cfa6ec4491df15683bff59264be82c55a"
+        },
+        {
+          "state_id": "fd6b9850c72f045cd8236f7f",
+          "json_sha256": "b2419bfa2a8450c22586278124a1e698c2c956916ab5f9693d33d7e7b4e0a50e",
+          "npz_sha256": "2391a1b1c4f1030d6de5caf904edb73de0197ad5d7a8bec4b61a55a491debb37"
+        },
+        {
+          "state_id": "32f3384b26cf4a00b91aceb9",
+          "json_sha256": "d7d9031eea43988916afbceb00796df348d79b2b77c0a00f5e88bdda80447178",
+          "npz_sha256": "d20b3f1bb46e643a730e4050ac810fd877fb8152c6055d59976b6cb95942b906"
+        },
+        {
+          "state_id": "e7352d97633d791187b7a8f4",
+          "json_sha256": "0b8649c9f8f06e28308b527c6c06d37fb469d22a39a52039124acf45525ec361",
+          "npz_sha256": "acae5450b16bf6868666455f4b0c6dd0d87e3aa68a78079c1ebf6006e217201f"
+        },
+        {
+          "state_id": "c343eb44eb0f4bd6bd71546e",
+          "json_sha256": "669166e9f4da7c9bf11c6f017c67944842850898eae57c76fc8364b70b9a8081",
+          "npz_sha256": "7d105f8a4b9f4ee36010968cd3a0d48071cf4a4d7ab5cbb55cd62211848e0e55"
+        },
+        {
+          "state_id": "f55a17af24594d1f954bb810",
+          "json_sha256": "2a36f4db122c18a5cf15487c232b45999f741eca2c16c5d6f576be3c7309c5dc",
+          "npz_sha256": "f155a8e4f59b2b6350ceec593a19bd7b6135d8a8306c2e93acd49b73f8ae08dd"
+        },
+        {
+          "state_id": "56aba06ed200113b594e48f3",
+          "json_sha256": "5e8c7211d8999829a21fc656fa8d572ba42026eba4ab33f88f8b8b1d8315c78c",
+          "npz_sha256": "4a992535d553edf3fd5bc0142e5181bf8f3180dc71adb8809e51b83a3f1d0959"
+        },
+        {
+          "state_id": "e513a5f4cb8ef368f0d6cffb",
+          "json_sha256": "e954b43401791915750dc779d69c1511a98c54d0aa60df8ee8dd54756a8497db",
+          "npz_sha256": "846edd8aca96ed524b1004d70d516b7089c784491477c17ef93567b331ad964d"
+        },
+        {
+          "state_id": "8a03d76d52a20b85e7152d34",
+          "json_sha256": "966a04ab1913f2328ef5063fe46b14483a2b21915fbf3b5b930390e4c92bd853",
+          "npz_sha256": "83d31287aacdd41012e1fad39586b6b43ebf3caae910da580160b7128224b363"
+        },
+        {
+          "state_id": "d5ed9810dbdeffd29a0970d9",
+          "json_sha256": "4023a1ae666fb34b2f0a9b314f6eae8b122cafd0624231b28f0cb5df46a34dfc",
+          "npz_sha256": "65bfe967505cdc5bd62975c566c4456dbbaaa48f3261887d8964a5a20fa6d0da"
+        },
+        {
+          "state_id": "18a7b61772f2856fb15f359c",
+          "json_sha256": "8d53946d32707a11af0a3f6be02c9174ea579242f2652f28cb0de93a2738a61d",
+          "npz_sha256": "225af90fc40c04861e1b0d40add985ae61202aed9f7229d9ea6449a3d5db9d60"
+        }
+      ],
+      "game_config_sha256": {
+        "ai_race_risk_10": "c7cc0f83c60bffcce61dcf6d1abe90bc25961083a193c1bbf454dad8526f330b",
+        "ai_race_risk_60": "35a6f0af03199af3099e25ddd3ba90938c1f3f05fd6051bb1104d9c342bc93bb",
+        "ai_race_risk_90": "a676137698ef58c80163fe3a68a950ba75226df895baa949ddebc292b719f286"
+      },
+      "artifacts": {
+        "reachable_states.jsonl": "9dc1291937d671968d118e51382fe7394aa271b8f715eabe3e1b2209e173363e",
+        "context_skin_invariance.json": "1961aadfb3f0c6c76f19eb88b068a279265434228f6e61cce1b2e08d5bc0d1d4"
+      },
+      "completed_at_utc": "2026-08-01T09:10:46.340073+00:00"
+    },
+    "analyze": {
+      "status": "complete",
+      "selected_feature_ids": [
+        3930,
+        2660,
+        22035
+      ],
+      "artifacts": {
+        "context_analysis.json": "604fe677cc79166ff274fb6f1ec981cfa97fadb65b4570faafa0ec70671746c8",
+        "context_pair_rows.jsonl": "1e43d2c0c2700bc65b72031dfa27c84a7191d06cc8183a4184ae4bb33c7e5bf1"
+      },
+      "completed_at_utc": "2026-08-01T09:10:46.991578+00:00"
+    },
+    "steer": {
+      "status": "complete",
+      "n_rows": 1312,
+      "n_heldout_prompts": 32,
+      "max_baseline_replay_error": 0.0,
+      "artifacts": {
+        "context_steering_rows.jsonl": "948e2caaaee003edee9c733d8ced705092cfb02bff92ddc0791cb60fe087a0e7",
+        "context_steering_summary.json": "b79735af2a6773559f33b57b292f382304a157be090c8ed646c8607aab1c13ef"
+      },
+      "completed_at_utc": "2026-08-01T09:14:07.128074+00:00"
+    }
+  },
+  "resolved_artifacts": {
+    "model_snapshot": "/root/.cache/huggingface/models--Qwen--Qwen2.5-7B-Instruct/snapshots/a09a35458c702b33eeacc393d103063234e8bc28",
+    "sae_snapshot": "/root/.cache/huggingface/models--Geaming--Qwen2.5-7B-Instruct_SAEs/snapshots/5a7ecabe1401bf4de11a0e6da1f7c36bbb46a464",
+    "sae_cfg_sha256": "4a4d36d620850843a7656b2e1951e759b3877b8db7a0e740e9d37d8ed5d73528",
+    "sae_weights_sha256": "bc88be1bb601d4d18d1ffa0b898da65d66158873b6091a59ec2c12128e8b118a",
+    "cuda_device": "NVIDIA H100 80GB HBM3 MIG 4g.40gb",
+    "cuda_capability": [
+      9,
+      0
+    ]
+  },
+  "completed_at_utc": "2026-08-01T09:14:07.128946+00:00"
+}

@@ -1,0 +1,11 @@
+protocol,shard,status,expected_rows,observed_rows,observed_decisions_or_probes,parse_failures,retried_rows,paired_coverage_passed,admission_passed
+live_trajectory,lane_a/hospital_deployment,completed,6,6,72,0,0,True,not_applicable
+live_trajectory,lane_a/logistics_contract,completed,6,6,72,0,0,True,not_applicable
+live_trajectory,lane_a/robotic_expedition,completed,6,6,72,0,0,True,not_applicable
+live_trajectory,lane_a/technology_race,completed,6,6,72,0,0,True,not_applicable
+live_trajectory,lane_b/abstract_contest,completed,6,6,72,0,0,True,not_applicable
+live_trajectory,lane_b/colony_life_support,completed,6,6,72,0,0,True,not_applicable
+live_trajectory,lane_b/crystal_guild_contract,completed,6,6,72,0,0,True,not_applicable
+live_trajectory,lane_b/fictional_cartography,completed,6,6,72,0,0,True,not_applicable
+fixed_state_replay,lane_a,completed,48,48,128,0,0,True,False
+fixed_state_replay,lane_b,completed,48,48,128,0,0,True,False

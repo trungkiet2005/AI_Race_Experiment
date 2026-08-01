@@ -4,6 +4,26 @@ This tree contains admitted open-weight smoke and pilot artifacts. It does not
 retain Collective Risk outputs, placeholder observations, or fabricated effect
 sizes. Confirmatory AI Race inference remains pending.
 
+## Current expanded pilot index
+
+The single visual and narrative entry point is
+[`visualization_insight_full.md`](visualization_insight_full.md). The current
+evidence-bearing modules are:
+
+| Module | Primary artifact | Status |
+|---|---|---|
+| Context invariance, T=0 | [`analysis_live_pilot_t0`](open_source/context_skin_pilot/analysis_live_pilot_t0/) | 768 races; primary context pilot |
+| Context decoding sensitivity | [`analysis_temperature_robustness`](open_source/context_skin_pilot/analysis_temperature_robustness/) | paired T=0 versus T=.7; never pooled |
+| Fixed-state context replay | [`fixed_state_pilot_t0`](open_source/context_skin_pilot/fixed_state_pilot_t0/) | 1,536 matched cells |
+| Context recognition | [`context_recognition_v2_t0_confirm`](open_source/context_skin_pilot/context_recognition_v2_t0_confirm/) | v2 admitted; contradictory v1 retained as rejected evidence |
+| Native actual-self-play FAST-SAE | [`causal_selfplay`](open_source/activation_sae/causal_selfplay/) | association retained; causal specificity rejected |
+| Context FAST-SAE | [`context_fast_sae_analysis`](open_source/activation_sae/context_fast_sae_analysis/) | layer-20 diagnostic promoted; steering not promoted |
+| Evolutionary-game reconstruction | [`egt_reproduction`](open_source/egt_reproduction/) | faithful reconstruction; not bitwise author-code reproduction |
+
+All primary comparisons identify exact model digests, source/config/mechanism
+hashes, decoding contracts, seeds, and hardware. Failed admission tests and
+incompatible estimands remain visible rather than being pooled away.
+
 ```text
 results/
   open_source/     outputs from offline/open-weight Kaggle runs
@@ -41,7 +61,7 @@ The no-response variant is the preferred production-safe audit (it excludes
 `raw_response` from featureization to avoid direct target leakage).  
 `--include-response-text` enables an exploratory leakage-rich benchmark.
 
-Sparse-autoencoder sparse-code analysis is also available in
+Leakage-resistant sparse dictionary analysis is also available in
 `results/scripts/explain_action_sparse_autoencoder.py`:
 
 ```bash
@@ -53,8 +73,26 @@ python results/scripts/explain_action_sparse_autoencoder.py \
   --max-tfidf-features 300 \
   --max-learner-features 350 \
   --dict-iter 120 \
+  --split-unit race \
   --top-local-examples 30
 ```
+
+This is a feature-space surrogate over logged prompts and game states, not a
+neuron-level SAE. The default split holds out complete races and fits TF-IDF,
+imputation, scaling, feature selection, and the dictionary on training rows
+only. `--split-unit prompt_hash` is a stricter robustness check;
+`--split-unit row` is retained only to demonstrate how row-wise leakage can
+inflate predictive scores. Internal-activation SAE results are stored separately
+under [`open_source/activation_sae/`](open_source/activation_sae/README.md). The
+original attribution-only pilot remains associational because its decision and
+attribution runtimes differ. A newer native actual-self-play FAST-SAE run uses one
+revision-pinned runtime for actions and activations, splits by whole race, and
+adds matched-norm random, unrelated-feature, reconstruction, sign, dose, and live
+common-random-number controls. It retained held-out feature--action association
+but did not establish feature-specific causal control; see
+[`causal_selfplay/fast-sae-pilot-L12-v1/analysis`](open_source/activation_sae/causal_selfplay/fast-sae-pilot-L12-v1/analysis/).
+The frozen neuron-level design is documented in
+[`docs/experiments/activation_sae_protocol.md`](../docs/experiments/activation_sae_protocol.md).
 
 Artifacts include:
 

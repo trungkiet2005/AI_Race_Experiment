@@ -1,5 +1,12 @@
 #!/usr/bin/env python3
-"""Interpret LLM SAFE/UNSAFE actions with a sparse auto-encoder style representation."""
+"""Interpret SAFE/UNSAFE logs with a sparse dictionary-learning surrogate.
+
+This script operates on logged prompt/state features.  It is intentionally not
+described as a neuron-level sparse autoencoder: no internal model activations are
+read here.  Splits are made before feature fitting and are grouped by race by
+default so repeated turns from one endogenous trajectory cannot leak across the
+evaluation boundary.
+"""
 
 from __future__ import annotations
 
@@ -7,6 +14,7 @@ import argparse
 import hashlib
 import json
 import re
+import warnings
 from pathlib import Path
 from typing import Any
 
@@ -15,12 +23,13 @@ import pandas as pd
 from scipy.sparse import issparse
 
 from sklearn.compose import ColumnTransformer
-from sklearn.decomposition import DictionaryLearning
+from sklearn.exceptions import ConvergenceWarning
+from sklearn.decomposition import MiniBatchDictionaryLearning
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.impute import SimpleImputer
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, classification_report, log_loss, roc_auc_score
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import GroupShuffleSplit, train_test_split
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
@@ -65,6 +74,9 @@ CATEGORICAL_FEATURES = [
 
 
 PREFERRED_CONTEXT_COLUMNS = [
+    "run_root",
+    "run_group",
+    "run_treatment",
     "game_id",
     "player",
     "opponent",
@@ -73,6 +85,76 @@ PREFERRED_CONTEXT_COLUMNS = [
     "prompt_version",
     "run_root_name",
 ]
+
+
+def _race_group_key(turns: pd.DataFrame) -> pd.Series:
+    """Return a globally unique race key across pooled result roots."""
+    required = ["run_root", "run_group", "run_treatment", "game_id"]
+    missing = [column for column in required if column not in turns.columns]
+    if missing:
+        raise ValueError(f"Race-group split requires columns: {missing}")
+    return turns[required].fillna("missing").astype(str).agg("::".join, axis=1)
+
+
+def split_turns(
+    turns: pd.DataFrame,
+    *,
+    split_unit: str,
+    random_state: int,
+    test_size: float = 0.2,
+) -> tuple[pd.DataFrame, pd.DataFrame, dict[str, Any]]:
+    """Split raw rows before any imputation, scaling, one-hot, or TF-IDF fit."""
+    clean = turns[~turns["unsafe"].isna()].copy().reset_index(drop=True)
+    clean["unsafe"] = clean["unsafe"].astype(float)
+    if split_unit == "row":
+        train, test = train_test_split(
+            clean,
+            test_size=test_size,
+            random_state=random_state,
+            stratify=clean["unsafe"],
+        )
+        group_overlap = None
+        n_groups_train = None
+        n_groups_test = None
+    else:
+        if split_unit == "race":
+            groups = _race_group_key(clean)
+        elif split_unit == "prompt_hash":
+            groups = clean["prompt_template_hash"].fillna("hash__missing").astype(str)
+        else:
+            raise ValueError(f"Unknown split_unit={split_unit!r}")
+        splitter = GroupShuffleSplit(
+            n_splits=1,
+            test_size=test_size,
+            random_state=random_state,
+        )
+        train_idx, test_idx = next(splitter.split(clean, clean["unsafe"], groups))
+        train = clean.iloc[train_idx]
+        test = clean.iloc[test_idx]
+        train_groups = set(groups.iloc[train_idx])
+        test_groups = set(groups.iloc[test_idx])
+        overlap = train_groups & test_groups
+        if overlap:
+            raise AssertionError(f"Grouped split leaked {len(overlap)} groups")
+        group_overlap = 0
+        n_groups_train = len(train_groups)
+        n_groups_test = len(test_groups)
+    if train["unsafe"].nunique() != 2 or test["unsafe"].nunique() != 2:
+        raise ValueError(
+            "Both train and test partitions must contain SAFE and UNSAFE labels; "
+            f"got train={sorted(train['unsafe'].unique())}, test={sorted(test['unsafe'].unique())}"
+        )
+    return (
+        train.reset_index(drop=True),
+        test.reset_index(drop=True),
+        {
+            "split_unit": split_unit,
+            "test_size_requested": test_size,
+            "n_groups_train": n_groups_train,
+            "n_groups_test": n_groups_test,
+            "group_overlap": group_overlap,
+        },
+    )
 
 
 def _parse_bool(value: Any) -> float:
@@ -182,19 +264,15 @@ def load_turns(input_roots: list[Path]) -> pd.DataFrame:
     return pd.concat(tables, ignore_index=True)
 
 
-def prepare_features(
-    turns: pd.DataFrame,
-    *,
-    include_response_text: bool,
-    max_tfidf_features: int = 300,
-    max_learner_features: int = 300,
-) -> tuple[pd.DataFrame, pd.Series, pd.DataFrame, np.ndarray]:
+def _normalize_feature_frame(turns: pd.DataFrame) -> tuple[pd.DataFrame, pd.Series, pd.DataFrame]:
+    """Normalize schema without learning any statistics from the rows."""
     turns = turns.copy()
     turns = turns[~turns["unsafe"].isna()].copy()
     turns["unsafe"] = turns["unsafe"].astype(float)
 
     # Fill schema.
     for c in [
+        "run_root",
         "run_group",
         "run_treatment",
         "lane",
@@ -231,11 +309,24 @@ def prepare_features(
     turns["stop_draw"] = turns["stop_draw"].fillna(-1.0)
     turns["parse_failed"] = turns["parse_failed"].fillna(0.0)
 
-    context = turns[list(dict.fromkeys(PREFERRED_CONTEXT_COLUMNS + ["prompt_template_hash"]))].copy()
-    if "player_index" in turns.columns:
-        context["player_index"] = turns["player_index"]
-    else:
-        context["player_index"] = -1
+    context_columns = [column for column in dict.fromkeys(
+        PREFERRED_CONTEXT_COLUMNS + ["prompt_template_hash"]
+    ) if column in turns.columns]
+    context = turns[context_columns].copy()
+    context["player_index"] = turns.get("player_index", pd.Series(-1, index=turns.index))
+    return turns, turns["unsafe"].astype(float), context
+
+
+def prepare_features(
+    train_turns: pd.DataFrame,
+    test_turns: pd.DataFrame,
+    *,
+    include_response_text: bool,
+    max_tfidf_features: int = 300,
+    max_learner_features: int = 300,
+) -> tuple[Any, Any, pd.Series, pd.Series, pd.DataFrame, pd.DataFrame, np.ndarray]:
+    train, y_train, context_train = _normalize_feature_frame(train_turns)
+    test, y_test, context_test = _normalize_feature_frame(test_turns)
 
     numeric_transformer = Pipeline(
         steps=[
@@ -275,30 +366,39 @@ def prepare_features(
         sparse_threshold=0.3,
     )
 
-    feature_matrix = preprocessor.fit_transform(turns)
+    train_matrix = preprocessor.fit_transform(train)
+    test_matrix = preprocessor.transform(test)
     feature_names = preprocessor.get_feature_names_out()
 
-    # Keep target as vector.
-    target = turns["unsafe"].astype(float)
-
-    # Keep a deterministic feature limit for dictionary learner stability.
+    # Select learner features using training variance only, then apply the frozen
+    # column set to test.  This prevents held-out rows from influencing the model.
     max_features = max(100, int(max_learner_features))
-    if feature_matrix.shape[1] > max_features:
+    if train_matrix.shape[1] > max_features:
         feature_names = np.asarray(feature_names)
-        if issparse(feature_matrix):
-            mean = np.asarray(feature_matrix.mean(axis=0)).ravel()
-            mean_sq = np.asarray(feature_matrix.multiply(feature_matrix).mean(axis=0)).ravel()
+        if issparse(train_matrix):
+            mean = np.asarray(train_matrix.mean(axis=0)).ravel()
+            mean_sq = np.asarray(train_matrix.multiply(train_matrix).mean(axis=0)).ravel()
             variances = mean_sq - mean * mean
             top_idx = np.argsort(np.array(variances))[::-1][:max_features]
-            feature_matrix = feature_matrix[:, top_idx]
+            train_matrix = train_matrix[:, top_idx]
+            test_matrix = test_matrix[:, top_idx]
             feature_names = feature_names[top_idx]
         else:
-            variances = np.var(feature_matrix, axis=0)
+            variances = np.var(train_matrix, axis=0)
             top_idx = np.argsort(np.array(variances))[::-1][:max_features]
-            feature_matrix = feature_matrix[:, top_idx]
+            train_matrix = train_matrix[:, top_idx]
+            test_matrix = test_matrix[:, top_idx]
             feature_names = feature_names[top_idx]
 
-    return feature_matrix, target, context, feature_names
+    return (
+        train_matrix,
+        test_matrix,
+        y_train.reset_index(drop=True),
+        y_test.reset_index(drop=True),
+        context_train.reset_index(drop=True),
+        context_test.reset_index(drop=True),
+        feature_names,
+    )
 
 
 def build_sparse_code_and_head(
@@ -314,11 +414,17 @@ def build_sparse_code_and_head(
 ) -> dict[str, Any]:
     n_components = min(code_dim, X_train.shape[1])
     n_components = max(1, int(n_components))
-    dict_learn = DictionaryLearning(
+    dict_learn = MiniBatchDictionaryLearning(
         n_components=n_components,
         alpha=alpha,
         transform_alpha=alpha,
-        transform_algorithm="lasso_lars",
+        fit_algorithm="lars",
+        transform_algorithm="omp",
+        transform_n_nonzero_coefs=max(1, n_components // 4),
+        batch_size=min(512, max(32, len(y_train))),
+        # n_jobs=1 is deterministic and avoids environment-specific joblib/psutil
+        # process-discovery failures seen on Windows research workstations.
+        n_jobs=1,
         random_state=random_state,
         max_iter=max_iter,
     )
@@ -333,8 +439,13 @@ def build_sparse_code_and_head(
         if hasattr(X_test, "toarray")
         else np.asarray(X_test, dtype=np.float32)
     )
-    train_code = dict_learn.fit_transform(X_train_dense)
-    test_code = dict_learn.transform(X_test_dense)
+    with warnings.catch_warnings(record=True) as caught:
+        warnings.simplefilter("always", ConvergenceWarning)
+        train_code = dict_learn.fit_transform(X_train_dense)
+        test_code = dict_learn.transform(X_test_dense)
+    convergence_warning_count = sum(
+        issubclass(item.category, ConvergenceWarning) for item in caught
+    )
 
     clf = LogisticRegression(
         max_iter=1000,
@@ -364,6 +475,7 @@ def build_sparse_code_and_head(
         "class_1_recall": float(report["1.0"]["recall"]),
         "class_0_recall": float(report["0.0"]["recall"]),
         "recon_mse": recon_mse,
+        "convergence_warning_count": int(convergence_warning_count),
         "n_rows": int(len(y_train) + len(y_test)),
     }
 
@@ -464,8 +576,11 @@ def write_summary(
     local: pd.DataFrame,
 ) -> Path:
     lines = [
-        "# Sparse Autoencoder Action Audit",
+        "# Sparse Dictionary Action Audit",
         "",
+        "> Scope: this feature-space dictionary-learning surrogate uses logged prompts and states. It does not inspect model neurons or establish a causal mechanism.",
+        "",
+        f"- Evaluation split: **{metrics.get('split_unit', 'unknown')}** (fit after split; group overlap: {metrics.get('group_overlap')})",
         f"- Samples: **{metrics['n_rows']}**",
         f"- Sparse code units: **{metrics['n_code']}**",
         f"- Test AUC: **{metrics['roc_auc']:.4f}**",
@@ -530,6 +645,15 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--top-local-examples", type=int, default=20, help="Local explanation examples.")
     parser.add_argument("--include-response-text", action="store_true", help="Include raw_response in featureization.")
     parser.add_argument("--random-state", type=int, default=42, help="Random seed.")
+    parser.add_argument(
+        "--split-unit",
+        choices=["race", "prompt_hash", "row"],
+        default="race",
+        help=(
+            "Evaluation split unit. 'race' is the primary leakage-resistant default; "
+            "'prompt_hash' is stricter; 'row' is retained only as a leakage diagnostic."
+        ),
+    )
     parser.add_argument("--max-tfidf-features", type=int, default=300, help="Max TF-IDF prompt vocabulary size.")
     parser.add_argument(
         "--max-learner-features",
@@ -546,20 +670,25 @@ def main() -> None:
     if turns.empty:
         raise SystemExit("No valid turns found from the input roots.")
 
-    x, y, context, feature_names = prepare_features(
+    train_turns, test_turns, split_metadata = split_turns(
         turns,
+        split_unit=args.split_unit,
+        random_state=args.random_state,
+    )
+    (
+        x_train,
+        x_test,
+        y_train,
+        y_test,
+        ctx_train,
+        ctx_test,
+        feature_names,
+    ) = prepare_features(
+        train_turns,
+        test_turns,
         include_response_text=args.include_response_text,
         max_tfidf_features=args.max_tfidf_features,
         max_learner_features=args.max_learner_features,
-    )
-
-    x_train, x_test, y_train, y_test, ctx_train, ctx_test = train_test_split(
-        x,
-        y,
-        context,
-        test_size=0.2,
-        random_state=args.random_state,
-        stratify=y,
     )
     fit = build_sparse_code_and_head(
         x_train,
@@ -599,10 +728,10 @@ def main() -> None:
     with (output_dir / "xae_target_distribution.json").open("w", encoding="utf-8") as f:
         json.dump(
             {
-                "n_unsafe": int((y == 1.0).sum()),
-                "n_safe": int((y == 0.0).sum()),
-                "unsafe_rate": float(y.mean()),
-                "method": "dictionary_learning_sparse_autoencoder",
+                "n_unsafe": int((turns["unsafe"] == 1.0).sum()),
+                "n_safe": int((turns["unsafe"] == 0.0).sum()),
+                "unsafe_rate": float(turns["unsafe"].mean()),
+                "method": "feature_space_minibatch_dictionary_learning_surrogate",
             },
             f,
             indent=2,
@@ -620,6 +749,10 @@ def main() -> None:
             "random_state": args.random_state,
             "max_tfidf_features": args.max_tfidf_features,
             "max_learner_features": args.max_learner_features,
+            "representation_scope": "logged_prompt_and_state_features_not_internal_activations",
+            "dictionary_solver": "MiniBatchDictionaryLearning(fit=lars,transform=omp,n_jobs=1)",
+            "code_nonzero_budget": max(1, int(model_report["n_code"]) // 4),
+            **split_metadata,
         }
     )
     with (output_dir / "xai_sparse_autoencoder_metadata.json").open("w", encoding="utf-8") as f:

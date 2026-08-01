@@ -5,7 +5,12 @@ import random
 from typing import Any, Optional, Sequence
 
 from .agent import RaceAgent
-from .round import AIRaceRound, extract_reasoning, parse_action, response_text
+from .round import (
+    AIRaceRound,
+    extract_reasoning,
+    parse_action,
+    raw_response_text,
+)
 from .scoring import joint_round_outcome, terminal_scoring
 from .state import Action, GameConfig, GameResult, TurnRecord
 
@@ -145,7 +150,7 @@ class AIRaceGame:
                             else None
                         ),
                         "sampling_seed_applied": self.config.sampling_seed_applied,
-                        "raw_response": response_text(responses[player_index]),
+                        "raw_response": raw_response_text(responses[player_index]),
                         "parse_failed": bool(parse_action(responses[player_index])[1]),
                     }
                 ]
@@ -237,7 +242,7 @@ class AIRaceGame:
                     parse_failed=bool(parse_failed[player_index]),
                     retry_count=retry_count,
                     reasoning=extract_reasoning(responses[player_index]),
-                    raw_response=response_text(responses[player_index]),
+                    raw_response=raw_response_text(responses[player_index]),
                     prompt=str(prompts[player_index]),
                     own_prev_action=(
                         previous_actions[player_index].value

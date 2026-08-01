@@ -1,0 +1,5 @@
+domain,semantic_accuracy,strict_valid_rate,n
+rule_recall,1.0,0.0,64
+stage_payoff,0.984375,0.34375,64
+state_update,0.125,0.078125,64
+terminal_scoring,0.171875,0.921875,64

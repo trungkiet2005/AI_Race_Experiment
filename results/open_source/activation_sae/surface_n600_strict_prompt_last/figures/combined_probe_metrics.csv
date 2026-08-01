@@ -1,0 +1,6 @@
+layer,representation,n_probe_features,feature_screen,solver,alpha,tolerance,convergence_warning_count,roc_auc,average_precision,balanced_accuracy
+4,pretrained_sae,4096,train_only_variance,ridge_lsqr,1.0,0.0001,0,0.8227719907407408,0.856379113287744,0.7465277777777778
+12,pretrained_sae,4096,train_only_variance,ridge_lsqr,1.0,0.0001,0,0.806568287037037,0.8381577189011478,0.7222222222222223
+18,pretrained_sae,4096,train_only_variance,ridge_lsqr,1.0,0.0001,0,0.865017361111111,0.9039925098853628,0.78125
+20,pretrained_sae,4096,train_only_variance,ridge_lsqr,1.0,0.0001,0,0.8519965277777778,0.889205429896034,0.78125
+25,pretrained_sae,4096,train_only_variance,ridge_lsqr,1.0,0.0001,0,0.8621238425925927,0.8874280704830179,0.8229166666666667

@@ -1,0 +1,103 @@
+{
+  "schema_version": "ai-race-context-recognition-run-v1",
+  "status": "completed",
+  "evidence_class": "exploratory_model_self_report",
+  "evidence_boundary": "Recognition is a separate model self-report audit and is not proof of training contamination, memorisation, or causal recognition.",
+  "started_utc": "2026-08-01T09:28:08.120890+00:00",
+  "completed_utc": "2026-08-01T09:28:10.953555+00:00",
+  "run_spec": {
+    "protocol": "ai-race-context-recognition-audit-v2",
+    "lane": "a",
+    "profile": "confirm",
+    "backend": "ollama",
+    "skins": [
+      "technology_race",
+      "logistics_contract",
+      "hospital_deployment",
+      "robotic_expedition"
+    ],
+    "repetitions": 1,
+    "seed": 260726,
+    "model": "qwen2.5:7b-instruct-fp16",
+    "temperature": 0.0,
+    "max_tokens": 96,
+    "max_parse_retries": 2
+  },
+  "run_spec_sha256": "1ec075ff2e10918a04ecc9f2e32223f5169372ea65eee09c1c493c7a8504539d",
+  "source_tree_sha256": "4b181226feb9e6a79b55ffc3728b33a9bf2db122038f3c1f1958177ae415ad71",
+  "source_files_sha256": {
+    "ai_race/audit/context_recognition.py": "a4f969cc9f13ce1dc1cd5658b6b968f9a2ed3f5ce075507f3dc1d9d0200013be",
+    "ai_race/prompts/context_skins.py": "dcbd2dba273db22f1e9c3594596ed5bbe001fe00274fdb0366367426bb948ea2",
+    "kaggle/experiments/greennode_context_recognition.py": "58fa63a5213e342a30e999d94d28350487d469d128fac3861f618397c326ddd8",
+    "ai_race/configs/experiment/context_skin_invariance.json": "1961aadfb3f0c6c76f19eb88b068a279265434228f6e61cce1b2e08d5bc0d1d4",
+    "ai_race/configs/game/ai_race_risk_10.json": "c7cc0f83c60bffcce61dcf6d1abe90bc25961083a193c1bbf454dad8526f330b",
+    "ai_race/configs/game/ai_race_risk_60.json": "35a6f0af03199af3099e25ddd3ba90938c1f3f05fd6051bb1104d9c342bc93bb",
+    "ai_race/configs/game/ai_race_risk_90.json": "a676137698ef58c80163fe3a68a950ba75226df895baa949ddebc292b719f286"
+  },
+  "experiment_config_sha256": "1961aadfb3f0c6c76f19eb88b068a279265434228f6e61cce1b2e08d5bc0d1d4",
+  "game_config_sha256": {
+    "ai_race_risk_10": "c7cc0f83c60bffcce61dcf6d1abe90bc25961083a193c1bbf454dad8526f330b",
+    "ai_race_risk_60": "35a6f0af03199af3099e25ddd3ba90938c1f3f05fd6051bb1104d9c342bc93bb",
+    "ai_race_risk_90": "a676137698ef58c80163fe3a68a950ba75226df895baa949ddebc292b719f286"
+  },
+  "scenario_game_config": "ai_race_risk_60",
+  "scenario_game_config_max_private_risk": 0.6,
+  "template_sha256": {
+    "technology_race/safe_p": "1a52a037c6f265f459f687110a3bbc10f5879e20dec0c4af9308427de2a25cb1",
+    "technology_race/safe_q": "a789d70477b767c372daa5f8599f7d97946a830f2dcc53f5e4395b96915f6159",
+    "logistics_contract/safe_p": "93983731524f28041907e2bff03fe1b7913c06f13c26f6af43efb7660377667d",
+    "logistics_contract/safe_q": "38e040a22a63cc9a4045ad6b404d92797e54bc5b2cba1775f6f79745d5db53fb",
+    "hospital_deployment/safe_p": "03164e0b9581044c9dd1d68040dc0037193aeb356d18dd5558c2a2b744de4bfe",
+    "hospital_deployment/safe_q": "fa476317fb4f75269910086a5ff8a08493da84268285e658c765769026f45ee6",
+    "robotic_expedition/safe_p": "eacfb93fff24274b522607db86b8add306918b23ab575a26573e46a3ed5fdcbf",
+    "robotic_expedition/safe_q": "359dfa62e6be244723498cd6a8373f5710eaa37ad5b604cc3ccdc60a7dede669"
+  },
+  "model": {
+    "name": "qwen2.5:7b-instruct-fp16",
+    "digest": "59805ce4a4046be2d8f63231a78daacd2e66f5dccf1a64d0d138ebeeb26ff16c",
+    "size": 15237866977,
+    "details": {
+      "parent_model": "/Users/ollama/.ollama/models/blobs/sha256-678e1e0883636c4234928f23fd208337f790456121124a1986cbf1b806baeadb",
+      "format": "gguf",
+      "family": "qwen2",
+      "families": [
+        "qwen2"
+      ],
+      "parameter_size": "7.6B",
+      "quantization_level": "F16",
+      "context_length": 32768,
+      "embedding_length": 3584
+    },
+    "engine": "ollama"
+  },
+  "hardware": {
+    "hostname": "nb-17c64ac4-3f70-43b9-8d6f-579c209b038d-5d7d76f986-4vdvg",
+    "gpu_name": "NVIDIA H100 80GB HBM3",
+    "ollama_version": "0.30.8",
+    "python": "3.10.12"
+  },
+  "decoding": {
+    "temperature": 0.0,
+    "max_tokens": 96,
+    "workers": 16,
+    "batch_size": 128,
+    "max_parse_retries": 2,
+    "retry_prompt_policy": "exact_prompt_reissue_without_correction_or_hint",
+    "seed_requested": true
+  },
+  "expected_rows": 8,
+  "n_rows": 8,
+  "artifacts": {
+    "rows": {
+      "path": "recognition_rows.jsonl",
+      "bytes": 28044,
+      "sha256": "c0130451aa7d912310e6872c55a240a5ebca13bd95959c8dde4d998094e8c9e8"
+    },
+    "summary": {
+      "path": "recognition_summary.json",
+      "bytes": 3124,
+      "sha256": "04b2e8456354b8e4d079a6337cac0a826dca8a1895cb7dd8ac95521e5c14ddf8"
+    }
+  },
+  "error": null
+}

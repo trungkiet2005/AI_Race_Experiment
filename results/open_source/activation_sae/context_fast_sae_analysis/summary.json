@@ -1,0 +1,133 @@
+{
+  "schema_version": "ai-race.context-fast-sae-analysis.v1",
+  "status": "complete",
+  "evidence_classes": {
+    "context_shift_descriptive": "paired fixed-state behavior and SAE-code shifts",
+    "heldout_probe_association": "discovery-trained predictive association; not causal",
+    "heldout_causal_intervention": "target steering/ablation compared with frozen controls"
+  },
+  "cross_layer_audit": {
+    "passed": true,
+    "same_runner_sha256": "0bc64d4ea2c866b164c24d040b3d1cb824f7863dfea8e8b3b71f6720911167de",
+    "same_source_hashes": true,
+    "same_state_bank": true,
+    "same_context_pair_rows": true,
+    "same_192_prompt_action_cells": true,
+    "behavioral_comparison_note": "baseline context behavior is exactly identical by design; layer comparisons concern SAE representations and interventions"
+  },
+  "layer_decisions": [
+    {
+      "layer": 12,
+      "n_states": 12,
+      "n_prompt_action_cells": 192,
+      "discovery_action_flips": 1,
+      "double_heldout_context_action_flips": 1,
+      "double_heldout_probe_n": 56,
+      "double_heldout_probe_auc": 0.9215686274509804,
+      "double_heldout_probe_accuracy": 0.8928571428571429,
+      "max_intervention_flip_rate": 0.0,
+      "max_abs_intervention_median_log_odds_delta": 9.538780432194471e-07,
+      "target_sign_reversal_features": 0,
+      "target_control_exceedance_cells": 3,
+      "target_dose_cells": 12,
+      "causal_mediation_admitted": false,
+      "pilot_decision": "HOLD",
+      "pilot_rationale": "smoke pipeline passed, but held-out association did not meet the preregistered prioritization threshold"
+    },
+    {
+      "layer": 20,
+      "n_states": 12,
+      "n_prompt_action_cells": 192,
+      "discovery_action_flips": 1,
+      "double_heldout_context_action_flips": 1,
+      "double_heldout_probe_n": 56,
+      "double_heldout_probe_auc": 0.9849170437405732,
+      "double_heldout_probe_accuracy": 0.9285714285714286,
+      "max_intervention_flip_rate": 0.0,
+      "max_abs_intervention_median_log_odds_delta": 5.361871444620192e-07,
+      "target_sign_reversal_features": 0,
+      "target_control_exceedance_cells": 6,
+      "target_dose_cells": 12,
+      "causal_mediation_admitted": false,
+      "pilot_decision": "PROMOTE_CAPTURE_ANALYZE_ONLY",
+      "pilot_rationale": "held-out association and context shifts justify a larger descriptive run; defer steering until discovery has at least 10 action flips"
+    }
+  ],
+  "input_artifacts": {
+    "layer_12": {
+      "root": "results/open_source/activation_sae/context_fast_sae_smoke_l12",
+      "hashes": {
+        "manifest.json": "e472dfa868fc46bd5f0e4fae13f2c13f733b5c8f9406b6891a027c3c91b5b961",
+        "context_analysis.json": "604fe677cc79166ff274fb6f1ec981cfa97fadb65b4570faafa0ec70671746c8",
+        "context_pair_rows.jsonl": "1e43d2c0c2700bc65b72031dfa27c84a7191d06cc8183a4184ae4bb33c7e5bf1",
+        "context_steering_rows.jsonl": "948e2caaaee003edee9c733d8ced705092cfb02bff92ddc0791cb60fe087a0e7",
+        "context_steering_summary.json": "b79735af2a6773559f33b57b292f382304a157be090c8ed646c8607aab1c13ef",
+        "reachable_states.jsonl": "9dc1291937d671968d118e51382fe7394aa271b8f715eabe3e1b2209e173363e"
+      },
+      "model_revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+      "sae_revision": "5a7ecabe1401bf4de11a0e6da1f7c36bbb46a464",
+      "sae_weights_sha256": "bc88be1bb601d4d18d1ffa0b898da65d66158873b6091a59ec2c12128e8b118a"
+    },
+    "layer_20": {
+      "root": "results/open_source/activation_sae/context_fast_sae_smoke_l20",
+      "hashes": {
+        "manifest.json": "f90361dc1dbdeb242b3f916a7c6890f612233387f5044f7bd76e8e5de8184d07",
+        "context_analysis.json": "b82e05faf36a1320fdb42d05b3ee32c41e8ccd2cc154da58839b6e00774c4850",
+        "context_pair_rows.jsonl": "1e43d2c0c2700bc65b72031dfa27c84a7191d06cc8183a4184ae4bb33c7e5bf1",
+        "context_steering_rows.jsonl": "205ba9ff9384b8acdee3d2b908a951361436f2038df3f94b3989d3aef4de1a52",
+        "context_steering_summary.json": "ed234170436b78d3f375e1f972e4358267fdc129025db87bc5f363a42dd5cd49",
+        "reachable_states.jsonl": "9dc1291937d671968d118e51382fe7394aa271b8f715eabe3e1b2209e173363e"
+      },
+      "model_revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+      "sae_revision": "5a7ecabe1401bf4de11a0e6da1f7c36bbb46a464",
+      "sae_weights_sha256": "8c7175599fed01b8edf39815d10803a21fd5a824290cd9eb12389cff27ce99f4"
+    }
+  },
+  "outputs": {
+    "context_shift_summary.csv": {
+      "bytes": 1387,
+      "sha256": "6d668d8f937e24a1274c9cba2f038850dbd0928a883776ec1188b4e5b663ece9"
+    },
+    "heldout_probe_summary.csv": {
+      "bytes": 936,
+      "sha256": "c13e3660cc93d8a04cadd15eba6c4731181c73831f1331b6c35127f7beb2e409"
+    },
+    "causal_steering_summary.csv": {
+      "bytes": 8839,
+      "sha256": "1670811267ba07a578e099d23e38f020f37275c4ba93a7da2d92e0513572f234"
+    },
+    "layer_promotion_decisions.csv": {
+      "bytes": 846,
+      "sha256": "a4b985ea8b0d83bf496508d48d22e6d58cefb11eef3e0b1b8bc717dbcbe397b3"
+    },
+    "README.md": {
+      "bytes": 2994,
+      "sha256": "81113a75a535b9c63adde8d42486e12ebd6cd995144e9bdae644ffb480623a98"
+    },
+    "context_shift_descriptives.png": {
+      "bytes": 160104,
+      "sha256": "439ecf3561b0d4645e32a951ea765d59f43ce1482240991b7964f9285b827b74"
+    },
+    "context_shift_descriptives.pdf": {
+      "bytes": 27987,
+      "sha256": "b3378a3279dac70f50e95166a2d239cfab1961e2fb7360176783e72f0899ad78"
+    },
+    "heldout_action_probe.png": {
+      "bytes": 172325,
+      "sha256": "bb7f190f13e81b78a8cc6d350ae90d61f1038ef354e8d68efa2f2f325749539c"
+    },
+    "heldout_action_probe.pdf": {
+      "bytes": 27653,
+      "sha256": "a4e060ea4000e6c4d353bf7297127c9f64968ee371a673c5c0ab8e3d8cd47ea5"
+    },
+    "causal_steering_controls.png": {
+      "bytes": 215091,
+      "sha256": "234563400a99c1da8fac05b727c96a8ed5ceef32501f8f43220067de68b75216"
+    },
+    "causal_steering_controls.pdf": {
+      "bytes": 30659,
+      "sha256": "d911fe1cc5a3d15ff177830567ed8b77e8a72c7037e2b0b57e7a2cfbecb49e46"
+    }
+  },
+  "analysis_script_sha256": "b137698316d98c7012a9cf296f352294bded5f8ae6871c39220f9406cab71c1a"
+}

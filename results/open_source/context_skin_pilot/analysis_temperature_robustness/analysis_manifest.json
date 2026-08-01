@@ -1,0 +1,30 @@
+{
+  "analysis_script": "results/scripts/analyze_context_temperature_robustness.py",
+  "bootstrap_repetitions": 10000,
+  "bootstrap_seed": 260802,
+  "derived_artifacts": {
+    "analysis_summary.json": "cf1d06be3adb00c88d0cec8453cc925a75d85c3ad04bac74b3c84cd3ae68549a",
+    "figures/context_effect_temperature_change.pdf": "d1e07d3fa67b986061198f48e241970139376d30fd49876c6fb95bd86961ec0b",
+    "figures/context_effect_temperature_change.png": "39d4811a5e20a45377505ff53b3707e4ecf034a7d12e74b88c8dd0b644b4c04f",
+    "figures/context_effect_temperature_stability.pdf": "9fe55bb3be2f7ebeb060f4596e05ed3a3affd6403b6a25172e47102c9a8f76e8",
+    "figures/context_effect_temperature_stability.png": "56165b7a7a36f9d83351cedf7db8e55408bd0430b510e85cd16b2dfb5d2ff77a",
+    "figures/temperature_mapping_interaction_heatmap.pdf": "63dcfd2e07be0381592bb3991f4916aecb09d2ed5fa107999b4b84765d8276fd",
+    "figures/temperature_mapping_interaction_heatmap.png": "201405420b5de3454f8f1c65010b8691e7d6d321a800a2642bf5ac2dd8990962",
+    "figures/temperature_trajectory_agreement.pdf": "c0da456061550245646c3a5525f4bc7b1a21c154d110f4d29e30ff96a85145ad",
+    "figures/temperature_trajectory_agreement.png": "45b348886e88ef26de7e767b089fd8edfe5b138ea6039f041cdf57f2e9c8a6e4",
+    "figures/temperature_unsafe_delta_by_context.pdf": "bf510cdab305fbc957e0573158c6ac2053a838236079d8147111a2af7ff4031e",
+    "figures/temperature_unsafe_delta_by_context.png": "78a7929f608f308fa7ce0d115f03692096fdb09d133e562d03d5bc439f5b9b83",
+    "tables/compatibility_audit.csv": "1178d7021945e82e330c488e343f73a7a8ffa3d8e2d68c6c739637da2818b73c",
+    "tables/context_effect_stability.csv": "02b768f9f7bc676b463753975de8ef1d911810126723a2d852feb11542448a55",
+    "tables/first_round_replication_audit.csv": "b4f01f8aaad3fcd0bcc5c7057ac4c70252b9247a855f69e57d534a7a9313c911",
+    "tables/mapping_interactions.csv": "5342ab4a2fec46eb07fc3922197902329ecb4d4a529e874aee030d6ef88f029a",
+    "tables/paired_context_mapping_summary.csv": "4175bffb4dab425b88bf4f9bb6d9f90e4a8c4afb8c50b9af3ef757fa539a22b3",
+    "tables/paired_context_risk_summary.csv": "205205c0da76ff98fecb52d0f3fd40966ee9ead972e3784062a6669e5d5fdea5",
+    "tables/paired_context_summary.csv": "f5441d21dfcb850983200e328e2a0b643fc48c0d8630f7aff75283b339977549",
+    "tables/paired_overall_summary.csv": "10383a4f21fed55feda8572364ed3f4f4884050a03adf29dfd1d6b9929d1dd7c",
+    "tables/source_artifact_inventory.csv": "8bf6ca94d8380f48c351703828403b32e4a6d7fd2125345d4fea6eed3544f7d8",
+    "tables/trajectory_agreement_by_context.csv": "ddcd5222f0a81109b07e228fae04962c5fb8b9421bf46ca59303040fc47b22c2",
+    "temperature_robustness_report.md": "fc4dc0e6cbcadd6bc1e5a618a0950f2fe243354a2574222c185e2d1794411858"
+  },
+  "schema_version": "ai-race.context-temperature-analysis-manifest.v1"
+}

@@ -1,0 +1,33 @@
+{
+  "analysis_script": "results/scripts/analyze_causal_selfplay_fast_sae.py",
+  "bootstrap_repetitions": 10000,
+  "bootstrap_seed": 260801,
+  "derived_artifacts": {
+    "analysis_report.md": "53b65f46cc83413f5f6394656a52b3f3b0960619ab7f50c5f01f494d34acece6",
+    "analysis_summary.json": "c0b30cb76b59a81795eed2cdc7881f972687d67a4a30a206cb333ca60f148d22",
+    "figures/association_selected_features.pdf": "489ac183cf646de52f16f667a196ec661f9ac1dcbb2e494b03bccd100dc88c0c",
+    "figures/association_selected_features.png": "6f0340e2c128cefb40043c867ec9ed8e652a26dd43b98c16e46754875e9c810d",
+    "figures/fixed_state_dose_response.pdf": "808202e887149b9d65de48a8451ca34e87c9b130e52d3ae48b9b03be86a4aa36",
+    "figures/fixed_state_dose_response.png": "7862a7f046324274e1221b299b5236070b4b24eeb7649e05fd484dc3cbe5b831",
+    "figures/fixed_state_intervention_diagnostics.pdf": "acabd8512aa6de9b165cfa16678f352aee6799863a302425ea01f07217f49b0d",
+    "figures/fixed_state_intervention_diagnostics.png": "f18d88b103827b1f2da0d972a03e3c0812c41c821156d6a4b548abee011f516b",
+    "figures/fixed_state_target_minus_controls.pdf": "1749d5daf1902b24c18fb884fc293cb335540ea9cc20828657d49ab6bb195b47",
+    "figures/fixed_state_target_minus_controls.png": "8da7d2b0521fa7aeea8a623f7cdf063179de739a2b1c64dab24578c8ddee5f5b",
+    "figures/live_direct_comparable_flips.pdf": "c837f37b546fe7586df01179da918d58cafc3262280c10de912f7224216937d1",
+    "figures/live_direct_comparable_flips.png": "6c8ab804438760dc2a0431d1dc5cbf4fc12a26d73136eb03b1444cc74d0d7baa",
+    "figures/live_endogenous_payoff_effects.pdf": "c9d0431fb93ce7c6bd52e4e4dfa4488fde495064fce3d075fd9c0511352aa193",
+    "figures/live_endogenous_payoff_effects.png": "9cc95c5f5be8ef53dc3ea78d65b3376f0a1faabc23f45244cec3d8bdf6552e2f",
+    "tables/fixed_state_condition_summary.csv": "8ba317cb43db9f300cf4fbb30a0472fa4402250fe81f412f29b6c736d2efb4e2",
+    "tables/fixed_state_sign_dose_diagnostics.csv": "7491c6ea9bf6ca0c69a52cc6410f8aa9845e4618e399b060c9318415c41575fb",
+    "tables/fixed_state_target_control_contrasts.csv": "8bad1480ca06dff6e2971728cccedfdd0a9530352463bf2abc2c6c40d5aed0d7",
+    "tables/live_condition_summary.csv": "746e67fe28207757cf9529533ae8c1254d8d77bd53a4ab89b52dfeaeaec34201",
+    "tables/live_race_level_metrics.csv": "e12ff7294c75d23169c312c3ce047ff992509aa3c5d8454e9f9bfe8e56e0e5fd",
+    "tables/live_target_control_contrasts.csv": "29f7429d583763e34d5a177c323b3af75240840f028e786e109557b0e68e96eb",
+    "tables/live_target_control_equivalence.csv": "cd1310c5e98d375a948db725cd24c6eeebcf09f6ac734dbd4929d96b1b5c3a89",
+    "tables/selected_feature_associations.csv": "104711aa3c2e4834dd4ec5fd591a001f47fd2e815fe784fc4dfac7840a719ebe",
+    "tables/source_artifact_inventory.csv": "b6e3d4d5724c1e2fd93cf0f37ad709901ac3b2e2b09633754f16e5f07e3c28c2"
+  },
+  "schema_version": "ai-race.causal-selfplay-analysis-manifest.v1",
+  "source_artifact_count": 42,
+  "source_config_fingerprint": "0918a2bc583d935a41adf5ca6932ee8eb9481c064c79b142214a22b3ab0e22f7"
+}

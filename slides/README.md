@@ -1,12 +1,13 @@
 # AI Race presentation assets
 
-## Built artifacts
+## Canonical research deck
 
-- `ai_race_research_deck.tex` is the canonical 21-slide, 16:9 LaTeX Beamer source.
+- `ai_race_research_deck.tex` is the 24-frame, 16:9 Beamer evidence deck.
 - `../output/pdf/ai_race_research_deck.pdf` is the compiled presentation.
-- `index.html` is an optional browser-based companion deck.
+- `ai_race_project.md` is the slide-by-slide evidence map and speaker outline.
+- `index.html` remains an optional browser companion; it is not the canonical evidence artifact.
 
-Compile from the repository root (run twice so Beamer resolves page metadata):
+Compile twice from the repository root:
 
 ```bash
 pdflatex -interaction=nonstopmode -halt-on-error \
@@ -15,25 +16,24 @@ pdflatex -interaction=nonstopmode -halt-on-error \
   -output-directory=output/pdf slides/ai_race_research_deck.tex
 ```
 
-This directory contains a research-talk outline for the **LLM AI Race experiment**.
-
-- [`ai_race_project.md`](ai_race_project.md) is a visual-first, 15-minute project deck plan.
-- No `.pptx`, Beamer source, exported PDF, generated image, or result figure is included.
-
 ## Evidence status
 
-The project deck is a protocol and research-plan presentation. LLM results are **pending**. Findings attributed to Fernández Domingos and Han (2026) come from a human behavioural experiment and must remain visually and verbally separated from this project’s future LLM results.
+The deck now reports validated **exploratory pilot artifacts**, not a results-pending protocol. It covers the engine and game-understanding audit, calculator ablation, 18-variant surface sensitivity grid, the primary temperature-zero eight-context study, a separate temperature-0.7 robustness comparison, recognition audit, actual-self-play FAST-SAE analyses, and a reduced evolutionary-game reconstruction.
 
-Do not bring forward legacy labels, figures, effect sizes, screenshots, or conclusions. The canonical baseline here is the two-player repeated AI race with private terminal setback risk.
+The central admission boundary is explicit: the context comprehension gate failed, so context and mapping effects diagnose prompt-conditioned behavior rather than verified informed utility optimization. SAE AUC/correlation is presented as association; causal attribution is withheld because target steering did not outperform controls.
 
-## Design direction
+The EGT frame reports a faithful reconstruction, not bitwise reproduction: the source paper has not released its author code, generated payoff matrices, EGTTools lockfile, or Monte Carlo seeds. The independent transition implementation matches the pinned official EGTTools source to numerical precision, while the LLM comparison remains descriptive and non-equivalent to population evolution.
 
-Use a restrained, high-contrast palette: deep navy for the race environment, amber for Unsafe, cyan for Safe, and neutral grey for pending or unobserved results. Avoid red–green encoding. Each slide should communicate one idea, reserve substantial white space, and use direct labels rather than dense legends.
+## Figure policy
 
-The visual backbone should be the race-state diagram, exact game mechanics, source-versus-project boundary, Kaggle execution pipeline, and prespecified effect plots. Human-source panels must carry a persistent label such as **SOURCE STUDY — HUMAN PARTICIPANTS**. Future result slides must carry **LLM EXPERIMENT — THIS PROJECT** and remain visibly marked **PENDING** until a frozen analysis exists.
+The Beamer source embeds publication PDFs directly from `paper/figures/` and `results/open_source/`. Do not replace them with screenshots. Every result frame states its evidence class, denominator, and the boundary needed to interpret it.
 
-## Production checklist
+Design uses deep navy, cyan, amber, lime, and neutral ink; it avoids red-green semantics. Figures must remain readable at 16:9 projector scale and must not be cropped to remove uncertainty intervals, sample units, or captions.
 
-Before creating a presentation artifact, replace all author and venue placeholders, confirm the allotted duration, attach only validated figures, add figure-level sample units and uncertainty, and cross-check every numeric claim against the source note or a frozen project output. Keep citations readable at the bottom of the relevant slide.
+## Release checklist
 
-The deck has not been built or rendered on the local machine.
+1. Compile twice with `-halt-on-error`.
+2. Render every page to PNG and inspect for clipping, overlap, broken glyphs, and illegible labels.
+3. Confirm all numeric claims against frozen CSV/JSON artifacts.
+4. Keep human-source findings visually separate from project pilots.
+5. Do not promote diagnostic results to confirmatory claims without passing the listed gates.

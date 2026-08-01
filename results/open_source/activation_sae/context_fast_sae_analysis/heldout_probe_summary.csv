@@ -1,0 +1,9 @@
+layer,evidence_class,quadrant,n,unsafe_rate,accuracy,roc_auc
+12,heldout_probe_association,discovery_states__discovery_contexts,40,0.225,1.0,1.0
+12,heldout_probe_association,discovery_states__evaluation_contexts,40,0.225,0.875,0.9390681003584229
+12,heldout_probe_association,evaluation_states__discovery_contexts,56,0.26785714285714285,0.8571428571428571,0.943089430894309
+12,heldout_probe_association,evaluation_states__evaluation_contexts,56,0.30357142857142855,0.8928571428571429,0.9215686274509804
+20,heldout_probe_association,discovery_states__discovery_contexts,40,0.225,1.0,1.0
+20,heldout_probe_association,discovery_states__evaluation_contexts,40,0.225,0.925,1.0
+20,heldout_probe_association,evaluation_states__discovery_contexts,56,0.26785714285714285,0.9285714285714286,0.9902439024390244
+20,heldout_probe_association,evaluation_states__evaluation_contexts,56,0.30357142857142855,0.9285714285714286,0.9849170437405732

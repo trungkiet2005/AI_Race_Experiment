@@ -1,0 +1,16 @@
+{
+  "schema_version": "ai-race.activation-sae.position-comparison.v1",
+  "status": "complete",
+  "layers": [
+    4,
+    12,
+    18,
+    20,
+    25
+  ],
+  "n_eval": 120,
+  "mean_auc_pre_action": 0.8721354166666666,
+  "mean_auc_prompt_last": 0.8416956018518519,
+  "mean_auc_delta": 0.030439814814814746,
+  "interpretation": "association persists before response boilerplate; no causal or same-runtime claim"
+}

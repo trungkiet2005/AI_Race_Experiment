@@ -1,0 +1,120 @@
+{
+  "schema_version": "ai-race.greennode-fast-sae-selfplay.v1",
+  "status": "complete",
+  "created_at_utc": "2026-08-01T08:54:36.025216+00:00",
+  "config": {
+    "schema_version": "ai-race.greennode-fast-sae-selfplay.v1",
+    "model_repo": "Qwen/Qwen2.5-7B-Instruct",
+    "model_revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+    "sae_repo": "Geaming/Qwen2.5-7B-Instruct_SAEs",
+    "sae_revision": "5a7ecabe1401bf4de11a0e6da1f7c36bbb46a464",
+    "sae_lens_version": "5.3.3",
+    "sae_id": "FAST/blocks_12_hook_resid_post_8X_2048_jumprelu",
+    "layer": 12,
+    "hook_name": "blocks.12.hook_resid_post",
+    "capture_position": "final prompt token before any action-label token",
+    "action_policy": "teacher-forced exact-sequence likelihood over ACTION: SAFE vs ACTION: UNSAFE, including EOS",
+    "treatments": [
+      "ai_race_risk_60"
+    ],
+    "repetitions": 2,
+    "base_seed": 20260801,
+    "decision_temperature": 0.0,
+    "prompt_variant": "canonical",
+    "eval_fraction": 0.34,
+    "top_features": 1,
+    "ranking_limit": 500,
+    "min_feature_prevalence": 0.01,
+    "steering_max_decisions": 2,
+    "steering_alphas": [
+      -2.0,
+      -1.0,
+      1.0,
+      2.0
+    ],
+    "live_alpha": 1.0,
+    "steered_play_max_races_per_treatment": 1,
+    "score_replay_tolerance": 0.002,
+    "dtype": "bfloat16",
+    "device": "cuda"
+  },
+  "config_fingerprint": "e2a6932fcf68c2ce86dde08c9bc1f0b96cf87743cc6843bd0fee15ce6cb289d5",
+  "git_revision": null,
+  "runner_sha256": "a08ab8fe1989e98d431ee253d298ded427cd7cdfa9b63fd9cb32749638af4eaa",
+  "engine_source_sha256": {
+    "ai_race/engine/game.py": "1dbb5bb22f1314f8d4597c2a8be57dcf16616611ca6db3cb3c458e2124db144a",
+    "ai_race/engine/scoring.py": "d4d0474dc97e8215c0997fc3513a9c079e5651d0a23347710ee6d5a112320052",
+    "ai_race/engine/round.py": "c24763aece0e13a9cfb33d93b507ef42b3115ec5a1689d56163c200356b74908",
+    "ai_race/runner/run_experiment.py": "1774ccc83d03826eb380118bb7bac287c9014084c61ada5eeb16db148482fa4e"
+  },
+  "environment": {
+    "hostname": "nb-17c64ac4-3f70-43b9-8d6f-579c209b038d-5d7d76f986-4vdvg",
+    "python": "3.10.12",
+    "torch": "2.4.0a0+07cecf4168.nv24.5",
+    "transformers": "4.56.2",
+    "transformer_lens": "2.11.0",
+    "sae_lens": "5.3.3"
+  },
+  "evidence_class": "exploratory-pilot",
+  "claim_boundary": "checkpoint-, layer-, policy-, and game-context-specific direct interventions",
+  "stages": {
+    "selfplay": {
+      "status": "complete",
+      "n_expected_races": 2,
+      "n_completed_races": 2,
+      "shards": [
+        {
+          "game_id": "ai_race_risk_60__qwen-qwen2.5-7b-instruct-a09a35458c70-constrained-sequence__en__companies_default__rep0000",
+          "json_sha256": "a2681a0bdf5fc0240fe58596922e0980e419acf0cb230c50279376efd07d36f9",
+          "npz_sha256": "25288d47c65e1a319a849999b8f6db705cddc939494c40c37ce6f9742a87ae32"
+        },
+        {
+          "game_id": "ai_race_risk_60__qwen-qwen2.5-7b-instruct-a09a35458c70-constrained-sequence__en__companies_default__rep0001",
+          "json_sha256": "410a5d30f266f05b958c0550be018a4a99ce1681eff6d910004cc1d3d4339813",
+          "npz_sha256": "2de7f5c4ce50704febbff1d91a3a948f0f8941b867462311ad6ba9b835680bd7"
+        }
+      ],
+      "completed_at_utc": "2026-08-01T08:55:12.655324+00:00"
+    },
+    "mine": {
+      "status": "complete",
+      "artifact": "feature_mining.json",
+      "sha256": "7bfa56a71cb0804593f29bdb1e239e383c8b91119e87d11d13974f5068bfbfe1",
+      "completed_at_utc": "2026-08-01T08:55:12.727511+00:00"
+    },
+    "steer": {
+      "status": "complete",
+      "rows": 30,
+      "n_eval_decisions": 2,
+      "max_baseline_replay_error": 0.0,
+      "artifacts": {
+        "steering_rows.jsonl": "0d6815fa86164055d6a0e7dd3a44459c308a6e2eb67022098b208ac84ee1505c",
+        "steering_summary.json": "f396e7e2919c83e50ec757321136eba7e26e6ea460edfc1a4f34216635b4db58"
+      },
+      "completed_at_utc": "2026-08-01T08:55:17.377143+00:00"
+    },
+    "steered_play": {
+      "status": "complete",
+      "n_unique_race_seeds": 1,
+      "n_conditions": 7,
+      "n_trajectories": 7,
+      "artifacts": {
+        "steered_play_races.jsonl": "3d25add9eaa640cc0210e9573009321d1735d1cc6d94230236b1b667840fe79b",
+        "steered_play_summary.json": "6753be4e0c1e25a1dcba39bc3ad5258627612c71b6b99c3f6f5cf68eae1e5cbf"
+      },
+      "completed_at_utc": "2026-08-01T08:55:43.118674+00:00"
+    }
+  },
+  "resolved_artifacts": {
+    "model_snapshot": "/root/.cache/huggingface/models--Qwen--Qwen2.5-7B-Instruct/snapshots/a09a35458c702b33eeacc393d103063234e8bc28",
+    "sae_snapshot": "/root/.cache/huggingface/models--Geaming--Qwen2.5-7B-Instruct_SAEs/snapshots/5a7ecabe1401bf4de11a0e6da1f7c36bbb46a464",
+    "sae_cfg_sha256": "4a4d36d620850843a7656b2e1951e759b3877b8db7a0e740e9d37d8ed5d73528",
+    "sae_weights_sha256": "bc88be1bb601d4d18d1ffa0b898da65d66158873b6091a59ec2c12128e8b118a",
+    "cuda_device": "NVIDIA H100 80GB HBM3 MIG 4g.40gb",
+    "cuda_capability": [
+      9,
+      0
+    ]
+  },
+  "completed_at_utc": "2026-08-01T08:55:43.119222+00:00"
+}
