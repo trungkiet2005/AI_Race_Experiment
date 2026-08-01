@@ -1,0 +1,34 @@
+{
+  "name": "nvidia_persona_baseline_neutral",
+  "runPhase": "pilot",
+  "description": "Persona condition R0 (neutral placebo, same text length as the real personas but no directional content). Via NVIDIA API Catalog, direct call (backend='nvidia'), models=deepseek-v4-flash/pro.",
+  "games": [
+    "ai_race_risk_10",
+    "ai_race_risk_60",
+    "ai_race_risk_90"
+  ],
+  "agents": "persona_neutral",
+  "languages": [
+    "en"
+  ],
+  "models": [
+    "deepseek-ai/deepseek-v4-flash",
+    "deepseek-ai/deepseek-v4-pro"
+  ],
+  "useOffline": false,
+  "backend": "nvidia",
+  "samplingSeedApplied": false,
+  "proxyOptions": {
+    "temperature": 0.7,
+    "top_p": 0.95,
+    "max_tokens": 256,
+    "timeout": 120,
+    "max_transport_retries": 6,
+    "concurrency": 4,
+    "thinking": false
+  },
+  "repetitions": 10,
+  "seed": 260726,
+  "maxParseRetries": 3,
+  "verbose": true
+}

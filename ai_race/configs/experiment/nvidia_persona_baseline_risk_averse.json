@@ -1,0 +1,34 @@
+{
+  "name": "nvidia_persona_baseline_risk_averse",
+  "runPhase": "pilot",
+  "description": "Persona condition R- (both seats risk-averse). Via NVIDIA API Catalog, direct call (backend='nvidia'), models=deepseek-v4-flash/pro.",
+  "games": [
+    "ai_race_risk_10",
+    "ai_race_risk_60",
+    "ai_race_risk_90"
+  ],
+  "agents": "persona_risk_averse",
+  "languages": [
+    "en"
+  ],
+  "models": [
+    "deepseek-ai/deepseek-v4-flash",
+    "deepseek-ai/deepseek-v4-pro"
+  ],
+  "useOffline": false,
+  "backend": "nvidia",
+  "samplingSeedApplied": false,
+  "proxyOptions": {
+    "temperature": 0.7,
+    "top_p": 0.95,
+    "max_tokens": 256,
+    "timeout": 120,
+    "max_transport_retries": 6,
+    "concurrency": 4,
+    "thinking": false
+  },
+  "repetitions": 10,
+  "seed": 260726,
+  "maxParseRetries": 3,
+  "verbose": true
+}

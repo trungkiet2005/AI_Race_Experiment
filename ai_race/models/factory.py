@@ -121,14 +121,18 @@ def get_send_batch(
 
     ``backend`` is ``"offline"`` (vLLM/transformers), ``"proxy"`` (Kaggle model
     proxy), ``"api"`` (FAIRGAME provider SDK connectors, keyed by the abstract
-    names in ``MODEL_PROVIDER_MAP``), ``"openai"`` (direct OpenAI API call with
-    ``model_name`` used verbatim as the OpenAI model id, no abstract-name
-    indirection), or ``"auto"``, which resolves from the legacy ``offline`` flag.
+    names in ``MODEL_PROVIDER_MAP``), ``"openai"`` (direct call to the real
+    OpenAI API via :mod:`ai_race.models.openai_direct`, ``model_name`` used
+    verbatim as the OpenAI model id, no abstract-name indirection, bounded
+    ``max_tokens``), ``"nvidia"`` (direct call to NVIDIA's OpenAI-compatible
+    API Catalog via :mod:`ai_race.models.nvidia_direct`, ``model_name`` used
+    verbatim, e.g. ``"deepseek-ai/deepseek-v4-flash"``), or ``"auto"``, which
+    resolves from the legacy ``offline`` flag.
     """
     backend = str(backend or "auto").lower()
     if backend == "auto":
         backend = "offline" if offline else "api"
-    if backend not in {"offline", "proxy", "api", "openai"}:
+    if backend not in {"offline", "proxy", "api", "openai", "nvidia"}:
         raise ValueError(f"Unsupported model backend: {backend!r}")
 
     if backend == "proxy":
@@ -148,24 +152,14 @@ def get_send_batch(
         return send
 
     if backend == "openai":
-        from FAIRGAME.src.llm_connectors.openai_connector import OpenAIConnector
+        from ai_race.models.openai_direct import make_openai_send_batch
 
-        options = dict(proxy_options or {})
-        # OpenAIConnector defaults to temperature=1.0, which has never been
-        # validated against this game; 0.7 matches the value already confirmed
-        # (via check_symmetry.py) not to collapse race-position on the proxy
-        # backend. Always pass it explicitly rather than relying on the
-        # connector default.
-        model = OpenAIConnector(model_name, temperature=float(options.get("temperature", 0.7)))
+        return make_openai_send_batch(model_name, **(proxy_options or {}))
 
-        def send_openai(
-            prompts: list[str],
-            seeds: list[int] | None = None,
-        ) -> list[str]:
-            del seeds  # OpenAIConnector does not accept a seed; never claim CRN here
-            return [model.send_prompt(prompt) for prompt in prompts]
+    if backend == "nvidia":
+        from ai_race.models.nvidia_direct import make_nvidia_send_batch
 
-        return send_openai
+        return make_nvidia_send_batch(model_name, **(proxy_options or {}))
 
     from FAIRGAME.src.llm_connectors.llm_factory_connector import ChatModelFactory
 
