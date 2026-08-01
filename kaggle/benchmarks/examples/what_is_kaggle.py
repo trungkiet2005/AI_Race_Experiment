@@ -1,4 +1,4 @@
-# Syntax reference: kaggle_benchmarks_reference.md
+# Syntax reference: ../REFERENCE.md
 import kaggle_benchmarks as kbench
 
 @kbench.task(name="What is Kaggle?", description="Does the LLM know what Kaggle is?")

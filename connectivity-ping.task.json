@@ -1,5 +1,0 @@
-{
-  "versionNumber": 1,
-  "name": "connectivity-ping",
-  "definition": "@kbench.task(name=\"connectivity-ping\")\ndef connectivity_ping(llm) -> dict:\n    response = llm.prompt(\"Reply with exactly one word: PONG\")\n    kbench.assertions.assert_in(\n        \"PONG\", response.upper(), expectation=\"Model must echo PONG\"\n    )\n    return {\"response\": response}\n"
-}

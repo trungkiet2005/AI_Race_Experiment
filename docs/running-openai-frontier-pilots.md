@@ -152,7 +152,9 @@ EOF
 
 ## 4. Chạy pilot đầy đủ — 8 config, tuần tự, resumable
 
-Copy đoạn dưới thành `run_openai_stage.py` ở gốc repo rồi chạy. Cùng mẫu với script
+Runner chuẩn đã được check in tại `scripts/run_openai_stage.py`; chạy trực tiếp và
+không tạo thêm script ở root. Đoạn dưới chỉ là phiên bản tuần tự tối giản giải thích
+cơ chế resumable. Cùng mẫu với script
 `JOBS` trong [running-proxy-pilots.md](running-proxy-pilots.md#chạy-nhiều-config-nối-tiếp--sửa-jobs-rồi-chạy),
 bỏ bước `kaggle benchmarks auth` vì không cần:
 
@@ -164,7 +166,7 @@ import sys
 import time
 from pathlib import Path
 
-REPO = Path(__file__).resolve().parent
+REPO = Path(__file__).resolve().parents[1]
 PY = REPO / ".venv-kaggle/bin/python"
 
 JOBS = [
@@ -228,7 +230,7 @@ Chạy nền + xem log liên tục (khuyến nghị, vì gọi API tuần tự t
 
 ```bash
 mkdir -p results/frontier/openai/_logs/stage
-.venv-kaggle/bin/python run_openai_stage.py > results/frontier/openai/_logs/stage/run_openai_stage.log 2>&1 &
+.venv-kaggle/bin/python scripts/run_openai_stage.py > results/frontier/openai/_logs/stage/run_openai_stage.log 2>&1 &
 tail -f results/frontier/openai/_logs/stage/run_openai_stage.log
 ```
 
@@ -275,7 +277,7 @@ Sau khi pilot sạch (symmetry ổn, parse failure = 0):
 
 1. Đổi `"runPhase": "pilot"` → `"confirmatory"` trong cả 8 file `openai_*.json`.
 2. Sửa `"repetitions"` nếu muốn tăng số rep cho bản chính thức (khác pilot 10).
-3. Chạy lại đúng `run_openai_stage.py` với output root khác (ví dụ
+3. Chạy lại đúng `scripts/run_openai_stage.py` với output root khác (ví dụ
    `results/frontier/openai_confirmatory/...`) để không lẫn với dữ liệu pilot.
 4. Phân tích chính thức, **bỏ 4 flag `--allow-*`**:
    ```bash
@@ -292,9 +294,9 @@ Sau khi pilot sạch (symmetry ổn, parse failure = 0):
 | Một số model (đã gặp: `gpt-5-nano`) từ chối `temperature` khác giá trị mặc định (400 `unsupported_value`, chỉ nhận temperature=1) | Nếu không xử lý, toàn bộ run của model đó fail ngay từ request đầu | **Đã sửa**: `openai_direct.py` tự phát hiện lỗi này, bỏ `temperature` khỏi request và dùng default của model cho phần còn lại của run — in cảnh báo ra stderr một lần. Vẫn nên chạy `check_symmetry.py` cho model bị rơi vào nhánh này, vì temperature thực tế dùng có thể khác 0.7 đã định |
 | Key/project không có quyền dùng model muốn chạy (403 `model_not_found`, không phải lỗi sai tên) | Toàn bộ run của model đó fail | Chạy lệnh liệt kê model ở bước 2 để biết chính xác project của key có quyền dùng model nào, đừng đoán theo tên trên trang giá |
 | Gọi API tuần tự, không `ThreadPoolExecutor` | Pilot 8 config × nhiều model chậm hơn hẳn đường proxy | Đã có `concurrency` (mặc định 4) trong `proxyOptions`; tăng/giảm tùy rate limit thực tế của tài khoản |
-| Không giới hạn `max_transport_retries`/`timeout` | Một lỗi transport giữa chừng làm cả model đó `FAIL`, phải chạy lại (script tự skip phần đã `completed` nên không tốn tiền chạy lại) | Đã có `max_transport_retries`/`timeout` trong `proxyOptions`; theo dõi log, nếu 429 lặp lại liên tục thì dừng, đợi rồi chạy lại `run_openai_stage.py` |
+| Không giới hạn `max_transport_retries`/`timeout` | Một lỗi transport giữa chừng làm cả model đó `FAIL`, phải chạy lại (script tự skip phần đã `completed` nên không tốn tiền chạy lại) | Đã có `max_transport_retries`/`timeout` trong `proxyOptions`; theo dõi log, nếu 429 lặp lại liên tục thì dừng, đợi rồi chạy lại `scripts/run_openai_stage.py` |
 | Quên đổi `MODEL_IDS` ở bước 2 trước khi chạy pilot thật | Chạy nhầm placeholder `REPLACE_ME_openai_model_id`, lỗi ngay từ request đầu (rẻ, nhưng phí thời gian) | `grep -l REPLACE_ME` trước khi chạy stage script |
 | `temperature` 0.7 chưa từng kiểm chứng riêng cho backend này (chỉ mới kiểm chứng ở đường proxy) | Có thể symmetry collapse khác | Luôn chạy `check_symmetry.py` (bước 5) trước khi tin kết quả |
-| Chạy `openai_baseline` hôm nay, các persona cell hôm khác | `protocol_signature` khác nhau → persona trùng khít với batch, analyser từ chối | Chạy hết 8 config trong cùng một lần gọi `run_openai_stage.py` |
+| Chạy `openai_baseline` hôm nay, các persona cell hôm khác | `protocol_signature` khác nhau → persona trùng khít với batch, analyser từ chối | Chạy hết 8 config trong cùng một lần gọi `scripts/run_openai_stage.py` |
 | Trộn output pilot (`results/frontier/openai/`) với confirmatory | Mất tính preregistered, phải phân biệt bằng `run_phase` | Dùng thư mục output khác nhau cho pilot và confirmatory (bước 7) |
 | Dán API key thẳng vào chat/terminal log | Key lộ ra trong lịch sử hội thoại/log, không thể thu hồi khỏi đó | Rotate key trên platform.openai.com sau khi dùng xong nếu đã lỡ dán vào nơi không kiểm soát được |

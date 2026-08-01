@@ -50,6 +50,11 @@ kaggle.json
 !/results/kaggle-benchmarks/
 !/results/kaggle-benchmarks/**
 
+# Kaggle Benchmark CLI scratch artifacts. Keep raw local debug exports off Git.
+/results/kaggle-benchmarks/_local-debug/
+/*.task.json
+/*-run_id_*.run.json
+
 /ai_race_results/
 /output/game_understanding/
 /models/

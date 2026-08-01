@@ -19,7 +19,7 @@ import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
-REPO = Path(__file__).resolve().parent
+REPO = Path(__file__).resolve().parents[1]
 PY = REPO / ".venv-kaggle/bin/python"
 LOG_DIR = REPO / "results/frontier/openai/_logs/stage"
 

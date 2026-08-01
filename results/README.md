@@ -24,6 +24,10 @@ OpenAI stage-run console logs are local operational artifacts under
 `frontier/openai/_logs/` and are ignored by Git. The retained audit summary is
 [`analysis/openai/stage-run-summary.md`](../analysis/openai/stage-run-summary.md).
 
+Local Kaggle Benchmark CLI exports are similarly ignored under
+`kaggle-benchmarks/_local-debug/`; their retained outcome summary is
+[`kaggle-benchmarks/local-debug-summary.md`](kaggle-benchmarks/local-debug-summary.md).
+
 ### Action explainability (XAI)
 
 Prompt-turn explainability runs are tracked under:

@@ -42,8 +42,10 @@ kaggle/
   benchmarks/            Kaggle Benchmark task for frontier/API models
   setup/                 Offline-wheel preparation notes and script
 references/papers/
-  markdown/              AI-readable summary of the one retained reference paper
-  pdf/                   The single retained AI Race source PDF
+  markdown/              AI-readable research notes
+  pdf/                   Retained reference-paper PDFs
+  sources/               Publisher/arXiv source bundles
+scripts/                 Operational experiment runners
 strategy_analysis/       AS/AU/CS/CAS trajectory classification
 results/                 Analysis scripts and admitted pilot tables/hashes
 paper/                   Manuscript with bounded pilot audit evidence
