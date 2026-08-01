@@ -1,0 +1,14 @@
+{
+  "name": "companies_nplayer_default_n4",
+  "nPlayers": 4,
+  "names": ["Company_1", "Company_2", "Company_3", "Company_4"],
+  "personaCondition": "none",
+  "personaRoles": ["", "", "", ""],
+  "personas": {
+    "en": ["", "", "", ""]
+  },
+  "personaProbabilities": {
+    "en": [100.0, 100.0, 100.0, 100.0]
+  },
+  "description": "Neutral 4-company seats for the N-player baseline; no persona is injected."
+}

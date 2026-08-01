@@ -1,0 +1,18 @@
+{
+  "name": "ai_race_nplayer_n5_risk_10",
+  "engine": "ai_race_nplayer",
+  "nPlayers": 5,
+  "safeProgress": 1.0,
+  "speed": 1.5,
+  "cost": 1.0,
+  "benefit": 4.0,
+  "minRounds": 5,
+  "stopProbability": 0.2,
+  "maxRoundsSafetyCap": 100,
+  "racePrize": 100,
+  "maxPrivateRisk": 0.1,
+  "historyMode": "previous_round",
+  "promptTemplate": "ai_race_nplayer_en",
+  "promptVersion": "ai-race-nplayer-v1",
+  "agents": "companies_nplayer_default_n5"
+}

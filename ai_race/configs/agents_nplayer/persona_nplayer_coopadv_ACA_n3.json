@@ -1,0 +1,28 @@
+{
+  "name": "persona_nplayer_coopadv_ACA_n3",
+  "nPlayers": 3,
+  "names": [
+    "Company_1",
+    "Company_2",
+    "Company_3"
+  ],
+  "personaCondition": "ACA",
+  "personaRoles": [
+    "adversarial",
+    "cooperative",
+    "adversarial"
+  ],
+  "personas": {
+    "en": [
+      "an executive who believes rival firms only ever do well at each other's expense, and who would much rather come out ahead alone than reach any workable understanding with a competitor",
+      "an executive who believes rival firms both do better when neither tries to gain at the other's expense, and who would much rather reach a workable understanding than come out ahead alone",
+      "an executive who believes rival firms only ever do well at each other's expense, and who would much rather come out ahead alone than reach any workable understanding with a competitor"
+    ],
+    "vi": [
+      "một giám đốc tin rằng các công ty đối thủ chỉ khá lên trên tổn thất của nhau, và thà vượt lên một mình còn hơn đạt bất kỳ thỏa thuận khả thi nào với một đối thủ",
+      "một giám đốc tin rằng các công ty đối thủ đều khá hơn khi không bên nào tìm cách thu lợi trên tổn thất của bên kia, và thà đạt một thỏa thuận khả thi còn hơn vượt lên một mình",
+      "một giám đốc tin rằng các công ty đối thủ chỉ khá lên trên tổn thất của nhau, và thà vượt lên một mình còn hơn đạt bất kỳ thỏa thuận khả thi nào với một đối thủ"
+    ]
+  },
+  "description": "N-player (3) cooperative/adversarial persona cell ACA: seat i is cooperative if the i-th letter is C, adversarial if A. Full 2^N combinatorial matrix (tractable, unlike the 6^N risk matrix)."
+}

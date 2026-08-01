@@ -1,0 +1,28 @@
+{
+  "name": "persona_nplayer_risk_5_n3",
+  "nPlayers": 3,
+  "names": [
+    "Company_1",
+    "Company_2",
+    "Company_3"
+  ],
+  "personaCondition": "R5",
+  "personaRoles": [
+    "risk-5",
+    "risk-5",
+    "risk-5"
+  ],
+  "personas": {
+    "en": [
+      "an executive who, faced with six increasingly risky gambles in a prior assessment, chose the fifth gamble, favouring a high-variance prospect and treating a larger gain as worth the added uncertainty",
+      "an executive who, faced with six increasingly risky gambles in a prior assessment, chose the fifth gamble, favouring a high-variance prospect and treating a larger gain as worth the added uncertainty",
+      "an executive who, faced with six increasingly risky gambles in a prior assessment, chose the fifth gamble, favouring a high-variance prospect and treating a larger gain as worth the added uncertainty"
+    ],
+    "vi": [
+      "một giám đốc từng chọn mức cược thứ năm trên thang sáu mức cược rủi ro tăng dần, ưu tiên phương án có phương sai cao và xem khoản lợi lớn hơn là đáng để chấp nhận thêm bất định",
+      "một giám đốc từng chọn mức cược thứ năm trên thang sáu mức cược rủi ro tăng dần, ưu tiên phương án có phương sai cao và xem khoản lợi lớn hơn là đáng để chấp nhận thêm bất định",
+      "một giám đốc từng chọn mức cược thứ năm trên thang sáu mức cược rủi ro tăng dần, ưu tiên phương án có phương sai cao và xem khoản lợi lớn hơn là đáng để chấp nhận thêm bất định"
+    ]
+  },
+  "description": "Symmetric N-player risk-preference persona: all 3 seats at Eckel-Grossman gamble 5 of 6 (paper SI Task 1, arXiv-2607.26034v1). Symmetric-only because the full per-seat combinatorial matrix (6^N) is intractable for N > 2 -- see ai_race/engine_nplayer/README.md."
+}
