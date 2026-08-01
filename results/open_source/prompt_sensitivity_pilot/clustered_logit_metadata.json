@@ -56,8 +56,8 @@
     {
       "converged": true,
       "formula": "unsafe ~ C(max_private_risk) + own_prev_unsafe * opponent_prev_unsafe * progress_gap_before + C(persona_condition)",
-      "log_likelihood": -1491.0089223982375,
-      "pseudo_r_squared": 0.3773061727501533,
+      "log_likelihood": -1491.0089223982372,
+      "pseudo_r_squared": 0.37730617275015343,
       "specification": "3"
     },
     {
