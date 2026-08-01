@@ -114,7 +114,7 @@ def make_nvidia_send_batch(
                 last_error = error
                 if attempt >= int(max_transport_retries):
                     break
-                time.sleep(min(2**attempt, 8))
+                time.sleep(min(2**attempt, 30))
         raise RuntimeError(
             f"NVIDIA API call failed after {max_transport_retries} retries for "
             f"model {model_id!r}. No fallback action was applied. Last error: "

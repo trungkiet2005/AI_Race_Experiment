@@ -2,7 +2,7 @@
 
 Extends the paper-faithful two-player mechanism in `ai_race/engine/` to any
 `n_players >= 2`, following Appendix B of the reference paper
-(`jair-12225/JAIR-12225-ArticlePDF-25030-1-10-20201122.md`, Han et al. 2020,
+(`references/papers/sources/jair-12225/JAIR-12225-ArticlePDF-25030-1-10-20201122.md`, Han et al. 2020,
 "N-player AI Race Definition"). Built as a fully separate package on purpose
 — see "Why separate" below — with configs, prompts, and tests of its own.
 Nothing under `ai_race/engine/`, `ai_race/dataio/recorder.py`,

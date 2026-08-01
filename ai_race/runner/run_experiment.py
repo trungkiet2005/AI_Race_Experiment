@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import importlib.metadata
 import json
 import random
 import re
@@ -22,9 +23,19 @@ from ai_race.engine.agent import RaceAgent
 from ai_race.engine.game import AIRaceGame
 from ai_race.engine.state import GameConfig
 from ai_race.models.factory import get_send_batch, init_offline_backend
-from ai_race.paths import CONFIGS_DIR, PROMPTS_DIR, RESULTS_DIR
+from ai_race.paths import CONFIGS_DIR, PROMPTS_DIR, REPO_ROOT, RESULTS_DIR
 from ai_race.prompts.sensitivity import apply_prompt_variant, get_prompt_variant
 from ai_race.runner.batch import run_games_batched
+
+# Manifests written by this runner for a real backend (not --mock) use this schema
+# so results/scripts/analyze_ai_race.py can verify a protocol_signature across runs
+# (needed to estimate a persona effect via --fit-logit instead of only describing
+# it). The previous schema, "ai-race-results-v1", omitted source/decoding/seed
+# provenance, so every local run fell back to an "unverified" signature keyed on
+# its output path -- persona was then perfectly confounded with the run batch even
+# when every other setting was identical. See docs/running-proxy-pilots.md.
+MANIFEST_SCHEMA_PROXY_RUN = "ai-race-proxy-run-v1"
+MANIFEST_SCHEMA_LEAN = "ai-race-results-v1"
 
 
 def model_slug(name: str) -> str:
@@ -182,6 +193,203 @@ def _agents_provenance(exp: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def _source_tree_sha256() -> str:
+    """Hash every tracked-format source file under ai_race/ and FAIRGAME/src/.
+
+    Mirrors kaggle/experiments/baseline.py's source_tree_sha256() so a run
+    executed locally and one executed on Kaggle can be told apart (or matched)
+    on the same basis: two runs sharing this hash used byte-identical engine,
+    config, and prompt code, not merely "the same git commit at some point".
+    """
+    digest = hashlib.sha256()
+    roots = [REPO_ROOT / "ai_race", REPO_ROOT / "FAIRGAME" / "src"]
+    files = sorted(
+        path
+        for root in roots
+        if root.is_dir()
+        for path in root.rglob("*")
+        if path.is_file() and path.suffix.lower() in {".py", ".json", ".txt"}
+    )
+    for path in files:
+        relative = path.relative_to(REPO_ROOT).as_posix()
+        digest.update(relative.encode("utf-8"))
+        digest.update(b"\0")
+        digest.update(path.read_bytes())
+        digest.update(b"\0")
+    return digest.hexdigest()
+
+
+def _prompt_provenance(exp: dict[str, Any]) -> dict[str, str]:
+    """Hash the exact rendered template text this experiment's first game used.
+
+    Every game in one experiment shares a prompt template/version in this
+    project (only maxPrivateRisk varies by game), so the first game stands in
+    for all of them; a differing template elsewhere would already fail the
+    "same games" comparability the analyser expects.
+    """
+    game_name = str(exp["games"][0])
+    game_data = validate_game(load_json(CONFIGS_DIR / "game" / f"{game_name}.json"))
+    language = str(list(exp.get("languages", ["en"]))[0])
+    prompt_variant_id = str(exp.get("promptVariant", "canonical"))
+    prompt_variant = get_prompt_variant(prompt_variant_id)
+    version = (
+        prompt_variant.version
+        if prompt_variant_id != "canonical"
+        else str(game_data.get("promptVersion", "ai-race-fairgame-v3"))
+    )
+    template_name = str(game_data.get("promptTemplate", "ai_race_{language}")).format(
+        language=language
+    )
+    raw_template = (PROMPTS_DIR / f"{template_name}.txt").read_text(encoding="utf-8")
+    rendered = apply_prompt_variant(raw_template, prompt_variant_id)
+    return {
+        "version": version,
+        "sha256": hashlib.sha256(rendered.encode("utf-8")).hexdigest(),
+    }
+
+
+def _mechanism_provenance(exp: dict[str, Any]) -> dict[str, Any]:
+    """Collect the paper-mechanism constants and the set of risk treatments run.
+
+    Fails loudly if two games in the same experiment disagree on anything other
+    than maxPrivateRisk -- that would mean the runs are not the "same mechanism,
+    different treatment" design the analyser assumes.
+    """
+    games = [
+        validate_game(load_json(CONFIGS_DIR / "game" / f"{name}.json"))
+        for name in exp["games"]
+    ]
+    first = games[0]
+    fixed_fields = (
+        "minRounds",
+        "stopProbability",
+        "racePrize",
+        "safeProgress",
+        "unsafeProgress",
+        "stagePayoffs",
+    )
+    for other in games[1:]:
+        mismatched = [field for field in fixed_fields if other.get(field) != first.get(field)]
+        if mismatched:
+            raise ValueError(
+                f"Games {first['name']!r} and {other['name']!r} disagree on "
+                f"{mismatched}; manifest mechanism provenance assumes only "
+                "maxPrivateRisk varies across an experiment's games"
+            )
+    stage_payoffs = dict(first["stagePayoffs"])
+    return {
+        "minimum_rounds": int(first["minRounds"]),
+        "stop_probability": float(first["stopProbability"]),
+        "risk_levels": sorted({float(game["maxPrivateRisk"]) for game in games}),
+        "race_prize": float(first["racePrize"]),
+        "stage_payoff": {
+            "safe": {
+                "safe": float(stage_payoffs["safeSafe"]),
+                "unsafe": float(stage_payoffs["safeUnsafe"]),
+            },
+            "unsafe": {
+                "safe": float(stage_payoffs["unsafeSafe"]),
+                "unsafe": float(stage_payoffs["unsafeUnsafe"]),
+            },
+        },
+        "progress": {
+            "safe": float(first["safeProgress"]),
+            "unsafe": float(first["unsafeProgress"]),
+        },
+    }
+
+
+def _proxy_decoding_and_seed_provenance(exp: dict[str, Any]) -> dict[str, dict[str, Any]]:
+    """Describe the proxy backend's actual request contract, not an assumed one.
+
+    Mirrors the honesty rules in kaggle/benchmarks/ai_race_baseline.py: a value
+    is only ``_effective``/``_applied`` when this process can confirm the
+    provider actually used it, not merely that the SDK accepted the parameter.
+    """
+    from ai_race.models.proxy import (
+        DEFAULT_MAX_TOKENS,
+        DEFAULT_MAX_TRANSPORT_RETRIES,
+        DEFAULT_TEMPERATURE,
+    )
+
+    proxy_options = dict(exp.get("proxyOptions", {}) or {})
+    send_seed = bool(proxy_options.get("send_seed", False))
+    if send_seed:
+        seed_contract = {
+            "requested": True,
+            "forwarded_by_sdk": True,
+            "applied": None,
+            "applied_known": False,
+            "status": "forwarded_to_provider_application_unconfirmed",
+            "strip_detection": "not_applicable_proxy_backend",
+        }
+    else:
+        seed_contract = {
+            "requested": False,
+            "forwarded_by_sdk": False,
+            "applied": False,
+            "applied_known": True,
+            "status": "not_requested_send_seed_disabled_in_config",
+            "strip_detection": "not_applicable_seed_not_requested",
+        }
+    decoding = {
+        "temperature_requested": float(proxy_options.get("temperature", DEFAULT_TEMPERATURE)),
+        "temperature_forwarded_by_sdk": True,
+        "temperature_effective": None,
+        "temperature_effective_confirmed": False,
+        "temperature_status": "forwarded_to_provider_effective_value_unconfirmed",
+        "output_token_limit_parameter": "max_tokens",
+        "output_token_limit": int(proxy_options.get("max_tokens", DEFAULT_MAX_TOKENS)),
+        "max_parse_retries": int(exp.get("maxParseRetries", 3)),
+        "max_transport_retries": int(
+            proxy_options.get("max_transport_retries", DEFAULT_MAX_TRANSPORT_RETRIES)
+        ),
+    }
+    return {"decoding": decoding, "sampling_seed_provenance": seed_contract}
+
+
+def _unverified_decoding_and_seed_provenance(backend: str) -> dict[str, dict[str, Any]]:
+    """Fallback for backends whose request contract this runner doesn't model yet.
+
+    Fills every key the analyser requires so the manifest is structurally valid,
+    but every value that would claim knowledge of the provider's actual
+    behaviour is left explicitly unconfirmed -- this must never be read as
+    "equivalent to the proxy path", only as "not yet audited".
+    """
+    status = f"backend_{backend}_not_yet_documented_for_{MANIFEST_SCHEMA_PROXY_RUN}"
+    return {
+        "decoding": {
+            "temperature_requested": None,
+            "temperature_forwarded_by_sdk": None,
+            "temperature_effective": None,
+            "temperature_effective_confirmed": False,
+            "temperature_status": status,
+            "output_token_limit_parameter": "unknown",
+            "output_token_limit": 0,
+            "max_parse_retries": 0,
+            "max_transport_retries": 0,
+        },
+        "sampling_seed_provenance": {
+            "requested": None,
+            "forwarded_by_sdk": None,
+            "applied": None,
+            "applied_known": False,
+            "status": status,
+            "strip_detection": "not_audited",
+        },
+    }
+
+
+def _package_versions() -> dict[str, Optional[str]]:
+    versions: dict[str, Optional[str]] = {}
+    for package in ("numpy", "pandas", "openai", "torch", "transformers", "vllm"):
+        try:
+            versions[package] = importlib.metadata.version(package)
+        except importlib.metadata.PackageNotFoundError:
+            versions[package] = None
+    return versions
+
+
 def _write_manifest(
     path: Path,
     *,
@@ -191,9 +399,12 @@ def _write_manifest(
     n_turns: int,
     status: str,
     error: Optional[str] = None,
+    mock_strategy: Optional[str] = None,
 ) -> None:
-    manifest = {
-        "schema_version": "ai-race-results-v1",
+    backend = "offline" if bool(experiment.get("useOffline", True)) else str(
+        experiment.get("backend", "api")
+    )
+    manifest: dict[str, Any] = {
         "created_utc": datetime.now(timezone.utc).isoformat(),
         "experiment": experiment,
         "model": model,
@@ -203,6 +414,28 @@ def _write_manifest(
         "n_races": n_races,
         "n_turns": n_turns,
     }
+    if mock_strategy:
+        manifest["schema_version"] = MANIFEST_SCHEMA_LEAN
+    else:
+        prompt = _prompt_provenance(experiment)
+        decoding_and_seed = (
+            _proxy_decoding_and_seed_provenance(experiment)
+            if backend == "proxy"
+            else _unverified_decoding_and_seed_provenance(backend)
+        )
+        manifest.update(
+            {
+                "schema_version": MANIFEST_SCHEMA_PROXY_RUN,
+                "source_sha256": _source_tree_sha256(),
+                "prompt_version": prompt["version"],
+                "prompt_sha256": prompt["sha256"],
+                "model_route": model,
+                "llm_backend_mro": [backend],
+                "mechanism": _mechanism_provenance(experiment),
+                "package_versions": _package_versions(),
+                **decoding_and_seed,
+            }
+        )
     if error:
         manifest["error"] = str(error)
     path.write_text(json.dumps(manifest, indent=2, ensure_ascii=False), encoding="utf-8")
@@ -227,6 +460,7 @@ def run_experiment(
             n_races=0,
             n_turns=0,
             status="running",
+            mock_strategy=mock_strategy,
         )
         try:
             games = build_games_for_model(exp, str(model))
@@ -282,6 +516,7 @@ def run_experiment(
                 n_turns=journal.turn_count,
                 status="failed",
                 error=f"{type(exc).__name__}: {exc}",
+                mock_strategy=mock_strategy,
             )
             raise
         _write_manifest(
@@ -291,6 +526,7 @@ def run_experiment(
             n_races=journal.race_count,
             n_turns=journal.turn_count,
             status="completed",
+            mock_strategy=mock_strategy,
         )
         all_results.extend(results)
     write_all_results_csv(all_results, output_root / "all_results.csv")

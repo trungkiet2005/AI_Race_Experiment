@@ -82,6 +82,12 @@ CANONICAL_PROMPT_SHA256S = frozenset(CANONICAL_PROMPT_SHA256_BY_TEMPLATE.values(
 SUPPORTED_PROTOCOL_MANIFEST_SCHEMAS = {
     "ai-race-kaggle-run-v1",
     "ai-race-kbench-run-v1",
+    # Written by ai_race/runner/run_experiment.py for real (non-mock) local runs
+    # since the run_manifest upgrade in run_experiment.py; shares the kbench
+    # branch's field contract below (decoding/seed/mechanism), not a separate
+    # code path, because the two runners describe the same kind of hosted-model
+    # request (temperature/token-limit forwarded, provider effect unconfirmed).
+    "ai-race-proxy-run-v1",
 }
 
 TURN_ALIASES: dict[str, tuple[str, ...]] = {

@@ -1,0 +1,49 @@
+{
+  "schema_version": "ai-race-results-v1",
+  "created_utc": "2026-08-01T06:37:55.292307+00:00",
+  "experiment": {
+    "name": "api_persona_baseline_risk_4_1",
+    "runPhase": "pilot",
+    "description": "Persona condition R4-R1 (risk-preference matrix cell 4,1 of 6x6; Eckel-Grossman gamble scale, paper SI Task 1) over the Kaggle model proxy.",
+    "games": [
+      "ai_race_risk_10",
+      "ai_race_risk_60",
+      "ai_race_risk_90"
+    ],
+    "agents": "persona_risk_4_1",
+    "languages": [
+      "en"
+    ],
+    "models": [
+      "google/gemini-3-flash-preview"
+    ],
+    "useOffline": false,
+    "backend": "proxy",
+    "samplingSeedApplied": false,
+    "proxyOptions": {
+      "temperature": 0.7,
+      "max_tokens": 256,
+      "timeout": 120,
+      "max_transport_retries": 6,
+      "concurrency": 2,
+      "send_seed": false
+    },
+    "repetitions": 10,
+    "seed": 260726,
+    "maxParseRetries": 3,
+    "verbose": true
+  },
+  "model": "google/gemini-3-flash-preview",
+  "run_phase": "pilot",
+  "agents_name": "persona_risk_4_1",
+  "agents_config_sha256": "5398e3d69e482f7f32ec2800e418d2cfa4a9878b8732a9e652929dfbc01f06b7",
+  "persona_condition": "R4-R1",
+  "persona_roles": [
+    "risk-4",
+    "risk-1"
+  ],
+  "persona_sha256": "6569e61f303389dd2233770f830882cd3dfe9e8c1dcf82e6da19901d09508090",
+  "status": "completed",
+  "n_races": 30,
+  "n_turns": 558
+}

@@ -23,8 +23,8 @@
     "top_p": 0.95,
     "max_tokens": 256,
     "timeout": 120,
-    "max_transport_retries": 6,
-    "concurrency": 4,
+    "max_transport_retries": 10,
+    "concurrency": 2,
     "thinking": false
   },
   "repetitions": 10,

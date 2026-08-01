@@ -1,0 +1,49 @@
+{
+  "schema_version": "ai-race-results-v1",
+  "created_utc": "2026-08-01T03:32:01.295945+00:00",
+  "experiment": {
+    "name": "openai_baseline",
+    "runPhase": "pilot",
+    "description": "Frontier GPT models via direct OpenAI API (own API key, backend='openai'), neutral baseline, persona=none. Companion to api_baseline_crossmodel.json (same mechanism/prompt/seed) but bypasses the Kaggle model proxy entirely.",
+    "games": [
+      "ai_race_risk_10",
+      "ai_race_risk_60",
+      "ai_race_risk_90"
+    ],
+    "agents": "companies_default",
+    "languages": [
+      "en"
+    ],
+    "models": [
+      "gpt-5.4-nano",
+      "gpt-5-nano"
+    ],
+    "useOffline": false,
+    "backend": "openai",
+    "samplingSeedApplied": false,
+    "proxyOptions": {
+      "temperature": 0.7,
+      "max_tokens": 256,
+      "timeout": 120,
+      "max_transport_retries": 3,
+      "concurrency": 4
+    },
+    "repetitions": 10,
+    "seed": 260726,
+    "maxParseRetries": 3,
+    "verbose": true
+  },
+  "model": "gpt-5-nano",
+  "run_phase": "pilot",
+  "agents_name": "companies_default",
+  "agents_config_sha256": "ccf3a3ae7ec6e488ca58c9659ced7727ee34989af70e808081c7cd55a6320469",
+  "persona_condition": "none",
+  "persona_roles": [
+    "",
+    ""
+  ],
+  "persona_sha256": "d7c1f053e2581812f2db2c745131a2c8a1971ab5ad7725aeadd6d4f3c17fe6a1",
+  "status": "completed",
+  "n_races": 30,
+  "n_turns": 558
+}

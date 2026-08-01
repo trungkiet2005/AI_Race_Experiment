@@ -1,0 +1,390 @@
+<meta charset="utf-8">
+<title>AI Race — N-Player Pilot Dashboard</title>
+<style>
+  .viz-root {
+    color-scheme: light;
+    --surface-1:      #fcfcfb;
+    --page:           #f9f9f7;
+    --text-primary:   #0b0b0b;
+    --text-secondary: #52514e;
+    --text-muted:     #898781;
+    --grid:           #e1e0d9;
+    --axis:           #c3c2b7;
+    --border:         rgba(11,11,11,0.10);
+    --series-1: #2a78d6; /* blue */
+    --series-2: #eb6834; /* orange */
+    --series-3: #1baf7a; /* aqua */
+    --series-4: #eda100; /* yellow */
+    --series-5: #e87ba4; /* magenta */
+    --series-6: #4a3aa7; /* violet */
+    --good:     #0ca30c;
+    --warning:  #fab219;
+    --serious:  #ec835a;
+    --critical: #d03b3b;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:where(:not([data-theme="light"])) .viz-root {
+      color-scheme: dark;
+      --surface-1:      #1a1a19;
+      --page:           #0d0d0d;
+      --text-primary:   #ffffff;
+      --text-secondary: #c3c2b7;
+      --text-muted:     #898781;
+      --grid:           #2c2c2a;
+      --axis:           #383835;
+      --border:         rgba(255,255,255,0.10);
+      --series-1: #3987e5;
+      --series-2: #d95926;
+      --series-3: #199e70;
+      --series-4: #c98500;
+      --series-5: #d55181;
+      --series-6: #9085e9;
+      --good:     #0ca30c;
+      --warning:  #fab219;
+      --serious:  #ec835a;
+      --critical: #e66767;
+    }
+  }
+  :root[data-theme="dark"] .viz-root {
+    color-scheme: dark;
+    --surface-1:      #1a1a19;
+    --page:           #0d0d0d;
+    --text-primary:   #ffffff;
+    --text-secondary: #c3c2b7;
+    --text-muted:     #898781;
+    --grid:           #2c2c2a;
+    --axis:           #383835;
+    --border:         rgba(255,255,255,0.10);
+    --series-1: #3987e5;
+    --series-2: #d95926;
+    --series-3: #199e70;
+    --series-4: #c98500;
+    --series-5: #d55181;
+    --series-6: #9085e9;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    background: var(--page);
+    color: var(--text-primary);
+  }
+  .viz-root { max-width: 1180px; margin: 0 auto; padding: 32px 20px 80px; }
+
+  header h1 { font-size: 22px; margin: 0 0 6px; }
+  header p.lede { color: var(--text-secondary); font-size: 14px; margin: 0 0 18px; max-width: 820px; }
+
+  .banner {
+    background: color-mix(in srgb, var(--warning) 16%, var(--surface-1));
+    border: 1px solid color-mix(in srgb, var(--warning) 45%, transparent);
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: 13px;
+    color: var(--text-primary);
+    margin-bottom: 28px;
+    line-height: 1.5;
+  }
+  .banner b { color: var(--serious); }
+
+  .card {
+    background: var(--surface-1);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 22px 16px;
+    margin-bottom: 22px;
+  }
+  .card h2 { font-size: 16px; margin: 0 0 2px; }
+  .card .sub { color: var(--text-secondary); font-size: 12.5px; margin: 0 0 14px; max-width: 760px; }
+
+  svg { display: block; font-family: inherit; }
+  .axis-label { fill: var(--text-muted); font-size: 10.5px; }
+  .grid-line { stroke: var(--grid); stroke-width: 1; }
+  .axis-line { stroke: var(--axis); stroke-width: 1; }
+  .bar-label { fill: var(--text-secondary); font-size: 10px; }
+
+  .legend { display: flex; flex-wrap: wrap; gap: 14px; margin: 10px 0 4px; font-size: 12px; color: var(--text-secondary); }
+  .legend-item { display: flex; align-items: center; gap: 6px; }
+  .legend-swatch { width: 10px; height: 10px; border-radius: 2px; flex: none; }
+
+  .tooltip {
+    position: fixed;
+    pointer-events: none;
+    background: var(--text-primary);
+    color: var(--surface-1);
+    font-size: 12px;
+    padding: 6px 9px;
+    border-radius: 6px;
+    line-height: 1.45;
+    z-index: 50;
+    opacity: 0;
+    transition: opacity 0.08s ease;
+    max-width: 260px;
+  }
+
+  details.tv { margin-top: 10px; }
+  details.tv summary { cursor: pointer; font-size: 12px; color: var(--text-secondary); }
+  table.data-table { border-collapse: collapse; width: 100%; margin-top: 10px; font-size: 12px; }
+  table.data-table th, table.data-table td {
+    text-align: right; padding: 5px 8px; border-bottom: 1px solid var(--grid);
+    font-variant-numeric: tabular-nums;
+  }
+  table.data-table th:first-child, table.data-table td:first-child { text-align: left; }
+  table.data-table th { color: var(--text-muted); font-weight: 600; }
+
+  .badge { display: inline-flex; align-items: center; gap: 5px; font-size: 11.5px; padding: 2px 8px; border-radius: 999px; font-weight: 600; }
+  .badge.good { background: color-mix(in srgb, var(--good) 18%, transparent); color: var(--good); }
+  .badge.warn { background: color-mix(in srgb, var(--warning) 22%, transparent); color: color-mix(in srgb, var(--warning) 70%, var(--text-primary)); }
+
+  footer { color: var(--text-muted); font-size: 11.5px; margin-top: 30px; line-height: 1.6; }
+</style>
+
+<div class="viz-root">
+  <header>
+    <h1>AI Race — N-Player Pilot, Dashboard</h1>
+    <p class="lede">
+      qwen2.5-14b-instruct (offline, N=3 công ty) chơi biến thể N-player của AI Race
+      (<code>ai_race/engine_nplayer</code>). Baseline không persona (20 lần lặp/mức rủi ro) và
+      6 persona rủi ro Eckel-Grossman R1–R6 áp đối xứng cả 3 ghế (2 lần lặp/mức rủi ro), cùng
+      3 mức rủi ro riêng tối đa <code>max_private_risk</code> ∈ {0.1, 0.6, 0.9}.
+    </p>
+  </header>
+
+  <div class="banner">
+    <b>Đây là dữ liệu PILOT, không phải confirmatory.</b> Run persona chỉ có 2 lần lặp/ô
+    (~2 race độc lập/ô), nên các con số persona bên dưới là <b>quan sát mô tả</b>, không phải ước
+    lượng chắc chắn — cần chạy confirmatory với nhiều lần lặp hơn trước khi kết luận. Xem
+    <a href="../../../results/nplayer/ANALYSIS_qwen2.5-14b-instruct.md">phân tích đầy đủ</a> để biết
+    toàn bộ giới hạn.
+  </div>
+
+  <div class="card">
+    <h2>1. Tỷ lệ UNSAFE theo mức rủi ro, theo persona</h2>
+    <p class="sub">
+      Baseline (không persona, xám) làm tham chiếu; R1–R6 là 6 mức persona rủi ro
+      Eckel-Grossman (R1 = chọn cược an toàn nhất, R6 = chọn cược rủi ro nhất), áp giống nhau
+      cho cả 3 ghế. n = 528 lượt/ô (baseline), n = 33 lượt/ô (mỗi persona × risk).
+    </p>
+    <div id="chart1"></div>
+    <details class="tv"><summary>Xem bảng dữ liệu</summary><div id="table1"></div></details>
+  </div>
+
+  <div class="card">
+    <h2>2. Đối chiếu lý thuyết N-Player vs thực nghiệm (baseline)</h2>
+    <p class="sub">
+      "Lý thuyết" = tần suất chiến lược AU (luôn UNSAFE) tại phân phối dừng small-mutation-limit
+      (<code>N-Player/theory/stationary.py</code>, Z=100, β=0.1, cùng tham số cơ chế của run:
+      n=3, s=1.5, b=4, c=1, B=100, W=9). "Thực nghiệm" = tỷ lệ UNSAFE mỗi lượt quyết định thật.
+      Hai đại lượng đo hai cơ chế khác nhau (chọn lọc tiến hóa quần thể dài hạn vs suy luận
+      trong-ngữ-cảnh của một model) — chỉ nên so sánh <i>hướng</i>, không so sánh độ lớn/hình dạng.
+    </p>
+    <div id="chart2"></div>
+    <details class="tv"><summary>Xem bảng dữ liệu</summary><div id="table2"></div></details>
+  </div>
+
+  <div class="card">
+    <h2>3. Hiệu ứng vòng 1: luôn mở màn bằng UNSAFE</h2>
+    <p class="sub">
+      Tỷ lệ UNSAFE ở vòng 1 (chưa có tín hiệu đối thủ) so với vòng 2 trở đi, baseline không
+      persona. Vòng 1 = 100% UNSAFE ở cả 3 mức rủi ro; phân hóa theo risk chỉ xuất hiện từ vòng 2.
+    </p>
+    <div id="chart3"></div>
+    <details class="tv"><summary>Xem bảng dữ liệu</summary><div id="table3"></div></details>
+  </div>
+
+  <div class="card">
+    <h2>4. Hành vi theo vị thế trong cuộc đua (baseline)</h2>
+    <p class="sub">
+      Tỷ lệ UNSAFE khi đang dẫn đầu / bị dẫn / hòa (so với tiến độ cao nhất của đối thủ trước khi
+      ra quyết định). Ở risk thấp, nhóm "hòa" UNSAFE nhiều nhất; phân hóa theo vị thế mờ dần khi
+      risk tăng.
+    </p>
+    <div id="chart4"></div>
+    <details class="tv"><summary>Xem bảng dữ liệu</summary><div id="table4"></div></details>
+  </div>
+
+  <div class="card">
+    <h2>5. Tỷ lệ setback trong nhóm dẫn đầu (baseline)</h2>
+    <p class="sub">
+      Trong số người chơi đủ điều kiện chịu setback (thắng hoặc hòa ở cuối race), tỷ lệ thực sự bị
+      setback — tăng theo <code>max_private_risk</code> đúng như thiết kế cơ chế (không phải phát
+      hiện hành vi, chỉ xác nhận cơ chế hoạt động đúng).
+    </p>
+    <div id="chart5"></div>
+    <details class="tv"><summary>Xem bảng dữ liệu</summary><div id="table5"></div></details>
+  </div>
+
+  <div class="card">
+    <h2>6. Chi tiết persona × risk</h2>
+    <p class="sub">Bảng đầy đủ ứng với biểu đồ 1, kèm cỡ mẫu (số lượt quyết định) mỗi ô.</p>
+    <div id="table6"></div>
+  </div>
+
+  <footer>
+    Nguồn: <code>results/nplayer/</code> (<code>nplayer_nonpersona/</code> +
+    <code>nplayer-riskaware/</code>, model <code>qwen2.5-14b-instruct</code>, cả hai
+    <code>run_phase = pilot</code>). Script sinh dữ liệu:
+    <code>results/nplayer/analyze_nplayer_results.py</code>. Lý thuyết đối chiếu:
+    <code>N-Player/theory/</code>. Phân tích đầy đủ bằng văn xuôi:
+    <code>results/nplayer/ANALYSIS_qwen2.5-14b-instruct.md</code>.
+  </footer>
+</div>
+
+<div class="tooltip" id="tooltip"></div>
+
+<script>
+const DATA = {"unsafe_by_risk_condition": {"risks": ["0.1", "0.6", "0.9"], "series": [{"label": "Baseline (không persona)", "values": [0.6913, 0.572, 0.4659], "lo": [0.6506, 0.5294, 0.4238], "hi": [0.7292, 0.6135, 0.5086]}, {"label": "R1", "values": [0.0, 0.0, 0.0], "lo": [0.0, 0.0, 0.0], "hi": [0.1043, 0.1043, 0.1043]}, {"label": "R2", "values": [0.0, 0.0, 0.0], "lo": [0.0, 0.0, 0.0], "hi": [0.1043, 0.1043, 0.1043]}, {"label": "R3", "values": [0.7879, 0.6364, 0.4848], "lo": [0.6225, 0.4662, 0.325], "hi": [0.8932, 0.7781, 0.6478]}, {"label": "R4", "values": [1.0, 1.0, 1.0], "lo": [0.8957, 0.8957, 0.8957], "hi": [1.0, 1.0, 1.0]}, {"label": "R5", "values": [1.0, 1.0, 1.0], "lo": [0.8957, 0.8957, 0.8957], "hi": [1.0, 1.0, 1.0]}, {"label": "R6", "values": [1.0, 1.0, 1.0], "lo": [0.8957, 0.8957, 0.8957], "hi": [1.0, 1.0, 1.0]}]}, "theory_vs_empirical": {"risks": ["0.1", "0.6", "0.9"], "series": [{"label": "Lý thuyết (β tối ưu = 0.0016)", "values": [0.691, 0.4118, 0.2581]}, {"label": "Thực nghiệm (tỷ lệ UNSAFE mỗi lượt)", "values": [0.6913, 0.572, 0.4659]}], "best_fit_beta": 0.0016070528182616, "naive_beta_0_1_values": [1.0, 1.0, 0.0003]}, "round1_vs_later": {"risks": ["0.1", "0.6", "0.9"], "series": [{"label": "Vòng 1", "values": [1.0, 1.0, 1.0]}, {"label": "Vòng 2+", "values": [0.6517, 0.5171, 0.3974]}]}, "position_dependent": {"risks": ["0.1", "0.6", "0.9"], "series": [{"label": "Dẫn đầu", "values": [0.7143, 0.5682, 0.5185]}, {"label": "Bị dẫn", "values": [0.5625, 0.5673, 0.4656]}, {"label": "Hòa", "values": [0.7673, 0.5776, 0.4496]}]}, "setback_rate": {"risks": ["0.1", "0.6", "0.9"], "series": [{"label": "Tỷ lệ setback (trong nhóm leader)", "values": [0.0357, 0.3667, 0.4286]}], "n": [28, 30, 28]}, "persona_detail_table": [{"persona": "R1", "risk": "0.1", "mean": 0.0, "n": 33}, {"persona": "R1", "risk": "0.6", "mean": 0.0, "n": 33}, {"persona": "R1", "risk": "0.9", "mean": 0.0, "n": 33}, {"persona": "R2", "risk": "0.1", "mean": 0.0, "n": 33}, {"persona": "R2", "risk": "0.6", "mean": 0.0, "n": 33}, {"persona": "R2", "risk": "0.9", "mean": 0.0, "n": 33}, {"persona": "R3", "risk": "0.1", "mean": 0.7879, "n": 33}, {"persona": "R3", "risk": "0.6", "mean": 0.6364, "n": 33}, {"persona": "R3", "risk": "0.9", "mean": 0.4848, "n": 33}, {"persona": "R4", "risk": "0.1", "mean": 1.0, "n": 33}, {"persona": "R4", "risk": "0.6", "mean": 1.0, "n": 33}, {"persona": "R4", "risk": "0.9", "mean": 1.0, "n": 33}, {"persona": "R5", "risk": "0.1", "mean": 1.0, "n": 33}, {"persona": "R5", "risk": "0.6", "mean": 1.0, "n": 33}, {"persona": "R5", "risk": "0.9", "mean": 1.0, "n": 33}, {"persona": "R6", "risk": "0.1", "mean": 1.0, "n": 33}, {"persona": "R6", "risk": "0.6", "mean": 1.0, "n": 33}, {"persona": "R6", "risk": "0.9", "mean": 1.0, "n": 33}], "logit_forest": [{"term": "Risk = 0.6 (so với 0.1)", "coef": -1.0654, "lo": -1.3483, "hi": -0.7826, "p": 1.5560819635363685e-13}, {"term": "Risk = 0.9 (so với 0.1)", "coef": -1.7317, "lo": -2.058, "hi": -1.4053, "p": 2.5047791250187753e-25}, {"term": "Own(t-1) = Unsafe", "coef": 1.1009, "lo": 0.5595, "hi": 1.6422, "p": 6.728261082285882e-05}, {"term": "Others(t-1) tỷ lệ Unsafe", "coef": 1.4724, "lo": 0.6066, "hi": 2.3383, "p": 0.0008592277315914}, {"term": "Own(t-1) x Others(t-1)", "coef": -3.9893, "lo": -5.2351, "hi": -2.7435, "p": 3.4740033770371516e-10}, {"term": "ΔS(t-1) (vị thế đua)", "coef": 0.0325, "lo": -0.328, "hi": 0.393, "p": 0.8597641364653356}, {"term": "Own(t-1) x ΔS(t-1)", "coef": 0.5327, "lo": -0.399, "hi": 1.4644, "p": 0.2624564746735962}, {"term": "Others(t-1) x ΔS(t-1)", "coef": 0.7008, "lo": -0.0119, "hi": 1.4134, "p": 0.0539364539160016}, {"term": "Tương tác ba chiều", "coef": -0.4443, "lo": -1.7701, "hi": 0.8815, "p": 0.5112972382625909}], "strategy_mix": {"risks": ["0.1", "0.6", "0.9"], "categories": ["AS", "AU", "CS", "Tie/Other"], "series": [{"risk": "0.1", "shares": [0.0167, 0.8167, 0.0, 0.1667], "total": 60}, {"risk": "0.6", "shares": [0.1833, 0.6, 0.0, 0.2167], "total": 60}, {"risk": "0.9", "shares": [0.45, 0.4167, 0.0, 0.1333], "total": 60}]}};
+
+const tooltip = document.getElementById('tooltip');
+function showTip(evt, html) {
+  tooltip.innerHTML = html;
+  tooltip.style.opacity = 1;
+  tooltip.style.left = (evt.clientX + 14) + 'px';
+  tooltip.style.top = (evt.clientY + 14) + 'px';
+}
+function hideTip() { tooltip.style.opacity = 0; }
+
+// Baseline/reference series get muted gray (not a persona identity); R1-R6 get
+// the 6 categorical hues, in fixed order, never cycled.
+const MUTED = 'var(--text-muted)';
+const SERIES_COLORS = ['var(--series-1)','var(--series-2)','var(--series-3)','var(--series-4)','var(--series-5)','var(--series-6)'];
+
+function svgEl(tag, attrs) {
+  const el = document.createElementNS('http://www.w3.org/2000/svg', tag);
+  for (const k in attrs) el.setAttribute(k, attrs[k]);
+  return el;
+}
+
+function legend(container, items) {
+  const wrap = document.createElement('div');
+  wrap.className = 'legend';
+  items.forEach((it) => {
+    const row = document.createElement('div');
+    row.className = 'legend-item';
+    row.innerHTML = `<span class="legend-swatch" style="background:${it.color}"></span>${it.label}`;
+    wrap.appendChild(row);
+  });
+  container.appendChild(wrap);
+}
+
+// ---- Grouped bar, value in [0,1] ----
+function groupedBar(containerId, categories, series, colors, opts) {
+  opts = opts || {};
+  const container = document.getElementById(containerId);
+  const W = 1080, H = opts.h || 260;
+  const marginL = 34, marginR = 10, marginT = 10, marginB = 34;
+  const plotW = W - marginL - marginR, plotH = H - marginT - marginB;
+  const svg = svgEl('svg', {viewBox: `0 0 ${W} ${H}`, width: '100%', height: H});
+
+  const yMax = 1.0;
+  [0, 0.25, 0.5, 0.75, 1.0].forEach(v => {
+    const y = marginT + plotH - (v / yMax) * plotH;
+    svg.appendChild(svgEl('line', {x1: marginL, x2: W - marginR, y1: y, y2: y, class: 'grid-line'}));
+    const t = svgEl('text', {x: marginL - 8, y: y + 3, class: 'axis-label', 'text-anchor': 'end'});
+    t.textContent = v.toFixed(2);
+    svg.appendChild(t);
+  });
+  svg.appendChild(svgEl('line', {x1: marginL, x2: marginL, y1: marginT, y2: marginT + plotH, class: 'axis-line'}));
+  svg.appendChild(svgEl('line', {x1: marginL, x2: W - marginR, y1: marginT + plotH, y2: marginT + plotH, class: 'axis-line'}));
+
+  const nCat = categories.length, nSer = series.length;
+  const groupW = plotW / nCat;
+  const barPad = 0.14;
+  const barW = (groupW * (1 - barPad)) / nSer;
+
+  categories.forEach((cat, ci) => {
+    const gx = marginL + ci * groupW;
+    const lbl = svgEl('text', {x: gx + groupW / 2, y: H - marginB + 18, class: 'axis-label', 'text-anchor': 'middle'});
+    lbl.textContent = cat;
+    svg.appendChild(lbl);
+
+    series.forEach((s, si) => {
+      const v = s.values[ci];
+      if (v === null || v === undefined) return;
+      const barH = (v / yMax) * plotH;
+      const x = gx + groupW * barPad / 2 + si * barW;
+      const y = marginT + plotH - barH;
+      const rect = svgEl('rect', {
+        x: x + 1, y: y, width: Math.max(barW - 2, 1), height: Math.max(barH, 1),
+        rx: 3, fill: colors[si % colors.length]
+      });
+      rect.addEventListener('mousemove', (e) => showTip(e, `<b>${s.label}</b><br>${opts.xLabel || 'Risk'} = ${cat}<br>${opts.yLabel || 'tỷ lệ'} = ${v.toFixed(3)}`));
+      rect.addEventListener('mouseleave', hideTip);
+      svg.appendChild(rect);
+    });
+  });
+
+  container.innerHTML = '';
+  container.appendChild(svg);
+  legend(container, series.map((s, i) => ({label: s.label, color: colors[i % colors.length]})));
+}
+
+function dataTable(containerId, categories, series, catHeader) {
+  const container = document.getElementById(containerId);
+  let html = `<table class="data-table"><thead><tr><th>${catHeader}</th>`;
+  series.forEach(s => html += `<th>${s.label}</th>`);
+  html += '</tr></thead><tbody>';
+  categories.forEach((cat, ci) => {
+    html += `<tr><td>${cat}</td>`;
+    series.forEach(s => {
+      const v = s.values[ci];
+      html += `<td>${v === null || v === undefined ? '—' : v.toFixed(3)}</td>`;
+    });
+    html += '</tr>';
+  });
+  html += '</tbody></table>';
+  container.innerHTML = html;
+}
+
+// Chart 1: unsafe rate by risk x condition (baseline muted + 6 persona colors)
+{
+  const d = DATA.unsafe_by_risk_condition;
+  const series = d.series.map(s => ({label: s.label, values: s.values}));
+  const colors = [MUTED].concat(SERIES_COLORS);
+  groupedBar('chart1', d.risks.map(r => 'risk = ' + r), series, colors, {yLabel: 'tỷ lệ UNSAFE', h: 300});
+  dataTable('table1', d.risks.map(r => 'risk = ' + r), series, 'Treatment');
+}
+
+// Chart 2: theory vs empirical
+{
+  const d = DATA.theory_vs_empirical;
+  const series = d.series.map(s => ({label: s.label, values: s.values}));
+  groupedBar('chart2', d.risks.map(r => 'risk = ' + r), series, SERIES_COLORS, {yLabel: 'tần suất'});
+  dataTable('table2', d.risks.map(r => 'risk = ' + r), series, 'Treatment');
+}
+
+// Chart 3: round1 vs later
+{
+  const d = DATA.round1_vs_later;
+  const series = d.series.map(s => ({label: s.label, values: s.values}));
+  groupedBar('chart3', d.risks.map(r => 'risk = ' + r), series, SERIES_COLORS, {yLabel: 'tỷ lệ UNSAFE'});
+  dataTable('table3', d.risks.map(r => 'risk = ' + r), series, 'Treatment');
+}
+
+// Chart 4: position-dependent
+{
+  const d = DATA.position_dependent;
+  const series = d.series.map(s => ({label: s.label, values: s.values}));
+  groupedBar('chart4', d.risks.map(r => 'risk = ' + r), series, SERIES_COLORS, {yLabel: 'tỷ lệ UNSAFE'});
+  dataTable('table4', d.risks.map(r => 'risk = ' + r), series, 'Treatment');
+}
+
+// Chart 5: setback rate (single series)
+{
+  const d = DATA.setback_rate;
+  const series = d.series.map(s => ({label: s.label, values: s.values}));
+  groupedBar('chart5', d.risks.map((r, i) => 'risk = ' + r + ' (n=' + d.n[i] + ')'), series, SERIES_COLORS, {yLabel: 'tỷ lệ setback', h: 200});
+  dataTable('table5', d.risks.map((r, i) => 'risk = ' + r + ' (n=' + d.n[i] + ')'), series, 'Treatment');
+}
+
+// Table 6: persona detail
+{
+  const container = document.getElementById('table6');
+  let html = '<table class="data-table"><thead><tr><th>Persona</th><th>Risk</th><th>Tỷ lệ UNSAFE</th><th>n lượt</th></tr></thead><tbody>';
+  DATA.persona_detail_table.forEach(r => {
+    html += `<tr><td>${r.persona}</td><td>${r.risk}</td><td>${r.mean.toFixed(3)}</td><td>${r.n}</td></tr>`;
+  });
+  html += '</tbody></table>';
+  container.innerHTML = html;
+}
+</script>

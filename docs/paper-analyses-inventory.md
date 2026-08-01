@@ -1,6 +1,6 @@
 # Danh mục các phân tích trong bài báo gốc
 
-Nguồn: `arXiv-2607.26034v1/paper.tex` — Fernández Domingos & Han, *"Falling Behind Drives Unsafe
+Nguồn: `references/papers/sources/arXiv-2607.26034v1/paper.tex` — Fernández Domingos & Han, *"Falling Behind Drives Unsafe
 Development in an Idealised AI Race Experiment"* (arXiv:2607.26034v1).
 
 Đây là bản kiểm kê **mọi phân tích định lượng** xuất hiện trong bài (main text + Supporting

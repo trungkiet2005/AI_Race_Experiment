@@ -16,11 +16,13 @@ kaggle.json
 # Local archive from the former Collective Risk project.
 /.archive/
 
-# Generated AI Race results. Keep analysis code, README, and empty result surfaces.
+# Generated AI Race results. Keep analysis code, selected result surfaces,
+# and downloaded Kaggle Benchmark artifacts visible to Git.
 /results/**
 !/results/frontier/
 !/results/frontier/.gitkeep
 !/results/frontier/**
+/results/frontier/openai/_logs/
 !/results/open_source/
 !/results/open_source/.gitkeep
 !/results/open_source/*_manifest.json
@@ -43,6 +45,7 @@ kaggle.json
 !/results/open_source/surface_sensitivity_smoke/**
 !/results/nplayer/
 !/results/nplayer/**
+!/results/notebooks/
 !/results/scripts/
 !/results/scripts/*.py
 !/results/scripts/*.json
@@ -50,6 +53,14 @@ kaggle.json
 !/results/visualization_insight_full.md
 !/results/visualization_output_archive/
 !/results/visualization_output_archive/**
+!/results/kaggle-benchmarks/
+!/results/kaggle-benchmarks/**
+
+# Kaggle Benchmark CLI scratch artifacts. Keep raw local debug exports off Git.
+/results/kaggle-benchmarks/_local-debug/
+/*.task.json
+/*-run_id_*.run.json
+
 /ai_race_results/
 /output/game_understanding/
 /models/
