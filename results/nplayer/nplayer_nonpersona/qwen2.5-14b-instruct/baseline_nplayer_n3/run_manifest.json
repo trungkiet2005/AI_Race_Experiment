@@ -1,0 +1,71 @@
+{
+  "schema_version": "ai-race-nplayer-kaggle-run-v1",
+  "status": "completed",
+  "started_utc": "2026-08-01T02:46:50.898872+00:00",
+  "completed_utc": "2026-08-01T02:51:26.687509+00:00",
+  "source_sha256": "540309b4b207ad3777f6842907007401646509b76a420cb7d2d5d98a30c76fad",
+  "run_profile": "nplayer_none",
+  "repetitions_override": 20,
+  "gpu_runtime": {
+    "gpu_name": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+    "gpu_vram_gib": 94.971,
+    "cuda_version": "12.8",
+    "torch_cuda_device_count": 1,
+    "required_gpu_name": null,
+    "minimum_gpu_vram_gib": 0.0
+  },
+  "experiment_name": "baseline_nplayer_n3",
+  "run_phase": "pilot",
+  "experiment": {
+    "name": "baseline_nplayer_n3",
+    "runPhase": "pilot",
+    "description": "N-player baseline, 3 companies: neutral races across the same risk treatments 0.1/0.6/0.9. Uses ai_race/engine_nplayer, not the two-player engine.",
+    "games": [
+      "ai_race_nplayer_n3_risk_10",
+      "ai_race_nplayer_n3_risk_60",
+      "ai_race_nplayer_n3_risk_90"
+    ],
+    "agents": "companies_nplayer_default_n3",
+    "languages": [
+      "en"
+    ],
+    "models": [
+      "LocalQwen"
+    ],
+    "useOffline": true,
+    "offlineSettings": "offline_settings",
+    "repetitions": 20,
+    "seed": 260726,
+    "maxParseRetries": 3,
+    "verbose": true
+  },
+  "experiment_config_sha256": "3f9b75ba14f2795d6579830d6955db19084df042d3b77ffaf9bafb47cafc2604",
+  "agents_name": "companies_nplayer_default_n3",
+  "agents_config_sha256": "e3cd9e5a989a88b9e59f24d8059b614ab02324ff8d4ed90800ab8ab5bb8e05f6",
+  "persona_condition": "none",
+  "persona_roles": [
+    "",
+    "",
+    ""
+  ],
+  "model": {
+    "short_name": "qwen2.5-14b-instruct",
+    "path": "/kaggle/input/models/qwen-lm/qwen2.5/transformers/14b-instruct/1",
+    "engine": "transformers"
+  },
+  "decoding": {
+    "temperature": 0.7,
+    "max_tokens": 256,
+    "max_parse_retries": 3
+  },
+  "package_versions": {
+    "numpy": "2.0.2",
+    "pandas": "2.3.3",
+    "torch": "2.10.0+cu128",
+    "transformers": "5.0.0"
+  },
+  "n_races": 60,
+  "n_turns": 1584,
+  "error": null,
+  "expected_races": 60
+}
