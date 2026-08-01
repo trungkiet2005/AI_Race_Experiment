@@ -46,6 +46,8 @@ The no-response variant is the preferred production-safe audit (it excludes
 For this workspace, keep one canonical visualization-insight report here:
 
 - [results/visualization_insight_full.md](/AI_Race_Experiment/results/visualization_insight_full.md)
+- [results/visualization_output_archive/index.md](/AI_Race_Experiment/results/visualization_output_archive/index.md)  
+  (all generated figures/tables/plots/visualization assets copied into one searchable location)
 
 Keep one self-contained directory per run. A run directory must contain
 `turns.jsonl`, `races.csv`, `players.csv`, and `run_manifest.json` so completion,

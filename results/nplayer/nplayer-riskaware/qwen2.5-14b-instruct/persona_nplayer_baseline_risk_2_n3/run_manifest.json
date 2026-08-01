@@ -1,0 +1,71 @@
+{
+  "schema_version": "ai-race-nplayer-kaggle-run-v1",
+  "status": "completed",
+  "started_utc": "2026-08-01T02:51:40.338173+00:00",
+  "completed_utc": "2026-08-01T02:51:56.042472+00:00",
+  "source_sha256": "540309b4b207ad3777f6842907007401646509b76a420cb7d2d5d98a30c76fad",
+  "run_profile": "nplayer_persona_risk",
+  "repetitions_override": 2,
+  "gpu_runtime": {
+    "gpu_name": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+    "gpu_vram_gib": 94.971,
+    "cuda_version": "12.8",
+    "torch_cuda_device_count": 1,
+    "required_gpu_name": null,
+    "minimum_gpu_vram_gib": 0.0
+  },
+  "experiment_name": "persona_nplayer_baseline_risk_2_n3",
+  "run_phase": "pilot",
+  "experiment": {
+    "name": "persona_nplayer_baseline_risk_2_n3",
+    "runPhase": "pilot",
+    "description": "N-player (3) persona condition R2 (risk level 2 of 6, symmetric across all seats). Identical mechanism, prompt, seed, and repetitions to the neutral N-player baseline; only the agents configuration differs.",
+    "games": [
+      "ai_race_nplayer_n3_risk_10",
+      "ai_race_nplayer_n3_risk_60",
+      "ai_race_nplayer_n3_risk_90"
+    ],
+    "agents": "persona_nplayer_risk_2_n3",
+    "languages": [
+      "en"
+    ],
+    "models": [
+      "LocalQwen"
+    ],
+    "useOffline": true,
+    "offlineSettings": "offline_settings",
+    "repetitions": 2,
+    "seed": 260726,
+    "maxParseRetries": 3,
+    "verbose": true
+  },
+  "experiment_config_sha256": "ae4a5e3ff00482fe04653336abc886c7b228ceb5b0b3840f75d38d0299cfa81a",
+  "agents_name": "persona_nplayer_risk_2_n3",
+  "agents_config_sha256": "b1128854d074f87563a6085c3831746588c4bd44d99602b73edb42b265bb9498",
+  "persona_condition": "R2",
+  "persona_roles": [
+    "risk-2",
+    "risk-2",
+    "risk-2"
+  ],
+  "model": {
+    "short_name": "qwen2.5-14b-instruct",
+    "path": "/kaggle/input/models/qwen-lm/qwen2.5/transformers/14b-instruct/1",
+    "engine": "transformers"
+  },
+  "decoding": {
+    "temperature": 0.7,
+    "max_tokens": 256,
+    "max_parse_retries": 3
+  },
+  "package_versions": {
+    "numpy": "2.0.2",
+    "pandas": "2.3.3",
+    "torch": "2.10.0+cu128",
+    "transformers": "5.0.0"
+  },
+  "n_races": 6,
+  "n_turns": 99,
+  "error": null,
+  "expected_races": 6
+}

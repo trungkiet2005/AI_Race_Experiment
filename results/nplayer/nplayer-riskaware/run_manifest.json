@@ -1,0 +1,91 @@
+{
+  "repo_input": "/kaggle/input/datasets/nguyenlamphuquy/ai-race-experiment",
+  "run_profile": "nplayer_persona_risk",
+  "repetitions_override": 2,
+  "experiments": [
+    "persona_nplayer_baseline_risk_1_n3",
+    "persona_nplayer_baseline_risk_2_n3",
+    "persona_nplayer_baseline_risk_3_n3",
+    "persona_nplayer_baseline_risk_4_n3",
+    "persona_nplayer_baseline_risk_5_n3",
+    "persona_nplayer_baseline_risk_6_n3"
+  ],
+  "source_sha256": "540309b4b207ad3777f6842907007401646509b76a420cb7d2d5d98a30c76fad",
+  "package_versions": {
+    "numpy": "2.0.2",
+    "pandas": "2.3.3",
+    "torch": "2.10.0+cu128",
+    "transformers": "5.0.0"
+  },
+  "gpu_runtime": {
+    "gpu_name": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+    "gpu_vram_gib": 94.971,
+    "cuda_version": "12.8",
+    "torch_cuda_device_count": 1,
+    "required_gpu_name": null,
+    "minimum_gpu_vram_gib": 0.0
+  },
+  "models": [
+    {
+      "short_name": "qwen2.5-14b-instruct",
+      "path": "/kaggle/input/models/qwen-lm/qwen2.5/transformers/14b-instruct/1",
+      "engine": "transformers"
+    }
+  ],
+  "runs": [
+    {
+      "model": "qwen2.5-14b-instruct",
+      "experiment": "persona_nplayer_baseline_risk_1_n3",
+      "status": "completed",
+      "n_races": 6,
+      "n_turns": 99,
+      "output_dir": "/kaggle/working/ai_race_nplayer_results/qwen2.5-14b-instruct/persona_nplayer_baseline_risk_1_n3",
+      "run_manifest": "/kaggle/working/ai_race_nplayer_results/qwen2.5-14b-instruct/persona_nplayer_baseline_risk_1_n3/run_manifest.json"
+    },
+    {
+      "model": "qwen2.5-14b-instruct",
+      "experiment": "persona_nplayer_baseline_risk_2_n3",
+      "status": "completed",
+      "n_races": 6,
+      "n_turns": 99,
+      "output_dir": "/kaggle/working/ai_race_nplayer_results/qwen2.5-14b-instruct/persona_nplayer_baseline_risk_2_n3",
+      "run_manifest": "/kaggle/working/ai_race_nplayer_results/qwen2.5-14b-instruct/persona_nplayer_baseline_risk_2_n3/run_manifest.json"
+    },
+    {
+      "model": "qwen2.5-14b-instruct",
+      "experiment": "persona_nplayer_baseline_risk_3_n3",
+      "status": "completed",
+      "n_races": 6,
+      "n_turns": 99,
+      "output_dir": "/kaggle/working/ai_race_nplayer_results/qwen2.5-14b-instruct/persona_nplayer_baseline_risk_3_n3",
+      "run_manifest": "/kaggle/working/ai_race_nplayer_results/qwen2.5-14b-instruct/persona_nplayer_baseline_risk_3_n3/run_manifest.json"
+    },
+    {
+      "model": "qwen2.5-14b-instruct",
+      "experiment": "persona_nplayer_baseline_risk_4_n3",
+      "status": "completed",
+      "n_races": 6,
+      "n_turns": 99,
+      "output_dir": "/kaggle/working/ai_race_nplayer_results/qwen2.5-14b-instruct/persona_nplayer_baseline_risk_4_n3",
+      "run_manifest": "/kaggle/working/ai_race_nplayer_results/qwen2.5-14b-instruct/persona_nplayer_baseline_risk_4_n3/run_manifest.json"
+    },
+    {
+      "model": "qwen2.5-14b-instruct",
+      "experiment": "persona_nplayer_baseline_risk_5_n3",
+      "status": "completed",
+      "n_races": 6,
+      "n_turns": 99,
+      "output_dir": "/kaggle/working/ai_race_nplayer_results/qwen2.5-14b-instruct/persona_nplayer_baseline_risk_5_n3",
+      "run_manifest": "/kaggle/working/ai_race_nplayer_results/qwen2.5-14b-instruct/persona_nplayer_baseline_risk_5_n3/run_manifest.json"
+    },
+    {
+      "model": "qwen2.5-14b-instruct",
+      "experiment": "persona_nplayer_baseline_risk_6_n3",
+      "status": "completed",
+      "n_races": 6,
+      "n_turns": 99,
+      "output_dir": "/kaggle/working/ai_race_nplayer_results/qwen2.5-14b-instruct/persona_nplayer_baseline_risk_6_n3",
+      "run_manifest": "/kaggle/working/ai_race_nplayer_results/qwen2.5-14b-instruct/persona_nplayer_baseline_risk_6_n3/run_manifest.json"
+    }
+  ]
+}
