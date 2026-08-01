@@ -76,3 +76,80 @@ No exact-duplicate candidate folder signatures found.
 ## 6) Next cleanup action suggested
 - Keep generated report assets under `docs/reports/pilot_insight_report/` and move any new analysis markdown snapshots to a single tracker file under `results/` (this file).
 - If you want, we can next split this into a short technical appendix and a slide-ready insight digest file while preserving a single source of truth.
+
+## 7) XAI auto-vector attribution audit (prompt-sensitivity turn logs)
+
+The new explainability pass added `results/scripts/explain_action_xai.py`, which builds
+surrogate, auto-vectorized classifiers for SAFE/UNSAFE actions and writes decision-level
+interpretability artifacts for every requested run.
+
+### 7.1 Inputs used
+
+- Prompt logs:
+  - `tmp/pilot_rebuild/pilot_identified_t1_0`
+  - `results/frontier`
+- Feature construction:
+  - Numeric game-state and action-history fields (e.g., `step_increment`, `round_payoff`,
+    `prompt_chars`, `response_chars`, lag states),
+  - Categorical context (`run_group`, `run_treatment`, `model`, `persona_condition`,
+    `seat_persona_role`, etc.),
+  - Prompt text TF-IDF (`prompt`),
+  - Optional raw response TF-IDF variant (`raw_response`) for leakage-aware comparison.
+
+### 7.2 Current output sets
+
+| variant | directory | target leakage note | status |
+|---|---|---|---|
+| Text-free prompt-only vectorization | `results/open_source/prompt_sensitivity_pilot/xai_auto_vector_encoder_no_response` | does not include `raw_response` | production-safe diagnostic baseline |
+| Full prompt+response vectorization | `results/open_source/prompt_sensitivity_pilot/xai_auto_vector_encoder` | includes `raw_response`; high predictive performance can become proxy-to-leak driven | experimental/checking-only |
+
+Both variants currently use the same 5,958 cleaned decision rows and share identical
+unsafe rate (59.68%).
+
+### 7.3 Key quantified findings
+
+- **Performance (validation split):** AUC and accuracy are both near perfect (~1.0) in both variants.  
+  This should be treated as an upper-bound *separability* signal, not a causal proof of a valid mechanism.
+- **Dominant linear drivers (both variants):**
+  - `step_increment` and `round_payoff` are the strongest positive unsafe-weighted features;
+  - `prompt_chars` and `attempts` are substantial context/risk/format proxies;
+  - `response_chars` appears strongly weighted when included.
+- **Permutation robustness:** only a few low-order numeric fields produce non-zero
+  permutation signal once the linear decision surface is estimated; text n-grams are mostly
+  numerically near zero in this sample and should be read as unstable/unreliable feature ranking artifacts.
+- **Surface protocol signal is confounded by hash/split granularity:** prompt-template groups are
+  currently represented by short template hashes and split into many one-row groups; this collapses
+  interpretable grouping, so protocol comparisons should be made on merged conditions first.
+
+### 7.4 Files emitted
+
+- `xai_model_metadata.json`
+- `xai_global_importance.csv`
+- `xai_permutation_importance.csv`
+- `xai_local_explanations.csv`
+- `xai_prompt_surface_summary.csv`
+- `xai_input_snapshot.csv`
+- `xai_target_distribution.json`
+- `xai_markdown_summary.md`
+
+### 7.5 Recommended next step
+
+- Add a protocol-level aggregation pass before plotting (`run_treatment` + `persona_condition`
+  + coarse text family), then regenerate top-attribution figures with fixed tokens to produce
+  stable dashboard-grade visuals.
+
+### 7.6 Visual artifacts generated
+
+- `results/open_source/prompt_sensitivity_pilot/xai_auto_vector_encoder_no_response/xai_top_global_coefficients.png`
+- `results/open_source/prompt_sensitivity_pilot/xai_auto_vector_encoder_no_response/xai_top_permutation_importance.png`
+- `results/open_source/prompt_sensitivity_pilot/xai_auto_vector_encoder/xai_top_global_coefficients.png`
+- `results/open_source/prompt_sensitivity_pilot/xai_auto_vector_encoder/xai_top_permutation_importance.png`
+
+### 7.7 Reference XAI libraries for design traceability
+
+- `tmp/xai_ref_sources/lime` (LIME reference implementation)
+- `tmp/xai_ref_sources/shap` (SHAP reference implementation)
+
+These reference repos are intentionally left in `/tmp` and not tracked by git;
+they were used as design references for the prompt/text vectorization pipeline and
+audit reporting style.

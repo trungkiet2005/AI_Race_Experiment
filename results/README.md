@@ -20,6 +20,27 @@ directories. Run `python results/scripts/audit_gpu_archives.py --archive-dir
 results/open_source/gpu_run_archive` to verify all archive hashes and metadata
 from a clean clone.
 
+### Action explainability (XAI)
+
+Prompt-turn explainability runs are tracked under:
+
+- `results/open_source/prompt_sensitivity_pilot/xai_auto_vector_encoder_no_response`
+- `results/open_source/prompt_sensitivity_pilot/xai_auto_vector_encoder`
+
+Run:
+
+```bash
+python results/scripts/explain_action_xai.py \
+  --input-root tmp/pilot_rebuild/pilot_identified_t1_0 \
+  --input-root results/frontier \
+  --output-dir results/open_source/prompt_sensitivity_pilot/xai_auto_vector_encoder_no_response \
+  --top-local-examples 20
+```
+
+The no-response variant is the preferred production-safe audit (it excludes
+`raw_response` from featureization to avoid direct target leakage).  
+`--include-response-text` enables an exploratory leakage-rich benchmark.
+
 ## Consolidated visual output & insight snapshot
 
 For this workspace, keep one canonical visualization-insight report here:

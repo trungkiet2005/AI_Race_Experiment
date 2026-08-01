@@ -19,6 +19,7 @@ analysis = [
   "scipy>=1.11,<2",
   "statsmodels>=0.14,<1",
   "matplotlib>=3.8,<4",
+  "scikit-learn>=1.5,<2",
 ]
 dev = [
   "pytest>=8,<9",
