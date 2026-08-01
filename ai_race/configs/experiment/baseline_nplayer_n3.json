@@ -1,0 +1,19 @@
+{
+  "name": "baseline_nplayer_n3",
+  "runPhase": "pilot",
+  "description": "N-player baseline, 3 companies: neutral races across the same risk treatments 0.1/0.6/0.9. Uses ai_race/engine_nplayer, not the two-player engine.",
+  "games": [
+    "ai_race_nplayer_n3_risk_10",
+    "ai_race_nplayer_n3_risk_60",
+    "ai_race_nplayer_n3_risk_90"
+  ],
+  "agents": "companies_nplayer_default_n3",
+  "languages": ["en"],
+  "models": ["LocalQwen"],
+  "useOffline": true,
+  "offlineSettings": "offline_settings",
+  "repetitions": 10,
+  "seed": 260726,
+  "maxParseRetries": 3,
+  "verbose": true
+}

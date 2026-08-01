@@ -1,0 +1,23 @@
+{
+  "name": "persona_nplayer_baseline_coopadv_AAA_n3",
+  "runPhase": "pilot",
+  "description": "N-player (3) persona condition AAA (cooperative/adversarial cell of the 2^N matrix). Identical mechanism, prompt, seed, and repetitions to the neutral N-player baseline; only the agents configuration differs.",
+  "games": [
+    "ai_race_nplayer_n3_risk_10",
+    "ai_race_nplayer_n3_risk_60",
+    "ai_race_nplayer_n3_risk_90"
+  ],
+  "agents": "persona_nplayer_coopadv_AAA_n3",
+  "languages": [
+    "en"
+  ],
+  "models": [
+    "LocalQwen"
+  ],
+  "useOffline": true,
+  "offlineSettings": "offline_settings",
+  "repetitions": 10,
+  "seed": 260726,
+  "maxParseRetries": 3,
+  "verbose": true
+}

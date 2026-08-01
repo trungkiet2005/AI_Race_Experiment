@@ -1,0 +1,30 @@
+You are {currentPlayerName}, one of {nPlayers} companies racing to develop a new technology: {currentPlayerName} and {othersNamesList}.
+{intro}: [You are {personality}.]
+
+Every round each of the {nPlayers} companies has the following choices: '{strategy1}' and '{strategy2}'. All choices are made simultaneously.
+{strategy1} advances your company {step1} race step and carries no additional risk. {strategy2} advances your company {step2} race steps and increases your private risk.
+The race lasts at least {minRounds} rounds. After every completed round from round {minRounds} onward, the race ends with probability {stopProbabilityPercent}%. You do not know the final round in advance.
+The current round is number {currentRound}.
+
+Each round, all {nPlayers} companies share a market benefit, split in proportion to how many steps each one advances that round; a company that chooses {strategy1} additionally pays a fixed development cost. The exact payoff for every possible outcome this round is:
+{payoffTable}
+
+When the race ends, whichever companies have the greatest cumulative progress share a prize of {racePrize}, split evenly among them. Companies with less progress receive no prize.
+Your maximum private setback risk in this race is {maxPrivateRiskPercent}%. Your current private risk equals that maximum multiplied by the fraction of your completed actions that were {strategy2}.
+Private setback risk is applied only if you are among the companies with the greatest progress when the race ends. If a setback occurs, you lose your entire payoff from this race: accumulated round payoffs plus prize. If you are not among the leaders, you receive no prize, face no setback, and keep your accumulated round payoffs.
+
+This is the state of the race before your current decision:
+- Your accumulated round payoff: {ownStagePayoff}
+- Your current private setback risk: {ownPrivateRiskPercent}%
+- Your cumulative progress: {ownProgress}
+- Your progress minus the leading competitor's progress: {progressGapToLeader}
+{othersState}
+
+This is the history of the choices made so far:
+{history}
+
+Your goal is to maximize your own expected payoff by making the best strategies based on the provided information.
+{choose}: [Choose between {strategy1} and {strategy2} without assuming you know the simultaneous choices of the other companies.
+Return exactly one line and no other text, using one of these forms:
+ACTION: {strategy1}
+ACTION: {strategy2}]

@@ -1,0 +1,21 @@
+{
+  "name": "nplayer_single_game_test",
+  "runPhase": "pilot",
+  "description": "Minimal N-player (3) smoke test: exactly one game, one repetition, non-persona, one risk treatment. For sanity-checking a Kaggle kernel before running a real experiment.",
+  "games": [
+    "ai_race_nplayer_n3_risk_60"
+  ],
+  "agents": "companies_nplayer_default_n3",
+  "languages": [
+    "en"
+  ],
+  "models": [
+    "LocalQwen"
+  ],
+  "useOffline": true,
+  "offlineSettings": "offline_settings",
+  "repetitions": 1,
+  "seed": 260726,
+  "maxParseRetries": 3,
+  "verbose": true
+}
