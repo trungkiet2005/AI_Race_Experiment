@@ -1,0 +1,50 @@
+{
+  "schema_version": "ai-race-results-v1",
+  "created_utc": "2026-08-01T04:28:40.200507+00:00",
+  "experiment": {
+    "name": "api_persona_baseline_risk_2_2",
+    "runPhase": "pilot",
+    "description": "Persona condition R2-R2 (risk-preference matrix cell 2,2 of 6x6; Eckel-Grossman gamble scale, paper SI Task 1) over the Kaggle model proxy.",
+    "games": [
+      "ai_race_risk_10",
+      "ai_race_risk_60",
+      "ai_race_risk_90"
+    ],
+    "agents": "persona_risk_2_2",
+    "languages": [
+      "en"
+    ],
+    "models": [
+      "google/gemini-3-flash-preview"
+    ],
+    "useOffline": false,
+    "backend": "proxy",
+    "samplingSeedApplied": false,
+    "proxyOptions": {
+      "temperature": 0.7,
+      "max_tokens": 256,
+      "timeout": 120,
+      "max_transport_retries": 6,
+      "concurrency": 2,
+      "send_seed": false
+    },
+    "repetitions": 10,
+    "seed": 260726,
+    "maxParseRetries": 3,
+    "verbose": true
+  },
+  "model": "google/gemini-3-flash-preview",
+  "run_phase": "pilot",
+  "agents_name": "persona_risk_2_2",
+  "agents_config_sha256": "b0fdde6e620183e9b8f6dcb8e6797c9bb4a2df97a5b1165bb528b5efa4d22e21",
+  "persona_condition": "R2-R2",
+  "persona_roles": [
+    "risk-2",
+    "risk-2"
+  ],
+  "persona_sha256": "bb83ed929224c17a30712daa0691c7d0060abeab11a8157a097e10c7a9da89a4",
+  "status": "failed",
+  "n_races": 0,
+  "n_turns": 240,
+  "error": "RuntimeError: Model proxy call failed after 6 retries for route 'google/gemini-3-flash-preview'. Refresh Kaggle Benchmark authentication and resume; no fallback action was applied. Last error: AuthenticationError: Error code: 401 - {'code': '', 'message': 'Authorization failed: expired token', 'param': '', 'type': 'authentication_error'}"
+}

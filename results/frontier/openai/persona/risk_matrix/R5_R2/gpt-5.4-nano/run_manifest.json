@@ -1,0 +1,50 @@
+{
+  "schema_version": "ai-race-results-v1",
+  "created_utc": "2026-08-01T03:52:12.187146+00:00",
+  "experiment": {
+    "name": "openai_persona_baseline_risk_5_2",
+    "runPhase": "pilot",
+    "description": "Persona condition R5-R2 (risk-preference matrix cell 5,2 of 6x6; Eckel-Grossman gamble scale, paper SI Task 1) via direct OpenAI API (own API key, backend='openai').",
+    "games": [
+      "ai_race_risk_10",
+      "ai_race_risk_60",
+      "ai_race_risk_90"
+    ],
+    "agents": "persona_risk_5_2",
+    "languages": [
+      "en"
+    ],
+    "models": [
+      "gpt-5.4-nano",
+      "gpt-5-nano"
+    ],
+    "useOffline": false,
+    "backend": "openai",
+    "samplingSeedApplied": false,
+    "proxyOptions": {
+      "temperature": 0.7,
+      "max_tokens": 256,
+      "timeout": 120,
+      "max_transport_retries": 3,
+      "concurrency": 4
+    },
+    "repetitions": 10,
+    "seed": 260726,
+    "maxParseRetries": 3,
+    "verbose": true
+  },
+  "model": "gpt-5.4-nano",
+  "run_phase": "pilot",
+  "agents_name": "persona_risk_5_2",
+  "agents_config_sha256": "46f18abf3e36e315aa51728713c4297ea5523c227700253c879ae20e43990dfa",
+  "persona_condition": "R5-R2",
+  "persona_roles": [
+    "risk-5",
+    "risk-2"
+  ],
+  "persona_sha256": "e61a8830d89073f654b1709e25bb49ff117fcf71edfc5a7ef7b5ebf244cdeab1",
+  "status": "failed",
+  "n_races": 0,
+  "n_turns": 60,
+  "error": "RuntimeError: OpenAI API call failed after 3 retries for model 'gpt-5.4-nano'. No fallback action was applied. Last error: RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-5.4-nano in organization org-q40cTaB3Ry3Q6Y1yxTv9HGLk on requests per min (RPM): Limit 500, Used 500, Requested 1. Please try again in 120ms. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'requests', 'param': None, 'code': 'rate_limit_exceeded'}}"
+}

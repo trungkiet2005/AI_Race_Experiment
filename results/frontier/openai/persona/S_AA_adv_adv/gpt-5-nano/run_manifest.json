@@ -1,0 +1,49 @@
+{
+  "schema_version": "ai-race-results-v1",
+  "created_utc": "2026-08-01T04:11:08.979798+00:00",
+  "experiment": {
+    "name": "openai_persona_baseline_adv_adv",
+    "runPhase": "pilot",
+    "description": "Persona condition S_AA (both seats adversarial, symmetric) via direct OpenAI API (backend='openai'). Identical mechanism, prompt, seed, and repetitions to openai_baseline; only the agents configuration differs, so the difference from 'none' is the persona effect.",
+    "games": [
+      "ai_race_risk_10",
+      "ai_race_risk_60",
+      "ai_race_risk_90"
+    ],
+    "agents": "persona_adv_adv",
+    "languages": [
+      "en"
+    ],
+    "models": [
+      "gpt-5.4-nano",
+      "gpt-5-nano"
+    ],
+    "useOffline": false,
+    "backend": "openai",
+    "samplingSeedApplied": false,
+    "proxyOptions": {
+      "temperature": 0.7,
+      "max_tokens": 256,
+      "timeout": 120,
+      "max_transport_retries": 6,
+      "concurrency": 4
+    },
+    "repetitions": 10,
+    "seed": 260726,
+    "maxParseRetries": 3,
+    "verbose": true
+  },
+  "model": "gpt-5-nano",
+  "run_phase": "pilot",
+  "agents_name": "persona_adv_adv",
+  "agents_config_sha256": "7542c19759b5c0f8ea2c36512c145c58414cf52d01cc1cb0b6b9ec6b6d71f5c5",
+  "persona_condition": "S_AA",
+  "persona_roles": [
+    "adversarial",
+    "adversarial"
+  ],
+  "persona_sha256": "7c55912e96ee73aa1c6d4278c957709e47795f05b4df09c8c37d2b8d4e0e6468",
+  "status": "completed",
+  "n_races": 30,
+  "n_turns": 558
+}

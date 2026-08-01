@@ -5,8 +5,13 @@ Hướng dẫn thao tác để lắp API key + model rồi chạy 8 config
 Xem lý do và phạm vi ở [frontier-gpt-experiment-plan.md](frontier-gpt-experiment-plan.md);
 so sánh với đường proxy ở [running-proxy-pilots.md](running-proxy-pilots.md). Khác biệt
 quan trọng nhất: đường này **không qua Kaggle**, gọi thẳng `api.openai.com`, nên không có
-bước `kaggle benchmarks auth`, không có token hết hạn theo giờ — nhưng cũng không có
-concurrency/retry sẵn (xem mục "Bẫy" cuối file).
+bước `kaggle benchmarks auth`, không có token hết hạn theo giờ. Việc gọi API nằm trong
+[ai_race/models/openai_direct.py](../ai_race/models/openai_direct.py) — một connector
+riêng của project (không đi qua `OpenAIConnector` vendor của FAIRGAME, vì connector đó gọi
+`chat.completions.create()` không giới hạn `max_tokens`, tức output không bị chặn độ dài
+trong khi giá output cao hơn input 5-6 lần). Module này có sẵn `max_tokens` (thật ra API
+đòi `max_completion_tokens` cho dòng gpt-5, xem mục "Bẫy"), transport retry, và
+`ThreadPoolExecutor` concurrency.
 
 ## 0. Môi trường
 
@@ -32,9 +37,9 @@ Thêm một dòng vào `.env` ở gốc repo (file này đã có trong `.gitigno
 API_KEY_OPENAI=sk-...
 ```
 
-`FAIRGAME`'s `OpenAIConnector` đọc biến này qua `os.getenv` sau khi
-`llm_factory_connector.py` gọi `load_dotenv()` (không cần export tay ở shell, chỉ cần
-`.env` nằm ở thư mục chạy lệnh — tức gốc repo). Kiểm tra nhanh:
+`ai_race/models/openai_direct.py` đọc biến này qua `os.getenv` sau khi tự gọi
+`load_dotenv()` trỏ thẳng vào `.env` ở gốc repo (không cần export tay ở shell). Kiểm tra
+nhanh:
 
 ```bash
 .venv-kaggle/bin/python -c "
@@ -278,9 +283,13 @@ Sau khi pilot sạch (symmetry ổn, parse failure = 0):
 
 | Bẫy | Hậu quả | Cách tránh |
 |---|---|---|
-| Gọi API tuần tự, không `ThreadPoolExecutor` | Pilot 8 config × nhiều model chậm hơn hẳn đường proxy | Chạy nền (`&` + `tail -f`), ước lượng thời gian từ smoke test trước khi chạy full |
-| Không có `max_transport_retries`/`timeout` cấu hình được | Một lỗi transport giữa chừng làm cả model đó `FAIL`, phải chạy lại (script tự skip phần đã `completed` nên không tốn tiền chạy lại) | Theo dõi log; nếu 429 lặp lại liên tục, dừng, đợi rồi chạy lại `run_openai_stage.py` |
+| Model dòng gpt-5 từ chối tham số `max_tokens` (400 `unsupported_parameter`) | Gặp ngay ở lần gọi đầu tiên, toàn bộ request lỗi | **Đã sửa**: `openai_direct.py` gửi `max_completion_tokens` thay vì `max_tokens` — theo OpenAI, tham số này dùng được cho mọi model chat hiện tại |
+| Một số model (đã gặp: `gpt-5-nano`) từ chối `temperature` khác giá trị mặc định (400 `unsupported_value`, chỉ nhận temperature=1) | Nếu không xử lý, toàn bộ run của model đó fail ngay từ request đầu | **Đã sửa**: `openai_direct.py` tự phát hiện lỗi này, bỏ `temperature` khỏi request và dùng default của model cho phần còn lại của run — in cảnh báo ra stderr một lần. Vẫn nên chạy `check_symmetry.py` cho model bị rơi vào nhánh này, vì temperature thực tế dùng có thể khác 0.7 đã định |
+| Key/project không có quyền dùng model muốn chạy (403 `model_not_found`, không phải lỗi sai tên) | Toàn bộ run của model đó fail | Chạy lệnh liệt kê model ở bước 2 để biết chính xác project của key có quyền dùng model nào, đừng đoán theo tên trên trang giá |
+| Gọi API tuần tự, không `ThreadPoolExecutor` | Pilot 8 config × nhiều model chậm hơn hẳn đường proxy | Đã có `concurrency` (mặc định 4) trong `proxyOptions`; tăng/giảm tùy rate limit thực tế của tài khoản |
+| Không giới hạn `max_transport_retries`/`timeout` | Một lỗi transport giữa chừng làm cả model đó `FAIL`, phải chạy lại (script tự skip phần đã `completed` nên không tốn tiền chạy lại) | Đã có `max_transport_retries`/`timeout` trong `proxyOptions`; theo dõi log, nếu 429 lặp lại liên tục thì dừng, đợi rồi chạy lại `run_openai_stage.py` |
 | Quên đổi `MODEL_IDS` ở bước 2 trước khi chạy pilot thật | Chạy nhầm placeholder `REPLACE_ME_openai_model_id`, lỗi ngay từ request đầu (rẻ, nhưng phí thời gian) | `grep -l REPLACE_ME` trước khi chạy stage script |
 | `temperature` 0.7 chưa từng kiểm chứng riêng cho backend này (chỉ mới kiểm chứng ở đường proxy) | Có thể symmetry collapse khác | Luôn chạy `check_symmetry.py` (bước 5) trước khi tin kết quả |
 | Chạy `openai_baseline` hôm nay, các persona cell hôm khác | `protocol_signature` khác nhau → persona trùng khít với batch, analyser từ chối | Chạy hết 8 config trong cùng một lần gọi `run_openai_stage.py` |
 | Trộn output pilot (`results/frontier/openai/`) với confirmatory | Mất tính preregistered, phải phân biệt bằng `run_phase` | Dùng thư mục output khác nhau cho pilot và confirmatory (bước 7) |
+| Dán API key thẳng vào chat/terminal log | Key lộ ra trong lịch sử hội thoại/log, không thể thu hồi khỏi đó | Rotate key trên platform.openai.com sau khi dùng xong nếu đã lỡ dán vào nơi không kiểm soát được |

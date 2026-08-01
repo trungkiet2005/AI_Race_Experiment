@@ -1,0 +1,49 @@
+{
+  "schema_version": "ai-race-results-v1",
+  "created_utc": "2026-08-01T04:03:25.091914+00:00",
+  "experiment": {
+    "name": "openai_persona_baseline_risk_seeking",
+    "runPhase": "pilot",
+    "description": "Persona condition R+ (both seats risk-seeking) via direct OpenAI API (backend='openai').",
+    "games": [
+      "ai_race_risk_10",
+      "ai_race_risk_60",
+      "ai_race_risk_90"
+    ],
+    "agents": "persona_risk_seeking",
+    "languages": [
+      "en"
+    ],
+    "models": [
+      "gpt-5.4-nano",
+      "gpt-5-nano"
+    ],
+    "useOffline": false,
+    "backend": "openai",
+    "samplingSeedApplied": false,
+    "proxyOptions": {
+      "temperature": 0.7,
+      "max_tokens": 256,
+      "timeout": 120,
+      "max_transport_retries": 6,
+      "concurrency": 4
+    },
+    "repetitions": 10,
+    "seed": 260726,
+    "maxParseRetries": 3,
+    "verbose": true
+  },
+  "model": "gpt-5.4-nano",
+  "run_phase": "pilot",
+  "agents_name": "persona_risk_seeking",
+  "agents_config_sha256": "62e69734be5ad3b5d27467c2eac63174a03a7506f2def35a2ffb08d36fc5dc16",
+  "persona_condition": "R+",
+  "persona_roles": [
+    "risk-seeking",
+    "risk-seeking"
+  ],
+  "persona_sha256": "d680d5315c5190ab7be469f76f0485858886c7faefe94f7758073273f917f58c",
+  "status": "completed",
+  "n_races": 30,
+  "n_turns": 558
+}

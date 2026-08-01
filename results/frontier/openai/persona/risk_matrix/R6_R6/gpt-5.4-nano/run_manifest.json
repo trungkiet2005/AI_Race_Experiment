@@ -1,0 +1,49 @@
+{
+  "schema_version": "ai-race-results-v1",
+  "created_utc": "2026-08-01T03:57:34.046167+00:00",
+  "experiment": {
+    "name": "openai_persona_baseline_risk_6_6",
+    "runPhase": "pilot",
+    "description": "Persona condition R6-R6 (risk-preference matrix cell 6,6 of 6x6; Eckel-Grossman gamble scale, paper SI Task 1) via direct OpenAI API (own API key, backend='openai').",
+    "games": [
+      "ai_race_risk_10",
+      "ai_race_risk_60",
+      "ai_race_risk_90"
+    ],
+    "agents": "persona_risk_6_6",
+    "languages": [
+      "en"
+    ],
+    "models": [
+      "gpt-5.4-nano",
+      "gpt-5-nano"
+    ],
+    "useOffline": false,
+    "backend": "openai",
+    "samplingSeedApplied": false,
+    "proxyOptions": {
+      "temperature": 0.7,
+      "max_tokens": 256,
+      "timeout": 120,
+      "max_transport_retries": 3,
+      "concurrency": 4
+    },
+    "repetitions": 10,
+    "seed": 260726,
+    "maxParseRetries": 3,
+    "verbose": true
+  },
+  "model": "gpt-5.4-nano",
+  "run_phase": "pilot",
+  "agents_name": "persona_risk_6_6",
+  "agents_config_sha256": "e7daba8fb4daf34c2de285c04683921534543a782f2b623c9cc625328fcf7471",
+  "persona_condition": "R6-R6",
+  "persona_roles": [
+    "risk-6",
+    "risk-6"
+  ],
+  "persona_sha256": "0dc91a16ae1da9f8536f89ba9b236d6687c2a31b49e210b22ac879d5b3d5b65f",
+  "status": "completed",
+  "n_races": 30,
+  "n_turns": 558
+}
