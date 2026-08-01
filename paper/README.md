@@ -41,13 +41,13 @@ All figures must distinguish source-study values from this project’s estimates
 
 ## Build policy
 
-The stable manuscript preview is written to `output/pdf/ai_race_paper.pdf`. From the repository root, build with:
+The stable manuscript preview is written to `references/output/pdf/ai_race_paper.pdf`. From the repository root, build with:
 
 ```bash
-pdflatex -output-directory=output/pdf -jobname=ai_race_paper paper/main.tex
-bibtex output/pdf/ai_race_paper
-pdflatex -output-directory=output/pdf -jobname=ai_race_paper paper/main.tex
-pdflatex -output-directory=output/pdf -jobname=ai_race_paper paper/main.tex
+pdflatex -output-directory=references/output/pdf -jobname=ai_race_paper paper/main.tex
+bibtex references/output/pdf/ai_race_paper
+pdflatex -output-directory=references/output/pdf -jobname=ai_race_paper paper/main.tex
+pdflatex -output-directory=references/output/pdf -jobname=ai_race_paper paper/main.tex
 ```
 
 Generated auxiliary files remain untracked; the named PDF preview is tracked.

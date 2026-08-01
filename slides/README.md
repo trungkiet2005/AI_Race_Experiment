@@ -3,7 +3,7 @@
 ## Canonical research deck
 
 - `ai_race_research_deck.tex` is the 24-frame, 16:9 Beamer evidence deck.
-- `../output/pdf/ai_race_research_deck.pdf` is the compiled presentation.
+- `../references/output/pdf/ai_race_research_deck.pdf` is the compiled presentation.
 - `ai_race_project.md` is the slide-by-slide evidence map and speaker outline.
 - `index.html` remains an optional browser companion; it is not the canonical evidence artifact.
 
@@ -11,9 +11,9 @@ Compile twice from the repository root:
 
 ```bash
 pdflatex -interaction=nonstopmode -halt-on-error \
-  -output-directory=output/pdf slides/ai_race_research_deck.tex
+  -output-directory=references/output/pdf slides/ai_race_research_deck.tex
 pdflatex -interaction=nonstopmode -halt-on-error \
-  -output-directory=output/pdf slides/ai_race_research_deck.tex
+  -output-directory=references/output/pdf slides/ai_race_research_deck.tex
 ```
 
 ## Evidence status

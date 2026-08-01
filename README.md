@@ -161,7 +161,7 @@ ledger.
 
 The canonical presentation source is
 [`slides/ai_race_research_deck.tex`](slides/ai_race_research_deck.tex). The compiled
-21-slide PDF is written to `output/pdf/ai_race_research_deck.pdf`; see
+24-frame PDF is written to `references/output/pdf/ai_race_research_deck.pdf`; see
 [`slides/README.md`](slides/README.md) for build commands. A browser-based companion
 deck is also available at `http://localhost:8000/slides/`.
 The versioned multi-prompt robustness protocol, evidence survey, treatment

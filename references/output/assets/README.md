@@ -17,7 +17,7 @@ are intentionally not mirrored here.
 When you run a new experiment that emits new figures, just add them here as:
 
 ```bash
-Copy-Item path\to\new\figure.png output/assets/images/tracked\
+Copy-Item path\to\new\figure.png references/output/assets/images/tracked\
 ```
 
 or extend this folder with a tiny metadata table in this file.
