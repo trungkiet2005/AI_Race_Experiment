@@ -76,11 +76,9 @@ import os
 from pathlib import Path
 
 MODEL_NAME = "Qwen/Qwen2.5-7B-Instruct"
-# Local Kaggle Model mount, same convention as kaggle/kernel-metadata.json's
-# model_sources ("qwen-lm/qwen2.5/Transformers/7b-instruct/1" -> mounted at
-# /kaggle/input/models/<owner>/<model>/<framework>/<variation>/<version>).
-# None = fall back to a live HF Hub download of MODEL_NAME (needs Internet ON).
-MODEL_LOCAL_PATH = "/kaggle/input/models/qwen-lm/qwen2.5/transformers/7b-instruct/1"
+# Requires Internet ON: HookedTransformer.from_pretrained always resolves
+# MODEL_NAME against the HF Hub for architecture/config detection, with no
+# supported fully-offline path in transformer-lens==3.6.0 (see Cell 5).
 SAE_RELEASE = "qwen2.5-7b-instruct-andyrdt"       # SAE trained directly on this checkpoint
 LAYER = 15                                        # must be one of {3,7,11,15,19,23,27} -- the only layers this release covers
 SAE_ID = f"resid_post_layer_{LAYER}_trainer_1"
@@ -202,18 +200,42 @@ import sys as _sys
 from pathlib import Path as _Path
 
 
-def find_repo_input(root: str = "/kaggle/input", max_depth: int = 6) -> _Path | None:
+_AI_RACE_PACKAGE_MARKERS = ("engine", "configs", "runner", "paths.py")
+
+
+def _looks_like_ai_race_package(d: _Path) -> bool:
+    """True if ``d`` itself is the ai_race package's contents (not its parent).
+
+    Kaggle Dataset zip uploads can strip a sole top-level wrapping folder on
+    extraction, so a dataset built from a directory containing only
+    ``ai_race/`` sometimes mounts with ai_race's own contents at the dataset
+    root instead of nested under an ``ai_race/`` subdirectory. Detect that
+    case directly rather than relying on the archive's extraction behaviour.
+    """
+
+    try:
+        return all((d / marker).exists() for marker in _AI_RACE_PACKAGE_MARKERS)
+    except OSError:
+        return False
+
+
+def find_repo_input(root: str = "/kaggle/input", max_depth: int = 6) -> tuple[_Path | None, bool]:
+    """Return (path, is_package_root). ``is_package_root`` is True when
+    ``path`` itself is ai_race's contents rather than ai_race's parent."""
+
     root_path = _Path(root)
     if not root_path.is_dir():
-        return None
+        return None, False
     stack = [(root_path, 0)]
     while stack:
         d, depth = stack.pop()
         try:
             if (d / "ai_race").is_dir():
-                return d
+                return d, False
         except OSError:
             pass
+        if _looks_like_ai_race_package(d):
+            return d, True
         if depth < max_depth:
             try:
                 for c in sorted(d.iterdir()):
@@ -221,17 +243,21 @@ def find_repo_input(root: str = "/kaggle/input", max_depth: int = 6) -> _Path | 
                         stack.append((c, depth + 1))
             except OSError:
                 pass
-    return None
+    return None, False
 
 
 WORK_COPY = _Path("/kaggle/working/ai_race_repo")
-REPO_INPUT = find_repo_input()
+REPO_INPUT, REPO_INPUT_IS_PACKAGE_ROOT = find_repo_input()
 if REPO_INPUT is None:
     raise FileNotFoundError("No '+ Add Input' dataset containing ai_race/ was found under /kaggle/input")
 
 if WORK_COPY.exists():
     shutil.rmtree(WORK_COPY)
-shutil.copytree(REPO_INPUT, WORK_COPY, ignore=shutil.ignore_patterns(".git"))
+if REPO_INPUT_IS_PACKAGE_ROOT:
+    # REPO_INPUT *is* ai_race's contents; nest it so `import ai_race` works.
+    shutil.copytree(REPO_INPUT, WORK_COPY / "ai_race", ignore=shutil.ignore_patterns(".git"))
+else:
+    shutil.copytree(REPO_INPUT, WORK_COPY, ignore=shutil.ignore_patterns(".git"))
 if str(WORK_COPY) not in _sys.path:
     _sys.path.insert(0, str(WORK_COPY))
 os.chdir(WORK_COPY)
@@ -244,7 +270,6 @@ import json  # noqa: E402
 import torch  # noqa: E402
 from sae_lens import SAE  # noqa: E402
 from transformer_lens import HookedTransformer  # noqa: E402
-from transformers import AutoModelForCausalLM, AutoTokenizer  # noqa: E402
 
 from ai_race.dataio.config_loader import validate_experiment  # noqa: E402
 from ai_race.engine.round import parse_action  # noqa: E402
@@ -262,20 +287,21 @@ _need_model = FORCE_RECOMPUTE or (
 ) or not FEATURE_RANKING_PATH.exists()
 
 if _need_model:
-    if MODEL_LOCAL_PATH and Path(MODEL_LOCAL_PATH).is_dir():
-        # Load weights from the Kaggle Model mount (Internet OFF safe), then
-        # hand the already-loaded HF model to TransformerLens so it only
-        # needs MODEL_NAME for its architecture/weight-conversion mapping,
-        # not to fetch weights itself.
-        print(f"loading HF checkpoint from local mount: {MODEL_LOCAL_PATH}")
-        hf_model = AutoModelForCausalLM.from_pretrained(MODEL_LOCAL_PATH, torch_dtype=torch.bfloat16)
-        hf_tokenizer = AutoTokenizer.from_pretrained(MODEL_LOCAL_PATH)
-        model = HookedTransformer.from_pretrained(
-            MODEL_NAME, hf_model=hf_model, tokenizer=hf_tokenizer, device=DEVICE, dtype="bfloat16"
-        )
-    else:
-        print(f"MODEL_LOCAL_PATH not found -- falling back to a live HF Hub download of {MODEL_NAME}")
-        model = HookedTransformer.from_pretrained(MODEL_NAME, device=DEVICE, dtype="bfloat16")
+    # HookedTransformer.from_pretrained's very first step is an unconditional
+    # loading.get_official_model_name(model_name) lookup against its own alias
+    # table -- it does not special-case a local directory path, and even when
+    # hf_model= is provided, architecture detection still separately calls
+    # transformers.AutoConfig.from_pretrained(official_model_name) internally
+    # (hf_model's config is only used afterward to override a few fields, not
+    # to skip that call). In transformer-lens==3.6.0 there is no supported way
+    # to fully avoid a network hit for a Hub-registered model name, so this
+    # requires Internet ON (see kernel-metadata.json) rather than the
+    # MODEL_LOCAL_PATH Kaggle Model mount; weights are still cached by HF
+    # Hub's own on-disk cache across repeated cells/sessions with the same
+    # /kaggle/working, so this is a one-time download per fresh session, not
+    # per race.
+    print(f"loading {MODEL_NAME} (Internet required for HF Hub config/weights)")
+    model = HookedTransformer.from_pretrained(MODEL_NAME, device=DEVICE, dtype="bfloat16")
     model.eval()
     print(f"loaded {MODEL_NAME}: n_layers={model.cfg.n_layers} d_model={model.cfg.d_model}")
     if not (0 <= LAYER < model.cfg.n_layers):
