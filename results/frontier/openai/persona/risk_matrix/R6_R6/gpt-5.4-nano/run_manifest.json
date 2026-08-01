@@ -1,6 +1,6 @@
 {
   "schema_version": "ai-race-results-v1",
-  "created_utc": "2026-08-01T03:57:34.046167+00:00",
+  "created_utc": "2026-08-01T06:09:40.794324+00:00",
   "experiment": {
     "name": "openai_persona_baseline_risk_6_6",
     "runPhase": "pilot",
@@ -25,7 +25,7 @@
       "temperature": 0.7,
       "max_tokens": 256,
       "timeout": 120,
-      "max_transport_retries": 3,
+      "max_transport_retries": 6,
       "concurrency": 4
     },
     "repetitions": 10,

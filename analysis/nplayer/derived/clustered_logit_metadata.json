@@ -1,0 +1,42 @@
+{
+  "n_observations": 1404,
+  "n_clusters": 20,
+  "cluster_key": "rep",
+  "cluster_rationale": "Each repetition shares the same game_seed-derived horizon and setback draws across all three risk treatments (common random numbers) -- verified directly in this run's data; rep is the unit that must be treated as non-independent.",
+  "first_round_unsafe_is_constant": true,
+  "specifications": {
+    "1": {
+      "formula": "unsafe ~ C(max_private_risk)",
+      "converged": true,
+      "log_likelihood": -941.102597990955,
+      "pseudo_r_squared": 0.031597406965756414
+    },
+    "2": {
+      "formula": "unsafe ~ C(max_private_risk) + own_prev_unsafe + others_prev_unsafe_fraction + progress_gap_before",
+      "converged": true,
+      "log_likelihood": -872.5802691610099,
+      "pseudo_r_squared": 0.10210746725176756
+    },
+    "3": {
+      "formula": "unsafe ~ C(max_private_risk) + own_prev_unsafe * others_prev_unsafe_fraction * progress_gap_before",
+      "converged": true,
+      "log_likelihood": -811.2541139990644,
+      "pseudo_r_squared": 0.16521260351048095
+    },
+    "4": {
+      "formula": "unsafe ~ C(max_private_risk) + first_round_unsafe",
+      "converged": false,
+      "not_estimable_reason": "first_round_unsafe has zero variance in this sample (every recorded race opens with UNSAFE, first_round_unsafe == 1 for all 180 player-races) -- perfectly collinear with the intercept."
+    },
+    "5": {
+      "formula": "unsafe ~ C(max_private_risk) + first_round_unsafe + own_prev_unsafe + others_prev_unsafe_fraction + progress_gap_before",
+      "converged": false,
+      "not_estimable_reason": "first_round_unsafe has zero variance in this sample (every recorded race opens with UNSAFE, first_round_unsafe == 1 for all 180 player-races) -- perfectly collinear with the intercept."
+    },
+    "6": {
+      "formula": "unsafe ~ C(max_private_risk) + first_round_unsafe + own_prev_unsafe * others_prev_unsafe_fraction * progress_gap_before",
+      "converged": false,
+      "not_estimable_reason": "first_round_unsafe has zero variance in this sample (every recorded race opens with UNSAFE, first_round_unsafe == 1 for all 180 player-races) -- perfectly collinear with the intercept."
+    }
+  }
+}

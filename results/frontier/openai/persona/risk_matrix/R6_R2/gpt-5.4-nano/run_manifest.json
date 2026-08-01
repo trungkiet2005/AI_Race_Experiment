@@ -1,6 +1,6 @@
 {
   "schema_version": "ai-race-results-v1",
-  "created_utc": "2026-08-01T03:53:09.963167+00:00",
+  "created_utc": "2026-08-01T06:01:29.249026+00:00",
   "experiment": {
     "name": "openai_persona_baseline_risk_6_2",
     "runPhase": "pilot",
@@ -25,7 +25,7 @@
       "temperature": 0.7,
       "max_tokens": 256,
       "timeout": 120,
-      "max_transport_retries": 3,
+      "max_transport_retries": 6,
       "concurrency": 4
     },
     "repetitions": 10,
@@ -43,8 +43,7 @@
     "risk-2"
   ],
   "persona_sha256": "c7cdd27bf578652fee523aae0e17ef5da41a47b8bb0d8176bc17afcf70612c6c",
-  "status": "failed",
-  "n_races": 0,
-  "n_turns": 60,
-  "error": "RuntimeError: OpenAI API call failed after 3 retries for model 'gpt-5.4-nano'. No fallback action was applied. Last error: RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-5.4-nano in organization org-q40cTaB3Ry3Q6Y1yxTv9HGLk on requests per min (RPM): Limit 500, Used 500, Requested 1. Please try again in 120ms. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'requests', 'param': None, 'code': 'rate_limit_exceeded'}}"
+  "status": "completed",
+  "n_races": 30,
+  "n_turns": 558
 }

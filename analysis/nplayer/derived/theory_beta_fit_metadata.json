@@ -1,0 +1,21 @@
+{
+  "mechanism_params": {
+    "n": 3,
+    "s": 1.5,
+    "b": 4.0,
+    "c": 1.0,
+    "B": 100.0,
+    "W": 9.0,
+    "z": 100
+  },
+  "mutation_regime": "small_mutation_limit",
+  "mutation_regime_caveat": "The finite-mutation rate mu is not applied anywhere in N-Player/theory (same documented scope limit as ai_race/theory/evolution.py) -- only the selection intensity beta is searched here.",
+  "best_fit_beta": 0.0016070528182616384,
+  "best_fit_sse": 0.06885106643711726,
+  "empirical_unsafe_rate_by_risk": {
+    "0.1": 0.6912878787878788,
+    "0.6": 0.571969696969697,
+    "0.9": 0.4659090909090909
+  },
+  "search_grid": "logspace(-4, 1, 200)"
+}
