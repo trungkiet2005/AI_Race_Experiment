@@ -1,0 +1,23 @@
+{
+  "formula": "unsafe ~ C(max_private_risk) + first_round_unsafe + own_prev_unsafe * opponent_prev_unsafe * progress_gap_before + C(protocol_signature)",
+  "interpretation": "This is a sensitivity diagnostic, not an inferential test: the leave-one-out spread is not a standard error and has no p-value.",
+  "jackknife": "One refit per source_run/model/rep common-random-number block, each omitting that block. sign_stable is False if the full-sample coefficient and any leave-one-out coefficient disagree in sign.",
+  "skipped_block_note": "A block whose removal makes the model unidentified or non-convergent is listed rather than recorded as a zero coefficient.",
+  "skipped_blocks": {
+    "exclude_min_horizon": [
+      "google/gemini-3-flash-preview::rep1"
+    ],
+    "exclude_retried_races": [
+      "__variant_did_not_fit__"
+    ],
+    "full": [
+      "google/gemini-3-flash-preview::rep1"
+    ]
+  },
+  "specification": "6 (saturated), plus the protocol controls of the main fit",
+  "variants": {
+    "exclude_min_horizon": "races that stopped at the 5-round minimum",
+    "exclude_retried_races": "races where at least one decision needed a generation retry",
+    "full": "every race in the behavioural sample"
+  }
+}

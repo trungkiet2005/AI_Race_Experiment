@@ -1,0 +1,536 @@
+<title>AI Race — Frontier Models Pilot Dashboard</title>
+<style>
+  .viz-root {
+    color-scheme: light;
+    --surface-1:      #fcfcfb;
+    --page:           #f9f9f7;
+    --text-primary:   #0b0b0b;
+    --text-secondary: #52514e;
+    --text-muted:     #898781;
+    --grid:           #e1e0d9;
+    --axis:           #c3c2b7;
+    --border:         rgba(11,11,11,0.10);
+    --series-1: #2a78d6; /* blue */
+    --series-2: #eb6834; /* orange */
+    --series-3: #1baf7a; /* aqua */
+    --series-4: #eda100; /* yellow */
+    --series-5: #e87ba4; /* magenta */
+    --series-6: #4a3aa7; /* violet */
+    --good:     #0ca30c;
+    --warning:  #fab219;
+    --serious:  #ec835a;
+    --critical: #d03b3b;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:where(:not([data-theme="light"])) .viz-root {
+      color-scheme: dark;
+      --surface-1:      #1a1a19;
+      --page:           #0d0d0d;
+      --text-primary:   #ffffff;
+      --text-secondary: #c3c2b7;
+      --text-muted:     #898781;
+      --grid:           #2c2c2a;
+      --axis:           #383835;
+      --border:         rgba(255,255,255,0.10);
+      --series-1: #3987e5;
+      --series-2: #d95926;
+      --series-3: #199e70;
+      --series-4: #c98500;
+      --series-5: #d55181;
+      --series-6: #9085e9;
+      --good:     #0ca30c;
+      --warning:  #fab219;
+      --serious:  #ec835a;
+      --critical: #e66767;
+    }
+  }
+  :root[data-theme="dark"] .viz-root {
+    color-scheme: dark;
+    --surface-1:      #1a1a19;
+    --page:           #0d0d0d;
+    --text-primary:   #ffffff;
+    --text-secondary: #c3c2b7;
+    --text-muted:     #898781;
+    --grid:           #2c2c2a;
+    --axis:           #383835;
+    --border:         rgba(255,255,255,0.10);
+    --series-1: #3987e5;
+    --series-2: #d95926;
+    --series-3: #199e70;
+    --series-4: #c98500;
+    --series-5: #d55181;
+    --series-6: #9085e9;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    background: var(--page);
+    color: var(--text-primary);
+  }
+  .viz-root { max-width: 1180px; margin: 0 auto; padding: 32px 20px 80px; }
+
+  header h1 { font-size: 22px; margin: 0 0 6px; }
+  header p.lede { color: var(--text-secondary); font-size: 14px; margin: 0 0 18px; max-width: 820px; }
+
+  .banner {
+    background: color-mix(in srgb, var(--warning) 16%, var(--surface-1));
+    border: 1px solid color-mix(in srgb, var(--warning) 45%, transparent);
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: 13px;
+    color: var(--text-primary);
+    margin-bottom: 28px;
+    line-height: 1.5;
+  }
+  .banner b { color: var(--serious); }
+
+  .card {
+    background: var(--surface-1);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 22px 16px;
+    margin-bottom: 22px;
+  }
+  .card h2 { font-size: 16px; margin: 0 0 2px; }
+  .card .sub { color: var(--text-secondary); font-size: 12.5px; margin: 0 0 14px; max-width: 760px; }
+
+  svg { display: block; font-family: inherit; }
+  .axis-label { fill: var(--text-muted); font-size: 10.5px; }
+  .grid-line { stroke: var(--grid); stroke-width: 1; }
+  .axis-line { stroke: var(--axis); stroke-width: 1; }
+  .bar-label { fill: var(--text-secondary); font-size: 10px; }
+
+  .legend { display: flex; flex-wrap: wrap; gap: 14px; margin: 10px 0 4px; font-size: 12px; color: var(--text-secondary); }
+  .legend-item { display: flex; align-items: center; gap: 6px; }
+  .legend-swatch { width: 10px; height: 10px; border-radius: 2px; flex: none; }
+
+  .tooltip {
+    position: fixed;
+    pointer-events: none;
+    background: var(--text-primary);
+    color: var(--surface-1);
+    font-size: 12px;
+    padding: 6px 9px;
+    border-radius: 6px;
+    line-height: 1.45;
+    z-index: 50;
+    opacity: 0;
+    transition: opacity 0.08s ease;
+    max-width: 240px;
+  }
+
+  details.tv { margin-top: 10px; }
+  details.tv summary { cursor: pointer; font-size: 12px; color: var(--text-secondary); }
+  table.data-table { border-collapse: collapse; width: 100%; margin-top: 10px; font-size: 12px; }
+  table.data-table th, table.data-table td {
+    text-align: right; padding: 5px 8px; border-bottom: 1px solid var(--grid);
+    font-variant-numeric: tabular-nums;
+  }
+  table.data-table th:first-child, table.data-table td:first-child { text-align: left; }
+  table.data-table th { color: var(--text-muted); font-weight: 600; }
+
+  .badge { display: inline-flex; align-items: center; gap: 5px; font-size: 11.5px; padding: 2px 8px; border-radius: 999px; font-weight: 600; }
+  .badge.good { background: color-mix(in srgb, var(--good) 18%, transparent); color: var(--good); }
+  .badge.warn { background: color-mix(in srgb, var(--warning) 22%, transparent); color: color-mix(in srgb, var(--warning) 70%, var(--text-primary)); }
+
+  footer { color: var(--text-muted); font-size: 11.5px; margin-top: 30px; line-height: 1.6; }
+</style>
+
+<div class="viz-root">
+  <header>
+    <h1>AI Race — Frontier Models, Pilot Run Dashboard</h1>
+    <p class="lede">
+      Google Gemini 3 family (gemini-3-flash-preview, gemini-3.1-flash-lite-preview,
+      gemini-3.5-flash-lite) chơi trò AI Race của Fernández Domingos &amp; Han qua proxy Kaggle.
+      3 mức rủi ro riêng tối đa × 6 điều kiện persona (chỉ trên gemini-3-flash-preview) × 10 lần lặp.
+    </p>
+  </header>
+
+  <div class="banner">
+    <b>Đây là dữ liệu PILOT, không phải confirmatory.</b> Toàn bộ run có <code>run_phase = pilot</code>
+    và manifest schema <code>ai-race-results-v1</code> — theo <code>results/README.md</code>, schema này
+    "cố ý không đủ" cho phân tích chính (thiếu source hash, decoding contract, seed provenance đầy đủ).
+    Mỗi persona lại chạy ở một protocol signature/batch riêng nên hệ số persona trong hồi quy
+    <b>không ước lượng được</b> (confound với batch) — biểu đồ persona bên dưới chỉ mô tả, không suy luận nhân quả.
+    Xem <a href="../report.md">report.md</a> để biết đầy đủ giới hạn.
+  </div>
+
+  <div class="card">
+    <h2>1. φ_U theo mức rủi ro, theo model (baseline, không persona)</h2>
+    <p class="sub">Tần suất chọn Unsafe trung bình mỗi người chơi (mean of player-level φ_U), n = 20 người/ô. Tương ứng Fig. 2A của bài báo gốc.</p>
+    <div id="chart1"></div>
+    <details class="tv"><summary>Xem bảng dữ liệu</summary><div id="table1"></div></details>
+  </div>
+
+  <div class="card">
+    <h2>2. φ_U theo mức rủi ro, theo persona (gemini-3-flash-preview)</h2>
+    <p class="sub">
+      n = 20 người/ô cho baseline/R0/R−, n = 6 người/ô cho các cell S_* (mỗi seat 3 người × 2 vai).
+      R− (risk-averse) sụp về 0 ở risk 0.6/0.9; S_AA (cả hai ghế adversarial) gần như luôn Unsafe.
+    </p>
+    <div id="chart2"></div>
+    <details class="tv"><summary>Xem bảng dữ liệu</summary><div id="table2"></div></details>
+  </div>
+
+  <div class="card">
+    <h2>3. Tương quan φ_U người thắng – người thua trong cặp</h2>
+    <p class="sub">
+      Mỗi điểm là một ô (model × persona × risk); trục X = φ_U trung bình người thua, trục Y = φ_U trung bình người thắng.
+      Đường chấm là y = x. Điểm trên đường ⇒ người thắng Unsafe nhiều hơn người thua. Tương ứng Fig. 2C.
+      Cỡ mẫu race mỗi ô rất nhỏ (1–5 race) — đọc như minh hoạ, không phải ước lượng chính xác.
+    </p>
+    <div id="chart3"></div>
+    <details class="tv"><summary>Xem bảng dữ liệu</summary><div id="table3"></div></details>
+  </div>
+
+  <div class="card">
+    <h2>4. Hồi quy logistic panel cluster-robust — đặc tả (6)</h2>
+    <p class="sub">
+      unsafe ~ risk treatment + first_round_unsafe + own(t−1) × opp(t−1) × ΔS(t−1) + protocol signature.
+      Cluster theo <code>source_run/model/rep</code>, N = 2.814 quyết định, 30 CRN block. Chấm = hệ số, đường = khoảng tin cậy 95%.
+      Chấm đặc = p &lt; 0,05.
+    </p>
+    <div id="chart4"></div>
+    <details class="tv"><summary>Xem bảng dữ liệu</summary><div id="table4"></div></details>
+  </div>
+
+  <div class="card">
+    <h2>5. Phân bố chiến lược gần nhất theo mức rủi ro (baseline, không persona)</h2>
+    <p class="sub">
+      Phân loại Hamming đến 4 chiến lược tham chiếu (AS/AU/CS/CAS) trên toàn bộ player-race của 3 model.
+      "Tie/Other" = hoà giữa nhiều chiến lược hoặc không khớp chiến lược nào rõ ràng.
+    </p>
+    <div id="chart5"></div>
+    <details class="tv"><summary>Xem bảng dữ liệu</summary><div id="table5"></div></details>
+  </div>
+
+  <div class="card">
+    <h2>6. Đối chiếu với 8 hiệu ứng của con người (E1–E8)</h2>
+    <p class="sub">Từ <code>human_comparison.csv</code>, chấm tự động theo tiêu chí của <code>human_reference.json</code>. Dấu và ý nghĩa thống kê thường khớp hướng người, nhưng độ lớn hệ số LLM lớn hơn nhiều lần.</p>
+    <div id="table6"></div>
+  </div>
+
+  <footer>
+    Nguồn: <code>results/frontier/</code> (baseline 3 model + 5 persona cell hoàn chỉnh trên gemini-3-flash-preview).
+    Derived tables: <code>analysis/frontier/derived/</code>, sinh bởi <code>results/scripts/analyze_ai_race.py
+    --allow-mixed-protocols --allow-nonfinal-runs --allow-nonconfirmatory-runs --allow-missing-persona-condition</code>.
+    Cell persona <code>Rplus_risk_seeking</code> bị loại khỏi phân tích vì run chưa hoàn tất (status="running", 0 race).
+  </footer>
+</div>
+
+<div class="tooltip" id="tooltip"></div>
+
+<script>
+const DATA = {"treatment_by_model": {"models": ["gemini-3-flash-preview", "gemini-3.1-flash-lite-preview", "gemini-3.5-flash-lite"], "risks": ["0.1", "0.6", "0.9"], "series": [{"model": "gemini-3-flash-preview", "values": [1.0, 0.7235, 0.539]}, {"model": "gemini-3.1-flash-lite-preview", "values": [1.0, 0.8011, 0.6994]}, {"model": "gemini-3.5-flash-lite", "values": [0.838, 0.7077, 0.626]}]}, "treatment_by_persona": {"personas": ["Baseline (kh\u00f4ng persona)", "R0 Neutral", "R\u2212 Risk-averse", "S_AA Adversarial-Adversarial", "S_AC Adversarial (seat)", "S_CA Cooperative (seat)"], "risks": ["0.1", "0.6", "0.9"], "series": [{"persona": "Baseline (kh\u00f4ng persona)", "values": [1.0, 0.7235, 0.539]}, {"persona": "R0 Neutral", "values": [0.9923, 0.7143, 0.6162]}, {"persona": "R\u2212 Risk-averse", "values": [0.4046, 0.0, 0.0]}, {"persona": "S_AA Adversarial-Adversarial", "values": [1.0, 1.0, 0.9524]}, {"persona": "S_AC Adversarial (seat)", "values": [0.2937, 0.2788, 0.1513]}, {"persona": "S_CA Cooperative (seat)", "values": [0.5222, 0.2455, 0.1751]}]}, "winner_loser": [{"model": "gemini-3-flash-preview", "persona": "R-", "risk": "0.1", "winner": 0.5, "loser": 0.3875, "n": 2.0}, {"model": "gemini-3-flash-preview", "persona": "S_AC", "risk": "0.1", "winner": 0.5206, "loser": 0.0667, "n": 3.0}, {"model": "gemini-3-flash-preview", "persona": "S_CA", "risk": "0.1", "winner": 0.6974, "loser": 0.3471, "n": 3.0}, {"model": "gemini-3-flash-preview", "persona": "R0", "risk": "0.6", "winner": 0.7375, "loser": 0.575, "n": 2.0}, {"model": "gemini-3-flash-preview", "persona": "S_AC", "risk": "0.6", "winner": 0.454, "loser": 0.1037, "n": 3.0}, {"model": "gemini-3-flash-preview", "persona": "S_CA", "risk": "0.6", "winner": 0.454, "loser": 0.037, "n": 3.0}, {"model": "gemini-3-flash-preview", "persona": "none", "risk": "0.6", "winner": 0.7823, "loser": 0.653, "n": 3.0}, {"model": "gemini-3-flash-preview", "persona": "R0", "risk": "0.9", "winner": 0.6833, "loser": 0.5636, "n": 5.0}, {"model": "gemini-3-flash-preview", "persona": "S_AC", "risk": "0.9", "winner": 0.3026, "loser": 0.0, "n": 3.0}, {"model": "gemini-3-flash-preview", "persona": "S_CA", "risk": "0.9", "winner": 0.3503, "loser": 0.0, "n": 3.0}, {"model": "gemini-3-flash-preview", "persona": "none", "risk": "0.9", "winner": 0.5727, "loser": 0.4481, "n": 3.0}, {"model": "gemini-3.1-flash-lite-preview", "persona": "none", "risk": "0.6", "winner": 0.8472, "loser": 0.7315, "n": 3.0}, {"model": "gemini-3.1-flash-lite-preview", "persona": "none", "risk": "0.9", "winner": 0.7399, "loser": 0.6172, "n": 3.0}, {"model": "gemini-3.5-flash-lite", "persona": "none", "risk": "0.1", "winner": 0.7692, "loser": 0.6923, "n": 1.0}, {"model": "gemini-3.5-flash-lite", "persona": "none", "risk": "0.6", "winner": 0.7393, "loser": 0.611, "n": 4.0}, {"model": "gemini-3.5-flash-lite", "persona": "none", "risk": "0.9", "winner": 0.6458, "loser": 0.5278, "n": 2.0}], "logit_spec6": [{"term": "Risk = 0.6 (so v\u1edbi 0.1)", "coef": -2.1162, "lo": -2.6745, "hi": -1.5579, "p": 1.0939146382226573e-13}, {"term": "Risk = 0.9 (so v\u1edbi 0.1)", "coef": -2.7906, "lo": -3.4809, "hi": -2.1004, "p": 2.2950798696595567e-15}, {"term": "Unsafe v\u00f2ng 1", "coef": 1.6738, "lo": 0.6767, "hi": 2.671, "p": 0.0010011384140756626}, {"term": "Own(t-1) = Unsafe", "coef": -0.5953, "lo": -1.3093, "hi": 0.1188, "p": 0.10228584882427377}, {"term": "Opponent(t-1) = Unsafe", "coef": 1.4858, "lo": 0.8183, "hi": 2.1534, "p": 1.286546282603676e-05}, {"term": "Own(t-1) x Opp(t-1)", "coef": -0.9841, "lo": -1.9503, "hi": -0.0179, "p": 0.04590305935125905}, {"term": "\u0394S(t-1) (v\u1ecb th\u1ebf \u0111ua)", "coef": -0.2241, "lo": -0.8352, "hi": 0.387, "p": 0.47229761767683176}, {"term": "Own(t-1) x \u0394S(t-1)", "coef": -3.4616, "lo": -7.3661, "hi": 0.4429, "p": 0.08227219614045715}, {"term": "Opp(t-1) x \u0394S(t-1)", "coef": -0.1037, "lo": -1.6928, "hi": 1.4855, "p": 0.8982777602345999}, {"term": "T\u01b0\u01a1ng t\u00e1c 3 chi\u1ec1u", "coef": 2.4643, "lo": -2.4558, "hi": 7.3845, "p": 0.3262533250128764}], "strategy_mix": {"risks": ["0.1", "0.6", "0.9"], "categories": ["AS", "AU", "CS", "CAS", "Tie/Other"], "series": [{"risk": "0.1", "shares": [0.0, 0.05, 0.0, 0.1333, 0.8167], "total": 60}, {"risk": "0.6", "shares": [0.0, 0.3167, 0.0, 0.45, 0.2333], "total": 60}, {"risk": "0.9", "shares": [0.0333, 0.3667, 0.0, 0.4, 0.2], "total": 60}]}, "human_comparison": [{"id": "E1", "name": "opponent_prev_unsafe", "verdict": "replicated", "human": "0.607", "llm": "1.485829220924555"}, {"id": "E2", "name": "progress_gap_before", "verdict": "not_replicated", "human": "-0.296", "llm": "-0.224107742337984"}, {"id": "E3", "name": "first_round_unsafe", "verdict": "replicated", "human": "0.217", "llm": "1.6738489009941453"}, {"id": "E4", "name": "own_prev_unsafe", "verdict": "not_replicated", "human": "-0.193", "llm": "-0.5952660005026627"}, {"id": "E5", "name": "contrast_0.6_vs_0.9", "verdict": "not_replicated", "human": "-0.027", "llm": "1.0854209818059"}, {"id": "E6", "name": "contrast_0.1_vs_0.6", "verdict": "replicated", "human": "0.341", "llm": "3.0817315494968405"}, {"id": "E7", "name": "phi_U_overall", "verdict": "replicated", "human": "0.584", "llm": "0.6241662057340024"}, {"id": "E8", "name": "share_AS", "verdict": "not_replicated", "human": "", "llm": "0.11475409836065574"}]};
+
+const tooltip = document.getElementById('tooltip');
+function showTip(evt, html) {
+  tooltip.innerHTML = html;
+  tooltip.style.opacity = 1;
+  tooltip.style.left = (evt.clientX + 14) + 'px';
+  tooltip.style.top = (evt.clientY + 14) + 'px';
+}
+function hideTip() { tooltip.style.opacity = 0; }
+
+const SERIES_COLORS = ['var(--series-1)','var(--series-2)','var(--series-3)','var(--series-4)','var(--series-5)','var(--series-6)'];
+
+function svgEl(tag, attrs) {
+  const el = document.createElementNS('http://www.w3.org/2000/svg', tag);
+  for (const k in attrs) el.setAttribute(k, attrs[k]);
+  return el;
+}
+
+function legend(container, items) {
+  const wrap = document.createElement('div');
+  wrap.className = 'legend';
+  items.forEach((it, i) => {
+    const row = document.createElement('div');
+    row.className = 'legend-item';
+    row.innerHTML = `<span class="legend-swatch" style="background:${it.color}"></span>${it.label}`;
+    wrap.appendChild(row);
+  });
+  container.appendChild(wrap);
+}
+
+// ---- Chart 1 & 2: grouped bar, value in [0,1] ----
+function groupedBar(containerId, categories, series, opts) {
+  opts = opts || {};
+  const container = document.getElementById(containerId);
+  const W = 1080, H = opts.h || 260;
+  const marginL = 34, marginR = 10, marginT = 10, marginB = 34;
+  const plotW = W - marginL - marginR, plotH = H - marginT - marginB;
+  const svg = svgEl('svg', {viewBox: `0 0 ${W} ${H}`, width: '100%', height: H});
+
+  const yMax = 1.0;
+  [0, 0.25, 0.5, 0.75, 1.0].forEach(v => {
+    const y = marginT + plotH - (v / yMax) * plotH;
+    svg.appendChild(svgEl('line', {x1: marginL, x2: W - marginR, y1: y, y2: y, class: 'grid-line'}));
+    const t = svgEl('text', {x: marginL - 8, y: y + 3, class: 'axis-label', 'text-anchor': 'end'});
+    t.textContent = v.toFixed(2);
+    svg.appendChild(t);
+  });
+  svg.appendChild(svgEl('line', {x1: marginL, x2: marginL, y1: marginT, y2: marginT + plotH, class: 'axis-line'}));
+  svg.appendChild(svgEl('line', {x1: marginL, x2: W - marginR, y1: marginT + plotH, y2: marginT + plotH, class: 'axis-line'}));
+
+  const nCat = categories.length, nSer = series.length;
+  const groupW = plotW / nCat;
+  const barPad = 0.16;
+  const barW = (groupW * (1 - barPad)) / nSer;
+
+  categories.forEach((cat, ci) => {
+    const gx = marginL + ci * groupW;
+    const lbl = svgEl('text', {x: gx + groupW / 2, y: H - marginB + 18, class: 'axis-label', 'text-anchor': 'middle'});
+    lbl.textContent = cat;
+    svg.appendChild(lbl);
+
+    series.forEach((s, si) => {
+      const v = s.values[ci];
+      if (v === null || v === undefined) return;
+      const barH = (v / yMax) * plotH;
+      const x = gx + groupW * barPad / 2 + si * barW;
+      const y = marginT + plotH - barH;
+      const rect = svgEl('rect', {
+        x: x + 1, y: y, width: Math.max(barW - 2, 1), height: Math.max(barH, 1),
+        rx: 3, fill: SERIES_COLORS[si % SERIES_COLORS.length]
+      });
+      rect.addEventListener('mousemove', (e) => showTip(e, `<b>${s.label}</b><br>${opts.xLabel || 'Risk'} = ${cat}<br>${opts.yLabel || 'phi_U'} = ${v.toFixed(3)}`));
+      rect.addEventListener('mouseleave', hideTip);
+      svg.appendChild(rect);
+    });
+  });
+
+  container.innerHTML = '';
+  container.appendChild(svg);
+  legend(container, series.map((s, i) => ({label: s.label, color: SERIES_COLORS[i % SERIES_COLORS.length]})));
+}
+
+function dataTable(containerId, categories, series, catHeader) {
+  const container = document.getElementById(containerId);
+  let html = `<table class="data-table"><thead><tr><th>${catHeader}</th>`;
+  series.forEach(s => html += `<th>${s.label}</th>`);
+  html += '</tr></thead><tbody>';
+  categories.forEach((cat, ci) => {
+    html += `<tr><td>${cat}</td>`;
+    series.forEach(s => {
+      const v = s.values[ci];
+      html += `<td>${v === null || v === undefined ? '—' : v.toFixed(3)}</td>`;
+    });
+    html += '</tr>';
+  });
+  html += '</tbody></table>';
+  container.innerHTML = html;
+}
+
+// Chart 1
+{
+  const d = DATA.treatment_by_model;
+  const series = d.series.map(s => ({label: s.model, values: s.values}));
+  groupedBar('chart1', d.risks.map(r => 'risk = ' + r), series, {yLabel: 'phi_U'});
+  dataTable('table1', d.risks.map(r => 'risk = ' + r), series, 'Treatment');
+}
+// Chart 2
+{
+  const d = DATA.treatment_by_persona;
+  const series = d.series.map(s => ({label: s.persona, values: s.values}));
+  groupedBar('chart2', d.risks.map(r => 'risk = ' + r), series, {yLabel: 'phi_U', h: 300});
+  dataTable('table2', d.risks.map(r => 'risk = ' + r), series, 'Treatment');
+}
+
+// ---- Chart 3: scatter winner vs loser ----
+function scatter(containerId, points, opts) {
+  const container = document.getElementById(containerId);
+  const W = 620, H = 460;
+  const marginL = 44, marginR = 16, marginT = 14, marginB = 40;
+  const plotW = W - marginL - marginR, plotH = H - marginT - marginB;
+  const svg = svgEl('svg', {viewBox: `0 0 ${W} ${H}`, width: '100%', height: H, style: 'max-width:640px'});
+
+  const riskColor = {'0.1': 'var(--series-1)', '0.6': 'var(--series-2)', '0.9': 'var(--series-3)'};
+
+  [0, 0.25, 0.5, 0.75, 1.0].forEach(v => {
+    const x = marginL + v * plotW;
+    const y = marginT + plotH - v * plotH;
+    svg.appendChild(svgEl('line', {x1: marginL, x2: W - marginR, y1: y, y2: y, class: 'grid-line'}));
+    svg.appendChild(svgEl('line', {x1: x, x2: x, y1: marginT, y2: marginT + plotH, class: 'grid-line'}));
+    const tx = svgEl('text', {x: x, y: H - marginB + 16, class: 'axis-label', 'text-anchor': 'middle'});
+    tx.textContent = v.toFixed(2);
+    svg.appendChild(tx);
+    const ty = svgEl('text', {x: marginL - 8, y: y + 3, class: 'axis-label', 'text-anchor': 'end'});
+    ty.textContent = v.toFixed(2);
+    svg.appendChild(ty);
+  });
+  svg.appendChild(svgEl('line', {x1: marginL, x2: marginL, y1: marginT, y2: marginT + plotH, class: 'axis-line'}));
+  svg.appendChild(svgEl('line', {x1: marginL, x2: W - marginR, y1: marginT + plotH, y2: marginT + plotH, class: 'axis-line'}));
+  svg.appendChild(svgEl('line', {x1: marginL, x2: W - marginR, y1: marginT + plotH, y2: marginT, stroke: 'var(--text-muted)', 'stroke-width': 1, 'stroke-dasharray': '3,3'}));
+
+  const xt = svgEl('text', {x: marginL + plotW / 2, y: H - 4, class: 'axis-label', 'text-anchor': 'middle'});
+  xt.textContent = 'phi_U trung bình — người thua';
+  svg.appendChild(xt);
+  const yt = svgEl('text', {x: 12, y: marginT + plotH / 2, class: 'axis-label', 'text-anchor': 'middle', transform: `rotate(-90 12 ${marginT + plotH / 2})`});
+  yt.textContent = 'phi_U trung bình — người thắng';
+  svg.appendChild(yt);
+
+  points.forEach(p => {
+    const cx = marginL + p.loser * plotW;
+    const cy = marginT + plotH - p.winner * plotH;
+    const r = 4 + Math.min(p.n, 5) * 1.1;
+    const c = svgEl('circle', {cx, cy, r, fill: riskColor[p.risk] || 'var(--series-1)', 'fill-opacity': 0.78, stroke: 'var(--surface-1)', 'stroke-width': 1.4});
+    c.addEventListener('mousemove', (e) => showTip(e, `<b>${p.model}</b> · persona ${p.persona}<br>risk = ${p.risk}, n race = ${p.n}<br>winner phi_U = ${p.winner.toFixed(3)}<br>loser phi_U = ${p.loser.toFixed(3)}`));
+    c.addEventListener('mouseleave', hideTip);
+    svg.appendChild(c);
+  });
+
+  container.innerHTML = '';
+  container.appendChild(svg);
+  legend(container, [
+    {label: 'risk = 0.1', color: 'var(--series-1)'},
+    {label: 'risk = 0.6', color: 'var(--series-2)'},
+    {label: 'risk = 0.9', color: 'var(--series-3)'},
+    {label: 'đường chấm: y = x (thắng = thua)', color: 'var(--text-muted)'},
+  ]);
+}
+scatter('chart3', DATA.winner_loser);
+{
+  const container = document.getElementById('table3');
+  let html = '<table class="data-table"><thead><tr><th>Model</th><th>Persona</th><th>Risk</th><th>n race</th><th>Winner phi_U</th><th>Loser phi_U</th></tr></thead><tbody>';
+  DATA.winner_loser.forEach(p => {
+    html += `<tr><td>${p.model}</td><td>${p.persona}</td><td>${p.risk}</td><td>${p.n}</td><td>${p.winner.toFixed(3)}</td><td>${p.loser.toFixed(3)}</td></tr>`;
+  });
+  html += '</tbody></table>';
+  container.innerHTML = html;
+}
+
+// ---- Chart 4: forest plot ----
+function forest(containerId, terms) {
+  const container = document.getElementById(containerId);
+  const W = 1080, rowH = 34, marginL = 220, marginR = 40, marginT = 14, marginB = 34;
+  const H = marginT + marginB + terms.length * rowH;
+  const plotW = W - marginL - marginR;
+  const svg = svgEl('svg', {viewBox: `0 0 ${W} ${H}`, width: '100%', height: H});
+
+  let lo = Math.min(...terms.map(t => t.lo), 0);
+  let hi = Math.max(...terms.map(t => t.hi), 0);
+  const pad = (hi - lo) * 0.08;
+  lo -= pad; hi += pad;
+  const xOf = v => marginL + ((v - lo) / (hi - lo)) * plotW;
+
+  const zeroX = xOf(0);
+  svg.appendChild(svgEl('line', {x1: zeroX, x2: zeroX, y1: marginT, y2: marginT + terms.length * rowH, stroke: 'var(--text-muted)', 'stroke-width': 1, 'stroke-dasharray': '3,3'}));
+
+  [lo, lo + (hi - lo) * 0.25, lo + (hi - lo) * 0.5, lo + (hi - lo) * 0.75, hi].forEach(v => {
+    const x = xOf(v);
+    const t = svgEl('text', {x, y: marginT + terms.length * rowH + 18, class: 'axis-label', 'text-anchor': 'middle'});
+    t.textContent = v.toFixed(1);
+    svg.appendChild(t);
+  });
+  svg.appendChild(svgEl('line', {x1: marginL, x2: W - marginR, y1: marginT + terms.length * rowH, y2: marginT + terms.length * rowH, class: 'axis-line'}));
+
+  terms.forEach((t, i) => {
+    const y = marginT + i * rowH + rowH / 2;
+    const label = svgEl('text', {x: marginL - 12, y: y + 4, class: 'bar-label', 'text-anchor': 'end'});
+    label.textContent = t.term;
+    svg.appendChild(label);
+
+    const x1 = xOf(t.lo), x2 = xOf(t.hi), xc = xOf(t.coef);
+    const sig = t.p < 0.05;
+    const color = t.coef >= 0 ? 'var(--series-3)' : 'var(--series-2)';
+    svg.appendChild(svgEl('line', {x1, x2, y1: y, y2: y, stroke: color, 'stroke-width': 2}));
+    const dot = svgEl('circle', {cx: xc, cy: y, r: 5.5, fill: sig ? color : 'var(--surface-1)', stroke: color, 'stroke-width': 2});
+    dot.addEventListener('mousemove', (e) => showTip(e, `<b>${t.term}</b><br>coef = ${t.coef.toFixed(3)}<br>95% CI [${t.lo.toFixed(3)}, ${t.hi.toFixed(3)}]<br>p = ${t.p < 0.001 ? '< 0.001' : t.p.toFixed(3)}`));
+    dot.addEventListener('mouseleave', hideTip);
+    svg.appendChild(dot);
+  });
+
+  container.innerHTML = '';
+  container.appendChild(svg);
+  legend(container, [
+    {label: 'coef ≥ 0', color: 'var(--series-3)'},
+    {label: 'coef < 0', color: 'var(--series-2)'},
+    {label: 'chấm đặc = p < 0.05, chấm rỗng = không có ý nghĩa', color: 'var(--text-muted)'},
+  ]);
+}
+forest('chart4', DATA.logit_spec6);
+{
+  const container = document.getElementById('table4');
+  let html = '<table class="data-table"><thead><tr><th>Term</th><th>Coef</th><th>CI 95% thấp</th><th>CI 95% cao</th><th>p</th></tr></thead><tbody>';
+  DATA.logit_spec6.forEach(t => {
+    html += `<tr><td>${t.term}</td><td>${t.coef.toFixed(3)}</td><td>${t.lo.toFixed(3)}</td><td>${t.hi.toFixed(3)}</td><td>${t.p < 0.001 ? '< 0.001' : t.p.toFixed(3)}</td></tr>`;
+  });
+  html += '</tbody></table>';
+  container.innerHTML = html;
+}
+
+// ---- Chart 5: 100% stacked bar ----
+function stackedBar(containerId, risks, categories, series) {
+  const container = document.getElementById(containerId);
+  const W = 720, H = 220, marginL = 70, marginR = 200, marginT = 10, marginB = 30;
+  const plotW = W - marginL - marginR, plotH = H - marginT - marginB;
+  const svg = svgEl('svg', {viewBox: `0 0 ${W} ${H}`, width: '100%', height: H, style: 'max-width:760px'});
+
+  const barH = (plotH / risks.length) * 0.62;
+  const gap = (plotH / risks.length) * 0.38;
+  const colors = SERIES_COLORS.concat(['var(--text-muted)']);
+
+  [0, 0.25, 0.5, 0.75, 1.0].forEach(v => {
+    const x = marginL + v * plotW;
+    svg.appendChild(svgEl('line', {x1: x, x2: x, y1: marginT, y2: marginT + plotH, class: 'grid-line'}));
+    const t = svgEl('text', {x, y: marginT + plotH + 16, class: 'axis-label', 'text-anchor': 'middle'});
+    t.textContent = (v * 100).toFixed(0) + '%';
+    svg.appendChild(t);
+  });
+
+  series.forEach((s, ri) => {
+    const y = marginT + ri * (barH + gap) + gap / 2;
+    const lbl = svgEl('text', {x: marginL - 10, y: y + barH / 2 + 4, class: 'axis-label', 'text-anchor': 'end'});
+    lbl.textContent = 'risk = ' + s.risk;
+    svg.appendChild(lbl);
+
+    let acc = 0;
+    s.shares.forEach((share, ci) => {
+      if (share <= 0) return;
+      const x = marginL + acc * plotW;
+      const w = share * plotW;
+      const rect = svgEl('rect', {x: x + 0.5, y, width: Math.max(w - 1, 0), height: barH, fill: colors[ci], rx: 2});
+      rect.addEventListener('mousemove', (e) => showTip(e, `<b>${categories[ci]}</b> · risk = ${s.risk}<br>${(share * 100).toFixed(1)}% (n = ${Math.round(share * s.total)}/${s.total})`));
+      rect.addEventListener('mouseleave', hideTip);
+      svg.appendChild(rect);
+      acc += share;
+    });
+  });
+
+  container.innerHTML = '';
+  container.appendChild(svg);
+  legend(container, categories.map((c, i) => ({label: c, color: colors[i]})));
+}
+stackedBar('chart5', DATA.strategy_mix.risks, DATA.strategy_mix.categories, DATA.strategy_mix.series);
+{
+  const container = document.getElementById('table5');
+  const d = DATA.strategy_mix;
+  let html = '<table class="data-table"><thead><tr><th>Risk</th>';
+  d.categories.forEach(c => html += `<th>${c}</th>`);
+  html += '</tr></thead><tbody>';
+  d.series.forEach(s => {
+    html += `<tr><td>${s.risk}</td>`;
+    s.shares.forEach(v => html += `<td>${(v * 100).toFixed(1)}%</td>`);
+    html += '</tr>';
+  });
+  html += '</tbody></table>';
+  container.innerHTML = html;
+}
+
+// ---- Chart 6: human comparison table ----
+{
+  const container = document.getElementById('table6');
+  let html = '<table class="data-table"><thead><tr><th>ID</th><th>Hiệu ứng</th><th>Giá trị người</th><th>Giá trị LLM</th><th>Verdict</th></tr></thead><tbody>';
+  DATA.human_comparison.forEach(r => {
+    const badge = r.verdict === 'replicated'
+      ? '<span class="badge good">replicated</span>'
+      : '<span class="badge warn">not replicated</span>';
+    const llmVal = isNaN(parseFloat(r.llm)) ? r.llm : parseFloat(r.llm).toFixed(3);
+    html += `<tr><td>${r.id}</td><td>${r.name}</td><td>${r.human || '—'}</td><td>${llmVal}</td><td>${badge}</td></tr>`;
+  });
+  html += '</tbody></table>';
+  container.innerHTML = html;
+}
+</script>
