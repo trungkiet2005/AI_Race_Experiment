@@ -31,6 +31,7 @@
   "inference_cluster": "source_run/model/rep common-random-number repetition block; the logit refuses inputs without valid blocks spanning risk treatments",
   "logit_formula": "unsafe ~ C(max_private_risk) + first_round_unsafe + own_prev_unsafe * opponent_prev_unsafe * progress_gap_before + C(persona_condition)",
   "logit_requested": true,
+  "logit_robustness_requested": true,
   "mechanics_checks_passed": [
     "step_increment matches Safe=1.0/Unsafe=1.5",
     "round_payoff matches the canonical 2x2 stage game",
@@ -85,17 +86,24 @@
     "horizon_distribution.csv",
     "human_comparison.csv",
     "human_comparison_metadata.json",
+    "logit_robustness_jackknife.csv",
+    "logit_robustness_metadata.json",
     "opponent_response_player.csv",
     "opponent_response_turn.csv",
     "outcome_player.csv",
     "parse_failures.csv",
     "persona_contrasts.csv",
+    "persona_contrasts_round2plus.csv",
     "player_metrics.csv",
     "race_quality.csv",
     "race_state_player.csv",
+    "sample_summary.csv",
     "seat_balance.csv",
     "strategy_summary_player.csv",
+    "theory_vs_experiment.csv",
+    "theory_vs_experiment_metadata.json",
     "treatment_contrasts.csv",
+    "treatment_contrasts_round2plus.csv",
     "unsafe_by_gap_bin_turn.csv",
     "unsafe_by_gap_lag_turn.csv",
     "unsafe_by_lag_profile_turn.csv",
@@ -199,12 +207,12 @@
     "completed"
   ],
   "source_runs": [
-    "gpu_run_archive/pilot-identified-t1-0-results.tar.gz::pilot_identified_t1_0/lane_a/baseline",
-    "gpu_run_archive/pilot-identified-t1-0-results.tar.gz::pilot_identified_t1_0/lane_a/persona_baseline_adv_coop",
-    "gpu_run_archive/pilot-identified-t1-0-results.tar.gz::pilot_identified_t1_0/lane_a/persona_baseline_neutral",
-    "gpu_run_archive/pilot-identified-t1-0-results.tar.gz::pilot_identified_t1_0/lane_a/persona_baseline_risk_averse",
-    "gpu_run_archive/pilot-identified-t1-0-results.tar.gz::pilot_identified_t1_0/lane_b/baseline_swapped",
-    "gpu_run_archive/pilot-identified-t1-0-results.tar.gz::pilot_identified_t1_0/lane_b/persona_baseline_adv_adv",
-    "gpu_run_archive/pilot-identified-t1-0-results.tar.gz::pilot_identified_t1_0/lane_b/persona_baseline_coop_adv"
+    "/network-volume/icse27/AI_Race_Experiment/tmp/pilot_rebuild/pilot_identified_t1_0/lane_a/baseline",
+    "/network-volume/icse27/AI_Race_Experiment/tmp/pilot_rebuild/pilot_identified_t1_0/lane_a/persona_baseline_adv_coop",
+    "/network-volume/icse27/AI_Race_Experiment/tmp/pilot_rebuild/pilot_identified_t1_0/lane_a/persona_baseline_neutral",
+    "/network-volume/icse27/AI_Race_Experiment/tmp/pilot_rebuild/pilot_identified_t1_0/lane_a/persona_baseline_risk_averse",
+    "/network-volume/icse27/AI_Race_Experiment/tmp/pilot_rebuild/pilot_identified_t1_0/lane_b/baseline_swapped",
+    "/network-volume/icse27/AI_Race_Experiment/tmp/pilot_rebuild/pilot_identified_t1_0/lane_b/persona_baseline_adv_adv",
+    "/network-volume/icse27/AI_Race_Experiment/tmp/pilot_rebuild/pilot_identified_t1_0/lane_b/persona_baseline_coop_adv"
   ]
 }

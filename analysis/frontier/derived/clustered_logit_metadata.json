@@ -1,0 +1,94 @@
+{
+  "cluster_rationale": "The same repetition reuses horizon/setback random streams across risk treatments; game-only clustering would not capture that dependence.",
+  "covariance": "cluster-robust by source_run::model::rep",
+  "excluded_covariates": "Human demographics and elicited risk preference are not defined for these LLM agents.",
+  "interpretation": "Conditional associations in an endogenous repeated interaction; not causal effects.",
+  "models": [
+    "google/gemini-3-flash-preview",
+    "google/gemini-3.1-flash-lite-preview",
+    "google/gemini-3.5-flash-lite"
+  ],
+  "n_crn_repetition_blocks": 30,
+  "n_games": 177,
+  "n_observations": 2814,
+  "persona_identification": {
+    "confounded_with_protocol_signature": true,
+    "identified": false,
+    "n_persona_conditions": 6,
+    "persona_conditions": [
+      "R-",
+      "R0",
+      "S_AA",
+      "S_AC",
+      "S_CA",
+      "none"
+    ],
+    "remedy": "Run every persona cell in one batch so they share source revision, decoding, and package versions; persona then varies inside a single protocol signature and its coefficient is estimable.",
+    "varies_within_protocol_signature": false
+  },
+  "prompt_versions": [
+    "ai-race-fairgame-v3"
+  ],
+  "protocol_controls": " + C(protocol_signature)",
+  "protocol_signatures": [
+    "67d449c87677f4559ad1ad1ecc889a432c22dcb52f94a391fdb126778992df2e",
+    "979bae7b1682a11de6986508bc46a40cfe183fca8ea14fbfa98940869ae7f0bb",
+    "9bf504edfff3529d855847b1be178f557fc511c4e10b2b2d764e7ce286072f8f",
+    "e4b363cb23e7f51f4cb6e8cd54b83e012551e2d98a0913bef425397b88630537",
+    "e797ad425dab097001e50ec17372e386b79eacabbda45d5e9ecb2bc8a6d07d09",
+    "e7e9fdcc31a6097c7f48a238aef9a1cf1b9f924d4c4f1d2383423f94c79e3ff0",
+    "f55db946320bb74f1d8d014e335e7cfffec4178e6a614d8700d0046fa6894a0c",
+    "f6295d19b4449e411409e723e404dd654f86e04c1e17efe2c71d2a8cda3e5941"
+  ],
+  "run_phases": [
+    "pilot"
+  ],
+  "run_statuses": [
+    "completed"
+  ],
+  "specification_rationale": "The six nested specifications of Table 1 in the source paper. Comparing them shows whether a coefficient is stable or an artefact of one particular specification.",
+  "specifications": [
+    {
+      "converged": true,
+      "formula": "unsafe ~ C(max_private_risk) + C(protocol_signature)",
+      "log_likelihood": -1220.7161769864315,
+      "pseudo_r_squared": 0.35246959454785975,
+      "specification": "1"
+    },
+    {
+      "converged": true,
+      "formula": "unsafe ~ C(max_private_risk) + own_prev_unsafe + opponent_prev_unsafe + progress_gap_before + C(protocol_signature)",
+      "log_likelihood": -1083.0261914166217,
+      "pseudo_r_squared": 0.4255074176418592,
+      "specification": "2"
+    },
+    {
+      "converged": true,
+      "formula": "unsafe ~ C(max_private_risk) + own_prev_unsafe * opponent_prev_unsafe * progress_gap_before + C(protocol_signature)",
+      "log_likelihood": -1054.6473805740895,
+      "pseudo_r_squared": 0.44056099294261375,
+      "specification": "3"
+    },
+    {
+      "converged": true,
+      "formula": "unsafe ~ C(max_private_risk) + first_round_unsafe + C(protocol_signature)",
+      "log_likelihood": -1216.0553269691204,
+      "pseudo_r_squared": 0.35494194820250835,
+      "specification": "4"
+    },
+    {
+      "converged": true,
+      "formula": "unsafe ~ C(max_private_risk) + first_round_unsafe + own_prev_unsafe + opponent_prev_unsafe + progress_gap_before + C(protocol_signature)",
+      "log_likelihood": -1058.5110227653113,
+      "pseudo_r_squared": 0.43851151916503184,
+      "specification": "5"
+    },
+    {
+      "converged": true,
+      "formula": "unsafe ~ C(max_private_risk) + first_round_unsafe + own_prev_unsafe * opponent_prev_unsafe * progress_gap_before + C(protocol_signature)",
+      "log_likelihood": -1036.1206629412777,
+      "pseudo_r_squared": 0.450388513218529,
+      "specification": "6"
+    }
+  ]
+}

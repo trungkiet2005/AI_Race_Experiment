@@ -1,0 +1,27 @@
+{
+  "taskVersion": {
+    "versionNumber": 1,
+    "name": "debug-llm-type",
+    "description": ""
+  },
+  "modelVersion": {
+    "slug": "google/gemini-3-flash-preview"
+  },
+  "state": "BENCHMARK_TASK_RUN_STATE_COMPLETED",
+  "startTime": "2026-07-31T10:13:49.100301Z",
+  "endTime": "2026-07-31T10:13:49.100301Z",
+  "conversations": [
+    {
+      "id": "debug-llm-type-bbac5e6b",
+      "metrics": {},
+      "modelVersionSlug": "model_version_slug for conversation is DEPRECATED"
+    }
+  ],
+  "results": [
+    {
+      "type": "AGGREGATED",
+      "booleanResult": true
+    }
+  ],
+  "pyRunId": "debug-llm-type-Run #1"
+}
