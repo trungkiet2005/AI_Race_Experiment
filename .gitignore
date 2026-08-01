@@ -22,6 +22,7 @@ kaggle.json
 !/results/frontier/
 !/results/frontier/.gitkeep
 !/results/frontier/**
+/results/frontier/openai/_logs/
 !/results/open_source/
 !/results/open_source/.gitkeep
 !/results/open_source/*_manifest.json

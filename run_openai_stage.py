@@ -21,7 +21,7 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parent
 PY = REPO / ".venv-kaggle/bin/python"
-LOG_DIR = REPO / "logs_openai_stage"
+LOG_DIR = REPO / "results/frontier/openai/_logs/stage"
 
 MAX_PARALLEL_JOBS = 2
 
@@ -106,7 +106,7 @@ def run_job(config_rel: str, output_rel: str) -> tuple[str, str, float]:
         text=True,
     )
     elapsed = time.time() - started
-    LOG_DIR.mkdir(exist_ok=True)
+    LOG_DIR.mkdir(parents=True, exist_ok=True)
     (LOG_DIR / f"{name}.log").write_text(result.stdout + result.stderr, encoding="utf-8")
     status = "OK" if result.returncode == 0 else f"FAIL(rc={result.returncode})"
     return (name, status, elapsed)

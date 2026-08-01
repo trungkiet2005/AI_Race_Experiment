@@ -227,9 +227,14 @@ Chạy nền + xem log liên tục (khuyến nghị, vì gọi API tuần tự t
 đường proxy — xem mục "Bẫy"):
 
 ```bash
-.venv-kaggle/bin/python run_openai_stage.py > run_openai_stage.log 2>&1 &
-tail -f run_openai_stage.log
+mkdir -p results/frontier/openai/_logs/stage
+.venv-kaggle/bin/python run_openai_stage.py > results/frontier/openai/_logs/stage/run_openai_stage.log 2>&1 &
+tail -f results/frontier/openai/_logs/stage/run_openai_stage.log
 ```
+
+Raw console logs under `results/frontier/openai/_logs/` are operational artifacts
+and are ignored by Git. Keep durable run data in the normal result directories;
+record any audit-relevant incident in `analysis/openai/stage-run-summary.md`.
 
 Đứt giữa chừng (hết quota, mất mạng) thì chạy lại y nguyên lệnh trên — script tự bỏ qua
 model/config đã `completed`, không tốn tiền chạy lại phần đã xong. **Lưu ý:** logic
