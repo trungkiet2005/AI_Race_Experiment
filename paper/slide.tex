@@ -1,0 +1,840 @@
+\documentclass[9pt,aspectratio=169]{beamer}
+\usetheme[progressbar=frametitle, block=fill]{metropolis}
+
+\usepackage{amsmath,amssymb,amsfonts,mathtools,bm}
+\usepackage{graphicx,booktabs,array,multirow,colortbl}
+\usepackage{pifont}
+\usepackage{tikz,pgfplots}
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{shapes.geometric,arrows.meta,positioning,fit,backgrounds,calc,decorations.pathreplacing,matrix}
+\usepackage{xcolor,hyperref,appendixnumberbeamer,microtype}
+
+% ---------------------------------------------------------------------------
+% RaceInk palette (giữ bản sắc đã thiết lập trong ai_race_research_deck.tex)
+% ---------------------------------------------------------------------------
+\definecolor{RaceInk}{HTML}{07111F}
+\definecolor{RaceNavy}{HTML}{0E1B2D}
+\definecolor{RacePaper}{HTML}{F3F1EB}
+\definecolor{RaceCyan}{HTML}{28D7DC}
+\definecolor{RaceCyanDark}{HTML}{007E89}
+\definecolor{RaceAmber}{HTML}{FFB547}
+\definecolor{RaceLime}{HTML}{D8FF55}
+\definecolor{RaceMuted}{HTML}{697586}
+\definecolor{RaceRed}{HTML}{FF795F}
+\definecolor{RaceGreenDk}{HTML}{0F8A5F}
+\definecolor{lightgray}{HTML}{F0F0F0}
+
+% ---------------------------------------------------------------------------
+% Theme wiring: khung metropolis (bám refs.tex) + màu RaceInk (bám dự án)
+% ---------------------------------------------------------------------------
+\setbeamercolor{background canvas}{bg=RacePaper}
+\setbeamercolor{normal text}{fg=RaceInk,bg=RacePaper}
+\setbeamercolor{frametitle}{bg=RaceInk,fg=RacePaper}
+\setbeamercolor{progress bar}{fg=RaceAmber,bg=RaceCyan!30}
+\setbeamercolor{alerted text}{fg=RaceRed}
+\setbeamercolor{block title}{bg=RaceCyanDark!22,fg=RaceInk}
+\setbeamercolor{block body}{bg=lightgray}
+\setbeamercolor{block title example}{bg=RaceCyan!28,fg=RaceCyanDark}
+\setbeamercolor{block body example}{bg=RaceCyan!6}
+\setbeamercolor{block title alerted}{bg=RaceAmber!32,fg=RaceInk}
+\setbeamercolor{block body alerted}{bg=RaceAmber!10}
+\setbeamercolor{palette primary}{bg=RaceInk,fg=RacePaper}
+\setbeamercolor{title}{fg=RaceInk}
+\setbeamercolor{section in toc}{fg=RaceInk}
+\setbeamerfont{title}{size=\Large,series=\bfseries}
+\setbeamerfont{frametitle}{size=\normalsize,series=\bfseries}
+\metroset{sectionpage=progressbar}
+\setbeamertemplate{itemize item}{\color{RaceCyanDark}$\blacktriangleright$}
+\setbeamertemplate{itemize subitem}{\color{RaceAmber}$\bullet$}
+\setbeamertemplate{navigation symbols}{}
+
+% ---------------------------------------------------------------------------
+% Macro ngữ nghĩa (bám refs.tex: hl/tc/bad/good), ánh xạ sang RaceInk
+% ---------------------------------------------------------------------------
+\newcommand{\hl}[1]{\textcolor{RaceAmber!80!black}{\textbf{#1}}}
+\newcommand{\tc}[1]{\textcolor{RaceCyanDark}{#1}}
+\newcommand{\bad}[1]{\textcolor{RaceRed}{\textbf{#1}}}
+\newcommand{\good}[1]{\textcolor{RaceGreenDk}{\textbf{#1}}}
+\newcommand{\cmark}{\ding{51}}
+\newcommand{\xmark}{\ding{55}}
+
+% ---------------------------------------------------------------------------
+% Chip nhãn
+% ---------------------------------------------------------------------------
+\newcommand{\pilotchip}{\tikz[baseline=-0.5ex]\node[fill=RaceInk,text=RaceLime,rounded corners=3pt,inner xsep=6pt,inner ysep=3pt,font=\tiny\bfseries]{PILOT --- CHƯA CONFIRMATORY};}
+\newcommand{\sourcechip}{\tikz[baseline=-0.5ex]\node[draw=RaceCyanDark,text=RaceCyanDark,rounded corners=3pt,inner xsep=6pt,inner ysep=3pt,font=\tiny\bfseries]{NGHIÊN CỨU NGUỒN --- NGƯỜI};}
+\newcommand{\llmchip}[1]{\tikz[baseline=-0.5ex]\node[draw=RaceInk,text=RaceInk,rounded corners=3pt,inner xsep=6pt,inner ysep=3pt,font=\tiny\bfseries]{#1};}
+
+% ---------------------------------------------------------------------------
+% Footline
+% ---------------------------------------------------------------------------
+\setbeamertemplate{footline}{%
+  \ifnum\inserttotalframenumber>0%
+    \pgfmathsetlengthmacro{\progresswidth}{\paperwidth*\insertframenumber/\inserttotalframenumber}%
+    \hbox{\color{RaceCyanDark}\rule{\progresswidth}{0.7pt}}%
+  \fi%
+  \leavevmode\hbox{%
+  \begin{beamercolorbox}[wd=.78\paperwidth,ht=3.2ex,dp=1.4ex,leftskip=.5cm]{normal text}%
+    \color{RaceMuted}\tiny\bfseries AI RACE LAB \hspace{0.5em}|\hspace{0.5em} PROGRESS REPORT --- DỮ LIỆU PILOT
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.22\paperwidth,ht=3.2ex,dp=1.4ex,rightskip=.5cm plus1fil]{normal text}%
+    \color{RaceMuted}\tiny\bfseries \insertframenumber\ / \inserttotalframenumber
+  \end{beamercolorbox}}}
+
+% ---------------------------------------------------------------------------
+% Khung tối (nhấn mạnh), giữ nguyên ý tưởng từ ai_race_research_deck.tex
+% ---------------------------------------------------------------------------
+\newenvironment{darkframe}[1]{%
+  \setbeamercolor{background canvas}{bg=RaceInk}%
+  \setbeamercolor{normal text}{fg=RacePaper,bg=RaceInk}%
+  \setbeamercolor{frametitle}{fg=RacePaper,bg=RaceInk}%
+  \setbeamercolor{block title}{fg=RaceCyan,bg=RaceNavy}%
+  \setbeamercolor{block body}{fg=RacePaper,bg=RaceNavy}%
+  \begin{frame}{#1}%
+}{%
+  \end{frame}%
+  \setbeamercolor{background canvas}{bg=RacePaper}%
+  \setbeamercolor{normal text}{fg=RaceInk,bg=RacePaper}%
+  \setbeamercolor{frametitle}{fg=RacePaper,bg=RaceInk}%
+  \setbeamercolor{block title}{bg=RaceCyanDark!22,fg=RaceInk}%
+  \setbeamercolor{block body}{bg=lightgray}%
+}
+
+% ---------------------------------------------------------------------------
+% Style pgfplots dùng chung
+% ---------------------------------------------------------------------------
+%PROBE_DISABLED_PGFPLOTSSET%
+
+\title{AI Race: LLM có hành xử như người không?}
+\subtitle{Progress report --- \pilotchip\ \\[2pt]\small 4 lần chạy pilot: baseline (Qwen/Gemma), frontier (Gemini), openai (GPT-nano), N-player (Qwen)}
+\author{AI Race Lab}
+\date{\today}
+
+\begin{document}
+
+\begin{frame}[plain]
+\begin{tikzpicture}[remember picture,overlay]
+  \fill[RaceInk] (current page.south west) rectangle (current page.north east);
+  \fill[RaceCyan] ([xshift=10.8cm]current page.south west) rectangle (current page.north east);
+\end{tikzpicture}
+\vspace{0.5cm}
+{\color{RaceCyan}\scriptsize\bfseries LLM BEHAVIOR $\times$ STRATEGIC SAFETY --- SO SÁNH XUYÊN MÔ HÌNH 4 MODEL}\par
+\vspace{0.5cm}
+{\color{white}\fontsize{32}{35}\selectfont\bfseries AI Race: LLM có hành xử\\như người không?}\par
+\vspace{0.4cm}
+{\color{white!65}\large Báo cáo tiến độ --- 4 lần chạy pilot đã có kết quả}\par
+\vfill
+\pilotchip\hspace{0.4cm}{\color{white!55}\small Không dùng số liệu pilot làm bằng chứng confirmatory}
+\end{frame}
+
+\begin{frame}{Nội dung trình bày}
+  \setbeamertemplate{section in toc}[sections numbered]
+  \tableofcontents[hideallsubsections]
+\end{frame}
+
+\section{Nhắc nhanh khung thí nghiệm}
+
+\begin{frame}{Một vòng chơi, 5 bước, rủi ro riêng cho người thắng}
+\begin{columns}[T]
+\column{0.55\textwidth}
+\centering
+\begin{tikzpicture}[node distance=.22cm,font=\scriptsize]
+\tikzset{rs/.style={fill=RaceNavy,text=white,rounded corners=5pt,minimum width=1.85cm,minimum height=1.5cm,align=center,inner sep=4pt},arr/.style={-{Stealth},RaceMuted,thick}}
+\node[rs] (a) {\textcolor{RaceCyan}{\bfseries QUAN SÁT}\\[2pt]cùng trạng thái};
+\node[rs,right=of a] (b) {\textcolor{RaceCyan}{\bfseries CHỌN}\\[2pt]Safe / Unsafe};
+\node[rs,right=of b] (c) {\textcolor{RaceCyan}{\bfseries CỬA}\\[2pt]ẩn đến khi reveal};
+\node[rs,right=of c] (d) {\textcolor{RaceCyan}{\bfseries CẬP NHẬT}\\[2pt]payoff + tiến độ};
+\node[rs,draw=RaceAmber,right=of d] (e) {\textcolor{RaceAmber}{\bfseries DỪNG?}\\[2pt]sau vòng 5: 20\%};
+\draw[arr] (a)--(b); \draw[arr] (b)--(c); \draw[arr] (c)--(d); \draw[arr] (d)--(e);
+\end{tikzpicture}
+\vspace{0.4cm}
+\[
+q_i = p_{\max}\cdot\frac{n_i^{U}}{T}
+\]
+{\scriptsize Rủi ro chỉ áp dụng cho người thắng / hòa thắng, tại thời điểm dừng.}
+\column{0.42\textwidth}
+\begin{block}{4 câu hỏi gốc}
+\small
+\begin{enumerate}\setlength\itemsep{2pt}
+\item Mức rủi ro ($p_{\max}$) có đổi hành vi không?
+\item Hành động $U_{t-1}$ của đối thủ có dự báo $U_t$?
+\item Bị dẫn trước có dự báo $U_t$?
+\item Vòng 1 có mang theo về sau?
+\end{enumerate}
+\end{block}
+\begin{exampleblock}{Nguồn}
+\scriptsize Fernández Domingos \& Han (2026), arXiv:2607.26034 --- 4 câu hỏi này là khung phân tích xuyên suốt 4 pilot tiếp theo.
+\end{exampleblock}
+\end{columns}
+\end{frame}
+
+\section{Phạm vi 4 lần chạy pilot}
+
+\begin{frame}{4 pilot, 4 họ model, quy mô rất khác nhau}
+\centering
+\begin{columns}[T,onlytextwidth]
+\column{0.24\textwidth}
+\begin{beamercolorbox}[sep=.3cm,rounded=true]{normal text}
+\llmchip{BASELINE}\par\vspace{4pt}
+{\bfseries Qwen2.5-14B\\Gemma-3-12B}\par\vspace{6pt}
+{\Large\bfseries\color{RaceCyanDark} 60}\,race\\
+{\small\color{RaceMuted}558 quyết định}\par\vspace{4pt}
+{\tiny 2-player, 10 rep}
+\end{beamercolorbox}
+\column{0.24\textwidth}
+\begin{beamercolorbox}[sep=.3cm,rounded=true]{normal text}
+\llmchip{FRONTIER}\par\vspace{4pt}
+{\bfseries 3\texttimes\ Gemini 3\\+ 5 cell persona}\par\vspace{6pt}
+{\Large\bfseries\color{RaceCyanDark} 177}\,race\\
+{\small\color{RaceMuted}3.168 quyết định}\par\vspace{4pt}
+{\tiny proxy Kaggle}
+\end{beamercolorbox}
+\column{0.24\textwidth}
+\begin{beamercolorbox}[sep=.3cm,rounded=true]{normal text}
+\llmchip{OPENAI}\par\vspace{4pt}
+{\bfseries gpt-5-nano\\gpt-5.4-nano}\par\vspace{6pt}
+{\Large\bfseries\color{RaceCyanDark} 2.640}\,race\\
+{\small\color{RaceMuted}49.104 quyết định}\par\vspace{4pt}
+{\tiny +ma trận rủi ro 6\texttimes6}
+\end{beamercolorbox}
+\column{0.24\textwidth}
+\begin{beamercolorbox}[sep=.3cm,rounded=true]{normal text}
+\llmchip{N-PLAYER}\par\vspace{4pt}
+{\bfseries Qwen2.5-14B\\(N=3)}\par\vspace{6pt}
+{\Large\bfseries\color{RaceCyanDark} 60}\,race\\
+{\small\color{RaceMuted}1.404 quyết định (từ vòng 2)}\par\vspace{4pt}
+{\tiny +persona Eckel-Grossman}
+\end{beamercolorbox}
+\end{columns}
+\vfill
+\begin{alertblock}{Tất cả đều là \texttt{run\_phase = pilot}}
+\small Không có lần chạy nào đạt \texttt{confirmatory} theo PROJECT.md. Mọi con số sau đây đọc như tín hiệu định hướng.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}{Cổng chất lượng: đường ống chạy đúng thiết kế}
+\centering
+\small
+\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{lcccc}
+\toprule
+Kiểm tra & baseline & frontier & openai & nplayer \\
+\midrule
+Parse failure & \good{\cmark} 0/1.116 & \good{\cmark} 0/3.168 & \good{\cmark} 0/49.104 & \good{\cmark} 0\% \\
+Đẳng thức $\Delta S$ (residual) & \good{\cmark} 0,0 & \good{\cmark} 0,0 & \good{\cmark} 0,0 & \good{\cmark} khớp \\
+Cân bằng ghế & \good{\cmark} chênh 0,03 & --- & \good{\cmark} chênh 0,025 & --- \\
+\texttt{check\_symmetry.py} & \bad{\xmark} 65\% (Gemma) & --- & \good{\cmark} 20\% & --- \\
+CRN block & \good{\cmark} 10 & \good{\cmark} 30 & \good{\cmark} 20 & \good{\cmark} 20 \\
+\bottomrule
+\end{tabular}
+\vspace{0.5em}
+\begin{exampleblock}{Đọc bảng này thế nào}
+\small Cơ chế game (state, payoff, seed) \good{đúng} ở cả 4 pilot. Cổng duy nhất FAIL là symmetry ở baseline --- nguyên nhân hoàn toàn từ Gemma hòa 100\% (slide sau), không phải lỗi đường ống.
+\end{exampleblock}
+\end{frame}
+
+\section{Baseline 2-player: Qwen2.5-14B vs Gemma-3-12B}
+
+\begin{frame}{Gemma-3-12B: sụp hoàn toàn về Safe}
+\begin{columns}[T]
+\column{0.42\textwidth}
+\begin{alertblock}{Triệu chứng}
+\small \bad{558/558} lượt gọi trả đúng cùng một chuỗi: \texttt{`ACTION: SAFE'}. $\phi_U = 0{,}000$ ở cả ba mức rủi ro, với 186 seed phân biệt.
+\end{alertblock}
+\begin{block}{Đường ống đã loại trừ}
+\scriptsize
+\good{\cmark} parse\_failed = 0, retry = 0\\
+\good{\cmark} 186 seed áp dụng đúng\\
+\good{\cmark} prompt render đúng, hoán vị ghế đúng\\
+\good{\cmark} temperature 0,7 $>$ 0, \textit{do\_sample=True}\\
+\good{\cmark} model nạp đúng, khớp Qwen 30 race/558 lượt
+\end{block}
+\column{0.55\textwidth}
+\centering
+\begin{tikzpicture}
+\pgfplotsset{raceaxis}
+\begin{axis}[
+  ybar, bar width=0.7cm,
+  width=6.6cm, height=3.6cm,
+  symbolic x coords={0.1,0.6,0.9},
+  xtick=data, xlabel={$p_{\max}$},
+  ylabel={$\phi_U$ (Gemma)}, ymax=1,
+]
+\addplot[fill=RaceRed,draw=none] coordinates {(0.1,0.000) (0.6,0.000) (0.9,0.000)};
+\end{axis}
+\end{tikzpicture}
+\vspace{0.4em}
+\begin{exampleblock}{Hai giả thuyết chưa phân biệt được}
+\scriptsize
+\textbf{(A)} Gemma hiểu trò chơi, kết luận Safe tối ưu.\\
+\textbf{(B)} Gemma từ chối token \texttt{UNSAFE} do safety-tuning.\\
+\textit{Phép thử quyết định:} đổi nhãn thành \texttt{OPTION\_A/B}.
+\end{exampleblock}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Qwen2.5-14B: chuyển pha đúng vòng 5}
+\centering
+\begin{tikzpicture}
+\pgfplotsset{raceaxis}
+\begin{axis}[
+  ybar, bar width=0.55cm,
+  width=0.92\linewidth, height=4.6cm,
+  xtick={1,2,3,4,5,6,7,8,9,10}, xlabel={Vòng},
+  ylabel={Tỷ lệ Unsafe},
+  ymax=0.8,
+  legend style={font=\tiny,draw=none,fill=none,at={(0.5,-0.30)},anchor=north,legend columns=-1},
+]
+\addplot[fill=RaceCyanDark,draw=none] coordinates {(1,0.00)(2,0.00)(3,0.00)(4,0.00)};
+\addlegendentry{Safe tuyệt đối (vòng 1--4)}
+\addplot[fill=RaceAmber,draw=none] coordinates {(5,0.283)(6,0.521)(7,0.354)(8,0.690)(9,0.194)(10,0.583)};
+\addlegendentry{Sau \texttt{minRounds=5}}
+\draw[RaceInk,dashed,thick] (axis cs:4.5,0) -- (axis cs:4.5,0.8);
+\end{axis}
+\end{tikzpicture}
+\begin{exampleblock}{Diễn giải}
+\small Safe tuyệt đối ở cả 30 race trong vòng 1--4 (36\% mẫu panel, tất định hoàn toàn), bật Unsafe đúng từ vòng 5 --- vòng đầu tiên race \textbf{có thể} kết thúc. Qwen đang đọc luật dừng và chơi endgame có lý.
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Bị dẫn trước $\Rightarrow$ Unsafe mạnh --- tái tạo đúng phát hiện trung tâm của paper}
+\centering
+\begin{tikzpicture}
+\pgfplotsset{raceaxis}
+\begin{axis}[
+  ybar, bar width=6pt, width=0.92\linewidth, height=4.4cm,
+  symbolic x coords={0.1,0.6,0.9}, xtick=data, xlabel={$p_{\max}$},
+  ylabel={$\phi_U$}, ymax=1.05,
+  enlarge x limits=0.25,
+  legend style={font=\tiny,draw=none,fill=none,at={(0.5,-0.30)},anchor=north,legend columns=-1},
+]
+\addplot[fill=RaceCyanDark,draw=none] coordinates {(0.1,0.385)(0.6,0.125)(0.9,0.300)};
+\addlegendentry{Dẫn trước (+0,5)}
+\addplot[fill=RaceMuted,draw=none] coordinates {(0.1,0.157)(0.6,0.123)(0.9,0.137)};
+\addlegendentry{Hòa (0,0)}
+\addplot[fill=RaceAmber,draw=none] coordinates {(0.1,0.769)(0.6,0.938)(0.9,0.800)};
+\addlegendentry{Bị dẫn (--0,5)}
+\end{axis}
+\end{tikzpicture}
+\begin{alertblock}{Chênh lệch bị-dẫn trừ dẫn-trước}
+\small \bad{+0,38} / \bad{+0,81} / \bad{+0,50} --- nhất quán và lớn ở cả ba treatment. Đúng phát hiện trung tâm của Fernández Domingos \& Han (2026).
+\end{alertblock}
+\end{frame}
+
+\begin{frame}{Chia lượt, không phải quán tính --- ma trận chuyển trạng thái (vòng $\geq$5)}
+\centering
+\begin{tikzpicture}[cell/.style={rectangle,draw=RaceInk!15,minimum width=3.4cm,minimum height=1.7cm,align=center,font=\small}]
+\matrix (m) [matrix of nodes, nodes=cell, column sep=2pt, row sep=2pt, nodes in empty cells]{
+|[fill=RacePaper,font=\bfseries\small]| own $\backslash$ opp$_{t-1}$ & |[fill=RacePaper,font=\bfseries\small]| Safe & |[fill=RacePaper,font=\bfseries\small]| Unsafe \\
+|[fill=RacePaper,font=\bfseries\small]| Safe & |[fill=RaceCyanDark!35]| 0,404\\[2pt]{\tiny n=146} & |[fill=RaceAmber!85]| \textbf{0,892}\\[2pt]{\tiny n=65} \\
+|[fill=RacePaper,font=\bfseries\small]| Unsafe & |[fill=RaceCyanDark!12]| 0,154\\[2pt]{\tiny n=65} & |[fill=RaceCyanDark!4]| \textbf{0,048}\\[2pt]{\tiny n=42} \\
+};
+\end{tikzpicture}
+\vspace{0.4em}
+\begin{exampleblock}{Đọc ma trận}
+\small Đối thủ vừa Unsafe, mình vừa Safe $\Rightarrow$ \hl{89,2\%} mình chuyển Unsafe. Nhưng mình vừa Unsafe xong $\Rightarrow$ gần như chắc chắn lui về Safe (\hl{4,8\%}). \textbf{Chia lượt}, không phải momentum.
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Hệ số hồi quy Qwen (đặc tả 2, N=498, 10 cluster)}
+\centering
+\begin{tikzpicture}
+\pgfplotsset{raceaxis}
+\begin{axis}[
+  xbar, bar width=8pt,
+  width=0.85\linewidth, height=4.6cm,
+  symbolic y coords={ΔS (progress gap),opponent(t-1)=U,own(t-1)=U,pmax=0,9,pmax=0,6},
+  ytick=data, y dir=reverse,
+  xlabel={$\hat\beta$}, xmin=-3, xmax=3,
+  ymajorgrids=false,
+  nodes near coords, nodes near coords style={font=\tiny},
+]
+\addplot[xbar,fill=RaceRed,draw=none] coordinates {(-0.642,pmax=0,6)};
+\addplot[xbar,fill=RaceRed,draw=none] coordinates {(-0.320,pmax=0,9)};
+\addplot[xbar,fill=RaceRed,draw=none] coordinates {(-2.234,own(t-1)=U)};
+\addplot[xbar,fill=RaceGreenDk,draw=none] coordinates {(2.339,opponent(t-1)=U)};
+\addplot[xbar,fill=RaceRed,draw=none] coordinates {(-0.717,ΔS (progress gap))};
+\draw[RaceMuted] (axis cs:0,0) -- (axis cs:0,1);
+\end{axis}
+\end{tikzpicture}
+\begin{alertblock}{Cẩn thận}
+\scriptsize Chỉ 10 CRN cluster $\Rightarrow$ SE lạc quan. Đọc dấu/độ lớn như tín hiệu, không phải ước lượng chắc chắn. $\text{own}_{t-1}$ \bad{trái ngược} paper (paper: "không dự báo").
+\end{alertblock}
+\end{frame}
+
+\section{Frontier: họ Gemini}
+
+\begin{frame}{$\phi_U$ theo rủi ro --- Gemini giảm đơn điệu mạnh, ngược người}
+\centering
+\begin{tikzpicture}
+\pgfplotsset{raceaxis}
+\begin{axis}[
+  width=0.86\linewidth, height=4.6cm,
+  symbolic x coords={0.1,0.6,0.9}, xtick=data, xlabel={$p_{\max}$},
+  ylabel={$\phi_U$}, ymax=1.05,
+  legend style={font=\tiny,draw=none,fill=none,at={(0.5,-0.30)},anchor=north,legend columns=-1},
+]
+\addplot[RaceMuted,dashed,thick,mark=*,mark options={fill=RaceMuted}] coordinates {(0.1,0.64)(0.6,0.56)(0.9,0.56)};
+\addlegendentry{Người (paper, tham chiếu)}
+\addplot[RaceCyanDark,thick,mark=*,mark options={fill=RaceCyanDark}] coordinates {(0.1,1.000)(0.6,0.723)(0.9,0.539)};
+\addlegendentry{gemini-3-flash-preview}
+\addplot[RaceAmber,thick,mark=square*,mark options={fill=RaceAmber}] coordinates {(0.1,1.000)(0.6,0.801)(0.9,0.699)};
+\addlegendentry{gemini-3.1-flash-lite}
+\addplot[RaceRed,thick,mark=triangle*,mark options={fill=RaceRed}] coordinates {(0.1,0.838)(0.6,0.708)(0.9,0.626)};
+\addlegendentry{gemini-3.5-flash-lite}
+\end{axis}
+\end{tikzpicture}
+\begin{alertblock}{Ngược hướng với null quan trọng nhất của paper}
+\small Người: 0,6 vs 0,9 không khác nhau (H1.2 bị bác bỏ). Cả ba Gemini: \bad{có ý nghĩa thống kê} (d = 1,03--1,87, p$<$0,01) --- và bão hòa gần 1,0 ở risk=0,1.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}{Persona: risk-averse khóa cứng, "adversarial" không đơn điệu}
+\centering
+\begin{tikzpicture}
+\pgfplotsset{raceaxis}
+\begin{axis}[
+  xbar, bar width=9pt,
+  width=0.82\linewidth, height=4.6cm,
+  symbolic y coords={S\_AA (2 ghế adversarial),R0 trung lập,Baseline,S\_CA (ghế coop.),S\_AC (ghế adv.),R-- (risk-averse)},
+  ytick=data, xlabel={$\phi_U$ trung bình 3 risk}, xmin=0, xmax=1.05,
+  nodes near coords, nodes near coords style={font=\tiny},
+]
+\addplot[xbar,fill=RaceCyanDark,draw=none] coordinates {(0.135,R-- (risk-averse))};
+\addplot[xbar,fill=RaceCyanDark,draw=none] coordinates {(0.241,S\_AC (ghế adv.))};
+\addplot[xbar,fill=RaceCyanDark,draw=none] coordinates {(0.314,S\_CA (ghế coop.))};
+\addplot[xbar,fill=RaceMuted,draw=none] coordinates {(0.754,Baseline)};
+\addplot[xbar,fill=RaceAmber,draw=none] coordinates {(0.774,R0 trung lập)};
+\addplot[xbar,fill=RaceRed,draw=none] coordinates {(0.984,S\_AA (2 ghế adversarial))};
+\end{axis}
+\end{tikzpicture}
+\begin{exampleblock}{Nghịch lý}
+\small \texttt{S\_AC} (ghế "adversarial" nhưng đối thủ cooperative) lại \hl{thấp hơn} cả \texttt{S\_CA}. Chỉ mô tả thô --- mỗi persona chạy ở một protocol signature riêng, không tách được khỏi nhiễu batch.
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Hồi quy panel Gemini (đặc tả 6, N=2.814, 30 cluster)}
+\centering
+\begin{tikzpicture}
+\pgfplotsset{raceaxis}
+\begin{axis}[
+  xbar, bar width=8pt,
+  width=0.85\linewidth, height=4.6cm,
+  symbolic y coords={ΔS (progress gap),opponent(t-1)=U,own(t-1)=U,Unsafe vòng 1,pmax=0,9,pmax=0,6},
+  ytick=data, xlabel={$\hat\beta$}, xmin=-3.2, xmax=2.2,
+  nodes near coords, nodes near coords style={font=\tiny},
+]
+\addplot[xbar,fill=RaceRed,draw=none] coordinates {(-2.116,pmax=0,6)};
+\addplot[xbar,fill=RaceRed,draw=none] coordinates {(-2.791,pmax=0,9)};
+\addplot[xbar,fill=RaceGreenDk,draw=none] coordinates {(1.674,Unsafe vòng 1)};
+\addplot[xbar,fill=RaceMuted,draw=none] coordinates {(-0.595,own(t-1)=U)};
+\addplot[xbar,fill=RaceGreenDk,draw=none] coordinates {(1.486,opponent(t-1)=U)};
+\addplot[xbar,fill=RaceMuted,draw=none] coordinates {(-0.224,ΔS (progress gap))};
+\draw[RaceMuted] (axis cs:0,0) -- (axis cs:0,1);
+\end{axis}
+\end{tikzpicture}
+\begin{exampleblock}{Khớp hướng người, nhưng mạnh hơn nhiều}
+\small \good{opponent(t-1)}: người +0,607 $\to$ Gemini \good{+1,486} (gấp $\sim$2,4 lần). \good{Unsafe vòng 1}: người +0,217 (p$<$0,1) $\to$ Gemini +1,674 (p=0,001). Nhưng \bad{treatment} có ý nghĩa mạnh --- ngược paper.
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}{8 hiệu ứng người--LLM (E1--E8): 4/8 replicated}
+\centering
+\begin{tikzpicture}[chip/.style={rectangle,rounded corners=4pt,minimum width=3.55cm,minimum height=1.15cm,align=center,font=\scriptsize,inner sep=4pt}]
+\matrix[row sep=3pt,column sep=3pt]{
+\node[chip,fill=RaceGreenDk!85,text=white] {\textbf{E1} opponent(t-1)\\replicated (mạnh hơn)}; &
+\node[chip,fill=RaceRed!80,text=white] {\textbf{E2} $\Delta S$\\not replicated}; &
+\node[chip,fill=RaceGreenDk!85,text=white] {\textbf{E3} vòng 1\\replicated}; &
+\node[chip,fill=RaceRed!80,text=white] {\textbf{E4} own(t-1)$\approx$0\\not replicated}; \\
+\node[chip,fill=RaceRed!80,text=white] {\textbf{E5} 0,6 vs 0,9 $\approx$0\\not replicated}; &
+\node[chip,fill=RaceGreenDk!85,text=white] {\textbf{E6} 0,1 vs 0,6\\replicated (d=3,08)}; &
+\node[chip,fill=RaceGreenDk!85,text=white] {\textbf{E7} $\phi_U$ tổng\\replicated (0,624)}; &
+\node[chip,fill=RaceRed!80,text=white] {\textbf{E8} share AS\\not replicated}; \\
+};
+\end{tikzpicture}
+\vspace{0.4em}
+\begin{exampleblock}{Lưu ý về cách chấm}
+\scriptsize "Replicated" chỉ xét \textbf{dấu} và ngưỡng ý nghĩa, không xét độ lớn có bằng người hay không. E1/E3/E6 "replicated" nhưng hệ số lớn hơn người 2--9 lần.
+\end{exampleblock}
+\end{frame}
+
+\section{OpenAI: GPT-5-nano / GPT-5.4-nano}
+
+\begin{frame}{$\phi_U$ theo rủi ro --- hình chữ U, không đơn điệu}
+\centering
+\begin{tikzpicture}
+\pgfplotsset{raceaxis}
+\begin{axis}[
+  width=0.86\linewidth, height=4.6cm,
+  symbolic x coords={0.1,0.6,0.9}, xtick=data, xlabel={$p_{\max}$},
+  ylabel={$\phi_U$}, ymax=1.05,
+  legend style={font=\tiny,draw=none,fill=none,at={(0.5,-0.30)},anchor=north,legend columns=-1},
+]
+\addplot[RaceMuted,dashed,thick,mark=*,mark options={fill=RaceMuted}] coordinates {(0.1,0.64)(0.6,0.56)(0.9,0.56)};
+\addlegendentry{Người (tham chiếu)}
+\addplot[RaceCyanDark,thick,mark=*,mark options={fill=RaceCyanDark}] coordinates {(0.1,0.123)(0.6,0.151)(0.9,0.145)};
+\addlegendentry{gpt-5-nano}
+\addplot[RaceAmber,thick,mark=square*,mark options={fill=RaceAmber}] coordinates {(0.1,0.577)(0.6,0.496)(0.9,0.567)};
+\addlegendentry{gpt-5.4-nano}
+\end{axis}
+\end{tikzpicture}
+\begin{exampleblock}{Điểm trũng thật ở risk=0,6}
+\small \texttt{gpt-5.4-nano}, mẫu t$\geq$2: 0,1$\leftrightarrow$0,6 (d=0,662, p=0,043) và 0,6$\leftrightarrow$0,9 (d=--0,689, p=0,036) \good{có ý nghĩa}; 0,1$\leftrightarrow$0,9 gần bằng nhau (p=0,86). Không bão hòa gần 1,0 như Gemini.
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Persona: thứ hạng nhất quán trên 2 model độc lập}
+\centering
+\begin{tikzpicture}
+\pgfplotsset{raceaxis}
+\begin{axis}[
+  ybar, bar width=8pt,
+  width=0.92\linewidth, height=4.5cm,
+  symbolic x coords={S\_CC,R--,R0,Baseline,S\_AC,S\_CA,S\_AA,R+},
+  xtick=data, x tick label style={rotate=25,anchor=east,font=\tiny},
+  ylabel={$\phi_U$ trung bình}, ymax=1.05,
+  legend style={font=\tiny,draw=none,fill=none,at={(0.5,-0.42)},anchor=north,legend columns=-1},
+]
+\addplot[fill=RaceCyanDark,draw=none] coordinates {(S\_CC,0.000)(R--,0.052)(R0,0.015)(Baseline,0.140)(S\_AC,0.236)(S\_CA,0.302)(S\_AA,0.394)(R+,0.414)};
+\addlegendentry{gpt-5-nano}
+\addplot[fill=RaceAmber,draw=none] coordinates {(S\_CC,0.022)(R--,0.141)(R0,0.504)(Baseline,0.547)(S\_AC,0.430)(S\_CA,0.436)(S\_AA,0.719)(R+,0.940)};
+\addlegendentry{gpt-5.4-nano}
+\end{axis}
+\end{tikzpicture}
+\begin{exampleblock}{Thứ hạng hợp lý nhất trong cả hai pilot}
+\small R-- thấp nhất, R+ cao nhất, S\_CC$\approx$0. Nhưng \bad{gpt-5-nano sụp về Safe với BẤT KỲ persona nào}, kể cả R0 trung lập (0,14$\to$0,015) --- hiệu ứng "có persona hay không", không phải hướng persona.
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Ma trận rủi ro 6\texttimes6 (gpt-5.4-nano): mình chi phối, đối thủ bù trừ}
+\centering
+\begin{tikzpicture}[cellh/.style={rectangle,draw=RaceInk!12,minimum width=1.05cm,minimum height=0.58cm,font=\tiny,align=center}]
+\matrix (h) [matrix of nodes, nodes=cellh, column sep=1pt, row sep=1pt]{
+|[fill=RacePaper,font=\bfseries]| own$\backslash$opp & |[fill=RacePaper,font=\bfseries]| 1 & |[fill=RacePaper,font=\bfseries]| 2 & |[fill=RacePaper,font=\bfseries]| 3 & |[fill=RacePaper,font=\bfseries]| 4 & |[fill=RacePaper,font=\bfseries]| 5 & |[fill=RacePaper,font=\bfseries]| 6\\
+|[fill=RacePaper,font=\bfseries]| 1 & |[fill=RaceAmber!0]| ,002 & |[fill=RaceAmber!0]| ,004 & |[fill=RaceAmber!0]| ,002 & |[fill=RaceAmber!0]| ,000 & |[fill=RaceAmber!1]| ,008 & |[fill=RaceAmber!1]| ,006\\
+|[fill=RacePaper,font=\bfseries]| 2 & |[fill=RaceAmber!0]| ,000 & |[fill=RaceAmber!0]| ,000 & |[fill=RaceAmber!0]| ,003 & |[fill=RaceAmber!1]| ,006 & |[fill=RaceAmber!0]| ,003 & |[fill=RaceAmber!0]| ,002\\
+|[fill=RacePaper,font=\bfseries]| 3 & |[fill=RaceAmber!48]| ,479 & |[fill=RaceAmber!46]| ,463 & |[fill=RaceAmber!39]| ,385 & |[fill=RaceAmber!30]| ,300 & |[fill=RaceAmber!25]| ,252 & |[fill=RaceAmber!25]| ,250\\
+|[fill=RacePaper,font=\bfseries]| 4 & |[fill=RaceAmber!63]| ,628 & |[fill=RaceAmber!58]| ,581 & |[fill=RaceAmber!51]| ,506 & |[fill=RaceAmber!45]| ,446 & |[fill=RaceAmber!39]| ,390 & |[fill=RaceAmber!35]| ,345\\
+|[fill=RacePaper,font=\bfseries]| 5 & |[fill=RaceAmber!83]| ,833 & |[fill=RaceAmber!87]| ,869 & |[fill=RaceAmber!83]| ,834 & |[fill=RaceAmber!80]| ,796 & |[fill=RaceAmber!73]| ,729 & |[fill=RaceAmber!70]| ,702\\
+|[fill=RacePaper,font=\bfseries]| 6 & |[fill=RaceAmber!98]| ,982 & |[fill=RaceAmber!98]| ,982 & |[fill=RaceAmber!98]| ,983 & |[fill=RaceAmber!99]| ,991 & |[fill=RaceAmber!99]| ,985 & |[fill=RaceAmber!99]| ,988\\
+};
+\end{tikzpicture}
+\vspace{0.3em}
+\begin{columns}[T]
+\column{0.5\textwidth}
+\begin{exampleblock}{Hàng: mức của MÌNH}
+\scriptsize $\approx$0 (mức 1--2) $\to$ gần 1,0 (mức 6) --- \hl{dose-response} sạch hơn người (paper: không tìm thấy quan hệ nào).
+\end{exampleblock}
+\column{0.5\textwidth}
+\begin{alertblock}{Cột: mức của ĐỐI THỦ}
+\scriptsize Trong mỗi hàng, $\phi_U$ \bad{giảm dần} khi đối thủ "ưa rủi ro" hơn --- chiều bù trừ, khớp dấu âm của \texttt{opponent\_prev} ở slide sau.
+\end{alertblock}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Hồi quy panel GPT-nano: \bad{đảo dấu hoàn toàn} --- phát hiện nổi bật nhất}
+\centering
+\begin{tikzpicture}
+\pgfplotsset{raceaxis}
+\begin{axis}[
+  xbar, bar width=8pt,
+  width=0.85\linewidth, height=4.4cm,
+  symbolic y coords={own$\times$opp(t-1),ΔS (progress gap),opponent(t-1)=U,Unsafe vòng 1,pmax=0,9},
+  ytick=data, xlabel={$\hat\beta$}, xmin=-1.3, xmax=1.0,
+  nodes near coords, nodes near coords style={font=\tiny},
+]
+\addplot[xbar,fill=RaceMuted,draw=none] coordinates {(-0.126,pmax=0,9)};
+\addplot[xbar,fill=RaceGreenDk,draw=none] coordinates {(0.635,Unsafe vòng 1)};
+\addplot[xbar,fill=RaceRed,draw=none] coordinates {(-1.016,opponent(t-1)=U)};
+\addplot[xbar,fill=RaceRed,draw=none] coordinates {(0.490,ΔS (progress gap))};
+\addplot[xbar,fill=RaceMuted,draw=none] coordinates {(-0.655,own$\times$opp(t-1))};
+\draw[RaceMuted] (axis cs:0,-0.4) -- (axis cs:0,1);
+\end{axis}
+\end{tikzpicture}
+\begin{alertblock}{Người: opp(t-1) \good{+0,607}, $\Delta S$ \good{--0,296} --- ở đây cả hai \bad{đảo dấu}}
+\scriptsize \texttt{opponent\_prev}: \bad{--1,016} (phòng thủ, không leo thang). $\Delta S$: \bad{+0,490} (dẫn trước $\to$ củng cố, không bảo toàn). \textbf{Cảnh báo:} statsmodels báo \texttt{converged: False} cả 6 đặc tả (quasi-separation, 88 dummy protocol) --- đọc như tín hiệu thô.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}{8 hiệu ứng người--LLM (E1--E8): chỉ 2/8, và 2 cái đảo dấu}
+\centering
+\begin{tikzpicture}[chip/.style={rectangle,rounded corners=4pt,minimum width=3.55cm,minimum height=1.15cm,align=center,font=\scriptsize,inner sep=4pt}]
+\matrix[row sep=3pt,column sep=3pt]{
+\node[chip,fill=RaceRed!85,text=white] {\textbf{E1} opponent(t-1)\\\bad{đảo dấu}: --1,016}; &
+\node[chip,fill=RaceRed!85,text=white] {\textbf{E2} $\Delta S$\\\bad{đảo dấu}: +0,490}; &
+\node[chip,fill=RaceGreenDk!85,text=white] {\textbf{E3} vòng 1\\replicated}; &
+\node[chip,fill=RaceRed!80,text=white] {\textbf{E4} own(t-1)$\approx$0\\not replicated}; \\
+\node[chip,fill=RaceGreenDk!85,text=white] {\textbf{E5} 0,6 vs 0,9$\approx$0\\replicated}; &
+\node[chip,fill=RaceRed!80,text=white] {\textbf{E6} 0,1 vs 0,6\\not replicated ($\approx$0)}; &
+\node[chip,fill=RaceRed!80,text=white] {\textbf{E7} $\phi_U$ tổng\\not replicated (0,353)}; &
+\node[chip,fill=RaceRed!80,text=white] {\textbf{E8} share AS\\not repl. (0,562)}; \\
+};
+\end{tikzpicture}
+\begin{exampleblock}{Khác Gemini không chỉ ở \textit{số lượng} mà ở \textit{kiểu}}
+\scriptsize Gemini "not replicated" vẫn đúng dấu. GPT-nano ở E1/E2 \bad{đảo dấu hoàn toàn}. Bảng gộp 44 cell rất không đồng nhất --- đọc như trung bình thô.
+\end{exampleblock}
+\end{frame}
+
+\section{N-player (N=3): Qwen2.5-14B}
+
+\begin{frame}{$\phi_U$ giảm theo rủi ro (69\%$\to$57\%$\to$47\%), p$<$0,001}
+\centering
+\begin{tikzpicture}
+\pgfplotsset{raceaxis}
+\begin{axis}[
+  ybar, bar width=1.3cm,
+  width=0.7\linewidth, height=4.4cm,
+  symbolic x coords={0.1,0.6,0.9}, xtick=data, xlabel={$p_{\max}$},
+  ylabel={$\phi_U$}, ymax=0.85,
+  nodes near coords, nodes near coords style={font=\scriptsize},
+]
+\addplot[fill=RaceCyanDark,draw=none] coordinates {(0.1,0.69)(0.6,0.57)(0.9,0.47)};
+\end{axis}
+\end{tikzpicture}
+\begin{exampleblock}{So với lý thuyết quần thể}
+\small Kể cả sau khi \hl{quét $\beta$} tìm điểm khớp tốt nhất (chặt hơn cách cố định 2 điểm của frontier), lý thuyết vẫn dự báo \bad{dốc giảm mạnh hơn} thực tế ở risk 0,6/0,9.
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Persona Eckel-Grossman lấn át hoàn toàn tín hiệu rủi ro thực}
+\centering
+\begin{tikzpicture}[scale=1]
+\draw[RaceMuted,thick] (0,0) -- (9,0) node[right,font=\scriptsize]{mức persona R1$\to$R6};
+\draw[RaceMuted,thick] (0,0) -- (0,3.3) node[above,font=\scriptsize]{$\phi_U$};
+\draw[RaceRed,thick] (0.5,0.15) -- (2.5,0.15) -- (2.5,3) -- (4.5,3) -- (4.5,0.15) -- (6.5,0.15) -- (6.5,3) -- (8.5,3);
+\node[font=\tiny,RaceRed] at (4.5,-0.35) {5/6 mức: bậc thang $\approx$0\%\,/\,100\%};
+\node[RaceCyanDark,circle,fill=RaceCyanDark,minimum size=4pt,inner sep=0pt] at (1.5,0.9) {};
+\node[font=\tiny,RaceCyanDark,align=center] at (1.5,1.4) {riêng mức\\"trung tính"\\vẫn nhạy $p_{\max}$ thật};
+\end{tikzpicture}
+\begin{alertblock}{Đọc cẩn thận}
+\small Sơ đồ minh họa định tính (không phải số đo chính xác từng mức). Chỉ \hl{2 race/ô} --- không đưa vào hồi quy được, cần xác nhận lại bằng confirmatory run.
+\end{alertblock}
+\end{frame}
+
+\section{Tổng hợp xuyên mô hình}
+
+\begin{frame}{Từ 4 mảnh rời rạc đến một câu hỏi chung}
+\centering
+\begin{tikzpicture}[
+  font=\footnotesize,
+  scatter/.style={rectangle, rounded corners=3pt, draw=RaceRed, fill=RaceRed!8,
+    text width=3.0cm, align=center, inner sep=6pt},
+  unified/.style={rectangle, rounded corners=3pt, draw=RaceGreenDk, fill=RaceGreenDk!10,
+    text width=3.6cm, align=center, inner sep=8pt},
+  flow/.style={-{Stealth[length=3mm]}, line width=1pt, RaceAmber}
+]
+\node[scatter] (a) {\bad{Baseline}\\Gemma: 0.000\\Qwen: chia lượt};
+\node[scatter,below=6pt of a] (b) {\bad{Frontier}\\Gemini: giảm đơn điệu};
+\node[scatter,below=6pt of b] (c) {\bad{OpenAI}\\GPT-nano: hình U, đảo dấu};
+\node[scatter,below=6pt of c] (d) {\bad{N-player}\\persona $\gg$ risk thật};
+\node[unified,right=2.2cm of b,yshift=-0.9cm] (e) {\good{Có tồn tại một\\"hành vi LLM" chung\\khi đối mặt rủi ro?}};
+\draw[flow] (a) -- (e); \draw[flow] (b) -- (e); \draw[flow] (c) -- (e); \draw[flow] (d) -- (e);
+\end{tikzpicture}
+\begin{exampleblock}{Câu trả lời sơ bộ: không}
+\small Bốn pilot tổng hợp tiếp theo cho thấy \textbf{hình dạng} và thậm chí \textbf{dấu} của hiệu ứng thay đổi theo từng model.
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}{$\phi_U(risk)$ không cùng hình dạng giữa các nguồn}
+\centering
+\begin{tikzpicture}
+\pgfplotsset{raceaxis}
+\begin{axis}[
+  width=0.9\linewidth, height=4.6cm,
+  symbolic x coords={0.1,0.6,0.9}, xtick=data, xlabel={$p_{\max}$},
+  ylabel={$\phi_U$}, ymax=1.0,
+  legend style={font=\tiny,draw=none,fill=none,at={(0.5,-0.32)},anchor=north,legend columns=3},
+]
+\addplot[RaceMuted,dashed,thick,mark=*,mark options={fill=RaceMuted}] coordinates {(0.1,0.64)(0.6,0.56)(0.9,0.56)};
+\addlegendentry{Người (phẳng)}
+\addplot[RaceCyanDark,thick,mark=square*,mark options={fill=RaceCyanDark}] coordinates {(0.1,0.946)(0.6,0.744)(0.9,0.621)};
+\addlegendentry{Gemini (TB 3 model, giảm dốc)}
+\addplot[RaceAmber,thick,mark=triangle*,mark options={fill=RaceAmber}] coordinates {(0.1,0.350)(0.6,0.324)(0.9,0.356)};
+\addlegendentry{GPT-nano (TB 2 model, chữ U)}
+\addplot[RaceRed,thick,mark=diamond*,mark options={fill=RaceRed}] coordinates {(0.1,0.239)(0.6,0.173)(0.9,0.196)};
+\addlegendentry{Qwen 2-player}
+\addplot[RaceGreenDk,thick,mark=*,mark options={fill=RaceGreenDk}] coordinates {(0.1,0.69)(0.6,0.57)(0.9,0.47)};
+\addlegendentry{Qwen 3-player}
+\end{axis}
+\end{tikzpicture}
+\begin{exampleblock}{Không có "hành vi LLM" phổ quát}
+\small 5 đường, 5 hình dạng khác nhau: phẳng, dốc đơn điệu, chữ U, thấp-ổn định, giảm nhẹ. Chọn model là chọn cả một \textbf{hình dạng hành vi}, không chỉ một con số trung bình.
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Dấu hệ số \texttt{opponent\_prev} và $\Delta S$ đảo chiều theo model}
+\centering
+\begin{columns}[T]
+\column{0.5\textwidth}
+\centering{\scriptsize\bfseries opponent(t-1) = Unsafe}
+\begin{tikzpicture}
+\pgfplotsset{raceaxis}
+\begin{axis}[
+  xbar, bar width=8pt,
+  width=\linewidth, height=4.3cm,
+  symbolic y coords={Qwen 3p (+1,472),Qwen 2p (+2,339),GPT-nano (--1,016),Gemini (+1,486),Người (+0,607)},
+  ytick=data, y tick label style={font=\tiny}, xlabel={$\hat\beta$},
+  xmin=-1.5, xmax=2.8,
+]
+\addplot[xbar,fill=RaceInk,draw=none] coordinates {(0.607,Người (+0,607))};
+\addplot[xbar,fill=RaceGreenDk,draw=none] coordinates {(1.486,Gemini (+1,486))};
+\addplot[xbar,fill=RaceRed,draw=none] coordinates {(-1.016,GPT-nano (--1,016))};
+\addplot[xbar,fill=RaceGreenDk,draw=none] coordinates {(2.339,Qwen 2p (+2,339))};
+\addplot[xbar,fill=RaceGreenDk,draw=none] coordinates {(1.472,Qwen 3p (+1,472))};
+\draw[RaceMuted] (axis cs:0,-0.5) -- (axis cs:0,1);
+\end{axis}
+\end{tikzpicture}
+\column{0.5\textwidth}
+\centering{\scriptsize\bfseries ΔS (progress gap before)}
+\begin{tikzpicture}
+\pgfplotsset{raceaxis}
+\begin{axis}[
+  xbar, bar width=8pt,
+  width=\linewidth, height=4.3cm,
+  symbolic y coords={Qwen 3p ($\approx$0, n.s.),Qwen 2p (--0,717),GPT-nano (+0,490),Gemini (--0,224, n.s.),Người (--0,296)},
+  ytick=data, y tick label style={font=\tiny}, xlabel={$\hat\beta$},
+  xmin=-1.0, xmax=0.7,
+]
+\addplot[xbar,fill=RaceInk,draw=none] coordinates {(-0.296,Người (--0,296))};
+\addplot[xbar,fill=RaceGreenDk,draw=none] coordinates {(-0.224,Gemini (--0,224, n.s.))};
+\addplot[xbar,fill=RaceRed,draw=none] coordinates {(0.490,GPT-nano (+0,490))};
+\addplot[xbar,fill=RaceGreenDk,draw=none] coordinates {(-0.717,Qwen 2p (--0,717))};
+\addplot[xbar,fill=RaceMuted,draw=none] coordinates {(0.032,Qwen 3p ($\approx$0, n.s.))};
+\draw[RaceMuted] (axis cs:0,-0.5) -- (axis cs:0,1);
+\end{axis}
+\end{tikzpicture}
+\end{columns}
+\begin{alertblock}{Ảnh quan trọng nhất của đợt này}
+\scriptsize \good{Xanh} = cùng dấu người. \bad{Đỏ} = đảo dấu. Chỉ GPT-nano đảo cả hai hiệu ứng trung tâm của paper gốc cùng lúc --- nhưng hồi quy đó \texttt{converged=False}, nên đọc như tín hiệu thô, chưa kết luận.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}{Tỷ lệ tái tạo 8 hiệu ứng người: không model nào đầy đủ, không theo cùng một cách}
+\centering
+\begin{tikzpicture}
+\pgfplotsset{raceaxis}
+\begin{axis}[
+  ybar, bar width=1.4cm,
+  width=0.6\linewidth, height=4.4cm,
+  symbolic x coords={Gemini,GPT-nano}, xtick=data,
+  ylabel={Số hiệu ứng / 8}, ymax=8.6,
+  nodes near coords,
+]
+\addplot[fill=RaceGreenDk,draw=none] coordinates {(Gemini,4)(GPT-nano,2)};
+\end{axis}
+\end{tikzpicture}
+\begin{exampleblock}{Khác nhau cả ở \textit{loại} không-khớp}
+\small Gemini: 4 không-khớp đều là đúng dấu nhưng quá mạnh. GPT-nano: 6 không-khớp, trong đó \bad{2 cái đảo dấu hoàn toàn}. Không thể tổng quát hóa "LLM hành xử như người" hay ngay cả "LLM hành xử giống nhau".
+\end{exampleblock}
+\end{frame}
+
+\section{Giới hạn \& việc cần làm tiếp}
+
+\begin{frame}{Giới hạn cần giữ khi diễn giải}
+\begin{columns}[T]
+\column{0.49\textwidth}
+\begin{alertblock}{Thống kê}
+\small
+\begin{itemize}\setlength\itemsep{2pt}
+\item Tất cả \texttt{run\_phase = pilot}, chưa \texttt{confirmatory}.
+\item OpenAI: hồi quy \bad{không hội tụ} (quasi-separation, 88 dummy protocol).
+\item Baseline/nplayer: chỉ 10--20 CRN cluster --- SE lạc quan.
+\item N-player persona: 2 race/ô, không đủ cho hồi quy.
+\end{itemize}
+\end{alertblock}
+\column{0.49\textwidth}
+\begin{alertblock}{Đo lường}
+\small
+\begin{itemize}\setlength\itemsep{2pt}
+\item Persona \bad{confound với protocol/batch} ở cả frontier và openai --- 2 nguyên nhân cấu trúc khác nhau.
+\item \texttt{first\_round\_unsafe} hằng số $\Rightarrow$ nhiều đặc tả hồi quy \textbf{singular}.
+\item Gemma: 2 giả thuyết (A)/(B) chưa phân biệt được.
+\end{itemize}
+\end{alertblock}
+\end{columns}
+\vspace{0.4em}
+\begin{exampleblock}{Nguyên tắc báo cáo}
+\small Chỉ nói \textbf{tín hiệu pilot}; không dùng deck này làm bằng chứng cho bất kỳ RQ nào trong PROJECT.md.
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Việc cần làm tiếp}
+\begin{enumerate}\small\setlength\itemsep{4pt}
+\item \textbf{Phép thử đổi nhãn} \texttt{OPTION\_A/B} cho Gemma --- phân biệt giả thuyết (A) hiểu luật vs (B) từ chối từ.
+\item \textbf{Tạo biến thiên vòng 1} (persona \texttt{risk\_seeking}/\texttt{adv\_adv}) để \texttt{first\_round\_unsafe} hết là hằng số.
+\item \textbf{Chạy persona cùng session / qua \texttt{kaggle\_benchmarks}} để gỡ confound protocol.
+\item \textbf{Mixed-effects logit} (TA.4) và \textbf{EGTtools} (TD.2) để mở khóa các mục đang thiếu.
+\item \textbf{Khóa protocol} và đặt \texttt{RUN\_PHASE\_OVERRIDE=confirmatory} chỉ sau khi 4 bước trên xong.
+\end{enumerate}
+\vspace{0.4em}
+\begin{exampleblock}{Thứ tự}
+\small (1) và (2) chặn đường trước tiên --- chạy thêm repetition bây giờ chỉ nhân bản hai vấn đề này lên, không thêm thông tin.
+\end{exampleblock}
+\end{frame}
+
+\section{Kết}
+
+\begin{frame}[standout]
+Bốn model, bốn hành vi khác nhau --- kể cả \bad{đảo dấu} hiệu ứng trung tâm của paper người.\\[8pt]
+\small\color{RaceLime} Chưa đủ confirmatory để kết luận --- nhưng đủ để không giả định LLM hành xử như người, hay giống nhau.
+\end{frame}
+
+\begin{frame}[standout]
+Cảm ơn --- rất mong nhận được góp ý.
+\end{frame}
+
+\appendix
+
+\begin{frame}{Backup 1 --- Hệ số hồi quy đầy đủ, cả 4 nguồn}
+\centering
+\scriptsize
+\renewcommand{\arraystretch}{1.2}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{lccccc}
+\toprule
+Biến & Người & Gemini (spec 6) & GPT-nano (spec 6) & Qwen 2p (spec 2) & Qwen 3p (spec 3) \\
+\midrule
+opponent/others(t-1)=U & +0,607 (p=0,002) & +1,486 (p$<$0,001) & \bad{--1,016} (p$<$0,001) & +2,339 (p$<$0,001) & +1,472 (p$<$0,001) \\
+own(t-1)=U & --0,193 (n.s.) & --0,595 (n.s.) & +0,170 (n.s.) & --2,234 (p$<$0,001) & +1,101 (p$<$0,001) \\
+$\Delta S$ (progress gap) & --0,296 (p=0,048) & --0,224 (n.s.) & \bad{+0,490} (p$<$0,001) & --0,717 (p=0,013) & +0,032 (n.s.) \\
+Unsafe vòng 1 & +0,217 (p$<$0,10) & +1,674 (p=0,001) & +0,635 (p$<$0,001) & không ước lượng được & hằng số \\
+Pseudo R\textsuperscript{2} & 0,006--0,040 & 0,450 & 0,347 & 0,194 & --- \\
+Hội tụ? & có & có & \bad{không} & có (spec 1--2) & có \\
+\bottomrule
+\end{tabular}}
+\vspace{0.5em}
+{\scriptsize Nguồn: \texttt{analysis/baseline.md} \S4.4; \texttt{analysis/frontier/report.md} \S4; \texttt{analysis/openai/report.md} \S5; \texttt{analysis/nplayer/derived/clustered\_logit\_coefficients.csv} spec 3.}
+\end{frame}
+
+\begin{frame}{Backup 2 --- Provenance \& lệnh tái tạo}
+\scriptsize
+\begin{block}{4 file nguồn (không tính lại từ CSV thô)}
+\texttt{analysis/baseline.md} \textbullet\ \texttt{analysis/frontier/report.md} \textbullet\ \texttt{analysis/openai/report.md} \textbullet\ \texttt{analysis/nplayer/report.md}
+\end{block}
+\begin{block}{Lệnh tái tạo (ví dụ openai)}
+\begin{verbatim}
+.venv-kaggle/bin/python3 results/scripts/analyze_ai_race.py \
+  --input results/frontier/openai --output analysis/openai/derived \
+  --fit-logit --fit-logit-robustness \
+  --allow-mixed-protocols --allow-nonfinal-runs \
+  --allow-nonconfirmatory-runs --allow-missing-persona-condition
+\end{verbatim}
+\end{block}
+\begin{alertblock}{Freeze before you look}
+\small Mọi con số trên đây gắn với \texttt{run\_manifest.json} và \texttt{prompt\_sha256} đã khóa. Đổi prompt/config = \texttt{promptVersion} mới, không pool chung.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}{Tham chiếu chính}
+\begin{beamercolorbox}[sep=.5cm,rounded=true]{normal text}
+{\scriptsize\color{RaceCyanDark}\bfseries 2026 --- ARXIV:2607.26034}\par\vspace{.25cm}
+{\large\bfseries Falling Behind Drives Unsafe Development\\in an Idealised AI Race Experiment}\par\vspace{.2cm}
+{\normalsize E. Fernández Domingos \& T. A. Han}\par\vspace{.35cm}
+{\color{RaceCyanDark}\texttt{https://arxiv.org/abs/2607.26034}}
+\end{beamercolorbox}
+\vspace{0.6em}
+{\small\bfseries TÀI LIỆU DỰ ÁN}\par
+{\color{RaceMuted}\small Engine, prompt, config, test và kế hoạch phân tích được lưu trong repo này (\texttt{CLAUDE.md}, \texttt{PROJECT.md}, \texttt{analysis/}).}
+\end{frame}
+
+\end{document}
