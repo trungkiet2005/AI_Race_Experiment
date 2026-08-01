@@ -41,6 +41,30 @@ The no-response variant is the preferred production-safe audit (it excludes
 `raw_response` from featureization to avoid direct target leakage).  
 `--include-response-text` enables an exploratory leakage-rich benchmark.
 
+Sparse-autoencoder sparse-code analysis is also available in
+`results/scripts/explain_action_sparse_autoencoder.py`:
+
+```bash
+python results/scripts/explain_action_sparse_autoencoder.py \
+  --input-root results/frontier \
+  --input-root tmp/pilot_rebuild/pilot_identified_t1_0 \
+  --output-dir results/open_source/prompt_sensitivity_pilot/sparse_autoencoder \
+  --code-dim 16 \
+  --max-tfidf-features 300 \
+  --max-learner-features 350 \
+  --dict-iter 120 \
+  --top-local-examples 30
+```
+
+Artifacts include:
+
+- `xai_sparse_autoencoder_summary.md`
+- `xai_sparse_autoencoder_global_importance.csv`
+- `xai_sparse_autoencoder_code_features.csv`
+- `xai_sparse_autoencoder_local_explanations.csv`
+- `xai_sparse_autoencoder_metadata.json`
+- `xae_target_distribution.json`
+
 ## Consolidated visual output & insight snapshot
 
 For this workspace, keep one canonical visualization-insight report here:
