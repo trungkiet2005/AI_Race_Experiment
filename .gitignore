@@ -16,35 +16,6 @@ kaggle.json
 # Local archive from the former Collective Risk project.
 /.archive/
 
-# Generated AI Race results. Keep analysis code, README, and empty result surfaces.
-/results/**
-!/results/frontier/
-!/results/frontier/.gitkeep
-!/results/frontier/**
-!/results/open_source/
-!/results/open_source/.gitkeep
-!/results/open_source/*_manifest.json
-!/results/open_source/game_understanding_pilot/
-!/results/open_source/game_understanding_pilot/*.csv
-!/results/open_source/game_understanding_pilot/admission.json
-!/results/open_source/gpu_run_archive/
-!/results/open_source/gpu_run_archive/**
-!/results/open_source/prompt_sensitivity_pilot/
-!/results/open_source/prompt_sensitivity_pilot/**
-!/results/open_source/surface_sensitivity_pilot/
-!/results/open_source/surface_sensitivity_pilot/**
-!/results/open_source/surface_sensitivity_smoke/
-!/results/open_source/surface_sensitivity_smoke/**
-!/results/nplayer/
-!/results/nplayer/**
-!/results/notebooks/
-!/results/scripts/
-!/results/scripts/*.py
-!/results/scripts/*.json
-!/results/README.md
-!/results/visualization_insight_full.md
-!/results/visualization_output_archive/
-!/results/visualization_output_archive/**
 /ai_race_results/
 /output/game_understanding/
 /models/

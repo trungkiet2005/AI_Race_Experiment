@@ -28,8 +28,10 @@ import re
 import time
 from datetime import datetime, timezone
 from pathlib import Path
+from typing import Literal
 
 import kaggle_benchmarks as kbench
+from pydantic import BaseModel, Field
 
 
 # %%
@@ -56,6 +58,7 @@ STAGE_PAYOFF = {
 }
 
 TEMPERATURE = 0.7
+REASONING = "none"
 MAX_OUTPUT_TOKENS = 256
 MAX_PARSE_RETRIES = 3
 MAX_TRANSPORT_RETRIES = 3
@@ -93,6 +96,16 @@ SDK_SEED_STRIPPED_ROUTE_PREFIXES = (
 )
 
 _ACTION_LINE = re.compile(r"^\s*ACTION\s*:\s*(SAFE|UNSAFE)\s*$", re.IGNORECASE)
+
+
+class ActionDecision(BaseModel):
+    """Native structured-output contract for one simultaneous-move decision."""
+
+    action: Literal["SAFE", "UNSAFE"] = Field(
+        description="The company's action for the current round."
+    )
+
+
 # Byte-for-byte copy of ai_race/prompts/ai_race_en.txt. This task is
 # self-contained by design, so the copy is verified against the shipped file
 # by ai_race/tests/test_prompt_contract.py rather than imported: a drifted
@@ -397,7 +410,9 @@ def build_prompt(player_index, round_number, history, risk_max):
 
 
 def parse_action(response):
-    """Strict action-only protocol: exactly one formatted non-empty line."""
+    """Accept the native schema, or enforce the legacy one-line protocol."""
+    if isinstance(response, ActionDecision):
+        return response.action
     text = response if isinstance(response, str) else str(response or "")
     lines = [line.strip() for line in text.splitlines() if line.strip()]
     if not lines:
@@ -408,7 +423,16 @@ def parse_action(response):
     return final_match.group(1).upper()
 
 
+def serialize_response(response):
+    """Persist structured decisions as stable JSON instead of repr strings."""
+    if isinstance(response, ActionDecision):
+        return response.model_dump_json()
+    return response if isinstance(response, str) else str(response or "")
+
+
 def extract_reasoning(response):
+    if isinstance(response, ActionDecision):
+        return ""
     text = response if isinstance(response, str) else str(response or "")
     return "\n".join(
         line for line in text.splitlines() if _ACTION_LINE.fullmatch(line) is None
@@ -440,6 +464,8 @@ def prompt_with_transport_retries(
                     extra_api_params["timeout"] = REQUEST_TIMEOUT_SECONDS
                 response = llm.prompt(
                     prompt,
+                    schema=ActionDecision,
+                    reasoning=REASONING,
                     temperature=TEMPERATURE,
                     seed=seed,
                     extra_api_params=extra_api_params,
@@ -520,11 +546,8 @@ def decide(
                     "temperature_effective_confirmed"
                 ],
                 "temperature_status": llm_contract["temperature_status"],
-                "raw_response": (
-                    last_response
-                    if isinstance(last_response, str)
-                    else str(last_response or "")
-                ),
+                "raw_response": serialize_response(last_response),
+                "response_schema": "ActionDecision",
                 "parse_failed": action not in ACTIONS,
                 "parsed_action": action if action in ACTIONS else None,
                 "transport_errors": transport_errors,
@@ -699,7 +722,8 @@ def play_race(
                 "attempt_history": decision["attempt_history"],
                 "reasoning": extract_reasoning(decision["response"]),
                 "prompt": prompts[player],
-                "raw_response": decision["response"],
+                "raw_response": serialize_response(decision["response"]),
+                "response_schema": "ActionDecision",
             }
             turns_sink.append(turn_row)
             append_jsonl_record(turn_row, OUTPUT_DIR / "turns.jsonl")
@@ -1000,6 +1024,9 @@ def ai_race_baseline(llm) -> dict:
             "output_token_limit_selection": llm_contract[
                 "output_token_limit_selection"
             ],
+            "structured_output": True,
+            "response_schema": ActionDecision.model_json_schema(),
+            "reasoning_requested": REASONING,
             "max_parse_retries": MAX_PARSE_RETRIES,
             "max_transport_retries": MAX_TRANSPORT_RETRIES,
             "request_timeout_seconds": (
@@ -1092,7 +1119,7 @@ def ai_race_baseline(llm) -> dict:
             0,
             summary["parse_failures"],
             expectation=(
-                "Every model decision must contain only one formatted ACTION line."
+                "Every model decision must satisfy the ActionDecision schema."
             ),
         )
         return summary
