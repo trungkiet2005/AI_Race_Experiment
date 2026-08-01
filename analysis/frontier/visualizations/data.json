@@ -359,56 +359,64 @@
       "name": "opponent_prev_unsafe",
       "verdict": "replicated",
       "human": "0.607",
-      "llm": "1.485829220924555"
+      "llm": "1.485829220924555",
+      "criterion": "positive and p < 0.05"
     },
     {
       "id": "E2",
       "name": "progress_gap_before",
       "verdict": "not_replicated",
       "human": "-0.296",
-      "llm": "-0.224107742337984"
+      "llm": "-0.224107742337984",
+      "criterion": "negative and p < 0.05"
     },
     {
       "id": "E3",
       "name": "first_round_unsafe",
       "verdict": "replicated",
       "human": "0.217",
-      "llm": "1.6738489009941453"
+      "llm": "1.6738489009941453",
+      "criterion": "positive and p < 0.1"
     },
     {
       "id": "E4",
       "name": "own_prev_unsafe",
       "verdict": "not_replicated",
       "human": "-0.193",
-      "llm": "-0.5952660005026627"
+      "llm": "-0.5952660005026627",
+      "criterion": "TOST |beta| < 0.3"
     },
     {
       "id": "E5",
       "name": "contrast_0.6_vs_0.9",
       "verdict": "not_replicated",
       "human": "-0.027",
-      "llm": "1.0854209818059"
+      "llm": "1.0854209818059",
+      "criterion": "|d| < 0.2"
     },
     {
       "id": "E6",
       "name": "contrast_0.1_vs_0.6",
       "verdict": "replicated",
       "human": "0.341",
-      "llm": "3.0817315494968405"
+      "llm": "3.0817315494968405",
+      "criterion": "positive and |d| > 0.2"
     },
     {
       "id": "E7",
       "name": "phi_U_overall",
       "verdict": "replicated",
       "human": "0.584",
-      "llm": "0.6241662057340024"
+      "llm": "0.6241662057340024",
+      "criterion": "within [0.4, 0.75]"
     },
     {
       "id": "E8",
       "name": "share_AS",
       "verdict": "not_replicated",
       "human": "",
-      "llm": "0.11475409836065574"
+      "llm": "0.11475409836065574",
+      "criterion": "share < 0.1"
     }
   ]
 }

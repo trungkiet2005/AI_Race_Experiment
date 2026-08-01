@@ -1,0 +1,201 @@
+feature,perm_importance,perm_importance_std
+cat__prompt_template_hash_06c7ab6ad6d6,5.551115123125783e-17,5.551115123125783e-17
+cat__seat_persona_role_risk-seeking,2.7755575615628914e-17,4.8074067159589095e-17
+cat__persona_condition_R+,2.7755575615628914e-17,4.8074067159589095e-17
+num__max_private_risk,2.7755575615628914e-17,4.8074067159589095e-17
+num__rep,2.7755575615628914e-17,4.8074067159589095e-17
+cat__run_treatment_Rplus_risk_seeking,2.7755575615628914e-17,4.8074067159589095e-17
+cat__run_treatment_persona_baseline_adv_adv,2.7755575615628914e-17,4.8074067159589095e-17
+cat__persona_condition_S_CA,2.7755575615628914e-17,4.8074067159589095e-17
+prompt__workable,1.850371707708594e-17,4.137556922078789e-17
+cat__run_treatment_google-gemini-3.1-flash-lite-preview,1.850371707708594e-17,4.137556922078788e-17
+prompt__ahead,1.850371707708594e-17,4.137556922078789e-17
+prompt__ahead alone,1.850371707708594e-17,4.137556922078789e-17
+num__attempts,1.850371707708594e-17,4.1375569220787883e-17
+prompt__alone,1.850371707708594e-17,4.137556922078789e-17
+prompt__workable understanding,1.850371707708594e-17,4.137556922078789e-17
+prompt__would,1.850371707708594e-17,4.137556922078789e-17
+prompt__would much,1.850371707708594e-17,4.137556922078789e-17
+prompt__firms,1.850371707708594e-17,4.137556922078789e-17
+cat__run_group_lane_b,1.850371707708594e-17,4.137556922078789e-17
+cat__run_treatment_R0_neutral,1.850371707708594e-17,4.137556922078788e-17
+cat__run_treatment_S_AC_adv_coop,1.850371707708594e-17,4.1375569220787883e-17
+prompt__believes rival,1.850371707708594e-17,4.137556922078789e-17
+prompt__come,1.850371707708594e-17,4.137556922078789e-17
+cat__lane_lane_b,1.850371707708594e-17,4.137556922078789e-17
+prompt__come out,1.850371707708594e-17,4.137556922078789e-17
+cat__model_google/gemini-3-flash-preview,1.850371707708594e-17,4.1375569220787883e-17
+cat__model_google/gemini-3.1-flash-lite-preview,1.850371707708594e-17,4.137556922078788e-17
+cat__seat_persona_role_adversarial,1.850371707708594e-17,4.137556922078789e-17
+prompt__who believes,1.850371707708594e-17,4.137556922078789e-17
+prompt__expense,1.850371707708594e-17,4.137556922078789e-17
+prompt__expense and,1.850371707708594e-17,4.137556922078789e-17
+num__retry_count,1.850371707708594e-17,4.137556922078789e-17
+prompt__much,1.850371707708594e-17,4.137556922078789e-17
+prompt__much rather,1.850371707708594e-17,4.137556922078789e-17
+prompt__other expense,1.850371707708594e-17,4.137556922078789e-17
+prompt__out,1.850371707708594e-17,4.137556922078789e-17
+prompt__out ahead,1.850371707708594e-17,4.137556922078789e-17
+prompt__payoff 12,1.850371707708594e-17,4.137556922078789e-17
+prompt__understanding,1.850371707708594e-17,4.137556922078789e-17
+prompt__rather,1.850371707708594e-17,4.137556922078789e-17
+prompt__reach,1.850371707708594e-17,4.137556922078789e-17
+prompt__rival,1.850371707708594e-17,4.137556922078789e-17
+prompt__believes,1.850371707708594e-17,4.137556922078789e-17
+prompt__10 your,1.850371707708594e-17,4.137556922078788e-17
+prompt__rival firms,1.850371707708594e-17,4.137556922078789e-17
+prompt__who would,1.850371707708594e-17,4.137556922078789e-17
+cat__persona_condition_R0,9.25185853854297e-18,3.0684943385792895e-17
+cat__prompt_template_hash_412501ee30d4,9.25185853854297e-18,3.0684943385792895e-17
+num__prompt_chars,9.25185853854297e-18,3.0684943385792895e-17
+cat__run_treatment_persona_baseline_adv_coop,9.25185853854297e-18,3.0684943385792895e-17
+num__progress_gap_before,9.25185853854297e-18,3.0684943385792895e-17
+num__own_stage_payoff_before,9.25185853854297e-18,3.0684943385792895e-17
+num__own_private_risk_before,9.25185853854297e-18,3.0684943385792895e-17
+prompt__understanding with,9.25185853854297e-18,3.0684943385792895e-17
+prompt__unsafe round,9.25185853854297e-18,3.0684943385792895e-17
+prompt__well,9.25185853854297e-18,3.0684943385792895e-17
+prompt__well at,9.25185853854297e-18,3.0684943385792895e-17
+cat__prompt_template_hash_819f98bf2ded,9.25185853854297e-18,3.0684943385792895e-17
+cat__lane_persona,9.25185853854297e-18,3.0684943385792895e-17
+cat__model_qwen2.5:7b-instruct-fp16,9.25185853854297e-18,3.0684943385792895e-17
+cat__prompt_template_hash_68574275bafb,9.25185853854297e-18,3.0684943385792895e-17
+cat__run_treatment_S_CC_coop_coop,9.25185853854297e-18,3.0684943385792895e-17
+cat__seat_persona_role_neutral,9.25185853854297e-18,3.0684943385792895e-17
+cat__prompt_template_hash_a480aae7f828,9.25185853854297e-18,3.0684943385792895e-17
+cat__prompt_template_hash_b0e6b6344b26,9.25185853854297e-18,3.0684943385792895e-17
+cat__prompt_template_hash_b647f30c7d36,9.25185853854297e-18,3.0684943385792895e-17
+cat__prompt_template_hash_bae148a4e258,9.25185853854297e-18,3.0684943385792895e-17
+cat__prompt_template_hash_dc8e8ba4f5fc,9.25185853854297e-18,3.0684943385792895e-17
+cat__own_prev_action_none,9.25185853854297e-18,3.0684943385792895e-17
+cat__own_prev_action_unsafe,9.25185853854297e-18,3.0684943385792895e-17
+cat__opponent_prev_action_none,9.25185853854297e-18,3.0684943385792895e-17
+prompt__16,9.25185853854297e-18,3.0684943385792895e-17
+prompt__30 your,9.25185853854297e-18,3.0684943385792895e-17
+prompt__90,9.25185853854297e-18,3.0684943385792895e-17
+prompt__alone than,9.25185853854297e-18,3.0684943385792895e-17
+prompt__and round,9.25185853854297e-18,3.0684943385792895e-17
+prompt__any,9.25185853854297e-18,3.0684943385792895e-17
+prompt__any workable,9.25185853854297e-18,3.0684943385792895e-17
+prompt__at each,9.25185853854297e-18,3.0684943385792895e-17
+prompt__ever,9.25185853854297e-18,3.0684943385792895e-17
+prompt__ever do,9.25185853854297e-18,3.0684943385792895e-17
+prompt__chose safe,9.25185853854297e-18,3.0684943385792895e-17
+prompt__payoff your,9.25185853854297e-18,3.0684943385792895e-17
+prompt__competitor,9.25185853854297e-18,3.0684943385792895e-17
+prompt__played your,9.25185853854297e-18,3.0684943385792895e-17
+prompt__previous,9.25185853854297e-18,3.0684943385792895e-17
+prompt__previous round,9.25185853854297e-18,3.0684943385792895e-17
+prompt__progress your,9.25185853854297e-18,3.0684943385792895e-17
+prompt__far no,9.25185853854297e-18,3.0684943385792895e-17
+prompt__rather come,9.25185853854297e-18,3.0684943385792895e-17
+cat__opponent_prev_action_unsafe,9.25185853854297e-18,3.0684943385792895e-17
+prompt__reach any,9.25185853854297e-18,3.0684943385792895e-17
+prompt__firms only,9.25185853854297e-18,3.0684943385792895e-17
+prompt__is 10,9.25185853854297e-18,3.0684943385792895e-17
+prompt__round has,9.25185853854297e-18,3.0684943385792895e-17
+prompt__something,9.25185853854297e-18,3.0684943385792895e-17
+prompt__than reach,9.25185853854297e-18,3.0684943385792895e-17
+cat__persona_condition_S_CC,9.25185853854297e-18,3.0684943385792895e-17
+prompt__is 90,9.25185853854297e-18,3.0684943385792895e-17
+prompt__with competitor,9.25185853854297e-18,3.0684943385792895e-17
+prompt__competitor you,9.25185853854297e-18,3.0684943385792895e-17
+prompt__do well,9.25185853854297e-18,3.0684943385792895e-17
+prompt__no previous,9.25185853854297e-18,3.0684943385792895e-17
+prompt__of something,9.25185853854297e-18,3.0684943385792895e-17
+response__action safe,9.25185853854297e-18,3.0684943385792895e-17
+response__safe,9.25185853854297e-18,3.0684943385792895e-17
+num__step_increment,9.25185853854297e-18,3.0684943385792895e-17
+prompt__only ever,9.25185853854297e-18,3.0684943385792895e-17
+cat__run_group_persona,9.25185853854297e-18,3.0684943385792895e-17
+prompt__each other,9.25185853854297e-18,3.0684943385792895e-17
+prompt__been played,9.25185853854297e-18,3.0684943385792895e-17
+prompt__played,9.25185853854297e-18,3.0684943385792895e-17
+cat__prompt_template_hash_05621cb31b56,0.0,0.0
+cat__prompt_template_hash_0570c7d47aeb,0.0,0.0
+cat__prompt_template_hash_058e2febd7ef,0.0,0.0
+cat__prompt_template_hash_059dc1c73aed,0.0,0.0
+cat__prompt_template_hash_05eb878b401e,0.0,0.0
+cat__prompt_template_hash_063e1fa117e9,0.0,0.0
+cat__prompt_template_hash_0648365fee16,0.0,0.0
+cat__prompt_template_hash_066eaf52624b,0.0,0.0
+cat__prompt_template_hash_06729b1b3020,0.0,0.0
+cat__prompt_template_hash_068e09b1f946,0.0,0.0
+cat__prompt_template_hash_069b1f46e9e9,0.0,0.0
+cat__prompt_template_hash_06c0c8cfc2c7,0.0,0.0
+cat__prompt_template_hash_06dbffc9da80,0.0,0.0
+cat__prompt_template_hash_06f627c48f1c,0.0,0.0
+cat__prompt_template_hash_074b45aac099,0.0,0.0
+cat__prompt_template_hash_075bb3619c94,0.0,0.0
+cat__prompt_template_hash_0783a1fd4990,0.0,0.0
+cat__prompt_template_hash_0790036962ff,0.0,0.0
+cat__prompt_template_hash_0790e9f5ded5,0.0,0.0
+cat__prompt_template_hash_07989997c68b,0.0,0.0
+cat__prompt_template_hash_079cf572ac04,0.0,0.0
+cat__prompt_template_hash_07b8fa509260,0.0,0.0
+cat__prompt_template_hash_07e7a40f9aac,0.0,0.0
+cat__prompt_template_hash_07fac1a0ad28,0.0,0.0
+cat__prompt_template_hash_0818ff7ef420,0.0,0.0
+cat__prompt_template_hash_0837e7336be6,0.0,0.0
+cat__prompt_template_hash_085cf8596f5f,0.0,0.0
+cat__prompt_template_hash_086a6ec639bd,0.0,0.0
+cat__prompt_template_hash_087f443aa9ad,0.0,0.0
+cat__prompt_template_hash_08ad32abb8dd,0.0,0.0
+cat__prompt_template_hash_08c7e7a38a2e,0.0,0.0
+cat__prompt_template_hash_08e86262c3cf,0.0,0.0
+cat__prompt_template_hash_091a08c91406,0.0,0.0
+cat__prompt_template_hash_09289b8cdc0e,0.0,0.0
+cat__prompt_template_hash_093c917cdeca,0.0,0.0
+cat__prompt_template_hash_094c9a8117d2,0.0,0.0
+cat__prompt_template_hash_09560e3a48ed,0.0,0.0
+cat__prompt_template_hash_09610d28c17a,0.0,0.0
+cat__prompt_template_hash_0969e4d2e900,0.0,0.0
+cat__prompt_template_hash_096a20f374cb,0.0,0.0
+cat__prompt_template_hash_09b4c61898d6,0.0,0.0
+cat__prompt_template_hash_09b7e6f98244,0.0,0.0
+cat__prompt_template_hash_09c0b7a79a73,0.0,0.0
+cat__prompt_template_hash_0a37efbfa231,0.0,0.0
+cat__prompt_template_hash_0a766dc541be,0.0,0.0
+cat__prompt_template_hash_0ac2e171d43a,0.0,0.0
+cat__prompt_template_hash_0af90240ced9,0.0,0.0
+cat__prompt_template_hash_0b145cfe9737,0.0,0.0
+cat__prompt_template_hash_0b49e2ea8d3f,0.0,0.0
+cat__prompt_template_hash_0b5f9514427e,0.0,0.0
+cat__prompt_template_hash_0b604c8834f0,0.0,0.0
+cat__prompt_template_hash_0b729e1878f6,0.0,0.0
+cat__prompt_template_hash_0bb9a7d4cfb2,0.0,0.0
+cat__prompt_template_hash_0be8b42cd23e,0.0,0.0
+cat__prompt_template_hash_0c230dd49822,0.0,0.0
+cat__prompt_template_hash_0c3162d6f0d2,0.0,0.0
+cat__prompt_template_hash_0c3a94bed679,0.0,0.0
+cat__prompt_template_hash_0c3f65d104bd,0.0,0.0
+cat__prompt_template_hash_0c7b9e5aba73,0.0,0.0
+cat__prompt_template_hash_0c8682a5b026,0.0,0.0
+cat__prompt_template_hash_0c967ab4ba9d,0.0,0.0
+cat__prompt_template_hash_0cdf3813a5a4,0.0,0.0
+cat__prompt_template_hash_0cf2b4ccc0b4,0.0,0.0
+cat__prompt_template_hash_0d3a870f4b50,0.0,0.0
+cat__prompt_template_hash_0d5e40ab4eb4,0.0,0.0
+cat__prompt_template_hash_0d7b2f16aa32,0.0,0.0
+cat__prompt_template_hash_0d9a009ca11d,0.0,0.0
+cat__prompt_template_hash_0db4ce2ed6c3,0.0,0.0
+cat__prompt_template_hash_0e007af56729,0.0,0.0
+cat__prompt_template_hash_0e4a9d71e081,0.0,0.0
+cat__prompt_template_hash_0e59b2acb881,0.0,0.0
+cat__prompt_template_hash_0ea8b4db3998,0.0,0.0
+cat__prompt_template_hash_0ebf3b54151f,0.0,0.0
+cat__prompt_template_hash_0f0fa8827430,0.0,0.0
+cat__prompt_template_hash_0f108e5306ee,0.0,0.0
+cat__prompt_template_hash_0f232ce329b3,0.0,0.0
+cat__prompt_template_hash_0f9abae9a6a0,0.0,0.0
+cat__prompt_template_hash_0f9c5f91d789,0.0,0.0
+cat__prompt_template_hash_0fabe96291e6,0.0,0.0
+cat__prompt_template_hash_0faf1e7b92ff,0.0,0.0
+cat__prompt_template_hash_0fcac34c6bdb,0.0,0.0
+cat__prompt_template_hash_0fd63fc8bb20,0.0,0.0
+cat__prompt_template_hash_107ef73219d5,0.0,0.0
+cat__prompt_template_hash_1084db12e523,0.0,0.0
+cat__prompt_template_hash_10a109a7ff6b,0.0,0.0
+cat__prompt_template_hash_10a996b171a4,0.0,0.0
+cat__prompt_template_hash_10c97c6e1874,0.0,0.0
+cat__prompt_template_hash_111f2f1e0caf,0.0,0.0

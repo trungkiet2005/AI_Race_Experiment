@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Presentation deck for the AI Race LLM research protocol.">
+  <title>AI Race — Research Protocol Deck</title>
+  <link rel="stylesheet" href="deck.css">
+  <link rel="stylesheet" href="audit.css">
+</head>
+<body>
+  <main class="deck" aria-live="polite">
+    <section class="slide title-slide active" data-title="Title">
+      <div class="slide-no">01</div><div class="status-chip">PILOT AUDIT COMPLETE · CONFIRMATORY PENDING</div>
+      <div class="title-lockup"><span class="eyebrow">LLM BEHAVIOR × STRATEGIC SAFETY</span><h1>LLM agents in an<br><em>idealised AI race.</em></h1><p>When unsafe development is faster and more profitable, who still chooses safety?</p></div>
+      <div class="title-race" aria-hidden="true"><div class="race-line cyan"><i></i><b>A</b></div><div class="race-line amber"><i></i><b>B</b></div><span class="finish">FINISH</span></div>
+      <footer><span>AI RACE LAB · RESEARCH PLAN</span><span>01 / 19</span></footer>
+      <aside class="notes">Introduce this as a controlled adaptation of a human behavioral AI-race experiment. A diagnostic pilot audit is available; confirmatory race effects remain pending.</aside>
+    </section>
+
+    <section class="slide dark" data-title="Strategic choice">
+      <div class="slide-no">02</div><span class="eyebrow">THE STRATEGIC TENSION</span>
+      <h2>Competition changes<br>the decision.</h2>
+      <div class="fork-grid">
+        <article class="fork safe"><span>S</span><div><small>SAFE</small><strong>+1.0</strong><p>Steady progress<br>Zero added risk</p></div></article>
+        <div class="fork-vs">OR</div>
+        <article class="fork unsafe"><span>U</span><div><small>UNSAFE</small><strong>+1.5</strong><p>Faster progress<br>Risk accumulates</p></div></article>
+      </div>
+      <div class="takeaway">The question is not simply whether a model avoids risk. It is whether competition changes its action.</div>
+      <footer><span>CORE QUESTION</span><span>02 / 19</span></footer>
+      <aside class="notes">Unsafe also pays more immediately. The behavioral question is dynamic: does the model respond to a rival moving faster or to falling behind?</aside>
+    </section>
+
+    <section class="slide" data-title="Evidence boundary">
+      <div class="slide-no">03</div><span class="eyebrow">EVIDENCE BOUNDARY</span><h2>Adapt the mechanics.<br><em>Test the agents anew.</em></h2>
+      <div class="boundary">
+        <article><span class="source-label">SOURCE STUDY</span><div class="big-icon">H</div><h3>Human participants</h3><p>Paired online repeated race with an evolutionary interpretation.</p><small>Fernández Domingos & Han, 2026</small></article>
+        <div class="boundary-link"><span>MECHANICS</span><i>→</i><span>NEW EVIDENCE</span></div>
+        <article class="project"><span class="source-label">THIS PROJECT</span><div class="big-icon">AI</div><h3>LLM agents</h3><p>Config-driven model behavior experiment executed on Kaggle.</p><small>RESULTS PENDING</small></article>
+      </div>
+      <footer><span>Source: Fernández Domingos & Han (2026), arXiv:2607.26034</span><span>03 / 19</span></footer>
+      <aside class="notes">The human findings motivate hypotheses, but are not LLM evidence and must never be displayed as project results.</aside>
+    </section>
+
+    <section class="slide dark" data-title="Game loop">
+      <div class="slide-no">04</div><span class="eyebrow">CANONICAL GAME</span><h2>One round,<br>five exact steps.</h2>
+      <div class="round-flow">
+        <article><b>01</b><span>OBSERVE</span><p>Both agents see the same prior state.</p></article><i>→</i>
+        <article><b>02</b><span>CHOOSE</span><p>Safe or Unsafe, in isolation.</p></article><i>→</i>
+        <article><b>03</b><span>COMMIT</span><p>Same-round actions stay hidden.</p></article><i>→</i>
+        <article><b>04</b><span>UPDATE</span><p>Payoff, progress and risk.</p></article><i>→</i>
+        <article><b>05</b><span>STOP?</span><p>After round 5: 20% chance.</p></article>
+      </div>
+      <div class="number-band"><div><strong>5</strong><span>minimum rounds</span></div><div><strong>20%</strong><span>stop probability thereafter</span></div><div><strong>9</strong><span>expected total rounds</span></div><div><strong>100</strong><span>ECU winner prize</span></div></div>
+      <footer><span>SIMULTANEOUS · HIDDEN HORIZON</span><span>04 / 19</span></footer>
+      <aside class="notes">Both prompts are rendered before either response is applied. After round five, a new stop draw occurs after every completed round. Expected duration is nine rounds.</aside>
+    </section>
+
+    <section class="slide" data-title="Payoffs and risk">
+      <div class="slide-no">05</div><span class="eyebrow">INCENTIVE STRUCTURE</span><h2>Payoff now.<br><em>Private risk later.</em></h2>
+      <div class="payoff-layout">
+        <div><span class="mini-title">STAGE PAYOFF MATRIX · πᵢ</span><div class="payoff-matrix"><i></i><i>RIVAL S</i><i>RIVAL U</i><i>YOU S</i><b>1.0</b><b>0.6</b><i>YOU U</i><b class="hot">2.4</b><b class="hot">2.0</b></div><p>Unsafe strictly dominates in immediate payoff.</p></div>
+        <div class="risk-equation"><span class="mini-title">EFFECTIVE SETBACK PROBABILITY</span><div>q<sub>i</sub> = p<sup>max</sup><sub>risk</sub> × <span>n<sup>U</sup><sub>i</sub> / T</span></div><p>Applied only to a winner or tied winner at the terminal draw.</p><div class="treatments"><b>10%</b><b>60%</b><b>90%</b></div></div>
+      </div>
+      <footer><span>Source mechanics: Methods §6.2</span><span>05 / 19</span></footer>
+      <aside class="notes">Risk is proportional to the realized Unsafe fraction. A setback removes the entire final race payoff. A loser keeps stage payoffs and receives no prize.</aside>
+    </section>
+
+    <section class="slide source-slide" data-title="Human findings">
+      <div class="slide-no">06</div><span class="source-banner">SOURCE STUDY · HUMAN PARTICIPANTS</span><h2>What the source study found.</h2>
+      <div class="finding-grid">
+        <article><span>PREREGISTERED</span><strong>60% vs 90%</strong><p>Risk-cap contrast: negligible difference.</p><b class="null">NULL</b></article>
+        <article><span>PREREGISTERED</span><strong>Risk preference</strong><p>Elicited preference did not predict Unsafe choice.</p><b class="null">NULL</b></article>
+        <article class="wide"><span>EXPLORATORY DYNAMICS</span><div><strong>Opponent action</strong><strong>Relative position</strong><strong>First-round choice</strong></div><p>Associated with subsequent Unsafe behavior; lagged associations are not identified causal effects.</p></article>
+      </div>
+      <footer><span>Fernández Domingos & Han (2026), Results §§2.1–2.3</span><span>06 / 19</span></footer>
+      <aside class="notes">Keep this source label visible. These are human findings, not project bars or LLM estimates.</aside>
+    </section>
+
+    <section class="slide dark" data-title="LLM research gap">
+      <div class="slide-no">07</div><span class="eyebrow">THE ADAPTATION GAP</span><h2>Same game.<br>Different kind of agent.</h2>
+      <div class="gap-bridge"><div class="bridge-start">HUMAN<br>STUDY</div><div class="bridge-road"><span>CHECKPOINT</span><span>PROMPT</span><span>MEMORY</span><span>DECODING</span></div><div class="bridge-end">LLM<br>AGENT</div></div>
+      <div class="warning">OBSERVABLE CONDITIONING <b>≠</b> SUBJECTIVE FEAR OR PREFERENCE</div>
+      <div class="two-note"><p>Temperature is not psychological risk tolerance.</p><p>Behavior in this task is not evidence of experience.</p></div>
+      <footer><span>INTERPRETATION BOUNDARY</span><span>07 / 19</span></footer>
+      <aside class="notes">LLMs do not have a directly comparable risk-preference measure. Study observable actions and avoid anthropomorphic conclusions.</aside>
+    </section>
+
+    <section class="slide" data-title="Research questions">
+      <div class="slide-no">08</div><span class="eyebrow">PRESPECIFIED QUESTIONS</span><h2>What predicts<br><em>Unsafe?</em></h2>
+      <div class="question-map">
+        <div class="q-node center"><span>OUTCOME</span><strong>P(U<sub>i,t</sub> = 1)</strong></div>
+        <div class="q-node q1"><b>01</b><strong>Risk cap</strong><small>10 · 60 · 90%</small></div>
+        <div class="q-node q2"><b>02</b><strong>Opponent U<sub>t−1</sub></strong><small>response to rivalry</small></div>
+        <div class="q-node q3"><b>03</b><strong>Progress gap</strong><small>ahead · tied · behind</small></div>
+        <div class="q-node q4"><b>04</b><strong>Round 1</strong><small>behavioral momentum</small></div>
+      </div>
+      <footer><span>DIRECTIONAL EFFECTS REMAIN UNESTIMATED</span><span>08 / 19</span></footer>
+      <aside class="notes">Freeze the primary contrast, exact hypotheses, and multiplicity handling before confirmatory runs. Human coefficient signs are external references, not targets.</aside>
+    </section>
+
+    <section class="slide dark" data-title="Race pipeline">
+      <div class="slide-no">09</div><span class="eyebrow">ONE RACE, END TO END</span><h2>Every decision<br>leaves an audit trail.</h2>
+      <div class="audit-flow">
+        <article><span>CONFIG</span><strong>Seed + manifest</strong><small>model · prompt · treatment</small></article><i>→</i>
+        <article><span>ISOLATE</span><strong>2 agent prompts</strong><small>same pre-action snapshot</small></article><i>⇥</i>
+        <article class="gate"><span>REVEAL GATE</span><strong>S / U × S / U</strong><small>simultaneous commit</small></article><i>→</i>
+        <article><span>ENGINE</span><strong>Exact update</strong><small>progress · payoff · risk</small></article><i>→</i>
+        <article><span>LOG</span><strong>Append-only</strong><small>raw response · draws · state</small></article>
+      </div>
+      <div class="log-schema"><span>game_id</span><span>round</span><span>prompt</span><span>raw_response</span><span>action</span><span>progress_gap</span><span>stop_draw</span><span>setback_draw</span></div>
+      <footer><span>THE ENVIRONMENT DOES THE ARITHMETIC</span><span>09 / 19</span></footer>
+      <aside class="notes">Every raw response, parse decision, retry, state transition, stop draw and setback draw is retained. The model never calculates authoritative state.</aside>
+    </section>
+
+    <section class="slide" data-title="Frozen protocol">
+      <div class="slide-no">10</div><span class="eyebrow">REPRODUCIBILITY</span><h2>Freeze before<br><em>you look.</em></h2>
+      <div class="manifest-card"><div class="manifest-head"><span>RUN_MANIFEST.JSON</span><b>LOCKED</b></div><div class="manifest-lines"><p><span>model_revision</span><strong>sha256:c8…</strong></p><p><span>prompt_hash</span><strong>sha256:71…</strong></p><p><span>decoding</span><strong>temperature · max_tokens · seed</strong></p><p><span>pairing</span><strong>model × treatment × repetition</strong></p><p><span>retry_policy</span><strong>strict parser · bounded retries</strong></p></div></div>
+      <div class="freeze-note"><b>Hosted endpoints can drift.</b><p>Balance treatment allocation within model-pair strata, block run order, and never pool pilots with confirmatory runs.</p></div>
+      <footer><span>IMMUTABLE CONFIRMATORY CONFIG</span><span>10 / 19</span></footer>
+      <aside class="notes">The manifest makes endpoint and protocol drift visible. Prompt version and run phase are carried on every output row.</aside>
+    </section>
+
+    <section class="slide kaggle-slide" data-title="Execution">
+      <div class="slide-no">11</div><span class="eyebrow">EXECUTION ENVIRONMENT</span><h2>Immutable source.<br>Two H100 lanes.</h2>
+      <div class="compute-map"><div class="local-box"><span>LOCAL</span><strong>Code + deterministic tests</strong><small>Archive source by commit</small></div><i>→</i><div class="kaggle-box"><span>GREENNODE H100 × 2</span><strong>Probe + behavior lanes</strong><small>Same model digest · shared disk</small></div><i>→</i><div class="output-stack"><span>probe_outputs.jsonl</span><span>turns.jsonl</span><span>races.csv</span><span>run_manifest.json</span></div></div>
+      <div class="checkpoint-line"><span>START</span><i></i><b>CHECKPOINT</b><i></i><b>RESUME</b><i></i><span>EXPORT</span></div>
+      <footer><span>NOTEBOOK CONSOLE TEXT IS NOT THE DATASET</span><span>11 / 19</span></footer>
+      <aside class="notes">The pilot used source commit 1e96ce20fd5a and Qwen2.5 7B F16 digest 59805c…ff16c. The analyzer reconstructs prompts, scores and calculator arithmetic from persistent raw logs.</aside>
+    </section>
+
+    <section class="slide dark" data-title="Analysis">
+      <div class="slide-no">12</div><span class="eyebrow">PLANNED ANALYSIS</span><h2>Respect the<br>repeated structure.</h2>
+      <div class="analysis-layout">
+        <div class="nesting"><div>MODEL × TREATMENT</div><div>SEEDED RACE / DYAD<div>AGENT<div>ROUND DECISION</div></div></div></div>
+        <div class="model-card"><span>PRIMARY PANEL MODEL · t ≥ 2</span><code>unsafe ~ C(max_private_risk)<br>+ first_round_unsafe<br>+ own_prev_unsafe<br>  * opponent_prev_unsafe<br>  * progress_gap_before</code><small>Cluster on the common-random-number block.</small></div>
+      </div>
+      <div class="analysis-rule">A round is a decision unit—<b>not an independent replicate.</b></div>
+      <footer><span>REPORT EFFECTS + UNCERTAINTY</span><span>12 / 19</span></footer>
+      <aside class="notes">Rounds are nested in races. Coefficients describe conditional associations because lagged actions summarize endogenous interaction histories.</aside>
+    </section>
+
+    <section class="slide" data-title="Validation">
+      <div class="slide-no">13</div><span class="eyebrow">VALIDATION GATES</span><h2>Validate mechanics<br><em>before behavior.</em></h2>
+      <div class="check-grid">
+        <article><span>01</span><b>✓</b><strong>Payoff fixtures</strong><p>All four joint action profiles.</p></article>
+        <article><span>02</span><b>✓</b><strong>Winner + tie cases</strong><p>Prize allocation and eligibility.</p></article>
+        <article><span>03</span><b>✓</b><strong>Horizon simulation</strong><p>Minimum 5; mean approaches 9.</p></article>
+        <article><span>04</span><b>✓</b><strong>Risk draw audit</strong><p>Fixed-seat deterministic streams.</p></article>
+        <article><span>05</span><b>✓</b><strong>Parser visibility</strong><p>Retries and failures remain logged.</p></article>
+        <article><span>06</span><b>✓</b><strong>Stable joins</strong><p>Race, player and turn identifiers.</p></article>
+      </div>
+      <div class="pending-bar">RUNTIME VALIDATION STATUS <b>SMOKE + PILOT PASSED · 0 PARSE FAILURES</b></div>
+      <footer><span>ENGINEERING FAILURES ≠ BEHAVIORAL DATA</span><span>13 / 19</span></footer>
+      <aside class="notes">Static unit tests are necessary but not a substitute for a real Kaggle smoke run that validates inference, parsing and checkpoint behavior.</aside>
+    </section>
+
+    <section class="slide results-slide" data-title="Pilot audit">
+      <div class="slide-no">14</div><span class="source-banner">LLM PILOT AUDIT · THIS PROJECT</span><h2>Recall is not<br>full-game comprehension.</h2>
+      <div class="audit-result-layout"><figure><img src="../paper/figures/game_understanding_accuracy.png" alt="Accuracy by game-understanding audit domain."></figure><div class="audit-result-copy"><div><span>685 / 685</span><small>probe outputs retained</small></div><div><span>100%</span><small>stage-payoff lookup</small></div><div><span>22.2%</span><small>state-transition accuracy</small></div><div><span>16.7%</span><small>expected-payoff accuracy</small></div><p>Five fixed-seed repeats were identical. That is narrow reliability—not proof of task validity or an internal world model.</p></div></div>
+      <div class="result-rule">Pilot evidence · Qwen2.5 7B F16 · protocol v2 · confirmatory treatment effects remain pending.</div>
+      <footer><span>ANALYSIS SNAPSHOT · PILOT</span><span>14 / 19</span></footer>
+      <aside class="notes">The model reads the rules and one-step payoff table very well, but often fails multi-round state arithmetic. Action choice alone is therefore not a valid comprehension check.</aside>
+    </section>
+
+    <section class="slide dark" data-title="Interpretation">
+      <div class="slide-no">15</div><span class="eyebrow">BOUNDED CONCLUSIONS</span><h2>Similarity is behavioral.<br>Not psychological.</h2>
+      <div class="interpret-grid"><div class="corner"></div><div class="axis-head">LLM MATCHES DIRECTION</div><div class="axis-head">LLM DIFFERS</div><div class="axis-side">HUMAN SIGNAL</div><article><strong>Task-level alignment</strong><p>Similar observable conditioning under a shared game.</p></article><article><strong>Population difference</strong><p>Different behavior across agents or protocol.</p></article><div class="axis-side">CONCLUSION</div><article><strong>Behavior in this task</strong><p>Not evidence of human-like fear or preference.</p></article><article><strong>Behavior in this task</strong><p>Does not invalidate the human result.</p></article></div>
+      <footer><span>EXTERNAL VALIDITY REMAINS LIMITED</span><span>15 / 19</span></footer>
+      <aside class="notes">Agreement does not establish subjective experience. Disagreement does not invalidate the source because populations and mechanisms differ.</aside>
+    </section>
+
+    <section class="slide closing-slide" data-title="Contribution">
+      <div class="slide-no">16</div><span class="eyebrow">THE CONTRIBUTION, FOR NOW</span><h2>A faithful environment.<br>A verified pilot audit.<br><em>Confirmation comes next.</em></h2>
+      <div class="contribution-flow"><span>SPECIFICATION</span><i>→</i><span>ENGINE</span><i>→</i><span>PROBE AUDIT</span><i>→</i><span>PAIRED PILOT</span><i>→</i><span class="pending-node">CONFIRMATORY<br>RUN PENDING</span></div>
+      <div class="final-points"><p>Exact two-player AI Race mechanics</p><p>Reproducible LLM evaluation pipeline</p><p>Prespecified dynamic tests</p></div>
+      <footer><span>AI RACE LAB · QUESTIONS</span><span>16 / 19</span></footer>
+      <aside class="notes">Close on the present contribution. The next milestone is a validated Kaggle execution—not a prewritten conclusion.</aside>
+    </section>
+
+    <section class="slide backup" data-title="Source accounting">
+      <div class="slide-no">B1</div><span class="source-banner">BACKUP · SOURCE STUDY</span><h2>Exact human-study<br>accounting.</h2>
+      <div class="funnel"><div style="--w:100%"><strong>471</strong><span>recruited</span></div><div style="--w:82%"><strong>340</strong><span>full completers</span></div><div style="--w:70%"><strong>338</strong><span>covariate-complete panel</span></div><div style="--w:58%"><strong>2,888</strong><span>post-round-1 decisions</span></div><div style="--w:46%"><strong>172</strong><span>pair clusters</span></div></div>
+      <footer><span>Fernández Domingos & Han (2026), Supplement §S1.2</span><span>17 / 19</span></footer>
+      <aside class="notes">Use only if asked. One partially completed pair contributed three valid post-first-round decisions; two completers lacked the nationality covariate.</aside>
+    </section>
+
+    <section class="slide backup dark" data-title="Strategy classes">
+      <div class="slide-no">B2</div><span class="eyebrow">BACKUP · REDUCED STRATEGIES</span><h2>Four canonical<br>trajectory classes.</h2>
+      <div class="strategy-grid"><article><span>AS</span><strong>Always Safe</strong><div>S → S → S → S</div></article><article><span>AU</span><strong>Always Unsafe</strong><div>U → U → U → U</div></article><article><span>CS</span><strong>Conditional Safe</strong><div>S → copy rival<sub>t−1</sub></div></article><article><span>CAS</span><strong>Conditional Unsafe</strong><div>U → copy rival<sub>t−1</sub></div></article></div>
+      <div class="strategy-note">“Play Unsafe when behind” is scientifically relevant—but exploratory, not one of these four source-paper strategies.</div>
+      <footer><span>Methods §§6.4–6.5</span><span>18 / 19</span></footer>
+      <aside class="notes">The reduced evolutionary model interprets the human pattern. It is not a policy class imposed on LLM agents.</aside>
+    </section>
+
+    <section class="slide reference-slide" data-title="References">
+      <div class="slide-no">R</div><span class="eyebrow">REFERENCE</span><h2>Primary source.</h2>
+      <div class="reference-card"><span>2026 · ARXIV:2607.26034</span><h3>Falling Behind Drives Unsafe Development in an Idealised AI Race Experiment</h3><p>E. Fernández Domingos &amp; T. A. Han</p><a href="https://arxiv.org/abs/2607.26034">arxiv.org/abs/2607.26034 ↗</a></div>
+      <div class="repo-card"><span>PROJECT MATERIALS</span><p>Engine, prompts, configurations, validation tests and analysis plan are maintained in the AI Race Experiment repository.</p><a href="../README.md">Open repository guide →</a></div>
+      <footer><span>END OF DECK</span><span>19 / 19</span></footer>
+      <aside class="notes">Reference slide. The repository README describes the exact implementation and research status.</aside>
+    </section>
+  </main>
+
+  <div class="deck-ui">
+    <div class="deck-brand"><span>AR</span><b>AI RACE LAB</b></div>
+    <div class="deck-progress"><i id="progressBar"></i></div>
+    <button id="overviewBtn" type="button" title="Overview (O)">▦</button>
+    <button id="notesBtn" type="button" title="Speaker notes (N)">≡</button>
+    <button id="fullscreenBtn" type="button" title="Fullscreen (F)">⛶</button>
+    <button id="prevBtn" type="button" title="Previous slide (←)">←</button>
+    <span id="counter">01 / 19</span>
+    <button id="nextBtn" type="button" title="Next slide (→)">→</button>
+  </div>
+  <div id="notesPanel" class="notes-panel"><span>SPEAKER NOTES</span><p></p></div>
+  <script src="deck.js"></script>
+</body>
+</html>

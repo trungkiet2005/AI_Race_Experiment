@@ -63,6 +63,24 @@ for m in client.models.list().data:
 Chọn ra các model id GPT muốn benchmark (ví dụ nhiều bản frontier khác nhau để trả lời
 RQ6 — ổn định qua model scale/family).
 
+**Đã xác nhận cho key hiện tại (chạy lệnh trên ngày 2026-08-01):** key này chỉ thấy đúng
+5 model, toàn bản mini/nano (không có bản flagship đầy đủ như `gpt-4o`, `gpt-4.1`, `gpt-5`,
+`gpt-5.5`):
+
+```
+gpt-4.1-mini
+gpt-4o-mini
+gpt-5-mini
+gpt-5-nano
+gpt-5.4-nano
+```
+
+**Đã chọn và áp vào cả 8 config** (xem bước dưới): `["gpt-5.4-nano", "gpt-5-nano"]` — 2 model
+rẻ nhất trong danh sách, để giữ chi phí thấp cho pilot đầu tiên (đây là API trả phí thật,
+khác Kaggle proxy free-tier). Muốn benchmark thêm `gpt-4.1-mini`/`gpt-4o-mini`/`gpt-5-mini`
+thì thêm vào list `MODEL_IDS` ở script dưới rồi chạy lại — chi phí/token cao hơn các bản
+nano nhưng vẫn rẻ hơn nhiều so với bản flagship (hiện không khả dụng cho key này).
+
 ### Điền vào cả 8 config cùng lúc
 
 Không cần sửa tay từng file. Mỗi config nhận một **danh sách** model trong `"models"` —
@@ -76,9 +94,10 @@ import json
 from pathlib import Path
 
 # Sửa danh sách này theo model id thật đã xác nhận ở bước trên.
+# Giá trị dưới đây là lựa chọn đã áp cho pilot đầu tiên (2 bản nano rẻ nhất).
 MODEL_IDS = [
-    "gpt-4o",
-    "gpt-4.1",
+    "gpt-5.4-nano",
+    "gpt-5-nano",
 ]
 
 config_dir = Path("ai_race/configs/experiment")
