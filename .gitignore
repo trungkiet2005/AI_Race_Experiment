@@ -37,6 +37,8 @@ kaggle.json
 !/results/open_source/surface_sensitivity_smoke/**
 !/results/nplayer/
 !/results/nplayer/**
+!/results/notebooks/
+!/results/notebooks/*.ipynb
 !/results/scripts/
 !/results/scripts/*.py
 !/results/scripts/*.json
