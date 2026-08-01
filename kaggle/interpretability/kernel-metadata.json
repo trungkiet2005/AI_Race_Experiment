@@ -1,14 +1,17 @@
 {
-  "id": "foundnotkiet/qwen2-5-sae-probe-setup-assets",
-  "title": "Qwen2.5 SAE Probe - Setup Assets",
-  "code_file": "setup_download_sae_assets.py",
+  "id": "foundnotkiet/qwen2-5-sae-probe",
+  "title": "Qwen2 5 Sae Probe",
+  "code_file": "qwen25_sae_probe.py",
   "language": "python",
   "kernel_type": "script",
   "is_private": true,
-  "enable_gpu": false,
+  "enable_gpu": true,
   "enable_tpu": false,
   "enable_internet": true,
-  "dataset_sources": [],
+  "dataset_sources": [
+    "foundnotkiet/qwen25-sae-probe-repo-snapshot",
+    "foundnotkiet/qwen25-sae-probe-setup-assets"
+  ],
   "competition_sources": [],
   "kernel_sources": []
 }

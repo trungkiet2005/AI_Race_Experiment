@@ -9,11 +9,11 @@
     "slug": "llm"
   },
   "state": "BENCHMARK_TASK_RUN_STATE_ERRORED",
-  "startTime": "2026-07-31T10:21:11.169541Z",
-  "endTime": "2026-07-31T10:21:11.169541Z",
+  "startTime": "2026-08-01T07:44:16.291968Z",
+  "endTime": "2026-08-01T07:44:16.298835Z",
   "conversations": [
     {
-      "id": "ai-race-baseline-070891dc",
+      "id": "ai-race-baseline-0daf9549",
       "metrics": {},
       "modelVersionSlug": "model_version_slug for conversation is DEPRECATED"
     }
@@ -25,5 +25,5 @@
     }
   ],
   "pyRunId": "ai-race-baseline-Run #1",
-  "errorMessage": "Traceback (most recent call last):\n  File \"C:\\Users\\huynh\\anaconda3\\Lib\\site-packages\\kaggle_benchmarks\\tasks.py\", line 171, in run\n    run.result = self.func(*args, **kwargs)\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"D:\\AI_PhD\\GameTheory\\AI_Race_Experiment\\kaggle\\benchmarks\\ai_race_baseline.py\", line 958, in ai_race_baseline\n    llm_contract = resolve_llm_contract(llm)\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"D:\\AI_PhD\\GameTheory\\AI_Race_Experiment\\kaggle\\benchmarks\\ai_race_baseline.py\", line 195, in resolve_llm_contract\n    raise RuntimeError(\nRuntimeError: Unknown Kaggle Benchmark LLM backend. Set AI_RACE_TOKEN_LIMIT_PARAMETER=max_tokens or max_output_tokens explicitly so the 256-token cap cannot be silently omitted.\n"
+  "errorMessage": "Traceback (most recent call last):\n  File \"C:\\Users\\huynh\\anaconda3\\Lib\\site-packages\\kaggle_benchmarks\\tasks.py\", line 171, in run\n    run.result = self.func(*args, **kwargs)\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"D:\\AI_PhD\\GameTheory\\AI_Race_Experiment\\kaggle\\benchmarks\\ai_race_baseline.py\", line 957, in ai_race_baseline\n    llm_contract = resolve_llm_contract(llm)\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"D:\\AI_PhD\\GameTheory\\AI_Race_Experiment\\kaggle\\benchmarks\\ai_race_baseline.py\", line 194, in resolve_llm_contract\n    raise RuntimeError(\nRuntimeError: Unknown Kaggle Benchmark LLM backend. Set AI_RACE_TOKEN_LIMIT_PARAMETER=max_tokens or max_output_tokens explicitly so the 256-token cap cannot be silently omitted.\n"
 }
