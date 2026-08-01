@@ -1,0 +1,49 @@
+{
+  "schema_version": "ai-race-results-v1",
+  "created_utc": "2026-08-01T02:40:17.380842+00:00",
+  "experiment": {
+    "name": "api_persona_baseline_risk_seeking",
+    "runPhase": "pilot",
+    "description": "Persona condition R+ (both seats risk-seeking) over the Kaggle model proxy.",
+    "games": [
+      "ai_race_risk_10",
+      "ai_race_risk_60",
+      "ai_race_risk_90"
+    ],
+    "agents": "persona_risk_seeking",
+    "languages": [
+      "en"
+    ],
+    "models": [
+      "google/gemini-3-flash-preview"
+    ],
+    "useOffline": false,
+    "backend": "proxy",
+    "samplingSeedApplied": false,
+    "proxyOptions": {
+      "temperature": 0.7,
+      "max_tokens": 256,
+      "timeout": 120,
+      "max_transport_retries": 6,
+      "concurrency": 2,
+      "send_seed": false
+    },
+    "repetitions": 10,
+    "seed": 260726,
+    "maxParseRetries": 3,
+    "verbose": true
+  },
+  "model": "google/gemini-3-flash-preview",
+  "run_phase": "pilot",
+  "agents_name": "persona_risk_seeking",
+  "agents_config_sha256": "62e69734be5ad3b5d27467c2eac63174a03a7506f2def35a2ffb08d36fc5dc16",
+  "persona_condition": "R+",
+  "persona_roles": [
+    "risk-seeking",
+    "risk-seeking"
+  ],
+  "persona_sha256": "d680d5315c5190ab7be469f76f0485858886c7faefe94f7758073273f917f58c",
+  "status": "completed",
+  "n_races": 30,
+  "n_turns": 558
+}

@@ -1,0 +1,32 @@
+{
+  "name": "api_persona_baseline_risk_5_2",
+  "runPhase": "pilot",
+  "description": "Persona condition R5-R2 (risk-preference matrix cell 5,2 of 6x6; Eckel-Grossman gamble scale, paper SI Task 1) over the Kaggle model proxy.",
+  "games": [
+    "ai_race_risk_10",
+    "ai_race_risk_60",
+    "ai_race_risk_90"
+  ],
+  "agents": "persona_risk_5_2",
+  "languages": [
+    "en"
+  ],
+  "models": [
+    "google/gemini-3-flash-preview"
+  ],
+  "useOffline": false,
+  "backend": "proxy",
+  "samplingSeedApplied": false,
+  "proxyOptions": {
+    "temperature": 0.7,
+    "max_tokens": 256,
+    "timeout": 120,
+    "max_transport_retries": 6,
+    "concurrency": 2,
+    "send_seed": false
+  },
+  "repetitions": 10,
+  "seed": 260726,
+  "maxParseRetries": 3,
+  "verbose": true
+}

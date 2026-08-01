@@ -120,13 +120,15 @@ def get_send_batch(
     """Return ``send_batch(prompts, seeds=None)`` for the selected backend.
 
     ``backend`` is ``"offline"`` (vLLM/transformers), ``"proxy"`` (Kaggle model
-    proxy), ``"api"`` (FAIRGAME provider SDK connectors), or ``"auto"``, which
-    resolves from the legacy ``offline`` flag.
+    proxy), ``"api"`` (FAIRGAME provider SDK connectors, keyed by the abstract
+    names in ``MODEL_PROVIDER_MAP``), ``"openai"`` (direct OpenAI API call with
+    ``model_name`` used verbatim as the OpenAI model id, no abstract-name
+    indirection), or ``"auto"``, which resolves from the legacy ``offline`` flag.
     """
     backend = str(backend or "auto").lower()
     if backend == "auto":
         backend = "offline" if offline else "api"
-    if backend not in {"offline", "proxy", "api"}:
+    if backend not in {"offline", "proxy", "api", "openai"}:
         raise ValueError(f"Unsupported model backend: {backend!r}")
 
     if backend == "proxy":
@@ -144,6 +146,26 @@ def get_send_batch(
             return send_prompts_global(prompts, batch_size, seeds=seeds)
 
         return send
+
+    if backend == "openai":
+        from FAIRGAME.src.llm_connectors.openai_connector import OpenAIConnector
+
+        options = dict(proxy_options or {})
+        # OpenAIConnector defaults to temperature=1.0, which has never been
+        # validated against this game; 0.7 matches the value already confirmed
+        # (via check_symmetry.py) not to collapse race-position on the proxy
+        # backend. Always pass it explicitly rather than relying on the
+        # connector default.
+        model = OpenAIConnector(model_name, temperature=float(options.get("temperature", 0.7)))
+
+        def send_openai(
+            prompts: list[str],
+            seeds: list[int] | None = None,
+        ) -> list[str]:
+            del seeds  # OpenAIConnector does not accept a seed; never claim CRN here
+            return [model.send_prompt(prompt) for prompt in prompts]
+
+        return send_openai
 
     from FAIRGAME.src.llm_connectors.llm_factory_connector import ChatModelFactory
 
