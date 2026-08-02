@@ -1,0 +1,46 @@
+{
+  "gpt-5.6-luna": {
+    "n": 18924,
+    "test_accuracy": 0.7958788305741459,
+    "majority_baseline_accuracy": 0.6224022543148996,
+    "roc_auc": 0.8665087260007265,
+    "balanced_accuracy": 0.7595218411338891,
+    "base_rate": 0.622437116888607,
+    "impurity_importance": {
+      "own_prev_unsafe": 0.09493685284832142,
+      "opponent_prev_unsafe": 0.4329835099820394,
+      "progress_gap": 0.2557190010186595,
+      "max_private_risk": 0.06596068654323001,
+      "round_number": 0.15039994960774977
+    },
+    "mean_abs_shap": {
+      "own_prev_unsafe": 0.04257933680138188,
+      "opponent_prev_unsafe": 0.1834573868098934,
+      "progress_gap": 0.07911815497728937,
+      "max_private_risk": 0.029630803497476463,
+      "round_number": 0.04780963885205955
+    }
+  },
+  "gpt-5.6-terra": {
+    "n": 18924,
+    "test_accuracy": 0.7935892920042268,
+    "majority_baseline_accuracy": 0.5051074321944347,
+    "roc_auc": 0.8742726216888279,
+    "balanced_accuracy": 0.7938196419442418,
+    "base_rate": 0.5051257662227859,
+    "impurity_importance": {
+      "own_prev_unsafe": 0.31702575459497545,
+      "opponent_prev_unsafe": 0.28574526541340395,
+      "progress_gap": 0.2586447723228898,
+      "max_private_risk": 0.030573375395537263,
+      "round_number": 0.10801083227319339
+    },
+    "mean_abs_shap": {
+      "own_prev_unsafe": 0.12306207430840439,
+      "opponent_prev_unsafe": 0.16856515658062496,
+      "progress_gap": 0.08754467811935053,
+      "max_private_risk": 0.024267188526912176,
+      "round_number": 0.040554177663213814
+    }
+  }
+}

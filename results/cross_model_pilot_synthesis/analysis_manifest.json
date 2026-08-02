@@ -100,13 +100,22 @@
     "2p_position_effect_by_persona.png": "dcbcf07a0c3fd3f61b2a755bdf0189243bf1d94cd218f6d5e38afe9d91afb762",
     "cross_model_risk_response_neutral.png": "48d460d715aa265edf96f380f8ecb6c7093b3018258c41de87706e6a0a507ff2",
     "feature_importance_shap_heatmap.png": "c86f33336e5d34d0ed9f45704191913727381404cf4fa7e938601c045fa70d5f",
+    "feature_importance_shap_heatmap_gen56.png": "e6d5c6a31ae3565129fd8cd279c5ecfafb1ff8b540a390b86614675c18322270",
+    "gen56_within_role_risk_sensitivity.png": "55ec367468d1c1f7de0e7e47c39aad0d49555ac6a106e7add795b3aa4feeb004",
     "human_effect_scorecard.png": "db2e145d5e906e2dd518ae0788979c071796f95a7586aaecd81b560969946829",
     "human_vs_llm_distribution.png": "1df23d3ddaf17e17fdef9d66b26883bfd6786e2042d0b3f44c50963507252344",
     "human_vs_llm_dynamic_coefficients.png": "1f49c952b42ad460d44406a87b429d5aa807441668779378ccf553599fead287",
     "llm_human_cluster_projection.png": "d02c02ffdf76d2b98ec9837e6d5166346504de33aee10d2041a24849276b6241",
+    "llm_human_cluster_projection_gen56.png": "fe967136f010c9c56ce2fd38a7dce05d7d03e6737ee627e3cc37cab36f134a2b",
     "nplayer_peer_composition_effect.png": "7a19fe16ebd69e6ca2310cf7fc174b7ff88a1c420c15f20b60e5197fe6653b71",
     "nplayer_position_effect_sign_flip.png": "11a03d5d67b1b3ba736c8cf36b56eea629ec955d4dece0192b2ad618ee39930c",
     "payoff_welfare_unsafe_vs_payoff.png": "d747c81babb95abca4d04daf0f4cfa180d42d3e00ef26362cd76e91bb10d6f0e",
-    "persona_role_gradient.png": "0a7662abf7b41fbc2f6b3d9fe3304b228a3c837422bd728eefe86b619ca346ea"
-  }
+    "persona_role_gradient.png": "0a7662abf7b41fbc2f6b3d9fe3304b228a3c837422bd728eefe86b619ca346ea",
+    "persona_role_gradient_gen56.png": "4946ff73190bb28bfb9a53f9edb7ab8bdf8d5b97fdfab61db09cf7b48edec98f",
+    "round_trajectory_gen56.png": "064618015af429b642b2359ab51b63751312837aa98bee2c3c17d3c3323fefb9"
+  },
+  "pass5_scripts": [
+    "results/scripts/build_gen56_persona_gradient.py",
+    "results/scripts/build_gen56_full_extension.py"
+  ]
 }

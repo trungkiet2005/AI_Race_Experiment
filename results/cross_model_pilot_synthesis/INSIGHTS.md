@@ -15,10 +15,13 @@ adds a payoff/welfare angle nobody had asked yet (Part G — does Unsafe actuall
 pay off?), and closes out three smaller threads explicitly requested: a formal
 statistical test of cross-model heterogeneity, a theory-gap-vs-human-likeness
 correlation, and a cross-reference against the project's existing Qwen
-interpretability pipeline (Part I). **Status remains pilot / diagnostic
-throughout — nothing here is confirmatory, and nothing is pooled across
-models, across the 2-player/N-player designs, or across human/LLM
-populations.**
+interpretability pipeline (Part I). **Pass 5** adds a new model generation
+(GPT-5.6 Luna/Terra) to the persona-dominance finding, plus an operational
+lesson about a backend-specific failure mode that made the same checkpoints'
+data unusable from one route and clean from another (Part J). **Status remains
+pilot / diagnostic throughout — nothing here is confirmatory, and nothing is
+pooled across models, across the 2-player/N-player designs, or across
+human/LLM populations.**
 
 A genuine data-quality correction from this pass, flagged upfront: `Insight C1`
 and the 2-player figures previously included `results/frontier/api_5games_allrisk`
@@ -45,10 +48,13 @@ Figures: [`figures/`](figures/). Tables: [`data/`](data/). Generation scripts:
 [`analyze_behavioral_clustering.py`](../scripts/analyze_behavioral_clustering.py),
 [`build_2p_position_persona.py`](../scripts/build_2p_position_persona.py),
 [`analyze_payoff_welfare.py`](../scripts/analyze_payoff_welfare.py),
-[`analyze_heterogeneity_test.py`](../scripts/analyze_heterogeneity_test.py).
+[`analyze_heterogeneity_test.py`](../scripts/analyze_heterogeneity_test.py),
+[`build_gen56_persona_gradient.py`](../scripts/build_gen56_persona_gradient.py),
+[`build_gen56_full_extension.py`](../scripts/build_gen56_full_extension.py).
 
 ## Most interesting findings, ranked
 
+0. **[Part J, new] The persona-dominance finding replicates in a newer model generation at large scale, but the dominance ratio shrinks.** Two GPT-5.6 checkpoints (Luna, Terra), run through an AWS Bedrock route after the direct OpenAI route failed, reproduce the same monotone R1-R6 persona gradient as the original three checkpoints (76 cells, 4,320 players, 0 parse failures) — but unlike GPT-5/5.4 nano, both retain a real, monotone within-persona risk effect at every framing level, shrinking persona's dominance over risk from roughly 25x down to roughly 4-6x. Extending the feature-importance, trajectory, clustering, and payoff analyses to these two checkpoints (pooled across persona, since no neutral lane exists yet) finds a third distinct round-by-round signature and archetype mix, and a SHAP profile that is plausibly a persona-proxy artifact rather than genuine reciprocity — see J3-J6.
 1. **[Part D] Humans and LLM checkpoints run on visibly different "decision architectures."** An RF+SHAP model fit separately on each population's own decisions shows opponent-reciprocity dominates for humans (48% of predictive weight) and for one Gemini checkpoint (34%), but GPT-5 nano is instead dominated by relative race position (44%, opponent barely registers at 4%), and the Gemini-lite checkpoints are dominated by the risk-treatment parameter itself (35-40%).
 2. **[Part F] LLM checkpoints occupy very different, and very different-sized, slices of human behavioral diversity.** Projected into a 4-archetype clustering fit on 341 human participants, GPT-5 nano is a 99% point-mass in one archetype; the three Gemini checkpoints all collapse into the same other two archetypes; GPT-5.4 nano is the only checkpoint that spans (almost) the full human behavioral space, including the one archetype (a genuine "persister") that nothing else reaches.
 3. **[Part G] Whether Unsafe play "pays off" is itself checkpoint-specific, not a universal fact about the mechanism.** Once the actual setback draw is included, GPT-5 nano's naive positive Unsafe-payoff correlation vanishes (r=0.34→-0.06) — its setback risk fully erases the apparent benefit — while GPT-5.4 nano's stays clearly positive (r=0.44) even after the same correction, and all three Gemini checkpoints show *true* payoff correlating with Unsafe rate more strongly than the setback-free proxy does.
@@ -436,6 +442,177 @@ opponent's last move is the weakest, the reverse of the human ordering.
 
 ---
 
+## Part J — A newer model generation, and an operational lesson about failure modes
+
+### J0. Two runs of the same checkpoints told very different stories, and the difference was not behavioral
+
+Two new checkpoints, `gpt-5.6-luna` and `gpt-5.6-terra`, were first run through the
+direct OpenAI route already used for every other 2-player checkpoint in this
+report (`results/frontier/openai_luna/`, `results/frontier/openai_terra/`).
+Auditing that data the same way as everything else in this report (manifest
+counts vs. actual file contents, then parse-failure rates) found it almost
+entirely unusable: OpenAI billing credits were exhausted partway through the
+sweep (`RateLimitError: ... credit_balance_exhausted`), leaving 0 of 36 planned
+persona cells complete for Luna and only 2 of 36 for Terra. Worse, even those
+two "completed" Terra cells were severely contaminated: 14.2% and 41.6% of
+individual decisions failed to parse, and because this project excludes an
+entire race the moment any one decision in it fails to parse, only 5 of 30
+races in one cell and **0 of 30** in the other survived that rule. Every failed
+decision's raw response was an empty string, not malformed text — the model
+was not answering at all, not answering incorrectly.
+
+The root cause traced to `ai_race/models/openai_direct.py`'s existing mitigation
+for a known GPT-5-series failure mode (a model can spend its entire token
+budget on hidden reasoning and return empty visible content). That mitigation
+retries with `reasoning_effort="minimal"` — but GPT-5.6 only accepts
+`none`/`low`/`medium`/`high`/`xhigh`, so the retry itself failed with an
+"unsupported value" error that the harness misread as "this model rejects the
+parameter entirely," permanently disabling the fallback instead of resubmitting
+with a valid value. This was independently diagnosed while auditing the data
+(before the root cause was known) purely from the audit numbers and the
+empty-string pattern, then confirmed exactly by cross-checking the harness
+code and Bedrock Mantle documentation.
+
+The practical resolution was to re-run the same two checkpoints through a
+different backend entirely: AWS Bedrock via a "mantle" route
+(`results/frontier/bedrock_mantle/`), which is unaffected by both problems (no
+OpenAI billing dependency, and a different response path that never exercises
+the broken reasoning-effort retry). That re-run is what Part J below analyzes.
+**The lesson worth keeping**: a "0% parse failure, manifest counts match"
+audit result is necessary but the audit must be re-run per data source — the
+same nominal checkpoint name produced unusable data from one backend and
+clean data from another, for reasons that had nothing to do with the model's
+behavior.
+
+### J1. The persona-dominance finding replicates at scale in a newer generation
+
+![](figures/persona_role_gradient_gen56.png)
+
+`results/frontier/bedrock_mantle/{luna,terra}/persona/risk_matrix/` is a
+complete $6\times6$ persona sweep for both checkpoints (72 cells) plus
+`Rminus_risk_averse`/`Rplus_risk_seeking` singles (4 more) — 76 of 76 run
+directories complete, matching manifest counts, **0 parse failures across
+42,408 decisions**. Own-seat persona role, pooled over the opponent's role and
+all three risk levels ($n=360$ players/point):
+
+| Role | GPT-5.6 Luna | GPT-5.6 Terra |
+|---|---|---|
+| R1 (risk-averse) | 18.6% | 0.06% |
+| R2 | 27.2% | 11.6% |
+| R3 | 71.9% | 52.1% |
+| R4 | 80.0% | 62.7% |
+| R5 | 86.8% | 81.2% |
+| R6 (risk-seeking) | 90.2% | 98.3% |
+
+Both reproduce the same large, monotone gradient found in every checkpoint
+tested so far (GPT-5 nano, GPT-5.4 nano, Gemini 3 Flash, and independently in
+the N-player game). Terra's shape is the most extreme seen anywhere in this
+report — a near-perfect floor-to-ceiling swing (0.06% to 98.3%) — while Luna is
+the first checkpoint whose most risk-averse framing does *not* collapse
+toward zero (18.6%, compared to under 2% for every other 2-player checkpoint's
+R1). The single-persona cells corroborate this ordering without the matrix
+structure: Rminus/Rplus give 38.5%/95.3% for Luna and 19.4%/100.0% for Terra
+($n=60$ each).
+
+### J2. But the newer generation keeps a real risk effect underneath the persona framing
+
+![](figures/gen56_within_role_risk_sensitivity.png)
+
+The original three checkpoints' persona sweep showed an almost flat
+within-role risk response — e.g. GPT-5 nano's R4 cell moved only
+45.1%/46.2%/46.1% across the 0.1/0.6/0.9 risk levels, and the N-player
+replication put persona's range at roughly **25x** the within-role risk
+range. GPT-5.6 Luna and Terra do not show that near-total flattening: **every
+one of the 12 role$\times$checkpoint cells declines monotonically with risk**
+($n=120$ players/point). Terra's R4 cell, for example, moves 75.4%/62.3%/50.5%
+across 0.1/0.6/0.9 — a 24.9-point range — and Luna's R1 cell moves
+27.2%/14.5%/14.2%, a 13.0-point range. Persona still dominates (its R1-to-R6
+range at a fixed risk level is 77-98 points, versus 13-25 points for risk
+within a fixed persona), but the **dominance ratio is roughly 4-6x here,
+not the ~25x found in the prior GPT generation** — a newer checkpoint
+generation that has not simply inherited the same near-total risk-treatment
+override.
+
+### J3. Feature importance (Part D style): opponent-reciprocity shows up strongly, but likely as a persona proxy
+
+![](figures/feature_importance_shap_heatmap_gen56.png)
+
+The same five-feature Random Forest + SHAP fit as Part D, applied to all
+18,924 round-≥2 decisions per checkpoint pooled across the persona sweep
+(no neutral lane exists yet to hold framing constant, so this is a
+descriptive companion to Part D, not a replication of it). Luna's SHAP
+profile is opponent-reciprocity-dominated (48% — matching humans' own share
+exactly) and Terra's is more balanced but still opponent-leaning (38%
+opponent, 28% own-previous-action, 20% progress gap); both show low weight on
+the risk treatment itself (8%, 5%). Predictive power is high for both (AUC
+0.87/0.87, balanced accuracy 0.76/0.79) — much higher than any of the five
+original checkpoints' neutral-lane fits.
+
+**This is likely a pooling artifact, not a clean reciprocity signal, and
+should be read that way.** Because persona itself is not one of the five
+features, and because a player's own- and opponent-previous-action are
+strongly correlated with which persona they were assigned (an R6 player
+plays Unsafe almost every round, so `own_prev_unsafe`/`opponent_prev_unsafe`
+are close to constant within a persona level), the model can use those two
+history features as an indirect proxy for the persona label itself rather
+than picking up a genuine within-episode reciprocity dynamic. The high
+predictive power (AUC 0.87 vs. 0.56-0.95 for the neutral-lane fits, most of
+which are much less powerful) is consistent with this: the model is
+substantially easier to predict once persona-correlated history features are
+available, which is a different phenomenon from the human/Gemini-3.5-lite
+neutral-lane reciprocity finding in Part D.
+
+### J4. Round-by-round trajectory (Part E style): a round-1-to-2 dip, then a plateau
+
+![](figures/round_trajectory_gen56.png)
+
+Pooled across the full persona sweep, both checkpoints show a mean Unsafe
+rate that dips from round 1 to round 2 (Luna 67.9%→44.6%; Terra 60.8%→39.7%)
+then recovers and plateaus in a fairly narrow band from round 3 onward (Luna
+58-68%; Terra 49-55%) through round 16. Because the round-1 level here is a
+persona-weighted blend rather than a comparable baseline, only the *shape* is
+informative: a one-round dip-and-recover is a third distinct pattern,
+alongside GPT-5 nano's spike-and-decay and the Gemini checkpoints'
+ceiling-crash-and-rebound (Part E) — no two checkpoint families examined in
+this report share a round-by-round signature.
+
+### J5. Human-archetype projection (Part F style): a third distinct cluster mix
+
+![](figures/llm_human_cluster_projection_gen56.png)
+
+Using the same five-feature player-race vectors and the same human cluster
+centroids as Part F, pooled across the persona sweep ($n=2{,}280$ player-races
+each): Luna lands 65.3% "aggressive starter/reciprocator", 31.6% "cautious
+starter", 2.8% "persister", 0.4% residual; Terra lands 59.3% / 38.6% / 2.0% /
+0%. This is a third distinct pattern in this report: it resembles GPT-5.4
+nano's mix (real presence in the "cautious starter" archetype, where the
+three Gemini checkpoints have essentially none) but with much less spread
+into the "persister" archetype (2-3% vs. GPT-5.4 nano's 11.7%) and, unlike
+GPT-5.4 nano, negligible presence in the small residual cluster. As with J3/J4,
+pooling across every persona level mechanically guarantees broader archetype
+coverage than a single neutral condition would produce, so the *comparable*
+part of this finding is the qualitative mix (which two archetypes dominate,
+and by roughly what ratio), not the raw coverage breadth.
+
+### J6. Payoff/welfare (Part G style): a real but much weaker positive relationship
+
+Using the real `final_payoff` field (includes the actual setback draw) against
+each player's overall Unsafe rate, pooled across the persona sweep: Luna
+$r=0.112$ ($p<0.0001$, $n=2{,}280$), Terra $r=0.081$ ($p=0.0001$, $n=2{,}280$)
+— both positive and statistically significant given the large $n$, but far
+weaker than GPT-5.4 nano's neutral-lane finding ($r=0.438$) and closer to
+GPT-5 nano's near-null result. Setback rates are substantial for both (26.7%,
+23.5%). A plausible reading (descriptive, not confirmed causally): pooling
+across personas mixes players who are safe *because* they were told to be
+(low progress, rarely winning, rarely facing a setback draw at all) with
+players who are unsafe *because* they were told to be (higher win rate but
+also higher setback exposure), which can attenuate a within-persona
+Unsafe-payoff relationship when averaged over the whole pooled sample — this
+would need a per-persona-level breakdown to confirm and is flagged as a
+direction for follow-up rather than resolved here.
+
+---
+
 ## Part B — N-player (N=3/4/5) findings
 
 *(B1-B3 unchanged from the previous pass; B4 is new.)*
@@ -555,7 +732,14 @@ counts). `api_5games_allrisk` is additionally excluded from Gemini-3-Flash's
 neutral lane for the CRN-independence reason explained above (not a duplicate-
 log issue as first stated). N-player data (Part B): all 41 real per-model run
 directories audited clean, 0 parse failures anywhere across 22,950+ decisions
-checked this pass.
+checked this pass. GPT-5.6 generation (Part J): `results/frontier/openai_luna/`
+and `results/frontier/openai_terra/` (direct OpenAI route) are excluded
+wholesale — 0 of 36 and 2 of 36 persona cells complete respectively, and the
+2 completed Terra cells are themselves 14.2%/41.6% parse-failure-contaminated
+(root cause: OpenAI billing exhaustion plus a `reasoning_effort` value-mismatch
+bug, see Part J0). `results/frontier/bedrock_mantle/{luna,terra}/` (Bedrock
+route) is used instead: all 76 directories audited clean, 0 parse failures
+across 42,408 decisions.
 
 ## How this maps onto the manuscript
 
@@ -568,6 +752,14 @@ in the existing pending ones.
 
 ## Limitations
 
+- Part J's GPT-5.6 findings come from a single sweep design (full risk_matrix
+  persona cross plus two single-persona cells) with no neutral/no-persona
+  baseline lane yet for either checkpoint, so there is no E1-E8 scorecard entry
+  or feature-importance/SHAP comparison for Luna/Terra in this pass — only the
+  persona-gradient and within-role risk-sensitivity questions are addressed.
+  The direct-OpenAI-route data for the same two checkpoints remains
+  unusable pending the `reasoning_effort` fix and restored billing; it is not
+  re-attempted here.
 - Part D's RF+SHAP models are descriptive association-structure comparisons,
   not causal or mechanistic claims; predictive power itself varies hugely by
   population (AUC 0.56-0.95) and floor/ceiling behavior mechanically caps
