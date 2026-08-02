@@ -1,0 +1,247 @@
+{
+  "admission_receipts": {
+    "mistral7_01": {
+      "evidence_class": null,
+      "model_digest": "da31c656311edd100f35461ac00ce12398a502cf46bc0495c8a53289f0dfe497",
+      "model_source": "hf://mistralai/Mistral-7B-Instruct-v0.1@ec5deb64f2c6e6fa90c1abf74a91d5c93a9669ca",
+      "passed": false,
+      "path": "/network-volume/icse27/ai_race_capacity_ab0527e/results/mistral-7b-instruct-v0.1/smoke/admission.json",
+      "protocol": "ai-race-state-scaffold-comprehension-v1",
+      "sha256": "5268febdd6b08dcc70768b08cf15783812e767d17d088ce3c4a7d16e7d8cb2b2",
+      "status": "complete"
+    },
+    "qwen25_7b": {
+      "evidence_class": null,
+      "model_digest": "6a49f5db66a7a2e210ab5774d3ab929ca2f9b6b6c1f996121b1cba489236dc86",
+      "model_source": "hf://Qwen/Qwen2.5-7B-Instruct@a09a35458c702b33eeacc393d103063234e8bc28",
+      "passed": false,
+      "path": "/network-volume/icse27/ai_race_capacity_ab0527e/results/qwen2.5-7b-instruct/smoke/admission.json",
+      "protocol": "ai-race-state-scaffold-comprehension-v1",
+      "sha256": "4d10e53b01eb5f627a159df179708250c7aceab4a6afe4d1c16d10389c33b93d",
+      "status": "complete"
+    }
+  },
+  "audit_passed": false,
+  "claim_boundary": "Unaided rows measure rule and arithmetic performance under the frozen prompt bank; they do not establish an internal world model. Calculator rows measure uptake of a disclosed verified result and are excluded from unaided accuracy.",
+  "completed_utc": "2026-08-02T07:04:22.913004+00:00",
+  "design": {
+    "calculator_measurement": "tool_uptake_not_unaided_understanding",
+    "do_sample": false,
+    "mailbox_transport_protocol": "ai-race-heterogeneous-dyad-v1",
+    "models": [
+      "qwen25_7b",
+      "mistral7_01"
+    ],
+    "probe_items": 41,
+    "profile": "smoke",
+    "repetitions": 1,
+    "requests_per_model": 137,
+    "sampling_seed_applied": false,
+    "temperature": 0.0
+  },
+  "elapsed_seconds": 2.039,
+  "error": "RuntimeError: RuntimeError: NVML_SUCCESS == r INTERNAL ASSERT FAILED at \"/opt/pytorch/pytorch/c10/cuda/CUDACachingAllocator.cpp\":841, please report a bug to PyTorch. ",
+  "evidence_class": "diagnostic_unadmitted_comprehension_reaudit",
+  "expected_responses": 274,
+  "lane_block": "A-qwen_B-mistral",
+  "n_responses": 0,
+  "probe_bank_sha256": "1c94c882cb92bc10e99deadd33f1dd85e8880abab26a67d0cfd7ce611a606a32",
+  "protocol": "ai-race-game-understanding-reaudit-v1",
+  "rendered_request_bank_sha256": "48c6836e9e66b27b84a78c42f4988f3062da9947fddf41abd2330c0b31812bf6",
+  "rules_context_sha256": "58851201dec4e0e39c63c7225b384464c6032e6fbc2a1ccbc3b9d6982b3556cf",
+  "schema_version": "ai-race-game-understanding-reaudit-run-v1",
+  "source_artifacts": [
+    {
+      "bytes": 18656,
+      "path": "ai_race/audit/game_understanding.py",
+      "sha256": "9eadea06fe6e37d4f37dfc088cd956cdb7ea418bafdaaae4071381c9abd9adf8"
+    },
+    {
+      "bytes": 13856,
+      "path": "ai_race/engine/game.py",
+      "sha256": "1dbb5bb22f1314f8d4597c2a8be57dcf16616611ca6db3cb3c458e2124db144a"
+    },
+    {
+      "bytes": 5035,
+      "path": "ai_race/engine/scoring.py",
+      "sha256": "d4d0474dc97e8215c0997fc3513a9c079e5651d0a23347710ee6d5a112320052"
+    },
+    {
+      "bytes": 10737,
+      "path": "ai_race/engine/state.py",
+      "sha256": "72e5e302cf47595d51a8ec91e2f492a11c83eb5cbbcbbf4dd1dae95a02adcdb1"
+    },
+    {
+      "bytes": 2809,
+      "path": "ai_race/prompts/ai_race_en.txt",
+      "sha256": "27086bd80378c25e859d03527a5ae55c1046f231ef7b914db9cb3c3b4fb2df3e"
+    },
+    {
+      "bytes": 25286,
+      "path": "kaggle/experiments/greennode_comprehension_reaudit.py",
+      "sha256": "19cab4b69c5130ac49eb0a0ee8d5d1c06188a7b330fab7945e6326b85a0bf788"
+    },
+    {
+      "bytes": 23839,
+      "path": "kaggle/experiments/greennode_heterogeneous_dyad.py",
+      "sha256": "eb6dd2f690095c00c1608f64ed878fbc1b363f261774093ede69e04dbd1417f3"
+    }
+  ],
+  "source_audit_protocol": "ai-race-game-understanding-v2",
+  "source_bundle_sha256": "be65df5a293f19537b5b069162df4324d013e3e5731964d6323619c3581b7016",
+  "source_commit": "66f1029b2d9f61e4cd73fc5c357de30a54643192",
+  "started_utc": "2026-08-02T07:04:20.861000+00:00",
+  "status": "failed",
+  "workers": {
+    "mistral7_01": {
+      "decoding": {
+        "batch_size": 8,
+        "do_sample": false,
+        "max_new_tokens": 64,
+        "sampling_seed_applied": false,
+        "temperature": 0.0
+      },
+      "hardware": {
+        "checks": {
+          "bf16_supported": true,
+          "compute_capability": true,
+          "cuda_available": true,
+          "free_vram": true,
+          "single_gpu": true
+        },
+        "hostname": "nb-17c64ac4-3f70-43b9-8d6f-579c209b038d-5d7d76f986-nc55c",
+        "model_key": "mistral7_01",
+        "model_short_name": "mistral-7b-instruct-v0.1",
+        "observed": {
+          "bf16_supported": true,
+          "compute_capability": [
+            9,
+            0
+          ],
+          "cuda_available": true,
+          "free_vram_gib": 39.08917236328125,
+          "gpu_count": 1,
+          "gpu_name": "NVIDIA H100 80GB HBM3 MIG 4g.40gb",
+          "total_vram_gib": 39.375
+        },
+        "passed": true,
+        "python": "3.10.12",
+        "required": {
+          "bf16": true,
+          "gpu_count": 1,
+          "min_compute_capability": [
+            8,
+            0
+          ],
+          "min_free_vram_gib": 18.0
+        },
+        "torch": "2.4.0a0+07cecf4168.nv24.05"
+      },
+      "hostname": "nb-17c64ac4-3f70-43b9-8d6f-579c209b038d-5d7d76f986-nc55c",
+      "model": {
+        "family": "Mistral-7B",
+        "repo_id": "mistralai/Mistral-7B-Instruct-v0.1",
+        "revision": "ec5deb64f2c6e6fa90c1abf74a91d5c93a9669ca",
+        "short_name": "mistral-7b-instruct-v0.1"
+      },
+      "model_key": "mistral7_01",
+      "protocol": "ai-race-heterogeneous-dyad-v1",
+      "ready_receipt_path": "/network-volume/icse27/ai_race_capacity_ab0527e/queues/reaudit_v2_b1_66f1029/workers/reaudit_b1_mistral/ready.json",
+      "ready_receipt_sha256": "e3141651ac7543517c6d8ff7eefb4a261ed6aad40362b046cc640817861a337e",
+      "runtime_layout": {
+        "hf_device_map": {
+          "": "0"
+        },
+        "parameter_devices": [
+          "cuda:0"
+        ],
+        "parameter_dtypes": [
+          "torch.bfloat16"
+        ]
+      },
+      "started_utc": "2026-08-02T07:03:51.105316+00:00",
+      "status": "ready",
+      "tokenizer": {
+        "chat_template_sha256": "796853172235ab3aaa4810013ddfe2eab481bda3306dad4f700c00d436eed596",
+        "class": "LlamaTokenizerFast",
+        "vocab_size": 32000
+      },
+      "worker_id": "reaudit_b1_mistral"
+    },
+    "qwen25_7b": {
+      "decoding": {
+        "batch_size": 8,
+        "do_sample": false,
+        "max_new_tokens": 64,
+        "sampling_seed_applied": false,
+        "temperature": 0.0
+      },
+      "hardware": {
+        "checks": {
+          "bf16_supported": true,
+          "compute_capability": true,
+          "cuda_available": true,
+          "free_vram": true,
+          "single_gpu": true
+        },
+        "hostname": "nb-b43b17b4-d969-4c10-a95c-929ed8b71e8a-57bfddc5d7-7vbw9",
+        "model_key": "qwen25_7b",
+        "model_short_name": "qwen2.5-7b-instruct",
+        "observed": {
+          "bf16_supported": true,
+          "compute_capability": [
+            9,
+            0
+          ],
+          "cuda_available": true,
+          "free_vram_gib": 19.45166015625,
+          "gpu_count": 1,
+          "gpu_name": "NVIDIA H100 80GB HBM3 MIG 2g.20gb",
+          "total_vram_gib": 19.625
+        },
+        "passed": true,
+        "python": "3.10.12",
+        "required": {
+          "bf16": true,
+          "gpu_count": 1,
+          "min_compute_capability": [
+            8,
+            0
+          ],
+          "min_free_vram_gib": 18.0
+        },
+        "torch": "2.4.0a0+07cecf4168.nv24.05"
+      },
+      "hostname": "nb-b43b17b4-d969-4c10-a95c-929ed8b71e8a-57bfddc5d7-7vbw9",
+      "model": {
+        "family": "Qwen2.5",
+        "repo_id": "Qwen/Qwen2.5-7B-Instruct",
+        "revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+        "short_name": "qwen2.5-7b-instruct"
+      },
+      "model_key": "qwen25_7b",
+      "protocol": "ai-race-heterogeneous-dyad-v1",
+      "ready_receipt_path": "/network-volume/icse27/ai_race_capacity_ab0527e/queues/reaudit_v2_b1_66f1029/workers/reaudit_b1_qwen/ready.json",
+      "ready_receipt_sha256": "9baa8dd8826c292c2a987c04f3d599aa7e939dab423ddbc224e08ef4fe4efcc4",
+      "runtime_layout": {
+        "hf_device_map": {
+          "": "0"
+        },
+        "parameter_devices": [
+          "cuda:0"
+        ],
+        "parameter_dtypes": [
+          "torch.bfloat16"
+        ]
+      },
+      "started_utc": "2026-08-02T07:03:59.346456+00:00",
+      "status": "ready",
+      "tokenizer": {
+        "chat_template_sha256": "cd8e9439f0570856fd70470bf8889ebd8b5d1107207f67a5efb46e342330527f",
+        "class": "Qwen2TokenizerFast",
+        "vocab_size": 151665
+      },
+      "worker_id": "reaudit_b1_qwen"
+    }
+  }
+}

@@ -1,0 +1,20 @@
+[
+  {
+    "model_key": "qwen25_7b",
+    "n_responses": 137,
+    "request_id": "comprehension-reaudit-A-qwen_B-mistral-retry-batch1-aa8fd0c73f9147a0943b952f7cd22c49",
+    "request_sha256": "a7878a90e0d9da9745cd3e592c3262225920a2e8e06732b43a2dc0cd58867220",
+    "response_protocol": "ai-race-heterogeneous-dyad-v1",
+    "response_sha256": "3646d51747ab87d2d2143f6ab742b414831704675ef94b3e6537ccecbfff6952",
+    "worker_id": "reaudit_b1r_qwen"
+  },
+  {
+    "model_key": "mistral7_01",
+    "n_responses": 137,
+    "request_id": "comprehension-reaudit-A-qwen_B-mistral-retry-batch1-2bb8bc225e784ece8f6902c73855d5ed",
+    "request_sha256": "d2ea434cb26b821d4492c24217adce3f1a2066055c4ad18ef4c20fe9f2f084d3",
+    "response_protocol": "ai-race-heterogeneous-dyad-v1",
+    "response_sha256": "e3d3396cf677588f8c9110949b79a3abaf96c5c8f303f389bb316b8b91dbd6b5",
+    "worker_id": "reaudit_b1r_mistral"
+  }
+]
