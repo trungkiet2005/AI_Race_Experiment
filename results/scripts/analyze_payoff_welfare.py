@@ -28,7 +28,7 @@ import pandas as pd
 from scipy import stats
 
 ROOT = Path(__file__).resolve().parents[2]
-HUMAN_CSV = ROOT / "references" / "human_data" / "public_dataset" / "airace_deidentified_long.csv"
+HUMAN_CSV = ROOT / "public_dataset" / "airace_deidentified_long.csv"
 OUTPUT = ROOT / "results" / "cross_model_pilot_synthesis"
 FIGURES = OUTPUT / "figures"
 DATA = OUTPUT / "data"

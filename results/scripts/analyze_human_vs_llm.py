@@ -5,7 +5,7 @@ Earlier synthesis work (results/cross_model_pilot_synthesis/) compared LLM
 behavior against a small set of frozen human summary statistics
 (results/scripts/human_reference.json: E1-E8). This script goes one level
 deeper: it reproduces the human paper's own sample-construction recipe on the
-raw participant-round data (references/human_data/public_dataset), refits the
+raw participant-round data (public_dataset/), refits the
 paper's dynamic specification directly (rather than trusting a single frozen
 coefficient), and builds real distribution-vs-distribution comparisons against
 LLM player-level data already produced by build_cross_model_pilot_synthesis.py.
@@ -28,7 +28,7 @@ import statsmodels.formula.api as smf
 from scipy import stats
 
 ROOT = Path(__file__).resolve().parents[2]
-HUMAN_CSV = ROOT / "references" / "human_data" / "public_dataset" / "airace_deidentified_long.csv"
+HUMAN_CSV = ROOT / "public_dataset" / "airace_deidentified_long.csv"
 OUTPUT = ROOT / "results" / "cross_model_pilot_synthesis"
 FIGURES = OUTPUT / "figures"
 DATA = OUTPUT / "data"
