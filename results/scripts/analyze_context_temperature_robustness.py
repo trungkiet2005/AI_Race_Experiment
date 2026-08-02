@@ -3,7 +3,8 @@
 
 The two decoding conditions are never pooled. Temperature-zero repetitions are
 treated as common-random-number environment seeds, not independent model draws.
-All inferential intervals resample CRN race clusters (risk condition x repetition).
+All inferential intervals resample CRN repetition streams. Risk conditions
+reuse the same ``base_seed + rep`` stream and are not independent clusters.
 """
 from __future__ import annotations
 
@@ -230,8 +231,10 @@ def load_condition(root: Path, expected_temperature: float) -> dict[str, Any]:
                 frame["temperature"] = temperature
                 frame["mapping"] = frame["rep"].map(mapping_for_rep)
                 frame["risk"] = frame["max_private_risk"].map(risk_label)
-                frame["crn_cluster"] = frame.apply(
-                    lambda row: f"{row['risk']}|rep{int(row['rep']):04d}", axis=1
+                # All risk treatments reuse base_seed + rep.  The independent
+                # CRN unit is therefore the repetition stream, not risk x rep.
+                frame["crn_cluster"] = frame["rep"].map(
+                    lambda rep: f"rep{int(rep):04d}"
                 )
             turns_frames.append(turns)
             races_frames.append(races)
@@ -1128,7 +1131,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         "temperature_conditions_pooled": False,
         "temperature_zero_repetitions_interpretation": "CRN environment seeds, not independent model draws",
         "bootstrap": {
-            "unit": "CRN race cluster: risk condition x repetition",
+            "unit": "CRN repetition stream; risk strata share base_seed + rep",
             "repetitions": args.bootstrap_repetitions,
             "seed": BOOTSTRAP_SEED,
         },

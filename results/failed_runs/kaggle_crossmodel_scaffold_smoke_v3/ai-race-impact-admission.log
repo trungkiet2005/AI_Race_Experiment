@@ -1,0 +1,16 @@
+[{"stream_name":"stderr","time":1.081701671,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stderr","time":1.081784171,"data":"  File \"/kaggle/src/script.py\", line 414, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":1.081851841,"data":"    main()\n"}
+,{"stream_name":"stderr","time":1.081858451,"data":"  File \"/kaggle/src/script.py\", line 386, in main\n"}
+,{"stream_name":"stderr","time":1.082070054,"data":"    repo = locate_source_repo()\n"}
+,{"stream_name":"stderr","time":1.082087961,"data":"           ^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":1.082132624,"data":"  File \"/kaggle/src/script.py\", line 146, in locate_source_repo\n"}
+,{"stream_name":"stderr","time":1.082297052,"data":"    raise FileNotFoundError(\n"}
+,{"stream_name":"stderr","time":1.0823178549999999,"data":"FileNotFoundError: Pinned ai-race-admission-source Kaggle Dataset is not mounted; input roots=['/kaggle/input/ai-race-admission-source', '/kaggle/input/models']\n"}
+,{"stream_name":"stderr","time":3.482126994,"data":"/usr/local/lib/python3.12/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":3.482161402,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":3.776764633,"data":"/usr/local/lib/python3.12/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":3.776787663,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":4.975766724,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":6.202221524,"data":"[NbConvertApp] Writing 339278 bytes to __results__.html\n"}
+]

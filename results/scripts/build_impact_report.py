@@ -52,6 +52,8 @@ Five baseline checkpoints cover sharply different regimes: GPT-5 nano remains ne
 
 The Qwen context experiment provides a more controlled mechanism result. All paired first-round decisions agree, yet fixed-state replay detects direct context effects up to 16.7 percentage points and live trajectories reach a 34.0-point aggregate gap. The crucial new interaction is stronger: **the context effect is entirely gated by opaque action-code mapping in this pilot**. When Safe is code Q, the seven contexts produce no divergence from the abstract reference; when Safe is code P, six contexts diverge in every paired player trajectory, with the largest Unsafe-rate difference reaching 68.0 points. Mapping is balanced but assigned by repetition parity, so this is a high-priority replication target rather than a mapping-causal estimate.
 
+The inference audit corrected an important dependency error before the follow-up launch. All three risk treatments reuse `base_seed + repetition`, so the project has **32 independent CRN repetition streams, not 96 risk-by-repetition clusters**. Historical context intervals and figures have been recomputed with risk strata inside the repetition cluster. The frozen 32-stream mapping grid therefore remains diagnostic. A prospective residual-bootstrap sensitivity uses the largest observed context-delta spread as a conservative variance proxy: 96 independent streams deliver estimated power 0.937 for a 15-point interaction after a seven-test multiplicity screen; this is a design calculation, not a behavioral result.
+
 The validity boundary is equally important. Qwen passes rule recall (100%) and stage payoff (98.4%), but state updating is 12.5% and terminal scoring 17.2%; the preregistered comprehension admission gate therefore fails. SAE probes can predict action-associated representations (held-out AUC up to 0.985), but context steering causes no action flips in the context run, and the self-play target-minus-control intervention contrasts do not establish a reliable causal controller. Those negative results are retained, not hidden.
 
 ## Key findings and visual evidence
@@ -76,6 +78,10 @@ All 1,344 paired player-trajectory comparisons agree in round 1. Divergence begi
 
 The FAST-SAE pipeline has pinned model/SAE revisions, held-out splits, matched random and unrelated-feature controls, and live self-play. It detects predictive representations, but the intervention evidence does not clear the causal bar. This distinguishes *decodable information* from *behavioral control* and makes the XAI section more credible.
 
+### 6. Power and stopping are now prospective
+
+The 32-stream run is fixed as a diagnostic replication and cannot be promoted after seeing a favorable result. A separate 96-stream confirmatory target is frozen for a 15-point smallest effect of scientific interest, 80% target power, Holm family size seven, fixed N, and no optional continuation. Because the pilot mapping assignment is confounded, the power model is deliberately labelled a conservative sensitivity analysis.
+
 ## Scope, data, and metric definitions
 
 The synthesis covers 768 Qwen T=0 context races (13,680 decisions), a separate matched T=0.7 stratum of the same size, 2,640 OpenAI pilot races (49,104 decisions), 177 Gemini pilot races (3,168 decisions), an N=3 Qwen pilot, FAST-SAE representation and intervention audits, and an independent EGTTools transition validation. Temperature strata and provider protocols are not pooled.
@@ -91,6 +97,7 @@ The EGT reconstruction is labelled faithful rather than bitwise because the orig
 ## Limitations, uncertainty, and robustness boundary
 
 - Context findings remain **diagnostic** because the comprehension admission gate fails.
+- Earlier context uncertainty used risk-by-repetition clusters. The corrected analysis clusters by repetition because risk strata share the same RNG stream; estimates are unchanged but intervals are wider where dependence matters.
 - OpenAI and Gemini results are **pilots**; their local-run manifests do not identify persona effects cleanly across protocol signatures.
 - Mapping is balanced but assigned by repetition parity in the completed live context runs. The mapping interaction is therefore a replication target, not a clean mapping main effect.
 - Decisions within a race are dependent. Turn-weighted rates are descriptive, not independent Bernoulli trials.
@@ -100,7 +107,7 @@ The EGT reconstruction is labelled faithful rather than bitwise because the orig
 
 ## Recommended next experiments
 
-1. **Launch the frozen fully crossed mapping × context pilot.** For every seed, execute both Safe=P and Safe=Q across all eight contexts. The checked-in protocol fixes 1,536 races, paired estimands, Holm correction, failure gates, and promotion rules. This closes the largest identified confound at the lowest compute cost while retaining the failed-comprehension diagnostic boundary.
+1. **Complete admission before gameplay, then run the fully crossed diagnostic.** For every seed, execute both Safe=P and Safe=Q across all eight contexts only after provenance and comprehension are recorded. The checked-in 1,536-race grid remains diagnostic; the independent 96-stream replication is the frozen confirmatory target.
 2. **Admission-gated cross-family replication.** Run at least three model families at one fixed decoding setting; analyze gameplay only for model/configuration cells that pass rule recall, state transition, terminal scoring, and expected-payoff thresholds.
 3. **Direct-versus-feedback replay.** Freeze a logged state sequence, replay all contexts at each state, then separately launch endogenous trajectories from the same first divergence. This creates commensurable direct and feedback estimands.
 4. **Opaque-ID randomization per decision.** Randomize labels on every turn and decode after response to test whether position bias persists when a stable code policy cannot form.
@@ -128,6 +135,7 @@ def build_artifact() -> dict:
     divergence = records(data_dir / "trajectory_divergence_summary.csv")
     ledger = records(data_dir / "evidence_ledger.csv")
     quality = json.loads((OUT / "data_quality_audit.json").read_text(encoding="utf-8"))
+    power = records(OUT / "power" / "power_grid.csv")
     temperature = pd.read_csv(
         ROOT / "results/open_source/context_skin_pilot/analysis_temperature_robustness/tables/paired_overall_summary.csv"
     ).iloc[0]
@@ -150,6 +158,7 @@ def build_artifact() -> dict:
         ("divergence", "Trajectory divergence", "results/impact_upgrade/data/trajectory_divergence_summary.csv", "Player-trajectory divergence and payoff consequences."),
         ("evidence", "Evidence ledger", "results/impact_upgrade/data/evidence_ledger.csv", "Evidence class, coverage, quality gate, and permitted paper use."),
         ("comprehension", "Comprehension admission", "results/open_source/context_skin_pilot/analysis_live_pilot_t0/comprehension_by_domain.csv", "Semantic and strict-valid accuracy by game-understanding domain."),
+        ("power", "Prospective power sensitivity", "results/impact_upgrade/power/power_grid.csv", "Monte Carlo design sensitivity by independent CRN repetition streams and smallest interaction."),
     ]
     manifest_sources, canonical_sources = [], []
     for spec in sources_spec:
@@ -168,6 +177,7 @@ def build_artifact() -> dict:
         {"id": "mapping_chart", "title": "Action-code position gates context sensitivity", "subtitle": "Difference from abstract contest; 96 paired player-races per context × mapping.", "type": "bar", "dataset": "mapping", "sourceId": "mapping", "valueFormat": "percent", "encodings": {"x": {"field": "context", "type": "nominal", "label": "Context"}, "y": {"field": "mean_unsafe_delta", "type": "quantitative", "label": "Unsafe-rate difference"}, "color": {"field": "mapping", "type": "nominal", "label": "Mapping"}, "tooltip": [{"field": "ever_diverged_rate", "type": "quantitative", "label": "Ever diverged", "format": "percent"}, {"field": "mean_final_payoff_delta", "type": "quantitative", "label": "Mean payoff difference"}]}},
         {"id": "decomposition_chart", "title": "Direct effects and live trajectory effects", "subtitle": "The distance from the diagonal is descriptive amplification, not causal mediation.", "type": "scatter", "dataset": "decomposition", "sourceId": "decomposition", "encodings": {"x": {"field": "fixed_direct_effect_pp", "type": "quantitative", "label": "Fixed-state direct effect (pp)"}, "y": {"field": "live_effect_pp", "type": "quantitative", "label": "Live trajectory effect (pp)"}, "color": {"field": "context", "type": "nominal", "label": "Context"}, "tooltip": [{"field": "context", "type": "nominal", "label": "Context"}, {"field": "live_minus_fixed_descriptive_gap_pp", "type": "quantitative", "label": "Descriptive gap (pp)"}]}},
         {"id": "comprehension_chart", "title": "Rule recall survives; state reasoning does not", "subtitle": "Semantic accuracy in the T=0 context comprehension audit.", "type": "bar", "dataset": "comprehension", "sourceId": "comprehension", "valueFormat": "percent", "encodings": {"x": {"field": "domain", "type": "nominal", "label": "Domain"}, "y": {"field": "semantic_accuracy", "type": "quantitative", "label": "Semantic accuracy"}, "tooltip": [{"field": "n", "type": "quantitative", "label": "Responses"}, {"field": "strict_valid_rate", "type": "quantitative", "label": "Strict-valid rate", "format": "percent"}]}},
+        {"id": "power_chart", "title": "Power is governed by independent repetition streams", "subtitle": "Conservative pilot-residual sensitivity; familywise alpha 0.05 across seven contexts.", "type": "line", "dataset": "power", "sourceId": "power", "valueFormat": "percent", "encodings": {"x": {"field": "n_crn_repetition_streams", "type": "quantitative", "label": "Independent CRN streams"}, "y": {"field": "power_holm_single_step", "type": "quantitative", "label": "Estimated power"}, "color": {"field": "true_interaction", "type": "nominal", "label": "True interaction"}, "tooltip": [{"field": "true_interaction", "type": "quantitative", "label": "Interaction", "format": "percent"}, {"field": "monte_carlo_se", "type": "quantitative", "label": "Monte Carlo SE"}]}},
     ]
     tables = [
         {"id": "evidence_table", "title": "Evidence ledger", "subtitle": "Full quality gates and permitted uses are preserved in the source CSV.", "dataset": "evidence", "sourceId": "evidence", "columns": [{"field": "study", "label": "Study", "type": "text"}, {"field": "evidence_class", "label": "Class", "type": "text"}, {"field": "races", "label": "Races", "format": "number"}, {"field": "decisions_or_rows", "label": "Decisions / rows", "format": "number"}]},
@@ -186,6 +196,8 @@ def build_artifact() -> dict:
         {"id": "decomposition_block", "type": "chart", "chartId": "decomposition_chart"},
         {"id": "comprehension_text", "type": "markdown", "body": "### Comprehension is the admission bottleneck\n\nThe model can repeat rules and stage payoffs, but state update and terminal scoring fail. Gameplay therefore remains diagnostic even though code, parser, state transitions, and payoff accounting pass."},
         {"id": "comprehension_block", "type": "chart", "chartId": "comprehension_chart"},
+        {"id": "power_text", "type": "markdown", "body": "### Power and stopping are prospective\n\nRisk strata reuse the same `base_seed + repetition` stream, so the independent unit is repetition. The 32-stream run remains diagnostic. A separate 96-stream replication is frozen for a 15-point interaction, fixed N, Holm family size seven, and no optional continuation; estimated design power is **93.7%** under the conservative pilot-residual sensitivity."},
+        {"id": "power_block", "type": "chart", "chartId": "power_chart"},
         {"id": "rest", "type": "markdown", "body": "## Scope, data, methodology, limitations, next experiments, and further questions\n\n" + markdown.split("## Scope, data, and metric definitions", 1)[1]},
         {"id": "context_table_block", "type": "table", "tableId": "context_table"},
         {"id": "evidence_table_block", "type": "table", "tableId": "evidence_table"},
@@ -216,6 +228,7 @@ def build_artifact() -> dict:
                 "decomposition": decomposition,
                 "divergence": divergence,
                 "comprehension": comprehension,
+                "power": power,
                 "evidence": ledger,
             },
             "accessIssues": [],

@@ -21,7 +21,7 @@ from results.scripts.analyze_state_scaffold_factorial import (
     placebo_contrasts,
     summarize_contrasts,
 )
-from results.scripts.followup_analysis_common import sha256
+from results.scripts.followup_analysis_common import clustered_values, sha256
 
 
 DIGEST = "d" * 64
@@ -33,6 +33,19 @@ DECODING = {
     "seed_probe_exact_match": True,
 }
 RISKS = (0.1, 0.6, 0.9)
+
+
+def test_followup_inference_clusters_shared_risk_streams_by_rep() -> None:
+    rows = pd.DataFrame(
+        {
+            "max_private_risk": [0.1, 0.6, 0.9, 0.1, 0.6, 0.9],
+            "rep": [0, 0, 0, 1, 1, 1],
+            "estimate": [0.0, 0.3, 0.6, 0.2, 0.2, 0.2],
+        }
+    )
+    assert clustered_values(rows, "estimate").tolist() == pytest.approx(
+        [0.3, 0.2]
+    )
 
 
 def common_manifest(schema: str) -> dict:

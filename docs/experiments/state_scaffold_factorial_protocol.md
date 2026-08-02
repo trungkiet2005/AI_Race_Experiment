@@ -43,7 +43,9 @@ Primary behavioral endpoints are paired first-round disagreement, full-trajector
 Unsafe-rate shift, and final payoff. Round-1 effects are the direct prompt
 contrast; live trajectory effects are labelled symmetric game-level total
 intervention effects because both players receive the aid. Factorial main effects and their interaction
-are reported separately by mapping, with race-block bootstrap intervals.
+are reported separately by mapping, with bootstrap intervals clustered by
+repetition stream. Risk strata share `base_seed + repetition` and are not
+counted as independent clusters.
 
 Gameplay remains diagnostic unless every required comprehension domain clears
 its frozen threshold. Better performance with a card demonstrates aid uptake,

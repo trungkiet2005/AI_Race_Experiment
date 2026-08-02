@@ -4,8 +4,8 @@
 
 ## At a glance
 
-- Canonical files (excluding reproducible `_build/`): **1,542**
-- Total canonical size: **553.93 MiB**
+- Canonical files (excluding reproducible `_build/`): **1,554**
+- Total canonical size: **554.17 MiB**
 - Parsed manifest records: **199**
 - Invalid manifest JSON files: **0**
 - Exact duplicate hash groups: **50** (archives may intentionally retain immutable copies)
@@ -34,7 +34,7 @@ Evidence labels are conservative: a completed pilot stays `pilot`; a prepared or
 - [Payoff-scale mechanical contract](derived/payoff_scale_contract/README.md)
 - [Experiment impact roadmap](../docs/experiments/impact_experiment_program.md)
 
-## Complete visual artifact map (149)
+## Complete visual artifact map (151)
 
 Every rendered chart, publication PDF, and interactive HTML surface in the canonical results root is linked below. The narrative synthesis embeds the decision-relevant subset in `visualization_insight_full.md`.
 
@@ -87,6 +87,8 @@ Every rendered chart, publication PDF, and interactive HTML surface in the canon
 - [`impact_upgrade/figures/xai_decodability_vs_control.pdf`](<impact_upgrade/figures/xai_decodability_vs_control.pdf>)
 - [`impact_upgrade/figures/xai_decodability_vs_control.png`](<impact_upgrade/figures/xai_decodability_vs_control.png>)
 - [`impact_upgrade/impact_report.html`](<impact_upgrade/impact_report.html>)
+- [`impact_upgrade/power/context_mapping_power.pdf`](<impact_upgrade/power/context_mapping_power.pdf>)
+- [`impact_upgrade/power/context_mapping_power.png`](<impact_upgrade/power/context_mapping_power.png>)
 - [`open_source/activation_sae/causal_selfplay/fast-sae-pilot-L12-v1/analysis/figures/association_selected_features.pdf`](<open_source/activation_sae/causal_selfplay/fast-sae-pilot-L12-v1/analysis/figures/association_selected_features.pdf>)
 - [`open_source/activation_sae/causal_selfplay/fast-sae-pilot-L12-v1/analysis/figures/association_selected_features.png`](<open_source/activation_sae/causal_selfplay/fast-sae-pilot-L12-v1/analysis/figures/association_selected_features.png>)
 - [`open_source/activation_sae/causal_selfplay/fast-sae-pilot-L12-v1/analysis/figures/fixed_state_dose_response.pdf`](<open_source/activation_sae/causal_selfplay/fast-sae-pilot-L12-v1/analysis/figures/fixed_state_dose_response.pdf>)

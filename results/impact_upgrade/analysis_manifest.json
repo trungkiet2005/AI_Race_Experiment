@@ -23,8 +23,8 @@
     "analysis/openai/derived/analysis_manifest.json": "a6fb2838af5275f76292c9d64e94ae7364b1d047c724ca9e6124cd9c25189058",
     "analysis/frontier/derived/unsafe_by_risk_model_player.csv": "175ab40bebecbc8dd438675ac4da03e5b3536f73a619d0a8bf76dc4f03e9d093",
     "analysis/frontier/derived/analysis_manifest.json": "1b66fee5c2d5c97eda1d523aa3d1fceb2344b349703ba0f534ad1caf42a1408c",
-    "results/open_source/context_skin_pilot/analysis_live_pilot_t0/paired_context_effects.csv": "d5e9ddb19f96aa610db51a5e7f650796d48a4671f5a969cf54a6c98e9d242703",
-    "results/open_source/context_skin_pilot/analysis_live_pilot_t0/analysis_summary.json": "a49076804ae5caca7831945b0173e8e92dd7ca609e557b2e064bd3951c42c5f6",
+    "results/open_source/context_skin_pilot/analysis_live_pilot_t0/paired_context_effects.csv": "ff645f5387feafd5623af93b1e2a6227fa9add1d440f43b687bede02cc9d7671",
+    "results/open_source/context_skin_pilot/analysis_live_pilot_t0/analysis_summary.json": "ca906f4413195f72e615a8dd0f423b6d391d9c4285f440dae868f86a372195f1",
     "results/open_source/activation_sae/context_fast_sae_analysis/summary.json": "ff8660d4bb67a3e16e10fa4c4b5e797b67007a2388d77eb56b518c7aa5f05b9f",
     "results/open_source/activation_sae/causal_selfplay/fast-sae-pilot-L12-v1/analysis/analysis_summary.json": "c0b30cb76b59a81795eed2cdc7881f972687d67a4a30a206cb333ca60f148d22"
   },
@@ -47,7 +47,7 @@
     },
     "results/impact_upgrade/data/context_direct_vs_live.csv": {
       "bytes": 2564,
-      "sha256": "23faaedd365c04de10093178b89a53c785e0edc83f9294931790b50f6e300ea9"
+      "sha256": "56b91429c0a5532bca57c2c4c7abc51c7435d3ba3f20935c3dc4e97dc38efe51"
     },
     "results/impact_upgrade/data/cross_model_baseline_rates.csv": {
       "bytes": 2743,
@@ -63,7 +63,7 @@
     },
     "results/impact_upgrade/data/trajectory_demo.json": {
       "bytes": 108041,
-      "sha256": "583ac7e968c190ab7f93b783f3e5c25dd0f1a4f253ed5f4891e8e8a9e255f9ee"
+      "sha256": "cc446d0de269645c8f10fc2be11a4a16e70cd7fff944996850b88eae8e5157f1"
     },
     "results/impact_upgrade/data_quality_audit.json": {
       "bytes": 374,
@@ -71,7 +71,7 @@
     },
     "results/impact_upgrade/figures/context_direct_vs_live.pdf": {
       "bytes": 25736,
-      "sha256": "ce72c78f5c34c071eb627a4f5043989a1b303644fc9abbb863461036be51e780"
+      "sha256": "983b7aa14b823c078e328e51494650d54bf19c94ea321a0aba51cd50a0b7af10"
     },
     "results/impact_upgrade/figures/context_direct_vs_live.png": {
       "bytes": 125989,
@@ -79,7 +79,7 @@
     },
     "results/impact_upgrade/figures/context_mapping_gate.pdf": {
       "bytes": 26085,
-      "sha256": "78d3e3feed65a01101f28d8730ea9221ae4de21cdb4e5c3fb43d088612156b66"
+      "sha256": "f72a7e7926059115a3f36e28126e4b38e079f0c71df5ef06b339a557d85fed65"
     },
     "results/impact_upgrade/figures/context_mapping_gate.png": {
       "bytes": 110835,
@@ -87,7 +87,7 @@
     },
     "results/impact_upgrade/figures/cross_model_risk_response.pdf": {
       "bytes": 28508,
-      "sha256": "98610f1fc1c519de4288fadf47b9dd01da2fd966a176bc78c68cce66ec9e7706"
+      "sha256": "28b97f5282aeade898ca17612733b9ea9df003f4d3ad8c4d24a613fe0d8ad592"
     },
     "results/impact_upgrade/figures/cross_model_risk_response.png": {
       "bytes": 147760,
@@ -95,7 +95,7 @@
     },
     "results/impact_upgrade/figures/evidence_ladder.pdf": {
       "bytes": 23890,
-      "sha256": "c1c97ca9099ed7d06bc883f7ce45c42a47beba8c05756e234638f1f41b889116"
+      "sha256": "d8bc8e0fc086c50191ccb6b1fd8a189d26eaafc80c16a07219c1d7cf90fe3f76"
     },
     "results/impact_upgrade/figures/evidence_ladder.png": {
       "bytes": 115761,
@@ -103,7 +103,7 @@
     },
     "results/impact_upgrade/figures/trajectory_divergence_curve.pdf": {
       "bytes": 25358,
-      "sha256": "40a530aec2ce1c92efc8ae1ffd4c588de40334fde70a284b85bdee90f0b22cef"
+      "sha256": "92348bb780c9b801aa504945a1428d68f18c207403f11496e559649d401e0045"
     },
     "results/impact_upgrade/figures/trajectory_divergence_curve.png": {
       "bytes": 123700,
@@ -111,7 +111,7 @@
     },
     "results/impact_upgrade/figures/xai_decodability_vs_control.pdf": {
       "bytes": 30692,
-      "sha256": "3da8f437da82d9a87e693aa29fae4549e52e24c2b75dc4fef9f43a564829e483"
+      "sha256": "d6f5dae03b047a18c8e7670383a6bbccaf2ab89e766eb78ce8c310dea1104e0b"
     },
     "results/impact_upgrade/figures/xai_decodability_vs_control.png": {
       "bytes": 141936,

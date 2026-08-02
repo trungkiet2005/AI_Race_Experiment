@@ -61,7 +61,7 @@
     "method": "paired percentile cluster bootstrap",
     "repetitions": 5000,
     "seed": 260801,
-    "live_cluster": "risk/repetition race cluster",
+    "live_cluster": "repetition CRN stream (risk strata share base_seed + rep)",
     "fixed_cluster": "state_id"
   },
   "input_roots": {
@@ -83,7 +83,7 @@
     },
     "paired_context_effects.csv": {
       "rows": 84,
-      "sha256": "c9cde083252395b30be71aaa60db2996cc8a64309c3816011d02eb99a7118248"
+      "sha256": "43b46c619e0ddfe63c9e6cc730f9098239c4a772ac008257d3063fbfaa881448"
     },
     "paired_flip_directions.csv": {
       "rows": 14,
@@ -91,11 +91,11 @@
     },
     "payoff_setback_summary.csv": {
       "rows": 8,
-      "sha256": "f19eb0f03d02e8be308e1b87da6fbe5800b40f263b1be84ae44b62d75a2f6683"
+      "sha256": "66c64426e373673fb0b8ddab4a0f2c88a4fa1d8d3199d488e0b6e51b498da840"
     },
     "planned_realistic_fictional_contrasts.csv": {
       "rows": 9,
-      "sha256": "20cca1fcbc3372166115d2fc89d4953f0969b45e7250ebbc7355e05d1c1f061f"
+      "sha256": "2655890a57872bf12d4c87d91abd8f37cc8cb8f44987d620ee589d22e1efe866"
     },
     "comprehension_by_domain.csv": {
       "rows": 4,
@@ -115,7 +115,7 @@
     },
     "cross_protocol_effect_alignment.csv": {
       "rows": 7,
-      "sha256": "5b4031a551da9234f2292e27660bc773078c0bd9901f1ad67bd67df2a079f5ed"
+      "sha256": "6c91fe24c6e23bb24f68e75fd497e8015a64dbbf542ff0729eb816673e7e6f00"
     }
   },
   "figures": {
@@ -126,17 +126,17 @@
       },
       "pdf": {
         "bytes": 36588,
-        "sha256": "618bc13c5bc285992e0d8dc34f287b03846c5b8e19c723a9f818a81f9f60c76b"
+        "sha256": "2295c173dd08bdfd2ddb9a0a2a2c69fee9f21e29740d937b9f0f7258e3c2eaf7"
       }
     },
     "paired_context_effects": {
       "png": {
-        "bytes": 137500,
-        "sha256": "4312921dbb7408bab983f9cdc772d9b80597db320bdb9227d5907427c0380bf6"
+        "bytes": 137788,
+        "sha256": "9ce90fc5c5c0f51428a40d841a10ebf838b05b48bb8e43757749570d6877105b"
       },
       "pdf": {
-        "bytes": 26823,
-        "sha256": "7e522f935943ccd43ea47355f20090a4697e0d294ee32cacfdcdb2babf176215"
+        "bytes": 26830,
+        "sha256": "6935a1727973543e0934a2c8bdf358f5b12b27178cfe4d8ff90f526bef6d0ea4"
       }
     },
     "paired_flip_directions": {
@@ -146,27 +146,27 @@
       },
       "pdf": {
         "bytes": 26392,
-        "sha256": "5d4bdf108f5d5c4cdda894856e0677d2f886ba96835895b75146aa30fe98d02f"
+        "sha256": "c963662f2cf0dfc1b4453dcc8aefe6b22b3920548e24f052fe19ff9d78e15d83"
       }
     },
     "live_payoff_setback": {
       "png": {
-        "bytes": 148364,
-        "sha256": "4a9596199873766137ac8650a17413eb5c7721d4fcf9bebad8b44bfac26635b8"
+        "bytes": 148509,
+        "sha256": "662fbd64195cb776fe12bd7dc19d89936bd0101cdcfbeb09f6fb3c7373aa2e61"
       },
       "pdf": {
-        "bytes": 29513,
-        "sha256": "a6d2263f18453c3c527ba1bfa08c25f24bc3d90547bac6e69bc6381059250e7b"
+        "bytes": 29554,
+        "sha256": "3e9f426ae2eca3afc655cc4dd513ced3b90c7734b10f1d9619015a6d38da44ad"
       }
     },
     "planned_realistic_fictional_contrasts": {
       "png": {
-        "bytes": 101757,
-        "sha256": "0a38f1658561f156409408367decca2ebd839815bb7a7faeaa1454ffdd0c2e57"
+        "bytes": 102452,
+        "sha256": "d825ba7f2b2d9ec5a1af3ac402a5f58d86ee249a9322fd1bc69d86df727abb71"
       },
       "pdf": {
-        "bytes": 24705,
-        "sha256": "d697f6f1d9d74e2ac8e615ac067c8d69818ea6ce7adea76733fc68594f4f9c2a"
+        "bytes": 24922,
+        "sha256": "79feebce1ff97e5466e62b06f90088af012c182a545b8f5854ba5d38ab086e4c"
       }
     },
     "context_mapping_diagnostic": {
@@ -176,7 +176,7 @@
       },
       "pdf": {
         "bytes": 29725,
-        "sha256": "a29b368fa1f4a65c0126d9339907cbf18e2ec9384b22de4d5a06bfb79882db1c"
+        "sha256": "55fbdf37ac7cd7efa110309cb5cff274acba733771c807bb21a66f60e78bff64"
       }
     },
     "comprehension_admission": {
@@ -186,13 +186,13 @@
       },
       "pdf": {
         "bytes": 34893,
-        "sha256": "bf4b2d8c2bc3305b4970e18a2b04b3a7ff8d7164201ced492107aab6956eeeed"
+        "sha256": "6158f7e8fc0d78ae8936c3ebc9f4a776ab267aae9d8e95d7cc6fc27d5253a884"
       }
     }
   },
   "report": {
     "path": "context_skin_analysis.md",
-    "sha256": "7da39ef4b4ec0a3fbb55005b9d255dfc340bc310f6591d8c1c5b8bb501e5595c"
+    "sha256": "f95596762a4b5bdc0b1212108b33a63e91b378aefbb20a0384ce86c7a5dd1a2f"
   },
   "claim_boundary": "diagnostic only; comprehension admission failed",
   "cross_protocol_diagnostic": {

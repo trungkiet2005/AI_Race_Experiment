@@ -46,8 +46,9 @@ compute.
    difference, progress difference, and setback incidence; each reported by
    mapping and player role.
 
-Uncertainty is clustered by the common-random-number block
-`(risk, repetition)` and retains both player roles. Seven non-control context
+Uncertainty is clustered by the independent common-random-number repetition
+stream. All three risk strata reuse `base_seed + repetition`, so risk must not
+be counted as an independent cluster. Both player roles are retained. Seven non-control context
 interactions use Holm correction. Raw decision rows are not treated as
 independent Bernoulli trials.
 

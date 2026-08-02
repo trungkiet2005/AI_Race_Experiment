@@ -299,9 +299,7 @@ def summarize(rows: pd.DataFrame, repetitions: int) -> pd.DataFrame:
             {
                 "payoff_scale": scale,
                 "n_player_pairs": len(subset),
-                "n_crn_blocks": subset.groupby(
-                    ["max_private_risk", "rep"], observed=True
-                ).ngroups,
+                "n_crn_blocks": int(subset["rep"].nunique()),
                 "first_round_disagreement_rate": subset[
                     "first_round_disagreement"
                 ].mean(),

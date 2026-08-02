@@ -1,10 +1,10 @@
 estimand,context,reference,risk,estimate_pp,ci_low_pp,ci_high_pp,n_paired_rows,n_clusters,safe_to_unsafe,unsafe_to_safe,stable,pair_family,realistic,fictional
-live_first_round,crystal_guild_contract,logistics_contract,all,0.0,0.0,0.0,192,96,0,0,192,Commercial logistics,logistics_contract,crystal_guild_contract
-live_full_trajectory,crystal_guild_contract,logistics_contract,all,-4.412453270449594,-5.795676975019806,-3.0706987537755017,192,96,0,0,192,Commercial logistics,logistics_contract,crystal_guild_contract
+live_first_round,crystal_guild_contract,logistics_contract,all,0.0,0.0,0.0,192,32,0,0,192,Commercial logistics,logistics_contract,crystal_guild_contract
+live_full_trajectory,crystal_guild_contract,logistics_contract,all,-4.412453270449594,-6.119877156986532,-2.7635502156986536,192,32,0,0,192,Commercial logistics,logistics_contract,crystal_guild_contract
 fixed_state_direct,crystal_guild_contract,logistics_contract,all,-0.5208333333333333,-3.125,1.5625,192,96,2,3,187,Commercial logistics,logistics_contract,crystal_guild_contract
-live_first_round,colony_life_support,hospital_deployment,all,0.0,0.0,0.0,192,96,0,0,192,Public-safety deployment,hospital_deployment,colony_life_support
-live_full_trajectory,colony_life_support,hospital_deployment,all,-1.3923626584472173,-2.5057657611655775,-0.3954476598088745,192,96,0,0,192,Public-safety deployment,hospital_deployment,colony_life_support
+live_first_round,colony_life_support,hospital_deployment,all,0.0,0.0,0.0,192,32,0,0,192,Public-safety deployment,hospital_deployment,colony_life_support
+live_full_trajectory,colony_life_support,hospital_deployment,all,-1.392362658447217,-2.513853106741434,-0.40353732638889045,192,32,0,0,192,Public-safety deployment,hospital_deployment,colony_life_support
 fixed_state_direct,colony_life_support,hospital_deployment,all,-2.083333333333333,-5.208333333333334,0.5208333333333333,192,96,2,6,184,Public-safety deployment,hospital_deployment,colony_life_support
-live_first_round,fictional_cartography,robotic_expedition,all,0.0,0.0,0.0,192,96,0,0,192,Neutral exploration,robotic_expedition,fictional_cartography
-live_full_trajectory,fictional_cartography,robotic_expedition,all,10.241044018617547,7.998683216973658,12.604312116260644,192,96,0,0,192,Neutral exploration,robotic_expedition,fictional_cartography
+live_first_round,fictional_cartography,robotic_expedition,all,0.0,0.0,0.0,192,32,0,0,192,Neutral exploration,robotic_expedition,fictional_cartography
+live_full_trajectory,fictional_cartography,robotic_expedition,all,10.241044018617549,6.482286096256683,14.26119188205585,192,32,0,0,192,Neutral exploration,robotic_expedition,fictional_cartography
 fixed_state_direct,fictional_cartography,robotic_expedition,all,4.166666666666666,1.5625,7.291666666666667,192,96,8,0,184,Neutral exploration,robotic_expedition,fictional_cartography

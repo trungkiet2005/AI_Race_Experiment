@@ -122,8 +122,16 @@ def holm(p_values: list[float]) -> list[float]:
 
 
 def clustered_values(rows: pd.DataFrame, value: str) -> np.ndarray:
+    """Return equal-weight means for independent CRN repetition streams.
+
+    Follow-up runners reuse ``base_seed + rep`` across all risk treatments.
+    Risk strata within a repetition are dependent views of the same random
+    stream, not independent clusters.
+    """
+    if "rep" not in rows.columns:
+        raise ValueError("CRN inference requires the repetition identifier 'rep'")
     clusters = (
-        rows.groupby(["max_private_risk", "rep"], observed=True)[value]
+        rows.groupby("rep", observed=True)[value]
         .mean()
         .to_numpy(dtype=float)
     )
