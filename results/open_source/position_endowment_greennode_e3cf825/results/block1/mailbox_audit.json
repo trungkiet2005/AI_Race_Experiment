@@ -1,0 +1,16 @@
+[
+  {
+    "model_key": "qwen25_7b",
+    "n_responses": 96,
+    "request_sha256": "9213a1ced8b4f5c92016e7b8471492c0eab4e7835fe6b2aadbc033fc1375083d",
+    "response_sha256": "5169feed8eccdf1e92ba2b9ca0b2b0b6b0d1b3a618c54dc6ff424579c7c6e0e3",
+    "worker_id": "podA-qwen"
+  },
+  {
+    "model_key": "mistral7_01",
+    "n_responses": 96,
+    "request_sha256": "9d58382b8d654ad40941964b5c6014cedd28a56cc4efb20e7058b735f1d478f3",
+    "response_sha256": "d125e0f1a2932a210fcb5b61f91edc4e74ba45cf25e86017ccd289b99c1d130b",
+    "worker_id": "podB-mistral"
+  }
+]

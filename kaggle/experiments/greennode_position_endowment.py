@@ -17,6 +17,7 @@ from ai_race.audit.position_endowment import (
 )
 from kaggle.experiments.greennode_heterogeneous_dyad import (
     MODEL_LABELS,
+    PROTOCOL as MAILBOX_TRANSPORT_PROTOCOL,
     admission_receipts,
     atomic_json,
     sha256_file,
@@ -50,6 +51,20 @@ def wait_for_response(path: Path, timeout_seconds: float) -> dict[str, Any]:
     return payload
 
 
+def validate_response_envelope(payload: dict[str, Any], request_id: str) -> None:
+    """Fail closed when the shared worker transport returns the wrong envelope."""
+    if payload.get("protocol") != MAILBOX_TRANSPORT_PROTOCOL:
+        raise RuntimeError(
+            "worker transport protocol mismatch: "
+            f"expected {MAILBOX_TRANSPORT_PROTOCOL!r}, got {payload.get('protocol')!r}"
+        )
+    if payload.get("request_id") != request_id:
+        raise RuntimeError(
+            "worker request_id mismatch: "
+            f"expected {request_id!r}, got {payload.get('request_id')!r}"
+        )
+
+
 def run(args: argparse.Namespace) -> int:
     rows = build_position_probe_rows()
     if len(rows) != EXPECTED_PROMPTS_PER_MODEL:
@@ -64,7 +79,11 @@ def run(args: argparse.Namespace) -> int:
         if not path.is_file():
             raise FileNotFoundError(f"worker is not ready: {path}")
         receipt = json.loads(path.read_text(encoding="utf-8"))
-        if receipt.get("status") != "ready" or receipt.get("model_key") != model_key:
+        if (
+            receipt.get("status") != "ready"
+            or receipt.get("model_key") != model_key
+            or receipt.get("protocol") != MAILBOX_TRANSPORT_PROTOCOL
+        ):
             raise RuntimeError(f"worker receipt mismatch: {path}")
         ready[model_key] = {**receipt, "receipt_sha256": sha256_file(path)}
 
@@ -120,6 +139,7 @@ def run(args: argparse.Namespace) -> int:
             "action_mappings": ["safe_p", "safe_q"],
             "max_private_risk": 0.6,
             "temperature": 0.0,
+            "mailbox_transport_protocol": MAILBOX_TRANSPORT_PROTOCOL,
             "position_intervention": "engine-scored exogenous progress adjustment",
         },
         "expected_responses": len(rows) * len(workers),
@@ -156,6 +176,7 @@ def run(args: argparse.Namespace) -> int:
         mailbox_rows: list[dict[str, Any]] = []
         for model_key, (request_path, response_path, worker_id) in pending.items():
             payload = wait_for_response(response_path, args.timeout_seconds)
+            validate_response_envelope(payload, request_path.stem)
             responses = list(payload.get("responses", []))
             if len(responses) != len(rows):
                 raise RuntimeError(f"{model_key}: response count mismatch")

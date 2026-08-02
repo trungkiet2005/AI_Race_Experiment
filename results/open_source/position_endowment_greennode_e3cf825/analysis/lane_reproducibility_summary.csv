@@ -1,0 +1,17 @@
+model_key,model,game_size,rank_label_condition,mapping_id,n_probe_pairs,block1_unsafe_rate,block2_unsafe_rate,exact_action_agreement,unsafe_rate_delta_block2_minus_block1
+mistral7_01,Mistral-7B-Instruct-v0.1,2,numeric_only,safe_p,6,0.0,0.0,1.0,0.0
+mistral7_01,Mistral-7B-Instruct-v0.1,2,numeric_only,safe_q,6,0.0,0.0,1.0,0.0
+mistral7_01,Mistral-7B-Instruct-v0.1,2,verified_label,safe_p,6,0.0,0.0,1.0,0.0
+mistral7_01,Mistral-7B-Instruct-v0.1,2,verified_label,safe_q,6,0.0,0.0,1.0,0.0
+mistral7_01,Mistral-7B-Instruct-v0.1,3,numeric_only,safe_p,18,0.0,0.0,1.0,0.0
+mistral7_01,Mistral-7B-Instruct-v0.1,3,numeric_only,safe_q,18,0.0,0.0,1.0,0.0
+mistral7_01,Mistral-7B-Instruct-v0.1,3,verified_label,safe_p,18,0.0,0.0,1.0,0.0
+mistral7_01,Mistral-7B-Instruct-v0.1,3,verified_label,safe_q,18,0.0,0.0,1.0,0.0
+qwen25_7b,Qwen2.5-7B-Instruct,2,numeric_only,safe_p,6,0.3333333333333333,0.3333333333333333,1.0,0.0
+qwen25_7b,Qwen2.5-7B-Instruct,2,numeric_only,safe_q,6,0.5,0.3333333333333333,0.8333333333333334,-0.16666666666666669
+qwen25_7b,Qwen2.5-7B-Instruct,2,verified_label,safe_p,6,0.6666666666666666,0.6666666666666666,1.0,0.0
+qwen25_7b,Qwen2.5-7B-Instruct,2,verified_label,safe_q,6,0.3333333333333333,0.3333333333333333,1.0,0.0
+qwen25_7b,Qwen2.5-7B-Instruct,3,numeric_only,safe_p,18,0.7777777777777778,0.7777777777777778,1.0,0.0
+qwen25_7b,Qwen2.5-7B-Instruct,3,numeric_only,safe_q,18,0.7222222222222222,0.6666666666666666,0.9444444444444444,-0.05555555555555558
+qwen25_7b,Qwen2.5-7B-Instruct,3,verified_label,safe_p,18,0.7222222222222222,0.7222222222222222,0.8888888888888888,0.0
+qwen25_7b,Qwen2.5-7B-Instruct,3,verified_label,safe_q,18,0.6666666666666666,0.7222222222222222,0.9444444444444444,0.05555555555555558

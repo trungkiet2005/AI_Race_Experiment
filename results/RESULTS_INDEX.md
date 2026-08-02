@@ -4,11 +4,11 @@
 
 ## At a glance
 
-- Canonical files (excluding reproducible `_build/`): **2,751**
-- Total canonical size: **988.08 MiB**
-- Parsed manifest records: **341**
+- Canonical files (excluding reproducible `_build/`): **2,792**
+- Total canonical size: **990.81 MiB**
+- Parsed manifest records: **344**
 - Invalid manifest JSON files: **0**
-- Exact duplicate hash groups: **140** (archives may intentionally retain immutable copies)
+- Exact duplicate hash groups: **142** (archives may intentionally retain immutable copies)
 
 Evidence labels are conservative: a completed pilot stays `pilot`; a prepared or diagnostic artifact is never promoted by directory name alone.
 
@@ -18,7 +18,7 @@ Evidence labels are conservative: a completed pilot stays `pilot`; a prepared or
 |---|---|
 | `artifacts/publication/` | Current paper and research-deck PDFs |
 | `artifacts/qa/` | Rendered visual QA evidence |
-| `open_source/` | Open-weight raw runs, admitted summaries, SAE, EGT, context, and prompt audits |
+| `open_source/` | Open-weight raw runs, admitted and explicitly unadmitted diagnostics, SAE, EGT, context, and prompt audits |
 | `frontier/` | Hosted/frontier model runs, including the migrated API pilot |
 | `derived/` | Reproducible analysis outputs |
 | `impact_upgrade/` | Cross-study technical report and high-impact visual synthesis |
@@ -32,9 +32,12 @@ Evidence labels are conservative: a completed pilot stays `pilot`; a prepared or
 - [Paper PDF](artifacts/publication/ai_race_paper.pdf)
 - [Research deck PDF](artifacts/publication/ai_race_research_deck.pdf)
 - [Payoff-scale mechanical contract](derived/payoff_scale_contract/README.md)
+- [Heterogeneous identity/persona diagnostic](open_source/heterogeneous_dyad_greennode_ba2906a/analysis/README.md)
+- [Exogenous competitive-position diagnostic](open_source/position_endowment_greennode_e3cf825/analysis/README.md)
+- [Complete visualization and insight narrative](visualization_insight_full.md)
 - [Experiment impact roadmap](../docs/experiments/impact_experiment_program.md)
 
-## Complete visual artifact map (243)
+## Complete visual artifact map (249)
 
 Every rendered chart, publication PDF, and interactive HTML surface in the canonical results root is linked below. The narrative synthesis embeds the decision-relevant subset in `visualization_insight_full.md`.
 
@@ -277,6 +280,12 @@ Every rendered chart, publication PDF, and interactive HTML surface in the canon
 - [`open_source/heterogeneous_dyad_greennode_ba2906a/analysis/figures/identity_disclosure_matrix.png`](<open_source/heterogeneous_dyad_greennode_ba2906a/analysis/figures/identity_disclosure_matrix.png>)
 - [`open_source/heterogeneous_dyad_greennode_ba2906a/analysis/figures/risk_response_same_vs_cross.pdf`](<open_source/heterogeneous_dyad_greennode_ba2906a/analysis/figures/risk_response_same_vs_cross.pdf>)
 - [`open_source/heterogeneous_dyad_greennode_ba2906a/analysis/figures/risk_response_same_vs_cross.png`](<open_source/heterogeneous_dyad_greennode_ba2906a/analysis/figures/risk_response_same_vs_cross.png>)
+- [`open_source/position_endowment_greennode_e3cf825/analysis/lane_reproducibility.pdf`](<open_source/position_endowment_greennode_e3cf825/analysis/lane_reproducibility.pdf>)
+- [`open_source/position_endowment_greennode_e3cf825/analysis/lane_reproducibility.png`](<open_source/position_endowment_greennode_e3cf825/analysis/lane_reproducibility.png>)
+- [`open_source/position_endowment_greennode_e3cf825/analysis/primary_direct_contrasts.pdf`](<open_source/position_endowment_greennode_e3cf825/analysis/primary_direct_contrasts.pdf>)
+- [`open_source/position_endowment_greennode_e3cf825/analysis/primary_direct_contrasts.png`](<open_source/position_endowment_greennode_e3cf825/analysis/primary_direct_contrasts.png>)
+- [`open_source/position_endowment_greennode_e3cf825/analysis/primary_position_response.pdf`](<open_source/position_endowment_greennode_e3cf825/analysis/primary_position_response.pdf>)
+- [`open_source/position_endowment_greennode_e3cf825/analysis/primary_position_response.png`](<open_source/position_endowment_greennode_e3cf825/analysis/primary_position_response.png>)
 - [`open_source/prompt_sensitivity_pilot/xai_auto_vector_encoder/xai_top_global_coefficients.png`](<open_source/prompt_sensitivity_pilot/xai_auto_vector_encoder/xai_top_global_coefficients.png>)
 - [`open_source/prompt_sensitivity_pilot/xai_auto_vector_encoder/xai_top_permutation_importance.png`](<open_source/prompt_sensitivity_pilot/xai_auto_vector_encoder/xai_top_permutation_importance.png>)
 - [`open_source/prompt_sensitivity_pilot/xai_auto_vector_encoder_no_response/xai_top_global_coefficients.png`](<open_source/prompt_sensitivity_pilot/xai_auto_vector_encoder_no_response/xai_top_global_coefficients.png>)
@@ -286,7 +295,7 @@ Every rendered chart, publication PDF, and interactive HTML surface in the canon
 
 | Evidence class | Manifest records |
 |---|---:|
-| `diagnostic` | 17 |
+| `diagnostic` | 20 |
 | `failed-or-incomplete` | 8 |
 | `pilot` | 301 |
 | `unclassified` | 15 |
@@ -632,6 +641,9 @@ Every rendered chart, publication PDF, and interactive HTML surface in the canon
 | `results/open_source/greennode_prompt_sensitivity_pilot_manifest.json` | completed | pilot |  |  |  |
 | `results/open_source/heterogeneous_dyad_greennode_ba2906a/ai_race_hetero_ba2906a/results/block1/smoke/run_manifest.json` | completed | diagnostic |  | 192 | 2496 |
 | `results/open_source/heterogeneous_dyad_greennode_ba2906a/ai_race_hetero_ba2906a/results/block2/smoke/run_manifest.json` | completed | diagnostic |  | 192 | 2496 |
+| `results/open_source/position_endowment_greennode_e3cf825/analysis/analysis_manifest.json` | complete | diagnostic |  |  |  |
+| `results/open_source/position_endowment_greennode_e3cf825/results/block1/run_manifest.json` | completed | diagnostic |  |  |  |
+| `results/open_source/position_endowment_greennode_e3cf825/results/block2/run_manifest.json` | completed | diagnostic |  |  |  |
 | `results/open_source/prompt_sensitivity_pilot/analysis_manifest.json` | recorded | unclassified |  |  |  |
 | `results/open_source/surface_sensitivity_pilot/lane-a-manifest.json` | completed | pilot | qwen2.5:7b-instruct-fp16 |  |  |
 | `results/open_source/surface_sensitivity_pilot/lane-b-manifest.json` | completed | pilot | qwen2.5:7b-instruct-fp16 |  |  |

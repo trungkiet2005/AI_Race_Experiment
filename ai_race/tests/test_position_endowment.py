@@ -9,7 +9,14 @@ from ai_race.audit.position_endowment import (
     build_position_probe_rows,
     classify_position,
 )
-from kaggle.experiments.greennode_position_endowment import parse_code, sampling_seed
+from kaggle.experiments.greennode_position_endowment import (
+    parse_code,
+    sampling_seed,
+    validate_response_envelope,
+)
+from kaggle.experiments.greennode_heterogeneous_dyad import (
+    PROTOCOL as MAILBOX_TRANSPORT_PROTOCOL,
+)
 
 
 EXPECTED_ROWS = 96
@@ -149,3 +156,25 @@ def test_position_gpu_parser_is_strict_and_seed_is_stable() -> None:
     assert sampling_seed("probe-a", "qwen25_7b") != sampling_seed(
         "probe-a", "mistral7_01"
     )
+
+
+def test_position_worker_envelope_is_bound_to_transport_and_request() -> None:
+    validate_response_envelope(
+        {
+            "protocol": MAILBOX_TRANSPORT_PROTOCOL,
+            "request_id": "position-block1-abc",
+            "responses": ["ACTION: P"],
+            "error": None,
+        },
+        "position-block1-abc",
+    )
+    for payload in (
+        {"protocol": "wrong", "request_id": "position-block1-abc"},
+        {"protocol": MAILBOX_TRANSPORT_PROTOCOL, "request_id": "wrong"},
+    ):
+        try:
+            validate_response_envelope(payload, "position-block1-abc")
+        except RuntimeError:
+            pass
+        else:
+            raise AssertionError("invalid worker envelope must fail closed")
