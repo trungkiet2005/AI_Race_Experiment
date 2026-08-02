@@ -1,11 +1,11 @@
 # Phân tích run `baseline` — qwen2.5-14b-instruct và gemma-3-12b-it
 
 Nguồn: `results/ai_race_results.zip` (Kaggle, 2026-07-31, RTX PRO 6000).
-Notebook: [kaggle/experiments/baseline.py](../kaggle/experiments/baseline.py).
-Đối chiếu: [docs/paper-analyses-inventory.md](../docs/paper-analyses-inventory.md) — 19 phân tích của paper gốc.
+Notebook: [kaggle/experiments/baseline.py](../../kaggle/experiments/baseline.py).
+Đối chiếu: [docs/paper-analyses-inventory.md](../../docs/paper-analyses-inventory.md) — 19 phân tích của paper gốc.
 
 > **Đây là PILOT.** `run_phase = pilot`, 10 repetition, 10 CRN block. Không một con số nào
-> trong tài liệu này là bằng chứng confirmatory. Theo [PROJECT.md](../PROJECT.md), primary
+> trong tài liệu này là bằng chứng confirmatory. Theo [PROJECT.md](../../PROJECT.md), primary
 > analysis chỉ nhận một phase `confirmatory` duy nhất với manifest `status="completed"`.
 > Mọi p-value dưới đây đọc như tín hiệu định hướng, không phải kiểm định.
 
@@ -119,7 +119,7 @@ Model **thật sự** nhận prompt hợp lệ, **thật sự** đang sampling, 
 - **(B)** Gemma từ chối token `UNSAFE` do safety tuning, chưa từng cân nhắc payoff.
 
 Nghi ngờ nghiêng về (B): nhãn hành động **chính là chữ** `SAFE` / `UNSAFE`
-([prompt.py:141-142](../ai_race/engine/prompt.py#L141-L142)). Một model safety-tune nặng có
+([prompt.py:141-142](../../ai_race/engine/prompt.py#L141-L142)). Một model safety-tune nặng có
 prior rất mạnh trên hai từ đó, độc lập với cấu trúc payoff. Nhưng dữ liệu hiện có **không
 phân biệt được** — cả (A) và (B) đều sinh ra đúng bộ số này.
 

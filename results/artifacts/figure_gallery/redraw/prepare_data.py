@@ -8,7 +8,7 @@ paired contrast was never computed at all). Splitting derivation from drawing me
 every mark in the final PDFs traces to a CSV a reviewer can open, which is also the
 "table view" relief the palette contrast check requires.
 
-Outputs land in ``paper/all_figure/redraw/tables/``. Drawing code reads only those
+Outputs land in ``results/artifacts/figure_gallery/redraw/tables/``. Drawing code reads only those
 tables and never touches a raw run directory.
 """
 from __future__ import annotations

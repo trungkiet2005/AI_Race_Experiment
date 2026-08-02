@@ -49,9 +49,17 @@ results/
   frontier/        outputs from frontier/API or Kaggle Benchmark runs
   scripts/         analysis code tracked in Git
   derived/         reproducible analysis tables; selected admitted receipts tracked
+  reports/         narrative reports, dashboards, and their local derived tables
   impact_upgrade/  cross-study report, figures, evidence ledgers, and demo data
   _build/          ignored reproducible scratch; never a paper evidence source
 ```
+
+The curated paper-figure gallery, its selection notes, and redraw QA now live
+under [`artifacts/figure_gallery/`](artifacts/figure_gallery/). Historical
+baseline, frontier, OpenAI, and N-player narrative reports are consolidated
+under [`reports/`](reports/). No generated report or figure gallery should be
+created under repository-root `analysis/`, `docs/reports/`, or
+`paper/all_figure/`; those retired paths are intentionally absent.
 
 The complete public GreenNode handoff is indexed in
 `open_source/gpu_run_archive/archive_ledger.json`. It includes immutable raw and
@@ -63,7 +71,7 @@ from a clean clone.
 
 OpenAI stage-run console logs are local operational artifacts under
 `frontier/openai/_logs/` and are ignored by Git. The retained audit summary is
-[`analysis/openai/stage-run-summary.md`](../analysis/openai/stage-run-summary.md).
+[`reports/openai/stage-run-summary.md`](reports/openai/stage-run-summary.md).
 
 Local Kaggle Benchmark CLI exports are similarly ignored under
 `kaggle-benchmarks/_local-debug/`; their retained outcome summary is

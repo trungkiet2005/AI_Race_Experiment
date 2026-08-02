@@ -5,7 +5,7 @@ the repository-root `logs_openai_stage/` directory and `run_openai_stage.log`.
 Raw console logs now live locally under `results/frontier/openai/_logs/stage/`
 and are intentionally ignored by Git.
 
-The maintained entry point is [`scripts/run_openai_stage.py`](../../scripts/run_openai_stage.py).
+The maintained entry point is [`scripts/run_openai_stage.py`](../../../scripts/run_openai_stage.py).
 
 ## Outcome
 

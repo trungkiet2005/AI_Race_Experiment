@@ -803,18 +803,18 @@ Hội tụ? & có & có & \bad{không} & có (spec 1--2) & có \\
 \bottomrule
 \end{tabular}}
 \vspace{0.5em}
-{\scriptsize Nguồn: \texttt{analysis/baseline.md} \S4.4; \texttt{analysis/frontier/report.md} \S4; \texttt{analysis/openai/report.md} \S5; \texttt{analysis/nplayer/derived/clustered\_logit\_coefficients.csv} spec 3.}
+{\scriptsize Nguồn: \texttt{results/reports/baseline.md} \S4.4; \texttt{results/reports/frontier/report.md} \S4; \texttt{results/reports/openai/report.md} \S5; \texttt{results/reports/nplayer/derived/clustered\_logit\_coefficients.csv} spec 3.}
 \end{frame}
 
 \begin{frame}{Backup 2 --- Provenance \& lệnh tái tạo}
 \scriptsize
 \begin{block}{4 file nguồn (không tính lại từ CSV thô)}
-\texttt{analysis/baseline.md} \textbullet\ \texttt{analysis/frontier/report.md} \textbullet\ \texttt{analysis/openai/report.md} \textbullet\ \texttt{analysis/nplayer/report.md}
+\texttt{results/reports/baseline.md} \textbullet\ \texttt{results/reports/frontier/report.md} \textbullet\ \texttt{results/reports/openai/report.md} \textbullet\ \texttt{results/reports/nplayer/report.md}
 \end{block}
 \begin{block}{Lệnh tái tạo (ví dụ openai)}
 \begin{verbatim}
 .venv-kaggle/bin/python3 results/scripts/analyze_ai_race.py \
-  --input results/frontier/openai --output analysis/openai/derived \
+  --input results/frontier/openai --output results/reports/openai/derived \
   --fit-logit --fit-logit-robustness \
   --allow-mixed-protocols --allow-nonfinal-runs \
   --allow-nonconfirmatory-runs --allow-missing-persona-condition

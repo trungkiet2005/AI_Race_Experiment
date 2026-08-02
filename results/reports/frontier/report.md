@@ -2,19 +2,19 @@
 
 Nguồn dữ liệu: `results/frontier/` (`baseline/` — 3 model không persona; `persona/` — 6 cell
 persona, 5/6 hoàn chỉnh, trên `google/gemini-3-flash-preview`).
-Đối chiếu: [docs/paper-analyses-inventory.md](../../docs/paper-analyses-inventory.md) — 19 phân
-tích của paper gốc; [docs/implementation-status.md](../../docs/implementation-status.md) — tình
+Đối chiếu: [docs/paper-analyses-inventory.md](../../../docs/paper-analyses-inventory.md) — 19 phân
+tích của paper gốc; [docs/implementation-status.md](../../../docs/implementation-status.md) — tình
 trạng đã code trong `analyze_ai_race.py`.
 Dashboard: [visualizations/dashboard.html](visualizations/dashboard.html).
 Bảng dẫn xuất: [derived/](derived/) (35 file, sinh bởi `results/scripts/analyze_ai_race.py`).
 
 > **Đây là PILOT, không phải confirmatory.** Mọi run có `run_phase = pilot` và manifest schema
-> `ai-race-results-v1` — theo [results/README.md](../../results/README.md), schema này "cố ý
+> `ai-race-results-v1` — theo [results/README.md](../../README.md), schema này "cố ý
 > không đủ cho phân tích chính gộp" (thiếu source hash, decoding contract đầy đủ, seed
 > provenance đầy đủ so với hai schema Kaggle/Kaggle-Benchmark). Vì vậy analyser chỉ chạy được
 > khi bật cả ba cờ audit: `--allow-mixed-protocols --allow-nonfinal-runs
 > --allow-nonconfirmatory-runs --allow-missing-persona-condition`. Theo
-> [docs/running-the-experiment.md](../../docs/running-the-experiment.md): **"Đừng dùng ba flag đó
+> [docs/running-the-experiment.md](../../../docs/running-the-experiment.md): **"Đừng dùng ba flag đó
 > cho kết quả thật."** Tài liệu này đọc như một audit/exploratory pass trên dữ liệu pilot, không
 > phải bằng chứng confirmatory cho PROJECT.md.
 

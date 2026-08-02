@@ -79,7 +79,7 @@ Data flows config → games → lockstep batch → journal → analyser.
 ## Analyzing LLM behavioral results
 
 When asked to "analyze" or "visualize" a run under `results/` (2-player or N-player), match the
-rigor already established in `analysis/frontier/` (`results/scripts/analyze_ai_race.py`), not just
+rigor already established in `results/reports/frontier/` (`results/scripts/analyze_ai_race.py`), not just
 means/proportions. That baseline includes, wherever the sample size allows it: a cluster-robust
 panel logistic regression (cluster on the CRN block — pair or `rep`, whichever repetitions share
 common-random-number draws), nearest-strategy classification by Hamming distance (AS/AU/CS[/CAS]),
@@ -88,7 +88,7 @@ theory-vs-experiment comparison against `ai_race/theory/` or `N-Player/theory/` 
 free parameter (e.g. beta) for the best qualitative fit rather than checking one arbitrarily-picked
 value. Persona/small-N cells that can't support inference (zero variance, <5 independent races)
 stay strictly descriptive — say so explicitly rather than fitting a model that will silently fail
-or mean nothing. See `analysis/nplayer/report.md`'s "Đối chiếu độ sâu" table for a worked example
+or mean nothing. See `results/reports/nplayer/report.md`'s "Đối chiếu độ sâu" table for a worked example
 of holding an N-player pilot to this same bar, and what stayed descriptive-only and why.
 
 ## Conventions

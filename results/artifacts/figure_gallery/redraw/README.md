@@ -12,7 +12,7 @@ verify.py         đọc lại artifact gốc → assert khớp    (89/89 pass)
 Chạy lại toàn bộ:
 
 ```bash
-cd paper/all_figure/redraw
+cd results/artifacts/figure_gallery/redraw
 python prepare_data.py && python draw_figures.py && python verify.py
 ```
 

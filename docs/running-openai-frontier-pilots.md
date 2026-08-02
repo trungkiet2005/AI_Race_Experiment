@@ -236,7 +236,7 @@ tail -f results/frontier/openai/_logs/stage/run_openai_stage.log
 
 Raw console logs under `results/frontier/openai/_logs/` are operational artifacts
 and are ignored by Git. Keep durable run data in the normal result directories;
-record any audit-relevant incident in `analysis/openai/stage-run-summary.md`.
+record any audit-relevant incident in `results/reports/openai/stage-run-summary.md`.
 
 Đứt giữa chừng (hết quota, mất mạng) thì chạy lại y nguyên lệnh trên — script tự bỏ qua
 model/config đã `completed`, không tốn tiền chạy lại phần đã xong. **Lưu ý:** logic

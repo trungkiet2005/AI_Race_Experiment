@@ -1,7 +1,7 @@
 """Rigorous statistical layer for the N-player pilot runs.
 
 Extends ``analyze_nplayer_results.py``'s descriptive pass with the pieces
-that make ``analysis/frontier/`` (2-player) more than a means-and-proportions
+that make ``results/reports/frontier/`` (2-player) more than a means-and-proportions
 dashboard: nearest-strategy classification, a cluster-robust panel logistic
 regression, a theory-fit search over the selection intensity beta, and
 Wilson confidence intervals on every reported proportion. Mirrors, wherever
@@ -10,8 +10,8 @@ the N-player schema allows it, ``results/scripts/analyze_ai_race.py``'s
 ``strategy_analysis/classify.py``'s nearest-strategy classifier -- see each
 section below for exactly what differs and why.
 
-Writes CSV/JSON outputs to ``analysis/nplayer/derived/`` (mirroring
-``analysis/frontier/derived/``'s role: derived tables consumed by the
+Writes CSV/JSON outputs to ``results/reports/nplayer/derived/`` (mirroring
+``results/reports/frontier/derived/``'s role: derived tables consumed by the
 dashboard and report, not the raw run data itself, which stays under
 ``results/nplayer/``).
 
@@ -97,7 +97,7 @@ def classify_all_races(turns: pd.DataFrame) -> pd.DataFrame:
 def strategy_mix_table(classifications: pd.DataFrame, *, group_cols: list[str]) -> pd.DataFrame:
     """Share of player-races nearest each strategy, "Tie/Other" for ties.
 
-    Matches ``analysis/frontier/visualizations``' chart-5 category set
+    Matches ``results/reports/frontier/visualizations``' chart-5 category set
     (``AS, AU, CS, Tie/Other`` -- no CAS here, since the N-player engine and
     its source paper appendix do not define one).
     """

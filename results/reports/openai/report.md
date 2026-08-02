@@ -2,18 +2,18 @@
 
 Nguồn dữ liệu: `results/frontier/openai/` (`baseline/` — không persona; `persona/` — 7 cell
 persona core; `persona/risk_matrix/` — ma trận rủi ro 6×6 đầy đủ, 36 ô). Backend `"openai"`
-(direct API, không qua Kaggle proxy) — xem [ai_race/models/openai_direct.py](../../ai_race/models/openai_direct.py)
-và [docs/running-openai-frontier-pilots.md](../../docs/running-openai-frontier-pilots.md).
-Đối chiếu: [docs/paper-analyses-inventory.md](../../docs/paper-analyses-inventory.md) — 19 phân
+(direct API, không qua Kaggle proxy) — xem [ai_race/models/openai_direct.py](../../../ai_race/models/openai_direct.py)
+và [docs/running-openai-frontier-pilots.md](../../../docs/running-openai-frontier-pilots.md).
+Đối chiếu: [docs/paper-analyses-inventory.md](../../../docs/paper-analyses-inventory.md) — 19 phân
 tích của paper gốc. Đối chiếu chéo với pilot Gemini: [analysis/frontier/report.md](../frontier/report.md).
 Bảng dẫn xuất: [derived/](derived/) (35 file, sinh bởi `results/scripts/analyze_ai_race.py`).
 
 > **Đây là PILOT, không phải confirmatory.** Mọi run có `run_phase = pilot` và manifest schema
-> `ai-race-results-v1` — theo [results/README.md](../../results/README.md), schema này "cố ý
+> `ai-race-results-v1` — theo [results/README.md](../../README.md), schema này "cố ý
 > không đủ cho phân tích chính gộp". Analyser chỉ chạy được khi bật cả bốn cờ audit:
 > `--allow-mixed-protocols --allow-nonfinal-runs --allow-nonconfirmatory-runs
 > --allow-missing-persona-condition`. Theo
-> [docs/running-the-experiment.md](../../docs/running-the-experiment.md): **"Đừng dùng các flag
+> [docs/running-the-experiment.md](../../../docs/running-the-experiment.md): **"Đừng dùng các flag
 > đó cho kết quả thật."** Tài liệu này đọc như một audit/exploratory pass, không phải bằng chứng
 > confirmatory cho PROJECT.md.
 
@@ -325,7 +325,7 @@ lại contrast theo *từng model, chỉ baseline* ở §2 để so sánh mức 
    Không kết luận được gì về khác biệt giữa các họ model (GPT vs Gemini vs người) vượt ra ngoài
    so sánh mô tả.
 6. **`gpt-5-nano` cần cơ chế `reasoning_effort` đặc thù** (xem
-   [ai_race/models/openai_direct.py](../../ai_race/models/openai_direct.py)) để tránh response
+   [ai_race/models/openai_direct.py](../../../ai_race/models/openai_direct.py)) để tránh response
    rỗng do đốt hết ngân sách token vào reasoning ẩn — dữ liệu cuối sạch (0 parse_failed) nhưng
    cơ chế sinh sinh ra nó khác `gpt-5.4-nano` (temperature effective cũng khác: `gpt-5-nano`
    dùng default 1,0 của model vì từ chối giá trị 0,7 tường minh, `gpt-5.4-nano` dùng đúng 0,7).

@@ -6,11 +6,11 @@ cả 3 ghế, × 2 lần lặp). Cả hai đều `run_phase = pilot`.
 
 Dashboard: [visualizations/dashboard.html](visualizations/dashboard.html).
 Phân tích đầy đủ bằng văn xuôi (số liệu, diễn giải, giới hạn):
-[results/nplayer/ANALYSIS_qwen2.5-14b-instruct.md](../../results/nplayer/ANALYSIS_qwen2.5-14b-instruct.md).
-Script mô tả: [results/nplayer/analyze_nplayer_results.py](../../results/nplayer/analyze_nplayer_results.py).
+[results/nplayer/ANALYSIS_qwen2.5-14b-instruct.md](../../nplayer/ANALYSIS_qwen2.5-14b-instruct.md).
+Script mô tả: [results/nplayer/analyze_nplayer_results.py](../../nplayer/analyze_nplayer_results.py).
 Script suy luận (hồi quy, phân loại chiến lược, theory-fit):
-[results/nplayer/rigorous_analysis.py](../../results/nplayer/rigorous_analysis.py) → [derived/](derived/).
-Đối chiếu lý thuyết: [N-Player/theory/](../../N-Player/theory/) (điều kiện DSAI closed-form,
+[results/nplayer/rigorous_analysis.py](../../nplayer/rigorous_analysis.py) → [derived/](derived/).
+Đối chiếu lý thuyết: [N-Player/theory/](../../../N-Player/theory/) (điều kiện DSAI closed-form,
 stationary distribution AS/AU/CS).
 
 > **Đây là PILOT, không phải confirmatory.** Run persona chỉ có 2 lần lặp/ô (~2 race độc lập/ô) —

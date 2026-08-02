@@ -7,7 +7,7 @@ vào `main.tex` (bản `.tiff` 600dpi gốc không copy sang vì quá nặng —
 `NEW_05_two_player_paper_analysis/`). Ảnh nhúng ngay dưới mỗi mục bên dưới lấy từ chính
 `SELECTED_FOR_PAPER/`, nên đường link và ảnh xem trước luôn khớp nhau.
 
-**Mục đích của file này:** từ 120 hình trong `paper/all_figure/` (99 hình đã có caption trong
+**Mục đích của file này:** từ 120 hình trong `results/artifacts/figure_gallery/` (99 hình đã có caption trong
 [`INDEX.md`](INDEX.md) + 21 hình rời `cross_provider` chưa được index), chọn ra một bộ hình có
 tiềm năng thật sự nâng chất lượng bản thảo `paper/main.tex`, kèm insight vì sao từng hình giúp
 paper "dễ được accept" hơn — theo đúng khung đánh giá mà một reviewer AAMAS sẽ dùng: tính chặt chẽ
@@ -232,7 +232,7 @@ chính:
 
 | Nhóm hình | Vì sao cẩn trọng |
 |---|---|
-| `n3_*.png`, phần lớn `x10b`, `x11` (trận 3 người, `results/cross_provider/gemini_openai_claude_n3/`) | Dùng cơ chế/prompt **khác** (`ai-race-nplayer-v1`) so với game 2 người mà toàn bộ `main.tex` định nghĩa (`GameConfig` ép đúng 2 người — xem `CLAUDE.md`). Đưa vào paper 2-player sẽ cần cả một đoạn methods giải thích cơ chế N=3 riêng — không đáng, trừ khi bạn chủ động muốn mở một mục "N-player extension" ngắn. Để dành cho companion paper N-player (đã có `analysis/nplayer/report.md`, `N-Player/theory/`). |
+| `n3_*.png`, phần lớn `x10b`, `x11` (trận 3 người, `results/cross_provider/gemini_openai_claude_n3/`) | Dùng cơ chế/prompt **khác** (`ai-race-nplayer-v1`) so với game 2 người mà toàn bộ `main.tex` định nghĩa (`GameConfig` ép đúng 2 người — xem `CLAUDE.md`). Đưa vào paper 2-player sẽ cần cả một đoạn methods giải thích cơ chế N=3 riêng — không đáng, trừ khi bạn chủ động muốn mở một mục "N-player extension" ngắn. Để dành cho companion paper N-player (đã có `results/reports/nplayer/report.md`, `N-Player/theory/`). |
 | `ADMITTED_activation_sae/.../surface_n600_..._sae_feature_confirmation.png` | Đây là hình "association" *trước khi* qua causal control — nếu dùng thay cho `fixed_state_target_minus_controls.png` (hình đang dùng, đã qua control và cho null result), bạn sẽ **vô tình đảo ngược đúng luận điểm cẩn trọng mà `main.tex` §"Discussion" đang giữ** ("Predictive AUC or feature–action correlation... does not answer whether that feature uniquely causes a decision"). Nếu thêm, chỉ thêm cạnh hình null-control hiện có, không thay thế. |
 | 3 hình đã dùng (xem mục 0a) | Đừng đề xuất lại như hình mới — sẽ đọc như trùng lặp/padding trong mắt reviewer. |
 | Bất kỳ hình nào từ nhóm persona/surface/cross-provider dùng để lấp 3 mục `\pending` | Xem mục 0b — vi phạm trực tiếp cam kết editorial hiện có của chính bài. |

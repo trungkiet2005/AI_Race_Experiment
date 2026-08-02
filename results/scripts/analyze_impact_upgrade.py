@@ -332,8 +332,8 @@ def evidence_ledger() -> pd.DataFrame:
     context_summary = read_json(
         ROOT / "results/open_source/context_skin_pilot/analysis_live_pilot_t0/analysis_summary.json"
     )
-    openai_manifest = read_json(ROOT / "analysis/openai/derived/analysis_manifest.json")
-    frontier_manifest = read_json(ROOT / "analysis/frontier/derived/analysis_manifest.json")
+    openai_manifest = read_json(ROOT / "results/reports/openai/derived/analysis_manifest.json")
+    frontier_manifest = read_json(ROOT / "results/reports/frontier/derived/analysis_manifest.json")
     sae_summary = read_json(
         ROOT / "results/open_source/activation_sae/context_fast_sae_analysis/summary.json"
     )
@@ -820,10 +820,10 @@ def main() -> None:
     quality_path.write_text(json.dumps(quality, indent=2) + "\n", encoding="utf-8")
 
     input_paths = [
-        ROOT / "analysis/openai/derived/unsafe_by_risk_model_player.csv",
-        ROOT / "analysis/openai/derived/analysis_manifest.json",
-        ROOT / "analysis/frontier/derived/unsafe_by_risk_model_player.csv",
-        ROOT / "analysis/frontier/derived/analysis_manifest.json",
+        ROOT / "results/reports/openai/derived/unsafe_by_risk_model_player.csv",
+        ROOT / "results/reports/openai/derived/analysis_manifest.json",
+        ROOT / "results/reports/frontier/derived/unsafe_by_risk_model_player.csv",
+        ROOT / "results/reports/frontier/derived/analysis_manifest.json",
         ROOT / "results/open_source/context_skin_pilot/analysis_live_pilot_t0/paired_context_effects.csv",
         ROOT / "results/open_source/context_skin_pilot/analysis_live_pilot_t0/analysis_summary.json",
         ROOT / "results/open_source/activation_sae/context_fast_sae_analysis/summary.json",

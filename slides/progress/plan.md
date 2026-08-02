@@ -4,7 +4,7 @@
 
 Đây **không phải** bản deck "protocol / results pending" (`slides/ai_race_research_deck.tex`
 hiện tại). Đó là bài trình bày trước khi chạy — mọi ô kết quả đều để trống `PENDING`. Bây giờ
-4 pilot run đã chạy xong và có báo cáo trong `analysis/`, nên `progress_1.tex` là bản
+4 pilot run đã chạy xong và có báo cáo trong `results/reports/`, nên `progress_1.tex` là bản
 **progress report**: trình bày những gì đã quan sát được, đối chiếu với paper người, và nêu rõ
 giới hạn + việc cần làm tiếp — đúng tinh thần "kỷ luật báo cáo" đã đặt ra trong CLAUDE.md
 ("không dùng dữ liệu pilot làm bằng chứng confirmatory").
@@ -17,20 +17,20 @@ slides/progress/progress_1.tex   (nguồn LaTeX)
 slides/progress/progress_1.pdf   (bản build)
 ```
 
-## 1. Nguồn dữ liệu — 4 lần chạy pilot trong `analysis/`
+## 1. Nguồn dữ liệu — 4 lần chạy pilot trong `results/reports/`
 
 | Run | File báo cáo | Model | Quy mô | Đặc điểm nổi bật |
 |---|---|---|---|---|
-| `baseline` (2-player) | `analysis/baseline.md` | qwen2.5-14b-instruct, gemma-3-12b-it | 60 race, 558 quyết định, 10 rep | Gemma sụp 100% Safe; Qwen có chuyển pha đúng vòng 5 |
-| `frontier` (2-player) | `analysis/frontier/report.md` | 3× Gemini (proxy Kaggle) + 5 cell persona | 177 race, 3.168 quyết định | φ_U giảm đơn điệu mạnh theo risk — ngược null của người |
-| `openai` (2-player) | `analysis/openai/report.md` | gpt-5-nano, gpt-5.4-nano (API trực tiếp) | 2.640 race, 49.104 quyết định, ma trận persona 6×6 | φ_U hình chữ U; **đảo dấu** cả `opponent_prev` lẫn `ΔS` so với người/Gemini |
-| `nplayer` (N=3) | `analysis/nplayer/report.md` | qwen2.5-14b-instruct | 60 race baseline + persona Eckel-Grossman | UNSAFE giảm đơn điệu theo risk; persona lấn át hoàn toàn tín hiệu risk thật |
+| `baseline` (2-player) | `results/reports/baseline.md` | qwen2.5-14b-instruct, gemma-3-12b-it | 60 race, 558 quyết định, 10 rep | Gemma sụp 100% Safe; Qwen có chuyển pha đúng vòng 5 |
+| `frontier` (2-player) | `results/reports/frontier/report.md` | 3× Gemini (proxy Kaggle) + 5 cell persona | 177 race, 3.168 quyết định | φ_U giảm đơn điệu mạnh theo risk — ngược null của người |
+| `openai` (2-player) | `results/reports/openai/report.md` | gpt-5-nano, gpt-5.4-nano (API trực tiếp) | 2.640 race, 49.104 quyết định, ma trận persona 6×6 | φ_U hình chữ U; **đảo dấu** cả `opponent_prev` lẫn `ΔS` so với người/Gemini |
+| `nplayer` (N=3) | `results/reports/nplayer/report.md` | qwen2.5-14b-instruct | 60 race baseline + persona Eckel-Grossman | UNSAFE giảm đơn điệu theo risk; persona lấn át hoàn toàn tín hiệu risk thật |
 
 Tất cả đều `run_phase = pilot` — **không phải confirmatory**. Đây là ràng buộc xuyên suốt toàn
 bộ deck, phải xuất hiện lặp lại bằng nhãn/chip trực quan, không chỉ một dòng chữ ở đầu.
 
 Số liệu dùng trong slide lấy trực tiếp từ 4 file trên (đã đọc kỹ), không tính lại từ CSV thô —
-nếu cần đối chiếu, các bảng số nằm trong `analysis/*/derived/*.csv`.
+nếu cần đối chiếu, các bảng số nằm trong `results/reports/*/derived/*.csv`.
 
 ## 2. Ràng buộc kỹ thuật
 

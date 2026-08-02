@@ -20,8 +20,8 @@ vọng lý thuyết `E[W]=9`.
 Script tái tạo số liệu mô tả: [analyze_nplayer_results.py](analyze_nplayer_results.py).
 Script tái tạo số liệu suy luận (hồi quy, phân loại chiến lược, theory-fit):
 [rigorous_analysis.py](rigorous_analysis.py) → ghi ra
-[analysis/nplayer/derived/](../../analysis/nplayer/derived/).
-Dashboard trực quan: [analysis/nplayer/visualizations/dashboard.html](../../analysis/nplayer/visualizations/dashboard.html).
+[results/reports/nplayer/derived/](../reports/nplayer/derived/).
+Dashboard trực quan: [results/reports/nplayer/visualizations/dashboard.html](../reports/nplayer/visualizations/dashboard.html).
 
 ## 1. Chất lượng dữ liệu
 

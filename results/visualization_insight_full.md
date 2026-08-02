@@ -211,7 +211,7 @@ does not yield feature-specific causal steering. The next confirmatory grid
 must cross admitted model families, context, mapping, decoding, histories, and
 live replay-to-fork position interventions before strategic claims.
 
-Generated from artifact: `AI_Race_Experiment/docs/reports/pilot_insight_report/artifact.json`
+Generated from artifact: `AI_Race_Experiment/results/reports/pilot_reports/pilot_insight_report/artifact.json`
 
 The generated bundle below is a legacy pilot snapshot. Use the current evidence
 dashboard above when numbers or evidence labels differ.
@@ -283,12 +283,12 @@ No exact-duplicate candidate folder signatures found.
 
 ## 5) Outputs and where to find them
 
-- Artifact: `docs/reports/pilot_insight_report/artifact.json`
+- Artifact: `results/reports/pilot_reports/pilot_insight_report/artifact.json`
 - Single canonical insights file (this one): `results/visualization_insight_full.md`
 - Rebuild command: `python results/scripts/build_pilot_insight_report.py`
 
 ## 6) Next cleanup action suggested
-- Keep generated report assets under `docs/reports/pilot_insight_report/` and move any new analysis markdown snapshots to a single tracker file under `results/` (this file).
+- Keep generated report assets under `results/reports/pilot_reports/pilot_insight_report/` and move any new analysis markdown snapshots to a single tracker file under `results/` (this file).
 - If you want, we can next split this into a short technical appendix and a slide-ready insight digest file while preserving a single source of truth.
 
 ## 7) XAI auto-vector attribution audit (prompt-sensitivity turn logs)
