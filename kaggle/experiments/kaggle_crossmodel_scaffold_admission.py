@@ -35,6 +35,8 @@ BATCH_SIZE = 8
 MAX_NEW_TOKENS = 16
 TEMPERATURE = 0.0
 PROFILE_REPETITIONS = {"smoke": 1, "pilot": 5}
+REQUIRED_GPU_NAME_FRAGMENT = "RTX PRO 6000"
+MIN_COMPUTE_CAPABILITY = (8, 0)
 
 MODELS = {
     "qwen25_7b": {
@@ -44,6 +46,8 @@ MODELS = {
         ),
         "family": "Qwen2.5",
         "short_name": "qwen2.5-7b-instruct",
+        "min_vram_gib": 20.0,
+        "batch_size": 8,
     },
     "qwen25_14b": {
         "source": "qwen-lm/qwen2.5/Transformers/14b-instruct/1",
@@ -52,6 +56,18 @@ MODELS = {
         ),
         "family": "Qwen2.5",
         "short_name": "qwen2.5-14b-instruct",
+        "min_vram_gib": 36.0,
+        "batch_size": 4,
+    },
+    "qwen25_32b": {
+        "source": "qwen-lm/qwen2.5/Transformers/32b-instruct/1",
+        "path": Path(
+            "/kaggle/input/models/qwen-lm/qwen2.5/transformers/32b-instruct/1"
+        ),
+        "family": "Qwen2.5",
+        "short_name": "qwen2.5-32b-instruct",
+        "min_vram_gib": 72.0,
+        "batch_size": 2,
     },
     "gemma2_9b": {
         "source": "google/gemma-2/Transformers/gemma-2-9b-it/2",
@@ -60,8 +76,96 @@ MODELS = {
         ),
         "family": "Gemma-2",
         "short_name": "gemma-2-9b-it",
+        "min_vram_gib": 24.0,
+        "batch_size": 4,
+    },
+    "mistral7_01": {
+        "source": "mistral-ai/mistral/PyTorch/7b-instruct-v0.1-hf/1",
+        "path": Path(
+            "/kaggle/input/models/mistral-ai/mistral/pytorch/7b-instruct-v0.1-hf/1"
+        ),
+        "family": "Mistral-7B",
+        "short_name": "mistral-7b-instruct-v0.1",
+        "min_vram_gib": 20.0,
+        "batch_size": 8,
     },
 }
+
+
+def evaluate_hardware_gate(
+    model_key: str,
+    *,
+    cuda_available: bool,
+    gpu_name: str,
+    gpu_count: int,
+    total_vram_bytes: int,
+    compute_capability: tuple[int, int],
+    bf16_supported: bool,
+) -> dict[str, Any]:
+    """Return a serializable, fail-closed BF16 hardware admission receipt."""
+    if model_key not in MODELS:
+        raise ValueError(f"Unknown model key {model_key!r}")
+    model = MODELS[model_key]
+    actual_vram_gib = total_vram_bytes / (1024**3)
+    checks = {
+        "cuda_available": bool(cuda_available),
+        "single_gpu": gpu_count == 1,
+        "gpu_name": REQUIRED_GPU_NAME_FRAGMENT.lower() in gpu_name.lower(),
+        "vram": actual_vram_gib >= float(model["min_vram_gib"]),
+        "compute_capability": tuple(compute_capability) >= MIN_COMPUTE_CAPABILITY,
+        "bf16_supported": bool(bf16_supported),
+    }
+    return {
+        "passed": all(checks.values()),
+        "model_key": model_key,
+        "model_short_name": model["short_name"],
+        "checks": checks,
+        "required": {
+            "gpu_name_contains": REQUIRED_GPU_NAME_FRAGMENT,
+            "gpu_count": 1,
+            "min_vram_gib": model["min_vram_gib"],
+            "min_compute_capability": list(MIN_COMPUTE_CAPABILITY),
+            "bf16": True,
+        },
+        "observed": {
+            "cuda_available": bool(cuda_available),
+            "gpu_name": gpu_name,
+            "gpu_count": gpu_count,
+            "total_vram_gib": actual_vram_gib,
+            "compute_capability": list(compute_capability),
+            "bf16_supported": bool(bf16_supported),
+        },
+    }
+
+
+def runtime_hardware_gate(model_key: str) -> dict[str, Any]:
+    """Inspect the allocated accelerator before loading any model weights."""
+    import torch
+
+    available = bool(torch.cuda.is_available())
+    if available:
+        name = str(torch.cuda.get_device_name(0))
+        count = int(torch.cuda.device_count())
+        total = int(torch.cuda.get_device_properties(0).total_memory)
+        capability = tuple(map(int, torch.cuda.get_device_capability(0)))
+        bf16 = bool(torch.cuda.is_bf16_supported())
+    else:
+        name, count, total, capability, bf16 = "", 0, 0, (0, 0), False
+    receipt = evaluate_hardware_gate(
+        model_key,
+        cuda_available=available,
+        gpu_name=name,
+        gpu_count=count,
+        total_vram_bytes=total,
+        compute_capability=capability,
+        bf16_supported=bf16,
+    )
+    return {
+        **receipt,
+        "hostname": platform.node(),
+        "python": platform.python_version(),
+        "torch": torch.__version__,
+    }
 
 
 def utc_now() -> str:
@@ -250,9 +354,9 @@ class TransformersGreedyBackend:
             self.torch.cuda.empty_cache()
 
 
-def run_one(repo: Path, model_key: str) -> dict[str, Any]:
-    import torch
-
+def run_one(
+    repo: Path, model_key: str, hardware: dict[str, Any]
+) -> dict[str, Any]:
     from ai_race.audit.scaffold_comprehension import (
         build_scaffold_probe_requests,
         request_bank_sha256,
@@ -264,6 +368,7 @@ def run_one(repo: Path, model_key: str) -> dict[str, Any]:
     from ai_race.prompts.context_skins import ACTION_CODE_MAPPINGS
 
     model = MODELS[model_key]
+    effective_batch_size = int(model["batch_size"])
     provenance = model_provenance(model)
     output = OUTPUT_ROOT / model["short_name"] / RUN_PROFILE
     output.mkdir(parents=True, exist_ok=True)
@@ -283,24 +388,18 @@ def run_one(repo: Path, model_key: str) -> dict[str, Any]:
             "temperature": TEMPERATURE,
             "max_new_tokens": MAX_NEW_TOKENS,
             "do_sample": False,
-            "batch_size": BATCH_SIZE,
+            "batch_size": effective_batch_size,
             "sampling_seed_applied": False,
             "seed_note": "Greedy decoding; request seeds retained as CRN identifiers only.",
         },
-        "hardware": {
-            "hostname": platform.node(),
-            "gpu_name": torch.cuda.get_device_name(0) if torch.cuda.is_available() else "",
-            "gpu_count": torch.cuda.device_count(),
-            "python": platform.python_version(),
-            "torch": torch.__version__,
-        },
+        "hardware": hardware,
         "artifacts": {},
         "error": None,
     }
     write_json(manifest_path, manifest)
     try:
-        if not torch.cuda.is_available():
-            raise RuntimeError("CUDA is required")
+        if not hardware.get("passed"):
+            raise RuntimeError("BF16 hardware admission gate did not pass")
         config_path = repo / "ai_race/configs/experiment/state_scaffold_factorial.json"
         experiment = validate_experiment(load_json(config_path))
         conditions = list(experiment["scaffoldConditions"])
@@ -330,7 +429,7 @@ def run_one(repo: Path, model_key: str) -> dict[str, Any]:
             if backend([probe])[0] != backend([probe])[0]:
                 raise RuntimeError("Greedy reproducibility probe failed")
             rows = run_scaffold_comprehension(
-                requests, backend, batch_size=BATCH_SIZE
+                requests, backend, batch_size=effective_batch_size
             )
         finally:
             backend.close()
@@ -383,7 +482,7 @@ def run_one(repo: Path, model_key: str) -> dict[str, Any]:
             error=f"{type(error).__name__}: {error}",
         )
         write_json(manifest_path, manifest)
-        raise
+        return manifest
     return manifest
 
 
@@ -393,20 +492,61 @@ def main() -> None:
     unknown = set(MODEL_KEYS) - set(MODELS)
     if unknown:
         raise ValueError(f"Unknown model keys: {sorted(unknown)}")
+    if len(MODEL_KEYS) != 1:
+        raise ValueError(
+            "Run exactly one checkpoint per Kaggle kernel version so model "
+            "attachments, failures, and runtime provenance remain isolated"
+        )
+    model_key = MODEL_KEYS[0]
+    hardware = runtime_hardware_gate(model_key)
+    if not hardware["passed"]:
+        OUTPUT_ROOT.mkdir(parents=True, exist_ok=True)
+        suite = {
+            "schema_version": "ai-race-kaggle-crossmodel-scaffold-suite-v1",
+            "status": "blocked_hardware",
+            "evidence_class": "blocked",
+            "run_profile": RUN_PROFILE,
+            "repo_commit": REPO_COMMIT,
+            "source_dataset": SOURCE_DATASET,
+            "model_key": model_key,
+            "model_source": MODELS[model_key]["source"],
+            "hardware": hardware,
+            "admission_passed": False,
+            "n_requests": 0,
+        }
+        write_json(OUTPUT_ROOT / "suite_manifest.json", suite)
+        shutil.make_archive(
+            "/kaggle/working/ai_race_crossmodel_scaffold_admission",
+            "zip",
+            OUTPUT_ROOT.parent,
+            OUTPUT_ROOT.name,
+        )
+        print(json.dumps(suite, indent=2))
+        return
     repo = locate_source_repo()
-    summaries = [run_one(repo, model_key) for model_key in MODEL_KEYS]
+    summaries = [run_one(repo, model_key, hardware)]
+    suite_status = (
+        "completed"
+        if all(summary.get("status") == "completed" for summary in summaries)
+        else "failed"
+    )
     OUTPUT_ROOT.mkdir(parents=True, exist_ok=True)
     write_json(
         OUTPUT_ROOT / "suite_manifest.json",
         {
             "schema_version": "ai-race-kaggle-crossmodel-scaffold-suite-v1",
-            "status": "completed",
+            "status": suite_status,
+            "evidence_class": (
+                "diagnostic" if suite_status == "completed" else "failed"
+            ),
             "run_profile": RUN_PROFILE,
             "repo_commit": REPO_COMMIT,
             "source_dataset": SOURCE_DATASET,
             "models": [summary["model"] for summary in summaries],
             "admission_passed": {
-                summary["model"]["short_name"]: summary["admission_passed"]
+                summary["model"]["short_name"]: bool(
+                    summary.get("admission_passed", False)
+                )
                 for summary in summaries
             },
         },
@@ -417,7 +557,7 @@ def main() -> None:
         OUTPUT_ROOT.parent,
         OUTPUT_ROOT.name,
     )
-    print(json.dumps({"status": "completed", "models": len(summaries)}, indent=2))
+    print(json.dumps({"status": suite_status, "models": len(summaries)}, indent=2))
 
 
 if __name__ == "__main__":

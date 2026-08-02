@@ -1,0 +1,48 @@
+{
+  "name": "capacity_family_targeted_context",
+  "runPhase": "pilot",
+  "executionAdapter": "admission_then_targeted_context_v1",
+  "genericRunnerCompatible": false,
+  "description": "Admission-gated two-axis checkpoint panel: a Qwen2.5 7B/14B/32B capacity comparison and a Qwen7/Gemma9/Mistral7 matched-scale family comparison, with targeted positive and null context controls.",
+  "games": [
+    "ai_race_risk_10",
+    "ai_race_risk_60",
+    "ai_race_risk_90"
+  ],
+  "agents": "context_skin_neutral",
+  "languages": ["en"],
+  "models": [
+    "qwen25-7b-instruct",
+    "qwen25-14b-instruct",
+    "qwen25-32b-instruct",
+    "gemma2-9b-it",
+    "mistral-7b-instruct-v0.1"
+  ],
+  "capacityAxis": [
+    "qwen25-7b-instruct",
+    "qwen25-14b-instruct",
+    "qwen25-32b-instruct"
+  ],
+  "familyAxis": [
+    "qwen25-7b-instruct",
+    "gemma2-9b-it",
+    "mistral-7b-instruct-v0.1"
+  ],
+  "contextSkins": [
+    "abstract_contest",
+    "logistics_contract",
+    "technology_race"
+  ],
+  "actionCodeMappings": ["safe_p", "safe_q"],
+  "actionCodeAssignment": "fully_crossed_within_seed",
+  "repetitions": 32,
+  "confirmatoryRepetitions": 96,
+  "seed": 260726,
+  "maxParseRetries": 3,
+  "samplingSeedApplied": true,
+  "temperature": 0.0,
+  "dtype": "bfloat16",
+  "quantization": null,
+  "backend": "transformers",
+  "verbose": false
+}

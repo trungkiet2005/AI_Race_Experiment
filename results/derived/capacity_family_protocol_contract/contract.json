@@ -1,0 +1,69 @@
+{
+  "schema_version": "ai-race.capacity-family-contract.v1",
+  "status": "passed",
+  "evidence_class": "protocol",
+  "config": {
+    "path": "ai_race/configs/experiment/capacity_family_targeted_context.json",
+    "sha256": "c2bae3f91ba3fcbb4a0581dd6b153d1102f3007354dce4da4ef414d77bc5fcee"
+  },
+  "roster": {
+    "all": [
+      "qwen25-7b-instruct",
+      "qwen25-14b-instruct",
+      "qwen25-32b-instruct",
+      "gemma2-9b-it",
+      "mistral-7b-instruct-v0.1"
+    ],
+    "capacity_axis": [
+      "qwen25-7b-instruct",
+      "qwen25-14b-instruct",
+      "qwen25-32b-instruct"
+    ],
+    "family_axis": [
+      "qwen25-7b-instruct",
+      "gemma2-9b-it",
+      "mistral-7b-instruct-v0.1"
+    ],
+    "shared_anchor": "qwen25-7b-instruct"
+  },
+  "frozen_protocol": {
+    "contexts": [
+      "abstract_contest",
+      "logistics_contract",
+      "technology_race"
+    ],
+    "mappings": [
+      "safe_p",
+      "safe_q"
+    ],
+    "risks": [
+      "ai_race_risk_10",
+      "ai_race_risk_60",
+      "ai_race_risk_90"
+    ],
+    "diagnostic_streams": 32,
+    "confirmatory_streams": 96,
+    "dtype": "bfloat16",
+    "quantization": null,
+    "temperature": 0.0,
+    "backend": "transformers",
+    "execution_adapter": "admission_then_targeted_context_v1",
+    "generic_runner_compatible": false
+  },
+  "expected_counts": {
+    "admission_probes_per_model": 96,
+    "admission_probes_all_models": 480,
+    "diagnostic_races_if_all_admitted": 2880,
+    "diagnostic_expected_decisions_at_mean_horizon": 51840,
+    "confirmatory_races_if_all_admitted": 8640
+  },
+  "promotion_gate": {
+    "exact_coverage": true,
+    "strict_parse_min": 0.95,
+    "domain_accuracy_min": 0.8,
+    "state_update_min": 0.9,
+    "terminal_scoring_min": 0.9,
+    "behavior_requires_admission": true
+  },
+  "errors": []
+}
