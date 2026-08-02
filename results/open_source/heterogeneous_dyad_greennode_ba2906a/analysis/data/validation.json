@@ -1,0 +1,26 @@
+{
+  "failures": [],
+  "lane_action_agreement": 0.9859775641025641,
+  "lane_action_by_model": {
+    "mistral7_01": {
+      "agreement": 0.9967948717948718,
+      "n_compared": 1248,
+      "n_mismatches": 4
+    },
+    "qwen25_7b": {
+      "agreement": 0.9751602564102564,
+      "n_compared": 1248,
+      "n_mismatches": 31
+    }
+  },
+  "lane_action_mismatches": 35,
+  "lane_comparable_decisions": 2496,
+  "n_blocks": 2,
+  "n_races_total": 384,
+  "n_turns_total": 4992,
+  "parse_failures": 0,
+  "passed": true,
+  "source_commits": [
+    "ba2906ae0f32fdd1af69d9d68e1c8f26b00012d4"
+  ]
+}

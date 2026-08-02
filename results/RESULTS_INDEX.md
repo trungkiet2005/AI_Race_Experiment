@@ -4,11 +4,11 @@
 
 ## At a glance
 
-- Canonical files (excluding reproducible `_build/`): **1,989**
-- Total canonical size: **766.92 MiB**
-- Parsed manifest records: **250**
+- Canonical files (excluding reproducible `_build/`): **2,792**
+- Total canonical size: **990.81 MiB**
+- Parsed manifest records: **344**
 - Invalid manifest JSON files: **0**
-- Exact duplicate hash groups: **62** (archives may intentionally retain immutable copies)
+- Exact duplicate hash groups: **142** (archives may intentionally retain immutable copies)
 
 Evidence labels are conservative: a completed pilot stays `pilot`; a prepared or diagnostic artifact is never promoted by directory name alone.
 
@@ -18,7 +18,7 @@ Evidence labels are conservative: a completed pilot stays `pilot`; a prepared or
 |---|---|
 | `artifacts/publication/` | Current paper and research-deck PDFs |
 | `artifacts/qa/` | Rendered visual QA evidence |
-| `open_source/` | Open-weight raw runs, admitted summaries, SAE, EGT, context, and prompt audits |
+| `open_source/` | Open-weight raw runs, admitted and explicitly unadmitted diagnostics, SAE, EGT, context, and prompt audits |
 | `frontier/` | Hosted/frontier model runs, including the migrated API pilot |
 | `derived/` | Reproducible analysis outputs |
 | `impact_upgrade/` | Cross-study technical report and high-impact visual synthesis |
@@ -32,9 +32,12 @@ Evidence labels are conservative: a completed pilot stays `pilot`; a prepared or
 - [Paper PDF](artifacts/publication/ai_race_paper.pdf)
 - [Research deck PDF](artifacts/publication/ai_race_research_deck.pdf)
 - [Payoff-scale mechanical contract](derived/payoff_scale_contract/README.md)
+- [Heterogeneous identity/persona diagnostic](open_source/heterogeneous_dyad_greennode_ba2906a/analysis/README.md)
+- [Exogenous competitive-position diagnostic](open_source/position_endowment_greennode_e3cf825/analysis/README.md)
+- [Complete visualization and insight narrative](visualization_insight_full.md)
 - [Experiment impact roadmap](../docs/experiments/impact_experiment_program.md)
 
-## Complete visual artifact map (202)
+## Complete visual artifact map (249)
 
 Every rendered chart, publication PDF, and interactive HTML surface in the canonical results root is linked below. The narrative synthesis embeds the decision-relevant subset in `visualization_insight_full.md`.
 
@@ -72,6 +75,41 @@ Every rendered chart, publication PDF, and interactive HTML surface in the canon
 - [`artifacts/qa/latex/paper_p16-16.png`](<artifacts/qa/latex/paper_p16-16.png>)
 - [`artifacts/qa/latex/paper_p8-08.png`](<artifacts/qa/latex/paper_p8-08.png>)
 - [`artifacts/qa/latex/paper_p9-09.png`](<artifacts/qa/latex/paper_p9-09.png>)
+- [`capacity_family/greennode_smoke_ab0527e/analysis/scaffold_admission_heatmap.pdf`](<capacity_family/greennode_smoke_ab0527e/analysis/scaffold_admission_heatmap.pdf>)
+- [`capacity_family/greennode_smoke_ab0527e/analysis/scaffold_admission_heatmap.png`](<capacity_family/greennode_smoke_ab0527e/analysis/scaffold_admission_heatmap.png>)
+- [`cross_model_pilot_synthesis/figures/2p_position_effect_by_persona.pdf`](<cross_model_pilot_synthesis/figures/2p_position_effect_by_persona.pdf>)
+- [`cross_model_pilot_synthesis/figures/2p_position_effect_by_persona.png`](<cross_model_pilot_synthesis/figures/2p_position_effect_by_persona.png>)
+- [`cross_model_pilot_synthesis/figures/cross_model_risk_response_neutral.pdf`](<cross_model_pilot_synthesis/figures/cross_model_risk_response_neutral.pdf>)
+- [`cross_model_pilot_synthesis/figures/cross_model_risk_response_neutral.png`](<cross_model_pilot_synthesis/figures/cross_model_risk_response_neutral.png>)
+- [`cross_model_pilot_synthesis/figures/feature_importance_shap_heatmap.pdf`](<cross_model_pilot_synthesis/figures/feature_importance_shap_heatmap.pdf>)
+- [`cross_model_pilot_synthesis/figures/feature_importance_shap_heatmap.png`](<cross_model_pilot_synthesis/figures/feature_importance_shap_heatmap.png>)
+- [`cross_model_pilot_synthesis/figures/feature_importance_shap_heatmap_gen56.pdf`](<cross_model_pilot_synthesis/figures/feature_importance_shap_heatmap_gen56.pdf>)
+- [`cross_model_pilot_synthesis/figures/feature_importance_shap_heatmap_gen56.png`](<cross_model_pilot_synthesis/figures/feature_importance_shap_heatmap_gen56.png>)
+- [`cross_model_pilot_synthesis/figures/gen56_within_role_risk_sensitivity.pdf`](<cross_model_pilot_synthesis/figures/gen56_within_role_risk_sensitivity.pdf>)
+- [`cross_model_pilot_synthesis/figures/gen56_within_role_risk_sensitivity.png`](<cross_model_pilot_synthesis/figures/gen56_within_role_risk_sensitivity.png>)
+- [`cross_model_pilot_synthesis/figures/human_effect_scorecard.pdf`](<cross_model_pilot_synthesis/figures/human_effect_scorecard.pdf>)
+- [`cross_model_pilot_synthesis/figures/human_effect_scorecard.png`](<cross_model_pilot_synthesis/figures/human_effect_scorecard.png>)
+- [`cross_model_pilot_synthesis/figures/human_vs_llm_distribution.pdf`](<cross_model_pilot_synthesis/figures/human_vs_llm_distribution.pdf>)
+- [`cross_model_pilot_synthesis/figures/human_vs_llm_distribution.png`](<cross_model_pilot_synthesis/figures/human_vs_llm_distribution.png>)
+- [`cross_model_pilot_synthesis/figures/human_vs_llm_dynamic_coefficients.pdf`](<cross_model_pilot_synthesis/figures/human_vs_llm_dynamic_coefficients.pdf>)
+- [`cross_model_pilot_synthesis/figures/human_vs_llm_dynamic_coefficients.png`](<cross_model_pilot_synthesis/figures/human_vs_llm_dynamic_coefficients.png>)
+- [`cross_model_pilot_synthesis/figures/llm_human_cluster_projection.pdf`](<cross_model_pilot_synthesis/figures/llm_human_cluster_projection.pdf>)
+- [`cross_model_pilot_synthesis/figures/llm_human_cluster_projection.png`](<cross_model_pilot_synthesis/figures/llm_human_cluster_projection.png>)
+- [`cross_model_pilot_synthesis/figures/llm_human_cluster_projection_gen56.pdf`](<cross_model_pilot_synthesis/figures/llm_human_cluster_projection_gen56.pdf>)
+- [`cross_model_pilot_synthesis/figures/llm_human_cluster_projection_gen56.png`](<cross_model_pilot_synthesis/figures/llm_human_cluster_projection_gen56.png>)
+- [`cross_model_pilot_synthesis/figures/nplayer_peer_composition_effect.pdf`](<cross_model_pilot_synthesis/figures/nplayer_peer_composition_effect.pdf>)
+- [`cross_model_pilot_synthesis/figures/nplayer_peer_composition_effect.png`](<cross_model_pilot_synthesis/figures/nplayer_peer_composition_effect.png>)
+- [`cross_model_pilot_synthesis/figures/nplayer_position_effect_sign_flip.pdf`](<cross_model_pilot_synthesis/figures/nplayer_position_effect_sign_flip.pdf>)
+- [`cross_model_pilot_synthesis/figures/nplayer_position_effect_sign_flip.png`](<cross_model_pilot_synthesis/figures/nplayer_position_effect_sign_flip.png>)
+- [`cross_model_pilot_synthesis/figures/payoff_welfare_unsafe_vs_payoff.pdf`](<cross_model_pilot_synthesis/figures/payoff_welfare_unsafe_vs_payoff.pdf>)
+- [`cross_model_pilot_synthesis/figures/payoff_welfare_unsafe_vs_payoff.png`](<cross_model_pilot_synthesis/figures/payoff_welfare_unsafe_vs_payoff.png>)
+- [`cross_model_pilot_synthesis/figures/persona_role_gradient.pdf`](<cross_model_pilot_synthesis/figures/persona_role_gradient.pdf>)
+- [`cross_model_pilot_synthesis/figures/persona_role_gradient.png`](<cross_model_pilot_synthesis/figures/persona_role_gradient.png>)
+- [`cross_model_pilot_synthesis/figures/persona_role_gradient_gen56.pdf`](<cross_model_pilot_synthesis/figures/persona_role_gradient_gen56.pdf>)
+- [`cross_model_pilot_synthesis/figures/persona_role_gradient_gen56.png`](<cross_model_pilot_synthesis/figures/persona_role_gradient_gen56.png>)
+- [`cross_model_pilot_synthesis/figures/round_trajectory_gen56.pdf`](<cross_model_pilot_synthesis/figures/round_trajectory_gen56.pdf>)
+- [`cross_model_pilot_synthesis/figures/round_trajectory_gen56.png`](<cross_model_pilot_synthesis/figures/round_trajectory_gen56.png>)
+- [`cross_model_pilot_synthesis/synthesis_report.pdf`](<cross_model_pilot_synthesis/synthesis_report.pdf>)
 - [`cross_provider/figures/expected_end_rounds.png`](<cross_provider/figures/expected_end_rounds.png>)
 - [`cross_provider/figures/n3_group_escalation_response.png`](<cross_provider/figures/n3_group_escalation_response.png>)
 - [`cross_provider/figures/n3_individual_unsafe_rate.png`](<cross_provider/figures/n3_individual_unsafe_rate.png>)
@@ -236,6 +274,18 @@ Every rendered chart, publication PDF, and interactive HTML surface in the canon
 - [`open_source/egt_reproduction/egt_strategy_lens_vs_llm.png`](<open_source/egt_reproduction/egt_strategy_lens_vs_llm.png>)
 - [`open_source/egt_reproduction/egt_theory_vs_llm_unsafe.pdf`](<open_source/egt_reproduction/egt_theory_vs_llm_unsafe.pdf>)
 - [`open_source/egt_reproduction/egt_theory_vs_llm_unsafe.png`](<open_source/egt_reproduction/egt_theory_vs_llm_unsafe.png>)
+- [`open_source/heterogeneous_dyad_greennode_ba2906a/analysis/figures/endogenous_position_response.pdf`](<open_source/heterogeneous_dyad_greennode_ba2906a/analysis/figures/endogenous_position_response.pdf>)
+- [`open_source/heterogeneous_dyad_greennode_ba2906a/analysis/figures/endogenous_position_response.png`](<open_source/heterogeneous_dyad_greennode_ba2906a/analysis/figures/endogenous_position_response.png>)
+- [`open_source/heterogeneous_dyad_greennode_ba2906a/analysis/figures/identity_disclosure_matrix.pdf`](<open_source/heterogeneous_dyad_greennode_ba2906a/analysis/figures/identity_disclosure_matrix.pdf>)
+- [`open_source/heterogeneous_dyad_greennode_ba2906a/analysis/figures/identity_disclosure_matrix.png`](<open_source/heterogeneous_dyad_greennode_ba2906a/analysis/figures/identity_disclosure_matrix.png>)
+- [`open_source/heterogeneous_dyad_greennode_ba2906a/analysis/figures/risk_response_same_vs_cross.pdf`](<open_source/heterogeneous_dyad_greennode_ba2906a/analysis/figures/risk_response_same_vs_cross.pdf>)
+- [`open_source/heterogeneous_dyad_greennode_ba2906a/analysis/figures/risk_response_same_vs_cross.png`](<open_source/heterogeneous_dyad_greennode_ba2906a/analysis/figures/risk_response_same_vs_cross.png>)
+- [`open_source/position_endowment_greennode_e3cf825/analysis/lane_reproducibility.pdf`](<open_source/position_endowment_greennode_e3cf825/analysis/lane_reproducibility.pdf>)
+- [`open_source/position_endowment_greennode_e3cf825/analysis/lane_reproducibility.png`](<open_source/position_endowment_greennode_e3cf825/analysis/lane_reproducibility.png>)
+- [`open_source/position_endowment_greennode_e3cf825/analysis/primary_direct_contrasts.pdf`](<open_source/position_endowment_greennode_e3cf825/analysis/primary_direct_contrasts.pdf>)
+- [`open_source/position_endowment_greennode_e3cf825/analysis/primary_direct_contrasts.png`](<open_source/position_endowment_greennode_e3cf825/analysis/primary_direct_contrasts.png>)
+- [`open_source/position_endowment_greennode_e3cf825/analysis/primary_position_response.pdf`](<open_source/position_endowment_greennode_e3cf825/analysis/primary_position_response.pdf>)
+- [`open_source/position_endowment_greennode_e3cf825/analysis/primary_position_response.png`](<open_source/position_endowment_greennode_e3cf825/analysis/primary_position_response.png>)
 - [`open_source/prompt_sensitivity_pilot/xai_auto_vector_encoder/xai_top_global_coefficients.png`](<open_source/prompt_sensitivity_pilot/xai_auto_vector_encoder/xai_top_global_coefficients.png>)
 - [`open_source/prompt_sensitivity_pilot/xai_auto_vector_encoder/xai_top_permutation_importance.png`](<open_source/prompt_sensitivity_pilot/xai_auto_vector_encoder/xai_top_permutation_importance.png>)
 - [`open_source/prompt_sensitivity_pilot/xai_auto_vector_encoder_no_response/xai_top_global_coefficients.png`](<open_source/prompt_sensitivity_pilot/xai_auto_vector_encoder_no_response/xai_top_global_coefficients.png>)
@@ -245,15 +295,19 @@ Every rendered chart, publication PDF, and interactive HTML surface in the canon
 
 | Evidence class | Manifest records |
 |---|---:|
-| `diagnostic` | 12 |
-| `failed-or-incomplete` | 4 |
-| `pilot` | 223 |
-| `unclassified` | 11 |
+| `diagnostic` | 20 |
+| `failed-or-incomplete` | 8 |
+| `pilot` | 301 |
+| `unclassified` | 15 |
 
 ## Run and analysis manifests
 
 | Manifest | Status | Evidence | Model | Races | Decisions/outputs |
 |---|---|---|---|---:|---:|
+| `results/capacity_family/greennode_smoke_ab0527e/results/mistral-7b-instruct-v0.1/smoke/run_manifest.json` | completed | diagnostic | mistral-7b-instruct-v0.1 |  |  |
+| `results/capacity_family/greennode_smoke_ab0527e/results/qwen2.5-14b-instruct/smoke/run_manifest.json` | completed | diagnostic | qwen2.5-14b-instruct |  |  |
+| `results/capacity_family/greennode_smoke_ab0527e/results/qwen2.5-7b-instruct/smoke/run_manifest.json` | completed | diagnostic | qwen2.5-7b-instruct |  |  |
+| `results/cross_model_pilot_synthesis/analysis_manifest.json` | recorded | unclassified |  |  |  |
 | `results/derived/agent_check_frontier_baseline/analysis_manifest.json` | recorded | unclassified |  |  |  |
 | `results/derived/agent_check_openai/analysis_manifest.json` | recorded | unclassified |  |  |  |
 | `results/derived/agent_check_persona/analysis_manifest.json` | recorded | unclassified |  |  |  |
@@ -262,6 +316,82 @@ Every rendered chart, publication PDF, and interactive HTML surface in the canon
 | `results/frontier/baseline/google-gemini-3-flash-preview/run_manifest.json` | completed | pilot | google/gemini-3-flash-preview | 30 | 558 |
 | `results/frontier/baseline/google-gemini-3.1-flash-lite-preview/run_manifest.json` | completed | pilot | google/gemini-3.1-flash-lite-preview | 30 | 558 |
 | `results/frontier/baseline/google-gemini-3.5-flash-lite/run_manifest.json` | completed | pilot | google/gemini-3.5-flash-lite | 30 | 558 |
+| `results/frontier/bedrock_mantle/luna/persona/risk_matrix/R1_R1/openai.gpt-5.6-luna/run_manifest.json` | completed | pilot | openai.gpt-5.6-luna | 30 | 558 |
+| `results/frontier/bedrock_mantle/luna/persona/risk_matrix/R1_R2/openai.gpt-5.6-luna/run_manifest.json` | completed | pilot | openai.gpt-5.6-luna | 30 | 558 |
+| `results/frontier/bedrock_mantle/luna/persona/risk_matrix/R1_R3/openai.gpt-5.6-luna/run_manifest.json` | completed | pilot | openai.gpt-5.6-luna | 30 | 558 |
+| `results/frontier/bedrock_mantle/luna/persona/risk_matrix/R1_R4/openai.gpt-5.6-luna/run_manifest.json` | completed | pilot | openai.gpt-5.6-luna | 30 | 558 |
+| `results/frontier/bedrock_mantle/luna/persona/risk_matrix/R1_R5/openai.gpt-5.6-luna/run_manifest.json` | completed | pilot | openai.gpt-5.6-luna | 30 | 558 |
+| `results/frontier/bedrock_mantle/luna/persona/risk_matrix/R1_R6/openai.gpt-5.6-luna/run_manifest.json` | completed | pilot | openai.gpt-5.6-luna | 30 | 558 |
+| `results/frontier/bedrock_mantle/luna/persona/risk_matrix/R2_R1/openai.gpt-5.6-luna/run_manifest.json` | completed | pilot | openai.gpt-5.6-luna | 30 | 558 |
+| `results/frontier/bedrock_mantle/luna/persona/risk_matrix/R2_R2/openai.gpt-5.6-luna/run_manifest.json` | completed | pilot | openai.gpt-5.6-luna | 30 | 558 |
+| `results/frontier/bedrock_mantle/luna/persona/risk_matrix/R2_R3/openai.gpt-5.6-luna/run_manifest.json` | completed | pilot | openai.gpt-5.6-luna | 30 | 558 |
+| `results/frontier/bedrock_mantle/luna/persona/risk_matrix/R2_R4/openai.gpt-5.6-luna/run_manifest.json` | completed | pilot | openai.gpt-5.6-luna | 30 | 558 |
+| `results/frontier/bedrock_mantle/luna/persona/risk_matrix/R2_R5/openai.gpt-5.6-luna/run_manifest.json` | completed | pilot | openai.gpt-5.6-luna | 30 | 558 |
+| `results/frontier/bedrock_mantle/luna/persona/risk_matrix/R2_R6/openai.gpt-5.6-luna/run_manifest.json` | completed | pilot | openai.gpt-5.6-luna | 30 | 558 |
+| `results/frontier/bedrock_mantle/luna/persona/risk_matrix/R3_R1/openai.gpt-5.6-luna/run_manifest.json` | completed | pilot | openai.gpt-5.6-luna | 30 | 558 |
+| `results/frontier/bedrock_mantle/luna/persona/risk_matrix/R3_R2/openai.gpt-5.6-luna/run_manifest.json` | completed | pilot | openai.gpt-5.6-luna | 30 | 558 |
+| `results/frontier/bedrock_mantle/luna/persona/risk_matrix/R3_R3/openai.gpt-5.6-luna/run_manifest.json` | completed | pilot | openai.gpt-5.6-luna | 30 | 558 |
+| `results/frontier/bedrock_mantle/luna/persona/risk_matrix/R3_R4/openai.gpt-5.6-luna/run_manifest.json` | completed | pilot | openai.gpt-5.6-luna | 30 | 558 |
+| `results/frontier/bedrock_mantle/luna/persona/risk_matrix/R3_R5/openai.gpt-5.6-luna/run_manifest.json` | completed | pilot | openai.gpt-5.6-luna | 30 | 558 |
+| `results/frontier/bedrock_mantle/luna/persona/risk_matrix/R3_R6/openai.gpt-5.6-luna/run_manifest.json` | completed | pilot | openai.gpt-5.6-luna | 30 | 558 |
+| `results/frontier/bedrock_mantle/luna/persona/risk_matrix/R4_R1/openai.gpt-5.6-luna/run_manifest.json` | completed | pilot | openai.gpt-5.6-luna | 30 | 558 |
+| `results/frontier/bedrock_mantle/luna/persona/risk_matrix/R4_R2/openai.gpt-5.6-luna/run_manifest.json` | completed | pilot | openai.gpt-5.6-luna | 30 | 558 |
+| `results/frontier/bedrock_mantle/luna/persona/risk_matrix/R4_R3/openai.gpt-5.6-luna/run_manifest.json` | completed | pilot | openai.gpt-5.6-luna | 30 | 558 |
+| `results/frontier/bedrock_mantle/luna/persona/risk_matrix/R4_R4/openai.gpt-5.6-luna/run_manifest.json` | completed | pilot | openai.gpt-5.6-luna | 30 | 558 |
+| `results/frontier/bedrock_mantle/luna/persona/risk_matrix/R4_R5/openai.gpt-5.6-luna/run_manifest.json` | completed | pilot | openai.gpt-5.6-luna | 30 | 558 |
+| `results/frontier/bedrock_mantle/luna/persona/risk_matrix/R4_R6/openai.gpt-5.6-luna/run_manifest.json` | completed | pilot | openai.gpt-5.6-luna | 30 | 558 |
+| `results/frontier/bedrock_mantle/luna/persona/risk_matrix/R5_R1/openai.gpt-5.6-luna/run_manifest.json` | completed | pilot | openai.gpt-5.6-luna | 30 | 558 |
+| `results/frontier/bedrock_mantle/luna/persona/risk_matrix/R5_R2/openai.gpt-5.6-luna/run_manifest.json` | completed | pilot | openai.gpt-5.6-luna | 30 | 558 |
+| `results/frontier/bedrock_mantle/luna/persona/risk_matrix/R5_R3/openai.gpt-5.6-luna/run_manifest.json` | completed | pilot | openai.gpt-5.6-luna | 30 | 558 |
+| `results/frontier/bedrock_mantle/luna/persona/risk_matrix/R5_R4/openai.gpt-5.6-luna/run_manifest.json` | completed | pilot | openai.gpt-5.6-luna | 30 | 558 |
+| `results/frontier/bedrock_mantle/luna/persona/risk_matrix/R5_R5/openai.gpt-5.6-luna/run_manifest.json` | completed | pilot | openai.gpt-5.6-luna | 30 | 558 |
+| `results/frontier/bedrock_mantle/luna/persona/risk_matrix/R5_R6/openai.gpt-5.6-luna/run_manifest.json` | completed | pilot | openai.gpt-5.6-luna | 30 | 558 |
+| `results/frontier/bedrock_mantle/luna/persona/risk_matrix/R6_R1/openai.gpt-5.6-luna/run_manifest.json` | completed | pilot | openai.gpt-5.6-luna | 30 | 558 |
+| `results/frontier/bedrock_mantle/luna/persona/risk_matrix/R6_R2/openai.gpt-5.6-luna/run_manifest.json` | completed | pilot | openai.gpt-5.6-luna | 30 | 558 |
+| `results/frontier/bedrock_mantle/luna/persona/risk_matrix/R6_R3/openai.gpt-5.6-luna/run_manifest.json` | completed | pilot | openai.gpt-5.6-luna | 30 | 558 |
+| `results/frontier/bedrock_mantle/luna/persona/risk_matrix/R6_R4/openai.gpt-5.6-luna/run_manifest.json` | completed | pilot | openai.gpt-5.6-luna | 30 | 558 |
+| `results/frontier/bedrock_mantle/luna/persona/risk_matrix/R6_R5/openai.gpt-5.6-luna/run_manifest.json` | completed | pilot | openai.gpt-5.6-luna | 30 | 558 |
+| `results/frontier/bedrock_mantle/luna/persona/risk_matrix/R6_R6/openai.gpt-5.6-luna/run_manifest.json` | completed | pilot | openai.gpt-5.6-luna | 30 | 558 |
+| `results/frontier/bedrock_mantle/luna/persona/Rminus_risk_averse/openai.gpt-5.6-luna/run_manifest.json` | completed | pilot | openai.gpt-5.6-luna | 30 | 558 |
+| `results/frontier/bedrock_mantle/luna/persona/Rplus_risk_seeking/openai.gpt-5.6-luna/run_manifest.json` | completed | pilot | openai.gpt-5.6-luna | 30 | 558 |
+| `results/frontier/bedrock_mantle/terra/persona/risk_matrix/R1_R1/openai.gpt-5.6-terra/run_manifest.json` | completed | pilot | openai.gpt-5.6-terra | 30 | 558 |
+| `results/frontier/bedrock_mantle/terra/persona/risk_matrix/R1_R2/openai.gpt-5.6-terra/run_manifest.json` | completed | pilot | openai.gpt-5.6-terra | 30 | 558 |
+| `results/frontier/bedrock_mantle/terra/persona/risk_matrix/R1_R3/openai.gpt-5.6-terra/run_manifest.json` | completed | pilot | openai.gpt-5.6-terra | 30 | 558 |
+| `results/frontier/bedrock_mantle/terra/persona/risk_matrix/R1_R4/openai.gpt-5.6-terra/run_manifest.json` | completed | pilot | openai.gpt-5.6-terra | 30 | 558 |
+| `results/frontier/bedrock_mantle/terra/persona/risk_matrix/R1_R5/openai.gpt-5.6-terra/run_manifest.json` | completed | pilot | openai.gpt-5.6-terra | 30 | 558 |
+| `results/frontier/bedrock_mantle/terra/persona/risk_matrix/R1_R6/openai.gpt-5.6-terra/run_manifest.json` | completed | pilot | openai.gpt-5.6-terra | 30 | 558 |
+| `results/frontier/bedrock_mantle/terra/persona/risk_matrix/R2_R1/openai.gpt-5.6-terra/run_manifest.json` | completed | pilot | openai.gpt-5.6-terra | 30 | 558 |
+| `results/frontier/bedrock_mantle/terra/persona/risk_matrix/R2_R2/openai.gpt-5.6-terra/run_manifest.json` | completed | pilot | openai.gpt-5.6-terra | 30 | 558 |
+| `results/frontier/bedrock_mantle/terra/persona/risk_matrix/R2_R3/openai.gpt-5.6-terra/run_manifest.json` | completed | pilot | openai.gpt-5.6-terra | 30 | 558 |
+| `results/frontier/bedrock_mantle/terra/persona/risk_matrix/R2_R4/openai.gpt-5.6-terra/run_manifest.json` | completed | pilot | openai.gpt-5.6-terra | 30 | 558 |
+| `results/frontier/bedrock_mantle/terra/persona/risk_matrix/R2_R5/openai.gpt-5.6-terra/run_manifest.json` | completed | pilot | openai.gpt-5.6-terra | 30 | 558 |
+| `results/frontier/bedrock_mantle/terra/persona/risk_matrix/R2_R6/openai.gpt-5.6-terra/run_manifest.json` | completed | pilot | openai.gpt-5.6-terra | 30 | 558 |
+| `results/frontier/bedrock_mantle/terra/persona/risk_matrix/R3_R1/openai.gpt-5.6-terra/run_manifest.json` | completed | pilot | openai.gpt-5.6-terra | 30 | 558 |
+| `results/frontier/bedrock_mantle/terra/persona/risk_matrix/R3_R2/openai.gpt-5.6-terra/run_manifest.json` | completed | pilot | openai.gpt-5.6-terra | 30 | 558 |
+| `results/frontier/bedrock_mantle/terra/persona/risk_matrix/R3_R3/openai.gpt-5.6-terra/run_manifest.json` | completed | pilot | openai.gpt-5.6-terra | 30 | 558 |
+| `results/frontier/bedrock_mantle/terra/persona/risk_matrix/R3_R4/openai.gpt-5.6-terra/run_manifest.json` | completed | pilot | openai.gpt-5.6-terra | 30 | 558 |
+| `results/frontier/bedrock_mantle/terra/persona/risk_matrix/R3_R5/openai.gpt-5.6-terra/run_manifest.json` | completed | pilot | openai.gpt-5.6-terra | 30 | 558 |
+| `results/frontier/bedrock_mantle/terra/persona/risk_matrix/R3_R6/openai.gpt-5.6-terra/run_manifest.json` | completed | pilot | openai.gpt-5.6-terra | 30 | 558 |
+| `results/frontier/bedrock_mantle/terra/persona/risk_matrix/R4_R1/openai.gpt-5.6-terra/run_manifest.json` | completed | pilot | openai.gpt-5.6-terra | 30 | 558 |
+| `results/frontier/bedrock_mantle/terra/persona/risk_matrix/R4_R2/openai.gpt-5.6-terra/run_manifest.json` | completed | pilot | openai.gpt-5.6-terra | 30 | 558 |
+| `results/frontier/bedrock_mantle/terra/persona/risk_matrix/R4_R3/openai.gpt-5.6-terra/run_manifest.json` | completed | pilot | openai.gpt-5.6-terra | 30 | 558 |
+| `results/frontier/bedrock_mantle/terra/persona/risk_matrix/R4_R4/openai.gpt-5.6-terra/run_manifest.json` | completed | pilot | openai.gpt-5.6-terra | 30 | 558 |
+| `results/frontier/bedrock_mantle/terra/persona/risk_matrix/R4_R5/openai.gpt-5.6-terra/run_manifest.json` | completed | pilot | openai.gpt-5.6-terra | 30 | 558 |
+| `results/frontier/bedrock_mantle/terra/persona/risk_matrix/R4_R6/openai.gpt-5.6-terra/run_manifest.json` | completed | pilot | openai.gpt-5.6-terra | 30 | 558 |
+| `results/frontier/bedrock_mantle/terra/persona/risk_matrix/R5_R1/openai.gpt-5.6-terra/run_manifest.json` | completed | pilot | openai.gpt-5.6-terra | 30 | 558 |
+| `results/frontier/bedrock_mantle/terra/persona/risk_matrix/R5_R2/openai.gpt-5.6-terra/run_manifest.json` | completed | pilot | openai.gpt-5.6-terra | 30 | 558 |
+| `results/frontier/bedrock_mantle/terra/persona/risk_matrix/R5_R3/openai.gpt-5.6-terra/run_manifest.json` | completed | pilot | openai.gpt-5.6-terra | 30 | 558 |
+| `results/frontier/bedrock_mantle/terra/persona/risk_matrix/R5_R4/openai.gpt-5.6-terra/run_manifest.json` | completed | pilot | openai.gpt-5.6-terra | 30 | 558 |
+| `results/frontier/bedrock_mantle/terra/persona/risk_matrix/R5_R5/openai.gpt-5.6-terra/run_manifest.json` | completed | pilot | openai.gpt-5.6-terra | 30 | 558 |
+| `results/frontier/bedrock_mantle/terra/persona/risk_matrix/R5_R6/openai.gpt-5.6-terra/run_manifest.json` | completed | pilot | openai.gpt-5.6-terra | 30 | 558 |
+| `results/frontier/bedrock_mantle/terra/persona/risk_matrix/R6_R1/openai.gpt-5.6-terra/run_manifest.json` | completed | pilot | openai.gpt-5.6-terra | 30 | 558 |
+| `results/frontier/bedrock_mantle/terra/persona/risk_matrix/R6_R2/openai.gpt-5.6-terra/run_manifest.json` | completed | pilot | openai.gpt-5.6-terra | 30 | 558 |
+| `results/frontier/bedrock_mantle/terra/persona/risk_matrix/R6_R3/openai.gpt-5.6-terra/run_manifest.json` | completed | pilot | openai.gpt-5.6-terra | 30 | 558 |
+| `results/frontier/bedrock_mantle/terra/persona/risk_matrix/R6_R4/openai.gpt-5.6-terra/run_manifest.json` | completed | pilot | openai.gpt-5.6-terra | 30 | 558 |
+| `results/frontier/bedrock_mantle/terra/persona/risk_matrix/R6_R5/openai.gpt-5.6-terra/run_manifest.json` | completed | pilot | openai.gpt-5.6-terra | 30 | 558 |
+| `results/frontier/bedrock_mantle/terra/persona/risk_matrix/R6_R6/openai.gpt-5.6-terra/run_manifest.json` | completed | pilot | openai.gpt-5.6-terra | 30 | 558 |
+| `results/frontier/bedrock_mantle/terra/persona/Rminus_risk_averse/openai.gpt-5.6-terra/run_manifest.json` | completed | pilot | openai.gpt-5.6-terra | 30 | 558 |
+| `results/frontier/bedrock_mantle/terra/persona/Rplus_risk_seeking/openai.gpt-5.6-terra/run_manifest.json` | completed | pilot | openai.gpt-5.6-terra | 30 | 558 |
 | `results/frontier/nvidia/baseline/deepseek-ai-deepseek-v4-flash/run_manifest.json` | failed | failed-or-incomplete | deepseek-ai/deepseek-v4-flash | 0 | 0 |
 | `results/frontier/nvidia/persona/R0_neutral/deepseek-ai-deepseek-v4-flash/run_manifest.json` | running | unclassified | deepseek-ai/deepseek-v4-flash | 0 | 0 |
 | `results/frontier/openai/baseline/gpt-5-nano/run_manifest.json` | completed | pilot | gpt-5-nano | 30 | 558 |
@@ -352,6 +482,15 @@ Every rendered chart, publication PDF, and interactive HTML surface in the canon
 | `results/frontier/openai/persona/S_CA_coop_adv/gpt-5.4-nano/run_manifest.json` | completed | pilot | gpt-5.4-nano | 30 | 558 |
 | `results/frontier/openai/persona/S_CC_coop_coop/gpt-5-nano/run_manifest.json` | completed | pilot | gpt-5-nano | 30 | 558 |
 | `results/frontier/openai/persona/S_CC_coop_coop/gpt-5.4-nano/run_manifest.json` | completed | pilot | gpt-5.4-nano | 30 | 558 |
+| `results/frontier/openai_luna/persona/risk_matrix/R1_R1/gpt-5.6-luna/run_manifest.json` | failed | failed-or-incomplete | gpt-5.6-luna | 0 | 0 |
+| `results/frontier/openai_luna/persona/risk_matrix/R1_R2/gpt-5.6-luna/run_manifest.json` | running | unclassified | gpt-5.6-luna | 0 | 0 |
+| `results/frontier/openai_terra/persona/risk_matrix/R1_R1/gpt-5.6-terra/run_manifest.json` | completed | pilot | gpt-5.6-terra | 30 | 558 |
+| `results/frontier/openai_terra/persona/risk_matrix/R1_R2/gpt-5.6-terra/run_manifest.json` | completed | pilot | gpt-5.6-terra | 30 | 558 |
+| `results/frontier/openai_terra/persona/risk_matrix/R1_R3/gpt-5.6-terra/run_manifest.json` | failed | failed-or-incomplete | gpt-5.6-terra | 0 | 180 |
+| `results/frontier/openai_terra/persona/risk_matrix/R1_R4/gpt-5.6-terra/run_manifest.json` | failed | failed-or-incomplete | gpt-5.6-terra | 0 | 0 |
+| `results/frontier/openai_terra/persona/risk_matrix/R1_R5/gpt-5.6-terra/run_manifest.json` | failed | failed-or-incomplete | gpt-5.6-terra | 0 | 0 |
+| `results/frontier/openai_terra/persona/risk_matrix/R1_R6/gpt-5.6-terra/run_manifest.json` | running | unclassified | gpt-5.6-terra | 0 | 0 |
+| `results/frontier/openai_terra/persona/risk_matrix/R2_R1/gpt-5.6-terra/run_manifest.json` | running | unclassified | gpt-5.6-terra | 0 | 0 |
 | `results/frontier/persona/R0_neutral/google-gemini-3-flash-preview/run_manifest.json` | completed | pilot | google/gemini-3-flash-preview | 30 | 558 |
 | `results/frontier/persona/R1_R1_risk_matrix/google-gemini-3-flash-preview/run_manifest.json` | completed | pilot | google/gemini-3-flash-preview | 30 | 558 |
 | `results/frontier/persona/R1_R2_risk_matrix/google-gemini-3-flash-preview/run_manifest.json` | completed | pilot | google/gemini-3-flash-preview | 30 | 558 |
@@ -500,6 +639,11 @@ Every rendered chart, publication PDF, and interactive HTML surface in the canon
 | `results/open_source/game_understanding_pilot/raw/behavior_lane/behavior/canonical/run_manifest.json` | completed | pilot | qwen2.5:7b-instruct-fp16 | 30 | 558 |
 | `results/open_source/game_understanding_pilot/raw/probe_lane/probes/run_manifest.json` | completed | pilot | qwen2.5:7b-instruct-fp16 |  | 685 |
 | `results/open_source/greennode_prompt_sensitivity_pilot_manifest.json` | completed | pilot |  |  |  |
+| `results/open_source/heterogeneous_dyad_greennode_ba2906a/ai_race_hetero_ba2906a/results/block1/smoke/run_manifest.json` | completed | diagnostic |  | 192 | 2496 |
+| `results/open_source/heterogeneous_dyad_greennode_ba2906a/ai_race_hetero_ba2906a/results/block2/smoke/run_manifest.json` | completed | diagnostic |  | 192 | 2496 |
+| `results/open_source/position_endowment_greennode_e3cf825/analysis/analysis_manifest.json` | complete | diagnostic |  |  |  |
+| `results/open_source/position_endowment_greennode_e3cf825/results/block1/run_manifest.json` | completed | diagnostic |  |  |  |
+| `results/open_source/position_endowment_greennode_e3cf825/results/block2/run_manifest.json` | completed | diagnostic |  |  |  |
 | `results/open_source/prompt_sensitivity_pilot/analysis_manifest.json` | recorded | unclassified |  |  |  |
 | `results/open_source/surface_sensitivity_pilot/lane-a-manifest.json` | completed | pilot | qwen2.5:7b-instruct-fp16 |  |  |
 | `results/open_source/surface_sensitivity_pilot/lane-b-manifest.json` | completed | pilot | qwen2.5:7b-instruct-fp16 |  |  |

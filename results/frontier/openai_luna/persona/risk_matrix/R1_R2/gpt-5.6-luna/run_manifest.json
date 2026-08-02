@@ -1,0 +1,106 @@
+{
+  "created_utc": "2026-08-02T03:45:38.421969+00:00",
+  "experiment": {
+    "name": "openai_luna_persona_baseline_risk_1_2",
+    "runPhase": "pilot",
+    "description": "Persona condition R1-R2 (risk-preference matrix cell 1,2 of 6x6; Eckel-Grossman gamble scale, paper SI Task 1) via direct OpenAI API (backend='openai'), model=gpt-5.6-luna. Isolated from openai_persona_baseline_risk_* (which already has completed gpt-5.4-nano/gpt-5-nano pilot data) so this run cannot reset that data.",
+    "games": [
+      "ai_race_risk_10",
+      "ai_race_risk_60",
+      "ai_race_risk_90"
+    ],
+    "agents": "persona_risk_1_2",
+    "languages": [
+      "en"
+    ],
+    "models": [
+      "gpt-5.6-luna"
+    ],
+    "useOffline": false,
+    "backend": "openai",
+    "samplingSeedApplied": false,
+    "proxyOptions": {
+      "temperature": 0.7,
+      "max_tokens": 256,
+      "timeout": 120,
+      "max_transport_retries": 6,
+      "concurrency": 1
+    },
+    "repetitions": 10,
+    "seed": 260726,
+    "maxParseRetries": 3,
+    "verbose": true
+  },
+  "model": "gpt-5.6-luna",
+  "run_phase": "pilot",
+  "agents_name": "persona_risk_1_2",
+  "agents_config_sha256": "0692a64f6acaa29a740647263ef70cc5aec9da7d24b28f13fdf8be291e108e9d",
+  "persona_condition": "R1-R2",
+  "persona_roles": [
+    "risk-1",
+    "risk-2"
+  ],
+  "persona_sha256": "1edf84da5652f175fc3e404c94e27392a09966ff94919441262934914a2974ce",
+  "status": "running",
+  "n_races": 0,
+  "n_turns": 0,
+  "schema_version": "ai-race-proxy-run-v1",
+  "source_sha256": "e27cbb1db6c10add494554b19f2111c4653638cbb84a15b0670928b7487adc0b",
+  "prompt_version": "ai-race-fairgame-v3",
+  "prompt_sha256": "27086bd80378c25e859d03527a5ae55c1046f231ef7b914db9cb3c3b4fb2df3e",
+  "model_route": "gpt-5.6-luna",
+  "llm_backend_mro": [
+    "openai"
+  ],
+  "mechanism": {
+    "minimum_rounds": 5,
+    "stop_probability": 0.2,
+    "risk_levels": [
+      0.1,
+      0.6,
+      0.9
+    ],
+    "race_prize": 100.0,
+    "stage_payoff": {
+      "safe": {
+        "safe": 1.0,
+        "unsafe": 0.6
+      },
+      "unsafe": {
+        "safe": 2.4,
+        "unsafe": 2.0
+      }
+    },
+    "progress": {
+      "safe": 1.0,
+      "unsafe": 1.5
+    }
+  },
+  "package_versions": {
+    "numpy": "2.4.6",
+    "pandas": "2.3.3",
+    "openai": "2.51.0",
+    "torch": null,
+    "transformers": null,
+    "vllm": null
+  },
+  "decoding": {
+    "temperature_requested": null,
+    "temperature_forwarded_by_sdk": null,
+    "temperature_effective": null,
+    "temperature_effective_confirmed": false,
+    "temperature_status": "backend_openai_not_yet_documented_for_ai-race-proxy-run-v1",
+    "output_token_limit_parameter": "unknown",
+    "output_token_limit": 0,
+    "max_parse_retries": 0,
+    "max_transport_retries": 0
+  },
+  "sampling_seed_provenance": {
+    "requested": null,
+    "forwarded_by_sdk": null,
+    "applied": null,
+    "applied_known": false,
+    "status": "backend_openai_not_yet_documented_for_ai-race-proxy-run-v1",
+    "strip_detection": "not_audited"
+  }
+}

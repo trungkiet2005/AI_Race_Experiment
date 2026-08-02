@@ -1,0 +1,565 @@
+{
+  "schema_version": "ai-race-kaggle-crossmodel-scaffold-admission-v1",
+  "status": "complete",
+  "protocol": "ai-race-state-scaffold-comprehension-v1",
+  "generated_utc": "2026-08-02T04:18:20.059614+00:00",
+  "model": {
+    "kaggle_model_source": "hf://Qwen/Qwen2.5-7B-Instruct@a09a35458c702b33eeacc393d103063234e8bc28",
+    "family": "Qwen2.5",
+    "short_name": "qwen2.5-7b-instruct",
+    "metadata": {
+      "config.json": {
+        "bytes": 663,
+        "sha256": "7463bb0ea78315365e6c6b74de4e73bbcc8359dfb0c5a737584e077d42c0b03c"
+      },
+      "generation_config.json": {
+        "bytes": 243,
+        "sha256": "3a8f9087e486054c8a4a08dae2e5a3ba62e23da212b5b8c08bc42cb983c3459f"
+      },
+      "tokenizer_config.json": {
+        "bytes": 7305,
+        "sha256": "5b5d4f65d0acd3b2d56a35b56d374a36cbc1c8fa5cf3b3febbbfabf22f359583"
+      },
+      "tokenizer.json": {
+        "bytes": 7031645,
+        "sha256": "c0382117ea329cdf097041132f6d735924b697924d6f6fc3945713e96ce87539"
+      },
+      "model.safetensors.index.json": {
+        "bytes": 27752,
+        "sha256": "624bf7c47cd12468fdc16e38a47cf4f19e0415b859a223ba3c027eed2f0e1028"
+      }
+    },
+    "weight_files": [
+      {
+        "name": "model-00001-of-00004.safetensors",
+        "bytes": 3945441440
+      },
+      {
+        "name": "model-00002-of-00004.safetensors",
+        "bytes": 3864726352
+      },
+      {
+        "name": "model-00003-of-00004.safetensors",
+        "bytes": 3864726424
+      },
+      {
+        "name": "model-00004-of-00004.safetensors",
+        "bytes": 3556377672
+      }
+    ],
+    "digest": "6a49f5db66a7a2e210ab5774d3ab929ca2f9b6b6c1f996121b1cba489236dc86"
+  },
+  "language": "en",
+  "request_bank_sha256": "8f85c813283251593a1a5dc89df241805c9fe85da6b72dae006c5287838f3b24",
+  "experiment_config_sha256": "2f5fef243e9407d3bbdfe7dc4978e2dc8bee52a50f5ee60fa4db9aaafad6df32",
+  "decoding": {
+    "temperature": 0.0,
+    "max_new_tokens": 16,
+    "do_sample": false,
+    "batch_size": 1,
+    "sampling_seed_applied": false,
+    "seed_note": "Greedy decoding; request seeds retained as CRN identifiers only."
+  },
+  "model_runtime": {
+    "parameter_devices": [
+      "cuda:0"
+    ],
+    "parameter_dtypes": [
+      "torch.bfloat16"
+    ],
+    "hf_device_map": {
+      "": "0"
+    }
+  },
+  "passed": false,
+  "rule": "every condition/action-mapping cell must have complete unique coverage, strict parse >= 0.95, all domains >= 0.80, and state-update plus terminal-scoring >= 0.90",
+  "thresholds": {
+    "strict_parse_rate": 0.95,
+    "domain_semantic_accuracy": {
+      "rule_recall": 0.8,
+      "stage_payoff": 0.8,
+      "state_update": 0.9,
+      "terminal_scoring": 0.9
+    }
+  },
+  "coverage": {
+    "passed": true,
+    "expected_rows": 160,
+    "observed_rows": 160,
+    "unique_rows": 160,
+    "missing_count": 0,
+    "unexpected_count": 0,
+    "duplicate_count": 0,
+    "missing_examples": [],
+    "unexpected_examples": []
+  },
+  "by_cell": {
+    "none/safe_p": {
+      "passed": false,
+      "condition": "none",
+      "mapping_id": "safe_p",
+      "coverage_passed": true,
+      "n": 16,
+      "expected_n": 16,
+      "strict_parse_n": 16,
+      "strict_parse_correct": 9,
+      "strict_parse_rate": 0.5625,
+      "strict_parse_threshold": 0.95,
+      "arithmetic_checks": 0,
+      "arithmetic_mismatches": 0,
+      "hidden_information_checks": 6,
+      "hidden_information_leaks": 0,
+      "by_domain": {
+        "rule_recall": {
+          "n": 4,
+          "correct": 4,
+          "semantic_accuracy": 1.0,
+          "threshold": 0.8,
+          "passed": true
+        },
+        "stage_payoff": {
+          "n": 4,
+          "correct": 4,
+          "semantic_accuracy": 1.0,
+          "threshold": 0.8,
+          "passed": true
+        },
+        "state_update": {
+          "n": 4,
+          "correct": 1,
+          "semantic_accuracy": 0.25,
+          "threshold": 0.9,
+          "passed": false
+        },
+        "terminal_scoring": {
+          "n": 4,
+          "correct": 0,
+          "semantic_accuracy": 0.0,
+          "threshold": 0.9,
+          "passed": false
+        }
+      }
+    },
+    "none/safe_q": {
+      "passed": false,
+      "condition": "none",
+      "mapping_id": "safe_q",
+      "coverage_passed": true,
+      "n": 16,
+      "expected_n": 16,
+      "strict_parse_n": 16,
+      "strict_parse_correct": 7,
+      "strict_parse_rate": 0.4375,
+      "strict_parse_threshold": 0.95,
+      "arithmetic_checks": 0,
+      "arithmetic_mismatches": 0,
+      "hidden_information_checks": 6,
+      "hidden_information_leaks": 0,
+      "by_domain": {
+        "rule_recall": {
+          "n": 4,
+          "correct": 4,
+          "semantic_accuracy": 1.0,
+          "threshold": 0.8,
+          "passed": true
+        },
+        "stage_payoff": {
+          "n": 4,
+          "correct": 4,
+          "semantic_accuracy": 1.0,
+          "threshold": 0.8,
+          "passed": true
+        },
+        "state_update": {
+          "n": 4,
+          "correct": 0,
+          "semantic_accuracy": 0.0,
+          "threshold": 0.9,
+          "passed": false
+        },
+        "terminal_scoring": {
+          "n": 4,
+          "correct": 0,
+          "semantic_accuracy": 0.0,
+          "threshold": 0.9,
+          "passed": false
+        }
+      }
+    },
+    "transition/safe_p": {
+      "passed": false,
+      "condition": "transition",
+      "mapping_id": "safe_p",
+      "coverage_passed": true,
+      "n": 16,
+      "expected_n": 16,
+      "strict_parse_n": 16,
+      "strict_parse_correct": 7,
+      "strict_parse_rate": 0.4375,
+      "strict_parse_threshold": 0.95,
+      "arithmetic_checks": 4,
+      "arithmetic_mismatches": 0,
+      "hidden_information_checks": 6,
+      "hidden_information_leaks": 0,
+      "by_domain": {
+        "rule_recall": {
+          "n": 4,
+          "correct": 4,
+          "semantic_accuracy": 1.0,
+          "threshold": 0.8,
+          "passed": true
+        },
+        "stage_payoff": {
+          "n": 4,
+          "correct": 4,
+          "semantic_accuracy": 1.0,
+          "threshold": 0.8,
+          "passed": true
+        },
+        "state_update": {
+          "n": 4,
+          "correct": 0,
+          "semantic_accuracy": 0.0,
+          "threshold": 0.9,
+          "passed": false
+        },
+        "terminal_scoring": {
+          "n": 4,
+          "correct": 0,
+          "semantic_accuracy": 0.0,
+          "threshold": 0.9,
+          "passed": false
+        }
+      }
+    },
+    "transition/safe_q": {
+      "passed": false,
+      "condition": "transition",
+      "mapping_id": "safe_q",
+      "coverage_passed": true,
+      "n": 16,
+      "expected_n": 16,
+      "strict_parse_n": 16,
+      "strict_parse_correct": 9,
+      "strict_parse_rate": 0.5625,
+      "strict_parse_threshold": 0.95,
+      "arithmetic_checks": 4,
+      "arithmetic_mismatches": 0,
+      "hidden_information_checks": 6,
+      "hidden_information_leaks": 0,
+      "by_domain": {
+        "rule_recall": {
+          "n": 4,
+          "correct": 3,
+          "semantic_accuracy": 0.75,
+          "threshold": 0.8,
+          "passed": false
+        },
+        "stage_payoff": {
+          "n": 4,
+          "correct": 4,
+          "semantic_accuracy": 1.0,
+          "threshold": 0.8,
+          "passed": true
+        },
+        "state_update": {
+          "n": 4,
+          "correct": 0,
+          "semantic_accuracy": 0.0,
+          "threshold": 0.9,
+          "passed": false
+        },
+        "terminal_scoring": {
+          "n": 4,
+          "correct": 0,
+          "semantic_accuracy": 0.0,
+          "threshold": 0.9,
+          "passed": false
+        }
+      }
+    },
+    "terminal/safe_p": {
+      "passed": false,
+      "condition": "terminal",
+      "mapping_id": "safe_p",
+      "coverage_passed": true,
+      "n": 16,
+      "expected_n": 16,
+      "strict_parse_n": 16,
+      "strict_parse_correct": 8,
+      "strict_parse_rate": 0.5,
+      "strict_parse_threshold": 0.95,
+      "arithmetic_checks": 4,
+      "arithmetic_mismatches": 0,
+      "hidden_information_checks": 6,
+      "hidden_information_leaks": 0,
+      "by_domain": {
+        "rule_recall": {
+          "n": 4,
+          "correct": 4,
+          "semantic_accuracy": 1.0,
+          "threshold": 0.8,
+          "passed": true
+        },
+        "stage_payoff": {
+          "n": 4,
+          "correct": 4,
+          "semantic_accuracy": 1.0,
+          "threshold": 0.8,
+          "passed": true
+        },
+        "state_update": {
+          "n": 4,
+          "correct": 0,
+          "semantic_accuracy": 0.0,
+          "threshold": 0.9,
+          "passed": false
+        },
+        "terminal_scoring": {
+          "n": 4,
+          "correct": 0,
+          "semantic_accuracy": 0.0,
+          "threshold": 0.9,
+          "passed": false
+        }
+      }
+    },
+    "terminal/safe_q": {
+      "passed": false,
+      "condition": "terminal",
+      "mapping_id": "safe_q",
+      "coverage_passed": true,
+      "n": 16,
+      "expected_n": 16,
+      "strict_parse_n": 16,
+      "strict_parse_correct": 10,
+      "strict_parse_rate": 0.625,
+      "strict_parse_threshold": 0.95,
+      "arithmetic_checks": 4,
+      "arithmetic_mismatches": 0,
+      "hidden_information_checks": 6,
+      "hidden_information_leaks": 0,
+      "by_domain": {
+        "rule_recall": {
+          "n": 4,
+          "correct": 4,
+          "semantic_accuracy": 1.0,
+          "threshold": 0.8,
+          "passed": true
+        },
+        "stage_payoff": {
+          "n": 4,
+          "correct": 4,
+          "semantic_accuracy": 1.0,
+          "threshold": 0.8,
+          "passed": true
+        },
+        "state_update": {
+          "n": 4,
+          "correct": 0,
+          "semantic_accuracy": 0.0,
+          "threshold": 0.9,
+          "passed": false
+        },
+        "terminal_scoring": {
+          "n": 4,
+          "correct": 0,
+          "semantic_accuracy": 0.0,
+          "threshold": 0.9,
+          "passed": false
+        }
+      }
+    },
+    "transition_terminal/safe_p": {
+      "passed": false,
+      "condition": "transition_terminal",
+      "mapping_id": "safe_p",
+      "coverage_passed": true,
+      "n": 16,
+      "expected_n": 16,
+      "strict_parse_n": 16,
+      "strict_parse_correct": 8,
+      "strict_parse_rate": 0.5,
+      "strict_parse_threshold": 0.95,
+      "arithmetic_checks": 8,
+      "arithmetic_mismatches": 0,
+      "hidden_information_checks": 6,
+      "hidden_information_leaks": 0,
+      "by_domain": {
+        "rule_recall": {
+          "n": 4,
+          "correct": 4,
+          "semantic_accuracy": 1.0,
+          "threshold": 0.8,
+          "passed": true
+        },
+        "stage_payoff": {
+          "n": 4,
+          "correct": 4,
+          "semantic_accuracy": 1.0,
+          "threshold": 0.8,
+          "passed": true
+        },
+        "state_update": {
+          "n": 4,
+          "correct": 0,
+          "semantic_accuracy": 0.0,
+          "threshold": 0.9,
+          "passed": false
+        },
+        "terminal_scoring": {
+          "n": 4,
+          "correct": 0,
+          "semantic_accuracy": 0.0,
+          "threshold": 0.9,
+          "passed": false
+        }
+      }
+    },
+    "transition_terminal/safe_q": {
+      "passed": false,
+      "condition": "transition_terminal",
+      "mapping_id": "safe_q",
+      "coverage_passed": true,
+      "n": 16,
+      "expected_n": 16,
+      "strict_parse_n": 16,
+      "strict_parse_correct": 9,
+      "strict_parse_rate": 0.5625,
+      "strict_parse_threshold": 0.95,
+      "arithmetic_checks": 8,
+      "arithmetic_mismatches": 0,
+      "hidden_information_checks": 6,
+      "hidden_information_leaks": 0,
+      "by_domain": {
+        "rule_recall": {
+          "n": 4,
+          "correct": 4,
+          "semantic_accuracy": 1.0,
+          "threshold": 0.8,
+          "passed": true
+        },
+        "stage_payoff": {
+          "n": 4,
+          "correct": 4,
+          "semantic_accuracy": 1.0,
+          "threshold": 0.8,
+          "passed": true
+        },
+        "state_update": {
+          "n": 4,
+          "correct": 0,
+          "semantic_accuracy": 0.0,
+          "threshold": 0.9,
+          "passed": false
+        },
+        "terminal_scoring": {
+          "n": 4,
+          "correct": 0,
+          "semantic_accuracy": 0.0,
+          "threshold": 0.9,
+          "passed": false
+        }
+      }
+    },
+    "length_placebo/safe_p": {
+      "passed": false,
+      "condition": "length_placebo",
+      "mapping_id": "safe_p",
+      "coverage_passed": true,
+      "n": 16,
+      "expected_n": 16,
+      "strict_parse_n": 16,
+      "strict_parse_correct": 4,
+      "strict_parse_rate": 0.25,
+      "strict_parse_threshold": 0.95,
+      "arithmetic_checks": 0,
+      "arithmetic_mismatches": 0,
+      "hidden_information_checks": 6,
+      "hidden_information_leaks": 0,
+      "by_domain": {
+        "rule_recall": {
+          "n": 4,
+          "correct": 4,
+          "semantic_accuracy": 1.0,
+          "threshold": 0.8,
+          "passed": true
+        },
+        "stage_payoff": {
+          "n": 4,
+          "correct": 4,
+          "semantic_accuracy": 1.0,
+          "threshold": 0.8,
+          "passed": true
+        },
+        "state_update": {
+          "n": 4,
+          "correct": 0,
+          "semantic_accuracy": 0.0,
+          "threshold": 0.9,
+          "passed": false
+        },
+        "terminal_scoring": {
+          "n": 4,
+          "correct": 0,
+          "semantic_accuracy": 0.0,
+          "threshold": 0.9,
+          "passed": false
+        }
+      }
+    },
+    "length_placebo/safe_q": {
+      "passed": false,
+      "condition": "length_placebo",
+      "mapping_id": "safe_q",
+      "coverage_passed": true,
+      "n": 16,
+      "expected_n": 16,
+      "strict_parse_n": 16,
+      "strict_parse_correct": 5,
+      "strict_parse_rate": 0.3125,
+      "strict_parse_threshold": 0.95,
+      "arithmetic_checks": 0,
+      "arithmetic_mismatches": 0,
+      "hidden_information_checks": 6,
+      "hidden_information_leaks": 0,
+      "by_domain": {
+        "rule_recall": {
+          "n": 4,
+          "correct": 4,
+          "semantic_accuracy": 1.0,
+          "threshold": 0.8,
+          "passed": true
+        },
+        "stage_payoff": {
+          "n": 4,
+          "correct": 4,
+          "semantic_accuracy": 1.0,
+          "threshold": 0.8,
+          "passed": true
+        },
+        "state_update": {
+          "n": 4,
+          "correct": 0,
+          "semantic_accuracy": 0.0,
+          "threshold": 0.9,
+          "passed": false
+        },
+        "terminal_scoring": {
+          "n": 4,
+          "correct": 0,
+          "semantic_accuracy": 0.0,
+          "threshold": 0.9,
+          "passed": false
+        }
+      }
+    }
+  },
+  "artifacts": {
+    "comprehension_raw": {
+      "path": "comprehension_raw.jsonl",
+      "bytes": 569746,
+      "sha256": "86bab8f354aa14c78f3d51bab8ef2a740829cac38eeff6abe00414b765fccc9b"
+    }
+  }
+}

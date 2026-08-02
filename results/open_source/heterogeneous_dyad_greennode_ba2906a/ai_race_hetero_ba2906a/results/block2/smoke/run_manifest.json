@@ -1,0 +1,229 @@
+{
+  "admission_receipts": {
+    "mistral7_01": {
+      "evidence_class": null,
+      "passed": false,
+      "path": "/network-volume/icse27/ai_race_capacity_ab0527e/results/mistral-7b-instruct-v0.1/smoke/admission.json",
+      "sha256": "5268febdd6b08dcc70768b08cf15783812e767d17d088ce3c4a7d16e7d8cb2b2",
+      "status": "complete"
+    },
+    "qwen25_7b": {
+      "evidence_class": null,
+      "passed": false,
+      "path": "/network-volume/icse27/ai_race_capacity_ab0527e/results/qwen2.5-7b-instruct/smoke/admission.json",
+      "sha256": "4d10e53b01eb5f627a159df179708250c7aceab4a6afe4d1c16d10389c33b93d",
+      "status": "complete"
+    }
+  },
+  "completed_utc": "2026-08-02T05:29:08.135400+00:00",
+  "design": {
+    "dyads": [
+      "qwen-qwen",
+      "mistral-mistral",
+      "qwen-mistral",
+      "mistral-qwen"
+    ],
+    "opponent_identity_conditions": [
+      "not_disclosed",
+      "accurate"
+    ],
+    "persona_conditions": [
+      "neutral",
+      "competitive"
+    ],
+    "repetitions": 2,
+    "risks": [
+      0.1,
+      0.6,
+      0.9
+    ],
+    "seat_reversal": true,
+    "self_identity_conditions": [
+      "not_disclosed",
+      "accurate"
+    ],
+    "temperature": 0.0
+  },
+  "elapsed_seconds": 170.898,
+  "error": null,
+  "evidence_class": "diagnostic_unadmitted",
+  "expected_races": 192,
+  "limitations": [
+    "Current checkpoints failed state-update/terminal admission; behavior is diagnostic.",
+    "Temperature-zero repetitions reuse horizons but not stochastic model samples.",
+    "Accurate versus not-disclosed identity changes prompt tokens and measures label disclosure, not latent family recognition."
+  ],
+  "mailbox_batches": 8,
+  "n_races": 192,
+  "n_turns": 2496,
+  "profile": "smoke",
+  "protocol": "ai-race-heterogeneous-dyad-v1",
+  "schema_version": "ai-race-heterogeneous-dyad-run-v1",
+  "source_artifacts": [
+    {
+      "path": "ai_race/runner/seat_routed.py",
+      "sha256": "87e815d3cb1667aab7acb9b302675b91015f0e46d70341db06b9e68c344b7f7a"
+    },
+    {
+      "path": "kaggle/experiments/greennode_heterogeneous_dyad.py",
+      "sha256": "cd8e1f458f6d66dcf5ec84500777d2a62cfc3b0856701b07ba621d6dcb7e922b"
+    },
+    {
+      "path": "ai_race/prompts/ai_race_en.txt",
+      "sha256": "27086bd80378c25e859d03527a5ae55c1046f231ef7b914db9cb3c3b4fb2df3e"
+    }
+  ],
+  "source_commit": "ba2906ae0f32fdd1af69d9d68e1c8f26b00012d4",
+  "started_utc": "2026-08-02T05:26:17.229247+00:00",
+  "status": "completed",
+  "workers": {
+    "mistral7_01": {
+      "decoding": {
+        "batch_size": 4,
+        "do_sample": false,
+        "max_new_tokens": 16,
+        "sampling_seed_applied": false,
+        "temperature": 0.0
+      },
+      "hardware": {
+        "checks": {
+          "bf16_supported": true,
+          "compute_capability": true,
+          "cuda_available": true,
+          "free_vram": true,
+          "single_gpu": true
+        },
+        "hostname": "nb-b43b17b4-d969-4c10-a95c-929ed8b71e8a-57bfddc5d7-7vbw9",
+        "model_key": "mistral7_01",
+        "model_short_name": "mistral-7b-instruct-v0.1",
+        "observed": {
+          "bf16_supported": true,
+          "compute_capability": [
+            9,
+            0
+          ],
+          "cuda_available": true,
+          "free_vram_gib": 19.45166015625,
+          "gpu_count": 1,
+          "gpu_name": "NVIDIA H100 80GB HBM3 MIG 2g.20gb",
+          "total_vram_gib": 19.625
+        },
+        "passed": true,
+        "python": "3.10.12",
+        "required": {
+          "bf16": true,
+          "gpu_count": 1,
+          "min_compute_capability": [
+            8,
+            0
+          ],
+          "min_free_vram_gib": 18.0
+        },
+        "torch": "2.4.0a0+07cecf4168.nv24.05"
+      },
+      "hostname": "nb-b43b17b4-d969-4c10-a95c-929ed8b71e8a-57bfddc5d7-7vbw9",
+      "model": {
+        "family": "Mistral-7B",
+        "repo_id": "mistralai/Mistral-7B-Instruct-v0.1",
+        "revision": "ec5deb64f2c6e6fa90c1abf74a91d5c93a9669ca",
+        "short_name": "mistral-7b-instruct-v0.1"
+      },
+      "model_key": "mistral7_01",
+      "protocol": "ai-race-heterogeneous-dyad-v1",
+      "receipt_sha256": "a5107f3c2223abda675f59e1cfef1ffc165c12475efa1e3ae19d3bc04fb633e5",
+      "runtime_layout": {
+        "hf_device_map": {
+          "": "0"
+        },
+        "parameter_devices": [
+          "cuda:0"
+        ],
+        "parameter_dtypes": [
+          "torch.bfloat16"
+        ]
+      },
+      "started_utc": "2026-08-02T05:26:01.729366+00:00",
+      "status": "ready",
+      "tokenizer": {
+        "chat_template_sha256": "796853172235ab3aaa4810013ddfe2eab481bda3306dad4f700c00d436eed596",
+        "class": "LlamaTokenizerFast",
+        "vocab_size": 32000
+      },
+      "worker_id": "podA-mistral"
+    },
+    "qwen25_7b": {
+      "decoding": {
+        "batch_size": 4,
+        "do_sample": false,
+        "max_new_tokens": 16,
+        "sampling_seed_applied": false,
+        "temperature": 0.0
+      },
+      "hardware": {
+        "checks": {
+          "bf16_supported": true,
+          "compute_capability": true,
+          "cuda_available": true,
+          "free_vram": true,
+          "single_gpu": true
+        },
+        "hostname": "nb-17c64ac4-3f70-43b9-8d6f-579c209b038d-5d7d76f986-nc55c",
+        "model_key": "qwen25_7b",
+        "model_short_name": "qwen2.5-7b-instruct",
+        "observed": {
+          "bf16_supported": true,
+          "compute_capability": [
+            9,
+            0
+          ],
+          "cuda_available": true,
+          "free_vram_gib": 39.08917236328125,
+          "gpu_count": 1,
+          "gpu_name": "NVIDIA H100 80GB HBM3 MIG 4g.40gb",
+          "total_vram_gib": 39.375
+        },
+        "passed": true,
+        "python": "3.10.12",
+        "required": {
+          "bf16": true,
+          "gpu_count": 1,
+          "min_compute_capability": [
+            8,
+            0
+          ],
+          "min_free_vram_gib": 18.0
+        },
+        "torch": "2.4.0a0+07cecf4168.nv24.05"
+      },
+      "hostname": "nb-17c64ac4-3f70-43b9-8d6f-579c209b038d-5d7d76f986-nc55c",
+      "model": {
+        "family": "Qwen2.5",
+        "repo_id": "Qwen/Qwen2.5-7B-Instruct",
+        "revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+        "short_name": "qwen2.5-7b-instruct"
+      },
+      "model_key": "qwen25_7b",
+      "protocol": "ai-race-heterogeneous-dyad-v1",
+      "receipt_sha256": "0ad767c84cc4297a79cd561895bcf1583f0b33480e436ee0324c2e7c51da22ec",
+      "runtime_layout": {
+        "hf_device_map": {
+          "": "0"
+        },
+        "parameter_devices": [
+          "cuda:0"
+        ],
+        "parameter_dtypes": [
+          "torch.bfloat16"
+        ]
+      },
+      "started_utc": "2026-08-02T05:26:03.609738+00:00",
+      "status": "ready",
+      "tokenizer": {
+        "chat_template_sha256": "cd8e9439f0570856fd70470bf8889ebd8b5d1107207f67a5efb46e342330527f",
+        "class": "Qwen2TokenizerFast",
+        "vocab_size": 151665
+      },
+      "worker_id": "podB-qwen"
+    }
+  }
+}

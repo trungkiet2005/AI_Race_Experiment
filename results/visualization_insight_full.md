@@ -1,6 +1,6 @@
 # AI Race Pilot Visualization & Results Insight Bundle
 
-## Current evidence dashboard (2026-08-01)
+## Current evidence dashboard (2026-08-02)
 
 This section is the canonical, current map of the expanded experiment suite. It
 supersedes older snapshots further below where numbers differ. Every conclusion
@@ -16,6 +16,8 @@ are displayed separately and are never pooled.
 | Fixed-state replay, T=0 | 96 states x 8 skins x 2 mappings = 1,536 cells | largest direct context contrast +16.7 pp | direct prompt diagnostic at identical states | different estimand from live feedback; do not pool |
 | Comprehension gate | 256 context probe rows | state update 12.5%; terminal scoring 17.2% | admission failed | behavior is not evidence of informed optimization |
 | Recognition audit v2 | 16/16 strict-valid | all reported generic structural resemblance; 0 specific named-game matches | protocol can record self-reported recognition cleanly | self-report is not contamination or internal-recognition evidence |
+| Heterogeneous dyads, T=0 | 384 races; 4,992 decisions | block-1 Unsafe: Qwen 75.2%, Mistral 93.3%; lane agreement 98.6% | disclosed identity/persona labels can shift enacted behavior in this grid | both checkpoints failed admission; block 2 is lane replication only |
+| Exogenous position, T=0 | 96 frozen states x 2 checkpoints x 2 lanes | Qwen numeric-only N=3 last-minus-leader +41.7 pp; Mistral 0 pp; lane agreement 94.8%/100% | direct fixed-state response to an engine-scored payoff-relevant rank intervention | one history/risk; unadmitted; not a live-game feedback effect |
 | Native FAST-SAE self-play | 18 races/300 decisions; 114 live reruns | strong held-out associations; 0/12 strongest-dose target-control CIs exclude zero | selected activations associate with action log odds | no feature-specific causal controller identified |
 | Context FAST-SAE | two layers; 1,312 interventions/layer | L20 held-out AUC .985; 0 intervention flips | L20 is useful for capture/diagnostic association | steering claim rejected |
 | EGT reconstruction | 36 seeded chains; 3 risks x 3 regimes x 4 chains | AU -> CAS -> CS strong-selection ordering recovered | faithful reconstruction of disclosed reduced model | not bitwise reproduction; private author code/seeds unavailable |
@@ -34,9 +36,10 @@ Three follow-ups are now executable under frozen, hash-checked protocols:
   placebo races. Round-1 effects are direct prompt contrasts; later symmetric
   self-play differences are game-level total intervention effects.
 
-These are protocol and mechanical-contract artifacts, not GPU behavioral
-findings. GreenNode accepted the network connection but rejected the available
-SSH key, so no synthetic completion or result was written.
+These three remain protocol and mechanical-contract artifacts, not GPU
+behavioral findings. The separate heterogeneous-dyad and exogenous-position
+studies below were completed through authenticated GreenNode notebook terminals;
+their results must not be imputed to these still-unrun prepared grids.
 
 ### 1. Payoff-preserving context changes behavior after feedback
 
@@ -74,7 +77,66 @@ shifted by as much as 9.29 pp.
 
 ![Temperature delta by context](open_source/context_skin_pilot/analysis_temperature_robustness/figures/temperature_unsafe_delta_by_context.png)
 
-### 3. SAE association survived held-out evaluation; causal specificity did not
+### 3. Disclosed model identity changes behavior, but does not reveal recognition
+
+The lane-counterbalanced Qwen2.5-7B/Mistral-7B diagnostic completed 384 races
+and 4,992 decisions with zero parse failures. In the frozen primary block,
+Qwen emitted Unsafe on 75.2% of decisions and Mistral on 93.3%. The largest
+aggregated opponent-label contrast was -41.7 pp for the Mistral/cross-family/
+neutral/round-1 slice (24 decisions per disclosure arm). This is a descriptive
+smoke-cell contrast, not a confirmatory population estimate.
+
+![Identity disclosure matrix](open_source/heterogeneous_dyad_greennode_ba2906a/analysis/figures/identity_disclosure_matrix.png)
+
+![Same- versus cross-family risk response](open_source/heterogeneous_dyad_greennode_ba2906a/analysis/figures/risk_response_same_vs_cross.png)
+
+The prompts manipulate disclosed checkpoint labels and persona text. They do
+not test hidden self-recognition, opponent identification without labels, or a
+stable personality trait. Both checkpoints failed comprehension admission.
+Block 2 only swaps GPU lanes: 98.6% action agreement is a reproducibility audit
+and is not pooled as a second behavioral sample.
+
+The live position panel remains observational because position is caused by
+earlier actions and state feedback; it cannot identify a causal leader/laggard
+effect.
+
+![Endogenous live position response](open_source/heterogeneous_dyad_greennode_ba2906a/analysis/figures/endogenous_position_response.png)
+
+[Full heterogeneous-dyad report](open_source/heterogeneous_dyad_greennode_ba2906a/analysis/README.md)
+
+### 4. Exogenous rank separates direct position response from live feedback
+
+The position-endowment protocol holds the four-round engine-scored history,
+stage payoff, risk, and decision round fixed, then changes only a public,
+payoff-relevant progress endowment. It crosses N=2 behind/tied/ahead and N=3
+leader/middle/last with both opaque P/Q mappings and numeric-only versus
+verified-rank-label prompts.
+
+In block 1's prespecified numeric-only arm, Qwen's N=3 Unsafe rate rose from
+50.0% as leader to 91.7% as last: an exact +41.7 pp direct contrast in this
+finite bank. Mistral chose Safe in every position cell. The two checkpoints
+therefore show radically different response surfaces, not a common family-wide
+strategy.
+
+![Exogenous position response](open_source/position_endowment_greennode_e3cf825/analysis/primary_position_response.png)
+
+![Direct position contrasts](open_source/position_endowment_greennode_e3cf825/analysis/primary_direct_contrasts.png)
+
+Across swapped GPU lanes, exact matched-probe agreement was 94.8% for Qwen and
+100% for Mistral. Block 2 is retained only as a runtime audit.
+
+![Position lane reproducibility](open_source/position_endowment_greennode_e3cf825/analysis/lane_reproducibility.png)
+
+This intervention supports a causal **direct fixed-state prompt effect** inside
+one modified state bank. It is not the total effect of falling behind in a live
+game, where later opponent actions, stopping, risk, and prompts become
+endogenous. Both checkpoints failed the separate 2-player comprehension gate,
+which also does not admit N=3 understanding; no rational-adaptation claim is
+warranted.
+
+[Full exogenous-position report](open_source/position_endowment_greennode_e3cf825/analysis/README.md)
+
+### 5. SAE association survived held-out evaluation; causal specificity did not
 
 In native actual-self-play, three discovery-selected layer-12 FAST-SAE features
 retained held-out absolute correlations of **.692--.700** with Unsafe-minus-Safe
@@ -100,7 +162,7 @@ interventions per layer**. Its steering hypothesis is rejected for this pilot.
 
 ![Context FAST-SAE controls](open_source/activation_sae/context_fast_sae_analysis/causal_steering_controls.png)
 
-### 4. Evolutionary theory is reproducible, but it does not describe the prompt policy
+### 6. Evolutionary theory is reproducible, but it does not describe the prompt policy
 
 The independently reconstructed four-strategy model reproduces the strong-
 selection qualitative phase ordering: **AU** dominates at risk .1, **CAS** at .6,
@@ -118,7 +180,7 @@ nearest-strategy label does not reveal a latent strategy.
 
 ![Theory versus LLM behavior](open_source/egt_reproduction/egt_theory_vs_llm_unsafe.png)
 
-### 5. Recognition and provenance controls
+### 7. Recognition and provenance controls
 
 The rejected v1 recognition pilot is retained because its prompt/parser contract
 was contradictory; it yielded 0/320 strict-valid rows and is not rescored. Frozen
@@ -134,18 +196,25 @@ Primary artifact reports:
 - [Native FAST-SAE causal audit](open_source/activation_sae/causal_selfplay/fast-sae-pilot-L12-v1/analysis/analysis_report.md)
 - [Context FAST-SAE audit](open_source/activation_sae/context_fast_sae_analysis/README.md)
 - [EGT reconstruction report](open_source/egt_reproduction/README.md)
+- [Heterogeneous-dyad diagnostic](open_source/heterogeneous_dyad_greennode_ba2906a/analysis/README.md)
+- [Exogenous-position diagnostic](open_source/position_endowment_greennode_e3cf825/analysis/README.md)
 
 ### Integrated conclusion
 
 The most defensible story is a validity boundary. The project can reproduce the
-game arithmetic and the reduced evolutionary phase pattern, and it can locate
-activation directions that predict actions. Yet the same checkpoint fails key
-state/scoring gates, is highly sensitive to opaque response position and
-payoff-preserving stories, and does not yield feature-specific causal steering.
-The next confirmatory grid must cross model family, context, mapping, and decoding
-while admitting agents through comprehension tests before strategic claims.
+game arithmetic and reduced evolutionary phase pattern, locate activation
+directions that predict actions, and identify a direct exogenous-position
+response for one checkpoint. Yet the tested checkpoints fail key state/scoring
+gates; behavior is sensitive to opaque mapping, payoff-preserving stories,
+disclosed identities, and runtime lane even at temperature zero; and the SAE
+does not yield feature-specific causal steering. The next confirmatory grid
+must cross admitted model families, context, mapping, decoding, histories, and
+live replay-to-fork position interventions before strategic claims.
 
 Generated from artifact: `AI_Race_Experiment/docs/reports/pilot_insight_report/artifact.json`
+
+The generated bundle below is a legacy pilot snapshot. Use the current evidence
+dashboard above when numbers or evidence labels differ.
 
 ## 1) Validation checklist and repository cleanup outcome
 - Artifact generation script and visualization pipeline were rebuilt and validated against current tracked files.

@@ -88,6 +88,12 @@ def build_games_for_model(
 ) -> list[AIRaceGame]:
     """Construct all treatment × language × repetition races for one model."""
     validate_experiment(exp)
+    if exp.get("genericRunnerCompatible") is False:
+        adapter = str(exp.get("executionAdapter", "dedicated adapter"))
+        raise ValueError(
+            "This experiment is not compatible with the generic race runner; "
+            f"use executionAdapter={adapter!r} so factorial dimensions are not dropped"
+        )
     if agents_cfg is None:
         resolved_agents_name, agents_cfg = _load_agents(exp, agents_name)
     else:

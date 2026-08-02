@@ -1,0 +1,90 @@
+{
+  "block2_use": "lane_reproducibility_only",
+  "blocks": [
+    {
+      "block": "block1",
+      "evidence_class": "diagnostic_unadmitted",
+      "mailbox_transport_protocol": "ai-race-heterogeneous-dyad-v1",
+      "model_digests": {
+        "mistral7_01": "da31c656311edd100f35461ac00ce12398a502cf46bc0495c8a53289f0dfe497",
+        "qwen25_7b": "6a49f5db66a7a2e210ab5774d3ab929ca2f9b6b6c1f996121b1cba489236dc86"
+      },
+      "n_models": 2,
+      "n_probe_ids": 96,
+      "n_rows": 192,
+      "parse_failures": 0,
+      "raw_sha256": "ee99caa2af294098bbeec56f4fb752777ff9a1daa84adc85c64521f54df09500",
+      "source_commit": "e3cf82523bd2a342f9cfb62db2fd445682390756",
+      "status": "completed"
+    },
+    {
+      "block": "block2",
+      "evidence_class": "diagnostic_unadmitted",
+      "mailbox_transport_protocol": "ai-race-heterogeneous-dyad-v1",
+      "model_digests": {
+        "mistral7_01": "da31c656311edd100f35461ac00ce12398a502cf46bc0495c8a53289f0dfe497",
+        "qwen25_7b": "6a49f5db66a7a2e210ab5774d3ab929ca2f9b6b6c1f996121b1cba489236dc86"
+      },
+      "n_models": 2,
+      "n_probe_ids": 96,
+      "n_rows": 192,
+      "parse_failures": 0,
+      "raw_sha256": "3f86a91f628bc921784915855dc32cbefef6dfb3968149eb9552507ae3ebe8e0",
+      "source_commit": "e3cf82523bd2a342f9cfb62db2fd445682390756",
+      "status": "completed"
+    }
+  ],
+  "evidence_class": "diagnostic_unadmitted",
+  "mailbox": [
+    {
+      "block": "block1",
+      "experiment_protocol": "ai-race-position-endowment-v1",
+      "mailbox_transport_protocol": "ai-race-heterogeneous-dyad-v1",
+      "model_key": "qwen25_7b",
+      "n_responses": 96,
+      "request_sha256": "9213a1ced8b4f5c92016e7b8471492c0eab4e7835fe6b2aadbc033fc1375083d",
+      "response_sha256": "5169feed8eccdf1e92ba2b9ca0b2b0b6b0d1b3a618c54dc6ff424579c7c6e0e3",
+      "status": "passed",
+      "worker_id": "podA-qwen"
+    },
+    {
+      "block": "block1",
+      "experiment_protocol": "ai-race-position-endowment-v1",
+      "mailbox_transport_protocol": "ai-race-heterogeneous-dyad-v1",
+      "model_key": "mistral7_01",
+      "n_responses": 96,
+      "request_sha256": "9d58382b8d654ad40941964b5c6014cedd28a56cc4efb20e7058b735f1d478f3",
+      "response_sha256": "d125e0f1a2932a210fcb5b61f91edc4e74ba45cf25e86017ccd289b99c1d130b",
+      "status": "passed",
+      "worker_id": "podB-mistral"
+    },
+    {
+      "block": "block2",
+      "experiment_protocol": "ai-race-position-endowment-v1",
+      "mailbox_transport_protocol": "ai-race-heterogeneous-dyad-v1",
+      "model_key": "qwen25_7b",
+      "n_responses": 96,
+      "request_sha256": "2faa02c4aee40e17e89f651a4725417293c1ccf70e431d4979ba2949f944afd5",
+      "response_sha256": "3f3c47bbdca6e2a90d7c2b2b66f8695ec2a5cf45eb30e4f6bf0d55c3c29b4373",
+      "status": "passed",
+      "worker_id": "podB-qwen"
+    },
+    {
+      "block": "block2",
+      "experiment_protocol": "ai-race-position-endowment-v1",
+      "mailbox_transport_protocol": "ai-race-heterogeneous-dyad-v1",
+      "model_key": "mistral7_01",
+      "n_responses": 96,
+      "request_sha256": "77dbacc4c3e0906a87ff6f1efe52a742c722e5ed75a6ed995569c8d2a7e902f8",
+      "response_sha256": "52b0e2b19eab4fc4c9a03a21a60a695821f612018801a5587cccd88a2a5d4acd",
+      "status": "passed",
+      "worker_id": "podA-mistral"
+    }
+  ],
+  "mailbox_protocol_note": "Position-v1 is the experiment request protocol; heterogeneous-dyad-v1 is the reused worker transport envelope. Both layers are explicitly validated by hash and request_id in this post-run audit.",
+  "n_primary_probe_ids": 96,
+  "n_primary_rows": 192,
+  "parse_failures": 0,
+  "primary_block": "block1",
+  "status": "passed"
+}

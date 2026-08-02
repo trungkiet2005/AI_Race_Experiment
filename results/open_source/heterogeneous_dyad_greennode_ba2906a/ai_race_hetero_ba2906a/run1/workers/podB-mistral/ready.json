@@ -1,0 +1,73 @@
+{
+  "decoding": {
+    "batch_size": 4,
+    "do_sample": false,
+    "max_new_tokens": 16,
+    "sampling_seed_applied": false,
+    "temperature": 0.0
+  },
+  "hardware": {
+    "checks": {
+      "bf16_supported": true,
+      "compute_capability": true,
+      "cuda_available": true,
+      "free_vram": true,
+      "single_gpu": true
+    },
+    "hostname": "nb-17c64ac4-3f70-43b9-8d6f-579c209b038d-5d7d76f986-nc55c",
+    "model_key": "mistral7_01",
+    "model_short_name": "mistral-7b-instruct-v0.1",
+    "observed": {
+      "bf16_supported": true,
+      "compute_capability": [
+        9,
+        0
+      ],
+      "cuda_available": true,
+      "free_vram_gib": 39.08917236328125,
+      "gpu_count": 1,
+      "gpu_name": "NVIDIA H100 80GB HBM3 MIG 4g.40gb",
+      "total_vram_gib": 39.375
+    },
+    "passed": true,
+    "python": "3.10.12",
+    "required": {
+      "bf16": true,
+      "gpu_count": 1,
+      "min_compute_capability": [
+        8,
+        0
+      ],
+      "min_free_vram_gib": 18.0
+    },
+    "torch": "2.4.0a0+07cecf4168.nv24.05"
+  },
+  "hostname": "nb-17c64ac4-3f70-43b9-8d6f-579c209b038d-5d7d76f986-nc55c",
+  "model": {
+    "family": "Mistral-7B",
+    "repo_id": "mistralai/Mistral-7B-Instruct-v0.1",
+    "revision": "ec5deb64f2c6e6fa90c1abf74a91d5c93a9669ca",
+    "short_name": "mistral-7b-instruct-v0.1"
+  },
+  "model_key": "mistral7_01",
+  "protocol": "ai-race-heterogeneous-dyad-v1",
+  "runtime_layout": {
+    "hf_device_map": {
+      "": "0"
+    },
+    "parameter_devices": [
+      "cuda:0"
+    ],
+    "parameter_dtypes": [
+      "torch.bfloat16"
+    ]
+  },
+  "started_utc": "2026-08-02T05:21:34.616591+00:00",
+  "status": "ready",
+  "tokenizer": {
+    "chat_template_sha256": "796853172235ab3aaa4810013ddfe2eab481bda3306dad4f700c00d436eed596",
+    "class": "LlamaTokenizerFast",
+    "vocab_size": 32000
+  },
+  "worker_id": "podB-mistral"
+}

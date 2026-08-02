@@ -1,0 +1,106 @@
+{
+  "created_utc": "2026-08-02T04:26:20.515396+00:00",
+  "experiment": {
+    "name": "mantle_luna_persona_baseline_risk_2_5",
+    "runPhase": "pilot",
+    "description": "Persona condition R2-R5 (risk-preference matrix cell 2,5 of 6x6; Eckel-Grossman gamble scale, paper SI Task 1) via Amazon Bedrock's bedrock-mantle endpoint (backend='bedrock-mantle'), model=GPT-5.6 Luna.",
+    "games": [
+      "ai_race_risk_10",
+      "ai_race_risk_60",
+      "ai_race_risk_90"
+    ],
+    "agents": "persona_risk_2_5",
+    "languages": [
+      "en"
+    ],
+    "models": [
+      "openai.gpt-5.6-luna"
+    ],
+    "useOffline": false,
+    "backend": "bedrock-mantle",
+    "samplingSeedApplied": false,
+    "proxyOptions": {
+      "temperature": 0.7,
+      "max_tokens": 256,
+      "reasoning_effort": "none",
+      "max_transport_retries": 6,
+      "concurrency": 4
+    },
+    "repetitions": 10,
+    "seed": 260726,
+    "maxParseRetries": 3,
+    "verbose": true
+  },
+  "model": "openai.gpt-5.6-luna",
+  "run_phase": "pilot",
+  "agents_name": "persona_risk_2_5",
+  "agents_config_sha256": "bc6d050930430f5e82b7d0818eeb2950b1a2b9c1e4dbd707943eb596ac9f1323",
+  "persona_condition": "R2-R5",
+  "persona_roles": [
+    "risk-2",
+    "risk-5"
+  ],
+  "persona_sha256": "51843128417285e18576436f428d0435192f90069a50a9f5daf6d2428f7712e1",
+  "status": "completed",
+  "n_races": 30,
+  "n_turns": 558,
+  "schema_version": "ai-race-proxy-run-v1",
+  "source_sha256": "e45381e669c4243695b8b3623525ebe108fa109385024b15a977cc8ba808cb73",
+  "prompt_version": "ai-race-fairgame-v3",
+  "prompt_sha256": "27086bd80378c25e859d03527a5ae55c1046f231ef7b914db9cb3c3b4fb2df3e",
+  "model_route": "openai.gpt-5.6-luna",
+  "llm_backend_mro": [
+    "bedrock-mantle"
+  ],
+  "mechanism": {
+    "minimum_rounds": 5,
+    "stop_probability": 0.2,
+    "risk_levels": [
+      0.1,
+      0.6,
+      0.9
+    ],
+    "race_prize": 100.0,
+    "stage_payoff": {
+      "safe": {
+        "safe": 1.0,
+        "unsafe": 0.6
+      },
+      "unsafe": {
+        "safe": 2.4,
+        "unsafe": 2.0
+      }
+    },
+    "progress": {
+      "safe": 1.0,
+      "unsafe": 1.5
+    }
+  },
+  "package_versions": {
+    "numpy": "2.4.6",
+    "pandas": "2.3.3",
+    "openai": "2.51.0",
+    "torch": null,
+    "transformers": null,
+    "vllm": null
+  },
+  "decoding": {
+    "temperature_requested": null,
+    "temperature_forwarded_by_sdk": null,
+    "temperature_effective": null,
+    "temperature_effective_confirmed": false,
+    "temperature_status": "backend_bedrock-mantle_not_yet_documented_for_ai-race-proxy-run-v1",
+    "output_token_limit_parameter": "unknown",
+    "output_token_limit": 0,
+    "max_parse_retries": 0,
+    "max_transport_retries": 0
+  },
+  "sampling_seed_provenance": {
+    "requested": null,
+    "forwarded_by_sdk": null,
+    "applied": null,
+    "applied_known": false,
+    "status": "backend_bedrock-mantle_not_yet_documented_for_ai-race-proxy-run-v1",
+    "strip_detection": "not_audited"
+  }
+}

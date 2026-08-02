@@ -1,0 +1,17 @@
+seat_model_key,dyad_type,persona_condition,round_phase,accurate,not_disclosed,n_accurate,n_not_disclosed,opponent_label_effect_pp
+mistral7_01,cross_family,competitive,round 1,1.0,0.75,24,24,25.0
+mistral7_01,cross_family,competitive,round 2+,1.0,1.0,132,132,0.0
+mistral7_01,cross_family,neutral,round 1,0.0,0.4166666666666667,24,24,-41.66666666666667
+mistral7_01,cross_family,neutral,round 2+,1.0,1.0,132,132,0.0
+mistral7_01,same_family,competitive,round 1,1.0,0.75,24,24,25.0
+mistral7_01,same_family,competitive,round 2+,1.0,1.0,132,132,0.0
+mistral7_01,same_family,neutral,round 1,0.16666666666666666,0.4166666666666667,24,24,-25.0
+mistral7_01,same_family,neutral,round 2+,1.0,1.0,132,132,0.0
+qwen25_7b,cross_family,competitive,round 1,1.0,1.0,24,24,0.0
+qwen25_7b,cross_family,competitive,round 2+,0.696969696969697,0.7878787878787878,132,132,-9.090909090909083
+qwen25_7b,cross_family,neutral,round 1,0.25,0.08333333333333333,24,24,16.666666666666668
+qwen25_7b,cross_family,neutral,round 2+,0.9242424242424242,0.8863636363636364,132,132,3.7878787878787845
+qwen25_7b,same_family,competitive,round 1,0.9166666666666666,1.0,24,24,-8.333333333333337
+qwen25_7b,same_family,competitive,round 2+,0.5909090909090909,0.5303030303030303,132,132,6.060606060606066
+qwen25_7b,same_family,neutral,round 1,0.25,0.08333333333333333,24,24,16.666666666666668
+qwen25_7b,same_family,neutral,round 2+,0.9545454545454546,0.9015151515151515,132,132,5.30303030303031

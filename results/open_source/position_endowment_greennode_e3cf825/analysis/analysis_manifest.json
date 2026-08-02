@@ -1,0 +1,85 @@
+{
+  "claim_boundary": "Direct fixed-state prompt effect in one unadmitted deterministic state bank; not a live-game total effect or evidence of strategic understanding.",
+  "evidence_class": "diagnostic_unadmitted",
+  "outputs": {
+    "README.md": {
+      "bytes": 4138,
+      "sha256": "5991111784fcaff2005d59dffdad06287b7e8dfdb500f459ff346a874e9d9d46"
+    },
+    "block_validation.csv": {
+      "bytes": 846,
+      "sha256": "3dc5a5ce6be88702e9348c5cf3d45d9bc464b23c51fb087d271a3e3e58572be2"
+    },
+    "lane_reproducibility.pdf": {
+      "bytes": 31852,
+      "sha256": "7dde432e10220a1c698e8d8c0c181b344625a39fae7ca96b2aa6413badf599ec"
+    },
+    "lane_reproducibility.png": {
+      "bytes": 162066,
+      "sha256": "67a19433437fe4dd1653b9d07cf32eaa2c972b89cd41f69be1928eaf13731efe"
+    },
+    "lane_reproducibility_summary.csv": {
+      "bytes": 1723,
+      "sha256": "2657b85619458daa6692a108ab1182fb40e86c73ce7b3fbb6ec275cc01d2b2ec"
+    },
+    "mailbox_validation.csv": {
+      "bytes": 1046,
+      "sha256": "3848b69a316fe90907126dea5e165b1a35af707018b045705adf6d66fbe42a31"
+    },
+    "primary_direct_contrasts.csv": {
+      "bytes": 3498,
+      "sha256": "1cd176e60d009df7a18cfc78294331451fddb515b77e943a9608f04596c42af3"
+    },
+    "primary_direct_contrasts.pdf": {
+      "bytes": 26347,
+      "sha256": "dc62370c92614cbb907ab13e9b362db106bb1f6f59798b0f740ec7d7be663ddf"
+    },
+    "primary_direct_contrasts.png": {
+      "bytes": 145823,
+      "sha256": "7c2a31c60876663c908d68508fcff9b9b55b349411f47b0833dd12e5a1ad8b9b"
+    },
+    "primary_position_rates.csv": {
+      "bytes": 3648,
+      "sha256": "36e66a05b6f476327f30b7f09016e35b9b4585b779c94e9f171bb94420cc0674"
+    },
+    "primary_position_response.pdf": {
+      "bytes": 29947,
+      "sha256": "2c65a6a84c0919959948b887f05182eb3241a3d4b7affe0cbf930039a5bc0c38"
+    },
+    "primary_position_response.png": {
+      "bytes": 193363,
+      "sha256": "aa447db60c46864275b59637e005f74adbefbce1dc60e36c9b4970a5c607341c"
+    },
+    "probe_level_lane_comparison.csv": {
+      "bytes": 19301,
+      "sha256": "68ae15625c6e19451cf98e6bb5fa209a7e1e854c4d7e7bd71310a59bea4daa8b"
+    },
+    "quality_audit.json": {
+      "bytes": 3657,
+      "sha256": "bb237d9a14a78f22689d6c3833c21c686e84ee45a4e7bc77f6601fcc400553cd"
+    }
+  },
+  "primary_block": "block1",
+  "reproducibility_only_block": "block2",
+  "schema_version": "ai-race-position-endowment-analysis-v1",
+  "source_commit_required": "e3cf82523bd2a342f9cfb62db2fd445682390756",
+  "sources": {
+    "admission/mistral-7b-instruct-v0.1/admission.json": "5268febdd6b08dcc70768b08cf15783812e767d17d088ce3c4a7d16e7d8cb2b2",
+    "admission/qwen2.5-7b-instruct/admission.json": "4d10e53b01eb5f627a159df179708250c7aceab4a6afe4d1c16d10389c33b93d",
+    "results/block1/mailbox_audit.json": "c20f52e15512c9c822ef4c300c69f6bf3af2f03db89647961906def40fd946a8",
+    "results/block1/position_responses.jsonl": "ee99caa2af294098bbeec56f4fb752777ff9a1daa84adc85c64521f54df09500",
+    "results/block1/run_manifest.json": "87faca548f6a1fadd0444419fcd5eb3b8c99f61e8504a82cf59f832bdf95041f",
+    "results/block2/mailbox_audit.json": "358108a7a647a62334b56f7e1c896f1668828cb7562511f47b49bfc9a41df1a7",
+    "results/block2/position_responses.jsonl": "3f86a91f628bc921784915855dc32cbefef6dfb3968149eb9552507ae3ebe8e0",
+    "results/block2/run_manifest.json": "51ecfb8be4b124a6e3216f8281685dfd9b9a428c1144a6534ea9c5f4905c054a",
+    "run1/requests/podA-qwen/position-block1-20b7bc772f8e4646b253a449b9cbe892.json": "9213a1ced8b4f5c92016e7b8471492c0eab4e7835fe6b2aadbc033fc1375083d",
+    "run1/requests/podB-mistral/position-block1-0c2aba5c7a4d4c2b9d4bda1dfbae1dd5.json": "9d58382b8d654ad40941964b5c6014cedd28a56cc4efb20e7058b735f1d478f3",
+    "run1/responses/podA-qwen/position-block1-20b7bc772f8e4646b253a449b9cbe892.json": "5169feed8eccdf1e92ba2b9ca0b2b0b6b0d1b3a618c54dc6ff424579c7c6e0e3",
+    "run1/responses/podB-mistral/position-block1-0c2aba5c7a4d4c2b9d4bda1dfbae1dd5.json": "d125e0f1a2932a210fcb5b61f91edc4e74ba45cf25e86017ccd289b99c1d130b",
+    "run2/requests/podA-mistral/position-block2-8fac6ee76dd4401ea5fa743dd61feac9.json": "77dbacc4c3e0906a87ff6f1efe52a742c722e5ed75a6ed995569c8d2a7e902f8",
+    "run2/requests/podB-qwen/position-block2-0b2c386feffd4e4caf3e11b1fc300710.json": "2faa02c4aee40e17e89f651a4725417293c1ccf70e431d4979ba2949f944afd5",
+    "run2/responses/podA-mistral/position-block2-8fac6ee76dd4401ea5fa743dd61feac9.json": "52b0e2b19eab4fc4c9a03a21a60a695821f612018801a5587cccd88a2a5d4acd",
+    "run2/responses/podB-qwen/position-block2-0b2c386feffd4e4caf3e11b1fc300710.json": "3f3c47bbdca6e2a90d7c2b2b66f8695ec2a5cf45eb30e4f6bf0d55c3c29b4373"
+  },
+  "status": "complete"
+}
