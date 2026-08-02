@@ -62,25 +62,49 @@ The validity boundary is equally important. Qwen passes rule recall (100%) and s
 
 The same three risk caps produce monotone-decreasing Gemini curves, a low flat GPT-5 nano curve, and a U-shaped GPT-5.4 nano curve. Reporting only an aggregate model mean would erase the phenomenon the study is trying to measure. The paper should report checkpoint-level curves and frame cross-model evidence as replication of instability, not as one pooled treatment effect.
 
+![Five checkpoint risk-response curves](figures/cross_model_risk_response.png)
+
 ### 2. Action-code position gates semantic framing
 
 The mapping interaction is the most demo-worthy result because it is visible round by round and has a concrete experimental remedy. Opaque IDs were intended to neutralize Safe/Unsafe wording, yet which ID denotes Safe determines whether context can move behavior. A fully crossed diagnostic follow-up is now frozen: both mappings run inside every seed block instead of being assigned by repetition parity.
+
+![Context sensitivity stratified by opaque action mapping](figures/context_mapping_gate.png)
 
 ### 3. Direct prompt response grows along live trajectories
 
 Fixed-state replay measures the action change caused by context while holding the state constant. Live play repeats the context and allows earlier decisions to alter later states. Logistics has a 15.6-point fixed-state effect and a 34.0-point live effect; the 18.4-point difference is descriptive evidence consistent with amplification, not a causal mediation estimate because the analysis units differ.
 
-### 4. No round-1 flip does not imply robustness
+![Fixed-state direct effects versus live trajectory effects](figures/context_direct_vs_live.png)
+
+### 4. More aggressive progress does not improve realized payoff
+
+Across all six Safe=P contexts that shifted behavior, Unsafe play increased while mean final payoff fell by 5.6 to 28.6 points relative to the paired abstract game. The largest behavioral shifts were also among the largest payoff losses (descriptive Pearson r=-0.81 across six context cells). This is not a universal welfare claim: the six points share one checkpoint and a parity-confounded mapping. It is nevertheless an important internal check—the framing effect changes consequential play, but does not make the agent better at the disclosed objective.
+
+![Behavioral shift versus realized-payoff difference](figures/behavior_payoff_tradeoff.png)
+
+### 5. No round-1 flip does not imply robustness
 
 All 1,344 paired player-trajectory comparisons agree in round 1. Divergence begins later, then changes progress, private risk, setbacks, and terminal payoff. Entry-only audits therefore miss state-conditional sensitivity in repeated games.
 
-### 5. Mechanistic interpretability supplied a useful negative result
+![Accumulation of paired trajectory divergence over rounds](figures/trajectory_divergence_curve.png)
+
+### 6. Mechanistic interpretability supplied a useful negative result
 
 The FAST-SAE pipeline has pinned model/SAE revisions, held-out splits, matched random and unrelated-feature controls, and live self-play. It detects predictive representations, but the intervention evidence does not clear the causal bar. This distinguishes *decodable information* from *behavioral control* and makes the XAI section more credible.
 
-### 6. Power and stopping are now prospective
+![SAE decodability versus controlled intervention evidence](figures/xai_decodability_vs_control.png)
+
+### 7. Power and stopping are now prospective
 
 The 32-stream run is fixed as a diagnostic replication and cannot be promoted after seeing a favorable result. A separate 96-stream confirmatory target is frozen for a 15-point smallest effect of scientific interest, 80% target power, Holm family size seven, fixed N, and no optional continuation. Because the pilot mapping assignment is confounded, the power model is deliberately labelled a conservative sensitivity analysis.
+
+![Prospective power sensitivity by independent CRN streams](power/context_mapping_power.png)
+
+### 8. The evidence ladder prevents impressive diagnostics from becoming overclaims
+
+The result families occupy different evidential levels: mechanical validation and EGT reconstruction verify implementations; context, identity, position, and cross-model runs diagnose behavior; SAE probes establish association; controlled interventions test but currently do not establish feature-specific causation. Keeping these lanes visible is itself a core result because it shows exactly which claims are ready for the main paper and which belong in an exploratory appendix.
+
+![Evidence classes and their current promotion boundary](figures/evidence_ladder.png)
 
 ## Scope, data, and metric definitions
 
@@ -131,6 +155,7 @@ def build_artifact() -> dict:
     data_dir = OUT / "data"
     cross_model = records(data_dir / "cross_model_baseline_rates.csv")
     mapping = records(data_dir / "context_mapping_interaction.csv")
+    tradeoff = records(data_dir / "context_behavior_payoff_tradeoff.csv")
     decomposition = records(data_dir / "context_direct_vs_live.csv")
     divergence = records(data_dir / "trajectory_divergence_summary.csv")
     ledger = records(data_dir / "evidence_ledger.csv")
@@ -154,6 +179,7 @@ def build_artifact() -> dict:
     sources_spec = [
         ("cross_model", "Cross-model pilot baselines", "results/impact_upgrade/data/cross_model_baseline_rates.csv", "Player-level baseline Unsafe rates for two OpenAI and three Gemini checkpoints."),
         ("mapping", "Context × mapping interaction", "results/impact_upgrade/data/context_mapping_interaction.csv", "Paired Qwen T=0 trajectory comparisons against the abstract context, stratified by opaque mapping."),
+        ("tradeoff", "Behavior and payoff trade-off", "results/impact_upgrade/data/context_behavior_payoff_tradeoff.csv", "Safe=P context-level behavioral shifts and paired realized-payoff differences."),
         ("decomposition", "Direct versus live context effects", "results/impact_upgrade/data/context_direct_vs_live.csv", "Fixed-state direct and live full-trajectory context contrasts."),
         ("divergence", "Trajectory divergence", "results/impact_upgrade/data/trajectory_divergence_summary.csv", "Player-trajectory divergence and payoff consequences."),
         ("evidence", "Evidence ledger", "results/impact_upgrade/data/evidence_ledger.csv", "Evidence class, coverage, quality gate, and permitted paper use."),
@@ -176,6 +202,7 @@ def build_artifact() -> dict:
         {"id": "cross_model_chart", "title": "Five checkpoints occupy different behavioral regimes", "subtitle": "Pilot player-level Unsafe rates; provider protocols remain separate.", "type": "line", "dataset": "cross_model", "sourceId": "cross_model", "valueFormat": "percent", "encodings": {"x": {"field": "max_private_risk", "type": "quantitative", "label": "Maximum private risk"}, "y": {"field": "unsafe_rate", "type": "quantitative", "label": "Unsafe rate"}, "color": {"field": "model_label", "type": "nominal", "label": "Checkpoint"}, "tooltip": [{"field": "model_label", "type": "nominal", "label": "Checkpoint"}, {"field": "n_players", "type": "quantitative", "label": "Players"}]}},
         {"id": "mapping_chart", "title": "Action-code position gates context sensitivity", "subtitle": "Difference from abstract contest; 96 paired player-races per context × mapping.", "type": "bar", "dataset": "mapping", "sourceId": "mapping", "valueFormat": "percent", "encodings": {"x": {"field": "context", "type": "nominal", "label": "Context"}, "y": {"field": "mean_unsafe_delta", "type": "quantitative", "label": "Unsafe-rate difference"}, "color": {"field": "mapping", "type": "nominal", "label": "Mapping"}, "tooltip": [{"field": "ever_diverged_rate", "type": "quantitative", "label": "Ever diverged", "format": "percent"}, {"field": "mean_final_payoff_delta", "type": "quantitative", "label": "Mean payoff difference"}]}},
         {"id": "decomposition_chart", "title": "Direct effects and live trajectory effects", "subtitle": "The distance from the diagonal is descriptive amplification, not causal mediation.", "type": "scatter", "dataset": "decomposition", "sourceId": "decomposition", "encodings": {"x": {"field": "fixed_direct_effect_pp", "type": "quantitative", "label": "Fixed-state direct effect (pp)"}, "y": {"field": "live_effect_pp", "type": "quantitative", "label": "Live trajectory effect (pp)"}, "color": {"field": "context", "type": "nominal", "label": "Context"}, "tooltip": [{"field": "context", "type": "nominal", "label": "Context"}, {"field": "live_minus_fixed_descriptive_gap_pp", "type": "quantitative", "label": "Descriptive gap (pp)"}]}},
+        {"id": "tradeoff_chart", "title": "Behavioral shift versus realized payoff", "subtitle": "Safe=P diagnostic cells; all six shifted contexts increase Unsafe play and reduce mean payoff.", "type": "scatter", "dataset": "tradeoff", "sourceId": "tradeoff", "encodings": {"x": {"field": "unsafe_delta_pp", "type": "quantitative", "label": "Unsafe-rate difference (pp)"}, "y": {"field": "payoff_delta", "type": "quantitative", "label": "Mean final-payoff difference"}, "color": {"field": "context", "type": "nominal", "label": "Context"}, "tooltip": [{"field": "context", "type": "nominal", "label": "Context"}, {"field": "n_paired_player_races", "type": "quantitative", "label": "Paired player-races"}]}},
         {"id": "comprehension_chart", "title": "Rule recall survives; state reasoning does not", "subtitle": "Semantic accuracy in the T=0 context comprehension audit.", "type": "bar", "dataset": "comprehension", "sourceId": "comprehension", "valueFormat": "percent", "encodings": {"x": {"field": "domain", "type": "nominal", "label": "Domain"}, "y": {"field": "semantic_accuracy", "type": "quantitative", "label": "Semantic accuracy"}, "tooltip": [{"field": "n", "type": "quantitative", "label": "Responses"}, {"field": "strict_valid_rate", "type": "quantitative", "label": "Strict-valid rate", "format": "percent"}]}},
         {"id": "power_chart", "title": "Power is governed by independent repetition streams", "subtitle": "Conservative pilot-residual sensitivity; familywise alpha 0.05 across seven contexts.", "type": "line", "dataset": "power", "sourceId": "power", "valueFormat": "percent", "encodings": {"x": {"field": "n_crn_repetition_streams", "type": "quantitative", "label": "Independent CRN streams"}, "y": {"field": "power_holm_single_step", "type": "quantitative", "label": "Estimated power"}, "color": {"field": "true_interaction", "type": "nominal", "label": "True interaction"}, "tooltip": [{"field": "true_interaction", "type": "quantitative", "label": "Interaction", "format": "percent"}, {"field": "monte_carlo_se", "type": "quantitative", "label": "Monte Carlo SE"}]}},
     ]
@@ -194,6 +221,8 @@ def build_artifact() -> dict:
         {"id": "mapping_block", "type": "chart", "chartId": "mapping_chart"},
         {"id": "decomposition_text", "type": "markdown", "body": f"### Direct response grows along live trajectories\n\nThe largest live-minus-fixed descriptive gap is **{max_gap:.1f} points**. Fixed replay and live play use different units, so this is consistent with repeated exposure and feedback amplification but is not a mediation estimate."},
         {"id": "decomposition_block", "type": "chart", "chartId": "decomposition_chart"},
+        {"id": "tradeoff_text", "type": "markdown", "body": "### Aggressive progress is not payoff improvement\n\nEvery shifted Safe=P context increases Unsafe play while reducing mean final payoff. Across six context cells, the descriptive Pearson correlation between behavioral and payoff differences is **-0.81**. This is consequential behavioral sensitivity, not improved optimization; the small, parity-confounded cell set prevents a general welfare claim."},
+        {"id": "tradeoff_block", "type": "chart", "chartId": "tradeoff_chart"},
         {"id": "comprehension_text", "type": "markdown", "body": "### Comprehension is the admission bottleneck\n\nThe model can repeat rules and stage payoffs, but state update and terminal scoring fail. Gameplay therefore remains diagnostic even though code, parser, state transitions, and payoff accounting pass."},
         {"id": "comprehension_block", "type": "chart", "chartId": "comprehension_chart"},
         {"id": "power_text", "type": "markdown", "body": "### Power and stopping are prospective\n\nRisk strata reuse the same `base_seed + repetition` stream, so the independent unit is repetition. The 32-stream run remains diagnostic. A separate 96-stream replication is frozen for a 15-point interaction, fixed N, Holm family size seven, and no optional continuation; estimated design power is **93.7%** under the conservative pilot-residual sensitivity."},
@@ -225,6 +254,7 @@ def build_artifact() -> dict:
                 "headlines": headlines,
                 "cross_model": cross_model,
                 "mapping": mapping,
+                "tradeoff": tradeoff,
                 "decomposition": decomposition,
                 "divergence": divergence,
                 "comprehension": comprehension,

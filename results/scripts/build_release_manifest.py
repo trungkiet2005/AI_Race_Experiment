@@ -62,9 +62,8 @@ def delivery_paths() -> list[Path]:
         ROOT / "results" / "scripts" / "analyze_context_skin.py",
         ROOT / "results" / "scripts" / "analyze_context_temperature_robustness.py",
         ROOT / "results" / "scripts" / "simulate_context_mapping_power.py",
-        ROOT / "results" / "RESULTS_INDEX.md",
-        ROOT / "results" / "catalog.csv",
-        ROOT / "results" / "catalog.json",
+        # Global catalogs are rebuilt while unrelated experiment writers are active.
+        # They are intentionally outside this immutable impact-package manifest.
         ROOT / "results" / "migration_manifest.json",
         ROOT / "results" / "visualization_insight_full.md",
         ROOT / "scripts" / "build_publication.py",

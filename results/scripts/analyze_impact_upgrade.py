@@ -564,6 +564,65 @@ def plot_mapping_gate(data: pd.DataFrame, figures: Path) -> None:
     save_figure(fig, figures / "context_mapping_gate")
 
 
+def behavior_payoff_tradeoff(data: pd.DataFrame) -> pd.DataFrame:
+    """Return the non-reference Safe=P cells used for the payoff trade-off audit."""
+    result = data[
+        (data["mapping"] == "safe_p") & (data["context"] != "technology_race")
+    ].copy()
+    result["unsafe_delta_pp"] = 100 * result["mean_unsafe_delta"]
+    result["payoff_delta"] = result["mean_final_payoff_delta"]
+    result["progress_gain_with_payoff_loss"] = (
+        (result["unsafe_delta_pp"] > 0) & (result["payoff_delta"] < 0)
+    )
+    return result[
+        [
+            "context",
+            "n_paired_player_races",
+            "unsafe_delta_pp",
+            "payoff_delta",
+            "progress_gain_with_payoff_loss",
+        ]
+    ].sort_values("unsafe_delta_pp", ascending=False)
+
+
+def plot_behavior_payoff_tradeoff(data: pd.DataFrame, figures: Path) -> None:
+    setup_plot()
+    fig, ax = plt.subplots(figsize=(9.4, 5.6))
+    ax.scatter(
+        data["unsafe_delta_pp"],
+        data["payoff_delta"],
+        s=100,
+        color=PALETTE["red"],
+        edgecolor="white",
+        linewidth=1.2,
+        zorder=3,
+    )
+    for row in data.itertuples(index=False):
+        ax.annotate(
+            CONTEXT_LABELS[row.context],
+            (row.unsafe_delta_pp, row.payoff_delta),
+            xytext=(6, 5),
+            textcoords="offset points",
+            fontsize=8.5,
+            color=PALETTE["navy"],
+        )
+    ax.axhline(0, color=PALETTE["slate"], linewidth=1)
+    ax.set_xlabel("Unsafe-rate difference vs abstract contest (percentage points)")
+    ax.set_ylabel("Mean final-payoff difference")
+    ax.set_title("More Unsafe play advances progress but reduces realized payoff in every shifted context")
+    ax.grid(color=PALETTE["grid"], linewidth=0.8)
+    ax.spines[["top", "right"]].set_visible(False)
+    ax.text(
+        0.01,
+        -0.18,
+        "Safe=P diagnostic cells only; n=96 paired player-races per context. Mapping follows repetition parity, so this is descriptive.",
+        transform=ax.transAxes,
+        fontsize=8.5,
+        color=PALETTE["slate"],
+    )
+    save_figure(fig, figures / "behavior_payoff_tradeoff")
+
+
 def plot_evidence_ladder(data: pd.DataFrame, figures: Path) -> None:
     setup_plot()
     levels = {
@@ -776,6 +835,7 @@ def main() -> None:
     rows = trajectory_rows(turns, players)
     summary = divergence_summary(rows)
     mapping_summary = mapping_interaction_summary(rows)
+    payoff_tradeoff = behavior_payoff_tradeoff(mapping_summary)
     curve = divergence_curve(rows)
     decomposition = context_decomposition()
     cross_model = cross_model_baselines()
@@ -786,6 +846,7 @@ def main() -> None:
         "trajectory_pair_rows.csv": rows,
         "trajectory_divergence_summary.csv": summary,
         "context_mapping_interaction.csv": mapping_summary,
+        "context_behavior_payoff_tradeoff.csv": payoff_tradeoff,
         "trajectory_divergence_curve.csv": curve,
         "context_direct_vs_live.csv": decomposition,
         "cross_model_baseline_rates.csv": cross_model,
@@ -799,6 +860,7 @@ def main() -> None:
     plot_context_decomposition(decomposition, figures)
     plot_divergence_curve(curve, figures)
     plot_mapping_gate(mapping_summary, figures)
+    plot_behavior_payoff_tradeoff(payoff_tradeoff, figures)
     plot_evidence_ladder(ledger, figures)
     plot_xai_decodability_control(xai, figures)
 

@@ -23,8 +23,8 @@
     "results/reports/openai/derived/analysis_manifest.json": "a6fb2838af5275f76292c9d64e94ae7364b1d047c724ca9e6124cd9c25189058",
     "results/reports/frontier/derived/unsafe_by_risk_model_player.csv": "175ab40bebecbc8dd438675ac4da03e5b3536f73a619d0a8bf76dc4f03e9d093",
     "results/reports/frontier/derived/analysis_manifest.json": "1b66fee5c2d5c97eda1d523aa3d1fceb2344b349703ba0f534ad1caf42a1408c",
-    "results/open_source/context_skin_pilot/analysis_live_pilot_t0/paired_context_effects.csv": "ff645f5387feafd5623af93b1e2a6227fa9add1d440f43b687bede02cc9d7671",
-    "results/open_source/context_skin_pilot/analysis_live_pilot_t0/analysis_summary.json": "ca906f4413195f72e615a8dd0f423b6d391d9c4285f440dae868f86a372195f1",
+    "results/open_source/context_skin_pilot/analysis_live_pilot_t0/paired_context_effects.csv": "6724da93d388edfa53c1e1b2c1d5337f8abf24098e5fa995011feda70cc3e672",
+    "results/open_source/context_skin_pilot/analysis_live_pilot_t0/analysis_summary.json": "9906029bd2b5642fa3f92bef6625196930976e4caacdcd0c8707c0980d397330",
     "results/open_source/activation_sae/context_fast_sae_analysis/summary.json": "ff8660d4bb67a3e16e10fa4c4b5e797b67007a2388d77eb56b518c7aa5f05b9f",
     "results/open_source/activation_sae/causal_selfplay/fast-sae-pilot-L12-v1/analysis/analysis_summary.json": "c0b30cb76b59a81795eed2cdc7881f972687d67a4a30a206cb333ca60f148d22"
   },
@@ -40,6 +40,10 @@
     "results/impact_upgrade/data/context_mapping_interaction.csv": {
       "bytes": 1137,
       "sha256": "4118db115db6afe3770422f3a81db913714c17e418de5469490a5c4f22bcf5a0"
+    },
+    "results/impact_upgrade/data/context_behavior_payoff_tradeoff.csv": {
+      "bytes": 497,
+      "sha256": "d558315ed5b168760fdd04304caae92745956922397c00aec0e03ecbf4071b78"
     },
     "results/impact_upgrade/data/trajectory_divergence_curve.csv": {
       "bytes": 6872,
@@ -69,9 +73,17 @@
       "bytes": 374,
       "sha256": "409c52b590f9cd1fa3c4174284f56ecfd70e130afd0f0c6b2197ccb8ec310435"
     },
+    "results/impact_upgrade/figures/behavior_payoff_tradeoff.pdf": {
+      "bytes": 26905,
+      "sha256": "631c0a1f6a8ff38a88b8177cb8c5106bca021687ce96e4f22802c94e3ccbefc2"
+    },
+    "results/impact_upgrade/figures/behavior_payoff_tradeoff.png": {
+      "bytes": 127631,
+      "sha256": "ffb1922358390adc1a111fefcc65be2a19f9aebb7302c712aacc8c469ae5991e"
+    },
     "results/impact_upgrade/figures/context_direct_vs_live.pdf": {
       "bytes": 25736,
-      "sha256": "983b7aa14b823c078e328e51494650d54bf19c94ea321a0aba51cd50a0b7af10"
+      "sha256": "c0e00631275ddfa14dc8ef9611fd2ffb088d6fb3e417c160001b835e26983674"
     },
     "results/impact_upgrade/figures/context_direct_vs_live.png": {
       "bytes": 125989,
@@ -79,7 +91,7 @@
     },
     "results/impact_upgrade/figures/context_mapping_gate.pdf": {
       "bytes": 26085,
-      "sha256": "f72a7e7926059115a3f36e28126e4b38e079f0c71df5ef06b339a557d85fed65"
+      "sha256": "0f795cc7ef4f793b03a4c108942f0cc362abf01dd9eed69456afcde49a9d6bf4"
     },
     "results/impact_upgrade/figures/context_mapping_gate.png": {
       "bytes": 110835,
@@ -87,7 +99,7 @@
     },
     "results/impact_upgrade/figures/cross_model_risk_response.pdf": {
       "bytes": 28508,
-      "sha256": "28b97f5282aeade898ca17612733b9ea9df003f4d3ad8c4d24a613fe0d8ad592"
+      "sha256": "7fd6a9c2f0568388429c9c7a40d0e913e10de551022c3c4fffb664da7d220287"
     },
     "results/impact_upgrade/figures/cross_model_risk_response.png": {
       "bytes": 147760,
@@ -95,7 +107,7 @@
     },
     "results/impact_upgrade/figures/evidence_ladder.pdf": {
       "bytes": 23890,
-      "sha256": "d8bc8e0fc086c50191ccb6b1fd8a189d26eaafc80c16a07219c1d7cf90fe3f76"
+      "sha256": "f04f18cf9aa03521542ea6135979d21251f9f60873d237e5f52212623bb9d1c2"
     },
     "results/impact_upgrade/figures/evidence_ladder.png": {
       "bytes": 115761,
@@ -103,7 +115,7 @@
     },
     "results/impact_upgrade/figures/trajectory_divergence_curve.pdf": {
       "bytes": 25358,
-      "sha256": "92348bb780c9b801aa504945a1428d68f18c207403f11496e559649d401e0045"
+      "sha256": "a1e3443dcae10bc863191b1bd468a99e73a39c754b85e29ee1660faed0e52060"
     },
     "results/impact_upgrade/figures/trajectory_divergence_curve.png": {
       "bytes": 123700,
@@ -111,7 +123,7 @@
     },
     "results/impact_upgrade/figures/xai_decodability_vs_control.pdf": {
       "bytes": 30692,
-      "sha256": "d6f5dae03b047a18c8e7670383a6bbccaf2ab89e766eb78ce8c310dea1104e0b"
+      "sha256": "d0222a247fec055f7cd80f889d8856ec2cdbd14ed151d0c408744a8d4f6dc674"
     },
     "results/impact_upgrade/figures/xai_decodability_vs_control.png": {
       "bytes": 141936,

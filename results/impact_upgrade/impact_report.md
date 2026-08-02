@@ -18,25 +18,49 @@ The validity boundary is equally important. Qwen passes rule recall (100%) and s
 
 The same three risk caps produce monotone-decreasing Gemini curves, a low flat GPT-5 nano curve, and a U-shaped GPT-5.4 nano curve. Reporting only an aggregate model mean would erase the phenomenon the study is trying to measure. The paper should report checkpoint-level curves and frame cross-model evidence as replication of instability, not as one pooled treatment effect.
 
+![Five checkpoint risk-response curves](figures/cross_model_risk_response.png)
+
 ### 2. Action-code position gates semantic framing
 
 The mapping interaction is the most demo-worthy result because it is visible round by round and has a concrete experimental remedy. Opaque IDs were intended to neutralize Safe/Unsafe wording, yet which ID denotes Safe determines whether context can move behavior. A fully crossed diagnostic follow-up is now frozen: both mappings run inside every seed block instead of being assigned by repetition parity.
+
+![Context sensitivity stratified by opaque action mapping](figures/context_mapping_gate.png)
 
 ### 3. Direct prompt response grows along live trajectories
 
 Fixed-state replay measures the action change caused by context while holding the state constant. Live play repeats the context and allows earlier decisions to alter later states. Logistics has a 15.6-point fixed-state effect and a 34.0-point live effect; the 18.4-point difference is descriptive evidence consistent with amplification, not a causal mediation estimate because the analysis units differ.
 
-### 4. No round-1 flip does not imply robustness
+![Fixed-state direct effects versus live trajectory effects](figures/context_direct_vs_live.png)
+
+### 4. More aggressive progress does not improve realized payoff
+
+Across all six Safe=P contexts that shifted behavior, Unsafe play increased while mean final payoff fell by 5.6 to 28.6 points relative to the paired abstract game. The largest behavioral shifts were also among the largest payoff losses (descriptive Pearson r=-0.81 across six context cells). This is not a universal welfare claim: the six points share one checkpoint and a parity-confounded mapping. It is nevertheless an important internal check—the framing effect changes consequential play, but does not make the agent better at the disclosed objective.
+
+![Behavioral shift versus realized-payoff difference](figures/behavior_payoff_tradeoff.png)
+
+### 5. No round-1 flip does not imply robustness
 
 All 1,344 paired player-trajectory comparisons agree in round 1. Divergence begins later, then changes progress, private risk, setbacks, and terminal payoff. Entry-only audits therefore miss state-conditional sensitivity in repeated games.
 
-### 5. Mechanistic interpretability supplied a useful negative result
+![Accumulation of paired trajectory divergence over rounds](figures/trajectory_divergence_curve.png)
+
+### 6. Mechanistic interpretability supplied a useful negative result
 
 The FAST-SAE pipeline has pinned model/SAE revisions, held-out splits, matched random and unrelated-feature controls, and live self-play. It detects predictive representations, but the intervention evidence does not clear the causal bar. This distinguishes *decodable information* from *behavioral control* and makes the XAI section more credible.
 
-### 6. Power and stopping are now prospective
+![SAE decodability versus controlled intervention evidence](figures/xai_decodability_vs_control.png)
+
+### 7. Power and stopping are now prospective
 
 The 32-stream run is fixed as a diagnostic replication and cannot be promoted after seeing a favorable result. A separate 96-stream confirmatory target is frozen for a 15-point smallest effect of scientific interest, 80% target power, Holm family size seven, fixed N, and no optional continuation. Because the pilot mapping assignment is confounded, the power model is deliberately labelled a conservative sensitivity analysis.
+
+![Prospective power sensitivity by independent CRN streams](power/context_mapping_power.png)
+
+### 8. The evidence ladder prevents impressive diagnostics from becoming overclaims
+
+The result families occupy different evidential levels: mechanical validation and EGT reconstruction verify implementations; context, identity, position, and cross-model runs diagnose behavior; SAE probes establish association; controlled interventions test but currently do not establish feature-specific causation. Keeping these lanes visible is itself a core result because it shows exactly which claims are ready for the main paper and which belong in an exploratory appendix.
+
+![Evidence classes and their current promotion boundary](figures/evidence_ladder.png)
 
 ## Scope, data, and metric definitions
 
