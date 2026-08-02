@@ -8,6 +8,7 @@ import pytest
 from ai_race.runner.run_experiment import build_games_for_model
 from kaggle.experiments.kaggle_crossmodel_scaffold_admission import (
     evaluate_hardware_gate,
+    validate_model_runtime_layout,
 )
 from kaggle.experiments.greennode_crossmodel_scaffold_admission import (
     evaluate_greennode_hardware_gate,
@@ -95,3 +96,17 @@ def test_greennode_48gb_lane_routes_qwen14_but_not_qwen32() -> None:
     assert qwen14["passed"] is True
     assert qwen32["passed"] is False
     assert qwen32["checks"]["free_vram"] is False
+
+
+def test_primary_panel_rejects_parameter_offload_and_dtype_drift() -> None:
+    with pytest.raises(RuntimeError, match="forbids CPU/disk parameter offload"):
+        validate_model_runtime_layout(
+            ["cuda:0", "cpu"], ["torch.bfloat16"], {"layer.0": 0, "layer.1": "cpu"}
+        )
+    with pytest.raises(RuntimeError, match="requires every model parameter"):
+        validate_model_runtime_layout(["cuda:0"], ["torch.float16"], {"": 0})
+    receipt = validate_model_runtime_layout(
+        ["cuda:0"], ["torch.bfloat16"], {"": 0}
+    )
+    assert receipt["parameter_devices"] == ["cuda:0"]
+    assert receipt["parameter_dtypes"] == ["torch.bfloat16"]

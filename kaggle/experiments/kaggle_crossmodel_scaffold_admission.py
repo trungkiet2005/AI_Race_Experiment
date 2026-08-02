@@ -294,6 +294,33 @@ def model_provenance(model: dict[str, Any]) -> dict[str, Any]:
     return {**identity, "digest": canonical_sha256(identity)}
 
 
+def validate_model_runtime_layout(
+    parameter_devices: Sequence[str],
+    parameter_dtypes: Sequence[str],
+    device_map: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    """Reject hidden CPU/disk offload or dtype drift in the primary panel."""
+    devices = sorted(set(map(str, parameter_devices)))
+    dtypes = sorted(set(map(str, parameter_dtypes)))
+    if not devices or any(not device.startswith("cuda") for device in devices):
+        raise RuntimeError(
+            "Primary BF16 panel forbids CPU/disk parameter offload; "
+            f"observed parameter devices={devices}"
+        )
+    if dtypes != ["torch.bfloat16"]:
+        raise RuntimeError(
+            "Primary BF16 panel requires every model parameter in bfloat16; "
+            f"observed dtypes={dtypes}"
+        )
+    return {
+        "parameter_devices": devices,
+        "parameter_dtypes": dtypes,
+        "hf_device_map": {
+            str(key): str(value) for key, value in dict(device_map or {}).items()
+        },
+    }
+
+
 class TransformersGreedyBackend:
     def __init__(self, model_path: Path) -> None:
         import torch
@@ -315,6 +342,11 @@ class TransformersGreedyBackend:
             low_cpu_mem_usage=True,
         )
         self.model.eval()
+        self.runtime_layout = validate_model_runtime_layout(
+            [str(parameter.device) for parameter in self.model.parameters()],
+            [str(parameter.dtype) for parameter in self.model.parameters()],
+            dict(getattr(self.model, "hf_device_map", {})),
+        )
 
     def _chat(self, prompt: str) -> str:
         messages = [{"role": "user", "content": prompt}]
@@ -425,6 +457,8 @@ def run_one(
             raise RuntimeError(f"Request-bank coverage mismatch: {len(requests)} != {expected}")
         backend = TransformersGreedyBackend(Path(model["path"]))
         try:
+            manifest["model_runtime"] = backend.runtime_layout
+            write_json(manifest_path, manifest)
             probe = "Return exactly one line: ANSWER: YES"
             if backend([probe])[0] != backend([probe])[0]:
                 raise RuntimeError("Greedy reproducibility probe failed")
@@ -453,6 +487,7 @@ def run_one(
             "request_bank_sha256": request_bank_sha256(requests),
             "experiment_config_sha256": file_sha256(config_path),
             "decoding": manifest["decoding"],
+            "model_runtime": manifest["model_runtime"],
             **summary,
             "artifacts": {"comprehension_raw": artifact(raw_path, output)},
         }
