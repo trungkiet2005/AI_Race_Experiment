@@ -1,0 +1,17 @@
+\frametitle{Backup 2 --- Provenance \& lệnh tái tạo}
+\scriptsize
+\begin{block}{4 file nguồn (không tính lại từ CSV thô)}
+\texttt{analysis/baseline.md} \textbullet\ \texttt{analysis/frontier/report.md} \textbullet\ \texttt{analysis/openai/report.md} \textbullet\ \texttt{analysis/nplayer/report.md}
+\end{block}
+\begin{block}{Lệnh tái tạo (ví dụ openai)}
+\begin{verbatim}
+.venv-kaggle/bin/python3 results/scripts/analyze_ai_race.py \
+  --input results/frontier/openai --output analysis/openai/derived \
+  --fit-logit --fit-logit-robustness \
+  --allow-mixed-protocols --allow-nonfinal-runs \
+  --allow-nonconfirmatory-runs --allow-missing-persona-condition
+\end{verbatim}
+\end{block}
+\begin{alertblock}{Freeze before you look}
+\small Mọi con số trên đây gắn với \texttt{run\_manifest.json} và \texttt{prompt\_sha256} đã khóa. Đổi prompt/config = \texttt{promptVersion} mới, không pool chung.
+\end{alertblock}
