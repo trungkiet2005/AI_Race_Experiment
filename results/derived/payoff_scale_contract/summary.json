@@ -1,0 +1,39 @@
+{
+  "schema_version": "ai-race.payoff-scale-contract.v1",
+  "protocol": "ai-race-payoff-scale-v1",
+  "max_rounds_exhaustive": 7,
+  "joint_action_sequences": 21844,
+  "risk_levels": [
+    0.1,
+    0.6,
+    0.9
+  ],
+  "setback_draw_pairs": [
+    [
+      0.0,
+      0.0
+    ],
+    [
+      0.37,
+      0.83
+    ],
+    [
+      0.83,
+      0.37
+    ],
+    [
+      1.0,
+      1.0
+    ]
+  ],
+  "payoff_scales": [
+    0.1,
+    1.0,
+    10.0,
+    100.0
+  ],
+  "terminal_comparisons": 1048512,
+  "all_cells_admitted": true,
+  "max_normalized_final_payoff_error": 1.4210854715202004e-14,
+  "scale_contract_sha256": "f99956eafe19236b6a71dc68333d845a2d0165033aa3afe6b85bc5197c715d30"
+}

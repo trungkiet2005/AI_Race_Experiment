@@ -1,0 +1,255 @@
+{
+  "schema_version": "ai-race.activation-sae.v1",
+  "status": "complete",
+  "created_at_utc": "2026-08-01T07:53:39.062225+00:00",
+  "git_revision": null,
+  "command": [
+    "results/scripts/run_activation_sae.py",
+    "--input-root",
+    "input/surface",
+    "--output-dir",
+    "/home/jovyan/ai_race_sae_runs/surface_n600_strict_pre_action_layers_4_12_18",
+    "--layers",
+    "4",
+    "12",
+    "18",
+    "--max-samples",
+    "600",
+    "--n-label-shuffles",
+    "20",
+    "--probe-max-features",
+    "4096",
+    "--fail-on-cross-split-duplicates",
+    "--decision-model-digest",
+    "59805ce4a4046be2d8f63231a78daacd2e66f5dccf1a64d0d138ebeeb26ff16c",
+    "--allow-model-provenance-mismatch",
+    "--cache-dir",
+    "/root/.cache/huggingface"
+  ],
+  "preset": {
+    "schema_version": "ai-race.activation-sae.preset.v1",
+    "name": "qwen25-7b-instruct-fast-jumprelu",
+    "model_repo": "Qwen/Qwen2.5-7B-Instruct",
+    "model_revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+    "sae_repo": "Geaming/Qwen2.5-7B-Instruct_SAEs",
+    "sae_revision": "5a7ecabe1401bf4de11a0e6da1f7c36bbb46a464",
+    "sae_lens_version": "5.3.3",
+    "framework": "SAELens",
+    "architecture": "JumpReLU",
+    "activation_width": 3584,
+    "feature_width": 28672,
+    "capture_semantics": "TransformerLens blocks.{layer}.hook_resid_post",
+    "layers": [
+      4,
+      12,
+      18,
+      20,
+      25
+    ],
+    "sae_id_template": "FAST/blocks_{layer}_hook_resid_post_8X_2048_jumprelu",
+    "context_size": 2048,
+    "prepend_bos": false,
+    "preset_path": "/home/jovyan/ai_race_activation_sae_20260801/ai_race/xai/presets/qwen25_7b_instruct_fast.json",
+    "preset_sha256": "84b243de4128202e5a3a60d80e88ef48cbc5df11ab547ba91cd43d0638b04fd2"
+  },
+  "provenance": {
+    "decision_model_digest": "59805ce4a4046be2d8f63231a78daacd2e66f5dccf1a64d0d138ebeeb26ff16c",
+    "attribution_model_revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+    "exact_model_match": false,
+    "exploratory_mismatch_override": true,
+    "claim_scope": "cross-model exploratory association only"
+  },
+  "input_audit": {
+    "schema_version": "ai-race.activation-sae.v1",
+    "n_examples": 10044,
+    "n_safe": 4069,
+    "n_unsafe": 5975,
+    "n_games": 540,
+    "models": [
+      "qwen2.5:7b-instruct-fp16"
+    ],
+    "prompt_versions": [
+      "ai-race-fairgame-v3",
+      "ai-race-surface-sensitivity-v1:boundary_compact",
+      "ai-race-surface-sensitivity-v1:emotional_importance",
+      "ai-race-surface-sensitivity-v1:emphasis_uppercase",
+      "ai-race-surface-sensitivity-v1:format_dense",
+      "ai-race-surface-sensitivity-v1:format_extra_spacing",
+      "ai-race-surface-sensitivity-v1:format_markdown",
+      "ai-race-surface-sensitivity-v1:format_numbered_state",
+      "ai-race-surface-sensitivity-v1:format_xml",
+      "ai-race-surface-sensitivity-v1:lexical_synonyms",
+      "ai-race-surface-sensitivity-v1:noise_minor_typo",
+      "ai-race-surface-sensitivity-v1:order_actions_reversed",
+      "ai-race-surface-sensitivity-v1:order_payoffs_reversed",
+      "ai-race-surface-sensitivity-v1:order_state_reversed",
+      "ai-race-surface-sensitivity-v1:paraphrase_instruction",
+      "ai-race-surface-sensitivity-v1:position_goal_first",
+      "ai-race-surface-sensitivity-v1:position_risk_near_response",
+      "ai-race-surface-sensitivity-v1:voice_impersonal"
+    ],
+    "rejected": {},
+    "source_files": [
+      {
+        "path": "/home/jovyan/ai_race_activation_sae_20260801/input/surface/lane-a/canonical/turns.jsonl",
+        "sha256": "0880feea1eb73dceb15874639dea517c24f4b2b81078458bac8f91d3c6a76537",
+        "bytes": 2056418
+      },
+      {
+        "path": "/home/jovyan/ai_race_activation_sae_20260801/input/surface/lane-a/lexical_synonyms/turns.jsonl",
+        "sha256": "1775006ac3ea2530e16ea9da693572673a0e5d57d9b8133c325343ed039b666e",
+        "bytes": 2106358
+      },
+      {
+        "path": "/home/jovyan/ai_race_activation_sae_20260801/input/surface/lane-a/order_actions_reversed/turns.jsonl",
+        "sha256": "73483451e3205f0af335d904316e6cc86ebed6cb9ce029ffbeab4739d8cf6aef",
+        "bytes": 2075126
+      },
+      {
+        "path": "/home/jovyan/ai_race_activation_sae_20260801/input/surface/lane-a/order_payoffs_reversed/turns.jsonl",
+        "sha256": "20d39ec4c6de1c55c029f2158c5a961562eba606218d383b7e4fd471b4dd4e04",
+        "bytes": 2096981
+      },
+      {
+        "path": "/home/jovyan/ai_race_activation_sae_20260801/input/surface/lane-a/order_state_reversed/turns.jsonl",
+        "sha256": "8f1ca834383aedc00e604ed9f225f63b68ec82cd48d4863212b4a30e4a9b5848",
+        "bytes": 2093894
+      },
+      {
+        "path": "/home/jovyan/ai_race_activation_sae_20260801/input/surface/lane-a/paraphrase_instruction/turns.jsonl",
+        "sha256": "a66b52fbd3ec5d3e389a61acfe180eef0ef912580f787851bab114691de3dec2",
+        "bytes": 2070377
+      },
+      {
+        "path": "/home/jovyan/ai_race_activation_sae_20260801/input/surface/lane-a/position_goal_first/turns.jsonl",
+        "sha256": "fdc22e740ad6b6c48b3e73fc4b19db83e7e770346849a32f131f6f7b443117f0",
+        "bytes": 2092271
+      },
+      {
+        "path": "/home/jovyan/ai_race_activation_sae_20260801/input/surface/lane-a/position_risk_near_response/turns.jsonl",
+        "sha256": "0f618806f6d40a1539bed759885d7b58d3f7c8d0c6a9890ed69cbccbe359b76b",
+        "bytes": 2105098
+      },
+      {
+        "path": "/home/jovyan/ai_race_activation_sae_20260801/input/surface/lane-a/voice_impersonal/turns.jsonl",
+        "sha256": "cee6e16da140e2c0607fa24c3cbf1809608fec9e5b6a668e2f9b4d0ce5ec5dd0",
+        "bytes": 2093526
+      },
+      {
+        "path": "/home/jovyan/ai_race_activation_sae_20260801/input/surface/lane-b/boundary_compact/turns.jsonl",
+        "sha256": "25941b1b534d77fbf1958d8c8fc681d4de42c28ed97a3ed6bfdc3c955e4739ba",
+        "bytes": 2074494
+      },
+      {
+        "path": "/home/jovyan/ai_race_activation_sae_20260801/input/surface/lane-b/emotional_importance/turns.jsonl",
+        "sha256": "2791126fc6a2980d9decf8b466bb4aa2116b5e5b89d2ed2bf68359e024802ba1",
+        "bytes": 2131453
+      },
+      {
+        "path": "/home/jovyan/ai_race_activation_sae_20260801/input/surface/lane-b/emphasis_uppercase/turns.jsonl",
+        "sha256": "827d72cac01dcdac67bdcb47d867c5625590cc168ef8951bf2e9246831c597d2",
+        "bytes": 2093439
+      },
+      {
+        "path": "/home/jovyan/ai_race_activation_sae_20260801/input/surface/lane-b/format_dense/turns.jsonl",
+        "sha256": "514a902e8de982e5265fce799fb5400b522225da430389005454507c09cc9e0b",
+        "bytes": 2062317
+      },
+      {
+        "path": "/home/jovyan/ai_race_activation_sae_20260801/input/surface/lane-b/format_extra_spacing/turns.jsonl",
+        "sha256": "70fb1a3ff558b35fcd4b6069e161f7ea98846b896bb32857b0a71ea02f070cc6",
+        "bytes": 2117335
+      },
+      {
+        "path": "/home/jovyan/ai_race_activation_sae_20260801/input/surface/lane-b/format_markdown/turns.jsonl",
+        "sha256": "b42a22357eb6940ca7adcb911013c588db7f968fac4793ecbdc12f3fcb300f87",
+        "bytes": 2127696
+      },
+      {
+        "path": "/home/jovyan/ai_race_activation_sae_20260801/input/surface/lane-b/format_numbered_state/turns.jsonl",
+        "sha256": "6a2a55059281c3d435e44c135c3b49f2d7a1d6aa3fe46a1d1ff0b8e61ef3f1cf",
+        "bytes": 2096215
+      },
+      {
+        "path": "/home/jovyan/ai_race_activation_sae_20260801/input/surface/lane-b/format_xml/turns.jsonl",
+        "sha256": "75c6274d147ba6b476cb05468a2c8edcf21826aa5e57b25cedfe368fdb277217",
+        "bytes": 2164624
+      },
+      {
+        "path": "/home/jovyan/ai_race_activation_sae_20260801/input/surface/lane-b/noise_minor_typo/turns.jsonl",
+        "sha256": "b99ffb11e105234f676499130fa4342478448c933155544e7a66348fa5ecc5c7",
+        "bytes": 2083793
+      }
+    ]
+  },
+  "split_audit": {
+    "group_key": "connected_component(game_id, exact_causal_prefix_sha256)",
+    "eval_fraction_requested": 0.2,
+    "n_train": 480,
+    "n_eval": 120,
+    "n_train_games": 286,
+    "n_eval_games": 74,
+    "n_connected_components": 298,
+    "n_unique_prefixes": 537,
+    "n_cross_split_duplicate_prefixes": 0,
+    "cross_split_duplicate_prefix_sha256": []
+  },
+  "capture": {
+    "position": "pre_action",
+    "target_label_excluded_from_prefix": true,
+    "layers": [
+      4,
+      12,
+      18
+    ],
+    "semantics": "TransformerLens blocks.{layer}.hook_resid_post",
+    "context_size": 2048
+  },
+  "probe": {
+    "max_features": 4096,
+    "feature_screen": "train_only_variance",
+    "screen_fit_partition": "train_only",
+    "n_label_shuffles": 20
+  },
+  "environment": {
+    "python": "3.10.12",
+    "platform": "Linux-5.15.0-176-generic-x86_64-with-glibc2.35",
+    "torch": "2.4.0a0+07cecf4168.nv24.5",
+    "transformer_lens": "2.11.0",
+    "sae_lens": "5.3.3",
+    "transformers": "4.56.2"
+  },
+  "limitations": [
+    "SAE features are hypotheses, not automatically monosemantic concepts.",
+    "Association/probe accuracy does not establish a causal decision mechanism.",
+    "At temperature > 0, a pre-action activation represents propensity, not the sampled RNG draw.",
+    "Feature discovery on train and confirmation on grouped eval must be reported separately."
+  ],
+  "completed_at_utc": "2026-08-01T07:55:32.603235+00:00",
+  "artifacts": {
+    "samples.csv": {
+      "sha256": "41737e1fdcff66a12833f77d7625bdd4c95739df70f1ee314cae6b2605498fec",
+      "bytes": 324619
+    },
+    "sparse_codes_topk.csv": {
+      "sha256": "796b19cb0f848de77e8c9858785dfba6d14c584cf2bff1ef85d3321537ce8b55",
+      "bytes": 7333963
+    },
+    "reconstruction_metrics.csv": {
+      "sha256": "22452f856f0d92e6381f9a14cb391642519a4bf103f57c0c633f78c1ba21dfa9",
+      "bytes": 494
+    },
+    "probe_metrics.csv": {
+      "sha256": "cec3919c15610298b14cae2d0ce84496e5296a84ed9481c92076d397ada7efa9",
+      "bytes": 519
+    },
+    "negative_controls.csv": {
+      "sha256": "973db067f141e41e090010605fa8dc20cec91630b605d4d6252377347466dc75",
+      "bytes": 8062
+    },
+    "feature_action_associations.csv": {
+      "sha256": "a07872de192e816169ba77c38ab0c2912af43d1756f2f74fc908d7706c47a183",
+      "bytes": 258449
+    }
+  }
+}

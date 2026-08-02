@@ -1,0 +1,6 @@
+stage,label,value,passed,total
+association,Layer 12 held-out probe,0.9215686274509804,,56
+causal_check,Layer 12 intervention flips,0.0,0.0,1312
+association,Layer 20 held-out probe,0.9849170437405732,,56
+causal_check,Layer 20 intervention flips,0.0,0.0,1312
+causal_check,Self-play target-control CIs,0.0,0.0,12

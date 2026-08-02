@@ -1,0 +1,69 @@
+{
+  "binary_pairwise_comparison": {
+    "blocker": "No egttools==0.1.14.2 wheel exists for Windows CPython 3.13; the docs-commit package imports its compiled numerical module at package initialisation.",
+    "executed": false
+  },
+  "comparison": {
+    "official_column_sums_max_abs_error": 1.1102230246251565e-16,
+    "official_stationary_distribution": [
+      0.8185640383333478,
+      0.1637128076666727,
+      0.016534585312970015,
+      0.0011273580895243157,
+      5.8600296736947034e-05,
+      2.4916661685937734e-06,
+      9.115881116591339e-08,
+      3.017310416917945e-09,
+      4.786405455336351e-10,
+      3.997123579688811e-09,
+      1.9982693651836986e-08
+    ],
+    "repo_column_sums_max_abs_error": 2.220446049250313e-16,
+    "repo_stationary_distribution": [
+      0.8185640383333413,
+      0.16371280766668034,
+      0.016534585312975032,
+      0.0011273580895233924,
+      5.860029673337349e-05,
+      2.4916661688097532e-06,
+      9.115881128372126e-08,
+      3.0173086497991376e-09,
+      4.786407811494755e-10,
+      3.997122661768762e-09,
+      1.9982694272782887e-08
+    ],
+    "stationary_distribution_max_abs_difference": 7.632783294297951e-15,
+    "transition_matrix_max_abs_difference": 1.1102230246251565e-16
+  },
+  "official_source": {
+    "branch": "docs",
+    "commit": "df7f5fb7787658b3fd3ab21343ff50a3e2a5d439",
+    "executed_class": "egttools.analytical.StochDynamics",
+    "relative_file": "tmp\\EGTTools-docs\\src\\egttools\\analytical\\sed_analytical.py",
+    "repository": "https://github.com/Socrats/EGTTools",
+    "sha256": "779346eb770dcc875e87d996403a4fcb85d71c3c2f5ede4d6383bb3faacbe177",
+    "source_modified": false
+  },
+  "passed": true,
+  "schema_version": "egttools-pinned-source-validation-v1",
+  "validation_case": {
+    "beta": 2.0,
+    "max_private_risk": 0.6,
+    "mutation": 0.02,
+    "payoff_matrix": [
+      [
+        58.99999999998884,
+        5.399999999993306
+      ],
+      [
+        48.63999999998931,
+        27.199999999991082
+      ]
+    ],
+    "population_size": 10,
+    "strategies": [
+      "AS",
+      "AU"
+    ]
+  }
+}

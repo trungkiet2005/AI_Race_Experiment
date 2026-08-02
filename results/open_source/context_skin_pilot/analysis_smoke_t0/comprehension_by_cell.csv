@@ -1,0 +1,17 @@
+skin_id,mapping_id,semantic_accuracy,strict_valid_rate,n
+abstract_contest,safe_p,0.5,0.5625,16
+abstract_contest,safe_q,0.5625,0.375,16
+colony_life_support,safe_p,0.5625,0.3125,16
+colony_life_support,safe_q,0.625,0.3125,16
+crystal_guild_contract,safe_p,0.625,0.375,16
+crystal_guild_contract,safe_q,0.625,0.3125,16
+fictional_cartography,safe_p,0.5625,0.375,16
+fictional_cartography,safe_q,0.5625,0.3125,16
+hospital_deployment,safe_p,0.5625,0.375,16
+hospital_deployment,safe_q,0.625,0.3125,16
+logistics_contract,safe_p,0.5,0.375,16
+logistics_contract,safe_q,0.625,0.375,16
+robotic_expedition,safe_p,0.5625,0.375,16
+robotic_expedition,safe_q,0.5,0.3125,16
+technology_race,safe_p,0.5625,0.25,16
+technology_race,safe_q,0.5625,0.125,16

@@ -1,0 +1,10 @@
+model,max_private_risk,persona_condition,prompt_version,protocol_signature,run_phase,run_status,n_decisions,parse_failures,parse_failure_rate,total_retries,mean_retries,n_races,contaminated_races,parse_clean_races,canonical_mechanism_races,forced_stop_races,behavioral_races,noncanonical_mechanism_races
+google/gemini-3-flash-preview,0.1,none,ai-race-fairgame-v3,51f86874ea08d313fd9025b5755a4e1a6959bcf0b40f3fae7bb956d6a41c0045,pilot,completed,186,0,0.0,8.0,0.043010752688172046,10,0,10,10,0,10,0
+google/gemini-3-flash-preview,0.6,none,ai-race-fairgame-v3,51f86874ea08d313fd9025b5755a4e1a6959bcf0b40f3fae7bb956d6a41c0045,pilot,completed,186,0,0.0,9.0,0.04838709677419355,10,0,10,10,0,10,0
+google/gemini-3-flash-preview,0.9,none,ai-race-fairgame-v3,51f86874ea08d313fd9025b5755a4e1a6959bcf0b40f3fae7bb956d6a41c0045,pilot,completed,186,0,0.0,8.0,0.043010752688172046,10,0,10,10,0,10,0
+google/gemini-3.1-flash-lite-preview,0.1,none,ai-race-fairgame-v3,0b80cb35e49b077d198ae21685cd13d305a39234d2037a6b5bbddb278c429130,pilot,completed,186,0,0.0,0.0,0.0,10,0,10,10,0,10,0
+google/gemini-3.1-flash-lite-preview,0.6,none,ai-race-fairgame-v3,0b80cb35e49b077d198ae21685cd13d305a39234d2037a6b5bbddb278c429130,pilot,completed,186,0,0.0,0.0,0.0,10,0,10,10,0,10,0
+google/gemini-3.1-flash-lite-preview,0.9,none,ai-race-fairgame-v3,0b80cb35e49b077d198ae21685cd13d305a39234d2037a6b5bbddb278c429130,pilot,completed,186,0,0.0,0.0,0.0,10,0,10,10,0,10,0
+google/gemini-3.5-flash-lite,0.1,none,ai-race-fairgame-v3,c24795f46a2d201502f5745e524b1fcd5dbfe804318909acdbf0f182730d1230,pilot,completed,186,0,0.0,0.0,0.0,10,0,10,10,0,10,0
+google/gemini-3.5-flash-lite,0.6,none,ai-race-fairgame-v3,c24795f46a2d201502f5745e524b1fcd5dbfe804318909acdbf0f182730d1230,pilot,completed,186,0,0.0,0.0,0.0,10,0,10,10,0,10,0
+google/gemini-3.5-flash-lite,0.9,none,ai-race-fairgame-v3,c24795f46a2d201502f5745e524b1fcd5dbfe804318909acdbf0f182730d1230,pilot,completed,186,0,0.0,0.0,0.0,10,0,10,10,0,10,0

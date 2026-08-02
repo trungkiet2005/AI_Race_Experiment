@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Paired AI Race trajectory-divergence explorer.">
+  <title>AI Race · Trajectory Lab</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="../../../web/index.html"><span>AR</span> AI RACE LAB</a>
+    <div class="status"><i></i> AUDITED T=0 PILOT</div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div>
+        <p class="eyebrow">TRAJECTORY DIVERGENCE EXPLORER</p>
+        <h1>Same game. Same seed.<br><em>Different story.</em></h1>
+        <p class="lede">Replay two payoff-equivalent framings round by round. The first choice agrees—then repeated prompt exposure and endogenous state feedback pull the games apart.</p>
+      </div>
+      <div class="hero-metrics" aria-label="Headline results">
+        <article><strong>0%</strong><span>round-1 flips</span></article>
+        <article><strong>68.0 pp</strong><span>largest gated shift</span></article>
+        <article><strong>13,680</strong><span>audited decisions</span></article>
+      </div>
+    </section>
+
+    <section class="lab" aria-labelledby="lab-title">
+      <div class="lab-toolbar">
+        <div>
+          <p class="eyebrow">LIVE EVIDENCE PLAYER</p>
+          <h2 id="lab-title">Watch the first divergence propagate</h2>
+        </div>
+        <div class="controls">
+          <label>Exemplar <select id="caseSelect"></select></label>
+          <button id="playButton" class="primary">Play trajectory</button>
+          <button id="resetButton">Reset</button>
+        </div>
+      </div>
+
+      <div class="case-strip">
+        <span id="caseRisk"></span><span id="caseMapping"></span><span id="caseRep"></span>
+        <strong id="caseDivergence"></strong>
+      </div>
+
+      <div class="arena">
+        <article class="lane reference">
+          <header><span>CONTROL FRAME</span><strong id="referenceName"></strong></header>
+          <div class="action-display" id="referenceAction">—</div>
+          <div class="meter-row"><span>Progress</span><b id="referenceProgress">0.0</b></div>
+          <div class="meter"><i id="referenceProgressBar"></i></div>
+          <div class="meter-row"><span>Private risk</span><b id="referenceRisk">0.0%</b></div>
+          <div class="meter risk"><i id="referenceRiskBar"></i></div>
+        </article>
+
+        <div class="round-core">
+          <span>ROUND</span><strong id="roundNumber">0</strong>
+          <div id="syncState" class="sync">SYNCED</div>
+        </div>
+
+        <article class="lane context">
+          <header><span>CONTEXT FRAME</span><strong id="contextName"></strong></header>
+          <div class="action-display" id="contextAction">—</div>
+          <div class="meter-row"><span>Progress</span><b id="contextProgress">0.0</b></div>
+          <div class="meter"><i id="contextProgressBar"></i></div>
+          <div class="meter-row"><span>Private risk</span><b id="contextRisk">0.0%</b></div>
+          <div class="meter risk"><i id="contextRiskBar"></i></div>
+        </article>
+      </div>
+
+      <div class="timeline-wrap">
+        <div class="timeline" id="timeline" aria-label="Round-by-round action timeline"></div>
+      </div>
+
+      <div class="explain-grid">
+        <article><span>WHAT IS HELD FIXED</span><p>Payoffs, progress, stopping draws, setback draws, risk cap, model checkpoint, decoding, seat, and CRN repetition.</p></article>
+        <article><span>WHAT CHANGES</span><p>Only the narrative skin. Action codes remain opaque, with the selected Safe=P or Safe=Q mapping fixed inside a pair.</p></article>
+        <article class="warning"><span>CLAIM BOUNDARY</span><p>This is paired diagnostic evidence. It visualizes divergence; it does not identify a causal mediation effect or prove human-like understanding.</p></article>
+      </div>
+    </section>
+
+    <section class="insight-section">
+      <div class="section-head"><p class="eyebrow">MINED INTERACTION</p><h2>Context has leverage only under one code mapping</h2></div>
+      <div class="mapping-grid" id="mappingGrid"></div>
+      <p class="footnote">Each bar compares a context with the abstract contest under the same risk, repetition, seat, and mapping. Mapping is balanced but assigned by repetition parity; confirm with a fully crossed run before making a mapping-causal claim.</p>
+    </section>
+  </main>
+
+  <footer>Source: <code>results/impact_upgrade/data/trajectory_demo.json</code> · Generated from immutable raw turn logs · No network requests</footer>
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

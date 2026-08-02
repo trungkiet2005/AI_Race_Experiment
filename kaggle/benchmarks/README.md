@@ -1,5 +1,17 @@
 # AI Race Kaggle Benchmark
 
+## Layout
+
+- `ai_race_baseline.py` — canonical AI Race benchmark task.
+- `connectivity_ping.py` — minimal hosted-model connectivity probe.
+- `examples/what_is_kaggle.py` — small API syntax example.
+- [`REFERENCE.md`](REFERENCE.md) — local Kaggle Benchmarks syntax reference.
+
+Kaggle CLI `.task.json` and `.run.json` files are local debug artifacts. They are
+kept under the ignored `results/kaggle-benchmarks/_local-debug/` directory instead
+of the repository root. The durable smoke-test outcome is recorded in
+[`results/kaggle-benchmarks/local-debug-summary.md`](../../results/kaggle-benchmarks/local-debug-summary.md).
+
 `ai_race_baseline.py` là task self-contained có slug `ai-race-baseline`. Task chạy
 hai agent có chat tách biệt trong repeated AI race của paper, quét
 `pmax ∈ {0.1, 0.6, 0.9}`, và ghi:

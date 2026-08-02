@@ -1,0 +1,312 @@
+{
+  "all_manifest_counts_verified": true,
+  "allow_mixed_protocols": true,
+  "allow_noncanonical_mechanism": false,
+  "allow_nonconfirmatory_runs": true,
+  "allow_nonfinal_runs": true,
+  "behavior_filter": "A race is included in behavioral, strategy, and logit estimands only when every decision parsed and the race used a canonical risk treatment, reached the five-round minimum, and did not terminate at a forced safety cap. All races remain in protocol-health and accounting outputs.",
+  "behavioral_models": [
+    "google/gemini-3-flash-preview",
+    "google/gemini-3.1-flash-lite-preview",
+    "google/gemini-3.5-flash-lite"
+  ],
+  "behavioral_persona_conditions": [
+    "none"
+  ],
+  "behavioral_prompt_versions": [
+    "ai-race-fairgame-v3"
+  ],
+  "behavioral_protocol_signatures": [
+    "0b80cb35e49b077d198ae21685cd13d305a39234d2037a6b5bbddb278c429130",
+    "51f86874ea08d313fd9025b5755a4e1a6959bcf0b40f3fae7bb956d6a41c0045",
+    "c24795f46a2d201502f5745e524b1fcd5dbfe804318909acdbf0f182730d1230"
+  ],
+  "behavioral_run_phases": [
+    "pilot"
+  ],
+  "behavioral_run_statuses": [
+    "completed"
+  ],
+  "inference_cluster": "source_run/model/rep common-random-number repetition block; the logit refuses inputs without valid blocks spanning risk treatments",
+  "logit_formula": null,
+  "logit_requested": false,
+  "logit_robustness_requested": false,
+  "mechanics_checks_passed": [
+    "step_increment matches Safe=1.0/Unsafe=1.5",
+    "round_payoff matches the canonical 2x2 stage game",
+    "own_progress_after matches pre-state plus step increment",
+    "each trajectory starts from zero progress",
+    "progress state is continuous across rounds",
+    "progress_gap_after matches focal minus opponent progress",
+    "opponent_progress_before matches the paired trajectory",
+    "opponent_progress_after matches the paired trajectory",
+    "own accumulated stage payoff before the decision matches prior round payoffs",
+    "cumulative stage payoff matches the round-payoff trajectory",
+    "accumulated stage payoff advances by the current round payoff",
+    "own private risk before the decision matches prior Unsafe frequency",
+    "current private risk matches max_private_risk times cumulative Unsafe frequency",
+    "opponent accumulated stage payoff before the decision matches the paired trajectory",
+    "opponent private risk before the decision matches the paired trajectory",
+    "stopped marks exactly the terminal game-round",
+    "stop_draw follows the shared minimum-5-round, p=0.2 stopping rule",
+    "horizon and stopping draws are fixed within each CRN repetition block",
+    "players.csv n_rounds matches trajectory length",
+    "players.csv unsafe_count matches enacted trajectory",
+    "players.csv unsafe_frequency matches enacted trajectory",
+    "players.csv progress matches terminal turn state",
+    "players.csv stage_payoff matches summed round payoffs",
+    "players.csv private_risk matches max_private_risk times realised Unsafe frequency",
+    "players.csv prize matches canonical winner=100/tie=50/loser=0",
+    "setback eligibility matches winner/tied-winner status",
+    "setback flags match eligibility, draw, and private risk",
+    "players.csv final_payoff is zero after setback and otherwise stage_payoff plus prize",
+    "setback draws are fixed by player seat within each CRN repetition block",
+    "players.csv outcomes match terminal progress",
+    "races.csv tie matches player outcomes"
+  ],
+  "n_parse_failures": 0,
+  "n_player_races_behavioral": 180,
+  "n_player_races_total": 180,
+  "n_player_rounds_behavioral": 1674,
+  "n_player_rounds_total": 1674,
+  "n_races_behavioral": 90,
+  "n_races_excluded_any_parse_failure": 0,
+  "n_races_excluded_forced_safety_cap_stop": 0,
+  "n_races_excluded_noncanonical_mechanism": 0,
+  "n_races_excluded_total": 0,
+  "n_races_total": 90,
+  "n_source_runs": 3,
+  "outputs": [
+    "first_round_persistence_player.csv",
+    "first_round_persistence_turn.csv",
+    "gap_collinearity.csv",
+    "horizon_distribution.csv",
+    "human_comparison.csv",
+    "human_comparison_metadata.json",
+    "opponent_response_player.csv",
+    "opponent_response_turn.csv",
+    "outcome_player.csv",
+    "parse_failures.csv",
+    "persona_contrasts.csv",
+    "persona_contrasts_round2plus.csv",
+    "player_metrics.csv",
+    "race_quality.csv",
+    "race_state_player.csv",
+    "sample_summary.csv",
+    "seat_balance.csv",
+    "strategy_summary_player.csv",
+    "theory_vs_experiment.csv",
+    "theory_vs_experiment_metadata.json",
+    "treatment_contrasts.csv",
+    "treatment_contrasts_round2plus.csv",
+    "unsafe_by_gap_bin_turn.csv",
+    "unsafe_by_gap_lag_turn.csv",
+    "unsafe_by_lag_profile_turn.csv",
+    "unsafe_by_race_state_turn.csv",
+    "unsafe_by_risk_model_player.csv",
+    "unsafe_by_risk_model_turn.csv",
+    "winner_loser_correlation.csv",
+    "winner_loser_pairs.csv"
+  ],
+  "persona_conditions": [
+    "none"
+  ],
+  "persona_identification": {
+    "confounded_with_protocol_signature": false,
+    "identified": false,
+    "n_persona_conditions": 1,
+    "persona_conditions": [
+      "none"
+    ],
+    "remedy": "Run every persona cell in one batch so they share source revision, decoding, and package versions; persona then varies inside a single protocol signature and its coefficient is estimable.",
+    "varies_within_protocol_signature": false
+  },
+  "player_level_note": "Player-level tables average within-player trajectory rates so longer realised horizons do not automatically receive more weight.",
+  "prompt_versions": [
+    "ai-race-fairgame-v3"
+  ],
+  "protocol_grouping": "Every descriptive table is stratified by prompt_version, protocol_signature, run_phase, and run_status. By default each model label may have only one exact manifest contract; overrides are explicit sensitivity/protocol audits.",
+  "protocol_signature_payloads": {
+    "0b80cb35e49b077d198ae21685cd13d305a39234d2037a6b5bbddb278c429130": {
+      "available_manifest": {
+        "agents_config_sha256": "ccf3a3ae7ec6e488ca58c9659ced7727ee34989af70e808081c7cd55a6320469",
+        "agents_name": "companies_default",
+        "created_utc": "2026-07-31T09:39:12.174399+00:00",
+        "experiment": {
+          "agents": "companies_default",
+          "backend": "proxy",
+          "description": "Cross-model pilot over the Kaggle model proxy: the neutral paper-faithful baseline run identically on every hosted route that was confirmed reachable on 2026-07-31. Answers PROJECT.md RQ6 (stability across model families and scale). Persona is 'none' throughout, so no persona contrast is claimed here. Routes deepseek-ai/deepseek-r1-0528 and openai/gpt-oss-120b were excluded because the proxy returned 429 on every probe that day.",
+          "games": [
+            "ai_race_risk_10",
+            "ai_race_risk_60",
+            "ai_race_risk_90"
+          ],
+          "languages": [
+            "en"
+          ],
+          "maxParseRetries": 3,
+          "models": [
+            "google/gemini-3.1-flash-lite-preview"
+          ],
+          "name": "api_baseline_crossmodel",
+          "proxyOptions": {
+            "concurrency": 2,
+            "max_tokens": 256,
+            "max_transport_retries": 6,
+            "send_seed": false,
+            "temperature": 0.7,
+            "timeout": 120
+          },
+          "repetitions": 10,
+          "runPhase": "pilot",
+          "samplingSeedApplied": false,
+          "seed": 260726,
+          "useOffline": false,
+          "verbose": true
+        },
+        "model": "google/gemini-3.1-flash-lite-preview",
+        "n_races": 30,
+        "n_turns": 558,
+        "persona_condition": "none",
+        "persona_roles": [
+          "",
+          ""
+        ],
+        "persona_sha256": "d7c1f053e2581812f2db2c745131a2c8a1971ab5ad7725aeadd6d4f3c17fe6a1",
+        "run_phase": "pilot",
+        "schema_version": "ai-race-results-v1",
+        "status": "completed"
+      },
+      "provenance_error": "D:\\AI_PhD\\GameTheory\\AI_Race_Experiment\\results\\frontier\\baseline\\google-gemini-3.1-flash-lite-preview\\run_manifest.json uses unsupported schema_version='ai-race-results-v1'; primary analysis accepts the provenance-rich offline Kaggle or Kaggle Benchmark manifests",
+      "signature_schema": "ai-race-analysis-protocol-signature-v1",
+      "source_run": "D:/AI_PhD/GameTheory/AI_Race_Experiment/results/frontier/baseline/google-gemini-3.1-flash-lite-preview",
+      "verification": "unverified_protocol_audit_only"
+    },
+    "51f86874ea08d313fd9025b5755a4e1a6959bcf0b40f3fae7bb956d6a41c0045": {
+      "available_manifest": {
+        "agents_config_sha256": "ccf3a3ae7ec6e488ca58c9659ced7727ee34989af70e808081c7cd55a6320469",
+        "agents_name": "companies_default",
+        "created_utc": "2026-07-31T09:26:16.093333+00:00",
+        "experiment": {
+          "agents": "companies_default",
+          "backend": "proxy",
+          "description": "Cross-model pilot over the Kaggle model proxy: the neutral paper-faithful baseline run identically on every hosted route that was confirmed reachable on 2026-07-31. Answers PROJECT.md RQ6 (stability across model families and scale). Persona is 'none' throughout, so no persona contrast is claimed here. Routes deepseek-ai/deepseek-r1-0528 and openai/gpt-oss-120b were excluded because the proxy returned 429 on every probe that day.",
+          "games": [
+            "ai_race_risk_10",
+            "ai_race_risk_60",
+            "ai_race_risk_90"
+          ],
+          "languages": [
+            "en"
+          ],
+          "maxParseRetries": 3,
+          "models": [
+            "google/gemini-3-flash-preview"
+          ],
+          "name": "api_baseline_crossmodel",
+          "proxyOptions": {
+            "concurrency": 8,
+            "max_tokens": 256,
+            "max_transport_retries": 3,
+            "send_seed": false,
+            "temperature": 0.7,
+            "timeout": 120
+          },
+          "repetitions": 10,
+          "runPhase": "pilot",
+          "samplingSeedApplied": false,
+          "seed": 260726,
+          "useOffline": false,
+          "verbose": true
+        },
+        "model": "google/gemini-3-flash-preview",
+        "n_races": 30,
+        "n_turns": 558,
+        "persona_condition": "none",
+        "persona_roles": [
+          "",
+          ""
+        ],
+        "persona_sha256": "d7c1f053e2581812f2db2c745131a2c8a1971ab5ad7725aeadd6d4f3c17fe6a1",
+        "run_phase": "pilot",
+        "schema_version": "ai-race-results-v1",
+        "status": "completed"
+      },
+      "provenance_error": "D:\\AI_PhD\\GameTheory\\AI_Race_Experiment\\results\\frontier\\baseline\\google-gemini-3-flash-preview\\run_manifest.json uses unsupported schema_version='ai-race-results-v1'; primary analysis accepts the provenance-rich offline Kaggle or Kaggle Benchmark manifests",
+      "signature_schema": "ai-race-analysis-protocol-signature-v1",
+      "source_run": "D:/AI_PhD/GameTheory/AI_Race_Experiment/results/frontier/baseline/google-gemini-3-flash-preview",
+      "verification": "unverified_protocol_audit_only"
+    },
+    "c24795f46a2d201502f5745e524b1fcd5dbfe804318909acdbf0f182730d1230": {
+      "available_manifest": {
+        "agents_config_sha256": "ccf3a3ae7ec6e488ca58c9659ced7727ee34989af70e808081c7cd55a6320469",
+        "agents_name": "companies_default",
+        "created_utc": "2026-07-31T10:07:40.045646+00:00",
+        "experiment": {
+          "agents": "companies_default",
+          "backend": "proxy",
+          "description": "Cross-model pilot, single-model slice: gemini-3.5-flash-lite over the Kaggle model proxy, neutral persona.",
+          "games": [
+            "ai_race_risk_10",
+            "ai_race_risk_60",
+            "ai_race_risk_90"
+          ],
+          "languages": [
+            "en"
+          ],
+          "maxParseRetries": 3,
+          "models": [
+            "google/gemini-3.5-flash-lite"
+          ],
+          "name": "api_baseline_flashlite35",
+          "proxyOptions": {
+            "concurrency": 2,
+            "max_tokens": 256,
+            "max_transport_retries": 6,
+            "send_seed": false,
+            "temperature": 0.7,
+            "timeout": 120
+          },
+          "repetitions": 10,
+          "runPhase": "pilot",
+          "samplingSeedApplied": false,
+          "seed": 260726,
+          "useOffline": false,
+          "verbose": true
+        },
+        "model": "google/gemini-3.5-flash-lite",
+        "n_races": 30,
+        "n_turns": 558,
+        "persona_condition": "none",
+        "persona_roles": [
+          "",
+          ""
+        ],
+        "persona_sha256": "d7c1f053e2581812f2db2c745131a2c8a1971ab5ad7725aeadd6d4f3c17fe6a1",
+        "run_phase": "pilot",
+        "schema_version": "ai-race-results-v1",
+        "status": "completed"
+      },
+      "provenance_error": "D:\\AI_PhD\\GameTheory\\AI_Race_Experiment\\results\\frontier\\baseline\\google-gemini-3.5-flash-lite\\run_manifest.json uses unsupported schema_version='ai-race-results-v1'; primary analysis accepts the provenance-rich offline Kaggle or Kaggle Benchmark manifests",
+      "signature_schema": "ai-race-analysis-protocol-signature-v1",
+      "source_run": "D:/AI_PhD/GameTheory/AI_Race_Experiment/results/frontier/baseline/google-gemini-3.5-flash-lite",
+      "verification": "unverified_protocol_audit_only"
+    }
+  },
+  "protocol_signatures": [
+    "0b80cb35e49b077d198ae21685cd13d305a39234d2037a6b5bbddb278c429130",
+    "51f86874ea08d313fd9025b5755a4e1a6959bcf0b40f3fae7bb956d6a41c0045",
+    "c24795f46a2d201502f5745e524b1fcd5dbfe804318909acdbf0f182730d1230"
+  ],
+  "run_phases": [
+    "pilot"
+  ],
+  "run_statuses": [
+    "completed"
+  ],
+  "source_runs": [
+    "D:/AI_PhD/GameTheory/AI_Race_Experiment/results/frontier/baseline/google-gemini-3-flash-preview",
+    "D:/AI_PhD/GameTheory/AI_Race_Experiment/results/frontier/baseline/google-gemini-3.1-flash-lite-preview",
+    "D:/AI_PhD/GameTheory/AI_Race_Experiment/results/frontier/baseline/google-gemini-3.5-flash-lite"
+  ]
+}

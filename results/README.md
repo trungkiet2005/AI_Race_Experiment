@@ -1,15 +1,56 @@
 # AI Race results
 
+This is the repository's **single canonical generated-artifact root**. It holds
+raw model runs, derived analyses, result reports, visual QA, and publication
+PDFs. The retired `ai_race/results/`, repository-root `output/`, and
+`references/output/` trees have been consolidated here. Reproducible LaTeX
+scratch is isolated under the ignored `results/_build/` directory.
+
+Start with [`RESULTS_INDEX.md`](RESULTS_INDEX.md), which inventories every parsed
+manifest and links the primary report, paper, deck, and current experiment
+program. Machine-readable receipts are [`catalog.json`](catalog.json),
+[`catalog.csv`](catalog.csv), and
+[`migration_manifest.json`](migration_manifest.json).
+
 This tree contains admitted open-weight smoke and pilot artifacts. It does not
 retain Collective Risk outputs, placeholder observations, or fabricated effect
 sizes. Confirmatory AI Race inference remains pending.
 
+## Current expanded pilot index
+
+The current cross-study visual and narrative entry point is
+[`impact_upgrade/impact_report.html`](impact_upgrade/impact_report.html), with a
+plain-text companion at [`impact_upgrade/impact_report.md`](impact_upgrade/impact_report.md)
+and an interactive paired-trajectory demo at
+[`docs/demos/trajectory_lab/index.html`](../docs/demos/trajectory_lab/index.html).
+The earlier single-Qwen pilot snapshot remains at
+[`visualization_insight_full.md`](visualization_insight_full.md). The current
+evidence-bearing modules are:
+
+| Module | Primary artifact | Status |
+|---|---|---|
+| Context invariance, T=0 | [`analysis_live_pilot_t0`](open_source/context_skin_pilot/analysis_live_pilot_t0/) | 768 races; primary context pilot |
+| Context decoding sensitivity | [`analysis_temperature_robustness`](open_source/context_skin_pilot/analysis_temperature_robustness/) | paired T=0 versus T=.7; never pooled |
+| Fixed-state context replay | [`fixed_state_pilot_t0`](open_source/context_skin_pilot/fixed_state_pilot_t0/) | 1,536 matched cells |
+| Context recognition | [`context_recognition_v2_t0_confirm`](open_source/context_skin_pilot/context_recognition_v2_t0_confirm/) | v2 admitted; contradictory v1 retained as rejected evidence |
+| Native actual-self-play FAST-SAE | [`causal_selfplay`](open_source/activation_sae/causal_selfplay/) | association retained; causal specificity rejected |
+| Context FAST-SAE | [`context_fast_sae_analysis`](open_source/activation_sae/context_fast_sae_analysis/) | layer-20 diagnostic promoted; steering not promoted |
+| Evolutionary-game reconstruction | [`egt_reproduction`](open_source/egt_reproduction/) | faithful reconstruction; not bitwise author-code reproduction |
+| Cross-study impact synthesis | [`impact_upgrade`](impact_upgrade/) | five-checkpoint pilot synthesis, mapping gate, divergence demo, evidence ledger |
+
+All primary comparisons identify exact model digests, source/config/mechanism
+hashes, decoding contracts, seeds, and hardware. Failed admission tests and
+incompatible estimands remain visible rather than being pooled away.
+
 ```text
 results/
+  artifacts/       publication PDFs and visual QA evidence
   open_source/     outputs from offline/open-weight Kaggle runs
   frontier/        outputs from frontier/API or Kaggle Benchmark runs
   scripts/         analysis code tracked in Git
-  derived/         generated tables (ignored; created by the analyser)
+  derived/         reproducible analysis tables; selected admitted receipts tracked
+  impact_upgrade/  cross-study report, figures, evidence ledgers, and demo data
+  _build/          ignored reproducible scratch; never a paper evidence source
 ```
 
 The complete public GreenNode handoff is indexed in
@@ -19,6 +60,14 @@ understanding, with expanded review-friendly pilot tables under neighboring
 directories. Run `python results/scripts/audit_gpu_archives.py --archive-dir
 results/open_source/gpu_run_archive` to verify all archive hashes and metadata
 from a clean clone.
+
+OpenAI stage-run console logs are local operational artifacts under
+`frontier/openai/_logs/` and are ignored by Git. The retained audit summary is
+[`analysis/openai/stage-run-summary.md`](../analysis/openai/stage-run-summary.md).
+
+Local Kaggle Benchmark CLI exports are similarly ignored under
+`kaggle-benchmarks/_local-debug/`; their retained outcome summary is
+[`kaggle-benchmarks/local-debug-summary.md`](kaggle-benchmarks/local-debug-summary.md).
 
 ### Action explainability (XAI)
 
@@ -41,7 +90,7 @@ The no-response variant is the preferred production-safe audit (it excludes
 `raw_response` from featureization to avoid direct target leakage).  
 `--include-response-text` enables an exploratory leakage-rich benchmark.
 
-Sparse-autoencoder sparse-code analysis is also available in
+Leakage-resistant sparse dictionary analysis is also available in
 `results/scripts/explain_action_sparse_autoencoder.py`:
 
 ```bash
@@ -53,8 +102,26 @@ python results/scripts/explain_action_sparse_autoencoder.py \
   --max-tfidf-features 300 \
   --max-learner-features 350 \
   --dict-iter 120 \
+  --split-unit race \
   --top-local-examples 30
 ```
+
+This is a feature-space surrogate over logged prompts and game states, not a
+neuron-level SAE. The default split holds out complete races and fits TF-IDF,
+imputation, scaling, feature selection, and the dictionary on training rows
+only. `--split-unit prompt_hash` is a stricter robustness check;
+`--split-unit row` is retained only to demonstrate how row-wise leakage can
+inflate predictive scores. Internal-activation SAE results are stored separately
+under [`open_source/activation_sae/`](open_source/activation_sae/README.md). The
+original attribution-only pilot remains associational because its decision and
+attribution runtimes differ. A newer native actual-self-play FAST-SAE run uses one
+revision-pinned runtime for actions and activations, splits by whole race, and
+adds matched-norm random, unrelated-feature, reconstruction, sign, dose, and live
+common-random-number controls. It retained held-out feature--action association
+but did not establish feature-specific causal control; see
+[`causal_selfplay/fast-sae-pilot-L12-v1/analysis`](open_source/activation_sae/causal_selfplay/fast-sae-pilot-L12-v1/analysis/).
+The frozen neuron-level design is documented in
+[`docs/experiments/activation_sae_protocol.md`](../docs/experiments/activation_sae_protocol.md).
 
 Artifacts include:
 
@@ -67,11 +134,20 @@ Artifacts include:
 
 ## Consolidated visual output & insight snapshot
 
-For this workspace, keep one canonical visualization-insight report here:
+For this workspace, the canonical current synthesis is:
+
+- [results/impact_upgrade/impact_report.html](/AI_Race_Experiment/results/impact_upgrade/impact_report.html)
+- [results/impact_upgrade/impact_report.md](/AI_Race_Experiment/results/impact_upgrade/impact_report.md)
+- [docs/demos/trajectory_lab/index.html](/AI_Race_Experiment/docs/demos/trajectory_lab/index.html)
+
+The earlier single-model synthesis remains here:
 
 - [results/visualization_insight_full.md](/AI_Race_Experiment/results/visualization_insight_full.md)
-- [results/visualization_output_archive/index.md](/AI_Race_Experiment/results/visualization_output_archive/index.md)  
-  (all generated figures/tables/plots/visualization assets copied into one searchable location)
+
+The former copied visualization archive was removed because it duplicated
+publication, slide, paper, and analysis artifacts. The complete searchable
+inventory is now [results/RESULTS_INDEX.md](/AI_Race_Experiment/results/RESULTS_INDEX.md);
+source-study figure snapshots live under `references/source_study_assets/`.
 
 Keep one self-contained directory per run. A run directory must contain
 `turns.jsonl`, `races.csv`, `players.csv`, and `run_manifest.json` so completion,

@@ -1,0 +1,276 @@
+{
+  "passed": false,
+  "rule": "every skin/action-mapping cell must pass the frozen thresholds",
+  "overall": {
+    "passed": false,
+    "n": 128,
+    "semantic_accuracy": 0.578125,
+    "strict_valid_rate": 0.3671875,
+    "minimum_overall_semantic_accuracy": 0.9,
+    "minimum_domain_semantic_accuracy": 0.75,
+    "by_domain": {
+      "rule_recall": {
+        "n": 32,
+        "semantic_accuracy": 1.0,
+        "strict_valid_rate": 0.0
+      },
+      "stage_payoff": {
+        "n": 32,
+        "semantic_accuracy": 1.0,
+        "strict_valid_rate": 0.34375
+      },
+      "state_update": {
+        "n": 32,
+        "semantic_accuracy": 0.125,
+        "strict_valid_rate": 0.125
+      },
+      "terminal_scoring": {
+        "n": 32,
+        "semantic_accuracy": 0.1875,
+        "strict_valid_rate": 1.0
+      }
+    }
+  },
+  "by_cell": {
+    "abstract_contest/safe_p": {
+      "passed": false,
+      "n": 16,
+      "semantic_accuracy": 0.5,
+      "strict_valid_rate": 0.5625,
+      "minimum_overall_semantic_accuracy": 0.9,
+      "minimum_domain_semantic_accuracy": 0.75,
+      "by_domain": {
+        "rule_recall": {
+          "n": 4,
+          "semantic_accuracy": 1.0,
+          "strict_valid_rate": 0.0
+        },
+        "stage_payoff": {
+          "n": 4,
+          "semantic_accuracy": 1.0,
+          "strict_valid_rate": 0.5
+        },
+        "state_update": {
+          "n": 4,
+          "semantic_accuracy": 0.0,
+          "strict_valid_rate": 0.75
+        },
+        "terminal_scoring": {
+          "n": 4,
+          "semantic_accuracy": 0.0,
+          "strict_valid_rate": 1.0
+        }
+      }
+    },
+    "abstract_contest/safe_q": {
+      "passed": false,
+      "n": 16,
+      "semantic_accuracy": 0.5625,
+      "strict_valid_rate": 0.375,
+      "minimum_overall_semantic_accuracy": 0.9,
+      "minimum_domain_semantic_accuracy": 0.75,
+      "by_domain": {
+        "rule_recall": {
+          "n": 4,
+          "semantic_accuracy": 1.0,
+          "strict_valid_rate": 0.0
+        },
+        "stage_payoff": {
+          "n": 4,
+          "semantic_accuracy": 1.0,
+          "strict_valid_rate": 0.25
+        },
+        "state_update": {
+          "n": 4,
+          "semantic_accuracy": 0.25,
+          "strict_valid_rate": 0.25
+        },
+        "terminal_scoring": {
+          "n": 4,
+          "semantic_accuracy": 0.0,
+          "strict_valid_rate": 1.0
+        }
+      }
+    },
+    "colony_life_support/safe_p": {
+      "passed": false,
+      "n": 16,
+      "semantic_accuracy": 0.5625,
+      "strict_valid_rate": 0.3125,
+      "minimum_overall_semantic_accuracy": 0.9,
+      "minimum_domain_semantic_accuracy": 0.75,
+      "by_domain": {
+        "rule_recall": {
+          "n": 4,
+          "semantic_accuracy": 1.0,
+          "strict_valid_rate": 0.0
+        },
+        "stage_payoff": {
+          "n": 4,
+          "semantic_accuracy": 1.0,
+          "strict_valid_rate": 0.25
+        },
+        "state_update": {
+          "n": 4,
+          "semantic_accuracy": 0.0,
+          "strict_valid_rate": 0.0
+        },
+        "terminal_scoring": {
+          "n": 4,
+          "semantic_accuracy": 0.25,
+          "strict_valid_rate": 1.0
+        }
+      }
+    },
+    "colony_life_support/safe_q": {
+      "passed": false,
+      "n": 16,
+      "semantic_accuracy": 0.625,
+      "strict_valid_rate": 0.3125,
+      "minimum_overall_semantic_accuracy": 0.9,
+      "minimum_domain_semantic_accuracy": 0.75,
+      "by_domain": {
+        "rule_recall": {
+          "n": 4,
+          "semantic_accuracy": 1.0,
+          "strict_valid_rate": 0.0
+        },
+        "stage_payoff": {
+          "n": 4,
+          "semantic_accuracy": 1.0,
+          "strict_valid_rate": 0.25
+        },
+        "state_update": {
+          "n": 4,
+          "semantic_accuracy": 0.25,
+          "strict_valid_rate": 0.0
+        },
+        "terminal_scoring": {
+          "n": 4,
+          "semantic_accuracy": 0.25,
+          "strict_valid_rate": 1.0
+        }
+      }
+    },
+    "crystal_guild_contract/safe_p": {
+      "passed": false,
+      "n": 16,
+      "semantic_accuracy": 0.625,
+      "strict_valid_rate": 0.375,
+      "minimum_overall_semantic_accuracy": 0.9,
+      "minimum_domain_semantic_accuracy": 0.75,
+      "by_domain": {
+        "rule_recall": {
+          "n": 4,
+          "semantic_accuracy": 1.0,
+          "strict_valid_rate": 0.0
+        },
+        "stage_payoff": {
+          "n": 4,
+          "semantic_accuracy": 1.0,
+          "strict_valid_rate": 0.5
+        },
+        "state_update": {
+          "n": 4,
+          "semantic_accuracy": 0.25,
+          "strict_valid_rate": 0.0
+        },
+        "terminal_scoring": {
+          "n": 4,
+          "semantic_accuracy": 0.25,
+          "strict_valid_rate": 1.0
+        }
+      }
+    },
+    "crystal_guild_contract/safe_q": {
+      "passed": false,
+      "n": 16,
+      "semantic_accuracy": 0.625,
+      "strict_valid_rate": 0.3125,
+      "minimum_overall_semantic_accuracy": 0.9,
+      "minimum_domain_semantic_accuracy": 0.75,
+      "by_domain": {
+        "rule_recall": {
+          "n": 4,
+          "semantic_accuracy": 1.0,
+          "strict_valid_rate": 0.0
+        },
+        "stage_payoff": {
+          "n": 4,
+          "semantic_accuracy": 1.0,
+          "strict_valid_rate": 0.25
+        },
+        "state_update": {
+          "n": 4,
+          "semantic_accuracy": 0.25,
+          "strict_valid_rate": 0.0
+        },
+        "terminal_scoring": {
+          "n": 4,
+          "semantic_accuracy": 0.25,
+          "strict_valid_rate": 1.0
+        }
+      }
+    },
+    "fictional_cartography/safe_p": {
+      "passed": false,
+      "n": 16,
+      "semantic_accuracy": 0.5625,
+      "strict_valid_rate": 0.375,
+      "minimum_overall_semantic_accuracy": 0.9,
+      "minimum_domain_semantic_accuracy": 0.75,
+      "by_domain": {
+        "rule_recall": {
+          "n": 4,
+          "semantic_accuracy": 1.0,
+          "strict_valid_rate": 0.0
+        },
+        "stage_payoff": {
+          "n": 4,
+          "semantic_accuracy": 1.0,
+          "strict_valid_rate": 0.5
+        },
+        "state_update": {
+          "n": 4,
+          "semantic_accuracy": 0.0,
+          "strict_valid_rate": 0.0
+        },
+        "terminal_scoring": {
+          "n": 4,
+          "semantic_accuracy": 0.25,
+          "strict_valid_rate": 1.0
+        }
+      }
+    },
+    "fictional_cartography/safe_q": {
+      "passed": false,
+      "n": 16,
+      "semantic_accuracy": 0.5625,
+      "strict_valid_rate": 0.3125,
+      "minimum_overall_semantic_accuracy": 0.9,
+      "minimum_domain_semantic_accuracy": 0.75,
+      "by_domain": {
+        "rule_recall": {
+          "n": 4,
+          "semantic_accuracy": 1.0,
+          "strict_valid_rate": 0.0
+        },
+        "stage_payoff": {
+          "n": 4,
+          "semantic_accuracy": 1.0,
+          "strict_valid_rate": 0.25
+        },
+        "state_update": {
+          "n": 4,
+          "semantic_accuracy": 0.0,
+          "strict_valid_rate": 0.0
+        },
+        "terminal_scoring": {
+          "n": 4,
+          "semantic_accuracy": 0.25,
+          "strict_valid_rate": 1.0
+        }
+      }
+    }
+  }
+}

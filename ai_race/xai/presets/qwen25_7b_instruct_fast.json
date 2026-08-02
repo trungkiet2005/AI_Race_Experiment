@@ -1,0 +1,18 @@
+{
+  "schema_version": "ai-race.activation-sae.preset.v1",
+  "name": "qwen25-7b-instruct-fast-jumprelu",
+  "model_repo": "Qwen/Qwen2.5-7B-Instruct",
+  "model_revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+  "sae_repo": "Geaming/Qwen2.5-7B-Instruct_SAEs",
+  "sae_revision": "5a7ecabe1401bf4de11a0e6da1f7c36bbb46a464",
+  "sae_lens_version": "5.3.3",
+  "framework": "SAELens",
+  "architecture": "JumpReLU",
+  "activation_width": 3584,
+  "feature_width": 28672,
+  "capture_semantics": "TransformerLens blocks.{layer}.hook_resid_post",
+  "layers": [4, 12, 18, 20, 25],
+  "sae_id_template": "FAST/blocks_{layer}_hook_resid_post_8X_2048_jumprelu",
+  "context_size": 2048,
+  "prepend_bos": false
+}

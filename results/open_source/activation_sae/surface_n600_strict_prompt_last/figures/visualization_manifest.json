@@ -1,0 +1,29 @@
+{
+  "schema_version": "ai-race.activation-sae.visualization.v1",
+  "status": "complete",
+  "source_runs": [
+    "D:\\PhD_LetGoo\\PhD_Farming\\AI_Race\\AI_Race_Experiment\\results\\open_source\\activation_sae\\surface_n600_strict_prompt_last\\surface_n600_strict_prompt_last_layers_4_12_18",
+    "D:\\PhD_LetGoo\\PhD_Farming\\AI_Race\\AI_Race_Experiment\\results\\open_source\\activation_sae\\surface_n600_strict_prompt_last\\surface_n600_strict_prompt_last_layers_20_25"
+  ],
+  "source_manifests_sha256": [
+    "e7ba1f3efd0f6b560c0e750d158a2dc59c8358b2223ac0ab62658f759620cfdc",
+    "a4bb7f4494002d3121c1acdc35181e120c1ad806351a6de02a883993023ae1c7"
+  ],
+  "sample_set_verified_identical": true,
+  "n_samples": 600,
+  "n_train": 480,
+  "n_eval": 120,
+  "layers": [
+    4,
+    12,
+    18,
+    20,
+    25
+  ],
+  "claim_scope": "cross-model exploratory association only",
+  "figures": [
+    "sae_fidelity_by_layer",
+    "sae_probe_by_layer",
+    "sae_feature_confirmation"
+  ]
+}

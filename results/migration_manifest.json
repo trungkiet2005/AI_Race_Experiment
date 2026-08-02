@@ -1,0 +1,230 @@
+{
+  "schema_version": "ai-race.results-migration.v1",
+  "canonical_root": "results/",
+  "retired_roots_absent": {
+    "ai_race/results": true,
+    "output": true,
+    "references/output": true
+  },
+  "migrated_trees": [
+    "frontier/api_5games_allrisk",
+    "open_source/game_understanding_pilot/raw",
+    "artifacts/publication",
+    "artifacts/qa/latex"
+  ],
+  "file_count": 53,
+  "files": {
+    "results/frontier/api_5games_allrisk/all_results.csv": {
+      "bytes": 8123,
+      "sha256": "32babbe597883bad35acdea5384173cf4a3f2a8a8dbbd8e65f16fdaf2d37e1a8"
+    },
+    "results/frontier/api_5games_allrisk/google-gemini-3-flash-preview/all_results.csv": {
+      "bytes": 8123,
+      "sha256": "32babbe597883bad35acdea5384173cf4a3f2a8a8dbbd8e65f16fdaf2d37e1a8"
+    },
+    "results/frontier/api_5games_allrisk/google-gemini-3-flash-preview/players.csv": {
+      "bytes": 7490,
+      "sha256": "deabb68cec5590303ef28c3e869f7ab06d7a58b0575ee43e69e99be29942f7b8"
+    },
+    "results/frontier/api_5games_allrisk/google-gemini-3-flash-preview/races.csv": {
+      "bytes": 5509,
+      "sha256": "cf57279a3c5a406bc26135a9fc7e2d3c6db8fbe5784efbe99a3b1bbce3988a36"
+    },
+    "results/frontier/api_5games_allrisk/google-gemini-3-flash-preview/run_manifest.json": {
+      "bytes": 1042,
+      "sha256": "b5cbfca9f78c11066cd9612f8cb90e28a5166a542b463100575523815453db9d"
+    },
+    "results/frontier/api_5games_allrisk/google-gemini-3-flash-preview/turns.jsonl": {
+      "bytes": 807644,
+      "sha256": "703dcc4d4aed303c528fece739a3d97b8f73029a4f10fceb9842ecf5d7859864"
+    },
+    "results/open_source/game_understanding_pilot/raw/behavior_lane/behavior/calculator_decision_card/all_results.csv": {
+      "bytes": 18445,
+      "sha256": "d7363913c9548a639b97d997c98c328d06886d9c26d01806153fdfa375a48a2a"
+    },
+    "results/open_source/game_understanding_pilot/raw/behavior_lane/behavior/calculator_decision_card/players.csv": {
+      "bytes": 18141,
+      "sha256": "55044c37dc49cd9dfffb2ac7314d5ec78257bce7c8b7e4d71a8a1fc11fadf485"
+    },
+    "results/open_source/game_understanding_pilot/raw/behavior_lane/behavior/calculator_decision_card/races.csv": {
+      "bytes": 13718,
+      "sha256": "bc8e1d8d9ae3017552da2e8f8e8e902ae733ad329da9db9299391ebc1cde308c"
+    },
+    "results/open_source/game_understanding_pilot/raw/behavior_lane/behavior/calculator_decision_card/run_manifest.json": {
+      "bytes": 2653,
+      "sha256": "835b1a613ca8a6087f9d3a158efd72d175abc9106bbb2486746d1a7237c5c36f"
+    },
+    "results/open_source/game_understanding_pilot/raw/behavior_lane/behavior/calculator_decision_card/turns.jsonl": {
+      "bytes": 2458272,
+      "sha256": "8e98e0dd978d3cb6a5b588b6e81a8dd458b055c8a62dcecf3f5364e5da1e2016"
+    },
+    "results/open_source/game_understanding_pilot/raw/behavior_lane/behavior/canonical/all_results.csv": {
+      "bytes": 17861,
+      "sha256": "607a1acf0b80100c9424fe043c056cba42f7502a74c48d9816c8bcda6eb9f2a2"
+    },
+    "results/open_source/game_understanding_pilot/raw/behavior_lane/behavior/canonical/players.csv": {
+      "bytes": 15099,
+      "sha256": "e31d2ff9c91edfbff5fc32b1b04d56da18f2ba3fed0194c6f6317c6b435eade4"
+    },
+    "results/open_source/game_understanding_pilot/raw/behavior_lane/behavior/canonical/races.csv": {
+      "bytes": 12182,
+      "sha256": "c3e47bf4541fea5480ebc938bf8f2405d5be0451c432d3b4de15c1c871918913"
+    },
+    "results/open_source/game_understanding_pilot/raw/behavior_lane/behavior/canonical/run_manifest.json": {
+      "bytes": 2623,
+      "sha256": "e0d1c2badb13eb58a3f9b71f5ce66854aed4659fb75a960e8eb015e43ddc85ed"
+    },
+    "results/open_source/game_understanding_pilot/raw/behavior_lane/behavior/canonical/turns.jsonl": {
+      "bytes": 2056158,
+      "sha256": "d7d647f1ece29bc58db0f32674f5bb1581724980106b8482351bad987956e625"
+    },
+    "results/open_source/game_understanding_pilot/raw/local-analysis.log": {
+      "bytes": 28680,
+      "sha256": "3f4f2e71661c9a65d192a5f26ff86ce9c86b73a40dba32b8223c21d4ce2717cd"
+    },
+    "results/open_source/game_understanding_pilot/raw/probe_lane/probes/probe_outputs.jsonl": {
+      "bytes": 1832265,
+      "sha256": "b4d24c158d7f249928f1809721d0d5891e27da68905b0f82ed88e0ec2a745a2b"
+    },
+    "results/open_source/game_understanding_pilot/raw/probe_lane/probes/run_manifest.json": {
+      "bytes": 2057,
+      "sha256": "4d5104ec6aea7e2d3cc0e8d65a62eacf301a88fd4f67b7d1897238465c40abe1"
+    },
+    "results/artifacts/publication/ai_race_paper.pdf": {
+      "bytes": 475255,
+      "sha256": "7adf0528bddd5a1be80959b5ccd8d2681a8043b697c9a1f7974c3cffd5dece6f"
+    },
+    "results/artifacts/publication/ai_race_research_deck.pdf": {
+      "bytes": 618614,
+      "sha256": "8e6af995eec8fdd3793ad433c3182b77e9b8cfce5a661f90500e3f610aea48ee"
+    },
+    "results/artifacts/qa/latex/deck_final_p1.png": {
+      "bytes": 40067,
+      "sha256": "2c6e95fb02a0c2f05b6443d95a9097c3a943d4a93d06c7e636b60346e9aae0c5"
+    },
+    "results/artifacts/qa/latex/deck_final_p10.png": {
+      "bytes": 66220,
+      "sha256": "38b35c3b45e96bf14d211c5c5972ba051b05222018a141504bc54e62c1d9da95"
+    },
+    "results/artifacts/qa/latex/deck_final_p11.png": {
+      "bytes": 57640,
+      "sha256": "a3423b00cdebfc9dd9e41c4150c9902a5317b7efe1991e92e9395864b8c6cf1d"
+    },
+    "results/artifacts/qa/latex/deck_final_p12.png": {
+      "bytes": 61592,
+      "sha256": "0825c4836cfae1d533da9da0a9414bfff628f51b59ffa7520e5f4f64fdf8222a"
+    },
+    "results/artifacts/qa/latex/deck_final_p2.png": {
+      "bytes": 52701,
+      "sha256": "ca03b269b70e9837f02ca4b6cfb54c4746f873cc19bd327e7841f9e138eabe82"
+    },
+    "results/artifacts/qa/latex/deck_final_p23.png": {
+      "bytes": 59318,
+      "sha256": "c84eccb13e971c9c3a13278e1d849db6f4bac17eb765762480d47c87d03851fd"
+    },
+    "results/artifacts/qa/latex/deck_final_p24.png": {
+      "bytes": 75332,
+      "sha256": "173a74169440f84809e74c49fd7b20d856fcbdf3a1318836985c117c41a0503d"
+    },
+    "results/artifacts/qa/latex/deck_final_p25.png": {
+      "bytes": 46970,
+      "sha256": "16345f3581b5f7dea7927b19fe06d049fe47b88936d77af9ad648b201af59541"
+    },
+    "results/artifacts/qa/latex/deck_final_p26.png": {
+      "bytes": 85218,
+      "sha256": "3dd29f47adb1a47d3044ee257c0c49019550e03e974ef406e47424e082a223ba"
+    },
+    "results/artifacts/qa/latex/deck_final_p7.png": {
+      "bytes": 66608,
+      "sha256": "668f66147a3b09d823ee433d74611ef61ab773f6b6d031a5e98bf6efb5df9d26"
+    },
+    "results/artifacts/qa/latex/deck_metric_p13.png": {
+      "bytes": 78046,
+      "sha256": "261828e32bacb346091e7226bad8ab4d008337a2a97bcd3b35fe2bc0ca62eb66"
+    },
+    "results/artifacts/qa/latex/deck_metric_p14.png": {
+      "bytes": 67192,
+      "sha256": "c5f6b5b30283bbf55818028f64b1d8377b8218eeff462454ce6c11664fa19ae5"
+    },
+    "results/artifacts/qa/latex/deck_metric_p17.png": {
+      "bytes": 64748,
+      "sha256": "6419ce45d055e974be048d3f6d4d771266282b299a5f47bfb1c91752949779a7"
+    },
+    "results/artifacts/qa/latex/deck_metric_p18.png": {
+      "bytes": 58511,
+      "sha256": "1d362282952d70d368ea7fb753335fb91a996f0f0e7524fabcd647c021891ffb"
+    },
+    "results/artifacts/qa/latex/deck_metric_p2.png": {
+      "bytes": 50676,
+      "sha256": "e1d9965a8ba1f9cae6498952fda4e32c10ec5dd45111bae1c117ad822bb34265"
+    },
+    "results/artifacts/qa/latex/deck_metric_p21.png": {
+      "bytes": 67552,
+      "sha256": "11a66ab69d74faa875858413987a5ce8afb49a3609c5a7b2c94c5bf5a0e010b1"
+    },
+    "results/artifacts/qa/latex/deck_metric_p22.png": {
+      "bytes": 69686,
+      "sha256": "a62f621015eb9175719b21bebcfc7176d50e7bd0691efce167352710cf997203"
+    },
+    "results/artifacts/qa/latex/deck_metric_p5.png": {
+      "bytes": 54008,
+      "sha256": "a6bb2ffd91e87ec43b175c321b8b4abb96254f6e849ad8a691bccf9a40c4636f"
+    },
+    "results/artifacts/qa/latex/deck_metric_p6.png": {
+      "bytes": 65586,
+      "sha256": "0f090819a05d0e5c2a95f405cf8acf9d493a4ae797f70c87d939dcabac2507c3"
+    },
+    "results/artifacts/qa/latex/deck_p10-10.png": {
+      "bytes": 67777,
+      "sha256": "7c7e79616ecef7a4e1389af33347626e045ead3f89ddaa66ab47e983121a0a89"
+    },
+    "results/artifacts/qa/latex/deck_p11-11.png": {
+      "bytes": 57919,
+      "sha256": "f8bb0d4a5fd61298aec98471728f2ec774ca20c0d101f2e1a62d67d8478e6270"
+    },
+    "results/artifacts/qa/latex/deck_p12-12.png": {
+      "bytes": 61500,
+      "sha256": "8ef91ca25aedbbc7a7fba7c72e7f5aca23241dc2631c3335a6aae86b83c68a61"
+    },
+    "results/artifacts/qa/latex/deck_p23-23.png": {
+      "bytes": 59740,
+      "sha256": "fbde7733d0a12c8599cfa752a7d7be6bdd9f5f559099b7726403c50fddce21db"
+    },
+    "results/artifacts/qa/latex/deck_p7-07.png": {
+      "bytes": 68109,
+      "sha256": "48e8f26f9b851713773b8be950a3a04d3de814fcef30b5288ccf1204482865e4"
+    },
+    "results/artifacts/qa/latex/paper_final_p1.png": {
+      "bytes": 146605,
+      "sha256": "3a3e3d0cce72ceba623f910e20bd9e043eb3c5aa36bde2b40b76ecff2d5860c9"
+    },
+    "results/artifacts/qa/latex/paper_final_p15.png": {
+      "bytes": 137138,
+      "sha256": "1f397a6796d994d682982eaad1e9c2d6b94016f5b96772bc8845f9a54295ef2d"
+    },
+    "results/artifacts/qa/latex/paper_final_p16.png": {
+      "bytes": 58995,
+      "sha256": "eb2876ec6428054086f1c47cfea29f26a5c7f857c4552c17a3219674ee488dce"
+    },
+    "results/artifacts/qa/latex/paper_p10-10.png": {
+      "bytes": 101201,
+      "sha256": "f575823f8f9f8a3163022d90709081121ef534f0dd85b3044a25395a2dbc3425"
+    },
+    "results/artifacts/qa/latex/paper_p15-15.png": {
+      "bytes": 137138,
+      "sha256": "1f397a6796d994d682982eaad1e9c2d6b94016f5b96772bc8845f9a54295ef2d"
+    },
+    "results/artifacts/qa/latex/paper_p16-16.png": {
+      "bytes": 58995,
+      "sha256": "eb2876ec6428054086f1c47cfea29f26a5c7f857c4552c17a3219674ee488dce"
+    },
+    "results/artifacts/qa/latex/paper_p8-08.png": {
+      "bytes": 124549,
+      "sha256": "606b36ab1bf6c9c974e04e7da55ad7c5b8e2f7ecb6079abbdc1a18e1cadc8a3a"
+    },
+    "results/artifacts/qa/latex/paper_p9-09.png": {
+      "bytes": 46871,
+      "sha256": "2e7e6393126a643f2011fdaf641cb6f32cd7c42547644cd50f5dac1e4ea9a54d"
+    }
+  }
+}

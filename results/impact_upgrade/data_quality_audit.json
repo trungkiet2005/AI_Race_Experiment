@@ -1,0 +1,16 @@
+{
+  "status": "passed",
+  "n_turns": 13680,
+  "n_player_races": 1536,
+  "n_races": 768,
+  "n_contexts": 8,
+  "n_risk_levels": 3,
+  "n_mappings": 2,
+  "parse_failures": 0,
+  "retried_decisions": 0,
+  "trajectory_pairs": 1344,
+  "contexts_vs_reference": 7,
+  "all_first_round_actions_agree": true,
+  "cross_model_checkpoints": 5,
+  "evidence_ledger_rows": 8
+}
