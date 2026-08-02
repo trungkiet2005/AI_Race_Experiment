@@ -1,0 +1,3 @@
+scope,decisions,clusters,unsafe_rate,cv_accuracy_mean,cv_balanced_accuracy_mean,cv_roc_auc_mean,cv_brier_score_mean,top_importance_feature,top_importance,top_root_feature,top_root_share
+baseline_completed,2490,150,0.585140562248996,0.7714859437751004,0.7645278731506705,0.8400326428172342,0.15329694313258396,model_slug_gpt-5-nano,0.46955730724869543,model_slug_gpt-5-nano,0.93
+all_completed,55518,3369,0.389135055297381,0.7619868450630959,0.7765588894148431,0.8446272283458004,0.1599066712137971,own_private_risk_before,0.6657870544815481,own_private_risk_before,1.0

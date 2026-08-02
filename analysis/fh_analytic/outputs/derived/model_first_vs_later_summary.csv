@@ -1,0 +1,11 @@
+family,model_slug,turn_phase,decisions,unsafe_rate
+family_chatgpt,gpt-5-nano,round_1,60,0.0
+family_chatgpt,gpt-5-nano,round_2plus,498,0.13855421686746988
+family_chatgpt,gpt-5.4-nano,round_1,60,0.43333333333333335
+family_chatgpt,gpt-5.4-nano,round_2plus,498,0.5602409638554217
+family_gemini,google-gemini-3-flash-preview,round_1,60,1.0
+family_gemini,google-gemini-3-flash-preview,round_2plus,498,0.7349397590361446
+family_gemini,google-gemini-3.1-flash-lite-preview,round_1,60,1.0
+family_gemini,google-gemini-3.1-flash-lite-preview,round_2plus,498,0.8152610441767069
+family_gemini,google-gemini-3.5-flash-lite,round_1,60,1.0
+family_gemini,google-gemini-3.5-flash-lite,round_2plus,498,0.6767068273092369

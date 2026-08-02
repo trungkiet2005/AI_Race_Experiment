@@ -1,0 +1,31 @@
+strategy,strategy_family,description,exact_fit_sequences,exact_new_beyond_canonical
+ANTI_CS,pd_memory,"safe first, then do the opposite of opponent previous action",272,88
+ALT_SAFE_FIRST,sequence_motif,alternate safe/unsafe starting safe,110,80
+PROBE_COOLDOWN_R2,sequence_motif,"unsafe once, then always safe",93,49
+ANTI_CAS,pd_memory,"unsafe first, then do the opposite of opponent previous action",245,45
+DELAYED_ATTACK_R2,sequence_motif,"safe once, then always unsafe",70,36
+ALT_UNSAFE_FIRST,sequence_motif,alternate unsafe/safe starting unsafe,102,35
+WSLS_U,pd_memory,"Pavlov / win-stay lose-shift, unsafe first",227,27
+DELAYED_ATTACK_R3,sequence_motif,"safe twice, then always unsafe",26,26
+DESPERATE_CATCHUP,positional_gap,unsafe only when behind by more than 0.5,1245,12
+UNEVEN_ATTACK,positional_gap,unsafe when the race is not close,1245,12
+WSLS_S,pd_memory,"Pavlov / win-stay lose-shift, safe first",1185,10
+TF2T_S,pd_memory,unsafe only after two consecutive opponent unsafe actions,1353,8
+BULLY_RETALIATOR,hybrid_gap_memory,"unsafe until far ahead, also retaliates",412,8
+BULLY_UNTIL_FAR_AHEAD,positional_gap,unsafe unless already ahead by more than 1,412,8
+PROBE_COOLDOWN_R3,sequence_motif,"unsafe twice, then always safe",50,6
+ONE_SHOT_PUNISHER,pd_memory,"retaliate one turn, then force cooldown",1237,5
+GRIM_S,pd_memory,"safe until opponent ever plays unsafe, then always unsafe",1213,4
+AS,canonical,always safe,2114,0
+DEFENSIVE_RETALIATOR,hybrid_gap_memory,retaliate only when not behind,2114,0
+LEADER_ATTACK,positional_gap,"unsafe when ahead, safe otherwise",2114,0
+OPPORTUNIST,hybrid_gap_memory,unsafe when ahead and opponent was previously safe,2114,0
+STRICT_LEADER_ATTACK,positional_gap,unsafe only when ahead by more than 0.5,2114,0
+CATCHUP_ATTACK,positional_gap,"unsafe when behind, safe otherwise",1313,0
+CATCHUP_OR_RETALIATE,hybrid_gap_memory,unsafe when behind or after opponent unsafe,1313,0
+CS,canonical,"safe first, then copy opponent previous action",1313,0
+LEADER_OR_RETALIATE,hybrid_gap_memory,unsafe when ahead or after opponent unsafe,1313,0
+AU,canonical,always unsafe,714,0
+GRIM_U,pd_memory,unsafe first and remains unsafe after any opponent unsafe,714,0
+PRESS_WHEN_NOT_BEHIND,positional_gap,unsafe when tied or ahead,714,0
+CAS,canonical,"unsafe first, then copy opponent previous action",421,0

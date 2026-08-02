@@ -1,0 +1,10 @@
+from_macro,to_macro,n,transition_rate
+mutual_safe,mutual_safe,7075,0.6208318708318709
+mutual_safe,mutual_unsafe,1019,0.08941733941733941
+mutual_safe,unilateral_unsafe,3302,0.2897507897507898
+mutual_unsafe,mutual_safe,1033,0.20772169716468933
+mutual_unsafe,mutual_unsafe,2531,0.5089483209330384
+mutual_unsafe,unilateral_unsafe,1409,0.28332998190227227
+unilateral_unsafe,mutual_safe,3012,0.26444249341527654
+unilateral_unsafe,mutual_unsafe,1415,0.12423178226514486
+unilateral_unsafe,unilateral_unsafe,6963,0.6113257243195785

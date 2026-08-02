@@ -1,0 +1,14 @@
+{
+  "report": "analysis\\fh_analytic\\outputs\\reports\\fh_mechanism_mining.md",
+  "derived_outputs": [
+    "mechanism_rules.csv",
+    "mechanism_top_rules.csv",
+    "mechanism_rule_bootstrap_summary.csv",
+    "mechanism_player_profiles.csv",
+    "mechanism_cluster_profiles.csv",
+    "mechanism_cluster_mix_by_model.csv",
+    "mechanism_rf_cv_metrics.csv",
+    "mechanism_rf_feature_importance.csv"
+  ],
+  "figures_dir": "analysis\\fh_analytic\\outputs\\figures\\mechanism_mining"
+}

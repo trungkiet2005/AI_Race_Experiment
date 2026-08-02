@@ -1,0 +1,19 @@
+|--- model_slug_gpt-5-nano <= 0.500
+|   |--- max_private_risk_0.6000000000000001 <= 0.500
+|   |   |--- progress_gap_before <= 0.250
+|   |   |   |--- class: 1
+|   |   |--- progress_gap_before >  0.250
+|   |   |   |--- class: 1
+|   |--- max_private_risk_0.6000000000000001 >  0.500
+|   |   |--- progress_gap_before <= 0.250
+|   |   |   |--- class: 1
+|   |   |--- progress_gap_before >  0.250
+|   |   |   |--- class: 1
+|--- model_slug_gpt-5-nano >  0.500
+|   |--- round <= 2.500
+|   |   |--- class: 1
+|   |--- round >  2.500
+|   |   |--- progress_gap_before <= -0.250
+|   |   |   |--- class: 0
+|   |   |--- progress_gap_before >  -0.250
+|   |   |   |--- class: 0

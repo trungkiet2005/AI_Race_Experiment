@@ -1,0 +1,19 @@
+|--- gap_bin_ahead_0_5_1 <= 0.500
+|   |--- max_private_risk_0.6000000000000001 <= 0.500
+|   |   |--- own_prev_unsafe <= 0.500
+|   |   |   |--- class: 1
+|   |   |--- own_prev_unsafe >  0.500
+|   |   |   |--- class: 0
+|   |--- max_private_risk_0.6000000000000001 >  0.500
+|   |   |--- progress_gap_before <= -0.250
+|   |   |   |--- class: 0
+|   |   |--- progress_gap_before >  -0.250
+|   |   |   |--- class: 0
+|--- gap_bin_ahead_0_5_1 >  0.500
+|   |--- own_private_risk_before <= 0.241
+|   |   |--- class: 1
+|   |--- own_private_risk_before >  0.241
+|   |   |--- round <= 4.500
+|   |   |   |--- class: 1
+|   |   |--- round >  4.500
+|   |   |   |--- class: 0

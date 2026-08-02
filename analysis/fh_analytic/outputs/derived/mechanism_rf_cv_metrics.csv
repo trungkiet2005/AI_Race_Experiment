@@ -1,0 +1,46 @@
+scope,scope_label,fold,n_train,n_test,balanced_accuracy,roc_auc,brier_score
+common_baseline_r2,Common baseline round 2+,1,1992,498,0.7656060606060606,0.8682323232323232,0.14653159013588718
+common_baseline_r2,Common baseline round 2+,2,1992,498,0.795275198938992,0.8958968832891246,0.1386637685421779
+common_baseline_r2,Common baseline round 2+,3,1992,498,0.8022475651377674,0.8998168650628485,0.13108996138801068
+common_baseline_r2,Common baseline round 2+,4,1992,498,0.7695983141937697,0.8781384256007319,0.14288388584209005
+common_baseline_r2,Common baseline round 2+,5,1992,498,0.7777526508869792,0.884977469554584,0.13744760081057164
+common_all_r2,Common all completed round 2+,1,44414,11104,0.7922765537927423,0.8803177120415209,0.14479081069369337
+common_all_r2,Common all completed round 2+,2,44414,11104,0.792579845181659,0.879308697459213,0.14547794276373824
+common_all_r2,Common all completed round 2+,3,44414,11104,0.7893031876681076,0.8777414024263579,0.14681555197864857
+common_all_r2,Common all completed round 2+,4,44414,11104,0.7829142903479391,0.8684277349342103,0.15205989159567138
+common_all_r2,Common all completed round 2+,5,44416,11102,0.7783507380189533,0.8686254439423575,0.15217233771806596
+family_family_chatgpt_baseline_r2,family_chatgpt baseline round 2+,1,798,198,0.7692307692307693,0.7926891290527653,0.18084380285740703
+family_family_chatgpt_baseline_r2,family_chatgpt baseline round 2+,2,798,198,0.6853658536585365,0.6996205962059621,0.22523550374012127
+family_family_chatgpt_baseline_r2,family_chatgpt baseline round 2+,3,796,200,0.7126682986536108,0.7893206854345166,0.18846135707695258
+family_family_chatgpt_baseline_r2,family_chatgpt baseline round 2+,4,796,200,0.6750818139317438,0.8309373539036933,0.16508017172668116
+family_family_chatgpt_baseline_r2,family_chatgpt baseline round 2+,5,796,200,0.7241758241758242,0.7689560439560439,0.19260836133571096
+family_family_gemini_baseline_r2,family_gemini baseline round 2+,1,1196,298,0.8255451713395638,0.9024254561637739,0.1539314545990552
+family_family_gemini_baseline_r2,family_gemini baseline round 2+,2,1196,298,0.726364522417154,0.8469298245614035,0.1619057368841973
+family_family_gemini_baseline_r2,family_gemini baseline round 2+,3,1196,298,0.7766892087162591,0.8755563262239177,0.1543167571172135
+family_family_gemini_baseline_r2,family_gemini baseline round 2+,4,1194,300,0.8183760683760684,0.912943537943538,0.11210769706005005
+family_family_gemini_baseline_r2,family_gemini baseline round 2+,5,1194,300,0.847718253968254,0.9506448412698413,0.0721384128506646
+model_google-gemini-3-flash-preview_baseline_r2,google-gemini-3-flash-preview baseline round 2+,1,400,98,0.8048674489352455,0.8850499782703173,0.15352434641670518
+model_google-gemini-3-flash-preview_baseline_r2,google-gemini-3-flash-preview baseline round 2+,2,398,100,0.796503156872268,0.9103933948518699,0.17822584227163962
+model_google-gemini-3-flash-preview_baseline_r2,google-gemini-3-flash-preview baseline round 2+,3,398,100,0.8414918414918415,0.9522144522144522,0.08521257526320014
+model_google-gemini-3-flash-preview_baseline_r2,google-gemini-3-flash-preview baseline round 2+,4,398,100,0.8519813519813519,0.9455128205128205,0.11161956789425488
+model_google-gemini-3-flash-preview_baseline_r2,google-gemini-3-flash-preview baseline round 2+,5,398,100,0.8625,0.9225,0.10420690770567323
+model_google-gemini-3.1-flash-lite-preview_baseline_r2,google-gemini-3.1-flash-lite-preview baseline round 2+,1,400,98,0.7286036036036037,0.9042792792792793,0.2060970255295114
+model_google-gemini-3.1-flash-lite-preview_baseline_r2,google-gemini-3.1-flash-lite-preview baseline round 2+,2,398,100,0.7922077922077921,0.9322416713721062,0.17931797386300874
+model_google-gemini-3.1-flash-lite-preview_baseline_r2,google-gemini-3.1-flash-lite-preview baseline round 2+,3,398,100,0.9119601328903655,0.9813122923588039,0.07591331904741434
+model_google-gemini-3.1-flash-lite-preview_baseline_r2,google-gemini-3.1-flash-lite-preview baseline round 2+,4,398,100,0.8869047619047619,0.956845238095238,0.1084294270124808
+model_google-gemini-3.1-flash-lite-preview_baseline_r2,google-gemini-3.1-flash-lite-preview baseline round 2+,5,398,100,0.8470588235294119,0.9474509803921568,0.07592304869574829
+model_google-gemini-3.5-flash-lite_baseline_r2,google-gemini-3.5-flash-lite baseline round 2+,1,400,98,0.8168103448275862,0.8756465517241379,0.15046480743318774
+model_google-gemini-3.5-flash-lite_baseline_r2,google-gemini-3.5-flash-lite baseline round 2+,2,398,100,0.6623263888888888,0.7708333333333333,0.19597397810861125
+model_google-gemini-3.5-flash-lite_baseline_r2,google-gemini-3.5-flash-lite baseline round 2+,3,398,100,0.7177754677754677,0.781964656964657,0.17167970585635048
+model_google-gemini-3.5-flash-lite_baseline_r2,google-gemini-3.5-flash-lite baseline round 2+,4,398,100,0.8014705882352942,0.8784466911764707,0.13410486929153997
+model_google-gemini-3.5-flash-lite_baseline_r2,google-gemini-3.5-flash-lite baseline round 2+,5,398,100,0.7374429223744292,0.8295281582952816,0.15898583525072268
+model_gpt-5-nano_baseline_r2,gpt-5-nano baseline round 2+,1,400,98,0.6859979101358411,0.6687565308254964,0.19819789321970718
+model_gpt-5-nano_baseline_r2,gpt-5-nano baseline round 2+,2,398,100,0.7992424242424242,0.8920454545454545,0.13636913620615837
+model_gpt-5-nano_baseline_r2,gpt-5-nano baseline round 2+,3,398,100,0.625,0.7021875000000001,0.20283946468683017
+model_gpt-5-nano_baseline_r2,gpt-5-nano baseline round 2+,4,398,100,0.7019607843137254,0.6937254901960784,0.21512869724654202
+model_gpt-5-nano_baseline_r2,gpt-5-nano baseline round 2+,5,398,100,0.8360572012257406,0.8692543411644534,0.14888810143930067
+model_gpt-5.4-nano_baseline_r2,gpt-5.4-nano baseline round 2+,1,400,98,0.5012515644555695,0.5652899457655403,0.2515145126955048
+model_gpt-5.4-nano_baseline_r2,gpt-5.4-nano baseline round 2+,2,398,100,0.45564030509835407,0.4600562023283822,0.268139182841457
+model_gpt-5.4-nano_baseline_r2,gpt-5.4-nano baseline round 2+,3,398,100,0.5796868727418707,0.6085909273384184,0.24305707346366615
+model_gpt-5.4-nano_baseline_r2,gpt-5.4-nano baseline round 2+,4,398,100,0.5916666666666667,0.645625,0.23738815372783045
+model_gpt-5.4-nano_baseline_r2,gpt-5.4-nano baseline round 2+,5,398,100,0.5271646859083192,0.5721561969439729,0.24177622043049962

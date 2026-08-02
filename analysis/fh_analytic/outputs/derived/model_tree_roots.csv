@@ -1,0 +1,6 @@
+model_slug,family,root_feature,root_threshold,decisions,clusters
+google-gemini-3-flash-preview,family_gemini,own_private_risk_before,0.4431818127632141,498,30
+google-gemini-3.1-flash-lite-preview,family_gemini,own_private_risk_before,0.4954545497894287,498,30
+google-gemini-3.5-flash-lite,family_gemini,opponent_prev_unsafe,0.5,498,30
+gpt-5-nano,family_chatgpt,round,2.5,498,30
+gpt-5.4-nano,family_chatgpt,gap_bin_ahead_0_5_1,0.5,498,30

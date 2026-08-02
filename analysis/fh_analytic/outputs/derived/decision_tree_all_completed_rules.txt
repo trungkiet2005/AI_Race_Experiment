@@ -1,0 +1,46 @@
+|--- own_private_risk_before <= 0.024
+|   |--- round <= 2.500
+|   |   |--- model_slug_gpt-5-nano <= 0.500
+|   |   |   |--- progress_gap_before <= -0.250
+|   |   |   |   |--- class: 0
+|   |   |   |--- progress_gap_before >  -0.250
+|   |   |   |   |--- class: 0
+|   |   |--- model_slug_gpt-5-nano >  0.500
+|   |   |   |--- progress_gap_before <= -0.250
+|   |   |   |   |--- class: 0
+|   |   |   |--- progress_gap_before >  -0.250
+|   |   |   |   |--- class: 1
+|   |--- round >  2.500
+|   |   |--- opponent_private_risk_before <= 0.009
+|   |   |   |--- own_private_risk_before <= 0.008
+|   |   |   |   |--- class: 0
+|   |   |   |--- own_private_risk_before >  0.008
+|   |   |   |   |--- class: 0
+|   |   |--- opponent_private_risk_before >  0.009
+|   |   |   |--- provider_provider_google <= 0.500
+|   |   |   |   |--- class: 0
+|   |   |   |--- provider_provider_google >  0.500
+|   |   |   |   |--- class: 1
+|--- own_private_risk_before >  0.024
+|   |--- first_round_unsafe <= 0.500
+|   |   |--- provider_provider_google <= 0.500
+|   |   |   |--- progress_gap_before <= 0.250
+|   |   |   |   |--- class: 0
+|   |   |   |--- progress_gap_before >  0.250
+|   |   |   |   |--- class: 1
+|   |   |--- provider_provider_google >  0.500
+|   |   |   |--- progress_gap_before <= -0.250
+|   |   |   |   |--- class: 1
+|   |   |   |--- progress_gap_before >  -0.250
+|   |   |   |   |--- class: 0
+|   |--- first_round_unsafe >  0.500
+|   |   |--- progress_gap_before <= -0.750
+|   |   |   |--- experiment_mode_mode_risk_matrix <= 0.500
+|   |   |   |   |--- class: 1
+|   |   |   |--- experiment_mode_mode_risk_matrix >  0.500
+|   |   |   |   |--- class: 0
+|   |   |--- progress_gap_before >  -0.750
+|   |   |   |--- opponent_prev_unsafe <= 0.500
+|   |   |   |   |--- class: 1
+|   |   |   |--- opponent_prev_unsafe >  0.500
+|   |   |   |   |--- class: 1

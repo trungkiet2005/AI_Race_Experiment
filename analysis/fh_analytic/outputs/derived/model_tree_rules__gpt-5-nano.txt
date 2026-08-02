@@ -1,0 +1,13 @@
+|--- round <= 2.500
+|   |--- class: 1
+|--- round >  2.500
+|   |--- progress_gap_before <= -0.250
+|   |   |--- opponent_prev_unsafe <= 0.500
+|   |   |   |--- class: 1
+|   |   |--- opponent_prev_unsafe >  0.500
+|   |   |   |--- class: 0
+|   |--- progress_gap_before >  -0.250
+|   |   |--- own_private_risk_before <= 0.022
+|   |   |   |--- class: 0
+|   |   |--- own_private_risk_before >  0.022
+|   |   |   |--- class: 0

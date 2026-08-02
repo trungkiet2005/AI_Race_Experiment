@@ -1,0 +1,10 @@
+scope,label,root_feature,root_threshold,decisions,clusters
+all_round2plus,"All completed, round 2+",own_private_risk_before,0.024038461968302727,55518,3369
+baseline_round2plus,"Baseline completed, round 2+",model_slug_gpt-5-nano,0.5,2490,150
+family_chatgpt_all_round2plus,"ChatGPT all, round 2+",own_private_risk_before,0.024038461968302727,43824,2640
+family_chatgpt_baseline_round2plus,"ChatGPT baseline, round 2+",model_slug_gpt-5-nano,0.5,996,60
+family_gemini_all_round2plus,"Gemini all, round 2+",opponent_prev_unsafe,0.5,11694,729
+family_gemini_baseline_round2plus,"Gemini baseline, round 2+",own_private_risk_before,0.5109890401363373,1494,90
+experiment_mode_baseline_round2plus,"mode_baseline, round 2+",model_slug_gpt-5-nano,0.5,2490,150
+experiment_mode_risk_matrix_round2plus,"mode_risk_matrix, round 2+",own_private_risk_before,0.024038461968302727,43740,2652
+experiment_mode_strategy_persona_round2plus,"mode_strategy_persona, round 2+",own_private_risk_before,0.020714285783469677,9288,567

@@ -1,0 +1,281 @@
+scope,scope_label,feature,importance,n,clusters
+common_baseline_r2,Common baseline round 2+,own_prev_unsafe,0.01043174141548678,2490,150
+common_baseline_r2,Common baseline round 2+,opponent_prev_unsafe,0.07337482265702854,2490,150
+common_baseline_r2,Common baseline round 2+,progress_gap_before,0.04412312036763699,2490,150
+common_baseline_r2,Common baseline round 2+,own_private_risk_before,0.08739215976269592,2490,150
+common_baseline_r2,Common baseline round 2+,opponent_private_risk_before,0.0742308373629008,2490,150
+common_baseline_r2,Common baseline round 2+,round,0.022920281011296523,2490,150
+common_baseline_r2,Common baseline round 2+,max_private_risk,0.02890569289758964,2490,150
+common_baseline_r2,Common baseline round 2+,prev_state_both_prev_safe,0.018202878648347628,2490,150
+common_baseline_r2,Common baseline round 2+,prev_state_both_prev_unsafe,0.0279554808061374,2490,150
+common_baseline_r2,Common baseline round 2+,prev_state_opponent_prev_unsafe,0.010973533673657535,2490,150
+common_baseline_r2,Common baseline round 2+,prev_state_own_prev_unsafe,0.028570722048196162,2490,150
+common_baseline_r2,Common baseline round 2+,gap_direction_ahead,0.03998755479892321,2490,150
+common_baseline_r2,Common baseline round 2+,gap_direction_behind,0.008850109828442868,2490,150
+common_baseline_r2,Common baseline round 2+,gap_direction_near_tied,0.013721244594044384,2490,150
+common_baseline_r2,Common baseline round 2+,gap_magnitude_gap_0_0_5,0.01704133976283016,2490,150
+common_baseline_r2,Common baseline round 2+,gap_magnitude_gap_0_5_1,0.01138558246830778,2490,150
+common_baseline_r2,Common baseline round 2+,gap_magnitude_gap_1plus,0.0031194780064767607,2490,150
+common_baseline_r2,Common baseline round 2+,own_risk_state_risk_high,0.006755017574877755,2490,150
+common_baseline_r2,Common baseline round 2+,own_risk_state_risk_low,0.015501845673434324,2490,150
+common_baseline_r2,Common baseline round 2+,own_risk_state_risk_mid,0.005083718265001465,2490,150
+common_baseline_r2,Common baseline round 2+,own_risk_state_risk_very_high,0.01951214560779867,2490,150
+common_baseline_r2,Common baseline round 2+,own_risk_state_risk_zero,0.0043590696017424945,2490,150
+common_baseline_r2,Common baseline round 2+,opponent_risk_state_risk_high,0.004316352708566012,2490,150
+common_baseline_r2,Common baseline round 2+,opponent_risk_state_risk_low,0.01703008889943963,2490,150
+common_baseline_r2,Common baseline round 2+,opponent_risk_state_risk_mid,0.0034735682749727314,2490,150
+common_baseline_r2,Common baseline round 2+,opponent_risk_state_risk_very_high,0.01011452888711181,2490,150
+common_baseline_r2,Common baseline round 2+,opponent_risk_state_risk_zero,0.008456572943294473,2490,150
+common_baseline_r2,Common baseline round 2+,round_phase_early_r2_4,0.006747271633330777,2490,150
+common_baseline_r2,Common baseline round 2+,round_phase_late_r9plus,0.0018174344537702485,2490,150
+common_baseline_r2,Common baseline round 2+,round_phase_mid_r5_8,0.0016058549262706362,2490,150
+common_baseline_r2,Common baseline round 2+,family_family_chatgpt,0.11069226564818746,2490,150
+common_baseline_r2,Common baseline round 2+,family_family_gemini,0.0875539912539,2490,150
+common_baseline_r2,Common baseline round 2+,model_slug_google-gemini-3-flash-preview,0.0031831720624640463,2490,150
+common_baseline_r2,Common baseline round 2+,model_slug_google-gemini-3.1-flash-lite-preview,0.013614985645796716,2490,150
+common_baseline_r2,Common baseline round 2+,model_slug_google-gemini-3.5-flash-lite,0.004682804499917261,2490,150
+common_baseline_r2,Common baseline round 2+,model_slug_gpt-5-nano,0.11343170601750778,2490,150
+common_baseline_r2,Common baseline round 2+,model_slug_gpt-5.4-nano,0.04088102531261639,2490,150
+common_all_r2,Common all completed round 2+,own_prev_unsafe,0.05854619065415625,55518,3369
+common_all_r2,Common all completed round 2+,opponent_prev_unsafe,0.018960989051971824,55518,3369
+common_all_r2,Common all completed round 2+,progress_gap_before,0.06529831347003974,55518,3369
+common_all_r2,Common all completed round 2+,own_private_risk_before,0.21512554366379144,55518,3369
+common_all_r2,Common all completed round 2+,opponent_private_risk_before,0.025557554173069,55518,3369
+common_all_r2,Common all completed round 2+,round,0.03934295927945722,55518,3369
+common_all_r2,Common all completed round 2+,max_private_risk,0.004883724278981223,55518,3369
+common_all_r2,Common all completed round 2+,prev_state_both_prev_safe,0.037549410537488226,55518,3369
+common_all_r2,Common all completed round 2+,prev_state_both_prev_unsafe,0.031227585828204632,55518,3369
+common_all_r2,Common all completed round 2+,prev_state_opponent_prev_unsafe,0.004641570081974153,55518,3369
+common_all_r2,Common all completed round 2+,prev_state_own_prev_unsafe,0.017313256225268792,55518,3369
+common_all_r2,Common all completed round 2+,gap_direction_ahead,0.03345141510558463,55518,3369
+common_all_r2,Common all completed round 2+,gap_direction_behind,0.016185915202499176,55518,3369
+common_all_r2,Common all completed round 2+,gap_direction_near_tied,0.010029994086278455,55518,3369
+common_all_r2,Common all completed round 2+,gap_magnitude_gap_0_0_5,0.013749213149210853,55518,3369
+common_all_r2,Common all completed round 2+,gap_magnitude_gap_0_5_1,0.0066878947929662124,55518,3369
+common_all_r2,Common all completed round 2+,gap_magnitude_gap_1plus,0.00806458684722054,55518,3369
+common_all_r2,Common all completed round 2+,own_risk_state_risk_high,0.010910855620221607,55518,3369
+common_all_r2,Common all completed round 2+,own_risk_state_risk_low,0.01268202437600171,55518,3369
+common_all_r2,Common all completed round 2+,own_risk_state_risk_mid,0.02306969014978498,55518,3369
+common_all_r2,Common all completed round 2+,own_risk_state_risk_very_high,0.0021862634366902507,55518,3369
+common_all_r2,Common all completed round 2+,own_risk_state_risk_zero,0.17226135407281423,55518,3369
+common_all_r2,Common all completed round 2+,opponent_risk_state_risk_high,0.0007847413856773977,55518,3369
+common_all_r2,Common all completed round 2+,opponent_risk_state_risk_low,0.0012994588596918913,55518,3369
+common_all_r2,Common all completed round 2+,opponent_risk_state_risk_mid,0.0037767771417715162,55518,3369
+common_all_r2,Common all completed round 2+,opponent_risk_state_risk_very_high,0.0004959141414473012,55518,3369
+common_all_r2,Common all completed round 2+,opponent_risk_state_risk_zero,0.007559280688122093,55518,3369
+common_all_r2,Common all completed round 2+,round_phase_early_r2_4,0.012843922861853457,55518,3369
+common_all_r2,Common all completed round 2+,round_phase_late_r9plus,0.003377784996723169,55518,3369
+common_all_r2,Common all completed round 2+,round_phase_mid_r5_8,0.0039214342294187415,55518,3369
+common_all_r2,Common all completed round 2+,family_family_chatgpt,0.025975647852065697,55518,3369
+common_all_r2,Common all completed round 2+,family_family_gemini,0.030841427190105235,55518,3369
+common_all_r2,Common all completed round 2+,model_slug_google-gemini-3-flash-preview,0.01738224669490953,55518,3369
+common_all_r2,Common all completed round 2+,model_slug_google-gemini-3.1-flash-lite-preview,0.0002547692865162374,55518,3369
+common_all_r2,Common all completed round 2+,model_slug_google-gemini-3.5-flash-lite,0.00021655897036697194,55518,3369
+common_all_r2,Common all completed round 2+,model_slug_gpt-5-nano,0.037563189831016176,55518,3369
+common_all_r2,Common all completed round 2+,model_slug_gpt-5.4-nano,0.01750099463230311,55518,3369
+common_all_r2,Common all completed round 2+,experiment_mode_mode_baseline,0.001990526887365921,55518,3369
+common_all_r2,Common all completed round 2+,experiment_mode_mode_risk_matrix,0.0022444956780953464,55518,3369
+common_all_r2,Common all completed round 2+,experiment_mode_mode_strategy_persona,0.0012646176224999372,55518,3369
+common_all_r2,Common all completed round 2+,persona_mode_persona_none,0.0014819428446350706,55518,3369
+common_all_r2,Common all completed round 2+,persona_mode_persona_risk_aware,0.0014979641217401796,55518,3369
+family_family_chatgpt_baseline_r2,family_chatgpt baseline round 2+,own_prev_unsafe,0.007766205611277808,996,60
+family_family_chatgpt_baseline_r2,family_chatgpt baseline round 2+,opponent_prev_unsafe,0.006450056219134178,996,60
+family_family_chatgpt_baseline_r2,family_chatgpt baseline round 2+,progress_gap_before,0.027104946776955054,996,60
+family_family_chatgpt_baseline_r2,family_chatgpt baseline round 2+,own_private_risk_before,0.03699925952507304,996,60
+family_family_chatgpt_baseline_r2,family_chatgpt baseline round 2+,opponent_private_risk_before,0.055453112180632175,996,60
+family_family_chatgpt_baseline_r2,family_chatgpt baseline round 2+,round,0.07100102630247145,996,60
+family_family_chatgpt_baseline_r2,family_chatgpt baseline round 2+,max_private_risk,0.012385452929623092,996,60
+family_family_chatgpt_baseline_r2,family_chatgpt baseline round 2+,prev_state_both_prev_safe,0.027820534575557294,996,60
+family_family_chatgpt_baseline_r2,family_chatgpt baseline round 2+,prev_state_both_prev_unsafe,0.008160797944855398,996,60
+family_family_chatgpt_baseline_r2,family_chatgpt baseline round 2+,prev_state_opponent_prev_unsafe,0.006173191391014099,996,60
+family_family_chatgpt_baseline_r2,family_chatgpt baseline round 2+,prev_state_own_prev_unsafe,0.007026214774728639,996,60
+family_family_chatgpt_baseline_r2,family_chatgpt baseline round 2+,gap_direction_ahead,0.014770955776239221,996,60
+family_family_chatgpt_baseline_r2,family_chatgpt baseline round 2+,gap_direction_behind,0.016872753542060567,996,60
+family_family_chatgpt_baseline_r2,family_chatgpt baseline round 2+,gap_direction_near_tied,0.07948662152572518,996,60
+family_family_chatgpt_baseline_r2,family_chatgpt baseline round 2+,gap_magnitude_gap_0_0_5,0.07917784614884413,996,60
+family_family_chatgpt_baseline_r2,family_chatgpt baseline round 2+,gap_magnitude_gap_0_5_1,0.013639288603475101,996,60
+family_family_chatgpt_baseline_r2,family_chatgpt baseline round 2+,gap_magnitude_gap_1plus,0.009338182422039511,996,60
+family_family_chatgpt_baseline_r2,family_chatgpt baseline round 2+,own_risk_state_risk_high,0.004271583220049522,996,60
+family_family_chatgpt_baseline_r2,family_chatgpt baseline round 2+,own_risk_state_risk_low,0.004319341709870172,996,60
+family_family_chatgpt_baseline_r2,family_chatgpt baseline round 2+,own_risk_state_risk_mid,0.0034659751937720987,996,60
+family_family_chatgpt_baseline_r2,family_chatgpt baseline round 2+,own_risk_state_risk_very_high,0.0,996,60
+family_family_chatgpt_baseline_r2,family_chatgpt baseline round 2+,own_risk_state_risk_zero,0.005486585569012256,996,60
+family_family_chatgpt_baseline_r2,family_chatgpt baseline round 2+,opponent_risk_state_risk_high,0.0015252938778537247,996,60
+family_family_chatgpt_baseline_r2,family_chatgpt baseline round 2+,opponent_risk_state_risk_low,0.00370280183547129,996,60
+family_family_chatgpt_baseline_r2,family_chatgpt baseline round 2+,opponent_risk_state_risk_mid,0.00367010056830508,996,60
+family_family_chatgpt_baseline_r2,family_chatgpt baseline round 2+,opponent_risk_state_risk_very_high,0.0,996,60
+family_family_chatgpt_baseline_r2,family_chatgpt baseline round 2+,opponent_risk_state_risk_zero,0.010239704150460095,996,60
+family_family_chatgpt_baseline_r2,family_chatgpt baseline round 2+,round_phase_early_r2_4,0.034747663900786256,996,60
+family_family_chatgpt_baseline_r2,family_chatgpt baseline round 2+,round_phase_late_r9plus,0.014402450745906134,996,60
+family_family_chatgpt_baseline_r2,family_chatgpt baseline round 2+,round_phase_mid_r5_8,0.013657059621605164,996,60
+family_family_chatgpt_baseline_r2,family_chatgpt baseline round 2+,model_slug_gpt-5-nano,0.2033169781419476,996,60
+family_family_chatgpt_baseline_r2,family_chatgpt baseline round 2+,model_slug_gpt-5.4-nano,0.21756801521525476,996,60
+family_family_gemini_baseline_r2,family_gemini baseline round 2+,own_prev_unsafe,0.010319679561720203,1494,90
+family_family_gemini_baseline_r2,family_gemini baseline round 2+,opponent_prev_unsafe,0.05805901405030244,1494,90
+family_family_gemini_baseline_r2,family_gemini baseline round 2+,progress_gap_before,0.10376530756532458,1494,90
+family_family_gemini_baseline_r2,family_gemini baseline round 2+,own_private_risk_before,0.1867334903154298,1494,90
+family_family_gemini_baseline_r2,family_gemini baseline round 2+,opponent_private_risk_before,0.09263659808337713,1494,90
+family_family_gemini_baseline_r2,family_gemini baseline round 2+,round,0.035988629426110516,1494,90
+family_family_gemini_baseline_r2,family_gemini baseline round 2+,max_private_risk,0.05601934795378043,1494,90
+family_family_gemini_baseline_r2,family_gemini baseline round 2+,prev_state_both_prev_safe,0.00406714661039675,1494,90
+family_family_gemini_baseline_r2,family_gemini baseline round 2+,prev_state_both_prev_unsafe,0.013128199304637048,1494,90
+family_family_gemini_baseline_r2,family_gemini baseline round 2+,prev_state_opponent_prev_unsafe,0.014618864505597651,1494,90
+family_family_gemini_baseline_r2,family_gemini baseline round 2+,prev_state_own_prev_unsafe,0.07099046402217374,1494,90
+family_family_gemini_baseline_r2,family_gemini baseline round 2+,gap_direction_ahead,0.06711494007783318,1494,90
+family_family_gemini_baseline_r2,family_gemini baseline round 2+,gap_direction_behind,0.014803147113689703,1494,90
+family_family_gemini_baseline_r2,family_gemini baseline round 2+,gap_direction_near_tied,0.018789776206002955,1494,90
+family_family_gemini_baseline_r2,family_gemini baseline round 2+,gap_magnitude_gap_0_0_5,0.018492347176440757,1494,90
+family_family_gemini_baseline_r2,family_gemini baseline round 2+,gap_magnitude_gap_0_5_1,0.019690005861506377,1494,90
+family_family_gemini_baseline_r2,family_gemini baseline round 2+,own_risk_state_risk_high,0.009332796691214592,1494,90
+family_family_gemini_baseline_r2,family_gemini baseline round 2+,own_risk_state_risk_low,0.029568898620229368,1494,90
+family_family_gemini_baseline_r2,family_gemini baseline round 2+,own_risk_state_risk_mid,0.0124568002536779,1494,90
+family_family_gemini_baseline_r2,family_gemini baseline round 2+,own_risk_state_risk_very_high,0.022073664569534152,1494,90
+family_family_gemini_baseline_r2,family_gemini baseline round 2+,opponent_risk_state_risk_high,0.01008222461919224,1494,90
+family_family_gemini_baseline_r2,family_gemini baseline round 2+,opponent_risk_state_risk_low,0.0468562366018255,1494,90
+family_family_gemini_baseline_r2,family_gemini baseline round 2+,opponent_risk_state_risk_mid,0.008821333427433678,1494,90
+family_family_gemini_baseline_r2,family_gemini baseline round 2+,opponent_risk_state_risk_very_high,0.01895018533539329,1494,90
+family_family_gemini_baseline_r2,family_gemini baseline round 2+,round_phase_early_r2_4,0.004843901112526895,1494,90
+family_family_gemini_baseline_r2,family_gemini baseline round 2+,round_phase_late_r9plus,0.0015231862614102079,1494,90
+family_family_gemini_baseline_r2,family_gemini baseline round 2+,round_phase_mid_r5_8,0.0019305070360037067,1494,90
+family_family_gemini_baseline_r2,family_gemini baseline round 2+,model_slug_google-gemini-3-flash-preview,0.007167436018806924,1494,90
+family_family_gemini_baseline_r2,family_gemini baseline round 2+,model_slug_google-gemini-3.1-flash-lite-preview,0.021457494946017053,1494,90
+family_family_gemini_baseline_r2,family_gemini baseline round 2+,model_slug_google-gemini-3.5-flash-lite,0.019718376672411546,1494,90
+model_google-gemini-3-flash-preview_baseline_r2,google-gemini-3-flash-preview baseline round 2+,own_prev_unsafe,0.007712325051260361,498,30
+model_google-gemini-3-flash-preview_baseline_r2,google-gemini-3-flash-preview baseline round 2+,opponent_prev_unsafe,0.05083265392368688,498,30
+model_google-gemini-3-flash-preview_baseline_r2,google-gemini-3-flash-preview baseline round 2+,progress_gap_before,0.04035705198881169,498,30
+model_google-gemini-3-flash-preview_baseline_r2,google-gemini-3-flash-preview baseline round 2+,own_private_risk_before,0.2454186184220364,498,30
+model_google-gemini-3-flash-preview_baseline_r2,google-gemini-3-flash-preview baseline round 2+,opponent_private_risk_before,0.13647195162801887,498,30
+model_google-gemini-3-flash-preview_baseline_r2,google-gemini-3-flash-preview baseline round 2+,round,0.04255751500418926,498,30
+model_google-gemini-3-flash-preview_baseline_r2,google-gemini-3-flash-preview baseline round 2+,max_private_risk,0.10687854228383394,498,30
+model_google-gemini-3-flash-preview_baseline_r2,google-gemini-3-flash-preview baseline round 2+,prev_state_both_prev_safe,0.0033879676660073885,498,30
+model_google-gemini-3-flash-preview_baseline_r2,google-gemini-3-flash-preview baseline round 2+,prev_state_both_prev_unsafe,0.011904538138187789,498,30
+model_google-gemini-3-flash-preview_baseline_r2,google-gemini-3-flash-preview baseline round 2+,prev_state_opponent_prev_unsafe,0.02130938394631099,498,30
+model_google-gemini-3-flash-preview_baseline_r2,google-gemini-3-flash-preview baseline round 2+,prev_state_own_prev_unsafe,0.028130873662135552,498,30
+model_google-gemini-3-flash-preview_baseline_r2,google-gemini-3-flash-preview baseline round 2+,gap_direction_ahead,0.022889406227855288,498,30
+model_google-gemini-3-flash-preview_baseline_r2,google-gemini-3-flash-preview baseline round 2+,gap_direction_behind,0.011589935086987253,498,30
+model_google-gemini-3-flash-preview_baseline_r2,google-gemini-3-flash-preview baseline round 2+,gap_direction_near_tied,0.005040332625734954,498,30
+model_google-gemini-3-flash-preview_baseline_r2,google-gemini-3-flash-preview baseline round 2+,gap_magnitude_gap_0_0_5,0.0042082439038957815,498,30
+model_google-gemini-3-flash-preview_baseline_r2,google-gemini-3-flash-preview baseline round 2+,gap_magnitude_gap_0_5_1,0.0063549156707907286,498,30
+model_google-gemini-3-flash-preview_baseline_r2,google-gemini-3-flash-preview baseline round 2+,own_risk_state_risk_high,0.021068666599189326,498,30
+model_google-gemini-3-flash-preview_baseline_r2,google-gemini-3-flash-preview baseline round 2+,own_risk_state_risk_low,0.08604604847475628,498,30
+model_google-gemini-3-flash-preview_baseline_r2,google-gemini-3-flash-preview baseline round 2+,own_risk_state_risk_mid,0.03184872385964202,498,30
+model_google-gemini-3-flash-preview_baseline_r2,google-gemini-3-flash-preview baseline round 2+,own_risk_state_risk_very_high,0.0,498,30
+model_google-gemini-3-flash-preview_baseline_r2,google-gemini-3-flash-preview baseline round 2+,opponent_risk_state_risk_high,0.006570686721533974,498,30
+model_google-gemini-3-flash-preview_baseline_r2,google-gemini-3-flash-preview baseline round 2+,opponent_risk_state_risk_low,0.07908227357729689,498,30
+model_google-gemini-3-flash-preview_baseline_r2,google-gemini-3-flash-preview baseline round 2+,opponent_risk_state_risk_mid,0.0036200564813743327,498,30
+model_google-gemini-3-flash-preview_baseline_r2,google-gemini-3-flash-preview baseline round 2+,opponent_risk_state_risk_very_high,0.0,498,30
+model_google-gemini-3-flash-preview_baseline_r2,google-gemini-3-flash-preview baseline round 2+,round_phase_early_r2_4,0.015899929028104904,498,30
+model_google-gemini-3-flash-preview_baseline_r2,google-gemini-3-flash-preview baseline round 2+,round_phase_late_r9plus,0.007214700981632234,498,30
+model_google-gemini-3-flash-preview_baseline_r2,google-gemini-3-flash-preview baseline round 2+,round_phase_mid_r5_8,0.003604659046726963,498,30
+model_google-gemini-3.1-flash-lite-preview_baseline_r2,google-gemini-3.1-flash-lite-preview baseline round 2+,own_prev_unsafe,0.04270877998452807,498,30
+model_google-gemini-3.1-flash-lite-preview_baseline_r2,google-gemini-3.1-flash-lite-preview baseline round 2+,opponent_prev_unsafe,0.008869916436629115,498,30
+model_google-gemini-3.1-flash-lite-preview_baseline_r2,google-gemini-3.1-flash-lite-preview baseline round 2+,progress_gap_before,0.003579850491385368,498,30
+model_google-gemini-3.1-flash-lite-preview_baseline_r2,google-gemini-3.1-flash-lite-preview baseline round 2+,own_private_risk_before,0.27703823867791827,498,30
+model_google-gemini-3.1-flash-lite-preview_baseline_r2,google-gemini-3.1-flash-lite-preview baseline round 2+,opponent_private_risk_before,0.16114134006258804,498,30
+model_google-gemini-3.1-flash-lite-preview_baseline_r2,google-gemini-3.1-flash-lite-preview baseline round 2+,round,0.051031914727378176,498,30
+model_google-gemini-3.1-flash-lite-preview_baseline_r2,google-gemini-3.1-flash-lite-preview baseline round 2+,max_private_risk,0.09645595768344148,498,30
+model_google-gemini-3.1-flash-lite-preview_baseline_r2,google-gemini-3.1-flash-lite-preview baseline round 2+,prev_state_both_prev_safe,0.002449622253136744,498,30
+model_google-gemini-3.1-flash-lite-preview_baseline_r2,google-gemini-3.1-flash-lite-preview baseline round 2+,prev_state_both_prev_unsafe,0.018351250051745135,498,30
+model_google-gemini-3.1-flash-lite-preview_baseline_r2,google-gemini-3.1-flash-lite-preview baseline round 2+,prev_state_opponent_prev_unsafe,0.012638187804310181,498,30
+model_google-gemini-3.1-flash-lite-preview_baseline_r2,google-gemini-3.1-flash-lite-preview baseline round 2+,prev_state_own_prev_unsafe,0.0225056757432298,498,30
+model_google-gemini-3.1-flash-lite-preview_baseline_r2,google-gemini-3.1-flash-lite-preview baseline round 2+,gap_direction_ahead,0.006834271569506512,498,30
+model_google-gemini-3.1-flash-lite-preview_baseline_r2,google-gemini-3.1-flash-lite-preview baseline round 2+,gap_direction_behind,0.0,498,30
+model_google-gemini-3.1-flash-lite-preview_baseline_r2,google-gemini-3.1-flash-lite-preview baseline round 2+,gap_direction_near_tied,0.008336367126179375,498,30
+model_google-gemini-3.1-flash-lite-preview_baseline_r2,google-gemini-3.1-flash-lite-preview baseline round 2+,gap_magnitude_gap_0_0_5,0.01832563102083095,498,30
+model_google-gemini-3.1-flash-lite-preview_baseline_r2,google-gemini-3.1-flash-lite-preview baseline round 2+,gap_magnitude_gap_0_5_1,0.013063896831628233,498,30
+model_google-gemini-3.1-flash-lite-preview_baseline_r2,google-gemini-3.1-flash-lite-preview baseline round 2+,own_risk_state_risk_high,0.030759973902331556,498,30
+model_google-gemini-3.1-flash-lite-preview_baseline_r2,google-gemini-3.1-flash-lite-preview baseline round 2+,own_risk_state_risk_low,0.08182068691146821,498,30
+model_google-gemini-3.1-flash-lite-preview_baseline_r2,google-gemini-3.1-flash-lite-preview baseline round 2+,own_risk_state_risk_mid,0.03594119320887615,498,30
+model_google-gemini-3.1-flash-lite-preview_baseline_r2,google-gemini-3.1-flash-lite-preview baseline round 2+,own_risk_state_risk_very_high,0.0,498,30
+model_google-gemini-3.1-flash-lite-preview_baseline_r2,google-gemini-3.1-flash-lite-preview baseline round 2+,opponent_risk_state_risk_high,0.013139061402079709,498,30
+model_google-gemini-3.1-flash-lite-preview_baseline_r2,google-gemini-3.1-flash-lite-preview baseline round 2+,opponent_risk_state_risk_low,0.07621140307321776,498,30
+model_google-gemini-3.1-flash-lite-preview_baseline_r2,google-gemini-3.1-flash-lite-preview baseline round 2+,opponent_risk_state_risk_mid,0.0068725395835003466,498,30
+model_google-gemini-3.1-flash-lite-preview_baseline_r2,google-gemini-3.1-flash-lite-preview baseline round 2+,opponent_risk_state_risk_very_high,0.0,498,30
+model_google-gemini-3.1-flash-lite-preview_baseline_r2,google-gemini-3.1-flash-lite-preview baseline round 2+,round_phase_early_r2_4,0.005230355463616823,498,30
+model_google-gemini-3.1-flash-lite-preview_baseline_r2,google-gemini-3.1-flash-lite-preview baseline round 2+,round_phase_late_r9plus,0.0027796748950216633,498,30
+model_google-gemini-3.1-flash-lite-preview_baseline_r2,google-gemini-3.1-flash-lite-preview baseline round 2+,round_phase_mid_r5_8,0.003914211095452497,498,30
+model_google-gemini-3.5-flash-lite_baseline_r2,google-gemini-3.5-flash-lite baseline round 2+,own_prev_unsafe,0.02143042278767203,498,30
+model_google-gemini-3.5-flash-lite_baseline_r2,google-gemini-3.5-flash-lite baseline round 2+,opponent_prev_unsafe,0.12021101507609702,498,30
+model_google-gemini-3.5-flash-lite_baseline_r2,google-gemini-3.5-flash-lite baseline round 2+,progress_gap_before,0.14332574553752328,498,30
+model_google-gemini-3.5-flash-lite_baseline_r2,google-gemini-3.5-flash-lite baseline round 2+,own_private_risk_before,0.09456611645383825,498,30
+model_google-gemini-3.5-flash-lite_baseline_r2,google-gemini-3.5-flash-lite baseline round 2+,opponent_private_risk_before,0.051412773321853886,498,30
+model_google-gemini-3.5-flash-lite_baseline_r2,google-gemini-3.5-flash-lite baseline round 2+,round,0.020781535492868788,498,30
+model_google-gemini-3.5-flash-lite_baseline_r2,google-gemini-3.5-flash-lite baseline round 2+,max_private_risk,0.024700560203856782,498,30
+model_google-gemini-3.5-flash-lite_baseline_r2,google-gemini-3.5-flash-lite baseline round 2+,prev_state_both_prev_safe,0.0034608980289991846,498,30
+model_google-gemini-3.5-flash-lite_baseline_r2,google-gemini-3.5-flash-lite baseline round 2+,prev_state_both_prev_unsafe,0.019921341831762345,498,30
+model_google-gemini-3.5-flash-lite_baseline_r2,google-gemini-3.5-flash-lite baseline round 2+,prev_state_opponent_prev_unsafe,0.035502246864678795,498,30
+model_google-gemini-3.5-flash-lite_baseline_r2,google-gemini-3.5-flash-lite baseline round 2+,prev_state_own_prev_unsafe,0.1364487509053192,498,30
+model_google-gemini-3.5-flash-lite_baseline_r2,google-gemini-3.5-flash-lite baseline round 2+,gap_direction_ahead,0.11502552661722244,498,30
+model_google-gemini-3.5-flash-lite_baseline_r2,google-gemini-3.5-flash-lite baseline round 2+,gap_direction_behind,0.051045519582138744,498,30
+model_google-gemini-3.5-flash-lite_baseline_r2,google-gemini-3.5-flash-lite baseline round 2+,gap_direction_near_tied,0.030133772478524667,498,30
+model_google-gemini-3.5-flash-lite_baseline_r2,google-gemini-3.5-flash-lite baseline round 2+,gap_magnitude_gap_0_0_5,0.026862351436247486,498,30
+model_google-gemini-3.5-flash-lite_baseline_r2,google-gemini-3.5-flash-lite baseline round 2+,gap_magnitude_gap_0_5_1,0.027086891627725936,498,30
+model_google-gemini-3.5-flash-lite_baseline_r2,google-gemini-3.5-flash-lite baseline round 2+,own_risk_state_risk_high,0.0055510913426835085,498,30
+model_google-gemini-3.5-flash-lite_baseline_r2,google-gemini-3.5-flash-lite baseline round 2+,own_risk_state_risk_low,0.020379271253759008,498,30
+model_google-gemini-3.5-flash-lite_baseline_r2,google-gemini-3.5-flash-lite baseline round 2+,own_risk_state_risk_mid,0.0061628155559343605,498,30
+model_google-gemini-3.5-flash-lite_baseline_r2,google-gemini-3.5-flash-lite baseline round 2+,own_risk_state_risk_very_high,0.0010136443807851143,498,30
+model_google-gemini-3.5-flash-lite_baseline_r2,google-gemini-3.5-flash-lite baseline round 2+,opponent_risk_state_risk_high,0.003029985108710541,498,30
+model_google-gemini-3.5-flash-lite_baseline_r2,google-gemini-3.5-flash-lite baseline round 2+,opponent_risk_state_risk_low,0.014096448082611821,498,30
+model_google-gemini-3.5-flash-lite_baseline_r2,google-gemini-3.5-flash-lite baseline round 2+,opponent_risk_state_risk_mid,0.004618590538151485,498,30
+model_google-gemini-3.5-flash-lite_baseline_r2,google-gemini-3.5-flash-lite baseline round 2+,opponent_risk_state_risk_very_high,0.004512274089461855,498,30
+model_google-gemini-3.5-flash-lite_baseline_r2,google-gemini-3.5-flash-lite baseline round 2+,round_phase_early_r2_4,0.010246107974685167,498,30
+model_google-gemini-3.5-flash-lite_baseline_r2,google-gemini-3.5-flash-lite baseline round 2+,round_phase_late_r9plus,0.001834696459134499,498,30
+model_google-gemini-3.5-flash-lite_baseline_r2,google-gemini-3.5-flash-lite baseline round 2+,round_phase_mid_r5_8,0.006639606967753843,498,30
+model_gpt-5-nano_baseline_r2,gpt-5-nano baseline round 2+,own_prev_unsafe,0.004342452850958886,498,30
+model_gpt-5-nano_baseline_r2,gpt-5-nano baseline round 2+,opponent_prev_unsafe,0.020101478588860713,498,30
+model_gpt-5-nano_baseline_r2,gpt-5-nano baseline round 2+,progress_gap_before,0.04567007245250492,498,30
+model_gpt-5-nano_baseline_r2,gpt-5-nano baseline round 2+,own_private_risk_before,0.0883366701251702,498,30
+model_gpt-5-nano_baseline_r2,gpt-5-nano baseline round 2+,opponent_private_risk_before,0.0635188146064625,498,30
+model_gpt-5-nano_baseline_r2,gpt-5-nano baseline round 2+,round,0.2628326262910568,498,30
+model_gpt-5-nano_baseline_r2,gpt-5-nano baseline round 2+,max_private_risk,0.022640528951401197,498,30
+model_gpt-5-nano_baseline_r2,gpt-5-nano baseline round 2+,prev_state_both_prev_safe,0.011194921727865625,498,30
+model_gpt-5-nano_baseline_r2,gpt-5-nano baseline round 2+,prev_state_both_prev_unsafe,0.0,498,30
+model_gpt-5-nano_baseline_r2,gpt-5-nano baseline round 2+,prev_state_opponent_prev_unsafe,0.003851395011909356,498,30
+model_gpt-5-nano_baseline_r2,gpt-5-nano baseline round 2+,prev_state_own_prev_unsafe,0.002435936493240337,498,30
+model_gpt-5-nano_baseline_r2,gpt-5-nano baseline round 2+,gap_direction_ahead,0.008625277619504264,498,30
+model_gpt-5-nano_baseline_r2,gpt-5-nano baseline round 2+,gap_direction_behind,0.05557494655348172,498,30
+model_gpt-5-nano_baseline_r2,gpt-5-nano baseline round 2+,gap_direction_near_tied,0.032774031147040764,498,30
+model_gpt-5-nano_baseline_r2,gpt-5-nano baseline round 2+,gap_magnitude_gap_0_0_5,0.04285927709454609,498,30
+model_gpt-5-nano_baseline_r2,gpt-5-nano baseline round 2+,gap_magnitude_gap_0_5_1,0.018299285675215115,498,30
+model_gpt-5-nano_baseline_r2,gpt-5-nano baseline round 2+,gap_magnitude_gap_1plus,0.0,498,30
+model_gpt-5-nano_baseline_r2,gpt-5-nano baseline round 2+,own_risk_state_risk_high,0.0,498,30
+model_gpt-5-nano_baseline_r2,gpt-5-nano baseline round 2+,own_risk_state_risk_low,0.011768516685452894,498,30
+model_gpt-5-nano_baseline_r2,gpt-5-nano baseline round 2+,own_risk_state_risk_mid,0.007462055980547596,498,30
+model_gpt-5-nano_baseline_r2,gpt-5-nano baseline round 2+,own_risk_state_risk_zero,0.042985559593481194,498,30
+model_gpt-5-nano_baseline_r2,gpt-5-nano baseline round 2+,opponent_risk_state_risk_high,0.0,498,30
+model_gpt-5-nano_baseline_r2,gpt-5-nano baseline round 2+,opponent_risk_state_risk_low,0.011151990695943182,498,30
+model_gpt-5-nano_baseline_r2,gpt-5-nano baseline round 2+,opponent_risk_state_risk_mid,0.004693285951659936,498,30
+model_gpt-5-nano_baseline_r2,gpt-5-nano baseline round 2+,opponent_risk_state_risk_zero,0.023778012146956476,498,30
+model_gpt-5-nano_baseline_r2,gpt-5-nano baseline round 2+,round_phase_early_r2_4,0.10648257500963673,498,30
+model_gpt-5-nano_baseline_r2,gpt-5-nano baseline round 2+,round_phase_late_r9plus,0.07064032118456286,498,30
+model_gpt-5-nano_baseline_r2,gpt-5-nano baseline round 2+,round_phase_mid_r5_8,0.03797996756254058,498,30
+model_gpt-5.4-nano_baseline_r2,gpt-5.4-nano baseline round 2+,own_prev_unsafe,0.04527072106573772,498,30
+model_gpt-5.4-nano_baseline_r2,gpt-5.4-nano baseline round 2+,opponent_prev_unsafe,0.02929114707012049,498,30
+model_gpt-5.4-nano_baseline_r2,gpt-5.4-nano baseline round 2+,progress_gap_before,0.08338329871019008,498,30
+model_gpt-5.4-nano_baseline_r2,gpt-5.4-nano baseline round 2+,own_private_risk_before,0.1124528550336965,498,30
+model_gpt-5.4-nano_baseline_r2,gpt-5.4-nano baseline round 2+,opponent_private_risk_before,0.12096081183416853,498,30
+model_gpt-5.4-nano_baseline_r2,gpt-5.4-nano baseline round 2+,round,0.07705495087927107,498,30
+model_gpt-5.4-nano_baseline_r2,gpt-5.4-nano baseline round 2+,max_private_risk,0.0564940269671956,498,30
+model_gpt-5.4-nano_baseline_r2,gpt-5.4-nano baseline round 2+,prev_state_both_prev_safe,0.009588502512543338,498,30
+model_gpt-5.4-nano_baseline_r2,gpt-5.4-nano baseline round 2+,prev_state_both_prev_unsafe,0.08251902682802947,498,30
+model_gpt-5.4-nano_baseline_r2,gpt-5.4-nano baseline round 2+,prev_state_opponent_prev_unsafe,0.023327574756217374,498,30
+model_gpt-5.4-nano_baseline_r2,gpt-5.4-nano baseline round 2+,prev_state_own_prev_unsafe,0.044372854817895206,498,30
+model_gpt-5.4-nano_baseline_r2,gpt-5.4-nano baseline round 2+,gap_direction_ahead,0.03221789616533295,498,30
+model_gpt-5.4-nano_baseline_r2,gpt-5.4-nano baseline round 2+,gap_direction_behind,0.01993212446463672,498,30
+model_gpt-5.4-nano_baseline_r2,gpt-5.4-nano baseline round 2+,gap_direction_near_tied,0.02951531473713386,498,30
+model_gpt-5.4-nano_baseline_r2,gpt-5.4-nano baseline round 2+,gap_magnitude_gap_0_0_5,0.03599947184884186,498,30
+model_gpt-5.4-nano_baseline_r2,gpt-5.4-nano baseline round 2+,gap_magnitude_gap_0_5_1,0.04697767728814695,498,30
+model_gpt-5.4-nano_baseline_r2,gpt-5.4-nano baseline round 2+,gap_magnitude_gap_1plus,0.016727739636629893,498,30
+model_gpt-5.4-nano_baseline_r2,gpt-5.4-nano baseline round 2+,own_risk_state_risk_high,0.009757701377420401,498,30
+model_gpt-5.4-nano_baseline_r2,gpt-5.4-nano baseline round 2+,own_risk_state_risk_low,0.022428652247567744,498,30
+model_gpt-5.4-nano_baseline_r2,gpt-5.4-nano baseline round 2+,own_risk_state_risk_mid,0.017939660260816687,498,30
+model_gpt-5.4-nano_baseline_r2,gpt-5.4-nano baseline round 2+,own_risk_state_risk_very_high,0.0,498,30
+model_gpt-5.4-nano_baseline_r2,gpt-5.4-nano baseline round 2+,own_risk_state_risk_zero,0.003635488192814198,498,30
+model_gpt-5.4-nano_baseline_r2,gpt-5.4-nano baseline round 2+,opponent_risk_state_risk_high,0.008615948808138036,498,30
+model_gpt-5.4-nano_baseline_r2,gpt-5.4-nano baseline round 2+,opponent_risk_state_risk_low,0.015633071869771,498,30
+model_gpt-5.4-nano_baseline_r2,gpt-5.4-nano baseline round 2+,opponent_risk_state_risk_mid,0.009935063045153757,498,30
+model_gpt-5.4-nano_baseline_r2,gpt-5.4-nano baseline round 2+,opponent_risk_state_risk_very_high,0.0,498,30
+model_gpt-5.4-nano_baseline_r2,gpt-5.4-nano baseline round 2+,opponent_risk_state_risk_zero,0.00239607360472927,498,30
+model_gpt-5.4-nano_baseline_r2,gpt-5.4-nano baseline round 2+,round_phase_early_r2_4,0.017166043476031106,498,30
+model_gpt-5.4-nano_baseline_r2,gpt-5.4-nano baseline round 2+,round_phase_late_r9plus,0.011044172195586927,498,30
+model_gpt-5.4-nano_baseline_r2,gpt-5.4-nano baseline round 2+,round_phase_mid_r5_8,0.015362130306183112,498,30

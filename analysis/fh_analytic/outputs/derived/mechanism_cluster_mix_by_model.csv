@@ -1,0 +1,11 @@
+model_slug,family,mechanism_label,players,share
+google-gemini-3-flash-preview,family_gemini,first_turn_opponent_triggered,44,0.7333333333333333
+google-gemini-3-flash-preview,family_gemini,persistent_unsafe,16,0.26666666666666666
+google-gemini-3.1-flash-lite-preview,family_gemini,first_turn_opponent_triggered,40,0.6666666666666666
+google-gemini-3.1-flash-lite-preview,family_gemini,persistent_unsafe,20,0.3333333333333333
+google-gemini-3.5-flash-lite,family_gemini,first_turn_opponent_triggered,40,0.6666666666666666
+google-gemini-3.5-flash-lite,family_gemini,persistent_unsafe,20,0.3333333333333333
+gpt-5-nano,family_chatgpt,mostly_safe,60,1.0
+gpt-5.4-nano,family_chatgpt,first_turn_opponent_triggered,26,0.43333333333333335
+gpt-5.4-nano,family_chatgpt,mostly_safe,20,0.3333333333333333
+gpt-5.4-nano,family_chatgpt,persistent_unsafe,14,0.23333333333333334
