@@ -1,21 +1,21 @@
-%%
+﻿%%
 %% This is file `aamas.cls',
 %% generated with the docstrip utility.
 %%
 %% The original source files were:
 %%
 %% aamas.dtx  (with options: `class')
-%% 
+%%
 %% IMPORTANT NOTICE:
-%% 
+%%
 %% For the copyright see the source file.
-%% 
+%%
 %% Any modified versions of this file must be renamed
 %% with new filenames distinct from aamas.cls.
-%% 
+%%
 %% For distribution of the original source see the terms
 %% for copying and modification in the file aamas.dtx.
-%% 
+%%
 %% This generated file may be distributed as long as the
 %% original source files, as listed above, are part of the
 %% same distribution. (The sources need not necessarily be

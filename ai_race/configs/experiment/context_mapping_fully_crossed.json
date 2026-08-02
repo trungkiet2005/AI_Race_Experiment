@@ -1,0 +1,32 @@
+{
+  "name": "context_mapping_fully_crossed",
+  "runPhase": "pilot",
+  "description": "Preregistered diagnostic follow-up crossing every narrative context with both opaque action-code mappings within the same risk and common-random-number seed block.",
+  "games": [
+    "ai_race_risk_10",
+    "ai_race_risk_60",
+    "ai_race_risk_90"
+  ],
+  "agents": "context_skin_neutral",
+  "languages": ["en"],
+  "models": ["LocalQwen"],
+  "useOffline": true,
+  "offlineSettings": "offline_settings",
+  "contextSkins": [
+    "technology_race",
+    "logistics_contract",
+    "crystal_guild_contract",
+    "hospital_deployment",
+    "colony_life_support",
+    "robotic_expedition",
+    "fictional_cartography",
+    "abstract_contest"
+  ],
+  "actionCodeMappings": ["safe_p", "safe_q"],
+  "actionCodeAssignment": "fully_crossed_within_seed",
+  "repetitions": 32,
+  "seed": 260726,
+  "maxParseRetries": 3,
+  "samplingSeedApplied": true,
+  "verbose": false
+}

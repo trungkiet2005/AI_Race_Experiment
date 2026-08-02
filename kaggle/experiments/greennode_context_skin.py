@@ -158,6 +158,47 @@ def build_context_games(
     return opaque_games
 
 
+def build_fully_crossed_context_games(
+    experiment: dict[str, Any], model: str, skin_id: str
+) -> list[OpaqueContextGame]:
+    """Cross both opaque mappings within every risk/context/seed block.
+
+    The original exploratory pilot balanced mappings by repetition parity.  That
+    design protected the context contrast on average, but it could not estimate
+    a mapping main effect or a context-by-mapping interaction without relying on
+    different seeds.  This builder duplicates each base race under both mappings
+    while preserving its game seed and sampling-seed streams.  The mapping id is
+    added only to prompt metadata and the game id, never to the mechanism.
+    """
+    skin = get_context_skin(skin_id)
+    effective = copy.deepcopy(experiment)
+    effective["agents"] = "context_skin_neutral"
+    effective.pop("promptVariant", None)
+    base_games = build_games_for_model(effective, model)
+    opaque_games: list[OpaqueContextGame] = []
+    for game in base_games:
+        for mapping_id, mapping in ACTION_CODE_MAPPINGS.items():
+            config = copy.deepcopy(game.config)
+            config.prompt_version = (
+                f"{skin.version}:{ACTION_CODE_PROTOCOL}:{mapping_id}"
+            )
+            game_id = (
+                f"{game.game_id}__context-{skin_id}__action-map-{mapping_id}"
+            )
+            opaque_games.append(
+                OpaqueContextGame(
+                    config,
+                    game.agents,
+                    template=render_context_skin(skin_id, mapping_id),
+                    game_id=game_id,
+                    seed=game.seed,
+                    rep=game.rep,
+                    action_code_mapping=mapping,
+                )
+            )
+    return opaque_games
+
+
 _OPAQUE_ACTION_RE = re.compile(
     r"^\s*ACTION\s*:\s*(P|Q)\s*$", flags=re.IGNORECASE
 )

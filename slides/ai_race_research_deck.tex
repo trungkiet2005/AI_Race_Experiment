@@ -60,12 +60,17 @@
 
 \newcommand{\metric}[3]{%
 \begin{tikzpicture}
-\node[fill=RaceWhite,draw=RaceInk!13,rounded corners=7pt,minimum width=3.65cm,minimum height=1.48cm,align=left,text width=3.15cm,inner sep=8pt] {\textcolor{RaceCyanDark}{\tiny\bfseries #1}\\[-1mm]{\fontsize{18}{19}\selectfont\bfseries #2}\\[-1mm]{\tiny\color{RaceMuted}#3}};
+\node[fill=RaceWhite,draw=RaceInk!13,rounded corners=7pt,minimum width=3.65cm,minimum height=1.48cm,align=left,text width=3.15cm,inner sep=8pt] {\textcolor{RaceCyanDark}{\tiny\bfseries #1}\\[.6mm]{\fontsize{16}{17}\selectfont\bfseries #2}\\[.2mm]{\tiny\color{RaceMuted}#3}};
 \end{tikzpicture}}
 
 \newcommand{\darkmetric}[3]{%
 \begin{tikzpicture}
-\node[fill=RaceNavy,draw=white!13,rounded corners=7pt,minimum width=3.65cm,minimum height=1.48cm,align=left,text width=3.15cm,inner sep=8pt] {\textcolor{RaceCyan}{\tiny\bfseries #1}\\[-1mm]{\color{white}\fontsize{20}{21}\selectfont\bfseries #2}\\[-1mm]{\tiny\color{white!55}#3}};
+\node[fill=RaceNavy,draw=white!13,rounded corners=7pt,minimum width=3.65cm,minimum height=1.48cm,align=left,text width=3.15cm,inner sep=8pt] {\textcolor{RaceCyan}{\tiny\bfseries #1}\\[.6mm]{\color{white}\fontsize{17}{18}\selectfont\bfseries #2}\\[.2mm]{\tiny\color{white!55}#3}};
+\end{tikzpicture}}
+
+\newcommand{\compactmetric}[3]{%
+\begin{tikzpicture}
+\node[fill=RaceWhite,draw=RaceInk!13,rounded corners=7pt,minimum width=3.25cm,minimum height=1.48cm,align=left,text width=2.78cm,inner sep=7pt] {\textcolor{RaceCyanDark}{\tiny\bfseries #1}\\[.7mm]{\fontsize{15}{16}\selectfont\bfseries #2}\\[.3mm]{\tiny\color{RaceMuted}#3}};
 \end{tikzpicture}}
 
 \begin{document}
@@ -104,7 +109,7 @@
 \node[fill=RaceLime,text=RaceInk,rounded corners=6pt,minimum width=14.55cm,minimum height=1.0cm,font=\large\bfseries] {ROBUST OUTPUT DIFFERENCES $\neq$ VERIFIED UTILITY OPTIMIZATION};
 \end{tikzpicture}
 \vfill
-{\color{white!58}\scriptsize One exact checkpoint. Exploratory estimates. Decisions within a race are dependent. No cross-model generality claim.}
+{\color{white!58}\scriptsize Controlled audit: one exact Qwen checkpoint. Breadth check: five pilot checkpoints under provider-specific protocols. No pooled family effect.}
 \end{darkframe}
 
 % 3
@@ -188,6 +193,22 @@ q_i=p_{\rm risk}^{\max}\frac{n_i^U}{T}
 \end{frame}
 
 % 7
+\begin{frame}{Five checkpoints did not share one risk-response curve.}
+\eyebrow{Cross-checkpoint baseline replication}\hfill\pilot
+\vspace{-.12cm}
+\begin{columns}[T,onlytextwidth]
+\column{.74\textwidth}
+\includegraphics[width=\linewidth,height=5.08cm,keepaspectratio]{results/impact_upgrade/figures/cross_model_risk_response.pdf}
+\column{.23\textwidth}
+\compactmetric{BASELINE}{150 races}{2,790 decisions}
+\vspace{.09cm}\compactmetric{CELL SIZE}{10 races}{per checkpoint $\times$ risk}
+\vspace{.09cm}\compactmetric{INFERENCE}{SEPARATE}{no provider pooling}
+\end{columns}
+\vfill
+{\color{RaceMuted}\scriptsize GPT-5 nano is low-flat; GPT-5.4 nano is non-monotone; three Gemini checkpoints decline with risk. This is qualitative heterogeneity, not a vendor ranking.}
+\end{frame}
+
+% 8
 \begin{darkframe}{Prompt surface moved the same model across 81 points.}
 \eyebrow{18-variant sensitivity grid}\hfill\pilot
 \vspace{.32cm}
@@ -247,19 +268,34 @@ q_i=p_{\rm risk}^{\max}\frac{n_i^U}{T}
 \end{frame}
 
 % 9
-\begin{frame}{Context effects appeared after feedback began.}
-\eyebrow{Paired live and fixed-state estimates}\hfill\diagnostic
+\begin{frame}{Direct context response grows along live trajectories.}
+\eyebrow{Fixed-state replay versus endogenous play}\hfill\diagnostic
 \vspace{-.08cm}
 \begin{columns}[T,onlytextwidth]
 \column{.72\textwidth}
-\includegraphics[width=\linewidth,height=4.92cm,keepaspectratio]{results/open_source/context_skin_pilot/analysis_live_pilot_t0/figures/paired_context_effects.pdf}
+\includegraphics[width=\linewidth,height=4.92cm,keepaspectratio]{results/impact_upgrade/figures/context_direct_vs_live.pdf}
 \column{.25\textwidth}
-\metric{FIRST ROUND}{0.0 pp}{all context contrasts}
-\vspace{.07cm}\metric{LIVE MAX}{+34.0 pp}{logistics vs abstract}
-\vspace{.07cm}\metric{FIXED MAX}{+16.7 pp}{fictional map vs abstract}
+\compactmetric{ENTRY}{1,344 / 1,344}{paired actions agree}
+\vspace{.07cm}\compactmetric{LIVE MAX}{+34.0 pp}{logistics vs abstract}
+\vspace{.07cm}\compactmetric{DESCRIPTIVE GAP}{+18.4 pp}{live minus fixed, max}
 \end{columns}
 \vspace{-.1cm}
-{\color{RaceMuted}\scriptsize Both protocols use T=0. Fixed replay isolates direct prompt effects at sampled states; live trajectories include endogenous feedback. They are shown together but never pooled.}
+{\color{RaceMuted}\scriptsize Both protocols use T=0. Live and replay units differ: the connector is consistent with repeated exposure and feedback amplification, but is not a causal mediation estimate.}
+\end{frame}
+
+\begin{frame}{No entry flip did not mean robust trajectories.}
+\eyebrow{Round-by-round divergence}\hfill\diagnostic
+\vspace{-.1cm}
+\begin{columns}[T,onlytextwidth]
+\column{.74\textwidth}
+\includegraphics[width=\linewidth,height=5.0cm,keepaspectratio]{results/impact_upgrade/figures/trajectory_divergence_curve.pdf}
+\column{.23\textwidth}
+\compactmetric{ROUND 1}{0 flips}{all paired contexts}
+\vspace{.09cm}\compactmetric{FIRST SPLIT}{2.5--5}{conditional median round}
+\vspace{.09cm}\compactmetric{CONTROL}{0}{technology divergences}
+\end{columns}
+\vfill
+{\color{RaceMuted}\scriptsize Kaplan--Meier cumulative divergence treats race termination as censoring. Entry-only robustness checks would miss the state-conditional separation.}
 \end{frame}
 
 % 10
@@ -268,14 +304,14 @@ q_i=p_{\rm risk}^{\max}\frac{n_i^U}{T}
 \vspace{-.12cm}
 \begin{columns}[T,onlytextwidth]
 \column{.74\textwidth}
-\includegraphics[width=\linewidth,height=5.12cm,keepaspectratio]{results/open_source/context_skin_pilot/analysis_live_pilot_t0/figures/context_mapping_diagnostic.pdf}
+\includegraphics[width=\linewidth,height=5.12cm,keepaspectratio]{results/impact_upgrade/figures/context_mapping_gate.pdf}
 \column{.23\textwidth}
-\metric{SAFE=P}{37.2\%}{live semantic Unsafe}
-\vspace{.12cm}\metric{SAFE=Q}{0.0\%}{live semantic Unsafe}
-\vspace{.12cm}\metric{DESIGN FIX}{CROSS}{mapping within same seed}
+\compactmetric{SAFE=P}{6 / 7}{contexts diverge}
+\vspace{.12cm}\compactmetric{SAFE=Q}{0 / 7}{contexts diverge}
+\vspace{.12cm}\compactmetric{MAX SHIFT}{+68.0 pp}{logistics, Safe=P}
 \end{columns}
 \vfill
-{\color{RaceMuted}\scriptsize Live mapping is confounded with repetition-specific horizon; fixed-state replay crosses both mappings within every state and confirms the asymmetry.}
+{\color{RaceMuted}\scriptsize Mapping was balanced but assigned by repetition parity. A frozen 1,536-race diagnostic now crosses both mappings inside every seed block; launch awaits current GPU NodePorts.}
 \end{frame}
 
 % 11
@@ -403,18 +439,11 @@ q_i=p_{\rm risk}^{\max}\frac{n_i^U}{T}
 % 18
 \begin{frame}{Context is decodable at two layers - causality still fails.}
 \eyebrow{Context FAST-SAE smoke}\hfill\diagnostic
-\vspace{-.08cm}
-\begin{columns}[T,onlytextwidth]
-\column{.5\textwidth}
-\includegraphics[width=\linewidth,height=4.55cm,keepaspectratio]{results/open_source/activation_sae/context_fast_sae_analysis/context_shift_descriptives.pdf}
-\column{.5\textwidth}
-\includegraphics[width=\linewidth,height=4.55cm,keepaspectratio]{results/open_source/activation_sae/context_fast_sae_analysis/heldout_action_probe.pdf}
-\end{columns}
-\vspace{-.12cm}
-\begin{columns}[T,onlytextwidth]
-\column{.5\textwidth}{\scriptsize\color{RaceMuted}Largest held-out context shift: mean $|\Delta|=1.214$ Unsafe log odds; only 1 discrete flip / 28 pairs.}
-\column{.5\textwidth}{\scriptsize\color{RaceMuted}Double-held-out action probe: L12 AUC .922; L20 AUC .985 ($n=56$).}
-\end{columns}
+\vspace{-.1cm}
+\centering
+\includegraphics[width=.96\linewidth,height=5.05cm,keepaspectratio]{results/impact_upgrade/figures/xai_decodability_vs_control.pdf}
+\vfill
+{\color{RaceMuted}\scriptsize Double holdout crosses unseen state trajectories and unseen context pairs ($n=56$). High AUC measures representational availability; zero held-out action flips and zero target--control intervals passing preserve the causal boundary.}
 \end{frame}
 
 % 19
@@ -450,44 +479,30 @@ q_i=p_{\rm risk}^{\max}\frac{n_i^U}{T}
 \end{frame}
 
 % 21
-\begin{frame}{What the pilots support - and what they do not.}
-\eyebrow{Evidence ledger}
-\vspace{.18cm}
+\begin{frame}{Evidence is promoted by gates, not by effect size.}
+\eyebrow{Evidence ladder}
+\vspace{-.08cm}
 \begin{columns}[T,onlytextwidth]
-\column{.49\textwidth}
-{\color{RaceCyanDark}\scriptsize\bfseries SUPPORTED BY THESE PILOTS}\par\vspace{.1cm}
-\begin{itemize}\small
-\item \textbf{Engine:} exact fixtures, hashes, complete logs
-\item \textbf{Comprehension:} failures localized to state and terminal arithmetic
-\item \textbf{Behavior:} large prompt, context, and mapping sensitivity
-\item \textbf{SAE:} held-out decodability; scores and actions can be perturbed
-\item \textbf{Recognition:} no named game in the v2 self-report
-\end{itemize}
-\column{.49\textwidth}
-{\color{RaceCoral}\scriptsize\bfseries NOT SUPPORTED}\par\vspace{.1cm}
-\begin{itemize}\small
-\item external validity of the idealized game
-\item informed utility optimization
-\item stable population or cross-model effects
-\item a semantic ``Unsafe feature'' or target-specific causal control
-\item absence of contamination, memorization, or latent recognition
-\end{itemize}
+\column{.75\textwidth}
+\includegraphics[width=\linewidth,height=5.08cm,keepaspectratio]{results/impact_upgrade/figures/evidence_ladder.pdf}
+\column{.22\textwidth}
+\compactmetric{METHOD}{VALIDATED}{engine + EGT parity}
+\vspace{.1cm}\compactmetric{BEHAVIOR}{PILOT}{breadth, not population}
+\vspace{.1cm}\compactmetric{MECHANISM}{WITHHELD}{controls do not pass}
 \end{columns}
 \vfill
-\begin{beamercolorbox}[sep=.22cm,rounded=true]{normal text}
-\scriptsize\bfseries All behavioral estimates remain exploratory: comprehension admission failed and only one model family is covered.
-\end{beamercolorbox}
+{\color{RaceMuted}\scriptsize Supported: exact mechanics, localized comprehension failures, and prompt-conditioned behavior. Not supported: informed optimization, stable family effects, or a semantic Unsafe feature.}
 \end{frame}
 
 % 22
 \begin{darkframe}{Promotion requires stronger controls, not more rows alone.}
-\eyebrow{Next confirmatory grid}
+\eyebrow{Next evidence grid}
 \vspace{.25cm}
 \begin{columns}[T,onlytextwidth]
 \column{.49\textwidth}
 \begin{itemize}\color{white!75}\small
-\item pass rule, state-update, terminal, and expected-payoff gates in every context $\times$ mapping cell
-\item cross mapping within identical live race seeds
+\item launch frozen 1,536-race context $\times$ mapping diagnostic
+\item cross both mappings within every identical live race seed
 \item at least three model families and fixed decoding
 \item replay logged states to separate direct effects from feedback
 \end{itemize}
@@ -520,7 +535,7 @@ q_i=p_{\rm risk}^{\max}\frac{n_i^U}{T}
 \draw[a](a)--(b);\draw[a](b)--(c);\draw[a](c)--(d);
 \end{tikzpicture}
 \vfill
-{\small\bfseries Reproducible artifacts in \texttt{results/open\_source/} \quad $\bullet$ \quad vector figures embedded directly}
+{\small\bfseries Reproducible artifacts in \texttt{results/} \quad $\bullet$ \quad interactive trajectory demo + vector evidence figures}
 \end{frame}
 
 % 24
@@ -538,6 +553,7 @@ q_i=p_{\rm risk}^{\max}\frac{n_i^U}{T}
 \scriptsize\ttfamily model digest: 59805ce4...ff16c\\
 live context: 768 races / 13,680 decisions\\
 fixed replay: 96 states / 1,536 cells\\
+cross-checkpoint baseline: 150 races / 2,790 decisions\\
 FAST-SAE self-play: 18 races / 300 decisions / 114 steered trajectories
 \end{beamercolorbox}
 \vfill

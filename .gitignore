@@ -29,6 +29,8 @@ kaggle.json
 !/results/open_source/game_understanding_pilot/
 !/results/open_source/game_understanding_pilot/*.csv
 !/results/open_source/game_understanding_pilot/admission.json
+!/results/open_source/game_understanding_pilot/raw/
+!/results/open_source/game_understanding_pilot/raw/**
 !/results/open_source/gpu_run_archive/
 !/results/open_source/gpu_run_archive/**
 !/results/open_source/prompt_sensitivity_pilot/
@@ -49,6 +51,19 @@ kaggle.json
 !/results/scripts/
 !/results/scripts/*.py
 !/results/scripts/*.json
+!/results/impact_upgrade/
+!/results/impact_upgrade/**
+/results/impact_upgrade/candidate.html
+/results/impact_upgrade/*verification-failure.png
+!/results/artifacts/
+!/results/artifacts/**
+!/results/derived/
+!/results/derived/payoff_scale_contract/
+!/results/derived/payoff_scale_contract/**
+!/results/catalog.json
+!/results/catalog.csv
+!/results/RESULTS_INDEX.md
+!/results/migration_manifest.json
 !/results/README.md
 !/results/visualization_insight_full.md
 !/results/visualization_output_archive/
@@ -62,7 +77,6 @@ kaggle.json
 /*-run_id_*.run.json
 
 /ai_race_results/
-/output/game_understanding/
 /models/
 /strategy_analysis/artifacts/
 /strategy_analysis/datasets/
@@ -91,9 +105,7 @@ slides/*.toc
 slides/*.vrb
 slides/*.xdv
 /tmp/
-/output/
-/references/output/pdf/*
-!/references/output/pdf/*.pdf
+/results/_build/
 
 # OS
 .DS_Store

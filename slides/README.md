@@ -2,23 +2,20 @@
 
 ## Canonical research deck
 
-- `ai_race_research_deck.tex` is the 24-frame, 16:9 Beamer evidence deck.
-- `../references/output/pdf/ai_race_research_deck.pdf` is the compiled presentation.
+- `ai_race_research_deck.tex` is the 26-frame, 16:9 Beamer evidence deck.
+- `../results/artifacts/publication/ai_race_research_deck.pdf` is the compiled presentation.
 - `ai_race_project.md` is the slide-by-slide evidence map and speaker outline.
 - `index.html` remains an optional browser companion; it is not the canonical evidence artifact.
 
-Compile twice from the repository root:
+Build both publication PDFs from the repository root:
 
 ```bash
-pdflatex -interaction=nonstopmode -halt-on-error \
-  -output-directory=references/output/pdf slides/ai_race_research_deck.tex
-pdflatex -interaction=nonstopmode -halt-on-error \
-  -output-directory=references/output/pdf slides/ai_race_research_deck.tex
+python scripts/build_publication.py
 ```
 
 ## Evidence status
 
-The deck now reports validated **exploratory pilot artifacts**, not a results-pending protocol. It covers the engine and game-understanding audit, calculator ablation, 18-variant surface sensitivity grid, the primary temperature-zero eight-context study, a separate temperature-0.7 robustness comparison, recognition audit, actual-self-play FAST-SAE analyses, and a reduced evolutionary-game reconstruction.
+The deck now reports validated **exploratory pilot artifacts**, not a results-pending protocol. It covers the engine and game-understanding audit, calculator ablation, a five-checkpoint descriptive baseline, the 18-variant surface sensitivity grid, the primary temperature-zero eight-context study, a separate temperature-0.7 robustness comparison, recognition audit, actual-self-play FAST-SAE analyses, and a reduced evolutionary-game reconstruction.
 
 The central admission boundary is explicit: the context comprehension gate failed, so context and mapping effects diagnose prompt-conditioned behavior rather than verified informed utility optimization. SAE AUC/correlation is presented as association; causal attribution is withheld because target steering did not outperform controls.
 

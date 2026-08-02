@@ -47,7 +47,7 @@ references/papers/
   sources/               Publisher/arXiv source bundles
 scripts/                 Operational experiment runners
 strategy_analysis/       AS/AU/CS/CAS trajectory classification
-results/                 Analysis scripts and admitted pilot tables/hashes
+results/                 Single canonical home for raw runs, analyses, reports, QA, and publication PDFs
 paper/                   Manuscript with bounded pilot audit evidence
 slides/                  AI Race presentation outline
 ```
@@ -161,7 +161,7 @@ ledger.
 
 The canonical presentation source is
 [`slides/ai_race_research_deck.tex`](slides/ai_race_research_deck.tex). The compiled
-24-frame PDF is written to `references/output/pdf/ai_race_research_deck.pdf`; see
+26-frame PDF is written to `results/artifacts/publication/ai_race_research_deck.pdf`; see
 [`slides/README.md`](slides/README.md) for build commands. A browser-based companion
 deck is also available at `http://localhost:8000/slides/`.
 The versioned multi-prompt robustness protocol, evidence survey, treatment

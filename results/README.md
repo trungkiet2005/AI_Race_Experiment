@@ -1,12 +1,29 @@
 # AI Race results
 
+This is the repository's **single canonical generated-artifact root**. It holds
+raw model runs, derived analyses, result reports, visual QA, and publication
+PDFs. The retired `ai_race/results/`, repository-root `output/`, and
+`references/output/` trees have been consolidated here. Reproducible LaTeX
+scratch is isolated under the ignored `results/_build/` directory.
+
+Start with [`RESULTS_INDEX.md`](RESULTS_INDEX.md), which inventories every parsed
+manifest and links the primary report, paper, deck, and current experiment
+program. Machine-readable receipts are [`catalog.json`](catalog.json),
+[`catalog.csv`](catalog.csv), and
+[`migration_manifest.json`](migration_manifest.json).
+
 This tree contains admitted open-weight smoke and pilot artifacts. It does not
 retain Collective Risk outputs, placeholder observations, or fabricated effect
 sizes. Confirmatory AI Race inference remains pending.
 
 ## Current expanded pilot index
 
-The single visual and narrative entry point is
+The current cross-study visual and narrative entry point is
+[`impact_upgrade/impact_report.html`](impact_upgrade/impact_report.html), with a
+plain-text companion at [`impact_upgrade/impact_report.md`](impact_upgrade/impact_report.md)
+and an interactive paired-trajectory demo at
+[`docs/demos/trajectory_lab/index.html`](../docs/demos/trajectory_lab/index.html).
+The earlier single-Qwen pilot snapshot remains at
 [`visualization_insight_full.md`](visualization_insight_full.md). The current
 evidence-bearing modules are:
 
@@ -19,6 +36,7 @@ evidence-bearing modules are:
 | Native actual-self-play FAST-SAE | [`causal_selfplay`](open_source/activation_sae/causal_selfplay/) | association retained; causal specificity rejected |
 | Context FAST-SAE | [`context_fast_sae_analysis`](open_source/activation_sae/context_fast_sae_analysis/) | layer-20 diagnostic promoted; steering not promoted |
 | Evolutionary-game reconstruction | [`egt_reproduction`](open_source/egt_reproduction/) | faithful reconstruction; not bitwise author-code reproduction |
+| Cross-study impact synthesis | [`impact_upgrade`](impact_upgrade/) | five-checkpoint pilot synthesis, mapping gate, divergence demo, evidence ledger |
 
 All primary comparisons identify exact model digests, source/config/mechanism
 hashes, decoding contracts, seeds, and hardware. Failed admission tests and
@@ -26,10 +44,13 @@ incompatible estimands remain visible rather than being pooled away.
 
 ```text
 results/
+  artifacts/       publication PDFs and visual QA evidence
   open_source/     outputs from offline/open-weight Kaggle runs
   frontier/        outputs from frontier/API or Kaggle Benchmark runs
   scripts/         analysis code tracked in Git
-  derived/         generated tables (ignored; created by the analyser)
+  derived/         reproducible analysis tables; selected admitted receipts tracked
+  impact_upgrade/  cross-study report, figures, evidence ledgers, and demo data
+  _build/          ignored reproducible scratch; never a paper evidence source
 ```
 
 The complete public GreenNode handoff is indexed in
@@ -113,11 +134,20 @@ Artifacts include:
 
 ## Consolidated visual output & insight snapshot
 
-For this workspace, keep one canonical visualization-insight report here:
+For this workspace, the canonical current synthesis is:
+
+- [results/impact_upgrade/impact_report.html](/AI_Race_Experiment/results/impact_upgrade/impact_report.html)
+- [results/impact_upgrade/impact_report.md](/AI_Race_Experiment/results/impact_upgrade/impact_report.md)
+- [docs/demos/trajectory_lab/index.html](/AI_Race_Experiment/docs/demos/trajectory_lab/index.html)
+
+The earlier single-model synthesis remains here:
 
 - [results/visualization_insight_full.md](/AI_Race_Experiment/results/visualization_insight_full.md)
-- [results/visualization_output_archive/index.md](/AI_Race_Experiment/results/visualization_output_archive/index.md)  
-  (all generated figures/tables/plots/visualization assets copied into one searchable location)
+
+The former copied visualization archive was removed because it duplicated
+publication, slide, paper, and analysis artifacts. The complete searchable
+inventory is now [results/RESULTS_INDEX.md](/AI_Race_Experiment/results/RESULTS_INDEX.md);
+source-study figure snapshots live under `references/source_study_assets/`.
 
 Keep one self-contained directory per run. A run directory must contain
 `turns.jsonl`, `races.csv`, `players.csv`, and `run_manifest.json` so completion,

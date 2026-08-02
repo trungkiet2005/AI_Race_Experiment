@@ -1,0 +1,30 @@
+{
+  "name": "context_skin_invariance",
+  "runPhase": "pilot",
+  "description": "Paired common-random-number test of whether narrative context changes behavior while the AI Race mechanism, state, action codes, and decoding stay fixed.",
+  "games": [
+    "ai_race_risk_10",
+    "ai_race_risk_60",
+    "ai_race_risk_90"
+  ],
+  "agents": "context_skin_neutral",
+  "languages": ["en"],
+  "models": ["LocalQwen"],
+  "useOffline": true,
+  "offlineSettings": "offline_settings",
+  "contextSkins": [
+    "technology_race",
+    "logistics_contract",
+    "crystal_guild_contract",
+    "hospital_deployment",
+    "colony_life_support",
+    "robotic_expedition",
+    "fictional_cartography",
+    "abstract_contest"
+  ],
+  "repetitions": 32,
+  "seed": 260726,
+  "maxParseRetries": 3,
+  "samplingSeedApplied": true,
+  "verbose": false
+}

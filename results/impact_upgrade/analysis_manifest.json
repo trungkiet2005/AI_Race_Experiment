@@ -1,0 +1,121 @@
+{
+  "schema_version": "ai-race-impact-synthesis-v1",
+  "status": "complete",
+  "evidence_policy": "No protocol pooling; pilot, diagnostic, association, causal-audit, and method-validation classes remain separate.",
+  "audit": {
+    "status": "passed",
+    "n_turns": 13680,
+    "n_player_races": 1536,
+    "n_races": 768,
+    "n_contexts": 8,
+    "n_risk_levels": 3,
+    "n_mappings": 2,
+    "parse_failures": 0,
+    "retried_decisions": 0,
+    "trajectory_pairs": 1344,
+    "contexts_vs_reference": 7,
+    "all_first_round_actions_agree": true,
+    "cross_model_checkpoints": 5,
+    "evidence_ledger_rows": 8
+  },
+  "inputs": {
+    "analysis/openai/derived/unsafe_by_risk_model_player.csv": "f1c72b0437f4e70a496b6c4bf328d83639feaa0c68191efa4a1d4da7dd7b4ae0",
+    "analysis/openai/derived/analysis_manifest.json": "a6fb2838af5275f76292c9d64e94ae7364b1d047c724ca9e6124cd9c25189058",
+    "analysis/frontier/derived/unsafe_by_risk_model_player.csv": "175ab40bebecbc8dd438675ac4da03e5b3536f73a619d0a8bf76dc4f03e9d093",
+    "analysis/frontier/derived/analysis_manifest.json": "1b66fee5c2d5c97eda1d523aa3d1fceb2344b349703ba0f534ad1caf42a1408c",
+    "results/open_source/context_skin_pilot/analysis_live_pilot_t0/paired_context_effects.csv": "d5e9ddb19f96aa610db51a5e7f650796d48a4671f5a969cf54a6c98e9d242703",
+    "results/open_source/context_skin_pilot/analysis_live_pilot_t0/analysis_summary.json": "a49076804ae5caca7831945b0173e8e92dd7ca609e557b2e064bd3951c42c5f6",
+    "results/open_source/activation_sae/context_fast_sae_analysis/summary.json": "ff8660d4bb67a3e16e10fa4c4b5e797b67007a2388d77eb56b518c7aa5f05b9f",
+    "results/open_source/activation_sae/causal_selfplay/fast-sae-pilot-L12-v1/analysis/analysis_summary.json": "c0b30cb76b59a81795eed2cdc7881f972687d67a4a30a206cb333ca60f148d22"
+  },
+  "outputs": {
+    "results/impact_upgrade/data/trajectory_pair_rows.csv": {
+      "bytes": 145508,
+      "sha256": "e1ecd692f5c34cdbf5039f4dc72145a82baa4cd463b6229b576f20e0b98ddc96"
+    },
+    "results/impact_upgrade/data/trajectory_divergence_summary.csv": {
+      "bytes": 1065,
+      "sha256": "2b75e277b1b16ea93fa8b5735e976494d14f6dc72878ee0807d5dd3b5359b26c"
+    },
+    "results/impact_upgrade/data/context_mapping_interaction.csv": {
+      "bytes": 1137,
+      "sha256": "4118db115db6afe3770422f3a81db913714c17e418de5469490a5c4f22bcf5a0"
+    },
+    "results/impact_upgrade/data/trajectory_divergence_curve.csv": {
+      "bytes": 6872,
+      "sha256": "8b557881cdb7bfce42c8614c3bede9f7e9854b5b41db940993236a382a5ad81a"
+    },
+    "results/impact_upgrade/data/context_direct_vs_live.csv": {
+      "bytes": 2564,
+      "sha256": "23faaedd365c04de10093178b89a53c785e0edc83f9294931790b50f6e300ea9"
+    },
+    "results/impact_upgrade/data/cross_model_baseline_rates.csv": {
+      "bytes": 2743,
+      "sha256": "a1aa447c2f50eaf7cc1164f44f401beb540d449f2c74992fab732126fe9ade36"
+    },
+    "results/impact_upgrade/data/evidence_ledger.csv": {
+      "bytes": 1324,
+      "sha256": "abd1115fd94f05c28d42630f2f621808565ef5a693691079d8e88afa5e2ca7d5"
+    },
+    "results/impact_upgrade/data/xai_decodability_vs_control.csv": {
+      "bytes": 316,
+      "sha256": "de0ece14d7e690b3d7f2c6ff72567ec21abbb654303acea675b53ed45c9a0574"
+    },
+    "results/impact_upgrade/data/trajectory_demo.json": {
+      "bytes": 108041,
+      "sha256": "583ac7e968c190ab7f93b783f3e5c25dd0f1a4f253ed5f4891e8e8a9e255f9ee"
+    },
+    "results/impact_upgrade/data_quality_audit.json": {
+      "bytes": 374,
+      "sha256": "409c52b590f9cd1fa3c4174284f56ecfd70e130afd0f0c6b2197ccb8ec310435"
+    },
+    "results/impact_upgrade/figures/context_direct_vs_live.pdf": {
+      "bytes": 25736,
+      "sha256": "ce72c78f5c34c071eb627a4f5043989a1b303644fc9abbb863461036be51e780"
+    },
+    "results/impact_upgrade/figures/context_direct_vs_live.png": {
+      "bytes": 125989,
+      "sha256": "538384f6b3905f13deca05d8ee1867373b17025be4eefc94edc830bf5da41396"
+    },
+    "results/impact_upgrade/figures/context_mapping_gate.pdf": {
+      "bytes": 26085,
+      "sha256": "78d3e3feed65a01101f28d8730ea9221ae4de21cdb4e5c3fb43d088612156b66"
+    },
+    "results/impact_upgrade/figures/context_mapping_gate.png": {
+      "bytes": 110835,
+      "sha256": "9e839179e5df6c78118e43ca1f75a6da042b358ba10842d44d68c771600398d6"
+    },
+    "results/impact_upgrade/figures/cross_model_risk_response.pdf": {
+      "bytes": 28508,
+      "sha256": "98610f1fc1c519de4288fadf47b9dd01da2fd966a176bc78c68cce66ec9e7706"
+    },
+    "results/impact_upgrade/figures/cross_model_risk_response.png": {
+      "bytes": 147760,
+      "sha256": "bfb28aa9c9d57695d8b870c3b9e4fa8e4fd018881ee55c1409da1383705a81a2"
+    },
+    "results/impact_upgrade/figures/evidence_ladder.pdf": {
+      "bytes": 23890,
+      "sha256": "c1c97ca9099ed7d06bc883f7ce45c42a47beba8c05756e234638f1f41b889116"
+    },
+    "results/impact_upgrade/figures/evidence_ladder.png": {
+      "bytes": 115761,
+      "sha256": "019a2eff13c785652e22dba3b5b7d7d433c7d6511f6c2afaa9e6b39ae135e154"
+    },
+    "results/impact_upgrade/figures/trajectory_divergence_curve.pdf": {
+      "bytes": 25358,
+      "sha256": "40a530aec2ce1c92efc8ae1ffd4c588de40334fde70a284b85bdee90f0b22cef"
+    },
+    "results/impact_upgrade/figures/trajectory_divergence_curve.png": {
+      "bytes": 123700,
+      "sha256": "ddc4ac6710a29809094904c8b235dec6dc07d06c1bfb99385a08a6cae9b4b418"
+    },
+    "results/impact_upgrade/figures/xai_decodability_vs_control.pdf": {
+      "bytes": 30692,
+      "sha256": "3da8f437da82d9a87e693aa29fae4549e52e24c2b75dc4fef9f43a564829e483"
+    },
+    "results/impact_upgrade/figures/xai_decodability_vs_control.png": {
+      "bytes": 141936,
+      "sha256": "db01be5cd3b87251586306a894da58b1f93b4b2ebe9c57c07c5c9c7ea72d735d"
+    }
+  }
+}
