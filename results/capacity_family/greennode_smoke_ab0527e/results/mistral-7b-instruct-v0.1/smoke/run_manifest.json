@@ -1,0 +1,122 @@
+{
+  "schema_version": "ai-race-kaggle-crossmodel-scaffold-admission-run-v1",
+  "status": "completed",
+  "evidence_class": "diagnostic_comprehension_failed",
+  "started_utc": "2026-08-02T04:28:13.801981+00:00",
+  "run_profile": "smoke",
+  "repo_url": "https://github.com/trungkiet2005/AI_Race_Experiment.git",
+  "repo_commit": "ab0527eba990dea2620bc03a37b2c33673e58949",
+  "source_dataset": "greennode-local-checkout",
+  "model": {
+    "kaggle_model_source": "hf://mistralai/Mistral-7B-Instruct-v0.1@ec5deb64f2c6e6fa90c1abf74a91d5c93a9669ca",
+    "family": "Mistral-7B",
+    "short_name": "mistral-7b-instruct-v0.1",
+    "metadata": {
+      "config.json": {
+        "bytes": 571,
+        "sha256": "cf25cdf4719f181d1d1d371973285d9afe9afde0d0c6a6fd48de857555ce1e0d"
+      },
+      "generation_config.json": {
+        "bytes": 116,
+        "sha256": "afcf2a1da583dbeb66bb367a759713901e23ce19ed83ed8f5a21b0e877addd5b"
+      },
+      "tokenizer_config.json": {
+        "bytes": 2103,
+        "sha256": "475361439e5c012de9dffdedc416a66a50f1a29f7aa80b375ba014fb13d6bb8a"
+      },
+      "tokenizer.json": {
+        "bytes": 1795188,
+        "sha256": "11c08db21487c885d8c792180f0be237f6a261b89a46f128a6a80a3aa4bd1720"
+      },
+      "model.safetensors.index.json": {
+        "bytes": 25125,
+        "sha256": "c94ab46aaf5fcca44720c10bcc498c1b0d9759d47534a396e3512edc451ebd06"
+      }
+    },
+    "weight_files": [
+      {
+        "name": "model-00001-of-00002.safetensors",
+        "bytes": 9942981696
+      },
+      {
+        "name": "model-00002-of-00002.safetensors",
+        "bytes": 4540516344
+      }
+    ],
+    "digest": "da31c656311edd100f35461ac00ce12398a502cf46bc0495c8a53289f0dfe497"
+  },
+  "language": "en",
+  "decoding": {
+    "temperature": 0.0,
+    "max_new_tokens": 16,
+    "do_sample": false,
+    "batch_size": 1,
+    "sampling_seed_applied": false,
+    "seed_note": "Greedy decoding; request seeds retained as CRN identifiers only."
+  },
+  "hardware": {
+    "passed": true,
+    "model_key": "mistral7_01",
+    "model_short_name": "mistral-7b-instruct-v0.1",
+    "checks": {
+      "cuda_available": true,
+      "single_gpu": true,
+      "free_vram": true,
+      "compute_capability": true,
+      "bf16_supported": true
+    },
+    "required": {
+      "gpu_count": 1,
+      "min_free_vram_gib": 18.0,
+      "min_compute_capability": [
+        8,
+        0
+      ],
+      "bf16": true
+    },
+    "observed": {
+      "cuda_available": true,
+      "gpu_name": "NVIDIA H100 80GB HBM3 MIG 2g.20gb",
+      "gpu_count": 1,
+      "free_vram_gib": 19.45166015625,
+      "total_vram_gib": 19.625,
+      "compute_capability": [
+        9,
+        0
+      ],
+      "bf16_supported": true
+    },
+    "hostname": "nb-b43b17b4-d969-4c10-a95c-929ed8b71e8a-57bfddc5d7-7vbw9",
+    "python": "3.10.12",
+    "torch": "2.4.0a0+07cecf4168.nv24.05"
+  },
+  "artifacts": {
+    "comprehension_raw": {
+      "path": "comprehension_raw.jsonl",
+      "bytes": 570230,
+      "sha256": "9dc1799aea0854df22cd1ce0351c8ac897727740bc092f014ec42e789c91ca02"
+    },
+    "admission": {
+      "path": "admission.json",
+      "bytes": 14660,
+      "sha256": "5268febdd6b08dcc70768b08cf15783812e767d17d088ce3c4a7d16e7d8cb2b2"
+    }
+  },
+  "error": null,
+  "model_runtime": {
+    "parameter_devices": [
+      "cuda:0"
+    ],
+    "parameter_dtypes": [
+      "torch.bfloat16"
+    ],
+    "hf_device_map": {
+      "": "0"
+    }
+  },
+  "completed_utc": "2026-08-02T04:29:41.900226+00:00",
+  "expected_requests": 160,
+  "n_requests": 160,
+  "admission_passed": false,
+  "request_bank_sha256": "8f85c813283251593a1a5dc89df241805c9fe85da6b72dae006c5287838f3b24"
+}

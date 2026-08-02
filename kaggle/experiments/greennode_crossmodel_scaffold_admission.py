@@ -171,6 +171,14 @@ def resolve_model(model_key: str, cache: Path, local_path: Path | None) -> Path:
             repo_id=model["repo_id"],
             revision=model["revision"],
             cache_dir=cache,
+            allow_patterns=(
+                "*.json",
+                "*.model",
+                "*.safetensors",
+                "*.safetensors.index.json",
+                "tokenizer*",
+                "special_tokens_map.json",
+            ),
         )
     )
 

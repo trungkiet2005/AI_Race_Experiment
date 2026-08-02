@@ -1,0 +1,130 @@
+{
+  "schema_version": "ai-race-kaggle-crossmodel-scaffold-admission-run-v1",
+  "status": "completed",
+  "evidence_class": "diagnostic_comprehension_failed",
+  "started_utc": "2026-08-02T04:16:59.558233+00:00",
+  "run_profile": "smoke",
+  "repo_url": "https://github.com/trungkiet2005/AI_Race_Experiment.git",
+  "repo_commit": "ab0527eba990dea2620bc03a37b2c33673e58949",
+  "source_dataset": "greennode-local-checkout",
+  "model": {
+    "kaggle_model_source": "hf://Qwen/Qwen2.5-7B-Instruct@a09a35458c702b33eeacc393d103063234e8bc28",
+    "family": "Qwen2.5",
+    "short_name": "qwen2.5-7b-instruct",
+    "metadata": {
+      "config.json": {
+        "bytes": 663,
+        "sha256": "7463bb0ea78315365e6c6b74de4e73bbcc8359dfb0c5a737584e077d42c0b03c"
+      },
+      "generation_config.json": {
+        "bytes": 243,
+        "sha256": "3a8f9087e486054c8a4a08dae2e5a3ba62e23da212b5b8c08bc42cb983c3459f"
+      },
+      "tokenizer_config.json": {
+        "bytes": 7305,
+        "sha256": "5b5d4f65d0acd3b2d56a35b56d374a36cbc1c8fa5cf3b3febbbfabf22f359583"
+      },
+      "tokenizer.json": {
+        "bytes": 7031645,
+        "sha256": "c0382117ea329cdf097041132f6d735924b697924d6f6fc3945713e96ce87539"
+      },
+      "model.safetensors.index.json": {
+        "bytes": 27752,
+        "sha256": "624bf7c47cd12468fdc16e38a47cf4f19e0415b859a223ba3c027eed2f0e1028"
+      }
+    },
+    "weight_files": [
+      {
+        "name": "model-00001-of-00004.safetensors",
+        "bytes": 3945441440
+      },
+      {
+        "name": "model-00002-of-00004.safetensors",
+        "bytes": 3864726352
+      },
+      {
+        "name": "model-00003-of-00004.safetensors",
+        "bytes": 3864726424
+      },
+      {
+        "name": "model-00004-of-00004.safetensors",
+        "bytes": 3556377672
+      }
+    ],
+    "digest": "6a49f5db66a7a2e210ab5774d3ab929ca2f9b6b6c1f996121b1cba489236dc86"
+  },
+  "language": "en",
+  "decoding": {
+    "temperature": 0.0,
+    "max_new_tokens": 16,
+    "do_sample": false,
+    "batch_size": 1,
+    "sampling_seed_applied": false,
+    "seed_note": "Greedy decoding; request seeds retained as CRN identifiers only."
+  },
+  "hardware": {
+    "passed": true,
+    "model_key": "qwen25_7b",
+    "model_short_name": "qwen2.5-7b-instruct",
+    "checks": {
+      "cuda_available": true,
+      "single_gpu": true,
+      "free_vram": true,
+      "compute_capability": true,
+      "bf16_supported": true
+    },
+    "required": {
+      "gpu_count": 1,
+      "min_free_vram_gib": 18.0,
+      "min_compute_capability": [
+        8,
+        0
+      ],
+      "bf16": true
+    },
+    "observed": {
+      "cuda_available": true,
+      "gpu_name": "NVIDIA H100 80GB HBM3 MIG 2g.20gb",
+      "gpu_count": 1,
+      "free_vram_gib": 19.45166015625,
+      "total_vram_gib": 19.625,
+      "compute_capability": [
+        9,
+        0
+      ],
+      "bf16_supported": true
+    },
+    "hostname": "nb-b43b17b4-d969-4c10-a95c-929ed8b71e8a-57bfddc5d7-7vbw9",
+    "python": "3.10.12",
+    "torch": "2.4.0a0+07cecf4168.nv24.05"
+  },
+  "artifacts": {
+    "comprehension_raw": {
+      "path": "comprehension_raw.jsonl",
+      "bytes": 569746,
+      "sha256": "86bab8f354aa14c78f3d51bab8ef2a740829cac38eeff6abe00414b765fccc9b"
+    },
+    "admission": {
+      "path": "admission.json",
+      "bytes": 14846,
+      "sha256": "4d10e53b01eb5f627a159df179708250c7aceab4a6afe4d1c16d10389c33b93d"
+    }
+  },
+  "error": null,
+  "model_runtime": {
+    "parameter_devices": [
+      "cuda:0"
+    ],
+    "parameter_dtypes": [
+      "torch.bfloat16"
+    ],
+    "hf_device_map": {
+      "": "0"
+    }
+  },
+  "completed_utc": "2026-08-02T04:18:20.098103+00:00",
+  "expected_requests": 160,
+  "n_requests": 160,
+  "admission_passed": false,
+  "request_bank_sha256": "8f85c813283251593a1a5dc89df241805c9fe85da6b72dae006c5287838f3b24"
+}
