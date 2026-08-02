@@ -148,6 +148,16 @@ Use these only by swapping out a core figure; adding all of them will dilute the
 - **Why:** separates stable aggregate treatment patterns from decision-level non-determinism.
 - **Caveat:** repeatability under one decoding/backend contract is not cross-model robustness.
 
+### A7 — Cross-checkpoint behavioral fingerprint
+
+![Behavioral fingerprint](cross_model_pilot_synthesis/figures/behavioral_fingerprint.png)
+
+- **PDF/data/source:** [`behavioral_fingerprint.pdf`](cross_model_pilot_synthesis/figures/behavioral_fingerprint.pdf), [`behavioral_fingerprint.csv`](cross_model_pilot_synthesis/data/behavioral_fingerprint.csv), [`build_behavioral_fingerprint.py`](scripts/build_behavioral_fingerprint.py)
+- **Why:** demonstrates that checkpoint behavior is not a one-dimensional Safe/Unsafe trait. Risk sensitivity, conditional reciprocity, persona swing, payoff coupling, and chance-corrected strategy fit separate sharply.
+- **New insight:** GPT-5.4 nano is nearly risk-flat but has a 98pp persona swing; Claude Opus 5 has a −100pp risk response but no identifiable reciprocity; Claude Sonnet 5 combines a −64pp risk response with approximately +70pp median within-risk reciprocity. No checkpoint has more than 6.7% of trajectories whose canonical-strategy fit beats its base-rate-matched chance null.
+- **Caveat:** five distinct descriptive estimands are deliberately not collapsed into a composite score. Blank cells mean the relevant persona lane or identifiable contrast is unavailable, not zero.
+- **Recommendation:** appendix or demo; use in main only if cross-checkpoint multidimensionality becomes a named contribution.
+
 ## Appendix figure menu
 
 | ID | Figure | Primary insight | Mandatory boundary |
@@ -225,6 +235,7 @@ Recommended default is checked. Change boxes to record your preferred story.
 - [ ] **A4** Human/LLM predictive architecture
 - [ ] **A5** Late trajectory divergence
 - [ ] **A6** Repeat-run stability
+- [ ] **A7** Cross-checkpoint behavioral fingerprint
 
 ### Appendix
 
