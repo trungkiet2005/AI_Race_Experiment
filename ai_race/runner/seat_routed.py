@@ -1,7 +1,7 @@
 """Lockstep race execution with an explicit backend route for every seat.
 
 The canonical batch runner intentionally sends every request to one backend.
-Heterogeneous-model dyads need a different contract: the dispatcher receives
+Heterogeneous-model games need a different contract: the dispatcher receives
 the game and seat for every request and must return responses in the same
 order.  Keeping this as a separate runner prevents a mixed-model pilot from
 silently masquerading as the paper-faithful homogeneous baseline.
@@ -64,7 +64,7 @@ def run_games_seat_routed(
     max_parse_retries: int = 3,
     on_round_complete: Callable[[Any, Any | None, list[Any]], None] | None = None,
 ) -> list[Any]:
-    """Run two-player races while preserving a game+seat route per request."""
+    """Run races of any supported size while preserving every seat route."""
     if max_parse_retries < 0:
         raise ValueError("max_parse_retries cannot be negative")
     games = list(games)
@@ -81,8 +81,11 @@ def run_games_seat_routed(
         prompts_by_game: dict[str, list[str]] = {}
         for game in active:
             prompts = list(game.build_round_prompts())
-            if len(prompts) != 2:
-                raise ValueError("Seat-routed dyad runner requires exactly two seats")
+            n_seats = len(game.agents)
+            if len(prompts) != n_seats:
+                raise ValueError(
+                    f"Game returned {len(prompts)} prompts for {n_seats} seats"
+                )
             if prompt_transform is not None:
                 prompts = [
                     prompt_transform(game, player_index, prompt)
@@ -152,10 +155,11 @@ def run_games_seat_routed(
 
         cursor = 0
         for game in active:
-            game_responses = responses[cursor : cursor + 2]
-            game_retries = retry_counts[cursor : cursor + 2]
-            game_attempts = attempt_histories[cursor : cursor + 2]
-            cursor += 2
+            n_seats = len(game.agents)
+            game_responses = responses[cursor : cursor + n_seats]
+            game_retries = retry_counts[cursor : cursor + n_seats]
+            game_attempts = attempt_histories[cursor : cursor + n_seats]
+            cursor += n_seats
             previous_turn_count = len(game.turns)
             result = game.apply_round_responses(
                 game_responses,

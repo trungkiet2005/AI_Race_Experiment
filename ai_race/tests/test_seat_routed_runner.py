@@ -2,8 +2,12 @@
 from __future__ import annotations
 
 from collections.abc import Callable, Sequence
+from pathlib import Path
 
 from ai_race.engine.game import AIRaceGame
+from ai_race.engine.agent import RaceAgent
+from ai_race.engine_nplayer.game import NPlayerAIRaceGame
+from ai_race.engine_nplayer.state import NPlayerGameConfig
 from ai_race.runner.seat_routed import SeatRequest, run_games_seat_routed
 from kaggle.experiments.greennode_heterogeneous_dyad import (
     build_games,
@@ -75,6 +79,44 @@ def test_retry_keeps_the_failed_seat_route_and_seed(
     assert calls[1][0].prompt == calls[0][0].prompt
     assert calls[1][0].sampling_seed == game.sampling_seed(0, 1, 1)
     assert calls[1][0].attempt == 1
+
+
+def test_seat_routed_runner_supports_three_player_games() -> None:
+    config = NPlayerGameConfig(
+        name="seat-route-n3",
+        n_players=3,
+        min_rounds=1,
+        stop_probability=1.0,
+        max_rounds_safety_cap=2,
+    )
+    template = (
+        Path(__file__).resolve().parents[1]
+        / "engine_nplayer"
+        / "prompts"
+        / "ai_race_nplayer_en.txt"
+    ).read_text(encoding="utf-8")
+    game = NPlayerAIRaceGame(
+        config,
+        [RaceAgent(f"Participant_{index + 1}") for index in range(3)],
+        template=template,
+        game_id="seat-route-n3",
+        seed=17,
+    )
+    routed: list[int] = []
+
+    def dispatch(requests: Sequence[SeatRequest]) -> list[str]:
+        routed.extend(request.player_index for request in requests)
+        return [
+            "ACTION: UNSAFE" if request.player_index == 2 else "ACTION: SAFE"
+            for request in requests
+        ]
+
+    results = run_games_seat_routed(
+        [game], dispatch, max_parse_retries=0
+    )
+
+    assert routed == [0, 1, 2]
+    assert results[0].per_round_actions == [["safe", "safe", "unsafe"]]
 
 
 def test_heterogeneous_design_crosses_identity_and_reverses_cross_family_seats() -> None:
