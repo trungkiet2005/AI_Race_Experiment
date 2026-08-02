@@ -1,0 +1,19 @@
+scope,estimand,n_safe_p_clusters,n_safe_q_clusters,temperature_delta_safe_p,temperature_delta_safe_q,mapping_interaction_safe_p_minus_safe_q,interaction_ci95_low,interaction_ci95_high,claim_boundary
+all_contexts,first_round,48,48,0.0,0.0,0.0,0.0,0.0,diagnostic; mapping is assigned by repetition parity
+all_contexts,full_trajectory,48,48,0.060723812883739355,0.0,0.060723812883739355,0.047705525401843196,0.07406493753790974,diagnostic; mapping is assigned by repetition parity
+abstract_contest,first_round,48,48,0.0,0.0,0.0,0.0,0.0,diagnostic; mapping is assigned by repetition parity
+abstract_contest,full_trajectory,48,48,0.13065427559912854,0.0,0.13065427559912854,0.09120536322167755,0.17244110838779952,diagnostic; mapping is assigned by repetition parity
+colony_life_support,first_round,48,48,0.0,0.0,0.0,0.0,0.0,diagnostic; mapping is assigned by repetition parity
+colony_life_support,full_trajectory,48,48,0.015475372598534357,0.0,0.015475372598534357,-0.01262938824519707,0.04366026224252327,diagnostic; mapping is assigned by repetition parity
+crystal_guild_contract,first_round,48,48,0.0,0.0,0.0,0.0,0.0,diagnostic; mapping is assigned by repetition parity
+crystal_guild_contract,full_trajectory,48,48,0.005528012972865916,0.0,0.005528012972865916,-0.02434950763765102,0.03617689610566449,diagnostic; mapping is assigned by repetition parity
+fictional_cartography,first_round,48,48,0.0,0.0,0.0,0.0,0.0,diagnostic; mapping is assigned by repetition parity
+fictional_cartography,full_trajectory,48,48,0.09940907234105763,0.0,0.09940907234105763,0.06746712684442463,0.13235545172930285,diagnostic; mapping is assigned by repetition parity
+hospital_deployment,first_round,48,48,0.0,0.0,0.0,0.0,0.0,diagnostic; mapping is assigned by repetition parity
+hospital_deployment,full_trajectory,48,48,-0.03552312339077045,0.0,-0.03552312339077045,-0.06017340995741731,-0.009989199593979016,diagnostic; mapping is assigned by repetition parity
+logistics_contract,first_round,48,48,0.0,0.0,0.0,0.0,0.0,diagnostic; mapping is assigned by repetition parity
+logistics_contract,full_trajectory,48,48,-0.055067835214894036,0.0,-0.055067835214894036,-0.08819716001931076,-0.022065136660724897,diagnostic; mapping is assigned by repetition parity
+robotic_expedition,first_round,48,48,0.0,0.0,0.0,0.0,0.0,diagnostic; mapping is assigned by repetition parity
+robotic_expedition,full_trajectory,48,48,0.18314718879976233,0.0,0.18314718879976233,0.1422766845848188,0.22360812475242625,diagnostic; mapping is assigned by repetition parity
+technology_race,first_round,48,48,0.0,0.0,0.0,0.0,0.0,diagnostic; mapping is assigned by repetition parity
+technology_race,full_trajectory,48,48,0.14216753936423054,0.0,0.14216753936423054,0.10502537244380074,0.18042492170479302,diagnostic; mapping is assigned by repetition parity

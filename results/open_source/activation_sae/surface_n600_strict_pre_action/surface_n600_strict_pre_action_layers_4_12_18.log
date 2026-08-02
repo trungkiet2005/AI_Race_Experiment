@@ -1,0 +1,42 @@
+`torch_dtype` is deprecated! Use `dtype` instead!
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:00<00:00, 108.19it/s]
+Loaded pretrained model Qwen/Qwen2.5-7B-Instruct into HookedTransformer
+Fetching 3 files:   0%|          | 0/3 [00:00<?, ?it/s]Fetching 3 files: 100%|██████████| 3/3 [00:00<00:00, 8197.34it/s]
+/home/jovyan/python/ai-race-sae-533/sae_lens/sae.py:145: UserWarning: 
+This SAE has non-empty model_from_pretrained_kwargs. 
+For optimal performance, load the model like so:
+model = HookedSAETransformer.from_pretrained_no_processing(..., **cfg.model_from_pretrained_kwargs)
+  warnings.warn(
+Fetching 3 files:   0%|          | 0/3 [00:00<?, ?it/s]Fetching 3 files: 100%|██████████| 3/3 [00:00<00:00, 20036.48it/s]
+Fetching 3 files:   0%|          | 0/3 [00:00<?, ?it/s]Fetching 3 files: 100%|██████████| 3/3 [00:00<00:00, 48960.75it/s]
+captured 25/600 decisions
+captured 50/600 decisions
+captured 75/600 decisions
+captured 100/600 decisions
+captured 125/600 decisions
+captured 150/600 decisions
+captured 175/600 decisions
+captured 200/600 decisions
+captured 225/600 decisions
+captured 250/600 decisions
+captured 275/600 decisions
+captured 300/600 decisions
+captured 325/600 decisions
+captured 350/600 decisions
+captured 375/600 decisions
+captured 400/600 decisions
+captured 425/600 decisions
+captured 450/600 decisions
+captured 475/600 decisions
+captured 500/600 decisions
+captured 525/600 decisions
+captured 550/600 decisions
+captured 575/600 decisions
+captured 600/600 decisions
+probing layer 4 with 4096/28672 train-selected features
+completed probes for layer 4
+probing layer 12 with 4096/28672 train-selected features
+completed probes for layer 12
+probing layer 18 with 4096/28672 train-selected features
+completed probes for layer 18
+wrote activation-level SAE artifacts to /home/jovyan/ai_race_sae_runs/surface_n600_strict_pre_action_layers_4_12_18

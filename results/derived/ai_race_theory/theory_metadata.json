@@ -1,0 +1,66 @@
+{
+  "game_configs": [
+    {
+      "max_private_risk": 0.1,
+      "min_rounds": 5,
+      "name": "ai_race_risk_10",
+      "race_prize": 100.0,
+      "stage_payoffs": {
+        "safe_safe": 1.0,
+        "safe_unsafe": 0.6,
+        "unsafe_safe": 2.4,
+        "unsafe_unsafe": 2.0
+      },
+      "stop_probability": 0.2
+    },
+    {
+      "max_private_risk": 0.6,
+      "min_rounds": 5,
+      "name": "ai_race_risk_60",
+      "race_prize": 100.0,
+      "stage_payoffs": {
+        "safe_safe": 1.0,
+        "safe_unsafe": 0.6,
+        "unsafe_safe": 2.4,
+        "unsafe_unsafe": 2.0
+      },
+      "stop_probability": 0.2
+    },
+    {
+      "max_private_risk": 0.9,
+      "min_rounds": 5,
+      "name": "ai_race_risk_90",
+      "race_prize": 100.0,
+      "stage_payoffs": {
+        "safe_safe": 1.0,
+        "safe_unsafe": 0.6,
+        "unsafe_safe": 2.4,
+        "unsafe_unsafe": 2.0
+      },
+      "stop_probability": 0.2
+    }
+  ],
+  "independence_warning": "Every number here is derived from the game mechanism alone. It is identical for every LLM, every persona condition, and every run. Agreement with observed behaviour is a property of the game, not evidence about a model.",
+  "monte_carlo_replications": 10000,
+  "monte_carlo_seed": 260726,
+  "mutation_regime": "small_mutation_limit",
+  "mutation_regime_caveat": "The stationary distributions are the mu -> 0 limit, in which the population is monomorphic and the chain reduces to fixation probabilities between the four strategies. nominal_mu records the mutation rate of the source paper's parameter point that each row approximates; it is NOT applied. Two consequences: (a) AU and CAS are exactly payoff-equivalent against each other, so the limit cannot reproduce the paper's AU-to-CAS transition near p_r^max = 0.2 and splits their mass evenly instead; (b) at a finite mutation rate the distribution spreads into mixed populations, which this limit cannot represent. Both need the full finite-mutation chain.",
+  "naming_warning": "theory_stationary_distribution.csv is a predicted population composition under evolutionary dynamics. strategy_summary_player.csv in the behavioural analysis is a nearest-strategy classification of observed trajectories. They are not two estimates of one quantity.",
+  "parameter_points": [
+    {
+      "beta": 2.0,
+      "label": "reference",
+      "nominal_mu": 0.02
+    },
+    {
+      "beta": 0.01,
+      "label": "best_fit",
+      "nominal_mu": 0.05
+    }
+  ],
+  "payoff_method": "exact",
+  "payoff_method_note": "exact enumerates the horizon distribution and has no sampling error; monte_carlo reproduces the source paper's construction and is offered for cross-checking. The equilibrium and evolutionary tables always use the exact matrix, because sampling noise breaks the exact equality between the AU and CAS cells that the equilibrium structure rests on.",
+  "population_size": 100,
+  "reads_experiment_output": false,
+  "schema_version": "ai-race-theory-v1"
+}

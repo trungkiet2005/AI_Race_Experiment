@@ -1,0 +1,4 @@
+max_private_risk,expected_horizon,stage_game_class,stage_game_ordering,social_dilemma_threshold,above_social_dilemma_threshold,nash_equilibria,symmetric_nash_strategies,as_is_nash,unconditional_region,always_safe_nash_from,always_unsafe_nash_until,payoff_method,replications,seed
+0.1,9.0,deadlock,T>P>R>S,0.13235294117647056,False,"AU,AU|AU,CAS|CAS,AU|CAS,CAS",AU|CAS,False,always_unsafe_only,0.5148026315789473,0.9205882352941177,exact,0,
+0.6,9.0,deadlock,T>P>R>S,0.13235294117647056,True,"AU,AU|AU,CAS|CAS,AU|CAS,CAS",AU|CAS,False,bistable_coordination,0.5148026315789473,0.9205882352941177,exact,0,
+0.9,9.0,deadlock,T>P>R>S,0.13235294117647056,True,"CS,CS",CS,False,bistable_coordination,0.5148026315789473,0.9205882352941177,exact,0,

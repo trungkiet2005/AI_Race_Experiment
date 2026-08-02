@@ -1,0 +1,81 @@
+{
+  "schema_version": "ai-race-game-understanding-run-v2",
+  "status": "completed",
+  "started_utc": "2026-07-31T08:30:54.401059+00:00",
+  "completed_utc": "2026-07-31T08:32:02.453241+00:00",
+  "profile": "pilot",
+  "hostname": "nb-b43b17b4-d969-4c10-a95c-929ed8b71e8a-57bfddc5d7-5h9rt",
+  "gpu_name": "NVIDIA H100 80GB HBM3",
+  "ollama_version": "0.30.8",
+  "model": {
+    "short_name": "qwen2.5:7b-instruct-fp16",
+    "path": "ollama://localhost/qwen2.5:7b-instruct-fp16@59805ce4a4046be2d8f63231a78daacd2e66f5dccf1a64d0d138ebeeb26ff16c",
+    "engine": "ollama",
+    "config_sha256": "59805ce4a4046be2d8f63231a78daacd2e66f5dccf1a64d0d138ebeeb26ff16c"
+  },
+  "ollama_model": {
+    "name": "qwen2.5:7b-instruct-fp16",
+    "digest": "59805ce4a4046be2d8f63231a78daacd2e66f5dccf1a64d0d138ebeeb26ff16c",
+    "size": 15237866977,
+    "details": {
+      "parent_model": "/Users/ollama/.ollama/models/blobs/sha256-678e1e0883636c4234928f23fd208337f790456121124a1986cbf1b806baeadb",
+      "format": "gguf",
+      "family": "qwen2",
+      "families": [
+        "qwen2"
+      ],
+      "parameter_size": "7.6B",
+      "quantization_level": "F16",
+      "context_length": 32768,
+      "embedding_length": 3584
+    }
+  },
+  "source_sha256": "47188d20958802e71be6536d37df49a4cbc44cfa7bdbd45b1dfa0e8389b00887",
+  "base_seed": 260726,
+  "decoding": {
+    "temperature": 0.7,
+    "max_tokens": 32,
+    "num_ctx": 4096,
+    "workers": 16,
+    "seed_requested": true,
+    "seed_probe_exact_match": true
+  },
+  "package_versions": {
+    "python": "3.10.12",
+    "ollama": "0.30.8"
+  },
+  "lane": "behavior",
+  "audit_protocol": "ai-race-game-understanding-v2",
+  "condition": "canonical",
+  "repetitions": 10,
+  "expected_races": 30,
+  "experiment": {
+    "name": "game_understanding_behavior__canonical",
+    "runPhase": "pilot",
+    "description": "Paper-faithful LLM baseline: neutral two-company races, English prompt, hidden stochastic horizon, and maximum private risk treatments 0.1/0.6/0.9. No human demographics or elicited risk-preference covariates.",
+    "games": [
+      "ai_race_risk_10",
+      "ai_race_risk_60",
+      "ai_race_risk_90"
+    ],
+    "agents": "companies_default",
+    "languages": [
+      "en"
+    ],
+    "models": [
+      "LocalQwen"
+    ],
+    "useOffline": true,
+    "offlineSettings": "offline_settings",
+    "repetitions": 10,
+    "seed": 260726,
+    "maxParseRetries": 3,
+    "verbose": true,
+    "samplingSeedApplied": true
+  },
+  "experiment_config_sha256": "a970d59c646fcca45a7404cbb3e9ae73bc9cb0d18e57675690e9f62a150ce550",
+  "n_races": 30,
+  "n_turns": 558,
+  "error": null,
+  "elapsed_seconds": 68.047
+}

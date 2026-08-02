@@ -5,6 +5,7 @@
 \usepackage{amsmath,amssymb}
 \usepackage{booktabs}
 \usepackage{graphicx}
+\usepackage{placeins}
 \usepackage{microtype}
 \microtypesetup{expansion=false}
 \usepackage[margin=1in]{geometry}
@@ -25,7 +26,7 @@ A Repeated-Game Evaluation of Competitive Safety Decisions}
 \maketitle
 
 \begin{abstract}
-Competitive technology development can make speed privately advantageous even when unsafe development carries substantial risk. We adapt a repeated, two-player AI-race experiment into a controlled evaluation of language-model agents while preserving simultaneous decisions, a hidden stochastic horizon, progress incentives, terminal prizes, and accumulated private setback risk. Before confirmatory data collection, we ran a claim-scoped pilot audit of one checkpoint. Forty-one atomic probes tested rule recall, stage payoffs, state reconstruction, state transition, terminal scoring, and expected payoff under direct, paraphrased, answer-order, and calculator-disclosure conditions. Across 685 fixed-seed outputs, semantic accuracy was 59.1\% overall, 52.1\% without disclosed calculator results, and 75.6\% with them; strict format compliance was 32.1\%. Rule recall (97.4\%) and stage-payoff lookup (100\%) contrasted with state transition (22.2\%) and expected-payoff calculation (16.7\%). In a paired behavioural pilot of 30 races per condition, a deterministic decision card produced 60.8\% Unsafe choices versus 52.0\% under the canonical prompt, with zero parse failures and identical hidden horizons. These diagnostic results show why action choice cannot itself establish game comprehension. Confirmatory treatment and dynamic-state effects remain pending.
+Competitive technology development can make speed privately advantageous even when unsafe development carries substantial risk. We adapt a repeated, two-player AI-race experiment into a controlled evaluation of language-model agents while preserving simultaneous decisions, a hidden stochastic horizon, progress incentives, terminal prizes, and accumulated private setback risk. Before confirmatory data collection, we ran a claim-scoped pilot audit of one checkpoint. Forty-one atomic probes tested rule recall, stage payoffs, state reconstruction, state transition, terminal scoring, and expected payoff under direct, paraphrased, answer-order, and calculator-disclosure conditions. Across 685 fixed-seed outputs, semantic accuracy was 59.1\% overall, 52.1\% without disclosed calculator results, and 75.6\% with them; strict format compliance was 32.1\%. Rule recall (97.4\%) and stage-payoff lookup (100\%) contrasted with state transition (22.2\%) and expected-payoff calculation (16.7\%). In a paired behavioural pilot of 30 races per condition, a deterministic decision card produced 60.8\% Unsafe choices versus 52.0\% under the canonical prompt, with zero parse failures and identical hidden horizons. A five-checkpoint baseline showed qualitatively heterogeneous risk-response profiles, but differing provider protocols and pilot status preclude pooled inference. An eight-context pilot found complete agreement at round 1 but large later trajectory differences gated by opaque action-code position; its comprehension admission failed. Fixed-state and live contrasts are reported descriptively, not as causal mediation. A revision-pinned FAST-SAE pilot found held-out activation associations without feature-specific causal control over actions. A faithful evolutionary-game reconstruction recovered the source paper's qualitative phase ordering but not the prompt-sensitive agent pattern. Confirmatory treatment and dynamic-state effects remain pending.
 \end{abstract}
 
 \section{Introduction}
@@ -43,6 +44,10 @@ The study is designed around three confirmatory questions. First, does the maxim
 The focal source combines a human behavioural experiment with a reduced evolutionary model \citep{fernandezDomingosHan2026}. Its canonical stage game has the Deadlock ordering \(T>P>R>S\), not the standard Prisoner's Dilemma ordering: Unsafe strictly dominates Safe in immediate payoff, and mutual Unsafe is not directly costly at the stage-game level. The cost of unsafe development instead enters through accumulated private setback risk at the end of the race. This distinction matters because an implementation that charges a per-round collective loss would constitute a different game.
 
 The source study recruited human participants through Prolific and implemented the task in oTree. Its dynamic associations cannot be imported as hypotheses that LLMs are expected to ``replicate.'' We will treat them as preregistration targets whose signs can be supported, contradicted, or left unresolved by independently generated agent data. Any comparison with human estimates will be descriptive unless a common estimand and uncertainty-aware comparison are specified in advance.
+
+Context-framing work provides a separate robustness target. Robinson and Burden vary vignettes while retaining an underlying game structure and report substantial contextual variability in model decisions \citep{robinsonBurden2025}. Mousavi Davoudi et al. formalise strategic robustness as invariance under payoff-preserving narrative changes \citep{mousaviDavoudiEtAl2026}. Our extension applies that idea to trial-level trajectories in a repeated stochastic-horizon game, while separating the first decision, matched fixed-state replay, and the endogenous live trajectory.
+
+Behavioral-game evaluations also identify positional and payoff biases under strategically equivalent presentations \citep{herrEtAl2024}. In repeated games, eliciting an opponent prediction before action can change coordination and realised score \citep{akataEtAl2025}. More general counterfactual-task results show that performance can decline when familiar rules are replaced by formally specified alternatives \citep{wuEtAl2024}. These findings motivate three separate checks here: opaque-code invariance, positive payoff-unit invariance, and explicit separation of state computation, opponent belief, and action. A move alone is not treated as evidence that the model formed the correct belief or applied the terminal objective.
 
 \section{Methods}
 
@@ -82,7 +87,7 @@ Same-round decisions will be isolated. Both responses must be committed before e
 
 \subsection{Models, pairings, and experimental units}
 
-The model roster, exact checkpoint or endpoint revision, provider, access date, context limit, decoding parameters, and seed support are \pending. Pairings may include homogeneous dyads and prespecified heterogeneous dyads, but the confirmatory design will balance risk treatments within every pairing stratum. A race generated from an independently allocated environment seed is the primary experimental unit; individual rounds are repeated observations nested within the race and dyad.
+The confirmatory model roster, exact checkpoint or endpoint revision, provider, access date, context limit, decoding parameters, and seed support are \pending. A separate descriptive baseline pilot covered GPT-5 nano, GPT-5.4 nano, Gemini 3 Flash, Gemini 3.1 Flash Lite, and Gemini 3.5 Flash Lite. Those endpoints were run through different provider routes and protocol signatures, so their curves are shown at checkpoint level and are never pooled into a family or population effect. Pairings may include homogeneous dyads and prespecified heterogeneous dyads, but the confirmatory design will balance risk treatments within every pairing stratum. A race generated from an independently allocated environment seed is the primary experimental unit; individual rounds are repeated observations nested within the race and dyad.
 
 Power or precision analysis, target race counts, pilot allocation, and stopping criteria are \pending. These quantities will be determined before the confirmatory run and will not be changed after inspecting confirmatory outcomes. Pilot races used for parser, state, and infrastructure validation will be labelled and excluded from confirmatory inference.
 
@@ -93,6 +98,14 @@ The first experiment will use the canonical game and vary only \(p_r^{\max}\). A
 To assess protocol comprehension without attributing human-like understanding, we use the claim-scoped distinction among reliability, task validity, and generalisability described by Minh et al. \citep{minhEtAlValiditySurvey}. Protocol \texttt{ai-race-game-understanding-v2} contains 41 atomic probes in six domains. Numeric questions use direct, paraphrased, and disclosed-calculator forms; categorical questions additionally reverse answer order. The probes are grounded in the actual rendered behavioural prompt. Strict one-line compliance and semantic correctness are scored separately. Version 1 was rejected at smoke stage because its semantic parser still required the strict answer prefix; version 2 was frozen and rerun rather than rescoring the rejected run as evidence.
 
 The behavioural audit pairs canonical games with games receiving a deterministic four-row decision card. The card enumerates the focal player's stage payoff, resulting progress, and resulting private risk for every combination of own and opponent action. It does not predict the opponent or reveal the final round. Thus, probe calculator accuracy measures use of a disclosed answer, while the behavioural comparison measures whether exact current-round arithmetic changes sampled actions. Neither condition establishes an internal world model.
+
+The exploratory context-robustness extension renders eight narrative skins from one mechanism template: the technology-race and abstract controls plus three realistic--fictional pairs covering logistics, safety-critical deployment, and neutral exploration. Progress increments, payoff matrix, risk treatments, horizon, terminal prize, tie rule, setback process, disclosed state, model digest, and parser remain fixed. The response is an opaque code P or Q. In live play, the mapping between code and semantic action is balanced by repetition parity and retained explicitly; fixed-state replay crosses both mappings within each state. No rendered prompt or later-round history contains the strings \Safe{} or \Unsafe{}.
+
+We distinguish three context estimands. Paired first-round differences occur before feedback. Fixed-state replay presents every skin and both code mappings at identical engine-reachable states, isolating a direct prompt diagnostic at sampled states. Full live-trajectory differences include continued context exposure and endogenous feedback after any earlier action divergence. A frozen admission battery separately tests rule recall, stage payoff, state update, and terminal scoring in every context--mapping cell; behavioral differences are not interpreted as informed utility optimization when that gate fails.
+
+For an exploratory activation-level audit, a native, revision-pinned Qwen2.5-7B-Instruct checkpoint is paired with the revision-pinned layer-12 FAST sparse autoencoder \citep{liEtAl2026Fast}. The runner first executes complete races through the project engine using constrained full-sequence likelihood over the two admissible action strings. Whole races, rather than decision rows, are divided into discovery and evaluation sets. Feature association is only a screening stage. Held-out fixed-state interventions edit the final prompt-token residual and include zero, SAE reconstruction, feature ablation, sign reversal, matched-norm random, and unrelated-feature controls. A separate live-steering stage reruns complete races with common random numbers; after the first action divergence, payoff changes are treated as endogenous trajectory effects rather than direct feature effects.
+
+We also reconstruct the source paper's reduced four-strategy evolutionary model using Always Safe (AS), Always Unsafe (AU), Copy Safe-first (CS), and Copy Unsafe-first (CAS). Ordered matchup payoffs are evaluated by a deterministic geometric-horizon sum with omitted mass below \(10^{-13}\); finite-population stationary distributions are estimated with four independently seeded pairwise-comparison chains per risk--parameter cell. The paper reports two inconsistent reference mutation settings, \(\mu=\beta/Z=0.02\) in the main text and \(\mu=1/Z=0.01\) in Figure S5, so both are preserved rather than silently reconciled. The transition implementation is independently checked against the unmodified pure-Python \texttt{StochDynamics} class at EGTTools' inspected \texttt{docs} commit \citep{fernandezDomingos2020Egttools}. Because the authors' run code, payoff matrices, EGTTools revision, and seeds are not public in arXiv v1, this is classified as a faithful reconstruction rather than exact reproduction.
 
 \subsection{Outcomes and statistical analysis}
 
@@ -106,7 +119,7 @@ Secondary outcomes will include first-round Unsafe frequency, within-race switch
 
 Each compute run emits an append-only event log and a manifest containing source-tree hash, configuration hash, prompt and probe-bank hashes, model digest, package versions, seed allocation, hardware, and timestamps. Derived tables are rebuilt from raw event logs without parsing console output. The analyzer re-renders every probe prompt, re-scores every raw response, recomputes every calculator fragment from the logged pre-turn state, and checks paired horizons. Failed sessions, endpoint errors, truncations, and exclusions remain visible in the accounting trail.
 
-Data cleaning and model fitting will operate on immutable snapshots. The manuscript will cite the snapshot identifier used for every table and figure. No local execution is assumed by this protocol; local files provide source control, while compute and validation runs will occur in the declared Kaggle environment.
+Data cleaning and model fitting will operate on immutable snapshots. The manuscript will cite the snapshot identifier used for every table and figure. GPU runs may execute on Kaggle or the declared GreenNode H100 environment, but every backend receives a separate manifest, immutable model identifier, source hash, and result directory; results are never pooled merely because the nominal model name matches.
 
 \section{Results}
 
@@ -138,6 +151,75 @@ The canonical condition produced an Unsafe rate of 52.0\% (repetition-cluster bo
     \label{fig:calculator-ablation}
 \end{figure}
 
+\subsection{Cross-checkpoint baseline replication}
+
+The descriptive baseline replication completed 150 races and 2,790 decisions: ten races at each maximum-risk level for each of five checkpoints. The curves occupied qualitatively different regimes. GPT-5 nano remained low and nearly flat (12.3\%, 15.1\%, and 14.5\% Unsafe at risks 0.1, 0.6, and 0.9); GPT-5.4 nano was non-monotone (57.7\%, 49.6\%, and 56.7\%); and all three Gemini checkpoints declined as risk increased, from 83.8--100\% at risk 0.1 to 53.9--69.9\% at risk 0.9. This is a replication of behavioural heterogeneity, not an estimate of a model-family effect: sampling was not provider-identical, only ten race seeds supported each checkpoint--risk cell, and the OpenAI and Gemini routes carry distinct protocol signatures.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\linewidth]{results/impact_upgrade/figures/cross_model_risk_response.pdf}
+    \caption{Player-level Unsafe rates in the five-checkpoint baseline pilot. Each point averages 20 player trajectories from ten races. Curves are juxtaposed descriptively; differing provider routes and protocol signatures preclude pooled inference.}
+    \label{fig:cross-model-pilot}
+\end{figure}
+
+\subsection{Payoff-preserving context robustness pilot}
+
+The primary temperature-zero context extension completed 768 live races (13,680 decisions) and a separate 96-state fixed replay crossed with eight contexts and both P/Q mappings (1,536 cells). No final parse failure or retry occurred, and live and fixed manifests used the same exact model digest, mechanism-configuration hash, and decoding temperature. All 1,344 paired non-control-versus-abstract player trajectories selected the same round-1 action. Separation appeared only after entry: conditional median first divergence occurred between rounds 2.5 and 5 across the six contexts that diverged, while the technology control never diverged. The largest live full-trajectory difference was the logistics context at (+34.0) points (race-cluster bootstrap interval (+27.2) to (+40.8)), while the largest fixed-state difference was fictional cartography at (+16.7) points (state-cluster interval (+12.0) to (+21.4)). Six of seven non-control context estimates had the same sign across the two protocols.
+
+The most important diagnostic was the opaque response mapping. When P denoted Safe, the live semantic Unsafe rate was 37.2\%; when Q denoted Safe, it was 0\%. Relative to the abstract control, context differences appeared only in the Safe=P stratum; every Safe=Q contrast was zero. Mapping was balanced but assigned by repetition parity, so this interaction is a gate diagnostic rather than an identified mapping treatment effect. More fundamentally, the frozen comprehension gate failed: state-update accuracy was 12.5\% and terminal-scoring accuracy was 17.2\%. These results demonstrate context-conditioned behavior under mechanically equivalent prompts, but they do not show that the checkpoint recognised, understood, or optimised the game.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\linewidth]{results/impact_upgrade/figures/context_direct_vs_live.pdf}
+    \caption{Direct fixed-state and full live-trajectory context contrasts relative to the abstract control. Their distance is descriptive evidence consistent with repeated exposure and endogenous feedback; because replay states and live races are different analysis units, the connector is not a causal mediation estimate.}
+    \label{fig:context-effects}
+\end{figure}
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\linewidth]{results/impact_upgrade/figures/context_mapping_gate.pdf}
+    \caption{Mapping-stratified paired live contrasts at temperature zero. Six contexts diverged from the abstract control only when Safe was code P; all Safe=Q contrasts were zero. Mapping followed repetition parity, so the pattern motivates a fully crossed diagnostic replication rather than identifying a mapping effect.}
+    \label{fig:mapping-gate}
+\end{figure}
+
+The temperature-0.7 sensitivity run reused all 768 common-random-number race seeds. Relative to temperature zero, its aggregate full-trajectory Unsafe rate was 3.04 points higher (race-cluster interval 2.19--3.97), even though the first-round difference remained exactly zero. Mean turn-level action agreement was 88.2\%, but only 62.6\% of complete player trajectories were identical. Context-effect ranks remained similar (Spearman \(\rho=0.857\)); six of seven non-control effects retained their sign. Temperatures are reported separately, not pooled, and deterministic temperature-zero repetitions are not described as independent model samples.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.92\linewidth]{results/open_source/context_skin_pilot/analysis_temperature_robustness/figures/context_effect_temperature_stability.pdf}
+    \caption{Full-trajectory context effects at two decoding temperatures. The diagonal indicates equality, not a causal null. Mechanism-specific hashes, first-round prompts, horizons, and model digest matched, while the whole staged-source archive hash differed; the comparison is therefore a bounded robustness diagnostic.}
+    \label{fig:temperature-stability}
+\end{figure}
+
+\FloatBarrier
+\subsection{Activation-level actual-self-play audit}
+
+The FAST-SAE pilot executed 18 complete constrained-policy self-play races (300 decisions), split by whole race into 12 discovery and six held-out races. Three discovery-selected layer-12 features retained large held-out absolute correlations with Unsafe-minus-Safe log odds (0.692--0.700), demonstrating association. The causal controls did not support a feature-specific interpretation. At the strongest fixed-state doses, zero of 12 target-minus-matched-random or target-minus-unrelated-feature contrasts had a race-cluster bootstrap interval excluding zero. Full SAE reconstruction itself flipped 12.5\% of the 24 replay-exact decisions.
+
+The live stage reran 114 trajectories over six common-random-number race seeds. Direct comparable target-feature flip rates ranged from 1.1\% to 3.9\%. Across feature, sign, and control cells, target and control conditions produced the identical complete action sequence in 68.1\% of comparisons; control payoff shifts were on the same or larger scale than target shifts. Thus the pilot shows that activation directions can perturb a simulation, but not that any selected feature uniquely represents or controls Unsafe strategy.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\linewidth]{results/open_source/activation_sae/causal_selfplay/fast-sae-pilot-L12-v1/analysis/figures/fixed_state_target_minus_controls.pdf}
+    \caption{Held-out fixed-state steering relative to matched-norm random and unrelated-feature controls. Intervals resample whole evaluation races. No strongest-dose target-minus-control contrast excluded zero; association scores are therefore not promoted to causal feature claims.}
+    \label{fig:sae-controls}
+\end{figure}
+
+\FloatBarrier
+\subsection{Evolutionary-game reconstruction and strategy lens}
+
+The reconstructed strong-selection reference recovered the source paper's qualitative phase ordering: AU dominated at maximum private risk 0.1, CAS at 0.6, and CS at 0.9. Their stationary-mixture implied Unsafe rates were 99.2\%, 98.0\%, and 1.9\%, respectively. At the reported weak-selection, high-mutation best-fit point, the corresponding rates were 87.2\%, 63.1\%, and 37.0\%. The independent transition audit agreed with the pinned official EGTTools source to maximum absolute error \(1.11\times10^{-16}\) for the transition matrix and \(7.63\times10^{-15}\) for the stationary distribution.
+
+The temperature-zero LLM pilot comprised 1,536 player trajectories and 13,680 decisions. Its technology framing selected Unsafe 0\% at every risk, whereas mechanically identical contexts ranged up to 33.3\%, 27.7\%, and 33.0\% at risks 0.1, 0.6, and 0.9. Figure~\ref{fig:egt-llm} therefore serves as a strategy lens, not an equivalence claim: repeated prompted self-play is not sampled evolution, and nearest-strategy labels do not identify a latent policy.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.96\linewidth]{results/open_source/egt_reproduction/egt_theory_vs_llm_unsafe.pdf}
+    \caption{Reduced evolutionary prediction versus LLM-agent behavior under shared game mechanics. The reconstruction yields a sharp risk-driven phase change; the single-checkpoint pilot is dominated by context and opaque-code position. These estimands are juxtaposed descriptively and never pooled.}
+    \label{fig:egt-llm}
+\end{figure}
+
+\FloatBarrier
 \subsection{Maximum-risk treatment effects}
 
 \pending. No treatment estimate, uncertainty interval, significance test, or qualitative direction is currently available. The human-study pattern reported by Fernández Domingos and Han \citep{fernandezDomingosHan2026} is prior work and will not be presented as this project's result.
@@ -154,6 +236,14 @@ The canonical condition produced an Unsafe rate of 52.0\% (repetition-cluster bo
 
 The pilot audit establishes a narrower conclusion than ``the model understands the game.'' The tested checkpoint reliably reproduced its fixed-seed answers and accurately recalled rules and local payoffs, but it did not reliably execute the multi-step calculations needed to represent the evolving race. A supplied calculator improved probe accuracy without guaranteeing safer behavioural choices or greater realised payoff. Consequently, later action analyses must report comprehension and parser health alongside behaviour rather than treating plausible play as a manipulation check.
 
+The context extension sharpens that validity problem. Mechanically equivalent narratives produced identical entry decisions but diverged after feedback, and the opaque P/Q mapping dominated semantic action rates. Because state-update and terminal-scoring admission failed, the appropriate claim is prompt-conditioned behavior, not strategic invariance or informed optimization. Fixed-state replay helps distinguish direct prompt sensitivity from live feedback, but it cannot repair a failed comprehension construct.
+
+The cross-checkpoint baseline adds breadth without resolving that construct. Its low-flat, non-monotone, and declining risk-response profiles reject a simple claim that one observed Unsafe rate characterises language models as a class. Because checkpoint identity is entangled with provider route and the cells are small pilots, the defensible conclusion is qualitative heterogeneity and the need for protocol-matched replication, not a ranking of vendors or model families.
+
+The activation audit imposes a parallel evidence boundary. Predictive AUC or feature--action correlation answers whether an activation separates labels; it does not answer whether that feature uniquely causes a decision. Reconstruction, random-direction, unrelated-feature, sign, and dose controls were as consequential as the selected directions in this pilot. Mechanistic claims therefore remain withheld even though the intervention runner demonstrably changed some complete game trajectories.
+
+The evolutionary reconstruction supplies a useful theoretical comparator without repairing those validity failures. Its sharp AU--CAS--CS phase ordering follows from a deliberately reduced strategy set and population process. Prompted self-play instead exhibited large context and response-code effects under identical payoffs. Agreement or disagreement between those panels cannot be read as validation until comprehension is admitted and the decision-generating populations and estimands are made commensurable.
+
 Confirmatory results will distinguish evidence that an agent's action changes with observable race state from stronger and generally unsupported claims about subjective fear, risk preference, strategic intent, or an internal world model. Agreement with the human-study coefficient signs would constitute behavioural alignment under this task, not psychological equivalence. Disagreement would likewise not invalidate the human study because the populations and decision mechanisms differ.
 
 Policy implications will remain conditional on external validity. The canonical game isolates a narrow speed--safety trade-off with private terminal risk. It does not directly model frontier-lab organisation, collective catastrophe, regulation, communication, or real capability uncertainty. Governance extensions must therefore be evaluated as new experimental games rather than inferred from the baseline alone.
@@ -163,6 +253,12 @@ Policy implications will remain conditional on external validity. The canonical 
 The planned study uses a stylised two-agent environment and sampled text-model policies. Results may depend on prompt wording, context representation, model pairing, decoding settings, endpoint updates, and provider-side inference changes. Repeated calls to one checkpoint do not constitute a population sample comparable to independently recruited human participants. Statistical uncertainty from sampled races does not capture uncertainty about task validity or generalisation to real institutions.
 
 The source study focuses on private risk, and this adaptation preserves that baseline. It therefore cannot answer how agents behave when unsafe development imposes collective or third-party harm without an explicit extension. The stochastic horizon is short, the action set is binary, and agents do not develop new capabilities during a race. These abstractions support controlled inference but limit substantive scope.
+
+The largest new patterns have design-specific uncertainty that ordinary decision-level intervals do not capture. The five-checkpoint baseline used only ten races per checkpoint--risk cell and mixed direct-provider with proxy protocols. In the live context pilot, code mapping was balanced but assigned by repetition parity, leaving mapping entangled with seed-specific horizons. All paired round-1 actions agreed, so later gaps combine repeated prompt exposure with state feedback; the live-minus-fixed difference is not causal mediation because its analysis units differ. Finally, the context comprehension admission failed, preventing strategic-understanding or utility-optimisation claims regardless of the size of the behavioural contrasts.
+
+The highest-priority follow-up is now frozen as a 1,536-race diagnostic: eight contexts, both action-code mappings, three risk levels, and 32 common-random-number repetitions. Both mappings occur within every risk--context--seed block, and the primary interaction is a context-versus-abstract difference-in-differences with race-block uncertainty and Holm correction. Because the current checkpoint failed comprehension admission, even a successful replication remains diagnostic until an admitted checkpoint and protocol-matched model-family replication are available.
+
+Two additional diagnostics are frozen but not reported as model results. A 384-race payoff-scale grid multiplies every stage payoff and the terminal prize by the same positive factor, leaving normalized utility, progress, risk, and random streams unchanged. A 768-race ($2\times2$) computation-scaffold grid independently supplies verified next-state and conditional terminal-payoff rows under both opaque mappings, with 192 additional character-length placebo races. The first is a numerical-rendering and utility-unit stress test; the second tests whether supplying either computation improves measured comprehension or behaviour. Tool-assisted performance would demonstrate aid uptake, not an unaided internal world model.
 
 \section{Ethics and responsible reporting}
 
@@ -174,7 +270,7 @@ Code, prompts, manifests, and de-identified event logs will be linked here after
 
 \section{Conclusion}
 
-This study now contributes a tested game implementation, a claim-scoped comprehension and payoff audit, a calculator-aided behavioural ablation, and a reproducible evidence boundary. The pilot shows that local rule recall can coexist with systematic errors in state transition and expected payoff. Confirmatory claims about risk treatment, opponent response, and race position remain pending until the preregistered run is complete.
+This study now contributes a tested game implementation, a claim-scoped comprehension and payoff audit, a five-checkpoint descriptive baseline, a calculator-aided behavioural ablation, a payoff-preserving context and temperature stress test, a controlled activation-level self-play audit, and a source-validated evolutionary-game reconstruction. The pilots show that checkpoint-level risk-response profiles can differ qualitatively, that local rule recall can coexist with state-transition errors, that context effects can emerge only after feedback and can be gated by opaque response-code position, and that strong SAE associations need not survive causal controls. The theoretical phase ordering was recoverable, but it did not describe the prompt-sensitive agent pilots. Confirmatory claims about risk treatment, opponent response, race position, or model-family differences remain pending until protocol-matched preregistered runs pass comprehension and design gates.
 
 \bibliographystyle{plainnat}
 \bibliography{paper/refs}

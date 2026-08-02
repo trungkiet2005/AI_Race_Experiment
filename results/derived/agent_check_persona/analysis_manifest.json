@@ -1,0 +1,1414 @@
+{
+  "all_manifest_counts_verified": true,
+  "allow_mixed_protocols": true,
+  "allow_noncanonical_mechanism": false,
+  "allow_nonconfirmatory_runs": true,
+  "allow_nonfinal_runs": true,
+  "behavior_filter": "A race is included in behavioral, strategy, and logit estimands only when every decision parsed and the race used a canonical risk treatment, reached the five-round minimum, and did not terminate at a forced safety cap. All races remain in protocol-health and accounting outputs.",
+  "behavioral_models": [
+    "google/gemini-3-flash-preview"
+  ],
+  "behavioral_persona_conditions": [
+    "R+",
+    "R-",
+    "R0",
+    "R1-R1",
+    "R1-R2",
+    "R1-R3",
+    "R1-R4",
+    "R1-R5",
+    "R1-R6",
+    "R2-R1",
+    "R2-R2",
+    "R2-R3",
+    "R2-R4",
+    "R2-R5",
+    "R2-R6",
+    "R3-R1",
+    "R4-R1",
+    "S_AA",
+    "S_AC",
+    "S_CA",
+    "S_CC"
+  ],
+  "behavioral_prompt_versions": [
+    "ai-race-fairgame-v3"
+  ],
+  "behavioral_protocol_signatures": [
+    "00b5bfeb6cb481a657d43f301d74449f7e63b308c3629d381fbcd55049f8775c",
+    "0155c897cb80073899c74de5772e440882cf90c259946beb6c1c9f409c771095",
+    "0c3bf15251a358e304264ea28bef87dae4bde546e394762dd96506cc4248ad64",
+    "233df2e39a7764e96eec0663236e32095e2b744a5b17cc6a44598bb3fffd3189",
+    "24ae349d06dd496859ec3963fc51abf44053b33a59fb84e284ef3a169ea16083",
+    "2f8075d632b736e0fd371f238859cbe42ba9342f75768d0920621896ebf83955",
+    "590431109d29eefe73c92aa3f3b0c29f97cfc204662b3cb78f9e50103cf085ae",
+    "6761230202f459967a8c53763fd76e54e433a8b09cab749741e7db0158747062",
+    "6bf202261e41dc424f5975cef28281046ef3ab3be938b58b3d76b6286606f21e",
+    "7070f64a43a39818896d80b53dc7f05949a9bb6c717cad036793e4301396c532",
+    "72fdad899c984ad38c2100883dcfdf0044c4ab51999e9cf3a422a771073c41b1",
+    "90caa184f8f63392a9e9add1276d33ba2d47587cceca248f31b07a6c13242bd9",
+    "98497ace89b4a166ca13f0fae4e684a2ed5eedd318b82621246158f00c66ce85",
+    "9a893d14110776eb4f0c57f8461bb1e46b856eb9970878b6026500c6571e840c",
+    "9dad670d4fdd00860e7405cd8fd2a6b31fc561ab5d71ead52ce349e3a626d449",
+    "a861b4afe43d5a44d1cbcd875344ba5bf0c17113bed45267aa1dcc88d1c935c5",
+    "aca0fc139f3c4589435f47436cb3f675597912e9fff03976ca5ac3fdf4e4f50b",
+    "d1f7b56ce254e84ab2f71ba7997a6f6214b49f5b69a4131fedf70e58ab946c59",
+    "e094769790771bbb867f871152b3869e592a3ea75216647faca3babf4717b9b2",
+    "e84fc1cdb37bfbfe50de3b53d832e513c01020656c6ffeb9e4eadb1d06c9873c",
+    "fda220309371e63ea3923ddd0eb2c932008c0e5d7b781c3081e0fd2695bf91ad"
+  ],
+  "behavioral_run_phases": [
+    "pilot"
+  ],
+  "behavioral_run_statuses": [
+    "completed"
+  ],
+  "inference_cluster": "source_run/model/rep common-random-number repetition block; the logit refuses inputs without valid blocks spanning risk treatments",
+  "logit_formula": null,
+  "logit_requested": false,
+  "logit_robustness_requested": false,
+  "mechanics_checks_passed": [
+    "step_increment matches Safe=1.0/Unsafe=1.5",
+    "round_payoff matches the canonical 2x2 stage game",
+    "own_progress_after matches pre-state plus step increment",
+    "each trajectory starts from zero progress",
+    "progress state is continuous across rounds",
+    "progress_gap_after matches focal minus opponent progress",
+    "opponent_progress_before matches the paired trajectory",
+    "opponent_progress_after matches the paired trajectory",
+    "own accumulated stage payoff before the decision matches prior round payoffs",
+    "cumulative stage payoff matches the round-payoff trajectory",
+    "accumulated stage payoff advances by the current round payoff",
+    "own private risk before the decision matches prior Unsafe frequency",
+    "current private risk matches max_private_risk times cumulative Unsafe frequency",
+    "opponent accumulated stage payoff before the decision matches the paired trajectory",
+    "opponent private risk before the decision matches the paired trajectory",
+    "stopped marks exactly the terminal game-round",
+    "stop_draw follows the shared minimum-5-round, p=0.2 stopping rule",
+    "horizon and stopping draws are fixed within each CRN repetition block",
+    "players.csv n_rounds matches trajectory length",
+    "players.csv unsafe_count matches enacted trajectory",
+    "players.csv unsafe_frequency matches enacted trajectory",
+    "players.csv progress matches terminal turn state",
+    "players.csv stage_payoff matches summed round payoffs",
+    "players.csv private_risk matches max_private_risk times realised Unsafe frequency",
+    "players.csv prize matches canonical winner=100/tie=50/loser=0",
+    "setback eligibility matches winner/tied-winner status",
+    "setback flags match eligibility, draw, and private risk",
+    "players.csv final_payoff is zero after setback and otherwise stage_payoff plus prize",
+    "setback draws are fixed by player seat within each CRN repetition block",
+    "players.csv outcomes match terminal progress",
+    "races.csv tie matches player outcomes"
+  ],
+  "n_parse_failures": 0,
+  "n_player_races_behavioral": 1134,
+  "n_player_races_total": 1134,
+  "n_player_rounds_behavioral": 10422,
+  "n_player_rounds_total": 10422,
+  "n_races_behavioral": 567,
+  "n_races_excluded_any_parse_failure": 0,
+  "n_races_excluded_forced_safety_cap_stop": 0,
+  "n_races_excluded_noncanonical_mechanism": 0,
+  "n_races_excluded_total": 0,
+  "n_races_total": 567,
+  "n_source_runs": 21,
+  "outputs": [
+    "first_round_persistence_player.csv",
+    "first_round_persistence_turn.csv",
+    "gap_collinearity.csv",
+    "horizon_distribution.csv",
+    "human_comparison.csv",
+    "human_comparison_metadata.json",
+    "opponent_response_player.csv",
+    "opponent_response_turn.csv",
+    "outcome_player.csv",
+    "parse_failures.csv",
+    "persona_contrasts.csv",
+    "persona_contrasts_round2plus.csv",
+    "player_metrics.csv",
+    "race_quality.csv",
+    "race_state_player.csv",
+    "sample_summary.csv",
+    "seat_balance.csv",
+    "strategy_summary_player.csv",
+    "theory_vs_experiment.csv",
+    "theory_vs_experiment_metadata.json",
+    "treatment_contrasts.csv",
+    "treatment_contrasts_round2plus.csv",
+    "unsafe_by_gap_bin_turn.csv",
+    "unsafe_by_gap_lag_turn.csv",
+    "unsafe_by_lag_profile_turn.csv",
+    "unsafe_by_race_state_turn.csv",
+    "unsafe_by_risk_model_player.csv",
+    "unsafe_by_risk_model_turn.csv",
+    "winner_loser_correlation.csv",
+    "winner_loser_pairs.csv"
+  ],
+  "persona_conditions": [
+    "R+",
+    "R-",
+    "R0",
+    "R1-R1",
+    "R1-R2",
+    "R1-R3",
+    "R1-R4",
+    "R1-R5",
+    "R1-R6",
+    "R2-R1",
+    "R2-R2",
+    "R2-R3",
+    "R2-R4",
+    "R2-R5",
+    "R2-R6",
+    "R3-R1",
+    "R4-R1",
+    "S_AA",
+    "S_AC",
+    "S_CA",
+    "S_CC"
+  ],
+  "persona_identification": {
+    "confounded_with_protocol_signature": true,
+    "identified": false,
+    "n_persona_conditions": 21,
+    "persona_conditions": [
+      "R+",
+      "R-",
+      "R0",
+      "R1-R1",
+      "R1-R2",
+      "R1-R3",
+      "R1-R4",
+      "R1-R5",
+      "R1-R6",
+      "R2-R1",
+      "R2-R2",
+      "R2-R3",
+      "R2-R4",
+      "R2-R5",
+      "R2-R6",
+      "R3-R1",
+      "R4-R1",
+      "S_AA",
+      "S_AC",
+      "S_CA",
+      "S_CC"
+    ],
+    "remedy": "Run every persona cell in one batch so they share source revision, decoding, and package versions; persona then varies inside a single protocol signature and its coefficient is estimable.",
+    "varies_within_protocol_signature": false
+  },
+  "player_level_note": "Player-level tables average within-player trajectory rates so longer realised horizons do not automatically receive more weight.",
+  "prompt_versions": [
+    "ai-race-fairgame-v3"
+  ],
+  "protocol_grouping": "Every descriptive table is stratified by prompt_version, protocol_signature, run_phase, and run_status. By default each model label may have only one exact manifest contract; overrides are explicit sensitivity/protocol audits.",
+  "protocol_signature_payloads": {
+    "00b5bfeb6cb481a657d43f301d74449f7e63b308c3629d381fbcd55049f8775c": {
+      "available_manifest": {
+        "agents_config_sha256": "b0fdde6e620183e9b8f6dcb8e6797c9bb4a2df97a5b1165bb528b5efa4d22e21",
+        "agents_name": "persona_risk_2_2",
+        "created_utc": "2026-08-01T06:25:13.337346+00:00",
+        "experiment": {
+          "agents": "persona_risk_2_2",
+          "backend": "proxy",
+          "description": "Persona condition R2-R2 (risk-preference matrix cell 2,2 of 6x6; Eckel-Grossman gamble scale, paper SI Task 1) over the Kaggle model proxy.",
+          "games": [
+            "ai_race_risk_10",
+            "ai_race_risk_60",
+            "ai_race_risk_90"
+          ],
+          "languages": [
+            "en"
+          ],
+          "maxParseRetries": 3,
+          "models": [
+            "google/gemini-3-flash-preview"
+          ],
+          "name": "api_persona_baseline_risk_2_2",
+          "proxyOptions": {
+            "concurrency": 2,
+            "max_tokens": 256,
+            "max_transport_retries": 6,
+            "send_seed": false,
+            "temperature": 0.7,
+            "timeout": 120
+          },
+          "repetitions": 10,
+          "runPhase": "pilot",
+          "samplingSeedApplied": false,
+          "seed": 260726,
+          "useOffline": false,
+          "verbose": true
+        },
+        "model": "google/gemini-3-flash-preview",
+        "n_races": 30,
+        "n_turns": 558,
+        "persona_condition": "R2-R2",
+        "persona_roles": [
+          "risk-2",
+          "risk-2"
+        ],
+        "persona_sha256": "bb83ed929224c17a30712daa0691c7d0060abeab11a8157a097e10c7a9da89a4",
+        "run_phase": "pilot",
+        "schema_version": "ai-race-results-v1",
+        "status": "completed"
+      },
+      "provenance_error": "D:\\AI_PhD\\GameTheory\\AI_Race_Experiment\\results\\frontier\\persona\\R2_R2_risk_matrix\\google-gemini-3-flash-preview\\run_manifest.json uses unsupported schema_version='ai-race-results-v1'; primary analysis accepts the provenance-rich offline Kaggle or Kaggle Benchmark manifests",
+      "signature_schema": "ai-race-analysis-protocol-signature-v1",
+      "source_run": "D:/AI_PhD/GameTheory/AI_Race_Experiment/results/frontier/persona/R2_R2_risk_matrix/google-gemini-3-flash-preview",
+      "verification": "unverified_protocol_audit_only"
+    },
+    "0155c897cb80073899c74de5772e440882cf90c259946beb6c1c9f409c771095": {
+      "available_manifest": {
+        "agents_config_sha256": "0692a64f6acaa29a740647263ef70cc5aec9da7d24b28f13fdf8be291e108e9d",
+        "agents_name": "persona_risk_1_2",
+        "created_utc": "2026-08-01T03:20:12.144681+00:00",
+        "experiment": {
+          "agents": "persona_risk_1_2",
+          "backend": "proxy",
+          "description": "Persona condition R1-R2 (risk-preference matrix cell 1,2 of 6x6; Eckel-Grossman gamble scale, paper SI Task 1) over the Kaggle model proxy.",
+          "games": [
+            "ai_race_risk_10",
+            "ai_race_risk_60",
+            "ai_race_risk_90"
+          ],
+          "languages": [
+            "en"
+          ],
+          "maxParseRetries": 3,
+          "models": [
+            "google/gemini-3-flash-preview"
+          ],
+          "name": "api_persona_baseline_risk_1_2",
+          "proxyOptions": {
+            "concurrency": 2,
+            "max_tokens": 256,
+            "max_transport_retries": 6,
+            "send_seed": false,
+            "temperature": 0.7,
+            "timeout": 120
+          },
+          "repetitions": 10,
+          "runPhase": "pilot",
+          "samplingSeedApplied": false,
+          "seed": 260726,
+          "useOffline": false,
+          "verbose": true
+        },
+        "model": "google/gemini-3-flash-preview",
+        "n_races": 30,
+        "n_turns": 558,
+        "persona_condition": "R1-R2",
+        "persona_roles": [
+          "risk-1",
+          "risk-2"
+        ],
+        "persona_sha256": "1edf84da5652f175fc3e404c94e27392a09966ff94919441262934914a2974ce",
+        "run_phase": "pilot",
+        "schema_version": "ai-race-results-v1",
+        "status": "completed"
+      },
+      "provenance_error": "D:\\AI_PhD\\GameTheory\\AI_Race_Experiment\\results\\frontier\\persona\\R1_R2_risk_matrix\\google-gemini-3-flash-preview\\run_manifest.json uses unsupported schema_version='ai-race-results-v1'; primary analysis accepts the provenance-rich offline Kaggle or Kaggle Benchmark manifests",
+      "signature_schema": "ai-race-analysis-protocol-signature-v1",
+      "source_run": "D:/AI_PhD/GameTheory/AI_Race_Experiment/results/frontier/persona/R1_R2_risk_matrix/google-gemini-3-flash-preview",
+      "verification": "unverified_protocol_audit_only"
+    },
+    "0c3bf15251a358e304264ea28bef87dae4bde546e394762dd96506cc4248ad64": {
+      "available_manifest": {
+        "agents_config_sha256": "62e69734be5ad3b5d27467c2eac63174a03a7506f2def35a2ffb08d36fc5dc16",
+        "agents_name": "persona_risk_seeking",
+        "created_utc": "2026-08-01T02:40:17.380842+00:00",
+        "experiment": {
+          "agents": "persona_risk_seeking",
+          "backend": "proxy",
+          "description": "Persona condition R+ (both seats risk-seeking) over the Kaggle model proxy.",
+          "games": [
+            "ai_race_risk_10",
+            "ai_race_risk_60",
+            "ai_race_risk_90"
+          ],
+          "languages": [
+            "en"
+          ],
+          "maxParseRetries": 3,
+          "models": [
+            "google/gemini-3-flash-preview"
+          ],
+          "name": "api_persona_baseline_risk_seeking",
+          "proxyOptions": {
+            "concurrency": 2,
+            "max_tokens": 256,
+            "max_transport_retries": 6,
+            "send_seed": false,
+            "temperature": 0.7,
+            "timeout": 120
+          },
+          "repetitions": 10,
+          "runPhase": "pilot",
+          "samplingSeedApplied": false,
+          "seed": 260726,
+          "useOffline": false,
+          "verbose": true
+        },
+        "model": "google/gemini-3-flash-preview",
+        "n_races": 30,
+        "n_turns": 558,
+        "persona_condition": "R+",
+        "persona_roles": [
+          "risk-seeking",
+          "risk-seeking"
+        ],
+        "persona_sha256": "d680d5315c5190ab7be469f76f0485858886c7faefe94f7758073273f917f58c",
+        "run_phase": "pilot",
+        "schema_version": "ai-race-results-v1",
+        "status": "completed"
+      },
+      "provenance_error": "D:\\AI_PhD\\GameTheory\\AI_Race_Experiment\\results\\frontier\\persona\\Rplus_risk_seeking\\google-gemini-3-flash-preview\\run_manifest.json uses unsupported schema_version='ai-race-results-v1'; primary analysis accepts the provenance-rich offline Kaggle or Kaggle Benchmark manifests",
+      "signature_schema": "ai-race-analysis-protocol-signature-v1",
+      "source_run": "D:/AI_PhD/GameTheory/AI_Race_Experiment/results/frontier/persona/Rplus_risk_seeking/google-gemini-3-flash-preview",
+      "verification": "unverified_protocol_audit_only"
+    },
+    "233df2e39a7764e96eec0663236e32095e2b744a5b17cc6a44598bb3fffd3189": {
+      "available_manifest": {
+        "agents_config_sha256": "99b53880392eed14ac679de438633d757307ae5d491cf968242d846a33fa5d74",
+        "agents_name": "persona_risk_2_1",
+        "created_utc": "2026-08-01T04:21:36.717940+00:00",
+        "experiment": {
+          "agents": "persona_risk_2_1",
+          "backend": "proxy",
+          "description": "Persona condition R2-R1 (risk-preference matrix cell 2,1 of 6x6; Eckel-Grossman gamble scale, paper SI Task 1) over the Kaggle model proxy.",
+          "games": [
+            "ai_race_risk_10",
+            "ai_race_risk_60",
+            "ai_race_risk_90"
+          ],
+          "languages": [
+            "en"
+          ],
+          "maxParseRetries": 3,
+          "models": [
+            "google/gemini-3-flash-preview"
+          ],
+          "name": "api_persona_baseline_risk_2_1",
+          "proxyOptions": {
+            "concurrency": 2,
+            "max_tokens": 256,
+            "max_transport_retries": 6,
+            "send_seed": false,
+            "temperature": 0.7,
+            "timeout": 120
+          },
+          "repetitions": 10,
+          "runPhase": "pilot",
+          "samplingSeedApplied": false,
+          "seed": 260726,
+          "useOffline": false,
+          "verbose": true
+        },
+        "model": "google/gemini-3-flash-preview",
+        "n_races": 30,
+        "n_turns": 558,
+        "persona_condition": "R2-R1",
+        "persona_roles": [
+          "risk-2",
+          "risk-1"
+        ],
+        "persona_sha256": "7b200caf510eb29220fb06eb94e19d217b26b1fb8be12b2936f581126977714e",
+        "run_phase": "pilot",
+        "schema_version": "ai-race-results-v1",
+        "status": "completed"
+      },
+      "provenance_error": "D:\\AI_PhD\\GameTheory\\AI_Race_Experiment\\results\\frontier\\persona\\R2_R1_risk_matrix\\google-gemini-3-flash-preview\\run_manifest.json uses unsupported schema_version='ai-race-results-v1'; primary analysis accepts the provenance-rich offline Kaggle or Kaggle Benchmark manifests",
+      "signature_schema": "ai-race-analysis-protocol-signature-v1",
+      "source_run": "D:/AI_PhD/GameTheory/AI_Race_Experiment/results/frontier/persona/R2_R1_risk_matrix/google-gemini-3-flash-preview",
+      "verification": "unverified_protocol_audit_only"
+    },
+    "24ae349d06dd496859ec3963fc51abf44053b33a59fb84e284ef3a169ea16083": {
+      "available_manifest": {
+        "agents_config_sha256": "a6dc0bb534f4245f18a83ac9f487c34a365455ff21e80afb426b9bc1fa55dc84",
+        "agents_name": "persona_neutral",
+        "created_utc": "2026-07-31T10:21:41.339637+00:00",
+        "experiment": {
+          "agents": "persona_neutral",
+          "backend": "proxy",
+          "description": "Persona condition R0 (neutral placebo, same text length as the real personas but no directional content) over the Kaggle model proxy.",
+          "games": [
+            "ai_race_risk_10",
+            "ai_race_risk_60",
+            "ai_race_risk_90"
+          ],
+          "languages": [
+            "en"
+          ],
+          "maxParseRetries": 3,
+          "models": [
+            "google/gemini-3-flash-preview"
+          ],
+          "name": "api_persona_baseline_neutral",
+          "proxyOptions": {
+            "concurrency": 2,
+            "max_tokens": 256,
+            "max_transport_retries": 6,
+            "send_seed": false,
+            "temperature": 0.7,
+            "timeout": 120
+          },
+          "repetitions": 10,
+          "runPhase": "pilot",
+          "samplingSeedApplied": false,
+          "seed": 260726,
+          "useOffline": false,
+          "verbose": true
+        },
+        "model": "google/gemini-3-flash-preview",
+        "n_races": 30,
+        "n_turns": 558,
+        "persona_condition": "R0",
+        "persona_roles": [
+          "neutral",
+          "neutral"
+        ],
+        "persona_sha256": "e01feb866f5e6ccf4dc60c64df1c7098892e1a5135b2fe61eb78b68590fea6e1",
+        "run_phase": "pilot",
+        "schema_version": "ai-race-results-v1",
+        "status": "completed"
+      },
+      "provenance_error": "D:\\AI_PhD\\GameTheory\\AI_Race_Experiment\\results\\frontier\\persona\\R0_neutral\\google-gemini-3-flash-preview\\run_manifest.json uses unsupported schema_version='ai-race-results-v1'; primary analysis accepts the provenance-rich offline Kaggle or Kaggle Benchmark manifests",
+      "signature_schema": "ai-race-analysis-protocol-signature-v1",
+      "source_run": "D:/AI_PhD/GameTheory/AI_Race_Experiment/results/frontier/persona/R0_neutral/google-gemini-3-flash-preview",
+      "verification": "unverified_protocol_audit_only"
+    },
+    "2f8075d632b736e0fd371f238859cbe42ba9342f75768d0920621896ebf83955": {
+      "available_manifest": {
+        "agents_config_sha256": "51bf5b7cc610a8c072de8f8ee6467e6829f5ff057fefbe856fbdef588d7422eb",
+        "agents_name": "persona_risk_2_6",
+        "created_utc": "2026-08-01T05:49:46.611044+00:00",
+        "experiment": {
+          "agents": "persona_risk_2_6",
+          "backend": "proxy",
+          "description": "Persona condition R2-R6 (risk-preference matrix cell 2,6 of 6x6; Eckel-Grossman gamble scale, paper SI Task 1) over the Kaggle model proxy.",
+          "games": [
+            "ai_race_risk_10",
+            "ai_race_risk_60",
+            "ai_race_risk_90"
+          ],
+          "languages": [
+            "en"
+          ],
+          "maxParseRetries": 3,
+          "models": [
+            "google/gemini-3-flash-preview"
+          ],
+          "name": "api_persona_baseline_risk_2_6",
+          "proxyOptions": {
+            "concurrency": 2,
+            "max_tokens": 256,
+            "max_transport_retries": 6,
+            "send_seed": false,
+            "temperature": 0.7,
+            "timeout": 120
+          },
+          "repetitions": 10,
+          "runPhase": "pilot",
+          "samplingSeedApplied": false,
+          "seed": 260726,
+          "useOffline": false,
+          "verbose": true
+        },
+        "model": "google/gemini-3-flash-preview",
+        "n_races": 30,
+        "n_turns": 558,
+        "persona_condition": "R2-R6",
+        "persona_roles": [
+          "risk-2",
+          "risk-6"
+        ],
+        "persona_sha256": "c4e8e957ff3dfac069813da47d582fcc8d92360cf94c1884aaa458b1a1727aca",
+        "run_phase": "pilot",
+        "schema_version": "ai-race-results-v1",
+        "status": "completed"
+      },
+      "provenance_error": "D:\\AI_PhD\\GameTheory\\AI_Race_Experiment\\results\\frontier\\persona\\R2_R6_risk_matrix\\google-gemini-3-flash-preview\\run_manifest.json uses unsupported schema_version='ai-race-results-v1'; primary analysis accepts the provenance-rich offline Kaggle or Kaggle Benchmark manifests",
+      "signature_schema": "ai-race-analysis-protocol-signature-v1",
+      "source_run": "D:/AI_PhD/GameTheory/AI_Race_Experiment/results/frontier/persona/R2_R6_risk_matrix/google-gemini-3-flash-preview",
+      "verification": "unverified_protocol_audit_only"
+    },
+    "590431109d29eefe73c92aa3f3b0c29f97cfc204662b3cb78f9e50103cf085ae": {
+      "available_manifest": {
+        "agents_config_sha256": "69949a51e3a643ffe97253522772b893e8b153b94207f978c4725c1715dad2c7",
+        "agents_name": "persona_coop_coop",
+        "created_utc": "2026-08-01T02:52:26.268871+00:00",
+        "experiment": {
+          "agents": "persona_coop_coop",
+          "backend": "proxy",
+          "description": "Persona condition S_CC (both seats cooperative, symmetric) over the Kaggle model proxy.",
+          "games": [
+            "ai_race_risk_10",
+            "ai_race_risk_60",
+            "ai_race_risk_90"
+          ],
+          "languages": [
+            "en"
+          ],
+          "maxParseRetries": 3,
+          "models": [
+            "google/gemini-3-flash-preview"
+          ],
+          "name": "api_persona_baseline_coop_coop",
+          "proxyOptions": {
+            "concurrency": 2,
+            "max_tokens": 256,
+            "max_transport_retries": 6,
+            "send_seed": false,
+            "temperature": 0.7,
+            "timeout": 120
+          },
+          "repetitions": 10,
+          "runPhase": "pilot",
+          "samplingSeedApplied": false,
+          "seed": 260726,
+          "useOffline": false,
+          "verbose": true
+        },
+        "model": "google/gemini-3-flash-preview",
+        "n_races": 30,
+        "n_turns": 558,
+        "persona_condition": "S_CC",
+        "persona_roles": [
+          "cooperative",
+          "cooperative"
+        ],
+        "persona_sha256": "4daa5de16a8d856a515442ed4167d671be34749c25c111c89ba9f21591a95094",
+        "run_phase": "pilot",
+        "schema_version": "ai-race-results-v1",
+        "status": "completed"
+      },
+      "provenance_error": "D:\\AI_PhD\\GameTheory\\AI_Race_Experiment\\results\\frontier\\persona\\S_CC_coop_coop\\google-gemini-3-flash-preview\\run_manifest.json uses unsupported schema_version='ai-race-results-v1'; primary analysis accepts the provenance-rich offline Kaggle or Kaggle Benchmark manifests",
+      "signature_schema": "ai-race-analysis-protocol-signature-v1",
+      "source_run": "D:/AI_PhD/GameTheory/AI_Race_Experiment/results/frontier/persona/S_CC_coop_coop/google-gemini-3-flash-preview",
+      "verification": "unverified_protocol_audit_only"
+    },
+    "6761230202f459967a8c53763fd76e54e433a8b09cab749741e7db0158747062": {
+      "available_manifest": {
+        "agents_config_sha256": "5398e3d69e482f7f32ec2800e418d2cfa4a9878b8732a9e652929dfbc01f06b7",
+        "agents_name": "persona_risk_4_1",
+        "created_utc": "2026-08-01T06:37:55.292307+00:00",
+        "experiment": {
+          "agents": "persona_risk_4_1",
+          "backend": "proxy",
+          "description": "Persona condition R4-R1 (risk-preference matrix cell 4,1 of 6x6; Eckel-Grossman gamble scale, paper SI Task 1) over the Kaggle model proxy.",
+          "games": [
+            "ai_race_risk_10",
+            "ai_race_risk_60",
+            "ai_race_risk_90"
+          ],
+          "languages": [
+            "en"
+          ],
+          "maxParseRetries": 3,
+          "models": [
+            "google/gemini-3-flash-preview"
+          ],
+          "name": "api_persona_baseline_risk_4_1",
+          "proxyOptions": {
+            "concurrency": 2,
+            "max_tokens": 256,
+            "max_transport_retries": 6,
+            "send_seed": false,
+            "temperature": 0.7,
+            "timeout": 120
+          },
+          "repetitions": 10,
+          "runPhase": "pilot",
+          "samplingSeedApplied": false,
+          "seed": 260726,
+          "useOffline": false,
+          "verbose": true
+        },
+        "model": "google/gemini-3-flash-preview",
+        "n_races": 30,
+        "n_turns": 558,
+        "persona_condition": "R4-R1",
+        "persona_roles": [
+          "risk-4",
+          "risk-1"
+        ],
+        "persona_sha256": "6569e61f303389dd2233770f830882cd3dfe9e8c1dcf82e6da19901d09508090",
+        "run_phase": "pilot",
+        "schema_version": "ai-race-results-v1",
+        "status": "completed"
+      },
+      "provenance_error": "D:\\AI_PhD\\GameTheory\\AI_Race_Experiment\\results\\frontier\\persona\\R4_R1_risk_matrix\\google-gemini-3-flash-preview\\run_manifest.json uses unsupported schema_version='ai-race-results-v1'; primary analysis accepts the provenance-rich offline Kaggle or Kaggle Benchmark manifests",
+      "signature_schema": "ai-race-analysis-protocol-signature-v1",
+      "source_run": "D:/AI_PhD/GameTheory/AI_Race_Experiment/results/frontier/persona/R4_R1_risk_matrix/google-gemini-3-flash-preview",
+      "verification": "unverified_protocol_audit_only"
+    },
+    "6bf202261e41dc424f5975cef28281046ef3ab3be938b58b3d76b6286606f21e": {
+      "available_manifest": {
+        "agents_config_sha256": "02c247c9c3ac144d666e8874881315e356c39ac66355d79479871f7c9802a6b7",
+        "agents_name": "persona_risk_2_3",
+        "created_utc": "2026-08-01T04:41:24.667345+00:00",
+        "experiment": {
+          "agents": "persona_risk_2_3",
+          "backend": "proxy",
+          "description": "Persona condition R2-R3 (risk-preference matrix cell 2,3 of 6x6; Eckel-Grossman gamble scale, paper SI Task 1) over the Kaggle model proxy.",
+          "games": [
+            "ai_race_risk_10",
+            "ai_race_risk_60",
+            "ai_race_risk_90"
+          ],
+          "languages": [
+            "en"
+          ],
+          "maxParseRetries": 3,
+          "models": [
+            "google/gemini-3-flash-preview"
+          ],
+          "name": "api_persona_baseline_risk_2_3",
+          "proxyOptions": {
+            "concurrency": 2,
+            "max_tokens": 256,
+            "max_transport_retries": 6,
+            "send_seed": false,
+            "temperature": 0.7,
+            "timeout": 120
+          },
+          "repetitions": 10,
+          "runPhase": "pilot",
+          "samplingSeedApplied": false,
+          "seed": 260726,
+          "useOffline": false,
+          "verbose": true
+        },
+        "model": "google/gemini-3-flash-preview",
+        "n_races": 30,
+        "n_turns": 558,
+        "persona_condition": "R2-R3",
+        "persona_roles": [
+          "risk-2",
+          "risk-3"
+        ],
+        "persona_sha256": "8cd84479da3a84e7517bdba426817c5bbb36397859e5743027d47ba9877646b2",
+        "run_phase": "pilot",
+        "schema_version": "ai-race-results-v1",
+        "status": "completed"
+      },
+      "provenance_error": "D:\\AI_PhD\\GameTheory\\AI_Race_Experiment\\results\\frontier\\persona\\R2_R3_risk_matrix\\google-gemini-3-flash-preview\\run_manifest.json uses unsupported schema_version='ai-race-results-v1'; primary analysis accepts the provenance-rich offline Kaggle or Kaggle Benchmark manifests",
+      "signature_schema": "ai-race-analysis-protocol-signature-v1",
+      "source_run": "D:/AI_PhD/GameTheory/AI_Race_Experiment/results/frontier/persona/R2_R3_risk_matrix/google-gemini-3-flash-preview",
+      "verification": "unverified_protocol_audit_only"
+    },
+    "7070f64a43a39818896d80b53dc7f05949a9bb6c717cad036793e4301396c532": {
+      "available_manifest": {
+        "agents_config_sha256": "3a0450a2151dec80105bb394fb58e66b4e60a8c0951a036b2ba336c9ddae61a4",
+        "agents_name": "persona_risk_1_5",
+        "created_utc": "2026-08-01T03:57:11.846840+00:00",
+        "experiment": {
+          "agents": "persona_risk_1_5",
+          "backend": "proxy",
+          "description": "Persona condition R1-R5 (risk-preference matrix cell 1,5 of 6x6; Eckel-Grossman gamble scale, paper SI Task 1) over the Kaggle model proxy.",
+          "games": [
+            "ai_race_risk_10",
+            "ai_race_risk_60",
+            "ai_race_risk_90"
+          ],
+          "languages": [
+            "en"
+          ],
+          "maxParseRetries": 3,
+          "models": [
+            "google/gemini-3-flash-preview"
+          ],
+          "name": "api_persona_baseline_risk_1_5",
+          "proxyOptions": {
+            "concurrency": 2,
+            "max_tokens": 256,
+            "max_transport_retries": 6,
+            "send_seed": false,
+            "temperature": 0.7,
+            "timeout": 120
+          },
+          "repetitions": 10,
+          "runPhase": "pilot",
+          "samplingSeedApplied": false,
+          "seed": 260726,
+          "useOffline": false,
+          "verbose": true
+        },
+        "model": "google/gemini-3-flash-preview",
+        "n_races": 30,
+        "n_turns": 558,
+        "persona_condition": "R1-R5",
+        "persona_roles": [
+          "risk-1",
+          "risk-5"
+        ],
+        "persona_sha256": "198062eeb3f313b295638a24ad25972f11792e55405bca95b4c9817fb86fe0c2",
+        "run_phase": "pilot",
+        "schema_version": "ai-race-results-v1",
+        "status": "completed"
+      },
+      "provenance_error": "D:\\AI_PhD\\GameTheory\\AI_Race_Experiment\\results\\frontier\\persona\\R1_R5_risk_matrix\\google-gemini-3-flash-preview\\run_manifest.json uses unsupported schema_version='ai-race-results-v1'; primary analysis accepts the provenance-rich offline Kaggle or Kaggle Benchmark manifests",
+      "signature_schema": "ai-race-analysis-protocol-signature-v1",
+      "source_run": "D:/AI_PhD/GameTheory/AI_Race_Experiment/results/frontier/persona/R1_R5_risk_matrix/google-gemini-3-flash-preview",
+      "verification": "unverified_protocol_audit_only"
+    },
+    "72fdad899c984ad38c2100883dcfdf0044c4ab51999e9cf3a422a771073c41b1": {
+      "available_manifest": {
+        "agents_config_sha256": "26dc3a2be9b2f5c25c226b6ae579e746877974ecc6d67bdfe9b1768f6f998a65",
+        "agents_name": "persona_risk_1_6",
+        "created_utc": "2026-08-01T04:09:16.142906+00:00",
+        "experiment": {
+          "agents": "persona_risk_1_6",
+          "backend": "proxy",
+          "description": "Persona condition R1-R6 (risk-preference matrix cell 1,6 of 6x6; Eckel-Grossman gamble scale, paper SI Task 1) over the Kaggle model proxy.",
+          "games": [
+            "ai_race_risk_10",
+            "ai_race_risk_60",
+            "ai_race_risk_90"
+          ],
+          "languages": [
+            "en"
+          ],
+          "maxParseRetries": 3,
+          "models": [
+            "google/gemini-3-flash-preview"
+          ],
+          "name": "api_persona_baseline_risk_1_6",
+          "proxyOptions": {
+            "concurrency": 2,
+            "max_tokens": 256,
+            "max_transport_retries": 6,
+            "send_seed": false,
+            "temperature": 0.7,
+            "timeout": 120
+          },
+          "repetitions": 10,
+          "runPhase": "pilot",
+          "samplingSeedApplied": false,
+          "seed": 260726,
+          "useOffline": false,
+          "verbose": true
+        },
+        "model": "google/gemini-3-flash-preview",
+        "n_races": 30,
+        "n_turns": 558,
+        "persona_condition": "R1-R6",
+        "persona_roles": [
+          "risk-1",
+          "risk-6"
+        ],
+        "persona_sha256": "e1611502022f840f15dddc73910235f327af1c19a1f0f60d2c953fd851bb84f1",
+        "run_phase": "pilot",
+        "schema_version": "ai-race-results-v1",
+        "status": "completed"
+      },
+      "provenance_error": "D:\\AI_PhD\\GameTheory\\AI_Race_Experiment\\results\\frontier\\persona\\R1_R6_risk_matrix\\google-gemini-3-flash-preview\\run_manifest.json uses unsupported schema_version='ai-race-results-v1'; primary analysis accepts the provenance-rich offline Kaggle or Kaggle Benchmark manifests",
+      "signature_schema": "ai-race-analysis-protocol-signature-v1",
+      "source_run": "D:/AI_PhD/GameTheory/AI_Race_Experiment/results/frontier/persona/R1_R6_risk_matrix/google-gemini-3-flash-preview",
+      "verification": "unverified_protocol_audit_only"
+    },
+    "90caa184f8f63392a9e9add1276d33ba2d47587cceca248f31b07a6c13242bd9": {
+      "available_manifest": {
+        "agents_config_sha256": "90552c8aab2ea00a4d4d0ba7d003607ce0a070b7ace01156819a8c2ba3c24d37",
+        "agents_name": "persona_risk_1_4",
+        "created_utc": "2026-08-01T03:44:37.539233+00:00",
+        "experiment": {
+          "agents": "persona_risk_1_4",
+          "backend": "proxy",
+          "description": "Persona condition R1-R4 (risk-preference matrix cell 1,4 of 6x6; Eckel-Grossman gamble scale, paper SI Task 1) over the Kaggle model proxy.",
+          "games": [
+            "ai_race_risk_10",
+            "ai_race_risk_60",
+            "ai_race_risk_90"
+          ],
+          "languages": [
+            "en"
+          ],
+          "maxParseRetries": 3,
+          "models": [
+            "google/gemini-3-flash-preview"
+          ],
+          "name": "api_persona_baseline_risk_1_4",
+          "proxyOptions": {
+            "concurrency": 2,
+            "max_tokens": 256,
+            "max_transport_retries": 6,
+            "send_seed": false,
+            "temperature": 0.7,
+            "timeout": 120
+          },
+          "repetitions": 10,
+          "runPhase": "pilot",
+          "samplingSeedApplied": false,
+          "seed": 260726,
+          "useOffline": false,
+          "verbose": true
+        },
+        "model": "google/gemini-3-flash-preview",
+        "n_races": 30,
+        "n_turns": 558,
+        "persona_condition": "R1-R4",
+        "persona_roles": [
+          "risk-1",
+          "risk-4"
+        ],
+        "persona_sha256": "f73a82b554e9ff9d5378898663baf0ed03f1f292c17961e5cdd96bc089c32be6",
+        "run_phase": "pilot",
+        "schema_version": "ai-race-results-v1",
+        "status": "completed"
+      },
+      "provenance_error": "D:\\AI_PhD\\GameTheory\\AI_Race_Experiment\\results\\frontier\\persona\\R1_R4_risk_matrix\\google-gemini-3-flash-preview\\run_manifest.json uses unsupported schema_version='ai-race-results-v1'; primary analysis accepts the provenance-rich offline Kaggle or Kaggle Benchmark manifests",
+      "signature_schema": "ai-race-analysis-protocol-signature-v1",
+      "source_run": "D:/AI_PhD/GameTheory/AI_Race_Experiment/results/frontier/persona/R1_R4_risk_matrix/google-gemini-3-flash-preview",
+      "verification": "unverified_protocol_audit_only"
+    },
+    "98497ace89b4a166ca13f0fae4e684a2ed5eedd318b82621246158f00c66ce85": {
+      "available_manifest": {
+        "agents_config_sha256": "e7ee25b836fe10fffa875294c36251440bcaa9d877067298089ebb84be960b70",
+        "agents_name": "persona_adv_coop",
+        "created_utc": "2026-07-31T07:15:32.414389+00:00",
+        "experiment": {
+          "agents": "persona_adv_coop",
+          "backend": "proxy",
+          "description": "Persona condition S_AC over the Kaggle model proxy. Identical mechanism, prompt, seed, and repetitions to api_baseline; only the agents configuration differs.",
+          "games": [
+            "ai_race_risk_10",
+            "ai_race_risk_60",
+            "ai_race_risk_90"
+          ],
+          "languages": [
+            "en"
+          ],
+          "maxParseRetries": 3,
+          "models": [
+            "google/gemini-3-flash-preview"
+          ],
+          "name": "api_persona_baseline_adv_coop",
+          "proxyOptions": {
+            "concurrency": 8,
+            "max_tokens": 256,
+            "max_transport_retries": 3,
+            "send_seed": false,
+            "temperature": 0.7,
+            "timeout": 120
+          },
+          "repetitions": 3,
+          "runPhase": "pilot",
+          "samplingSeedApplied": false,
+          "seed": 260726,
+          "useOffline": false,
+          "verbose": true
+        },
+        "model": "google/gemini-3-flash-preview",
+        "n_races": 9,
+        "n_turns": 126,
+        "persona_condition": "S_AC",
+        "persona_roles": [
+          "adversarial",
+          "cooperative"
+        ],
+        "persona_sha256": "25a676236f97dbe4a80c9c9d09b5777eff0417fc99c6979117685ca9b488eea9",
+        "run_phase": "pilot",
+        "schema_version": "ai-race-results-v1",
+        "status": "completed"
+      },
+      "provenance_error": "D:\\AI_PhD\\GameTheory\\AI_Race_Experiment\\results\\frontier\\persona\\S_AC_adv_coop\\google-gemini-3-flash-preview\\run_manifest.json uses unsupported schema_version='ai-race-results-v1'; primary analysis accepts the provenance-rich offline Kaggle or Kaggle Benchmark manifests",
+      "signature_schema": "ai-race-analysis-protocol-signature-v1",
+      "source_run": "D:/AI_PhD/GameTheory/AI_Race_Experiment/results/frontier/persona/S_AC_adv_coop/google-gemini-3-flash-preview",
+      "verification": "unverified_protocol_audit_only"
+    },
+    "9a893d14110776eb4f0c57f8461bb1e46b856eb9970878b6026500c6571e840c": {
+      "available_manifest": {
+        "agents_config_sha256": "0a2e1a6faf624af72b1865a70be4432b702fa049307a546da465094dab035611",
+        "agents_name": "persona_risk_averse",
+        "created_utc": "2026-07-31T10:35:43.109791+00:00",
+        "experiment": {
+          "agents": "persona_risk_averse",
+          "backend": "proxy",
+          "description": "Persona condition R- (both seats risk-averse) over the Kaggle model proxy.",
+          "games": [
+            "ai_race_risk_10",
+            "ai_race_risk_60",
+            "ai_race_risk_90"
+          ],
+          "languages": [
+            "en"
+          ],
+          "maxParseRetries": 3,
+          "models": [
+            "google/gemini-3-flash-preview"
+          ],
+          "name": "api_persona_baseline_risk_averse",
+          "proxyOptions": {
+            "concurrency": 2,
+            "max_tokens": 256,
+            "max_transport_retries": 6,
+            "send_seed": false,
+            "temperature": 0.7,
+            "timeout": 120
+          },
+          "repetitions": 10,
+          "runPhase": "pilot",
+          "samplingSeedApplied": false,
+          "seed": 260726,
+          "useOffline": false,
+          "verbose": true
+        },
+        "model": "google/gemini-3-flash-preview",
+        "n_races": 30,
+        "n_turns": 558,
+        "persona_condition": "R-",
+        "persona_roles": [
+          "risk-averse",
+          "risk-averse"
+        ],
+        "persona_sha256": "eb61397a1e4d270876c23cfed6b5622d3b826fb62677d6f8048adf526ee6622e",
+        "run_phase": "pilot",
+        "schema_version": "ai-race-results-v1",
+        "status": "completed"
+      },
+      "provenance_error": "D:\\AI_PhD\\GameTheory\\AI_Race_Experiment\\results\\frontier\\persona\\Rminus_risk_averse\\google-gemini-3-flash-preview\\run_manifest.json uses unsupported schema_version='ai-race-results-v1'; primary analysis accepts the provenance-rich offline Kaggle or Kaggle Benchmark manifests",
+      "signature_schema": "ai-race-analysis-protocol-signature-v1",
+      "source_run": "D:/AI_PhD/GameTheory/AI_Race_Experiment/results/frontier/persona/Rminus_risk_averse/google-gemini-3-flash-preview",
+      "verification": "unverified_protocol_audit_only"
+    },
+    "9dad670d4fdd00860e7405cd8fd2a6b31fc561ab5d71ead52ce349e3a626d449": {
+      "available_manifest": {
+        "agents_config_sha256": "7542c19759b5c0f8ea2c36512c145c58414cf52d01cc1cb0b6b9ec6b6d71f5c5",
+        "agents_name": "persona_adv_adv",
+        "created_utc": "2026-07-31T06:44:35.228032+00:00",
+        "experiment": {
+          "agents": "persona_adv_adv",
+          "backend": "proxy",
+          "description": "Persona condition S_AA over the Kaggle model proxy. Identical mechanism, prompt, seed, and repetitions to api_baseline; only the agents configuration differs, so the difference from 'none' is the persona effect.",
+          "games": [
+            "ai_race_risk_10",
+            "ai_race_risk_60",
+            "ai_race_risk_90"
+          ],
+          "languages": [
+            "en"
+          ],
+          "maxParseRetries": 3,
+          "models": [
+            "google/gemini-3-flash-preview"
+          ],
+          "name": "api_persona_baseline_adv_adv",
+          "proxyOptions": {
+            "concurrency": 8,
+            "max_tokens": 256,
+            "max_transport_retries": 3,
+            "send_seed": false,
+            "temperature": 0.7,
+            "timeout": 120
+          },
+          "repetitions": 3,
+          "runPhase": "pilot",
+          "samplingSeedApplied": false,
+          "seed": 260726,
+          "useOffline": false,
+          "verbose": true
+        },
+        "model": "google/gemini-3-flash-preview",
+        "n_races": 9,
+        "n_turns": 126,
+        "persona_condition": "S_AA",
+        "persona_roles": [
+          "adversarial",
+          "adversarial"
+        ],
+        "persona_sha256": "7c55912e96ee73aa1c6d4278c957709e47795f05b4df09c8c37d2b8d4e0e6468",
+        "run_phase": "pilot",
+        "schema_version": "ai-race-results-v1",
+        "status": "completed"
+      },
+      "provenance_error": "D:\\AI_PhD\\GameTheory\\AI_Race_Experiment\\results\\frontier\\persona\\S_AA_adv_adv\\google-gemini-3-flash-preview\\run_manifest.json uses unsupported schema_version='ai-race-results-v1'; primary analysis accepts the provenance-rich offline Kaggle or Kaggle Benchmark manifests",
+      "signature_schema": "ai-race-analysis-protocol-signature-v1",
+      "source_run": "D:/AI_PhD/GameTheory/AI_Race_Experiment/results/frontier/persona/S_AA_adv_adv/google-gemini-3-flash-preview",
+      "verification": "unverified_protocol_audit_only"
+    },
+    "a861b4afe43d5a44d1cbcd875344ba5bf0c17113bed45267aa1dcc88d1c935c5": {
+      "available_manifest": {
+        "agents_config_sha256": "9e9623087b61c9098c8b9a73adc757f843ed8f24144b3b9cd307a33bee3468f3",
+        "agents_name": "persona_risk_3_1",
+        "created_utc": "2026-08-01T06:01:48.116171+00:00",
+        "experiment": {
+          "agents": "persona_risk_3_1",
+          "backend": "proxy",
+          "description": "Persona condition R3-R1 (risk-preference matrix cell 3,1 of 6x6; Eckel-Grossman gamble scale, paper SI Task 1) over the Kaggle model proxy.",
+          "games": [
+            "ai_race_risk_10",
+            "ai_race_risk_60",
+            "ai_race_risk_90"
+          ],
+          "languages": [
+            "en"
+          ],
+          "maxParseRetries": 3,
+          "models": [
+            "google/gemini-3-flash-preview"
+          ],
+          "name": "api_persona_baseline_risk_3_1",
+          "proxyOptions": {
+            "concurrency": 2,
+            "max_tokens": 256,
+            "max_transport_retries": 6,
+            "send_seed": false,
+            "temperature": 0.7,
+            "timeout": 120
+          },
+          "repetitions": 10,
+          "runPhase": "pilot",
+          "samplingSeedApplied": false,
+          "seed": 260726,
+          "useOffline": false,
+          "verbose": true
+        },
+        "model": "google/gemini-3-flash-preview",
+        "n_races": 30,
+        "n_turns": 558,
+        "persona_condition": "R3-R1",
+        "persona_roles": [
+          "risk-3",
+          "risk-1"
+        ],
+        "persona_sha256": "7cb33fec559dcfe00dd503ccd6e1c830726a9d03da77501b0441f513230fb8db",
+        "run_phase": "pilot",
+        "schema_version": "ai-race-results-v1",
+        "status": "completed"
+      },
+      "provenance_error": "D:\\AI_PhD\\GameTheory\\AI_Race_Experiment\\results\\frontier\\persona\\R3_R1_risk_matrix\\google-gemini-3-flash-preview\\run_manifest.json uses unsupported schema_version='ai-race-results-v1'; primary analysis accepts the provenance-rich offline Kaggle or Kaggle Benchmark manifests",
+      "signature_schema": "ai-race-analysis-protocol-signature-v1",
+      "source_run": "D:/AI_PhD/GameTheory/AI_Race_Experiment/results/frontier/persona/R3_R1_risk_matrix/google-gemini-3-flash-preview",
+      "verification": "unverified_protocol_audit_only"
+    },
+    "aca0fc139f3c4589435f47436cb3f675597912e9fff03976ca5ac3fdf4e4f50b": {
+      "available_manifest": {
+        "agents_config_sha256": "0308301eb42ceab8cd18fe47b8f02778cfaa1f404339de4816eaac260a0515d9",
+        "agents_name": "persona_coop_adv",
+        "created_utc": "2026-07-31T07:16:55.039883+00:00",
+        "experiment": {
+          "agents": "persona_coop_adv",
+          "backend": "proxy",
+          "description": "Persona condition S_CA over the Kaggle model proxy. Seat-counterbalanced mirror of api_persona_baseline_adv_coop.",
+          "games": [
+            "ai_race_risk_10",
+            "ai_race_risk_60",
+            "ai_race_risk_90"
+          ],
+          "languages": [
+            "en"
+          ],
+          "maxParseRetries": 3,
+          "models": [
+            "google/gemini-3-flash-preview"
+          ],
+          "name": "api_persona_baseline_coop_adv",
+          "proxyOptions": {
+            "concurrency": 8,
+            "max_tokens": 256,
+            "max_transport_retries": 3,
+            "send_seed": false,
+            "temperature": 0.7,
+            "timeout": 120
+          },
+          "repetitions": 3,
+          "runPhase": "pilot",
+          "samplingSeedApplied": false,
+          "seed": 260726,
+          "useOffline": false,
+          "verbose": true
+        },
+        "model": "google/gemini-3-flash-preview",
+        "n_races": 9,
+        "n_turns": 126,
+        "persona_condition": "S_CA",
+        "persona_roles": [
+          "cooperative",
+          "adversarial"
+        ],
+        "persona_sha256": "d74e2a2958a0341ae217ec78fea32f4e83ecd26c3be2c41a946ad516028ed5a7",
+        "run_phase": "pilot",
+        "schema_version": "ai-race-results-v1",
+        "status": "completed"
+      },
+      "provenance_error": "D:\\AI_PhD\\GameTheory\\AI_Race_Experiment\\results\\frontier\\persona\\S_CA_coop_adv\\google-gemini-3-flash-preview\\run_manifest.json uses unsupported schema_version='ai-race-results-v1'; primary analysis accepts the provenance-rich offline Kaggle or Kaggle Benchmark manifests",
+      "signature_schema": "ai-race-analysis-protocol-signature-v1",
+      "source_run": "D:/AI_PhD/GameTheory/AI_Race_Experiment/results/frontier/persona/S_CA_coop_adv/google-gemini-3-flash-preview",
+      "verification": "unverified_protocol_audit_only"
+    },
+    "d1f7b56ce254e84ab2f71ba7997a6f6214b49f5b69a4131fedf70e58ab946c59": {
+      "available_manifest": {
+        "agents_config_sha256": "bc6d050930430f5e82b7d0818eeb2950b1a2b9c1e4dbd707943eb596ac9f1323",
+        "agents_name": "persona_risk_2_5",
+        "created_utc": "2026-08-01T05:05:06.285985+00:00",
+        "experiment": {
+          "agents": "persona_risk_2_5",
+          "backend": "proxy",
+          "description": "Persona condition R2-R5 (risk-preference matrix cell 2,5 of 6x6; Eckel-Grossman gamble scale, paper SI Task 1) over the Kaggle model proxy.",
+          "games": [
+            "ai_race_risk_10",
+            "ai_race_risk_60",
+            "ai_race_risk_90"
+          ],
+          "languages": [
+            "en"
+          ],
+          "maxParseRetries": 3,
+          "models": [
+            "google/gemini-3-flash-preview"
+          ],
+          "name": "api_persona_baseline_risk_2_5",
+          "proxyOptions": {
+            "concurrency": 2,
+            "max_tokens": 256,
+            "max_transport_retries": 6,
+            "send_seed": false,
+            "temperature": 0.7,
+            "timeout": 120
+          },
+          "repetitions": 10,
+          "runPhase": "pilot",
+          "samplingSeedApplied": false,
+          "seed": 260726,
+          "useOffline": false,
+          "verbose": true
+        },
+        "model": "google/gemini-3-flash-preview",
+        "n_races": 30,
+        "n_turns": 558,
+        "persona_condition": "R2-R5",
+        "persona_roles": [
+          "risk-2",
+          "risk-5"
+        ],
+        "persona_sha256": "51843128417285e18576436f428d0435192f90069a50a9f5daf6d2428f7712e1",
+        "run_phase": "pilot",
+        "schema_version": "ai-race-results-v1",
+        "status": "completed"
+      },
+      "provenance_error": "D:\\AI_PhD\\GameTheory\\AI_Race_Experiment\\results\\frontier\\persona\\R2_R5_risk_matrix\\google-gemini-3-flash-preview\\run_manifest.json uses unsupported schema_version='ai-race-results-v1'; primary analysis accepts the provenance-rich offline Kaggle or Kaggle Benchmark manifests",
+      "signature_schema": "ai-race-analysis-protocol-signature-v1",
+      "source_run": "D:/AI_PhD/GameTheory/AI_Race_Experiment/results/frontier/persona/R2_R5_risk_matrix/google-gemini-3-flash-preview",
+      "verification": "unverified_protocol_audit_only"
+    },
+    "e094769790771bbb867f871152b3869e592a3ea75216647faca3babf4717b9b2": {
+      "available_manifest": {
+        "agents_config_sha256": "a8a2244e8284f653d9b5db60c7f9b20685320627cbed1131c7c2dbfef140e42c",
+        "agents_name": "persona_risk_1_3",
+        "created_utc": "2026-08-01T03:32:23.389911+00:00",
+        "experiment": {
+          "agents": "persona_risk_1_3",
+          "backend": "proxy",
+          "description": "Persona condition R1-R3 (risk-preference matrix cell 1,3 of 6x6; Eckel-Grossman gamble scale, paper SI Task 1) over the Kaggle model proxy.",
+          "games": [
+            "ai_race_risk_10",
+            "ai_race_risk_60",
+            "ai_race_risk_90"
+          ],
+          "languages": [
+            "en"
+          ],
+          "maxParseRetries": 3,
+          "models": [
+            "google/gemini-3-flash-preview"
+          ],
+          "name": "api_persona_baseline_risk_1_3",
+          "proxyOptions": {
+            "concurrency": 2,
+            "max_tokens": 256,
+            "max_transport_retries": 6,
+            "send_seed": false,
+            "temperature": 0.7,
+            "timeout": 120
+          },
+          "repetitions": 10,
+          "runPhase": "pilot",
+          "samplingSeedApplied": false,
+          "seed": 260726,
+          "useOffline": false,
+          "verbose": true
+        },
+        "model": "google/gemini-3-flash-preview",
+        "n_races": 30,
+        "n_turns": 558,
+        "persona_condition": "R1-R3",
+        "persona_roles": [
+          "risk-1",
+          "risk-3"
+        ],
+        "persona_sha256": "9ace41627490a56fee5f1a3b4b8a5ed7c733f80a22a8b02f9c6fb755ea23d805",
+        "run_phase": "pilot",
+        "schema_version": "ai-race-results-v1",
+        "status": "completed"
+      },
+      "provenance_error": "D:\\AI_PhD\\GameTheory\\AI_Race_Experiment\\results\\frontier\\persona\\R1_R3_risk_matrix\\google-gemini-3-flash-preview\\run_manifest.json uses unsupported schema_version='ai-race-results-v1'; primary analysis accepts the provenance-rich offline Kaggle or Kaggle Benchmark manifests",
+      "signature_schema": "ai-race-analysis-protocol-signature-v1",
+      "source_run": "D:/AI_PhD/GameTheory/AI_Race_Experiment/results/frontier/persona/R1_R3_risk_matrix/google-gemini-3-flash-preview",
+      "verification": "unverified_protocol_audit_only"
+    },
+    "e84fc1cdb37bfbfe50de3b53d832e513c01020656c6ffeb9e4eadb1d06c9873c": {
+      "available_manifest": {
+        "agents_config_sha256": "93a1c7249d79af2ee694371decfd1acc2359ff2e8b22a8044dcaf2b7bdf1779a",
+        "agents_name": "persona_risk_2_4",
+        "created_utc": "2026-08-01T04:53:32.398583+00:00",
+        "experiment": {
+          "agents": "persona_risk_2_4",
+          "backend": "proxy",
+          "description": "Persona condition R2-R4 (risk-preference matrix cell 2,4 of 6x6; Eckel-Grossman gamble scale, paper SI Task 1) over the Kaggle model proxy.",
+          "games": [
+            "ai_race_risk_10",
+            "ai_race_risk_60",
+            "ai_race_risk_90"
+          ],
+          "languages": [
+            "en"
+          ],
+          "maxParseRetries": 3,
+          "models": [
+            "google/gemini-3-flash-preview"
+          ],
+          "name": "api_persona_baseline_risk_2_4",
+          "proxyOptions": {
+            "concurrency": 2,
+            "max_tokens": 256,
+            "max_transport_retries": 6,
+            "send_seed": false,
+            "temperature": 0.7,
+            "timeout": 120
+          },
+          "repetitions": 10,
+          "runPhase": "pilot",
+          "samplingSeedApplied": false,
+          "seed": 260726,
+          "useOffline": false,
+          "verbose": true
+        },
+        "model": "google/gemini-3-flash-preview",
+        "n_races": 30,
+        "n_turns": 558,
+        "persona_condition": "R2-R4",
+        "persona_roles": [
+          "risk-2",
+          "risk-4"
+        ],
+        "persona_sha256": "f05d5aff8fd8ce6608abb7332f58a4c716b174de27c8cfc0d6ca869cd653486b",
+        "run_phase": "pilot",
+        "schema_version": "ai-race-results-v1",
+        "status": "completed"
+      },
+      "provenance_error": "D:\\AI_PhD\\GameTheory\\AI_Race_Experiment\\results\\frontier\\persona\\R2_R4_risk_matrix\\google-gemini-3-flash-preview\\run_manifest.json uses unsupported schema_version='ai-race-results-v1'; primary analysis accepts the provenance-rich offline Kaggle or Kaggle Benchmark manifests",
+      "signature_schema": "ai-race-analysis-protocol-signature-v1",
+      "source_run": "D:/AI_PhD/GameTheory/AI_Race_Experiment/results/frontier/persona/R2_R4_risk_matrix/google-gemini-3-flash-preview",
+      "verification": "unverified_protocol_audit_only"
+    },
+    "fda220309371e63ea3923ddd0eb2c932008c0e5d7b781c3081e0fd2695bf91ad": {
+      "available_manifest": {
+        "agents_config_sha256": "4a188822de5d01b52fb85fe9e5bdba4d575dbd361848be85f44c73c8dc43cdec",
+        "agents_name": "persona_risk_1_1",
+        "created_utc": "2026-08-01T03:08:08.732656+00:00",
+        "experiment": {
+          "agents": "persona_risk_1_1",
+          "backend": "proxy",
+          "description": "Persona condition R1-R1 (risk-preference matrix cell 1,1 of 6x6; Eckel-Grossman gamble scale, paper SI Task 1) over the Kaggle model proxy.",
+          "games": [
+            "ai_race_risk_10",
+            "ai_race_risk_60",
+            "ai_race_risk_90"
+          ],
+          "languages": [
+            "en"
+          ],
+          "maxParseRetries": 3,
+          "models": [
+            "google/gemini-3-flash-preview"
+          ],
+          "name": "api_persona_baseline_risk_1_1",
+          "proxyOptions": {
+            "concurrency": 2,
+            "max_tokens": 256,
+            "max_transport_retries": 6,
+            "send_seed": false,
+            "temperature": 0.7,
+            "timeout": 120
+          },
+          "repetitions": 10,
+          "runPhase": "pilot",
+          "samplingSeedApplied": false,
+          "seed": 260726,
+          "useOffline": false,
+          "verbose": true
+        },
+        "model": "google/gemini-3-flash-preview",
+        "n_races": 30,
+        "n_turns": 558,
+        "persona_condition": "R1-R1",
+        "persona_roles": [
+          "risk-1",
+          "risk-1"
+        ],
+        "persona_sha256": "ccef3ab6c6b2879b8ed4f3dc9f423a4084082f37cdc04b36e4b8b501dc20f0e5",
+        "run_phase": "pilot",
+        "schema_version": "ai-race-results-v1",
+        "status": "completed"
+      },
+      "provenance_error": "D:\\AI_PhD\\GameTheory\\AI_Race_Experiment\\results\\frontier\\persona\\R1_R1_risk_matrix\\google-gemini-3-flash-preview\\run_manifest.json uses unsupported schema_version='ai-race-results-v1'; primary analysis accepts the provenance-rich offline Kaggle or Kaggle Benchmark manifests",
+      "signature_schema": "ai-race-analysis-protocol-signature-v1",
+      "source_run": "D:/AI_PhD/GameTheory/AI_Race_Experiment/results/frontier/persona/R1_R1_risk_matrix/google-gemini-3-flash-preview",
+      "verification": "unverified_protocol_audit_only"
+    }
+  },
+  "protocol_signatures": [
+    "00b5bfeb6cb481a657d43f301d74449f7e63b308c3629d381fbcd55049f8775c",
+    "0155c897cb80073899c74de5772e440882cf90c259946beb6c1c9f409c771095",
+    "0c3bf15251a358e304264ea28bef87dae4bde546e394762dd96506cc4248ad64",
+    "233df2e39a7764e96eec0663236e32095e2b744a5b17cc6a44598bb3fffd3189",
+    "24ae349d06dd496859ec3963fc51abf44053b33a59fb84e284ef3a169ea16083",
+    "2f8075d632b736e0fd371f238859cbe42ba9342f75768d0920621896ebf83955",
+    "590431109d29eefe73c92aa3f3b0c29f97cfc204662b3cb78f9e50103cf085ae",
+    "6761230202f459967a8c53763fd76e54e433a8b09cab749741e7db0158747062",
+    "6bf202261e41dc424f5975cef28281046ef3ab3be938b58b3d76b6286606f21e",
+    "7070f64a43a39818896d80b53dc7f05949a9bb6c717cad036793e4301396c532",
+    "72fdad899c984ad38c2100883dcfdf0044c4ab51999e9cf3a422a771073c41b1",
+    "90caa184f8f63392a9e9add1276d33ba2d47587cceca248f31b07a6c13242bd9",
+    "98497ace89b4a166ca13f0fae4e684a2ed5eedd318b82621246158f00c66ce85",
+    "9a893d14110776eb4f0c57f8461bb1e46b856eb9970878b6026500c6571e840c",
+    "9dad670d4fdd00860e7405cd8fd2a6b31fc561ab5d71ead52ce349e3a626d449",
+    "a861b4afe43d5a44d1cbcd875344ba5bf0c17113bed45267aa1dcc88d1c935c5",
+    "aca0fc139f3c4589435f47436cb3f675597912e9fff03976ca5ac3fdf4e4f50b",
+    "d1f7b56ce254e84ab2f71ba7997a6f6214b49f5b69a4131fedf70e58ab946c59",
+    "e094769790771bbb867f871152b3869e592a3ea75216647faca3babf4717b9b2",
+    "e84fc1cdb37bfbfe50de3b53d832e513c01020656c6ffeb9e4eadb1d06c9873c",
+    "fda220309371e63ea3923ddd0eb2c932008c0e5d7b781c3081e0fd2695bf91ad"
+  ],
+  "run_phases": [
+    "pilot"
+  ],
+  "run_statuses": [
+    "completed"
+  ],
+  "source_runs": [
+    "D:/AI_PhD/GameTheory/AI_Race_Experiment/results/frontier/persona/R0_neutral/google-gemini-3-flash-preview",
+    "D:/AI_PhD/GameTheory/AI_Race_Experiment/results/frontier/persona/R1_R1_risk_matrix/google-gemini-3-flash-preview",
+    "D:/AI_PhD/GameTheory/AI_Race_Experiment/results/frontier/persona/R1_R2_risk_matrix/google-gemini-3-flash-preview",
+    "D:/AI_PhD/GameTheory/AI_Race_Experiment/results/frontier/persona/R1_R3_risk_matrix/google-gemini-3-flash-preview",
+    "D:/AI_PhD/GameTheory/AI_Race_Experiment/results/frontier/persona/R1_R4_risk_matrix/google-gemini-3-flash-preview",
+    "D:/AI_PhD/GameTheory/AI_Race_Experiment/results/frontier/persona/R1_R5_risk_matrix/google-gemini-3-flash-preview",
+    "D:/AI_PhD/GameTheory/AI_Race_Experiment/results/frontier/persona/R1_R6_risk_matrix/google-gemini-3-flash-preview",
+    "D:/AI_PhD/GameTheory/AI_Race_Experiment/results/frontier/persona/R2_R1_risk_matrix/google-gemini-3-flash-preview",
+    "D:/AI_PhD/GameTheory/AI_Race_Experiment/results/frontier/persona/R2_R2_risk_matrix/google-gemini-3-flash-preview",
+    "D:/AI_PhD/GameTheory/AI_Race_Experiment/results/frontier/persona/R2_R3_risk_matrix/google-gemini-3-flash-preview",
+    "D:/AI_PhD/GameTheory/AI_Race_Experiment/results/frontier/persona/R2_R4_risk_matrix/google-gemini-3-flash-preview",
+    "D:/AI_PhD/GameTheory/AI_Race_Experiment/results/frontier/persona/R2_R5_risk_matrix/google-gemini-3-flash-preview",
+    "D:/AI_PhD/GameTheory/AI_Race_Experiment/results/frontier/persona/R2_R6_risk_matrix/google-gemini-3-flash-preview",
+    "D:/AI_PhD/GameTheory/AI_Race_Experiment/results/frontier/persona/R3_R1_risk_matrix/google-gemini-3-flash-preview",
+    "D:/AI_PhD/GameTheory/AI_Race_Experiment/results/frontier/persona/R4_R1_risk_matrix/google-gemini-3-flash-preview",
+    "D:/AI_PhD/GameTheory/AI_Race_Experiment/results/frontier/persona/Rminus_risk_averse/google-gemini-3-flash-preview",
+    "D:/AI_PhD/GameTheory/AI_Race_Experiment/results/frontier/persona/Rplus_risk_seeking/google-gemini-3-flash-preview",
+    "D:/AI_PhD/GameTheory/AI_Race_Experiment/results/frontier/persona/S_AA_adv_adv/google-gemini-3-flash-preview",
+    "D:/AI_PhD/GameTheory/AI_Race_Experiment/results/frontier/persona/S_AC_adv_coop/google-gemini-3-flash-preview",
+    "D:/AI_PhD/GameTheory/AI_Race_Experiment/results/frontier/persona/S_CA_coop_adv/google-gemini-3-flash-preview",
+    "D:/AI_PhD/GameTheory/AI_Race_Experiment/results/frontier/persona/S_CC_coop_coop/google-gemini-3-flash-preview"
+  ]
+}

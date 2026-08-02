@@ -1,0 +1,195 @@
+{
+  "disclosed_model": {
+    "min_rounds": 5,
+    "population_size": 100,
+    "race_prize": 100.0,
+    "regimes": [
+      {
+        "beta": 2.0,
+        "mutation": 0.02,
+        "name": "main_reference",
+        "source_label": "Main text: beta=2, mu=beta/Z=0.02"
+      },
+      {
+        "beta": 2.0,
+        "mutation": 0.01,
+        "name": "supplement_reference",
+        "source_label": "Figure S5: beta=2, mu=1/Z=0.01"
+      },
+      {
+        "beta": 0.01,
+        "mutation": 0.05,
+        "name": "reported_best_fit",
+        "source_label": "Main text best fit: beta=0.01, mu=0.05"
+      }
+    ],
+    "risks": [
+      0.1,
+      0.6,
+      0.9
+    ],
+    "safe_progress": 1.0,
+    "stage_payoffs": [
+      [
+        1.0,
+        0.6
+      ],
+      [
+        2.4,
+        2.0
+      ]
+    ],
+    "stop_probability": 0.2,
+    "strategies": [
+      "AS",
+      "AU",
+      "CS",
+      "CAS"
+    ],
+    "unsafe_progress": 1.5
+  },
+  "egttools": {
+    "execution_backend": "repo_native_reconstruction_of_documented_transition_rule",
+    "inspected_commit": "df7f5fb7787658b3fd3ab21343ff50a3e2a5d439",
+    "paper_pinned_version_or_commit": null,
+    "pinned_source_validation": {
+      "binary_pairwise_comparison": {
+        "blocker": "No egttools==0.1.14.2 wheel exists for Windows CPython 3.13; the docs-commit package imports its compiled numerical module at package initialisation.",
+        "executed": false
+      },
+      "comparison": {
+        "official_column_sums_max_abs_error": 1.1102230246251565e-16,
+        "official_stationary_distribution": [
+          0.8185640383333478,
+          0.1637128076666727,
+          0.016534585312970015,
+          0.0011273580895243157,
+          5.8600296736947034e-05,
+          2.4916661685937734e-06,
+          9.115881116591339e-08,
+          3.017310416917945e-09,
+          4.786405455336351e-10,
+          3.997123579688811e-09,
+          1.9982693651836986e-08
+        ],
+        "repo_column_sums_max_abs_error": 2.220446049250313e-16,
+        "repo_stationary_distribution": [
+          0.8185640383333413,
+          0.16371280766668034,
+          0.016534585312975032,
+          0.0011273580895233924,
+          5.860029673337349e-05,
+          2.4916661688097532e-06,
+          9.115881128372126e-08,
+          3.0173086497991376e-09,
+          4.786407811494755e-10,
+          3.997122661768762e-09,
+          1.9982694272782887e-08
+        ],
+        "stationary_distribution_max_abs_difference": 7.632783294297951e-15,
+        "transition_matrix_max_abs_difference": 1.1102230246251565e-16
+      },
+      "official_source": {
+        "branch": "docs",
+        "commit": "df7f5fb7787658b3fd3ab21343ff50a3e2a5d439",
+        "executed_class": "egttools.analytical.StochDynamics",
+        "relative_file": "tmp\\EGTTools-docs\\src\\egttools\\analytical\\sed_analytical.py",
+        "repository": "https://github.com/Socrats/EGTTools",
+        "sha256": "779346eb770dcc875e87d996403a4fcb85d71c3c2f5ede4d6383bb3faacbe177",
+        "source_modified": false
+      },
+      "passed": true,
+      "schema_version": "egttools-pinned-source-validation-v1",
+      "validation_case": {
+        "beta": 2.0,
+        "max_private_risk": 0.6,
+        "mutation": 0.02,
+        "payoff_matrix": [
+          [
+            58.99999999998884,
+            5.399999999993306
+          ],
+          [
+            48.63999999998931,
+            27.199999999991082
+          ]
+        ],
+        "population_size": 10,
+        "strategies": [
+          "AS",
+          "AU"
+        ]
+      }
+    },
+    "repository": "https://github.com/Socrats/EGTTools",
+    "requested_branch": "docs"
+  },
+  "evidence_class": "faithful_reconstruction_not_bitwise_reproduction",
+  "llm_comparison": {
+    "pooled": false,
+    "primary_temperature_0": {
+      "available": true,
+      "classified_player_trajectories": 1536,
+      "games": 768,
+      "incomplete_games": 0,
+      "parse_failures": 0,
+      "root": "results\\open_source\\context_skin_pilot\\live_pilot_t0",
+      "source_turn_rows": 13680,
+      "turn_files": 8
+    },
+    "sensitivity_temperature_0_7": {
+      "available": true,
+      "classified_player_trajectories": 1536,
+      "games": 768,
+      "incomplete_games": 0,
+      "parse_failures": 0,
+      "root": "results\\open_source\\context_skin_pilot\\live_pilot_t07",
+      "source_turn_rows": 13680,
+      "turn_files": 8
+    }
+  },
+  "numerics": {
+    "burn_in": 100000,
+    "chains": 4,
+    "maximum_discarded_horizon_mass": 8.26319960987817e-14,
+    "payoff_horizon_method": "deterministic_geometric_sum",
+    "steps": 400000,
+    "thin": 100,
+    "uncertainty": "between_independent_chain_range_diagnostic_not_confidence_interval"
+  },
+  "output_files": [
+    "README.md",
+    "egt_chain_diagnostics.pdf",
+    "egt_chain_diagnostics.png",
+    "egt_expected_payoff_matrices.csv",
+    "egt_expected_payoff_matrices.pdf",
+    "egt_expected_payoff_matrices.png",
+    "egt_pair_unsafe_fractions.csv",
+    "egt_stationary_chains.csv",
+    "egt_stationary_strategy_composition.pdf",
+    "egt_stationary_strategy_composition.png",
+    "egt_stationary_summary.csv",
+    "egt_strategy_lens_vs_llm.pdf",
+    "egt_strategy_lens_vs_llm.png",
+    "egt_theory_vs_llm_unsafe.pdf",
+    "egt_theory_vs_llm_unsafe.png",
+    "egttools_pinned_source_validation.json",
+    "llm_strategy_matches_primary_t0.csv",
+    "llm_strategy_matches_sensitivity_t07.csv",
+    "llm_strategy_summary_primary_t0.csv",
+    "llm_strategy_summary_sensitivity_t07.csv",
+    "theory_llm_comparison.csv"
+  ],
+  "paper": {
+    "arxiv": "2607.26034v1",
+    "author_code_public_in_arxiv_v1": false,
+    "local_source": "arXiv-2607.26034v1\\paper.tex",
+    "local_source_sha256": "f73254201dfc510e19b40a720299eb5207d3396fc4456bd815caaeac04993eec",
+    "url": "https://arxiv.org/abs/2607.26034"
+  },
+  "paper_parameter_inconsistency_preserved": {
+    "figure_s5": "beta=2, mu=1/Z=0.01",
+    "main_text": "beta=2, mu=beta/Z=0.02"
+  },
+  "schema_version": "egt-reconstruction-v1"
+}

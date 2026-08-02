@@ -1,0 +1,49 @@
+{
+  "schema_version": "ai-race-nplayer-results-v1",
+  "created_utc": "2026-08-01T08:12:53.712751+00:00",
+  "experiment": {
+    "name": "openai_persona_nplayer_baseline_coopadv_CAA_n3",
+    "runPhase": "pilot",
+    "description": "N-player (3) persona condition CAA (cooperative/adversarial cell of the 2^N matrix), via direct OpenAI API (backend='openai'). Identical mechanism, prompt, seed, and repetitions to the neutral N-player baseline; only the agents configuration differs.",
+    "games": [
+      "ai_race_nplayer_n3_risk_10",
+      "ai_race_nplayer_n3_risk_60",
+      "ai_race_nplayer_n3_risk_90"
+    ],
+    "agents": "persona_nplayer_coopadv_CAA_n3",
+    "languages": [
+      "en"
+    ],
+    "models": [
+      "gpt-5.4-nano",
+      "gpt-5-nano"
+    ],
+    "useOffline": false,
+    "backend": "openai",
+    "samplingSeedApplied": false,
+    "proxyOptions": {
+      "temperature": 0.7,
+      "max_tokens": 256,
+      "timeout": 120,
+      "max_transport_retries": 6,
+      "concurrency": 4
+    },
+    "repetitions": 10,
+    "seed": 260726,
+    "maxParseRetries": 3,
+    "verbose": true
+  },
+  "model": "gpt-5.4-nano",
+  "run_phase": "pilot",
+  "agents_name": "persona_nplayer_coopadv_CAA_n3",
+  "persona_condition": "CAA",
+  "persona_roles": [
+    "cooperative",
+    "adversarial",
+    "adversarial"
+  ],
+  "persona_sha256": "158c171fb22c99e36f70144ad31d35c17a6e41a9354a6a284fa1bbc23d2aa3dc",
+  "status": "completed",
+  "n_races": 30,
+  "n_turns": 765
+}

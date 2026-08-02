@@ -1,0 +1,49 @@
+{
+  "schema_version": "ai-race-nplayer-results-v1",
+  "created_utc": "2026-08-01T08:16:25.452764+00:00",
+  "experiment": {
+    "name": "openai_persona_nplayer_baseline_coopadv_ACC_n3",
+    "runPhase": "pilot",
+    "description": "N-player (3) persona condition ACC (cooperative/adversarial cell of the 2^N matrix), via direct OpenAI API (backend='openai'). Identical mechanism, prompt, seed, and repetitions to the neutral N-player baseline; only the agents configuration differs.",
+    "games": [
+      "ai_race_nplayer_n3_risk_10",
+      "ai_race_nplayer_n3_risk_60",
+      "ai_race_nplayer_n3_risk_90"
+    ],
+    "agents": "persona_nplayer_coopadv_ACC_n3",
+    "languages": [
+      "en"
+    ],
+    "models": [
+      "gpt-5.4-nano",
+      "gpt-5-nano"
+    ],
+    "useOffline": false,
+    "backend": "openai",
+    "samplingSeedApplied": false,
+    "proxyOptions": {
+      "temperature": 0.7,
+      "max_tokens": 256,
+      "timeout": 120,
+      "max_transport_retries": 6,
+      "concurrency": 4
+    },
+    "repetitions": 10,
+    "seed": 260726,
+    "maxParseRetries": 3,
+    "verbose": true
+  },
+  "model": "gpt-5-nano",
+  "run_phase": "pilot",
+  "agents_name": "persona_nplayer_coopadv_ACC_n3",
+  "persona_condition": "ACC",
+  "persona_roles": [
+    "adversarial",
+    "cooperative",
+    "cooperative"
+  ],
+  "persona_sha256": "4e963b7dbe5335367f0061f4caf6c6fa0e1d4d8f716202337f7fda435efbe90c",
+  "status": "completed",
+  "n_races": 30,
+  "n_turns": 765
+}

@@ -1,0 +1,4 @@
+layer,representation,n_probe_features,feature_screen,solver,alpha,tolerance,convergence_warning_count,roc_auc,average_precision,balanced_accuracy
+4,pretrained_sae,4096,train_only_variance,ridge_lsqr,1.0,0.0001,0,0.8835358796296295,0.89711119618799,0.8159722222222223
+12,pretrained_sae,4096,train_only_variance,ridge_lsqr,1.0,0.0001,0,0.8485243055555555,0.8800386027042968,0.7986111111111112
+18,pretrained_sae,4096,train_only_variance,ridge_lsqr,1.0,0.0001,0,0.8861400462962962,0.9092874761430577,0.8402777777777778

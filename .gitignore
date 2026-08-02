@@ -16,21 +16,31 @@ kaggle.json
 # Local archive from the former Collective Risk project.
 /.archive/
 
-# Generated AI Race results. Keep analysis code, README, and empty result surfaces.
+# Generated AI Race results. Keep analysis code, selected result surfaces,
+# and downloaded Kaggle Benchmark artifacts visible to Git.
 /results/**
 !/results/frontier/
 !/results/frontier/.gitkeep
 !/results/frontier/**
+/results/frontier/openai/_logs/
 !/results/open_source/
 !/results/open_source/.gitkeep
 !/results/open_source/*_manifest.json
 !/results/open_source/game_understanding_pilot/
 !/results/open_source/game_understanding_pilot/*.csv
 !/results/open_source/game_understanding_pilot/admission.json
+!/results/open_source/game_understanding_pilot/raw/
+!/results/open_source/game_understanding_pilot/raw/**
 !/results/open_source/gpu_run_archive/
 !/results/open_source/gpu_run_archive/**
 !/results/open_source/prompt_sensitivity_pilot/
 !/results/open_source/prompt_sensitivity_pilot/**
+!/results/open_source/activation_sae/
+!/results/open_source/activation_sae/**
+!/results/open_source/context_skin_pilot/
+!/results/open_source/context_skin_pilot/**
+!/results/open_source/egt_reproduction/
+!/results/open_source/egt_reproduction/**
 !/results/open_source/surface_sensitivity_pilot/
 !/results/open_source/surface_sensitivity_pilot/**
 !/results/open_source/surface_sensitivity_smoke/
@@ -41,12 +51,32 @@ kaggle.json
 !/results/scripts/
 !/results/scripts/*.py
 !/results/scripts/*.json
+!/results/impact_upgrade/
+!/results/impact_upgrade/**
+/results/impact_upgrade/candidate.html
+/results/impact_upgrade/*verification-failure.png
+!/results/artifacts/
+!/results/artifacts/**
+!/results/derived/
+!/results/derived/payoff_scale_contract/
+!/results/derived/payoff_scale_contract/**
+!/results/catalog.json
+!/results/catalog.csv
+!/results/RESULTS_INDEX.md
+!/results/migration_manifest.json
 !/results/README.md
 !/results/visualization_insight_full.md
 !/results/visualization_output_archive/
 !/results/visualization_output_archive/**
+!/results/kaggle-benchmarks/
+!/results/kaggle-benchmarks/**
+
+# Kaggle Benchmark CLI scratch artifacts. Keep raw local debug exports off Git.
+/results/kaggle-benchmarks/_local-debug/
+/*.task.json
+/*-run_id_*.run.json
+
 /ai_race_results/
-/output/game_understanding/
 /models/
 /strategy_analysis/artifacts/
 /strategy_analysis/datasets/
@@ -75,8 +105,7 @@ slides/*.toc
 slides/*.vrb
 slides/*.xdv
 /tmp/
-/output/pdf/*
-!/output/pdf/*.pdf
+/results/_build/
 
 # OS
 .DS_Store

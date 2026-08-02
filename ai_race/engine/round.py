@@ -17,6 +17,18 @@ def response_text(response: str | dict[str, Any]) -> str:
     return str(response or "")
 
 
+def raw_response_text(response: str | dict[str, Any]) -> str:
+    """Return the model-emitted text when an adapter supplies parsed ``text``.
+
+    Backend adapters may translate a protocol-specific response into the engine's
+    canonical ``ACTION: SAFE|UNSAFE`` representation. Keeping the original output
+    separately makes strict parsing and raw-output auditing compatible.
+    """
+    if isinstance(response, dict):
+        return str(response.get("raw_response", response.get("text", "")))
+    return str(response or "")
+
+
 def parse_action(response: str | dict[str, Any]) -> tuple[Action, bool]:
     """Parse an action-only response containing exactly one formatted line.
 

@@ -1,0 +1,31 @@
+model,model_label,max_private_risk,phase,estimate,ci95_low,ci95_high,n_blocks,n_observations
+google/gemini-3-flash-preview,Gemini 3 Flash,0.1,Round 1,1.0,1.0,1.0,10,20
+google/gemini-3-flash-preview,Gemini 3 Flash,0.1,Rounds 2+,1.0,1.0,1.0,10,20
+google/gemini-3-flash-preview,Gemini 3 Flash,0.6,Round 1,1.0,1.0,1.0,10,20
+google/gemini-3-flash-preview,Gemini 3 Flash,0.6,Rounds 2+,0.681845238095238,0.6322604166666667,0.7245877976190476,10,20
+google/gemini-3-flash-preview,Gemini 3 Flash,0.9,Round 1,1.0,1.0,1.0,10,20
+google/gemini-3-flash-preview,Gemini 3 Flash,0.9,Rounds 2+,0.4704960317460317,0.39443948412698415,0.5495868055555555,10,20
+google/gemini-3.1-flash-lite-preview,Gemini 3.1 Flash-Lite,0.1,Round 1,1.0,1.0,1.0,10,20
+google/gemini-3.1-flash-lite-preview,Gemini 3.1 Flash-Lite,0.1,Rounds 2+,1.0,1.0,1.0,10,20
+google/gemini-3.1-flash-lite-preview,Gemini 3.1 Flash-Lite,0.6,Round 1,1.0,1.0,1.0,10,20
+google/gemini-3.1-flash-lite-preview,Gemini 3.1 Flash-Lite,0.6,Rounds 2+,0.7730158730158729,0.7423179563492064,0.8017261904761904,10,20
+google/gemini-3.1-flash-lite-preview,Gemini 3.1 Flash-Lite,0.9,Round 1,1.0,1.0,1.0,10,20
+google/gemini-3.1-flash-lite-preview,Gemini 3.1 Flash-Lite,0.9,Rounds 2+,0.6555952380952381,0.6108333333333333,0.6945297619047618,10,20
+google/gemini-3.5-flash-lite,Gemini 3.5 Flash-Lite,0.1,Round 1,1.0,1.0,1.0,10,20
+google/gemini-3.5-flash-lite,Gemini 3.5 Flash-Lite,0.1,Rounds 2+,0.81765873015873,0.7592053571428571,0.8823809523809525,10,20
+google/gemini-3.5-flash-lite,Gemini 3.5 Flash-Lite,0.6,Round 1,1.0,1.0,1.0,10,20
+google/gemini-3.5-flash-lite,Gemini 3.5 Flash-Lite,0.6,Rounds 2+,0.6689880952380952,0.6137455357142857,0.7277395833333333,10,20
+google/gemini-3.5-flash-lite,Gemini 3.5 Flash-Lite,0.9,Round 1,1.0,1.0,1.0,10,20
+google/gemini-3.5-flash-lite,Gemini 3.5 Flash-Lite,0.9,Rounds 2+,0.5726388888888888,0.5330555555555556,0.6159756944444444,10,20
+gpt-5-nano,GPT-5 nano,0.1,Round 1,0.0,0.0,0.0,10,20
+gpt-5-nano,GPT-5 nano,0.1,Rounds 2+,0.14059523809523808,0.08166666666666668,0.1976190476190476,10,20
+gpt-5-nano,GPT-5 nano,0.6,Round 1,0.0,0.0,0.0,10,20
+gpt-5-nano,GPT-5 nano,0.6,Rounds 2+,0.1778769841269841,0.10077380952380953,0.2607142857142857,10,20
+gpt-5-nano,GPT-5 nano,0.9,Round 1,0.0,0.0,0.0,10,20
+gpt-5-nano,GPT-5 nano,0.9,Rounds 2+,0.16803571428571426,0.09511904761904762,0.23958333333333331,10,20
+gpt-5.4-nano,GPT-5.4 nano,0.1,Round 1,0.4,0.2,0.6,10,20
+gpt-5.4-nano,GPT-5.4 nano,0.1,Rounds 2+,0.6110912698412697,0.5626190476190477,0.6612306547619048,10,20
+gpt-5.4-nano,GPT-5.4 nano,0.6,Round 1,0.6,0.35,0.8,10,20
+gpt-5.4-nano,GPT-5.4 nano,0.6,Rounds 2+,0.47581349206349205,0.40625,0.5474211309523808,10,20
+gpt-5.4-nano,GPT-5.4 nano,0.9,Round 1,0.3,0.1,0.5,10,20
+gpt-5.4-nano,GPT-5.4 nano,0.9,Rounds 2+,0.6000396825396825,0.5393055555555555,0.6634563492063491,10,20

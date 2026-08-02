@@ -1,0 +1,15 @@
+{
+  "name": "context_skin_neutral",
+  "nPlayers": 2,
+  "names": ["Participant_1", "Participant_2"],
+  "personaCondition": "none",
+  "personaRoles": ["", ""],
+  "personas": {
+    "en": ["", ""],
+    "vi": ["", ""]
+  },
+  "personaProbabilities": {
+    "en": [100.0, 100.0]
+  },
+  "description": "Neutral, domain-independent seat names shared by every context-skin condition."
+}

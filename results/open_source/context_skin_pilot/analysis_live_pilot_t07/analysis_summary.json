@@ -1,0 +1,204 @@
+{
+  "schema_version": "ai-race-context-skin-analysis-v1",
+  "status": "complete",
+  "validation": {
+    "status": "passed",
+    "model_name": "qwen2.5:7b-instruct-fp16",
+    "model_digest": "59805ce4a4046be2d8f63231a78daacd2e66f5dccf1a64d0d138ebeeb26ff16c",
+    "live_experiment_config_sha256": "1961aadfb3f0c6c76f19eb88b068a279265434228f6e61cce1b2e08d5bc0d1d4",
+    "fixed_experiment_config_sha256": "1961aadfb3f0c6c76f19eb88b068a279265434228f6e61cce1b2e08d5bc0d1d4",
+    "cross_protocol_config_hash_match": true,
+    "game_config_sha256": {
+      "ai_race_risk_10": "c7cc0f83c60bffcce61dcf6d1abe90bc25961083a193c1bbf454dad8526f330b",
+      "ai_race_risk_60": "35a6f0af03199af3099e25ddd3ba90938c1f3f05fd6051bb1104d9c342bc93bb",
+      "ai_race_risk_90": "a676137698ef58c80163fe3a68a950ba75226df895baa949ddebc292b719f286"
+    },
+    "live_source_sha256": "a2da263974415bb9cff1204fec86fa424a2b20387d4bffa4ed032d6ec61ac2ba",
+    "fixed_source_sha256": "9087f11a6b4db7cd80bd06f5cd7d03d72a89232863a4be57cb0d70ecf7a13447",
+    "live_crn_contract_sha256": "f29c38160d5c83e88df3e8d4c2d5205b8123d27b9e39ea7d4b240aea5c303d9d",
+    "live_profile": "pilot",
+    "fixed_profile": "pilot",
+    "live_temperature": 0.7,
+    "replay_temperature": 0.0,
+    "cross_protocol_temperature_match": false,
+    "n_skins": 8,
+    "skins": [
+      "abstract_contest",
+      "colony_life_support",
+      "crystal_guild_contract",
+      "fictional_cartography",
+      "hospital_deployment",
+      "logistics_contract",
+      "robotic_expedition",
+      "technology_race"
+    ],
+    "n_live_races": 768,
+    "n_live_decisions": 13680,
+    "n_fixed_states": 96,
+    "n_fixed_rows": 1536,
+    "n_comprehension_rows": 256,
+    "live_parse_failures": 0,
+    "live_retried_decisions": 0,
+    "fixed_parse_failures": 0,
+    "admission_passed": false,
+    "claim_status": "diagnostic_comprehension_failed",
+    "live_manifest_sha256": [
+      "1dded7c13572c761ae3d28742c3bab244d7088a10218e5ed6946ef29195fc11e",
+      "c7394748fdfa30288a2fda5d72680327e14c4680e4d7c726e1ee24fdf70c496e",
+      "f3f8c00f2456d91f6e845dadacbc9ea8f63120baf40aa95a560b511313aedc86",
+      "c5f45d2751e243cffbf25205d63ced126e00a798b79bed87b55399e9fa200f54",
+      "ce5b73fa0620f8debb2bfef6227273da12e2c1578f63555df239a7497578eb2e",
+      "d8e29df5331d75036ba1cd1a7c067f779d8d39a3bba31b207c6c27282151c641",
+      "4b6d586f5ba3e3f1168970f42fe9e50a8c8992de2b55a4c41757e8d9b560d872",
+      "0fb940f5f9a9707103829f449ef6f24d11b249b544b9add4b1fec6c5628f0eaf"
+    ],
+    "fixed_manifest_sha256": [
+      "3892a82e695bc7efa127c524390b68d3795da726560976ad9f1d5139d6b8beba",
+      "537e70cb44d6e48d52bcf665c6fce3b6cc11e51134cbb2026198756fd44831b8"
+    ]
+  },
+  "bootstrap": {
+    "method": "paired percentile cluster bootstrap",
+    "repetitions": 5000,
+    "seed": 260801,
+    "live_cluster": "risk/repetition race cluster",
+    "fixed_cluster": "state_id"
+  },
+  "input_roots": {
+    "live": [
+      "D:\\PhD_LetGoo\\PhD_Farming\\AI_Race\\AI_Race_Experiment\\results\\open_source\\context_skin_pilot\\live_pilot_t07"
+    ],
+    "fixed": [
+      "D:\\PhD_LetGoo\\PhD_Farming\\AI_Race\\AI_Race_Experiment\\results\\open_source\\context_skin_pilot\\fixed_state_pilot_t0"
+    ]
+  },
+  "tables": {
+    "live_context_rates.csv": {
+      "rows": 144,
+      "sha256": "d917d5df5a8c4f1e73f84d9bfb6e6df62d43155ab01004f4f2a0d95962b135a9"
+    },
+    "fixed_state_context_rates.csv": {
+      "rows": 48,
+      "sha256": "8a865d1f972137b232edfc4b9367209f3dfbeb32308a028747ce53fe404cb31a"
+    },
+    "paired_context_effects.csv": {
+      "rows": 84,
+      "sha256": "c9cde083252395b30be71aaa60db2996cc8a64309c3816011d02eb99a7118248"
+    },
+    "paired_flip_directions.csv": {
+      "rows": 14,
+      "sha256": "7624f1f1e0816b2fe9150c735d16f51da1bc8dec7fe4a6eb6808dbd58282b371"
+    },
+    "payoff_setback_summary.csv": {
+      "rows": 8,
+      "sha256": "f19eb0f03d02e8be308e1b87da6fbe5800b40f263b1be84ae44b62d75a2f6683"
+    },
+    "planned_realistic_fictional_contrasts.csv": {
+      "rows": 9,
+      "sha256": "20cca1fcbc3372166115d2fc89d4953f0969b45e7250ebbc7355e05d1c1f061f"
+    },
+    "comprehension_by_domain.csv": {
+      "rows": 4,
+      "sha256": "a0741dfdb2cdb72609d4e45b1875fcfeca6401cb0210e1339197dc89c87873e6"
+    },
+    "comprehension_by_cell.csv": {
+      "rows": 16,
+      "sha256": "44df89eb80608cc25a20ff55a956cd5865fe703b751807e41d8b735932e25a32"
+    },
+    "context_mapping_diagnostic.csv": {
+      "rows": 8,
+      "sha256": "4d06aadc710ae858a37fea8d0c225e26a8e9ae532dbc3fc730a0d5834838d0b1"
+    },
+    "quality_coverage.csv": {
+      "rows": 10,
+      "sha256": "5c2d4278fb9af3a999b2439d548065683efd5aaf807b119c6be7662dad7054bd"
+    },
+    "cross_protocol_effect_alignment.csv": {
+      "rows": 7,
+      "sha256": "5b4031a551da9234f2292e27660bc773078c0bd9901f1ad67bd67df2a079f5ed"
+    }
+  },
+  "figures": {
+    "live_unsafe_context_risk_mapping": {
+      "png": {
+        "bytes": 204299,
+        "sha256": "5429ff4b13dc35f93a559f5521a26e69fb4c4fd4452be7cb8140a8d8a8d3a3ca"
+      },
+      "pdf": {
+        "bytes": 36588,
+        "sha256": "618bc13c5bc285992e0d8dc34f287b03846c5b8e19c723a9f818a81f9f60c76b"
+      }
+    },
+    "paired_context_effects": {
+      "png": {
+        "bytes": 137500,
+        "sha256": "4312921dbb7408bab983f9cdc772d9b80597db320bdb9227d5907427c0380bf6"
+      },
+      "pdf": {
+        "bytes": 26823,
+        "sha256": "7e522f935943ccd43ea47355f20090a4697e0d294ee32cacfdcdb2babf176215"
+      }
+    },
+    "paired_flip_directions": {
+      "png": {
+        "bytes": 126997,
+        "sha256": "26be78702cfe913c59ea89744ec5b32852b14878dbc5021af36c45c9a437e1a5"
+      },
+      "pdf": {
+        "bytes": 26392,
+        "sha256": "5d4bdf108f5d5c4cdda894856e0677d2f886ba96835895b75146aa30fe98d02f"
+      }
+    },
+    "live_payoff_setback": {
+      "png": {
+        "bytes": 148364,
+        "sha256": "4a9596199873766137ac8650a17413eb5c7721d4fcf9bebad8b44bfac26635b8"
+      },
+      "pdf": {
+        "bytes": 29513,
+        "sha256": "a6d2263f18453c3c527ba1bfa08c25f24bc3d90547bac6e69bc6381059250e7b"
+      }
+    },
+    "planned_realistic_fictional_contrasts": {
+      "png": {
+        "bytes": 101757,
+        "sha256": "0a38f1658561f156409408367decca2ebd839815bb7a7faeaa1454ffdd0c2e57"
+      },
+      "pdf": {
+        "bytes": 24705,
+        "sha256": "d697f6f1d9d74e2ac8e615ac067c8d69818ea6ce7adea76733fc68594f4f9c2a"
+      }
+    },
+    "context_mapping_diagnostic": {
+      "png": {
+        "bytes": 160642,
+        "sha256": "36022442970263d1e7ffcc5e1bd2b381521f0e160c6a2e9d04a1e645d2b4c845"
+      },
+      "pdf": {
+        "bytes": 29725,
+        "sha256": "a29b368fa1f4a65c0126d9339907cbf18e2ec9384b22de4d5a06bfb79882db1c"
+      }
+    },
+    "comprehension_admission": {
+      "png": {
+        "bytes": 257859,
+        "sha256": "e99fbf2c7c08f5d6cf1b6be4ad8fb408f11225e7b4d23b10160117beb341de29"
+      },
+      "pdf": {
+        "bytes": 34893,
+        "sha256": "bf4b2d8c2bc3305b4970e18a2b04b3a7ff8d7164201ced492107aab6956eeeed"
+      }
+    }
+  },
+  "report": {
+    "path": "context_skin_analysis.md",
+    "sha256": "7da39ef4b4ec0a3fbb55005b9d255dfc340bc310f6591d8c1c5b8bb501e5595c"
+  },
+  "claim_boundary": "diagnostic only; comprehension admission failed",
+  "cross_protocol_diagnostic": {
+    "n_contexts": 7,
+    "pearson_r_live_full_vs_fixed": 0.9635479985714588,
+    "same_direction_contexts": 7,
+    "warning": "descriptive only; decoding temperatures differ and comprehension admission failed"
+  }
+}

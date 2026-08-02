@@ -1,0 +1,168 @@
+{
+  "schema_version": "ai-race.greennode-fast-sae-selfplay.v1",
+  "config_fingerprint": "e2a6932fcf68c2ce86dde08c9bc1f0b96cf87743cc6843bd0fee15ce6cb289d5",
+  "n_eval_decisions": 2,
+  "max_baseline_replay_error": 0.0,
+  "intervention_position": "only final prompt token at pinned resid_post hook",
+  "dose_units": "alpha doses use discovery-set SD of target SAE activation; ablation uses minus the current held-out feature activation times the original decoder row",
+  "controls": [
+    "zero",
+    "sae_reconstruction",
+    "target_feature_ablation",
+    "matched_random",
+    "unrelated_feature",
+    "negative alpha sign reversal"
+  ],
+  "summaries": [
+    {
+      "condition": "matched_random",
+      "target_feature_id": 11385,
+      "direction_feature_id": null,
+      "alpha": -2.0,
+      "n": 2,
+      "mean_delta_unsafe_log_odds": 0.047912389039993286,
+      "median_delta_unsafe_log_odds": 0.047912389039993286,
+      "flip_rate": 0.0
+    },
+    {
+      "condition": "matched_random",
+      "target_feature_id": 11385,
+      "direction_feature_id": null,
+      "alpha": -1.0,
+      "n": 2,
+      "mean_delta_unsafe_log_odds": 0.11039935238659382,
+      "median_delta_unsafe_log_odds": 0.11039935238659382,
+      "flip_rate": 0.0
+    },
+    {
+      "condition": "matched_random",
+      "target_feature_id": 11385,
+      "direction_feature_id": null,
+      "alpha": 1.0,
+      "n": 2,
+      "mean_delta_unsafe_log_odds": 0.10885072220116854,
+      "median_delta_unsafe_log_odds": 0.10885072220116854,
+      "flip_rate": 0.0
+    },
+    {
+      "condition": "matched_random",
+      "target_feature_id": 11385,
+      "direction_feature_id": null,
+      "alpha": 2.0,
+      "n": 2,
+      "mean_delta_unsafe_log_odds": -0.022879845462739468,
+      "median_delta_unsafe_log_odds": -0.022879845462739468,
+      "flip_rate": 0.0
+    },
+    {
+      "condition": "sae_reconstruction",
+      "target_feature_id": null,
+      "direction_feature_id": null,
+      "alpha": 0.0,
+      "n": 2,
+      "mean_delta_unsafe_log_odds": 0.15809357445687056,
+      "median_delta_unsafe_log_odds": 0.15809357445687056,
+      "flip_rate": 0.0
+    },
+    {
+      "condition": "target_feature",
+      "target_feature_id": 11385,
+      "direction_feature_id": 11385,
+      "alpha": -2.0,
+      "n": 2,
+      "mean_delta_unsafe_log_odds": 0.11041705962270498,
+      "median_delta_unsafe_log_odds": 0.11041705962270498,
+      "flip_rate": 0.0
+    },
+    {
+      "condition": "target_feature",
+      "target_feature_id": 11385,
+      "direction_feature_id": 11385,
+      "alpha": -1.0,
+      "n": 2,
+      "mean_delta_unsafe_log_odds": 0.14872728195041418,
+      "median_delta_unsafe_log_odds": 0.14872728195041418,
+      "flip_rate": 0.0
+    },
+    {
+      "condition": "target_feature",
+      "target_feature_id": 11385,
+      "direction_feature_id": 11385,
+      "alpha": 1.0,
+      "n": 2,
+      "mean_delta_unsafe_log_odds": 0.09798624645918608,
+      "median_delta_unsafe_log_odds": 0.09798624645918608,
+      "flip_rate": 0.0
+    },
+    {
+      "condition": "target_feature",
+      "target_feature_id": 11385,
+      "direction_feature_id": 11385,
+      "alpha": 2.0,
+      "n": 2,
+      "mean_delta_unsafe_log_odds": 0.04943761322647333,
+      "median_delta_unsafe_log_odds": 0.04943761322647333,
+      "flip_rate": 0.0
+    },
+    {
+      "condition": "target_feature_ablation",
+      "target_feature_id": 11385,
+      "direction_feature_id": 11385,
+      "alpha": null,
+      "n": 2,
+      "mean_delta_unsafe_log_odds": 0.14878094010055065,
+      "median_delta_unsafe_log_odds": 0.14878094010055065,
+      "flip_rate": 0.0
+    },
+    {
+      "condition": "unrelated_feature",
+      "target_feature_id": 11385,
+      "direction_feature_id": 27198,
+      "alpha": -2.0,
+      "n": 2,
+      "mean_delta_unsafe_log_odds": 0.10885776858776808,
+      "median_delta_unsafe_log_odds": 0.10885776858776808,
+      "flip_rate": 0.0
+    },
+    {
+      "condition": "unrelated_feature",
+      "target_feature_id": 11385,
+      "direction_feature_id": 27198,
+      "alpha": -1.0,
+      "n": 2,
+      "mean_delta_unsafe_log_odds": 0.03709394671022892,
+      "median_delta_unsafe_log_odds": 0.03709394671022892,
+      "flip_rate": 0.0
+    },
+    {
+      "condition": "unrelated_feature",
+      "target_feature_id": 11385,
+      "direction_feature_id": 27198,
+      "alpha": 1.0,
+      "n": 2,
+      "mean_delta_unsafe_log_odds": 0.04942544363439083,
+      "median_delta_unsafe_log_odds": 0.04942544363439083,
+      "flip_rate": 0.0
+    },
+    {
+      "condition": "unrelated_feature",
+      "target_feature_id": 11385,
+      "direction_feature_id": 27198,
+      "alpha": 2.0,
+      "n": 2,
+      "mean_delta_unsafe_log_odds": 0.08782323822379112,
+      "median_delta_unsafe_log_odds": 0.08782323822379112,
+      "flip_rate": 0.0
+    },
+    {
+      "condition": "zero",
+      "target_feature_id": null,
+      "direction_feature_id": null,
+      "alpha": 0.0,
+      "n": 2,
+      "mean_delta_unsafe_log_odds": 0.0,
+      "median_delta_unsafe_log_odds": 0.0,
+      "flip_rate": 0.0
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "bootstrap": {
+    "method": "percentile cluster bootstrap over source_run \u00d7 repetition",
+    "repetitions": 5000,
+    "seed": 260802
+  },
+  "code_sha256": "5730e27a56c94e40ecf3b61c92830a1d0236140bf207a63f1105b957c60ad8ff",
+  "confirmatory_runs": 0,
+  "evidence_status": "exploratory_pilot_only",
+  "figure_bases": [
+    "fig01_baseline_risk_response",
+    "fig01b_protocol_robustness_baselines",
+    "fig02_initialization_and_dynamics",
+    "fig03_conditional_dynamics",
+    "fig04_strategy_composition",
+    "fig05_safety_payoff_frontier",
+    "fig06_persona_effects",
+    "fig07_persona_role_asymmetry",
+    "fig08_gpt_risk_persona_surfaces",
+    "fig09_gemini_risk_persona_partial",
+    "fig10_surface_sensitivity",
+    "fig11_context_temperature_diagnostic",
+    "fig12_evidence_inventory",
+    "fig13_repeat_run_stability"
+  ],
+  "generated_utc": "2026-08-02T00:33:01.338075+00:00",
+  "primary_input_manifest_sha256": {
+    "results/frontier/baseline/google-gemini-3-flash-preview/run_manifest.json": "a73ce3416e2c7b84ab75e976a24d954ca85ebe33810a63d82e4b52ce3a40d5b6",
+    "results/frontier/baseline/google-gemini-3.1-flash-lite-preview/run_manifest.json": "0f7a40cd214245fc904857c7fb5c1fca49d9ad01f943b6227e628931580c17b8",
+    "results/frontier/baseline/google-gemini-3.5-flash-lite/run_manifest.json": "e6bb374ae7e9e3b28f59445c3f97662687fef6942d49c1436726a509401c773a",
+    "results/frontier/openai/baseline/gpt-5-nano/run_manifest.json": "7351ccb10aed82e4055b6c053e74317ac73bef576bbc05d390c5dd3b03e07983",
+    "results/frontier/openai/baseline/gpt-5.4-nano/run_manifest.json": "3990cc276c7ae7f6e1e251fc52ffc2140a097980c077409514b7191edef298ea"
+  },
+  "primary_models": [
+    "google/gemini-3-flash-preview",
+    "google/gemini-3.1-flash-lite-preview",
+    "google/gemini-3.5-flash-lite",
+    "gpt-5-nano",
+    "gpt-5.4-nano"
+  ],
+  "quality_checks": "quality_checks.json",
+  "report": "report/two_player_eda_report.md",
+  "schema_version": "ai-race-two-player-paper-eda-v1",
+  "status": "complete"
+}

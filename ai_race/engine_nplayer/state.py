@@ -22,7 +22,7 @@ class NPlayerGameConfig:
 
     The payoff is parametric (``cost``, ``benefit``, ``speed``) rather than a
     fixed 2x2 matrix, following Appendix B of the reference paper
-    (``jair-12225/JAIR-12225-ArticlePDF-25030-1-10-20201122.md``, "N-player AI
+    (``references/papers/sources/jair-12225/JAIR-12225-ArticlePDF-25030-1-10-20201122.md``, "N-player AI
     Race Definition") with the found-out term ``p_fo`` dropped. At
     ``n_players=2`` with the defaults below (cost=1, benefit=4, speed=1.5) the
     formula reproduces the shipped two-player payoff matrix

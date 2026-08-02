@@ -29,6 +29,14 @@ strategy-ml = [
   "scikit-learn>=1.5,<2",
   "imbalanced-learn>=0.12,<1",
 ]
+activation-xai = [
+  "torch>=2.4,<3",
+  "transformers>=4.48,<5",
+  "transformer-lens==2.11.0",
+  "sae-lens==5.3.3",
+  "huggingface-hub>=0.27,<2",
+  "scikit-learn>=1.5,<2",
+]
 api = [
   "anthropic>=0.39",
   "mistralai>=1.0",
@@ -49,6 +57,7 @@ exclude = ["FAIRGAME.unit_tests*"]
 ai_race = [
   "configs/**/*.json",
   "prompts/*.txt",
+  "xai/presets/*.json",
 ]
 FAIRGAME = [
   "LICENSE",

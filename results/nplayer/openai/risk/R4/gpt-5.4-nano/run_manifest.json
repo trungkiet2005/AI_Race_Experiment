@@ -1,0 +1,49 @@
+{
+  "schema_version": "ai-race-nplayer-results-v1",
+  "created_utc": "2026-08-01T08:45:58.357426+00:00",
+  "experiment": {
+    "name": "openai_persona_nplayer_baseline_risk_4_n3",
+    "runPhase": "pilot",
+    "description": "N-player (3) persona condition R4 (risk level 4 of 6, symmetric across all seats), via direct OpenAI API (backend='openai'). Identical mechanism, prompt, seed, and repetitions to the neutral N-player baseline; only the agents configuration differs.",
+    "games": [
+      "ai_race_nplayer_n3_risk_10",
+      "ai_race_nplayer_n3_risk_60",
+      "ai_race_nplayer_n3_risk_90"
+    ],
+    "agents": "persona_nplayer_risk_4_n3",
+    "languages": [
+      "en"
+    ],
+    "models": [
+      "gpt-5.4-nano",
+      "gpt-5-nano"
+    ],
+    "useOffline": false,
+    "backend": "openai",
+    "samplingSeedApplied": false,
+    "proxyOptions": {
+      "temperature": 0.7,
+      "max_tokens": 256,
+      "timeout": 120,
+      "max_transport_retries": 6,
+      "concurrency": 4
+    },
+    "repetitions": 10,
+    "seed": 260726,
+    "maxParseRetries": 3,
+    "verbose": true
+  },
+  "model": "gpt-5.4-nano",
+  "run_phase": "pilot",
+  "agents_name": "persona_nplayer_risk_4_n3",
+  "persona_condition": "R4",
+  "persona_roles": [
+    "risk-4",
+    "risk-4",
+    "risk-4"
+  ],
+  "persona_sha256": "3249e93a05f257677ca02525db8134e5f2c4be54e1f9cddcda5e7fab0face4ec",
+  "status": "completed",
+  "n_races": 30,
+  "n_turns": 765
+}

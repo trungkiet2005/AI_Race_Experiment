@@ -1,0 +1,72 @@
+{
+  "schema_version": "ai-race-context-recognition-analysis-artifacts-v1",
+  "generated_utc": "2026-08-01T09:20:46.273090+00:00",
+  "analysis_script": {
+    "path": "analyze_recognition_pilot.py",
+    "sha256": "405cbd48c74225e1335c53ce11a8328c52c5d6a5eaac5a5c70d2451e430fa1c3"
+  },
+  "source_artifacts": [
+    {
+      "path": "lane_a/run_manifest.json",
+      "bytes": 4619,
+      "sha256": "59c9dda6bb666c2fe602bcb7197197d9d951755295bad56cffc2cefa46d45e80"
+    },
+    {
+      "path": "lane_a/recognition_rows.jsonl",
+      "bytes": 635171,
+      "sha256": "0f67f44fb0c231a8c5ee8241e5b2def91b6ab64d8e14ddde1c9e9ee5415a7e8d"
+    },
+    {
+      "path": "lane_a/recognition_summary.json",
+      "bytes": 3147,
+      "sha256": "883a37cf6a29008f61d8783f07c2b0db32bcb14c10db7c3cefabb0951c72432b"
+    },
+    {
+      "path": "lane_b/run_manifest.json",
+      "bytes": 4643,
+      "sha256": "362b333302a8ef6202d11b66e1564482cd61d7c44c635367b2fc0e29ab7127e0"
+    },
+    {
+      "path": "lane_b/recognition_rows.jsonl",
+      "bytes": 634665,
+      "sha256": "1114a20770c287d96cdb4a254d3aa87c655feef72cf194701026bd883c61fc2f"
+    },
+    {
+      "path": "lane_b/recognition_summary.json",
+      "bytes": 3155,
+      "sha256": "5d4f5b620280298e0e04a509fc47a7b540d7d833e11ba1ef7ff531993b7cc357"
+    }
+  ],
+  "generated_artifacts": [
+    {
+      "path": "recognition_analysis_by_cell.csv",
+      "bytes": 2868,
+      "sha256": "cf61dd56664d71d4c43d7a5212b395693fd5e7c72e20ef0a15ea5fd843b9e708"
+    },
+    {
+      "path": "recognition_candidate_counts.csv",
+      "bytes": 143,
+      "sha256": "91872476b43a104fa533653889d809805c8624fece13a077fc7412394309dcbb"
+    },
+    {
+      "path": "recognition_analysis_summary.json",
+      "bytes": 10446,
+      "sha256": "aa16d02d5c8343cd705b1db32b3531e43828bfcbe4f409fba33b1a38112ebcdf"
+    },
+    {
+      "path": "recognition_analysis.md",
+      "bytes": 3378,
+      "sha256": "7ba3d8a92c872f7d25276b347f199cbc70c89356fedba785445d375242530532"
+    },
+    {
+      "path": "figures/context_recognition_audit.png",
+      "bytes": 474477,
+      "sha256": "e1fa11ed1194d535b1cfd5b30da528832c0b7ec82c8add25b292c197dc56d7dc"
+    },
+    {
+      "path": "figures/context_recognition_audit.pdf",
+      "bytes": 40534,
+      "sha256": "c2c9977a5f7d2d25cf40d5c39edad21b6317d02ddaee8881767e6b171727c9a1"
+    }
+  ]
+}

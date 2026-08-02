@@ -1,0 +1,4575 @@
+{
+  "schema_version": "ai-race.greennode-fast-sae-selfplay.v1",
+  "config_fingerprint": "0918a2bc583d935a41adf5ca6932ee8eb9481c064c79b142214a22b3ab0e22f7",
+  "split_unit": "whole race, stratified by treatment",
+  "n_decisions": 300,
+  "n_races": 18,
+  "n_discovery_races": 12,
+  "n_eval_races": 6,
+  "race_split": {
+    "ai_race_risk_10__qwen-qwen2.5-7b-instruct-a09a35458c70-constrained-sequence__en__companies_default__rep0003": "eval",
+    "ai_race_risk_10__qwen-qwen2.5-7b-instruct-a09a35458c70-constrained-sequence__en__companies_default__rep0004": "eval",
+    "ai_race_risk_10__qwen-qwen2.5-7b-instruct-a09a35458c70-constrained-sequence__en__companies_default__rep0002": "discovery",
+    "ai_race_risk_10__qwen-qwen2.5-7b-instruct-a09a35458c70-constrained-sequence__en__companies_default__rep0000": "discovery",
+    "ai_race_risk_10__qwen-qwen2.5-7b-instruct-a09a35458c70-constrained-sequence__en__companies_default__rep0005": "discovery",
+    "ai_race_risk_10__qwen-qwen2.5-7b-instruct-a09a35458c70-constrained-sequence__en__companies_default__rep0001": "discovery",
+    "ai_race_risk_60__qwen-qwen2.5-7b-instruct-a09a35458c70-constrained-sequence__en__companies_default__rep0000": "eval",
+    "ai_race_risk_60__qwen-qwen2.5-7b-instruct-a09a35458c70-constrained-sequence__en__companies_default__rep0002": "eval",
+    "ai_race_risk_60__qwen-qwen2.5-7b-instruct-a09a35458c70-constrained-sequence__en__companies_default__rep0003": "discovery",
+    "ai_race_risk_60__qwen-qwen2.5-7b-instruct-a09a35458c70-constrained-sequence__en__companies_default__rep0004": "discovery",
+    "ai_race_risk_60__qwen-qwen2.5-7b-instruct-a09a35458c70-constrained-sequence__en__companies_default__rep0001": "discovery",
+    "ai_race_risk_60__qwen-qwen2.5-7b-instruct-a09a35458c70-constrained-sequence__en__companies_default__rep0005": "discovery",
+    "ai_race_risk_90__qwen-qwen2.5-7b-instruct-a09a35458c70-constrained-sequence__en__companies_default__rep0003": "eval",
+    "ai_race_risk_90__qwen-qwen2.5-7b-instruct-a09a35458c70-constrained-sequence__en__companies_default__rep0002": "eval",
+    "ai_race_risk_90__qwen-qwen2.5-7b-instruct-a09a35458c70-constrained-sequence__en__companies_default__rep0001": "discovery",
+    "ai_race_risk_90__qwen-qwen2.5-7b-instruct-a09a35458c70-constrained-sequence__en__companies_default__rep0000": "discovery",
+    "ai_race_risk_90__qwen-qwen2.5-7b-instruct-a09a35458c70-constrained-sequence__en__companies_default__rep0004": "discovery",
+    "ai_race_risk_90__qwen-qwen2.5-7b-instruct-a09a35458c70-constrained-sequence__en__companies_default__rep0005": "discovery"
+  },
+  "selection_target": "correlation with continuous Unsafe-vs-Safe sequence log-odds",
+  "selected_features": [
+    {
+      "feature_id": 8505,
+      "discovery_corr_log_odds": 0.7574875371331373,
+      "eval_corr_log_odds": 0.692336274846436,
+      "discovery_action_cohens_d": 1.3377776433787454,
+      "eval_action_cohens_d": 1.233597809914568,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005021857670332913
+    },
+    {
+      "feature_id": 16320,
+      "discovery_corr_log_odds": -0.7222489531082436,
+      "eval_corr_log_odds": -0.6927697066362695,
+      "discovery_action_cohens_d": -1.4302785332865198,
+      "eval_action_cohens_d": -1.4127729352261489,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004519037953473209
+    },
+    {
+      "feature_id": 1803,
+      "discovery_corr_log_odds": -0.719935248737602,
+      "eval_corr_log_odds": -0.6998195972385234,
+      "discovery_action_cohens_d": -1.2257488303553683,
+      "eval_action_cohens_d": -1.1271401419641909,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.003806154688043212
+    }
+  ],
+  "unrelated_control_feature": {
+    "feature_id": 6246,
+    "discovery_corr_log_odds": -9.132373275775422e-06,
+    "eval_corr_log_odds": -0.07307192710258961,
+    "discovery_action_cohens_d": 0.4416531789826112,
+    "eval_action_cohens_d": 0.3052863417464966,
+    "discovery_prevalence": 1.0,
+    "discovery_scale": 0.0041712154379577515
+  },
+  "ranking": [
+    {
+      "feature_id": 8505,
+      "discovery_corr_log_odds": 0.7574875371331373,
+      "eval_corr_log_odds": 0.692336274846436,
+      "discovery_action_cohens_d": 1.3377776433787454,
+      "eval_action_cohens_d": 1.233597809914568,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005021857670332913
+    },
+    {
+      "feature_id": 16320,
+      "discovery_corr_log_odds": -0.7222489531082436,
+      "eval_corr_log_odds": -0.6927697066362695,
+      "discovery_action_cohens_d": -1.4302785332865198,
+      "eval_action_cohens_d": -1.4127729352261489,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004519037953473209
+    },
+    {
+      "feature_id": 1803,
+      "discovery_corr_log_odds": -0.719935248737602,
+      "eval_corr_log_odds": -0.6998195972385234,
+      "discovery_action_cohens_d": -1.2257488303553683,
+      "eval_action_cohens_d": -1.1271401419641909,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.003806154688043212
+    },
+    {
+      "feature_id": 25979,
+      "discovery_corr_log_odds": 0.7192166260118398,
+      "eval_corr_log_odds": 0.7404953590865709,
+      "discovery_action_cohens_d": 1.1417273471433687,
+      "eval_action_cohens_d": 1.0705488116348139,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005069953953406696
+    },
+    {
+      "feature_id": 16246,
+      "discovery_corr_log_odds": 0.7187873903622908,
+      "eval_corr_log_odds": 0.7938235200645937,
+      "discovery_action_cohens_d": 1.2294229473721348,
+      "eval_action_cohens_d": 1.3356330799912366,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005606314836523
+    },
+    {
+      "feature_id": 17450,
+      "discovery_corr_log_odds": 0.7146332523839413,
+      "eval_corr_log_odds": 0.655949173216956,
+      "discovery_action_cohens_d": 1.6595013345633056,
+      "eval_action_cohens_d": 1.512461501218776,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005248024022424541
+    },
+    {
+      "feature_id": 21189,
+      "discovery_corr_log_odds": -0.709966503803425,
+      "eval_corr_log_odds": -0.7203941422856773,
+      "discovery_action_cohens_d": -1.3363374830388206,
+      "eval_action_cohens_d": -1.2703410291854627,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005325083837792792
+    },
+    {
+      "feature_id": 10498,
+      "discovery_corr_log_odds": -0.7083441096456142,
+      "eval_corr_log_odds": -0.7184108640830508,
+      "discovery_action_cohens_d": -1.3233799056283224,
+      "eval_action_cohens_d": -1.217276529963829,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0048435927387189374
+    },
+    {
+      "feature_id": 21359,
+      "discovery_corr_log_odds": 0.707160487837036,
+      "eval_corr_log_odds": 0.7300311877537385,
+      "discovery_action_cohens_d": 1.3718945448227495,
+      "eval_action_cohens_d": 1.299177048500616,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005425699571651307
+    },
+    {
+      "feature_id": 3293,
+      "discovery_corr_log_odds": -0.7061837302024581,
+      "eval_corr_log_odds": -0.7231302656087755,
+      "discovery_action_cohens_d": -1.3331819976650319,
+      "eval_action_cohens_d": -1.3198121459562484,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005568853286033697
+    },
+    {
+      "feature_id": 2811,
+      "discovery_corr_log_odds": -0.702692276238768,
+      "eval_corr_log_odds": -0.7326812776523373,
+      "discovery_action_cohens_d": -1.057905069412552,
+      "eval_action_cohens_d": -1.0857580725153038,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004183707383117213
+    },
+    {
+      "feature_id": 23251,
+      "discovery_corr_log_odds": 0.7002176350789668,
+      "eval_corr_log_odds": 0.7318989794167317,
+      "discovery_action_cohens_d": 1.3527383193606268,
+      "eval_action_cohens_d": 1.293003588350184,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005984684069182512
+    },
+    {
+      "feature_id": 7816,
+      "discovery_corr_log_odds": -0.6990045916107438,
+      "eval_corr_log_odds": -0.6644524950248848,
+      "discovery_action_cohens_d": -1.2943764803646343,
+      "eval_action_cohens_d": -1.2371250403182192,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004802235112440346
+    },
+    {
+      "feature_id": 5875,
+      "discovery_corr_log_odds": 0.6980351285110508,
+      "eval_corr_log_odds": 0.7925891575497898,
+      "discovery_action_cohens_d": 1.3095741700544723,
+      "eval_action_cohens_d": 1.4055596646704402,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005924489023905802
+    },
+    {
+      "feature_id": 22662,
+      "discovery_corr_log_odds": -0.6962923033542813,
+      "eval_corr_log_odds": -0.6967295369800677,
+      "discovery_action_cohens_d": -1.3650644200630706,
+      "eval_action_cohens_d": -1.3258351923320593,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004790655523460366
+    },
+    {
+      "feature_id": 5659,
+      "discovery_corr_log_odds": -0.6947603919028787,
+      "eval_corr_log_odds": -0.7264049027009453,
+      "discovery_action_cohens_d": -1.109211516418257,
+      "eval_action_cohens_d": -1.0622386646892656,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.003409337386462416
+    },
+    {
+      "feature_id": 24918,
+      "discovery_corr_log_odds": 0.6933724918800334,
+      "eval_corr_log_odds": 0.6942177200915542,
+      "discovery_action_cohens_d": 0.940612647577057,
+      "eval_action_cohens_d": 0.9095795961439253,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004764663811961829
+    },
+    {
+      "feature_id": 27579,
+      "discovery_corr_log_odds": -0.6932472041995232,
+      "eval_corr_log_odds": -0.6874350098585503,
+      "discovery_action_cohens_d": -1.3571674154006375,
+      "eval_action_cohens_d": -1.2968949236781033,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0043010623527718304
+    },
+    {
+      "feature_id": 1402,
+      "discovery_corr_log_odds": -0.6917876689663012,
+      "eval_corr_log_odds": -0.6623792026446057,
+      "discovery_action_cohens_d": -1.3348740549495757,
+      "eval_action_cohens_d": -1.2115901684472588,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.006013827701718865
+    },
+    {
+      "feature_id": 9384,
+      "discovery_corr_log_odds": -0.689558982798282,
+      "eval_corr_log_odds": -0.7597088340857562,
+      "discovery_action_cohens_d": -1.1252434166207574,
+      "eval_action_cohens_d": -1.1758293121415335,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005986719720383014
+    },
+    {
+      "feature_id": 18339,
+      "discovery_corr_log_odds": -0.6891360804654968,
+      "eval_corr_log_odds": -0.7097227501553722,
+      "discovery_action_cohens_d": -1.2007031643587966,
+      "eval_action_cohens_d": -1.1111047576415813,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005344112950046034
+    },
+    {
+      "feature_id": 15977,
+      "discovery_corr_log_odds": 0.6851722559421617,
+      "eval_corr_log_odds": 0.6870915662546049,
+      "discovery_action_cohens_d": 1.2114694143420504,
+      "eval_action_cohens_d": 1.2390547219904133,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004083353349451087
+    },
+    {
+      "feature_id": 709,
+      "discovery_corr_log_odds": -0.67640679559415,
+      "eval_corr_log_odds": -0.7008047102891413,
+      "discovery_action_cohens_d": -1.2324268042379427,
+      "eval_action_cohens_d": -1.2003440582809024,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0030793370625512646
+    },
+    {
+      "feature_id": 22716,
+      "discovery_corr_log_odds": -0.6754215987495923,
+      "eval_corr_log_odds": -0.6934004159553977,
+      "discovery_action_cohens_d": -1.3944537354220374,
+      "eval_action_cohens_d": -1.338855897451436,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.007080086994039186
+    },
+    {
+      "feature_id": 15112,
+      "discovery_corr_log_odds": -0.6740679475892833,
+      "eval_corr_log_odds": -0.7365363521983891,
+      "discovery_action_cohens_d": -1.1295189158523662,
+      "eval_action_cohens_d": -1.2714776499541198,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0070343912359343
+    },
+    {
+      "feature_id": 18680,
+      "discovery_corr_log_odds": 0.6732340954546189,
+      "eval_corr_log_odds": 0.6765696334798076,
+      "discovery_action_cohens_d": 1.2349461430576063,
+      "eval_action_cohens_d": 1.2130774559829878,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0068827423024468955
+    },
+    {
+      "feature_id": 18891,
+      "discovery_corr_log_odds": -0.6715268081873101,
+      "eval_corr_log_odds": -0.6822721309550139,
+      "discovery_action_cohens_d": -1.257305205395481,
+      "eval_action_cohens_d": -1.2485272220227857,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004849239459975129
+    },
+    {
+      "feature_id": 23278,
+      "discovery_corr_log_odds": 0.6713187217241836,
+      "eval_corr_log_odds": 0.6109402660604389,
+      "discovery_action_cohens_d": 1.2461916336706598,
+      "eval_action_cohens_d": 1.1581891320131645,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.00593192640435388
+    },
+    {
+      "feature_id": 6890,
+      "discovery_corr_log_odds": -0.6705767683810474,
+      "eval_corr_log_odds": -0.6534501217691436,
+      "discovery_action_cohens_d": -1.2978818313170266,
+      "eval_action_cohens_d": -1.2531054688423526,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.00587392272565697
+    },
+    {
+      "feature_id": 14162,
+      "discovery_corr_log_odds": 0.667654241755537,
+      "eval_corr_log_odds": 0.6066033725479886,
+      "discovery_action_cohens_d": 1.3403283289153032,
+      "eval_action_cohens_d": 1.2291444157135238,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005264291209103483
+    },
+    {
+      "feature_id": 12135,
+      "discovery_corr_log_odds": 0.666283648748576,
+      "eval_corr_log_odds": 0.6631373236670701,
+      "discovery_action_cohens_d": 1.2567802780806525,
+      "eval_action_cohens_d": 1.3101127260047287,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0037303522492337163
+    },
+    {
+      "feature_id": 973,
+      "discovery_corr_log_odds": -0.6649771547768084,
+      "eval_corr_log_odds": -0.6906709581893332,
+      "discovery_action_cohens_d": -1.4546907969384653,
+      "eval_action_cohens_d": -1.3983483501888636,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005245565619286348
+    },
+    {
+      "feature_id": 23030,
+      "discovery_corr_log_odds": -0.6644849485545613,
+      "eval_corr_log_odds": -0.7260845507349079,
+      "discovery_action_cohens_d": -0.9274725309523233,
+      "eval_action_cohens_d": -0.9142041850793605,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004855592791929422
+    },
+    {
+      "feature_id": 21785,
+      "discovery_corr_log_odds": 0.6602087150722753,
+      "eval_corr_log_odds": 0.6690473877565648,
+      "discovery_action_cohens_d": 1.029227793205082,
+      "eval_action_cohens_d": 1.003700302681137,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0035693919303615125
+    },
+    {
+      "feature_id": 12206,
+      "discovery_corr_log_odds": 0.6592149367570797,
+      "eval_corr_log_odds": 0.7156018798156268,
+      "discovery_action_cohens_d": 0.9493679469791635,
+      "eval_action_cohens_d": 1.017357296257055,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.00495016524654041
+    },
+    {
+      "feature_id": 4240,
+      "discovery_corr_log_odds": 0.659035324110602,
+      "eval_corr_log_odds": 0.6801697096809427,
+      "discovery_action_cohens_d": 1.036217986991548,
+      "eval_action_cohens_d": 1.0210367127781568,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005621560334820205
+    },
+    {
+      "feature_id": 19457,
+      "discovery_corr_log_odds": 0.6559753714181514,
+      "eval_corr_log_odds": 0.6972107163589751,
+      "discovery_action_cohens_d": 1.1304957099723552,
+      "eval_action_cohens_d": 1.1267162251433238,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005607115361425879
+    },
+    {
+      "feature_id": 4,
+      "discovery_corr_log_odds": -0.6550249517638145,
+      "eval_corr_log_odds": -0.6359878258726482,
+      "discovery_action_cohens_d": -0.8781994504614246,
+      "eval_action_cohens_d": -0.7410555620122383,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0045422948619440505
+    },
+    {
+      "feature_id": 9631,
+      "discovery_corr_log_odds": 0.6537821755590474,
+      "eval_corr_log_odds": 0.6750768452700836,
+      "discovery_action_cohens_d": 1.3245061339749724,
+      "eval_action_cohens_d": 1.3348147094791123,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0036296337975998735
+    },
+    {
+      "feature_id": 18026,
+      "discovery_corr_log_odds": 0.6531172962839059,
+      "eval_corr_log_odds": 0.6783933602380514,
+      "discovery_action_cohens_d": 1.1779619133517991,
+      "eval_action_cohens_d": 1.2036794068742582,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.003734544012083253
+    },
+    {
+      "feature_id": 8885,
+      "discovery_corr_log_odds": -0.6529923765504355,
+      "eval_corr_log_odds": -0.7257453273344121,
+      "discovery_action_cohens_d": -1.2344224349531372,
+      "eval_action_cohens_d": -1.2790284489116968,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.006170542720305195
+    },
+    {
+      "feature_id": 10379,
+      "discovery_corr_log_odds": 0.6523267095913656,
+      "eval_corr_log_odds": 0.6800355890440647,
+      "discovery_action_cohens_d": 1.4362968492518875,
+      "eval_action_cohens_d": 1.5063432944217872,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0053913625408793416
+    },
+    {
+      "feature_id": 4524,
+      "discovery_corr_log_odds": -0.6521337753867763,
+      "eval_corr_log_odds": -0.7120011454760443,
+      "discovery_action_cohens_d": -1.0545527082638333,
+      "eval_action_cohens_d": -1.0915695288749578,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0046905013043837766
+    },
+    {
+      "feature_id": 21866,
+      "discovery_corr_log_odds": 0.6508902781172919,
+      "eval_corr_log_odds": 0.7236182509475351,
+      "discovery_action_cohens_d": 0.7615362455502814,
+      "eval_action_cohens_d": 0.7859940964740711,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.007491395453655623
+    },
+    {
+      "feature_id": 13878,
+      "discovery_corr_log_odds": -0.65013634863317,
+      "eval_corr_log_odds": -0.6269461788888835,
+      "discovery_action_cohens_d": -1.1770913813162756,
+      "eval_action_cohens_d": -1.0121667023248297,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.006510909471044796
+    },
+    {
+      "feature_id": 4907,
+      "discovery_corr_log_odds": 0.649199761965874,
+      "eval_corr_log_odds": 0.6077955438314606,
+      "discovery_action_cohens_d": 1.0362730605571957,
+      "eval_action_cohens_d": 0.9526048300499549,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004671951108716751
+    },
+    {
+      "feature_id": 24550,
+      "discovery_corr_log_odds": -0.6478222079158561,
+      "eval_corr_log_odds": -0.6543439431877716,
+      "discovery_action_cohens_d": -0.8400800476657891,
+      "eval_action_cohens_d": -0.8656070440629915,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004089890304879981
+    },
+    {
+      "feature_id": 13778,
+      "discovery_corr_log_odds": -0.6468025162961816,
+      "eval_corr_log_odds": -0.7613206924639475,
+      "discovery_action_cohens_d": -1.2796808224613032,
+      "eval_action_cohens_d": -1.3888940507736387,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0054126248751685795
+    },
+    {
+      "feature_id": 12392,
+      "discovery_corr_log_odds": 0.6465335768222917,
+      "eval_corr_log_odds": 0.6687595716827944,
+      "discovery_action_cohens_d": 1.415785508205465,
+      "eval_action_cohens_d": 1.3859171240128918,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0050933591236695976
+    },
+    {
+      "feature_id": 586,
+      "discovery_corr_log_odds": -0.6443630589450698,
+      "eval_corr_log_odds": -0.7000378764976262,
+      "discovery_action_cohens_d": -1.4303168404444446,
+      "eval_action_cohens_d": -1.406717554232068,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004553286182881408
+    },
+    {
+      "feature_id": 20967,
+      "discovery_corr_log_odds": 0.6441208366154956,
+      "eval_corr_log_odds": 0.6289489910722426,
+      "discovery_action_cohens_d": 0.9209192034525511,
+      "eval_action_cohens_d": 0.8268068611858923,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.003416467771893821
+    },
+    {
+      "feature_id": 14760,
+      "discovery_corr_log_odds": -0.6439679468621458,
+      "eval_corr_log_odds": -0.7294984014444235,
+      "discovery_action_cohens_d": -0.9494298716681955,
+      "eval_action_cohens_d": -0.9772521822722638,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004104329322010786
+    },
+    {
+      "feature_id": 8318,
+      "discovery_corr_log_odds": 0.6430439580703168,
+      "eval_corr_log_odds": 0.6469011326752413,
+      "discovery_action_cohens_d": 0.9248621110549977,
+      "eval_action_cohens_d": 0.8528364537397444,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004419811658578797
+    },
+    {
+      "feature_id": 4490,
+      "discovery_corr_log_odds": -0.6408316833231613,
+      "eval_corr_log_odds": -0.6199932231096114,
+      "discovery_action_cohens_d": -1.2904603266683918,
+      "eval_action_cohens_d": -1.1433331296936584,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0069252056963120395
+    },
+    {
+      "feature_id": 9663,
+      "discovery_corr_log_odds": -0.6407555638699887,
+      "eval_corr_log_odds": -0.6887381564998382,
+      "discovery_action_cohens_d": -1.3395989255526242,
+      "eval_action_cohens_d": -1.3597370546573686,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005159714741035966
+    },
+    {
+      "feature_id": 27100,
+      "discovery_corr_log_odds": 0.6398465598234507,
+      "eval_corr_log_odds": 0.6961663933486745,
+      "discovery_action_cohens_d": 0.9914595515294297,
+      "eval_action_cohens_d": 0.9730675090347403,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.003733422953875338
+    },
+    {
+      "feature_id": 15032,
+      "discovery_corr_log_odds": 0.6392615881691405,
+      "eval_corr_log_odds": 0.6663185878671108,
+      "discovery_action_cohens_d": 1.209102862700711,
+      "eval_action_cohens_d": 1.1889782800584368,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.007376692020745335
+    },
+    {
+      "feature_id": 15031,
+      "discovery_corr_log_odds": -0.6387367461834526,
+      "eval_corr_log_odds": -0.6181178847626064,
+      "discovery_action_cohens_d": -1.0332513507841024,
+      "eval_action_cohens_d": -1.004636771523503,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0028669753391615026
+    },
+    {
+      "feature_id": 23867,
+      "discovery_corr_log_odds": 0.6383871854393124,
+      "eval_corr_log_odds": 0.6904301580115954,
+      "discovery_action_cohens_d": 1.0389044368208205,
+      "eval_action_cohens_d": 1.0565431335939106,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.007234971247598005
+    },
+    {
+      "feature_id": 17315,
+      "discovery_corr_log_odds": -0.6371652818419002,
+      "eval_corr_log_odds": -0.6914190458485099,
+      "discovery_action_cohens_d": -1.3035096247708222,
+      "eval_action_cohens_d": -1.3195894038020688,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.00600900463847603
+    },
+    {
+      "feature_id": 22301,
+      "discovery_corr_log_odds": -0.6367522938503446,
+      "eval_corr_log_odds": -0.6863918995895752,
+      "discovery_action_cohens_d": -1.374736203448494,
+      "eval_action_cohens_d": -1.4065661770656028,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.006370704619857302
+    },
+    {
+      "feature_id": 3752,
+      "discovery_corr_log_odds": 0.636531675503585,
+      "eval_corr_log_odds": 0.6899746424906185,
+      "discovery_action_cohens_d": 1.0681095874853308,
+      "eval_action_cohens_d": 1.156663806059721,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004920882600442426
+    },
+    {
+      "feature_id": 4039,
+      "discovery_corr_log_odds": -0.6365291288527987,
+      "eval_corr_log_odds": -0.703772498554526,
+      "discovery_action_cohens_d": -1.249084986080775,
+      "eval_action_cohens_d": -1.3410371877456284,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.00592360188961507
+    },
+    {
+      "feature_id": 26197,
+      "discovery_corr_log_odds": -0.6362407751558098,
+      "eval_corr_log_odds": -0.6499173438289018,
+      "discovery_action_cohens_d": -0.7167648113215749,
+      "eval_action_cohens_d": -0.7092251992351761,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004564993601226705
+    },
+    {
+      "feature_id": 16245,
+      "discovery_corr_log_odds": 0.6356690468629587,
+      "eval_corr_log_odds": 0.6161610547715926,
+      "discovery_action_cohens_d": 0.7182358132463734,
+      "eval_action_cohens_d": 0.6179538815924677,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004438548683725744
+    },
+    {
+      "feature_id": 1756,
+      "discovery_corr_log_odds": -0.6348773801545683,
+      "eval_corr_log_odds": -0.6466791275209094,
+      "discovery_action_cohens_d": -1.2486718301653557,
+      "eval_action_cohens_d": -1.2470287506170417,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004448193027999367
+    },
+    {
+      "feature_id": 28070,
+      "discovery_corr_log_odds": 0.63417422301756,
+      "eval_corr_log_odds": 0.6578597469183344,
+      "discovery_action_cohens_d": 0.9025022456616629,
+      "eval_action_cohens_d": 0.8605849410247085,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.006772177031283992
+    },
+    {
+      "feature_id": 2798,
+      "discovery_corr_log_odds": -0.632697218085874,
+      "eval_corr_log_odds": -0.7033800701285283,
+      "discovery_action_cohens_d": -1.0676165622538134,
+      "eval_action_cohens_d": -1.1359813581292233,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0035900968713595996
+    },
+    {
+      "feature_id": 16565,
+      "discovery_corr_log_odds": -0.6321123645458717,
+      "eval_corr_log_odds": -0.6814472718452054,
+      "discovery_action_cohens_d": -0.8135737583487266,
+      "eval_action_cohens_d": -0.8030652986970424,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005678558541016603
+    },
+    {
+      "feature_id": 13799,
+      "discovery_corr_log_odds": 0.6320714030432264,
+      "eval_corr_log_odds": 0.6610868901409203,
+      "discovery_action_cohens_d": 0.9115821714989176,
+      "eval_action_cohens_d": 0.8946915361083531,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.003816331326885515
+    },
+    {
+      "feature_id": 6648,
+      "discovery_corr_log_odds": -0.6319512124129688,
+      "eval_corr_log_odds": -0.6754224656177521,
+      "discovery_action_cohens_d": -0.9258216446500631,
+      "eval_action_cohens_d": -0.9044604209103035,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004105304302435642
+    },
+    {
+      "feature_id": 24213,
+      "discovery_corr_log_odds": 0.6316943381124948,
+      "eval_corr_log_odds": 0.6595395674818011,
+      "discovery_action_cohens_d": 1.3228339430384337,
+      "eval_action_cohens_d": 1.3437673745775651,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005567470773011795
+    },
+    {
+      "feature_id": 18326,
+      "discovery_corr_log_odds": -0.6316095224700814,
+      "eval_corr_log_odds": -0.6516720968239608,
+      "discovery_action_cohens_d": -1.4380737977937734,
+      "eval_action_cohens_d": -1.4098904309357856,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.006970111209397432
+    },
+    {
+      "feature_id": 8315,
+      "discovery_corr_log_odds": 0.6312938919416732,
+      "eval_corr_log_odds": 0.6508488188179117,
+      "discovery_action_cohens_d": 0.9921718633688841,
+      "eval_action_cohens_d": 0.9622696680759415,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004956541304386889
+    },
+    {
+      "feature_id": 7919,
+      "discovery_corr_log_odds": 0.6311259749269005,
+      "eval_corr_log_odds": 0.6269585956037917,
+      "discovery_action_cohens_d": 1.227939607899369,
+      "eval_action_cohens_d": 1.1804878447693945,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0053749238791266874
+    },
+    {
+      "feature_id": 19266,
+      "discovery_corr_log_odds": -0.6303128720027609,
+      "eval_corr_log_odds": -0.6430175381971837,
+      "discovery_action_cohens_d": -1.4028653812716732,
+      "eval_action_cohens_d": -1.4119790582230967,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005106585812772644
+    },
+    {
+      "feature_id": 10441,
+      "discovery_corr_log_odds": 0.629548427219306,
+      "eval_corr_log_odds": 0.6894530445534668,
+      "discovery_action_cohens_d": 1.2569090495695345,
+      "eval_action_cohens_d": 1.307777139175689,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005778405586702641
+    },
+    {
+      "feature_id": 14768,
+      "discovery_corr_log_odds": -0.629440715934523,
+      "eval_corr_log_odds": -0.6566905497951012,
+      "discovery_action_cohens_d": -1.2365319165185953,
+      "eval_action_cohens_d": -1.2346713097711626,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0055330867472435956
+    },
+    {
+      "feature_id": 16118,
+      "discovery_corr_log_odds": 0.6283800052752528,
+      "eval_corr_log_odds": 0.5358748495835578,
+      "discovery_action_cohens_d": 0.8030271304569515,
+      "eval_action_cohens_d": 0.5104495908374942,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004895766049872406
+    },
+    {
+      "feature_id": 1393,
+      "discovery_corr_log_odds": 0.6255116194151874,
+      "eval_corr_log_odds": 0.6988211436288053,
+      "discovery_action_cohens_d": 1.070224625129752,
+      "eval_action_cohens_d": 1.1939925609626842,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0050577153431621835
+    },
+    {
+      "feature_id": 14800,
+      "discovery_corr_log_odds": -0.6253506567461743,
+      "eval_corr_log_odds": -0.6505626557871665,
+      "discovery_action_cohens_d": -1.0112988293134464,
+      "eval_action_cohens_d": -1.0217623819225372,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0036470350598028435
+    },
+    {
+      "feature_id": 21354,
+      "discovery_corr_log_odds": 0.6250427027658577,
+      "eval_corr_log_odds": 0.6184637010043554,
+      "discovery_action_cohens_d": 0.805036825861278,
+      "eval_action_cohens_d": 0.7388352780765656,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.007958447932375674
+    },
+    {
+      "feature_id": 25120,
+      "discovery_corr_log_odds": -0.6245260273788078,
+      "eval_corr_log_odds": -0.6660801697402898,
+      "discovery_action_cohens_d": -1.073925567816674,
+      "eval_action_cohens_d": -1.0914915913799654,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005631530776453393
+    },
+    {
+      "feature_id": 16423,
+      "discovery_corr_log_odds": 0.6238514013200473,
+      "eval_corr_log_odds": 0.6253318048854025,
+      "discovery_action_cohens_d": 1.203979903766827,
+      "eval_action_cohens_d": 1.1731135251513645,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.006806924444832179
+    },
+    {
+      "feature_id": 4592,
+      "discovery_corr_log_odds": -0.622845039960728,
+      "eval_corr_log_odds": -0.6721663028093322,
+      "discovery_action_cohens_d": -1.2739460331338532,
+      "eval_action_cohens_d": -1.2543391140656273,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005187999382782623
+    },
+    {
+      "feature_id": 3984,
+      "discovery_corr_log_odds": 0.6222832087506324,
+      "eval_corr_log_odds": 0.6078512277812894,
+      "discovery_action_cohens_d": 0.7998862867523711,
+      "eval_action_cohens_d": 0.7753289608235917,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004628474277622376
+    },
+    {
+      "feature_id": 8477,
+      "discovery_corr_log_odds": -0.6218523632753221,
+      "eval_corr_log_odds": -0.6534354927541759,
+      "discovery_action_cohens_d": -1.228914057432612,
+      "eval_action_cohens_d": -1.1869549809798765,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0039955729253302475
+    },
+    {
+      "feature_id": 3413,
+      "discovery_corr_log_odds": -0.6215132521733601,
+      "eval_corr_log_odds": -0.5754537213706515,
+      "discovery_action_cohens_d": -1.311820340906039,
+      "eval_action_cohens_d": -1.2074226036703641,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004975602092423894
+    },
+    {
+      "feature_id": 20198,
+      "discovery_corr_log_odds": -0.6212036120842481,
+      "eval_corr_log_odds": -0.597650262897176,
+      "discovery_action_cohens_d": -1.200702652607622,
+      "eval_action_cohens_d": -1.0979321525687675,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005481237378420814
+    },
+    {
+      "feature_id": 13252,
+      "discovery_corr_log_odds": -0.6207972827201016,
+      "eval_corr_log_odds": -0.6538580239418547,
+      "discovery_action_cohens_d": -1.2568874949500153,
+      "eval_action_cohens_d": -1.2511261043024908,
+      "discovery_prevalence": 0.11650485436893204,
+      "discovery_scale": 0.0029771746162142393
+    },
+    {
+      "feature_id": 5959,
+      "discovery_corr_log_odds": -0.6198860539201287,
+      "eval_corr_log_odds": -0.6969059607893081,
+      "discovery_action_cohens_d": -1.1256487659663674,
+      "eval_action_cohens_d": -1.1281113637451001,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004479566797391187
+    },
+    {
+      "feature_id": 15060,
+      "discovery_corr_log_odds": -0.6197035942633543,
+      "eval_corr_log_odds": -0.6305192169601875,
+      "discovery_action_cohens_d": -1.155363411822504,
+      "eval_action_cohens_d": -1.1584162444652573,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005999190606237306
+    },
+    {
+      "feature_id": 2792,
+      "discovery_corr_log_odds": -0.6183611229917673,
+      "eval_corr_log_odds": -0.5872219153544758,
+      "discovery_action_cohens_d": -1.0101703657693328,
+      "eval_action_cohens_d": -0.8851989396521881,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.00516205704340504
+    },
+    {
+      "feature_id": 23765,
+      "discovery_corr_log_odds": 0.6176024367020893,
+      "eval_corr_log_odds": 0.5670751377035803,
+      "discovery_action_cohens_d": 0.6786833184472632,
+      "eval_action_cohens_d": 0.5738941944162074,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0053705219114548435
+    },
+    {
+      "feature_id": 5451,
+      "discovery_corr_log_odds": -0.6164076226891964,
+      "eval_corr_log_odds": -0.621034041359054,
+      "discovery_action_cohens_d": -0.9059519191245113,
+      "eval_action_cohens_d": -0.91503619599306,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.002919433856375874
+    },
+    {
+      "feature_id": 13132,
+      "discovery_corr_log_odds": -0.6162993400844093,
+      "eval_corr_log_odds": -0.6263910429679482,
+      "discovery_action_cohens_d": -1.3281719876713367,
+      "eval_action_cohens_d": -1.3109998248030237,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.006409283690448852
+    },
+    {
+      "feature_id": 12586,
+      "discovery_corr_log_odds": -0.6162423117333192,
+      "eval_corr_log_odds": -0.6689836102364759,
+      "discovery_action_cohens_d": -1.254642484364591,
+      "eval_action_cohens_d": -1.2454178006166192,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.00550428782623584
+    },
+    {
+      "feature_id": 3711,
+      "discovery_corr_log_odds": 0.6160238473092174,
+      "eval_corr_log_odds": 0.6817468006912879,
+      "discovery_action_cohens_d": 1.4388356575677268,
+      "eval_action_cohens_d": 1.5039463753725864,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.006029715017008329
+    },
+    {
+      "feature_id": 6880,
+      "discovery_corr_log_odds": -0.6149363609242452,
+      "eval_corr_log_odds": -0.6852359983356505,
+      "discovery_action_cohens_d": -1.3462548758432304,
+      "eval_action_cohens_d": -1.4043323649228998,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005349876593465082
+    },
+    {
+      "feature_id": 13391,
+      "discovery_corr_log_odds": -0.614858582532548,
+      "eval_corr_log_odds": -0.6927982307268344,
+      "discovery_action_cohens_d": -1.065797931448804,
+      "eval_action_cohens_d": -1.127155711713417,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005043447466772335
+    },
+    {
+      "feature_id": 20298,
+      "discovery_corr_log_odds": 0.6144406126627886,
+      "eval_corr_log_odds": 0.655644381108211,
+      "discovery_action_cohens_d": 1.1261165466060368,
+      "eval_action_cohens_d": 1.1462391183440122,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.00483912102140641
+    },
+    {
+      "feature_id": 10618,
+      "discovery_corr_log_odds": -0.6143863265330793,
+      "eval_corr_log_odds": -0.5923659433140593,
+      "discovery_action_cohens_d": -1.2091571232658778,
+      "eval_action_cohens_d": -1.0973289290128316,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.006013494758627999
+    },
+    {
+      "feature_id": 26277,
+      "discovery_corr_log_odds": -0.6139356498215914,
+      "eval_corr_log_odds": -0.6423650211091064,
+      "discovery_action_cohens_d": -1.3568761287136824,
+      "eval_action_cohens_d": -1.350765587819691,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004937610621743618
+    },
+    {
+      "feature_id": 5983,
+      "discovery_corr_log_odds": -0.6137510990197996,
+      "eval_corr_log_odds": -0.6509980420571599,
+      "discovery_action_cohens_d": -1.1519781669363085,
+      "eval_action_cohens_d": -1.1862837798262391,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005226500252506113
+    },
+    {
+      "feature_id": 13911,
+      "discovery_corr_log_odds": -0.6127552669328917,
+      "eval_corr_log_odds": -0.661383238771509,
+      "discovery_action_cohens_d": -0.9822950111171113,
+      "eval_action_cohens_d": -1.0055554290761877,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.00555188259804666
+    },
+    {
+      "feature_id": 7414,
+      "discovery_corr_log_odds": -0.6116173675087696,
+      "eval_corr_log_odds": -0.6750561541454174,
+      "discovery_action_cohens_d": -0.8327949542771659,
+      "eval_action_cohens_d": -0.7905636300553739,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.006468812553440398
+    },
+    {
+      "feature_id": 27104,
+      "discovery_corr_log_odds": 0.6106239450748859,
+      "eval_corr_log_odds": 0.5230760677764204,
+      "discovery_action_cohens_d": 0.9640529888078748,
+      "eval_action_cohens_d": 0.8298098820769336,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.00487188635465102
+    },
+    {
+      "feature_id": 8497,
+      "discovery_corr_log_odds": 0.6104443524355815,
+      "eval_corr_log_odds": 0.6471004235242447,
+      "discovery_action_cohens_d": 0.8635063396177208,
+      "eval_action_cohens_d": 0.9407747826021198,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.003972394347095956
+    },
+    {
+      "feature_id": 21459,
+      "discovery_corr_log_odds": -0.6104410491931977,
+      "eval_corr_log_odds": -0.6690084491207646,
+      "discovery_action_cohens_d": -0.9670156795139984,
+      "eval_action_cohens_d": -1.024875242507127,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005006200468154823
+    },
+    {
+      "feature_id": 9078,
+      "discovery_corr_log_odds": -0.6101514536695454,
+      "eval_corr_log_odds": -0.6380305454176481,
+      "discovery_action_cohens_d": -1.134581954708732,
+      "eval_action_cohens_d": -1.2001931531161805,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.003085479885117097
+    },
+    {
+      "feature_id": 3572,
+      "discovery_corr_log_odds": -0.6100601609777635,
+      "eval_corr_log_odds": -0.616979436857485,
+      "discovery_action_cohens_d": -0.8750606102695233,
+      "eval_action_cohens_d": -0.7907119233288693,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004863912992824312
+    },
+    {
+      "feature_id": 23645,
+      "discovery_corr_log_odds": -0.6099670072213198,
+      "eval_corr_log_odds": -0.6370876794835985,
+      "discovery_action_cohens_d": -0.9251579787747659,
+      "eval_action_cohens_d": -0.8312701764997672,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0048088546958995095
+    },
+    {
+      "feature_id": 15370,
+      "discovery_corr_log_odds": -0.6095380487120957,
+      "eval_corr_log_odds": -0.5216149519837968,
+      "discovery_action_cohens_d": -0.9984733948301034,
+      "eval_action_cohens_d": -0.7644303747660791,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005053053482711768
+    },
+    {
+      "feature_id": 336,
+      "discovery_corr_log_odds": -0.6094416361433757,
+      "eval_corr_log_odds": -0.6851470913806548,
+      "discovery_action_cohens_d": -1.0495307361284785,
+      "eval_action_cohens_d": -1.0185801858311245,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0036214937373418906
+    },
+    {
+      "feature_id": 26432,
+      "discovery_corr_log_odds": -0.6091757480169356,
+      "eval_corr_log_odds": -0.6926273689758048,
+      "discovery_action_cohens_d": -1.1446004183810696,
+      "eval_action_cohens_d": -1.2555896928832064,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0040201875738355465
+    },
+    {
+      "feature_id": 16710,
+      "discovery_corr_log_odds": -0.6091716513791442,
+      "eval_corr_log_odds": -0.6275065093132328,
+      "discovery_action_cohens_d": -1.1897093074093337,
+      "eval_action_cohens_d": -1.1625681815366244,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004825078988775397
+    },
+    {
+      "feature_id": 12972,
+      "discovery_corr_log_odds": 0.6091483674657485,
+      "eval_corr_log_odds": 0.6160664981274815,
+      "discovery_action_cohens_d": 0.9041167986312637,
+      "eval_action_cohens_d": 0.9068793517136156,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0052793729340741575
+    },
+    {
+      "feature_id": 23379,
+      "discovery_corr_log_odds": 0.6090250728553948,
+      "eval_corr_log_odds": 0.6102121087482621,
+      "discovery_action_cohens_d": 0.9548265882691459,
+      "eval_action_cohens_d": 0.979846382575412,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0033324579506067774
+    },
+    {
+      "feature_id": 508,
+      "discovery_corr_log_odds": -0.6089618761415739,
+      "eval_corr_log_odds": -0.5738654823650499,
+      "discovery_action_cohens_d": -1.2946313692062241,
+      "eval_action_cohens_d": -1.1779780895258003,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.00566131419449701
+    },
+    {
+      "feature_id": 10937,
+      "discovery_corr_log_odds": 0.6084116564848437,
+      "eval_corr_log_odds": 0.6072356015906718,
+      "discovery_action_cohens_d": 1.2263274289466155,
+      "eval_action_cohens_d": 1.1594653627459404,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004427816917851941
+    },
+    {
+      "feature_id": 14582,
+      "discovery_corr_log_odds": -0.6079940865311952,
+      "eval_corr_log_odds": -0.5440231600884311,
+      "discovery_action_cohens_d": -0.9464675796393758,
+      "eval_action_cohens_d": -0.8068673188524882,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.006136339912249913
+    },
+    {
+      "feature_id": 25574,
+      "discovery_corr_log_odds": -0.6074119787559953,
+      "eval_corr_log_odds": -0.6309088412121057,
+      "discovery_action_cohens_d": -0.863346981548756,
+      "eval_action_cohens_d": -0.8044496294718592,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005972014835925697
+    },
+    {
+      "feature_id": 26820,
+      "discovery_corr_log_odds": -0.6071494080971198,
+      "eval_corr_log_odds": -0.6739081793192889,
+      "discovery_action_cohens_d": -0.8857234716384493,
+      "eval_action_cohens_d": -0.9754372315371731,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004456064324219618
+    },
+    {
+      "feature_id": 22217,
+      "discovery_corr_log_odds": 0.6067160077570185,
+      "eval_corr_log_odds": 0.5258789643345022,
+      "discovery_action_cohens_d": 0.902148738633727,
+      "eval_action_cohens_d": 0.7494454656373136,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005055549950835146
+    },
+    {
+      "feature_id": 20920,
+      "discovery_corr_log_odds": -0.6062549085864508,
+      "eval_corr_log_odds": -0.6196494314086748,
+      "discovery_action_cohens_d": -1.2233884870549168,
+      "eval_action_cohens_d": -1.1391650799064408,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.006500007608018491
+    },
+    {
+      "feature_id": 20466,
+      "discovery_corr_log_odds": 0.6053865157796825,
+      "eval_corr_log_odds": 0.6470421758601106,
+      "discovery_action_cohens_d": 0.8752134635482489,
+      "eval_action_cohens_d": 0.8998906527679533,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.006379580678547567
+    },
+    {
+      "feature_id": 2257,
+      "discovery_corr_log_odds": -0.6050885260024381,
+      "eval_corr_log_odds": -0.6991869697074212,
+      "discovery_action_cohens_d": -0.982415660050997,
+      "eval_action_cohens_d": -1.0622157706123594,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0065837692646977565
+    },
+    {
+      "feature_id": 2996,
+      "discovery_corr_log_odds": -0.6044310881607675,
+      "eval_corr_log_odds": -0.641568210430615,
+      "discovery_action_cohens_d": -1.231268174901494,
+      "eval_action_cohens_d": -1.2295738425435798,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005082524982921529
+    },
+    {
+      "feature_id": 5801,
+      "discovery_corr_log_odds": -0.6043852225239328,
+      "eval_corr_log_odds": -0.5631937092353192,
+      "discovery_action_cohens_d": -1.3318096588137298,
+      "eval_action_cohens_d": -1.2320800612336025,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.003823130462193395
+    },
+    {
+      "feature_id": 25258,
+      "discovery_corr_log_odds": -0.6042349402495294,
+      "eval_corr_log_odds": -0.6977964872451818,
+      "discovery_action_cohens_d": -1.131993797383964,
+      "eval_action_cohens_d": -1.2360922597437407,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.006291207317306224
+    },
+    {
+      "feature_id": 8253,
+      "discovery_corr_log_odds": -0.6038721307028961,
+      "eval_corr_log_odds": -0.6085498012059067,
+      "discovery_action_cohens_d": -1.2745017310207332,
+      "eval_action_cohens_d": -1.2675010630125951,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004079568779966685
+    },
+    {
+      "feature_id": 10362,
+      "discovery_corr_log_odds": -0.6038210601732132,
+      "eval_corr_log_odds": -0.6806485599292343,
+      "discovery_action_cohens_d": -1.0485528073457824,
+      "eval_action_cohens_d": -1.08846048382578,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004383321401415201
+    },
+    {
+      "feature_id": 15427,
+      "discovery_corr_log_odds": -0.6037736739835501,
+      "eval_corr_log_odds": -0.6537166463416771,
+      "discovery_action_cohens_d": -1.1172826332184667,
+      "eval_action_cohens_d": -1.1316829536800932,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0066594341823971925
+    },
+    {
+      "feature_id": 24220,
+      "discovery_corr_log_odds": -0.6034552224167754,
+      "eval_corr_log_odds": -0.644255882017662,
+      "discovery_action_cohens_d": -1.0888070859540824,
+      "eval_action_cohens_d": -1.0897743955879435,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0034763629913522175
+    },
+    {
+      "feature_id": 6518,
+      "discovery_corr_log_odds": -0.6034015706427996,
+      "eval_corr_log_odds": -0.7060600779672943,
+      "discovery_action_cohens_d": -0.9232113950670079,
+      "eval_action_cohens_d": -1.0095965376899687,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.006294089191072552
+    },
+    {
+      "feature_id": 736,
+      "discovery_corr_log_odds": 0.6033016661028284,
+      "eval_corr_log_odds": 0.632422376641318,
+      "discovery_action_cohens_d": 1.0349739482309648,
+      "eval_action_cohens_d": 1.0443021105580783,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0054783662427024616
+    },
+    {
+      "feature_id": 6350,
+      "discovery_corr_log_odds": -0.6031960162194349,
+      "eval_corr_log_odds": -0.6863184336861349,
+      "discovery_action_cohens_d": -1.0217975033203162,
+      "eval_action_cohens_d": -1.089553253521658,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005552467976122466
+    },
+    {
+      "feature_id": 13254,
+      "discovery_corr_log_odds": 0.602920161412761,
+      "eval_corr_log_odds": 0.575279203042494,
+      "discovery_action_cohens_d": 1.1726931550844182,
+      "eval_action_cohens_d": 1.157018888081582,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0032707521801324606
+    },
+    {
+      "feature_id": 1093,
+      "discovery_corr_log_odds": 0.6027476825396529,
+      "eval_corr_log_odds": 0.6736364268258742,
+      "discovery_action_cohens_d": 1.052700074191527,
+      "eval_action_cohens_d": 1.1450177002782178,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.003591551875908299
+    },
+    {
+      "feature_id": 22892,
+      "discovery_corr_log_odds": -0.6024630338544438,
+      "eval_corr_log_odds": -0.6942918073331215,
+      "discovery_action_cohens_d": -1.07412692859929,
+      "eval_action_cohens_d": -1.2245525680931701,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0040673836911272795
+    },
+    {
+      "feature_id": 24974,
+      "discovery_corr_log_odds": 0.6024240008314544,
+      "eval_corr_log_odds": 0.6312333787116426,
+      "discovery_action_cohens_d": 1.1265450861976176,
+      "eval_action_cohens_d": 1.1695349592846644,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.006361621882108219
+    },
+    {
+      "feature_id": 24322,
+      "discovery_corr_log_odds": 0.6022797312778131,
+      "eval_corr_log_odds": 0.6751508846447148,
+      "discovery_action_cohens_d": 1.0671970160765996,
+      "eval_action_cohens_d": 1.1416873172661015,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0037883571538957377
+    },
+    {
+      "feature_id": 17529,
+      "discovery_corr_log_odds": 0.6018355777698525,
+      "eval_corr_log_odds": 0.6142934515318133,
+      "discovery_action_cohens_d": 1.219122904887246,
+      "eval_action_cohens_d": 1.1183425318345896,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005936371252884377
+    },
+    {
+      "feature_id": 8731,
+      "discovery_corr_log_odds": 0.6015168273811647,
+      "eval_corr_log_odds": 0.6991792117099651,
+      "discovery_action_cohens_d": 0.8923295308396292,
+      "eval_action_cohens_d": 0.9473839838031741,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.003646029653819267
+    },
+    {
+      "feature_id": 2546,
+      "discovery_corr_log_odds": -0.6011818497091382,
+      "eval_corr_log_odds": -0.6655116420849385,
+      "discovery_action_cohens_d": -0.8566290851319391,
+      "eval_action_cohens_d": -0.8968549977622366,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004842330265234994
+    },
+    {
+      "feature_id": 10332,
+      "discovery_corr_log_odds": -0.5999013649219924,
+      "eval_corr_log_odds": -0.638578864499672,
+      "discovery_action_cohens_d": -0.9368415780450601,
+      "eval_action_cohens_d": -0.8430940207900411,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0030234590277306078
+    },
+    {
+      "feature_id": 6627,
+      "discovery_corr_log_odds": -0.5997746617141294,
+      "eval_corr_log_odds": -0.5656357028112965,
+      "discovery_action_cohens_d": -0.7607651977363388,
+      "eval_action_cohens_d": -0.6853865981189284,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.003990689232143221
+    },
+    {
+      "feature_id": 3298,
+      "discovery_corr_log_odds": -0.5997745797809688,
+      "eval_corr_log_odds": -0.620810409844715,
+      "discovery_action_cohens_d": -1.315006928528127,
+      "eval_action_cohens_d": -1.2567282716648056,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0031022071110913124
+    },
+    {
+      "feature_id": 17503,
+      "discovery_corr_log_odds": -0.5995484555785316,
+      "eval_corr_log_odds": -0.7257779917611245,
+      "discovery_action_cohens_d": -0.7841814951127419,
+      "eval_action_cohens_d": -1.0041674634070108,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.00634781263770768
+    },
+    {
+      "feature_id": 25099,
+      "discovery_corr_log_odds": -0.599468483341629,
+      "eval_corr_log_odds": -0.6995072008403252,
+      "discovery_action_cohens_d": -0.9910703579570318,
+      "eval_action_cohens_d": -1.0956625267790714,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.006835132971799794
+    },
+    {
+      "feature_id": 19414,
+      "discovery_corr_log_odds": -0.598873386518125,
+      "eval_corr_log_odds": -0.6498976108542484,
+      "discovery_action_cohens_d": -1.1176833158496948,
+      "eval_action_cohens_d": -1.0989767622158946,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0052138177473355675
+    },
+    {
+      "feature_id": 597,
+      "discovery_corr_log_odds": -0.5987287574069873,
+      "eval_corr_log_odds": -0.7436613626910129,
+      "discovery_action_cohens_d": -0.9462736994240319,
+      "eval_action_cohens_d": -1.1389451110097066,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0035629772178317177
+    },
+    {
+      "feature_id": 5617,
+      "discovery_corr_log_odds": -0.5981109333399319,
+      "eval_corr_log_odds": -0.6560867654746825,
+      "discovery_action_cohens_d": -1.0997431010508034,
+      "eval_action_cohens_d": -1.162983692736364,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005756376020671964
+    },
+    {
+      "feature_id": 1097,
+      "discovery_corr_log_odds": -0.5979118764326238,
+      "eval_corr_log_odds": -0.6019375495721954,
+      "discovery_action_cohens_d": -1.2870192907739935,
+      "eval_action_cohens_d": -1.1839095172821354,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0038796623624197508
+    },
+    {
+      "feature_id": 18486,
+      "discovery_corr_log_odds": -0.5977692518492495,
+      "eval_corr_log_odds": -0.5498706754545869,
+      "discovery_action_cohens_d": -0.9538638218549425,
+      "eval_action_cohens_d": -0.8409060204229387,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0035138486350969472
+    },
+    {
+      "feature_id": 11397,
+      "discovery_corr_log_odds": 0.5973523174218768,
+      "eval_corr_log_odds": 0.6538740764878469,
+      "discovery_action_cohens_d": 0.6886191863855341,
+      "eval_action_cohens_d": 0.6601398363051305,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.006819049648991724
+    },
+    {
+      "feature_id": 20326,
+      "discovery_corr_log_odds": -0.5970240681988639,
+      "eval_corr_log_odds": -0.6253611930146845,
+      "discovery_action_cohens_d": -1.1455441762334122,
+      "eval_action_cohens_d": -1.1411756212857624,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.00888740964660808
+    },
+    {
+      "feature_id": 23835,
+      "discovery_corr_log_odds": -0.5968223597427507,
+      "eval_corr_log_odds": -0.6576105916965383,
+      "discovery_action_cohens_d": -1.3017402054094047,
+      "eval_action_cohens_d": -1.3792284455021224,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.003814771756711881
+    },
+    {
+      "feature_id": 3322,
+      "discovery_corr_log_odds": -0.5966675063387084,
+      "eval_corr_log_odds": -0.6357614771612319,
+      "discovery_action_cohens_d": -0.7396649874738586,
+      "eval_action_cohens_d": -0.7160783496799085,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.003214608814105485
+    },
+    {
+      "feature_id": 11064,
+      "discovery_corr_log_odds": 0.5966404908843145,
+      "eval_corr_log_odds": 0.630472552972356,
+      "discovery_action_cohens_d": 1.4673593412249462,
+      "eval_action_cohens_d": 1.4840343505015532,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005859342801072847
+    },
+    {
+      "feature_id": 22415,
+      "discovery_corr_log_odds": -0.5964355350595297,
+      "eval_corr_log_odds": -0.5933068567111464,
+      "discovery_action_cohens_d": -0.695897374668151,
+      "eval_action_cohens_d": -0.5644306326402423,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.007050787564657167
+    },
+    {
+      "feature_id": 16831,
+      "discovery_corr_log_odds": -0.5959761723447381,
+      "eval_corr_log_odds": -0.5895591291155687,
+      "discovery_action_cohens_d": -1.1911688004203955,
+      "eval_action_cohens_d": -1.1541837505574508,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005938928781242172
+    },
+    {
+      "feature_id": 19366,
+      "discovery_corr_log_odds": -0.5956522245337292,
+      "eval_corr_log_odds": -0.5949519150950163,
+      "discovery_action_cohens_d": -0.997540955246222,
+      "eval_action_cohens_d": -0.8941744752114401,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004421482225598943
+    },
+    {
+      "feature_id": 2213,
+      "discovery_corr_log_odds": -0.5956517092071585,
+      "eval_corr_log_odds": -0.6395743906493149,
+      "discovery_action_cohens_d": -1.19011687778311,
+      "eval_action_cohens_d": -1.145253950408476,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004404012608075608
+    },
+    {
+      "feature_id": 24247,
+      "discovery_corr_log_odds": 0.5955235367439983,
+      "eval_corr_log_odds": 0.5824028593972407,
+      "discovery_action_cohens_d": 0.6839959651685947,
+      "eval_action_cohens_d": 0.7724990201059776,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005982197947874186
+    },
+    {
+      "feature_id": 15334,
+      "discovery_corr_log_odds": 0.595395346774458,
+      "eval_corr_log_odds": 0.5692294880567775,
+      "discovery_action_cohens_d": 0.9470296281445268,
+      "eval_action_cohens_d": 0.8881291301427322,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.00432061937039816
+    },
+    {
+      "feature_id": 14492,
+      "discovery_corr_log_odds": -0.5951879075122845,
+      "eval_corr_log_odds": -0.6380999230046007,
+      "discovery_action_cohens_d": -0.8981078345119212,
+      "eval_action_cohens_d": -0.8269721716036249,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004683612621030582
+    },
+    {
+      "feature_id": 3487,
+      "discovery_corr_log_odds": 0.5949034376240658,
+      "eval_corr_log_odds": 0.5196555976420991,
+      "discovery_action_cohens_d": 1.303720233326721,
+      "eval_action_cohens_d": 1.0909326659572893,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005218514369113731
+    },
+    {
+      "feature_id": 16139,
+      "discovery_corr_log_odds": -0.5948015910199085,
+      "eval_corr_log_odds": -0.6081480440785653,
+      "discovery_action_cohens_d": -1.1844950356939377,
+      "eval_action_cohens_d": -1.201142891915704,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.006694794586356486
+    },
+    {
+      "feature_id": 6593,
+      "discovery_corr_log_odds": 0.594619688032005,
+      "eval_corr_log_odds": 0.6493117000169727,
+      "discovery_action_cohens_d": 0.9161836046116894,
+      "eval_action_cohens_d": 0.954359731037733,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0036929257836525856
+    },
+    {
+      "feature_id": 10041,
+      "discovery_corr_log_odds": -0.5942040593581779,
+      "eval_corr_log_odds": -0.651611515117651,
+      "discovery_action_cohens_d": -1.323023704162818,
+      "eval_action_cohens_d": -1.3401896156007955,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0062509758064404715
+    },
+    {
+      "feature_id": 2388,
+      "discovery_corr_log_odds": 0.5941497256623275,
+      "eval_corr_log_odds": 0.5985620124907197,
+      "discovery_action_cohens_d": 0.7706328001803324,
+      "eval_action_cohens_d": 0.8057821013109854,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004981989062360743
+    },
+    {
+      "feature_id": 18466,
+      "discovery_corr_log_odds": 0.5925984113982963,
+      "eval_corr_log_odds": 0.6647780693485248,
+      "discovery_action_cohens_d": 1.272185527344185,
+      "eval_action_cohens_d": 1.2240493447182672,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.003610228624624747
+    },
+    {
+      "feature_id": 13376,
+      "discovery_corr_log_odds": 0.5925194491121418,
+      "eval_corr_log_odds": 0.5510200878660302,
+      "discovery_action_cohens_d": 1.3017184441552323,
+      "eval_action_cohens_d": 1.173089430120225,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005468352186250326
+    },
+    {
+      "feature_id": 18678,
+      "discovery_corr_log_odds": 0.5924633037335726,
+      "eval_corr_log_odds": 0.5186769622039371,
+      "discovery_action_cohens_d": 1.0146181254740982,
+      "eval_action_cohens_d": 0.7672087372547332,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004545169508101499
+    },
+    {
+      "feature_id": 27696,
+      "discovery_corr_log_odds": 0.5923376651973988,
+      "eval_corr_log_odds": 0.6189886449047585,
+      "discovery_action_cohens_d": 0.7134837320401874,
+      "eval_action_cohens_d": 0.6056743917685355,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.003937588484056733
+    },
+    {
+      "feature_id": 18197,
+      "discovery_corr_log_odds": 0.5921417372264177,
+      "eval_corr_log_odds": 0.6686763391311059,
+      "discovery_action_cohens_d": 1.0245133871033922,
+      "eval_action_cohens_d": 1.0287108305363815,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004351896712074105
+    },
+    {
+      "feature_id": 3713,
+      "discovery_corr_log_odds": -0.5920790974784659,
+      "eval_corr_log_odds": -0.6209440921955621,
+      "discovery_action_cohens_d": -0.5619814531336018,
+      "eval_action_cohens_d": -0.5085325116185111,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005758666896134833
+    },
+    {
+      "feature_id": 21599,
+      "discovery_corr_log_odds": -0.5916542501755189,
+      "eval_corr_log_odds": -0.6225067257345478,
+      "discovery_action_cohens_d": -1.195956412119354,
+      "eval_action_cohens_d": -1.1714603414352,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004479731402703757
+    },
+    {
+      "feature_id": 20537,
+      "discovery_corr_log_odds": -0.5911656040344929,
+      "eval_corr_log_odds": -0.6885384542418227,
+      "discovery_action_cohens_d": -0.9006393479109333,
+      "eval_action_cohens_d": -0.9924027141205477,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005537543142193315
+    },
+    {
+      "feature_id": 5155,
+      "discovery_corr_log_odds": 0.5910504009442374,
+      "eval_corr_log_odds": 0.624515335954806,
+      "discovery_action_cohens_d": 1.1729281179601427,
+      "eval_action_cohens_d": 1.2370259413246787,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004621701151183789
+    },
+    {
+      "feature_id": 10369,
+      "discovery_corr_log_odds": 0.5908499929064863,
+      "eval_corr_log_odds": 0.5803903359381896,
+      "discovery_action_cohens_d": 1.2482573083196058,
+      "eval_action_cohens_d": 1.2925018007908937,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0036552367228305
+    },
+    {
+      "feature_id": 8954,
+      "discovery_corr_log_odds": -0.590294185682668,
+      "eval_corr_log_odds": -0.6878252947215742,
+      "discovery_action_cohens_d": -1.1826573880308142,
+      "eval_action_cohens_d": -1.237927968839846,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0041519631091657214
+    },
+    {
+      "feature_id": 17966,
+      "discovery_corr_log_odds": -0.5902255784125058,
+      "eval_corr_log_odds": -0.6379030503539188,
+      "discovery_action_cohens_d": -1.2606964409954915,
+      "eval_action_cohens_d": -1.2517283484605586,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.006387459226458502
+    },
+    {
+      "feature_id": 3017,
+      "discovery_corr_log_odds": -0.5897288045900175,
+      "eval_corr_log_odds": -0.6679006722014448,
+      "discovery_action_cohens_d": -1.3863862925481283,
+      "eval_action_cohens_d": -1.4768216214842294,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005200775938327835
+    },
+    {
+      "feature_id": 20646,
+      "discovery_corr_log_odds": 0.5893440256005968,
+      "eval_corr_log_odds": 0.6307870016867065,
+      "discovery_action_cohens_d": 0.9613766911731533,
+      "eval_action_cohens_d": 1.0464291033318647,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0030895936932965164
+    },
+    {
+      "feature_id": 14015,
+      "discovery_corr_log_odds": -0.5893358541224032,
+      "eval_corr_log_odds": -0.6336128074816378,
+      "discovery_action_cohens_d": -1.1420278408751736,
+      "eval_action_cohens_d": -1.1501056251441673,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0052504305436565325
+    },
+    {
+      "feature_id": 8471,
+      "discovery_corr_log_odds": -0.5893349008133221,
+      "eval_corr_log_odds": -0.6485322013272887,
+      "discovery_action_cohens_d": -0.9753773297237601,
+      "eval_action_cohens_d": -1.0157469772527479,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.006966515881995268
+    },
+    {
+      "feature_id": 5536,
+      "discovery_corr_log_odds": 0.5888670356609862,
+      "eval_corr_log_odds": 0.6334249752487858,
+      "discovery_action_cohens_d": 1.1343162311757438,
+      "eval_action_cohens_d": 1.2037787893158118,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0035319305926048822
+    },
+    {
+      "feature_id": 24278,
+      "discovery_corr_log_odds": -0.5885972339819939,
+      "eval_corr_log_odds": -0.6729024180683928,
+      "discovery_action_cohens_d": -1.1138471275552733,
+      "eval_action_cohens_d": -1.1499806437238078,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.006606749230849096
+    },
+    {
+      "feature_id": 3905,
+      "discovery_corr_log_odds": -0.5883145663108357,
+      "eval_corr_log_odds": -0.5425272968498159,
+      "discovery_action_cohens_d": -1.4394331803420357,
+      "eval_action_cohens_d": -1.3108943455985447,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0044080188184097415
+    },
+    {
+      "feature_id": 20253,
+      "discovery_corr_log_odds": -0.5880254418828853,
+      "eval_corr_log_odds": -0.6640680182683126,
+      "discovery_action_cohens_d": -1.1435666589882663,
+      "eval_action_cohens_d": -1.2210366857347945,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0048840644266590905
+    },
+    {
+      "feature_id": 18089,
+      "discovery_corr_log_odds": -0.5877912592611059,
+      "eval_corr_log_odds": -0.5989060727768506,
+      "discovery_action_cohens_d": -1.10562148643317,
+      "eval_action_cohens_d": -1.0917128437918242,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.006130436377914263
+    },
+    {
+      "feature_id": 4548,
+      "discovery_corr_log_odds": -0.5876156468667374,
+      "eval_corr_log_odds": -0.599788203250567,
+      "discovery_action_cohens_d": -1.4816590583516585,
+      "eval_action_cohens_d": -1.4275668108559483,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0060230031786272335
+    },
+    {
+      "feature_id": 27719,
+      "discovery_corr_log_odds": 0.5872537118374234,
+      "eval_corr_log_odds": 0.6092831278641525,
+      "discovery_action_cohens_d": 1.3764077430886814,
+      "eval_action_cohens_d": 1.3008178816103573,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004574795308513827
+    },
+    {
+      "feature_id": 17558,
+      "discovery_corr_log_odds": 0.5864880877631995,
+      "eval_corr_log_odds": 0.6559465988558195,
+      "discovery_action_cohens_d": 1.1419810370875558,
+      "eval_action_cohens_d": 1.2524195159200218,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0036451559605249063
+    },
+    {
+      "feature_id": 14469,
+      "discovery_corr_log_odds": -0.5863870611634354,
+      "eval_corr_log_odds": -0.6498301400099058,
+      "discovery_action_cohens_d": -0.8888540388080699,
+      "eval_action_cohens_d": -0.9483848211516253,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004925801757611751
+    },
+    {
+      "feature_id": 19439,
+      "discovery_corr_log_odds": -0.5861470175466406,
+      "eval_corr_log_odds": -0.5881477713211744,
+      "discovery_action_cohens_d": -1.1058737405861216,
+      "eval_action_cohens_d": -1.0403847743227095,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.008472183000123286
+    },
+    {
+      "feature_id": 14951,
+      "discovery_corr_log_odds": -0.5861068746682033,
+      "eval_corr_log_odds": -0.598386899200485,
+      "discovery_action_cohens_d": -1.1458666208709345,
+      "eval_action_cohens_d": -1.0942667755417212,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0036785834371419694
+    },
+    {
+      "feature_id": 25559,
+      "discovery_corr_log_odds": 0.5856293322182725,
+      "eval_corr_log_odds": 0.5785822441880099,
+      "discovery_action_cohens_d": 0.7624144726080492,
+      "eval_action_cohens_d": 0.7584722537180406,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.003971013714318135
+    },
+    {
+      "feature_id": 14401,
+      "discovery_corr_log_odds": -0.5852670609229625,
+      "eval_corr_log_odds": -0.5786071539097574,
+      "discovery_action_cohens_d": -0.728456981668903,
+      "eval_action_cohens_d": -0.6583927538521409,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005282788935785158
+    },
+    {
+      "feature_id": 17247,
+      "discovery_corr_log_odds": -0.5848966207949201,
+      "eval_corr_log_odds": -0.630410905285655,
+      "discovery_action_cohens_d": -1.0795824296134906,
+      "eval_action_cohens_d": -1.1048199688001756,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.009394509638951061
+    },
+    {
+      "feature_id": 26012,
+      "discovery_corr_log_odds": -0.5848461950024262,
+      "eval_corr_log_odds": -0.5688174322283784,
+      "discovery_action_cohens_d": -1.1710496576971297,
+      "eval_action_cohens_d": -1.0890495391941761,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.006289346732846373
+    },
+    {
+      "feature_id": 3703,
+      "discovery_corr_log_odds": 0.5848326045065783,
+      "eval_corr_log_odds": 0.5730194590513954,
+      "discovery_action_cohens_d": 0.7932251055954277,
+      "eval_action_cohens_d": 0.7118396474448696,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004649308200780918
+    },
+    {
+      "feature_id": 12481,
+      "discovery_corr_log_odds": -0.5847134161743649,
+      "eval_corr_log_odds": -0.6723682384045445,
+      "discovery_action_cohens_d": -1.0004008568072473,
+      "eval_action_cohens_d": -1.094078608392239,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005006988447586479
+    },
+    {
+      "feature_id": 662,
+      "discovery_corr_log_odds": -0.5845519489342561,
+      "eval_corr_log_odds": -0.6343646341817563,
+      "discovery_action_cohens_d": -0.8922646819718085,
+      "eval_action_cohens_d": -0.8508640874647897,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005404794785770606
+    },
+    {
+      "feature_id": 10133,
+      "discovery_corr_log_odds": -0.5841221306311756,
+      "eval_corr_log_odds": -0.6273477475602254,
+      "discovery_action_cohens_d": -1.1260864621080724,
+      "eval_action_cohens_d": -1.1788189663074742,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.008868818329140079
+    },
+    {
+      "feature_id": 22164,
+      "discovery_corr_log_odds": 0.5841027339691923,
+      "eval_corr_log_odds": 0.488800601465221,
+      "discovery_action_cohens_d": 1.3001273872942662,
+      "eval_action_cohens_d": 1.2602556639669842,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.003287057458765356
+    },
+    {
+      "feature_id": 4908,
+      "discovery_corr_log_odds": -0.58362356347404,
+      "eval_corr_log_odds": -0.5919246099140822,
+      "discovery_action_cohens_d": -1.103678431423198,
+      "eval_action_cohens_d": -1.161332845672569,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.002846302970867461
+    },
+    {
+      "feature_id": 10268,
+      "discovery_corr_log_odds": 0.58320249221056,
+      "eval_corr_log_odds": 0.6193884409568462,
+      "discovery_action_cohens_d": 1.1488394426051445,
+      "eval_action_cohens_d": 1.2273376786035974,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004198486307382755
+    },
+    {
+      "feature_id": 11295,
+      "discovery_corr_log_odds": -0.5831469261749934,
+      "eval_corr_log_odds": -0.6214740741558955,
+      "discovery_action_cohens_d": -1.0013684586888356,
+      "eval_action_cohens_d": -1.0079157324075805,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.008501994807825715
+    },
+    {
+      "feature_id": 14284,
+      "discovery_corr_log_odds": -0.5830894413402543,
+      "eval_corr_log_odds": -0.654570260804781,
+      "discovery_action_cohens_d": -1.2383684567850266,
+      "eval_action_cohens_d": -1.2660877073991097,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004403691674634036
+    },
+    {
+      "feature_id": 19309,
+      "discovery_corr_log_odds": 0.5830459258524383,
+      "eval_corr_log_odds": 0.5623361755502108,
+      "discovery_action_cohens_d": 0.9825441158301522,
+      "eval_action_cohens_d": 0.9690983596546103,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005381526953832695
+    },
+    {
+      "feature_id": 25980,
+      "discovery_corr_log_odds": -0.5825414956587234,
+      "eval_corr_log_odds": -0.5931335028270645,
+      "discovery_action_cohens_d": -1.333492957943845,
+      "eval_action_cohens_d": -1.3020439788712923,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005766114950983607
+    },
+    {
+      "feature_id": 23097,
+      "discovery_corr_log_odds": -0.582351309939598,
+      "eval_corr_log_odds": -0.5835537032741115,
+      "discovery_action_cohens_d": -1.2312326600149663,
+      "eval_action_cohens_d": -1.1515355607087705,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.007522006362928377
+    },
+    {
+      "feature_id": 24932,
+      "discovery_corr_log_odds": 0.5823071779857586,
+      "eval_corr_log_odds": 0.6381764102510861,
+      "discovery_action_cohens_d": 0.5558517594705688,
+      "eval_action_cohens_d": 0.6381292081210832,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.00564237109775875
+    },
+    {
+      "feature_id": 3399,
+      "discovery_corr_log_odds": -0.5822478533803733,
+      "eval_corr_log_odds": -0.7557830032844238,
+      "discovery_action_cohens_d": -0.8531039279680387,
+      "eval_action_cohens_d": -1.1351336583349385,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.003726967444431672
+    },
+    {
+      "feature_id": 7162,
+      "discovery_corr_log_odds": -0.5812693281468027,
+      "eval_corr_log_odds": -0.6488781855023578,
+      "discovery_action_cohens_d": -0.951599882923142,
+      "eval_action_cohens_d": -0.9968700797108457,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005596141483468657
+    },
+    {
+      "feature_id": 14699,
+      "discovery_corr_log_odds": 0.5811987064621218,
+      "eval_corr_log_odds": 0.645833703954218,
+      "discovery_action_cohens_d": 0.7485856264470068,
+      "eval_action_cohens_d": 0.7831057416684236,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0034622873850680006
+    },
+    {
+      "feature_id": 11279,
+      "discovery_corr_log_odds": -0.5805222031183976,
+      "eval_corr_log_odds": -0.7216953061224302,
+      "discovery_action_cohens_d": -1.1190334597571836,
+      "eval_action_cohens_d": -1.3484934006527656,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.003118057973373648
+    },
+    {
+      "feature_id": 12189,
+      "discovery_corr_log_odds": -0.5804766811340355,
+      "eval_corr_log_odds": -0.5736562377357936,
+      "discovery_action_cohens_d": -1.1924995816998083,
+      "eval_action_cohens_d": -1.0380371852943833,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004133489847106792
+    },
+    {
+      "feature_id": 27566,
+      "discovery_corr_log_odds": -0.5803254206104637,
+      "eval_corr_log_odds": -0.6843117101840049,
+      "discovery_action_cohens_d": -1.0667009411568982,
+      "eval_action_cohens_d": -1.140134913016542,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004493533600923249
+    },
+    {
+      "feature_id": 12765,
+      "discovery_corr_log_odds": -0.5798133273362033,
+      "eval_corr_log_odds": -0.666361806298375,
+      "discovery_action_cohens_d": -1.0711677362539997,
+      "eval_action_cohens_d": -1.111103298667816,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004327406961104548
+    },
+    {
+      "feature_id": 25469,
+      "discovery_corr_log_odds": -0.5797867821191883,
+      "eval_corr_log_odds": -0.5729180991891015,
+      "discovery_action_cohens_d": -1.068045822980792,
+      "eval_action_cohens_d": -1.0464507218706203,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004076966950342246
+    },
+    {
+      "feature_id": 14861,
+      "discovery_corr_log_odds": -0.5795743449917428,
+      "eval_corr_log_odds": -0.6676455902878827,
+      "discovery_action_cohens_d": -1.2404913126673638,
+      "eval_action_cohens_d": -1.368840496357072,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004485202850183566
+    },
+    {
+      "feature_id": 2094,
+      "discovery_corr_log_odds": -0.5792925688388778,
+      "eval_corr_log_odds": -0.5401905601303231,
+      "discovery_action_cohens_d": -0.8447459502220482,
+      "eval_action_cohens_d": -0.7332990196766893,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004732762018283041
+    },
+    {
+      "feature_id": 14340,
+      "discovery_corr_log_odds": -0.5792384705403499,
+      "eval_corr_log_odds": -0.6468564021117321,
+      "discovery_action_cohens_d": -0.8173203048322769,
+      "eval_action_cohens_d": -0.8579209746673848,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.00629297250322332
+    },
+    {
+      "feature_id": 18183,
+      "discovery_corr_log_odds": -0.5788801895487445,
+      "eval_corr_log_odds": -0.4896421251645163,
+      "discovery_action_cohens_d": -0.7019048689250944,
+      "eval_action_cohens_d": -0.4558102237322239,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0033381002006530607
+    },
+    {
+      "feature_id": 1742,
+      "discovery_corr_log_odds": -0.5788490584950217,
+      "eval_corr_log_odds": -0.5719075050937038,
+      "discovery_action_cohens_d": -1.3315478138265142,
+      "eval_action_cohens_d": -1.3200023886136938,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005060740550411018
+    },
+    {
+      "feature_id": 2592,
+      "discovery_corr_log_odds": 0.5786342781180248,
+      "eval_corr_log_odds": 0.5388586438332953,
+      "discovery_action_cohens_d": 1.2743864406212335,
+      "eval_action_cohens_d": 1.1329279310214364,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0030893228066862645
+    },
+    {
+      "feature_id": 8462,
+      "discovery_corr_log_odds": 0.5785047885991799,
+      "eval_corr_log_odds": 0.6777660587109924,
+      "discovery_action_cohens_d": 0.977827920806548,
+      "eval_action_cohens_d": 1.123862836678285,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005405852201542636
+    },
+    {
+      "feature_id": 24196,
+      "discovery_corr_log_odds": 0.5782839397109397,
+      "eval_corr_log_odds": 0.5720858333557892,
+      "discovery_action_cohens_d": 1.0934933786307055,
+      "eval_action_cohens_d": 1.0045369421912653,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004602476690400292
+    },
+    {
+      "feature_id": 714,
+      "discovery_corr_log_odds": -0.5779527670328787,
+      "eval_corr_log_odds": -0.63277417413104,
+      "discovery_action_cohens_d": -0.8036294995156269,
+      "eval_action_cohens_d": -0.8067559872043047,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.00484835502617777
+    },
+    {
+      "feature_id": 6256,
+      "discovery_corr_log_odds": -0.5779023554594909,
+      "eval_corr_log_odds": -0.6118074148044487,
+      "discovery_action_cohens_d": -1.0112569028297436,
+      "eval_action_cohens_d": -1.0224849502177575,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0038373488339925295
+    },
+    {
+      "feature_id": 24775,
+      "discovery_corr_log_odds": 0.5777752958173397,
+      "eval_corr_log_odds": 0.7085729285245568,
+      "discovery_action_cohens_d": 1.0761951434948045,
+      "eval_action_cohens_d": 1.2733646831252532,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005999094445985256
+    },
+    {
+      "feature_id": 3432,
+      "discovery_corr_log_odds": -0.57774347377828,
+      "eval_corr_log_odds": -0.6116721569476171,
+      "discovery_action_cohens_d": -1.2525281686420306,
+      "eval_action_cohens_d": -1.20749656764169,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005368056797104069
+    },
+    {
+      "feature_id": 5152,
+      "discovery_corr_log_odds": 0.5777103632863799,
+      "eval_corr_log_odds": 0.6859921365292132,
+      "discovery_action_cohens_d": 0.9721606843008574,
+      "eval_action_cohens_d": 1.1737259469026082,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.003970441770604042
+    },
+    {
+      "feature_id": 3567,
+      "discovery_corr_log_odds": 0.5775021443335352,
+      "eval_corr_log_odds": 0.6827123994204854,
+      "discovery_action_cohens_d": 0.8834578493629585,
+      "eval_action_cohens_d": 0.971203760697899,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.006212722901198302
+    },
+    {
+      "feature_id": 28154,
+      "discovery_corr_log_odds": 0.5773584923519003,
+      "eval_corr_log_odds": 0.6315229296744493,
+      "discovery_action_cohens_d": 0.6980229105001577,
+      "eval_action_cohens_d": 0.7076322154098006,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005212588127031287
+    },
+    {
+      "feature_id": 37,
+      "discovery_corr_log_odds": -0.5772597888049658,
+      "eval_corr_log_odds": -0.5758261868045546,
+      "discovery_action_cohens_d": -1.2677094351736493,
+      "eval_action_cohens_d": -1.2666581556548155,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004485995453592096
+    },
+    {
+      "feature_id": 24389,
+      "discovery_corr_log_odds": -0.5771109314319631,
+      "eval_corr_log_odds": -0.5865478519382235,
+      "discovery_action_cohens_d": -1.2218936423550046,
+      "eval_action_cohens_d": -1.2145912207791527,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005485226584975609
+    },
+    {
+      "feature_id": 18813,
+      "discovery_corr_log_odds": -0.5770346778048855,
+      "eval_corr_log_odds": -0.5531399647249963,
+      "discovery_action_cohens_d": -1.2862587150452995,
+      "eval_action_cohens_d": -1.225102093612857,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004628417015062742
+    },
+    {
+      "feature_id": 12725,
+      "discovery_corr_log_odds": 0.576798698110328,
+      "eval_corr_log_odds": 0.6179833714333158,
+      "discovery_action_cohens_d": 0.7840921477022212,
+      "eval_action_cohens_d": 0.7473687967691248,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005670137708718432
+    },
+    {
+      "feature_id": 1839,
+      "discovery_corr_log_odds": -0.5762141025226758,
+      "eval_corr_log_odds": -0.5668303044382111,
+      "discovery_action_cohens_d": -1.098068350792938,
+      "eval_action_cohens_d": -0.9955200735772997,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004817172259313306
+    },
+    {
+      "feature_id": 4663,
+      "discovery_corr_log_odds": 0.5758999659850893,
+      "eval_corr_log_odds": 0.5937593517917155,
+      "discovery_action_cohens_d": 0.93450748008143,
+      "eval_action_cohens_d": 0.9341879522293497,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.007184359171306568
+    },
+    {
+      "feature_id": 6559,
+      "discovery_corr_log_odds": -0.5757142187122422,
+      "eval_corr_log_odds": -0.6282859622818503,
+      "discovery_action_cohens_d": -1.0904147025373252,
+      "eval_action_cohens_d": -1.0683658311667017,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004690727728677448
+    },
+    {
+      "feature_id": 13776,
+      "discovery_corr_log_odds": -0.5753148479935897,
+      "eval_corr_log_odds": -0.6694053720595518,
+      "discovery_action_cohens_d": -0.9339247753287803,
+      "eval_action_cohens_d": -1.067188103183581,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004763011708326742
+    },
+    {
+      "feature_id": 8432,
+      "discovery_corr_log_odds": 0.575266588411397,
+      "eval_corr_log_odds": 0.6065012625762968,
+      "discovery_action_cohens_d": 0.7393930887608573,
+      "eval_action_cohens_d": 0.6535682131726764,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005901793670112166
+    },
+    {
+      "feature_id": 21537,
+      "discovery_corr_log_odds": 0.5751950057089136,
+      "eval_corr_log_odds": 0.607054808207079,
+      "discovery_action_cohens_d": 0.9039175293140642,
+      "eval_action_cohens_d": 0.9710123957052953,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004158693478623592
+    },
+    {
+      "feature_id": 23817,
+      "discovery_corr_log_odds": 0.5751632885389596,
+      "eval_corr_log_odds": 0.5678353296620081,
+      "discovery_action_cohens_d": 1.346074361344266,
+      "eval_action_cohens_d": 1.3747278708994157,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004844713169013118
+    },
+    {
+      "feature_id": 7982,
+      "discovery_corr_log_odds": -0.5750874506792756,
+      "eval_corr_log_odds": -0.5505925871551879,
+      "discovery_action_cohens_d": -0.7251818958109775,
+      "eval_action_cohens_d": -0.5650766999910721,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0047513534504334985
+    },
+    {
+      "feature_id": 15106,
+      "discovery_corr_log_odds": -0.5748888579017306,
+      "eval_corr_log_odds": -0.6455689945188404,
+      "discovery_action_cohens_d": -0.889125884773757,
+      "eval_action_cohens_d": -0.9307080791484165,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0060375850195520595
+    },
+    {
+      "feature_id": 16471,
+      "discovery_corr_log_odds": -0.574886573495387,
+      "eval_corr_log_odds": -0.5919154614290126,
+      "discovery_action_cohens_d": -0.7918565890818974,
+      "eval_action_cohens_d": -0.8017153241461175,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.006056461977329959
+    },
+    {
+      "feature_id": 7966,
+      "discovery_corr_log_odds": -0.5744972453836495,
+      "eval_corr_log_odds": -0.6820015488286502,
+      "discovery_action_cohens_d": -1.1335718938761299,
+      "eval_action_cohens_d": -1.3509372204966303,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0032625623650365237
+    },
+    {
+      "feature_id": 26240,
+      "discovery_corr_log_odds": 0.5744016276962957,
+      "eval_corr_log_odds": 0.5944615040921707,
+      "discovery_action_cohens_d": 1.0719160060615496,
+      "eval_action_cohens_d": 1.0480161600345306,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.007178501842246381
+    },
+    {
+      "feature_id": 16430,
+      "discovery_corr_log_odds": -0.5741799214430647,
+      "eval_corr_log_odds": -0.5978693858585515,
+      "discovery_action_cohens_d": -1.0752367709172432,
+      "eval_action_cohens_d": -1.0693679134120773,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.006964294596431181
+    },
+    {
+      "feature_id": 8242,
+      "discovery_corr_log_odds": -0.5741208142484996,
+      "eval_corr_log_odds": -0.5586943304886075,
+      "discovery_action_cohens_d": -1.2476214620982353,
+      "eval_action_cohens_d": -1.1831302159002448,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004726367323013786
+    },
+    {
+      "feature_id": 23249,
+      "discovery_corr_log_odds": 0.5740649701629618,
+      "eval_corr_log_odds": 0.5531566779724088,
+      "discovery_action_cohens_d": 0.7529068731274591,
+      "eval_action_cohens_d": 0.6641576792806637,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004463499271090826
+    },
+    {
+      "feature_id": 3172,
+      "discovery_corr_log_odds": 0.5738354103510602,
+      "eval_corr_log_odds": 0.6764713733968305,
+      "discovery_action_cohens_d": 0.8003147936558289,
+      "eval_action_cohens_d": 0.9533856185391498,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005410121917146434
+    },
+    {
+      "feature_id": 14782,
+      "discovery_corr_log_odds": -0.57361243360989,
+      "eval_corr_log_odds": -0.644944393287672,
+      "discovery_action_cohens_d": -1.4128432919316134,
+      "eval_action_cohens_d": -1.4671167500536078,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0075003869406845185
+    },
+    {
+      "feature_id": 10943,
+      "discovery_corr_log_odds": -0.5736091159459004,
+      "eval_corr_log_odds": -0.6327780483497488,
+      "discovery_action_cohens_d": -0.8897777035715505,
+      "eval_action_cohens_d": -0.8870027318769962,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004637763514244316
+    },
+    {
+      "feature_id": 3070,
+      "discovery_corr_log_odds": -0.5732005152662834,
+      "eval_corr_log_odds": -0.626045711424759,
+      "discovery_action_cohens_d": -0.9461098496782906,
+      "eval_action_cohens_d": -1.0026965000229429,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0041372538594494825
+    },
+    {
+      "feature_id": 14551,
+      "discovery_corr_log_odds": -0.5731929894050758,
+      "eval_corr_log_odds": -0.6343556040770394,
+      "discovery_action_cohens_d": -1.1488644935970065,
+      "eval_action_cohens_d": -1.1549328357458402,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005617168189526134
+    },
+    {
+      "feature_id": 11581,
+      "discovery_corr_log_odds": 0.5724980844137192,
+      "eval_corr_log_odds": 0.5871722838231461,
+      "discovery_action_cohens_d": 1.1355160315965713,
+      "eval_action_cohens_d": 1.1305010234822577,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004565714318974763
+    },
+    {
+      "feature_id": 1257,
+      "discovery_corr_log_odds": -0.5723431999050056,
+      "eval_corr_log_odds": -0.5942948062415716,
+      "discovery_action_cohens_d": -1.2166938329801744,
+      "eval_action_cohens_d": -1.163809746646216,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.008695674435473342
+    },
+    {
+      "feature_id": 26344,
+      "discovery_corr_log_odds": 0.5722567859021056,
+      "eval_corr_log_odds": 0.5317498626268516,
+      "discovery_action_cohens_d": 1.063124304156602,
+      "eval_action_cohens_d": 0.9792095403374944,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.00451288400909212
+    },
+    {
+      "feature_id": 4856,
+      "discovery_corr_log_odds": -0.5722115206528572,
+      "eval_corr_log_odds": -0.6393120892796561,
+      "discovery_action_cohens_d": -1.036233386109963,
+      "eval_action_cohens_d": -1.0967444922076661,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005667435660532997
+    },
+    {
+      "feature_id": 19043,
+      "discovery_corr_log_odds": -0.5721658721188226,
+      "eval_corr_log_odds": -0.5888211187584064,
+      "discovery_action_cohens_d": -1.2763625363520559,
+      "eval_action_cohens_d": -1.2866655116388752,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0055415407246356095
+    },
+    {
+      "feature_id": 22619,
+      "discovery_corr_log_odds": -0.5718573544599944,
+      "eval_corr_log_odds": -0.6036388481427579,
+      "discovery_action_cohens_d": -1.1635694246866324,
+      "eval_action_cohens_d": -1.1434256363449518,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.006905389279184696
+    },
+    {
+      "feature_id": 19097,
+      "discovery_corr_log_odds": -0.5715619943054773,
+      "eval_corr_log_odds": -0.6065446493235136,
+      "discovery_action_cohens_d": -0.7515294932737426,
+      "eval_action_cohens_d": -0.7373161130485201,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005520172821511935
+    },
+    {
+      "feature_id": 147,
+      "discovery_corr_log_odds": 0.571267701606884,
+      "eval_corr_log_odds": 0.5426576601937899,
+      "discovery_action_cohens_d": 1.3534426899552752,
+      "eval_action_cohens_d": 1.3123663834676627,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0067981678601418995
+    },
+    {
+      "feature_id": 4994,
+      "discovery_corr_log_odds": -0.57095799198851,
+      "eval_corr_log_odds": -0.6328681967711421,
+      "discovery_action_cohens_d": -0.8438719066871322,
+      "eval_action_cohens_d": -0.7989451595433662,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0041840124220967456
+    },
+    {
+      "feature_id": 5098,
+      "discovery_corr_log_odds": -0.5709464632445097,
+      "eval_corr_log_odds": -0.640525143439495,
+      "discovery_action_cohens_d": -0.914490870607938,
+      "eval_action_cohens_d": -1.0505655308213881,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005035485855286317
+    },
+    {
+      "feature_id": 25880,
+      "discovery_corr_log_odds": -0.570519103005679,
+      "eval_corr_log_odds": -0.5923289730609554,
+      "discovery_action_cohens_d": -0.9040033207353888,
+      "eval_action_cohens_d": -0.8480604710609639,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.008208828337955484
+    },
+    {
+      "feature_id": 7219,
+      "discovery_corr_log_odds": -0.5704634467255798,
+      "eval_corr_log_odds": -0.5898892301497549,
+      "discovery_action_cohens_d": -1.3862560853020687,
+      "eval_action_cohens_d": -1.3867270199556787,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.007208540121351314
+    },
+    {
+      "feature_id": 11179,
+      "discovery_corr_log_odds": -0.5704194239143976,
+      "eval_corr_log_odds": -0.5880863068112514,
+      "discovery_action_cohens_d": -1.1522782538337126,
+      "eval_action_cohens_d": -1.051122384791729,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004609321460899141
+    },
+    {
+      "feature_id": 22675,
+      "discovery_corr_log_odds": -0.5701346994915268,
+      "eval_corr_log_odds": -0.6687582539834427,
+      "discovery_action_cohens_d": -0.7401856975777897,
+      "eval_action_cohens_d": -0.8023728751855039,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.00536126035739365
+    },
+    {
+      "feature_id": 21982,
+      "discovery_corr_log_odds": 0.5701147460534957,
+      "eval_corr_log_odds": 0.5950123248644433,
+      "discovery_action_cohens_d": 0.9832304069640343,
+      "eval_action_cohens_d": 1.0118773223016198,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.00762891004077318
+    },
+    {
+      "feature_id": 14155,
+      "discovery_corr_log_odds": 0.5700561206201324,
+      "eval_corr_log_odds": 0.5646670904004755,
+      "discovery_action_cohens_d": 0.7934162048995718,
+      "eval_action_cohens_d": 0.7136678378081894,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.003975715382826718
+    },
+    {
+      "feature_id": 4281,
+      "discovery_corr_log_odds": -0.5700509337208698,
+      "eval_corr_log_odds": -0.6032842145487909,
+      "discovery_action_cohens_d": -1.1685002188821452,
+      "eval_action_cohens_d": -1.154781312881293,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004350194577282792
+    },
+    {
+      "feature_id": 16730,
+      "discovery_corr_log_odds": 0.5699651525746116,
+      "eval_corr_log_odds": 0.5966977493066941,
+      "discovery_action_cohens_d": 0.9139813672808059,
+      "eval_action_cohens_d": 0.934018123725613,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004939819335219304
+    },
+    {
+      "feature_id": 1881,
+      "discovery_corr_log_odds": 0.5698385466459034,
+      "eval_corr_log_odds": 0.6139950617801373,
+      "discovery_action_cohens_d": 0.6794038506295829,
+      "eval_action_cohens_d": 0.7244266312679624,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.00371531173874555
+    },
+    {
+      "feature_id": 547,
+      "discovery_corr_log_odds": -0.5698040129501805,
+      "eval_corr_log_odds": -0.6560410373581086,
+      "discovery_action_cohens_d": -1.0681739371723613,
+      "eval_action_cohens_d": -1.1945445455004626,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.006137204556604274
+    },
+    {
+      "feature_id": 20936,
+      "discovery_corr_log_odds": 0.5697091202075634,
+      "eval_corr_log_odds": 0.6007151085100891,
+      "discovery_action_cohens_d": 1.063186246266694,
+      "eval_action_cohens_d": 1.0878555226578073,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.003398074931964572
+    },
+    {
+      "feature_id": 14969,
+      "discovery_corr_log_odds": -0.5696449064004041,
+      "eval_corr_log_odds": -0.5557539664929544,
+      "discovery_action_cohens_d": -1.445066956852255,
+      "eval_action_cohens_d": -1.4123828551555744,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0046819444568798095
+    },
+    {
+      "feature_id": 10283,
+      "discovery_corr_log_odds": 0.5696437353182998,
+      "eval_corr_log_odds": 0.5900389056563795,
+      "discovery_action_cohens_d": 0.797512049582667,
+      "eval_action_cohens_d": 0.8116177891248401,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004570822429478904
+    },
+    {
+      "feature_id": 526,
+      "discovery_corr_log_odds": 0.5696177499359202,
+      "eval_corr_log_odds": 0.6457108069825128,
+      "discovery_action_cohens_d": 0.7128603087087897,
+      "eval_action_cohens_d": 0.764155138152739,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.006120748705165103
+    },
+    {
+      "feature_id": 835,
+      "discovery_corr_log_odds": 0.5695844432037087,
+      "eval_corr_log_odds": 0.6435009966088286,
+      "discovery_action_cohens_d": 0.7294585098901402,
+      "eval_action_cohens_d": 0.8190728347086448,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005543628962630118
+    },
+    {
+      "feature_id": 21653,
+      "discovery_corr_log_odds": -0.5694804616630271,
+      "eval_corr_log_odds": -0.6130688619974476,
+      "discovery_action_cohens_d": -0.7250566502364101,
+      "eval_action_cohens_d": -0.6819306837933939,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004576456989345695
+    },
+    {
+      "feature_id": 5883,
+      "discovery_corr_log_odds": -0.5694375240922658,
+      "eval_corr_log_odds": -0.7012114206075253,
+      "discovery_action_cohens_d": -0.7705658721990668,
+      "eval_action_cohens_d": -0.888797316029166,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.007982858795128084
+    },
+    {
+      "feature_id": 10395,
+      "discovery_corr_log_odds": 0.5686817681190639,
+      "eval_corr_log_odds": 0.5570420956407043,
+      "discovery_action_cohens_d": 0.9973837692683698,
+      "eval_action_cohens_d": 0.9889535722558895,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004391461893075057
+    },
+    {
+      "feature_id": 24,
+      "discovery_corr_log_odds": -0.5686765678654693,
+      "eval_corr_log_odds": -0.6200775985909912,
+      "discovery_action_cohens_d": -1.1336864084920582,
+      "eval_action_cohens_d": -1.173965721205853,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004100346097975209
+    },
+    {
+      "feature_id": 11663,
+      "discovery_corr_log_odds": -0.5685724832410461,
+      "eval_corr_log_odds": -0.5749358249406582,
+      "discovery_action_cohens_d": -0.8976971309675449,
+      "eval_action_cohens_d": -0.8344372455978774,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005594634532652849
+    },
+    {
+      "feature_id": 10619,
+      "discovery_corr_log_odds": 0.5684187786455522,
+      "eval_corr_log_odds": 0.5971234362332922,
+      "discovery_action_cohens_d": 1.0826269756274245,
+      "eval_action_cohens_d": 1.10484850531868,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005991835275264849
+    },
+    {
+      "feature_id": 5291,
+      "discovery_corr_log_odds": 0.5682251058661864,
+      "eval_corr_log_odds": 0.599737629054112,
+      "discovery_action_cohens_d": 0.9080464478852727,
+      "eval_action_cohens_d": 0.9616283781672221,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.006043851259453951
+    },
+    {
+      "feature_id": 10371,
+      "discovery_corr_log_odds": -0.5681651233384748,
+      "eval_corr_log_odds": -0.6095092768654397,
+      "discovery_action_cohens_d": -1.391060540401588,
+      "eval_action_cohens_d": -1.4108663839628337,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004548866217438854
+    },
+    {
+      "feature_id": 16755,
+      "discovery_corr_log_odds": -0.5680237895578122,
+      "eval_corr_log_odds": -0.6127551133918921,
+      "discovery_action_cohens_d": -0.9483235881440216,
+      "eval_action_cohens_d": -1.0084623307907057,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004733464037462426
+    },
+    {
+      "feature_id": 4108,
+      "discovery_corr_log_odds": -0.5678870214830255,
+      "eval_corr_log_odds": -0.6110337965227175,
+      "discovery_action_cohens_d": -1.4427874699287095,
+      "eval_action_cohens_d": -1.5076028576794624,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.006947060586190245
+    },
+    {
+      "feature_id": 6428,
+      "discovery_corr_log_odds": -0.5678217427361352,
+      "eval_corr_log_odds": -0.6421524442385745,
+      "discovery_action_cohens_d": -1.0888618155367134,
+      "eval_action_cohens_d": -1.180935566986053,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0045609635050317355
+    },
+    {
+      "feature_id": 3120,
+      "discovery_corr_log_odds": -0.5678197558040087,
+      "eval_corr_log_odds": -0.6151047941857094,
+      "discovery_action_cohens_d": -0.8776777060345623,
+      "eval_action_cohens_d": -0.8303776106865701,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005805471445740476
+    },
+    {
+      "feature_id": 6563,
+      "discovery_corr_log_odds": -0.5675585908547246,
+      "eval_corr_log_odds": -0.58993547258222,
+      "discovery_action_cohens_d": -1.2979387436979004,
+      "eval_action_cohens_d": -1.2789429447666134,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005969436622867936
+    },
+    {
+      "feature_id": 10840,
+      "discovery_corr_log_odds": -0.5674311506271708,
+      "eval_corr_log_odds": -0.49632853935884524,
+      "discovery_action_cohens_d": -0.8486768349802323,
+      "eval_action_cohens_d": -0.7167581449356828,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0035861737280357122
+    },
+    {
+      "feature_id": 10478,
+      "discovery_corr_log_odds": -0.5673869965772507,
+      "eval_corr_log_odds": -0.6215718202367683,
+      "discovery_action_cohens_d": -0.784668125028615,
+      "eval_action_cohens_d": -0.8107625577323698,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004863441319991451
+    },
+    {
+      "feature_id": 25772,
+      "discovery_corr_log_odds": 0.5673528375185314,
+      "eval_corr_log_odds": 0.6392683833462263,
+      "discovery_action_cohens_d": 0.9912872332550597,
+      "eval_action_cohens_d": 1.197753628760429,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0025868947414867233
+    },
+    {
+      "feature_id": 9142,
+      "discovery_corr_log_odds": -0.5673501871933309,
+      "eval_corr_log_odds": -0.6800193714497081,
+      "discovery_action_cohens_d": -1.0729142627276747,
+      "eval_action_cohens_d": -1.1662195958300967,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0046040073331487606
+    },
+    {
+      "feature_id": 21294,
+      "discovery_corr_log_odds": -0.5671889292883119,
+      "eval_corr_log_odds": -0.6504756719231415,
+      "discovery_action_cohens_d": -0.8239548523143803,
+      "eval_action_cohens_d": -0.8972205367859696,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.006952315138403249
+    },
+    {
+      "feature_id": 731,
+      "discovery_corr_log_odds": -0.5671435185677447,
+      "eval_corr_log_odds": -0.5933121914213297,
+      "discovery_action_cohens_d": -1.191558433132035,
+      "eval_action_cohens_d": -1.1768201013987971,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004344760427874762
+    },
+    {
+      "feature_id": 22450,
+      "discovery_corr_log_odds": -0.5670915129598997,
+      "eval_corr_log_odds": -0.6004123136856403,
+      "discovery_action_cohens_d": -1.0960826516005686,
+      "eval_action_cohens_d": -1.0581250328594554,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0070490228746640056
+    },
+    {
+      "feature_id": 16580,
+      "discovery_corr_log_odds": -0.5670113513120277,
+      "eval_corr_log_odds": -0.6496984158173831,
+      "discovery_action_cohens_d": -1.194572962929737,
+      "eval_action_cohens_d": -1.2700632924442912,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0025606477481698855
+    },
+    {
+      "feature_id": 6234,
+      "discovery_corr_log_odds": -0.5668628007450064,
+      "eval_corr_log_odds": -0.6156765783234026,
+      "discovery_action_cohens_d": -1.148717080439246,
+      "eval_action_cohens_d": -1.1686027198230389,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005845417961646107
+    },
+    {
+      "feature_id": 1172,
+      "discovery_corr_log_odds": -0.5664534975625445,
+      "eval_corr_log_odds": -0.5673011994194914,
+      "discovery_action_cohens_d": -0.8205189248361873,
+      "eval_action_cohens_d": -0.749739949387324,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0037960490921364687
+    },
+    {
+      "feature_id": 12715,
+      "discovery_corr_log_odds": -0.5662951379763229,
+      "eval_corr_log_odds": -0.49698641495918844,
+      "discovery_action_cohens_d": -0.9764315066512779,
+      "eval_action_cohens_d": -0.8295849979042258,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004902825925213994
+    },
+    {
+      "feature_id": 5675,
+      "discovery_corr_log_odds": -0.5662664100246101,
+      "eval_corr_log_odds": -0.6596809386910485,
+      "discovery_action_cohens_d": -1.1452058437824644,
+      "eval_action_cohens_d": -1.2762596791497878,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.003946172199453925
+    },
+    {
+      "feature_id": 18364,
+      "discovery_corr_log_odds": -0.566237854937188,
+      "eval_corr_log_odds": -0.5899144240178763,
+      "discovery_action_cohens_d": -1.1299941012355252,
+      "eval_action_cohens_d": -1.1672542549773144,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.006137292858575347
+    },
+    {
+      "feature_id": 7821,
+      "discovery_corr_log_odds": 0.566198714630873,
+      "eval_corr_log_odds": 0.6102747148896361,
+      "discovery_action_cohens_d": 0.8031907108263661,
+      "eval_action_cohens_d": 0.8547017269887619,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005799609399580008
+    },
+    {
+      "feature_id": 15862,
+      "discovery_corr_log_odds": -0.5661483739202633,
+      "eval_corr_log_odds": -0.5975331821774486,
+      "discovery_action_cohens_d": -1.0082915624818243,
+      "eval_action_cohens_d": -0.9946297170006508,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005889547406340442
+    },
+    {
+      "feature_id": 22625,
+      "discovery_corr_log_odds": -0.5661327328823702,
+      "eval_corr_log_odds": -0.6317786899186499,
+      "discovery_action_cohens_d": -0.976848063359956,
+      "eval_action_cohens_d": -1.0167984125464664,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.010455087897412256
+    },
+    {
+      "feature_id": 10493,
+      "discovery_corr_log_odds": -0.5658571704069983,
+      "eval_corr_log_odds": -0.6814667939226147,
+      "discovery_action_cohens_d": -0.9286137762712087,
+      "eval_action_cohens_d": -1.0650568927282273,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.010932565915413486
+    },
+    {
+      "feature_id": 22307,
+      "discovery_corr_log_odds": -0.5654611604379848,
+      "eval_corr_log_odds": -0.6763058431444248,
+      "discovery_action_cohens_d": -0.9165651094783382,
+      "eval_action_cohens_d": -1.0496316720527032,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0035058892964378277
+    },
+    {
+      "feature_id": 27840,
+      "discovery_corr_log_odds": -0.5653534584357036,
+      "eval_corr_log_odds": -0.661200669495523,
+      "discovery_action_cohens_d": -0.9593602593243254,
+      "eval_action_cohens_d": -1.047572689940227,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004332885466030222
+    },
+    {
+      "feature_id": 10591,
+      "discovery_corr_log_odds": 0.5652506563533914,
+      "eval_corr_log_odds": 0.5619725355637721,
+      "discovery_action_cohens_d": 0.6173400044939461,
+      "eval_action_cohens_d": 0.561659519620115,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004599726340025067
+    },
+    {
+      "feature_id": 12931,
+      "discovery_corr_log_odds": 0.5651957314786945,
+      "eval_corr_log_odds": 0.5992706126162072,
+      "discovery_action_cohens_d": 1.3872676639192887,
+      "eval_action_cohens_d": 1.453552103557612,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.007835746600559954
+    },
+    {
+      "feature_id": 12703,
+      "discovery_corr_log_odds": 0.5646674035276004,
+      "eval_corr_log_odds": 0.5480041398801233,
+      "discovery_action_cohens_d": 0.9311805755988989,
+      "eval_action_cohens_d": 0.840051828974312,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004418209645675332
+    },
+    {
+      "feature_id": 8040,
+      "discovery_corr_log_odds": -0.5644122122920393,
+      "eval_corr_log_odds": -0.6453024481209069,
+      "discovery_action_cohens_d": -1.2193884234971235,
+      "eval_action_cohens_d": -1.3353512261644604,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004727968014525661
+    },
+    {
+      "feature_id": 5140,
+      "discovery_corr_log_odds": -0.5642172590842955,
+      "eval_corr_log_odds": -0.5547735559854408,
+      "discovery_action_cohens_d": -0.9180813294576308,
+      "eval_action_cohens_d": -0.8302296427040814,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005819572816640136
+    },
+    {
+      "feature_id": 26041,
+      "discovery_corr_log_odds": -0.5639176793661886,
+      "eval_corr_log_odds": -0.6585323254806936,
+      "discovery_action_cohens_d": -1.269407737858221,
+      "eval_action_cohens_d": -1.4539812328027868,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004820814380013224
+    },
+    {
+      "feature_id": 10601,
+      "discovery_corr_log_odds": -0.563229523974248,
+      "eval_corr_log_odds": -0.6739133434090053,
+      "discovery_action_cohens_d": -0.8589392500392803,
+      "eval_action_cohens_d": -1.0209823295403553,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.00944432653018537
+    },
+    {
+      "feature_id": 18512,
+      "discovery_corr_log_odds": -0.5631997452548415,
+      "eval_corr_log_odds": -0.5988868829533585,
+      "discovery_action_cohens_d": -1.069445578963079,
+      "eval_action_cohens_d": -1.0370949610885323,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004871318343466757
+    },
+    {
+      "feature_id": 21622,
+      "discovery_corr_log_odds": -0.562764944283305,
+      "eval_corr_log_odds": -0.5600363085232714,
+      "discovery_action_cohens_d": -0.6969802565801071,
+      "eval_action_cohens_d": -0.6288657478821384,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005225431531706665
+    },
+    {
+      "feature_id": 23698,
+      "discovery_corr_log_odds": -0.5627622161556008,
+      "eval_corr_log_odds": -0.5044239619686816,
+      "discovery_action_cohens_d": -1.2028726803813006,
+      "eval_action_cohens_d": -1.1272530629703397,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.003676107915719062
+    },
+    {
+      "feature_id": 22242,
+      "discovery_corr_log_odds": -0.5626330003288995,
+      "eval_corr_log_odds": -0.5753081300056508,
+      "discovery_action_cohens_d": -1.1901370020275055,
+      "eval_action_cohens_d": -1.1136257314051543,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.008261179301679585
+    },
+    {
+      "feature_id": 3871,
+      "discovery_corr_log_odds": -0.5623993151384558,
+      "eval_corr_log_odds": -0.5203000043048569,
+      "discovery_action_cohens_d": -1.2519251407096907,
+      "eval_action_cohens_d": -1.0715407683679796,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004529807282096294
+    },
+    {
+      "feature_id": 11666,
+      "discovery_corr_log_odds": 0.562109745060915,
+      "eval_corr_log_odds": 0.6310279330844263,
+      "discovery_action_cohens_d": 1.1461543541664998,
+      "eval_action_cohens_d": 1.2747954408016788,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004564900703123395
+    },
+    {
+      "feature_id": 18113,
+      "discovery_corr_log_odds": -0.5619607291669485,
+      "eval_corr_log_odds": -0.6052643637104673,
+      "discovery_action_cohens_d": -1.447999127843743,
+      "eval_action_cohens_d": -1.5088205975147275,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0049626145003386826
+    },
+    {
+      "feature_id": 5355,
+      "discovery_corr_log_odds": 0.5612597406845331,
+      "eval_corr_log_odds": 0.6294175755911895,
+      "discovery_action_cohens_d": 0.7384212061472102,
+      "eval_action_cohens_d": 0.8027911506084735,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004241421882216242
+    },
+    {
+      "feature_id": 3552,
+      "discovery_corr_log_odds": -0.5612486936708395,
+      "eval_corr_log_odds": -0.521953914654556,
+      "discovery_action_cohens_d": -1.3151783954260114,
+      "eval_action_cohens_d": -1.2192271911336314,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005009804649584902
+    },
+    {
+      "feature_id": 2655,
+      "discovery_corr_log_odds": -0.5611966718744255,
+      "eval_corr_log_odds": -0.60104651348077,
+      "discovery_action_cohens_d": -1.09406040028027,
+      "eval_action_cohens_d": -1.1259256487097236,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.006655248466402474
+    },
+    {
+      "feature_id": 757,
+      "discovery_corr_log_odds": -0.561077712236725,
+      "eval_corr_log_odds": -0.5573120498155785,
+      "discovery_action_cohens_d": -1.0799436063774415,
+      "eval_action_cohens_d": -0.9525900480773608,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0060495802471582285
+    },
+    {
+      "feature_id": 202,
+      "discovery_corr_log_odds": -0.5610616912618045,
+      "eval_corr_log_odds": -0.6035775400419655,
+      "discovery_action_cohens_d": -1.0773575259673829,
+      "eval_action_cohens_d": -1.1292325088289386,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005035806265145306
+    },
+    {
+      "feature_id": 12213,
+      "discovery_corr_log_odds": -0.560961061935128,
+      "eval_corr_log_odds": -0.6151167732077029,
+      "discovery_action_cohens_d": -0.8365003154311604,
+      "eval_action_cohens_d": -0.8926608262570007,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.006392479952596832
+    },
+    {
+      "feature_id": 3569,
+      "discovery_corr_log_odds": 0.5607793174448845,
+      "eval_corr_log_odds": 0.5448930387030211,
+      "discovery_action_cohens_d": 0.6662409786130281,
+      "eval_action_cohens_d": 0.7046009835715606,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.003253317004677424
+    },
+    {
+      "feature_id": 28557,
+      "discovery_corr_log_odds": -0.560473494955866,
+      "eval_corr_log_odds": -0.6051446660703709,
+      "discovery_action_cohens_d": -0.7875406094249938,
+      "eval_action_cohens_d": -0.7762436985469892,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.007045014520626548
+    },
+    {
+      "feature_id": 15149,
+      "discovery_corr_log_odds": -0.5604216419678559,
+      "eval_corr_log_odds": -0.607344373898212,
+      "discovery_action_cohens_d": -1.1774518164658794,
+      "eval_action_cohens_d": -1.2162447237399143,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005002008808225557
+    },
+    {
+      "feature_id": 15968,
+      "discovery_corr_log_odds": -0.5601027024344457,
+      "eval_corr_log_odds": -0.6409257455625297,
+      "discovery_action_cohens_d": -1.3950688975080008,
+      "eval_action_cohens_d": -1.5552011481286565,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004487212336349074
+    },
+    {
+      "feature_id": 7500,
+      "discovery_corr_log_odds": -0.5600465832341529,
+      "eval_corr_log_odds": -0.5796144553838045,
+      "discovery_action_cohens_d": -1.423263312195855,
+      "eval_action_cohens_d": -1.435628730124619,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005308176894624198
+    },
+    {
+      "feature_id": 6954,
+      "discovery_corr_log_odds": 0.5600321659423974,
+      "eval_corr_log_odds": 0.5725735467492199,
+      "discovery_action_cohens_d": 1.074383793879006,
+      "eval_action_cohens_d": 1.09307912851204,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0056870201955885056
+    },
+    {
+      "feature_id": 23789,
+      "discovery_corr_log_odds": -0.56000947056715,
+      "eval_corr_log_odds": -0.5761883894621345,
+      "discovery_action_cohens_d": -1.1467360054505447,
+      "eval_action_cohens_d": -1.1732804553810703,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.00456301409450046
+    },
+    {
+      "feature_id": 3527,
+      "discovery_corr_log_odds": 0.5599798309024189,
+      "eval_corr_log_odds": 0.627563823832053,
+      "discovery_action_cohens_d": 0.5602988055445229,
+      "eval_action_cohens_d": 0.6136557006700498,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0036243967121885714
+    },
+    {
+      "feature_id": 5939,
+      "discovery_corr_log_odds": -0.559951661916055,
+      "eval_corr_log_odds": -0.5929843786899955,
+      "discovery_action_cohens_d": -1.1901565609290605,
+      "eval_action_cohens_d": -1.0655172878420498,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0027587185283658665
+    },
+    {
+      "feature_id": 23813,
+      "discovery_corr_log_odds": -0.5598195793544312,
+      "eval_corr_log_odds": -0.6482056767283214,
+      "discovery_action_cohens_d": -1.3353230489999788,
+      "eval_action_cohens_d": -1.5018157422415008,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004985815914451504
+    },
+    {
+      "feature_id": 26345,
+      "discovery_corr_log_odds": -0.5596779278218484,
+      "eval_corr_log_odds": -0.579123017819698,
+      "discovery_action_cohens_d": -0.6859477986915955,
+      "eval_action_cohens_d": -0.6911462770412328,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.002986585053790135
+    },
+    {
+      "feature_id": 22559,
+      "discovery_corr_log_odds": 0.5595147617948422,
+      "eval_corr_log_odds": 0.6592353245005416,
+      "discovery_action_cohens_d": 0.6271090998572174,
+      "eval_action_cohens_d": 0.8158564612100117,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.003595806410170091
+    },
+    {
+      "feature_id": 17378,
+      "discovery_corr_log_odds": 0.5594958763240742,
+      "eval_corr_log_odds": 0.589468673383203,
+      "discovery_action_cohens_d": 1.405798093220069,
+      "eval_action_cohens_d": 1.452710960619458,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005592055744579255
+    },
+    {
+      "feature_id": 10880,
+      "discovery_corr_log_odds": -0.559399143019918,
+      "eval_corr_log_odds": -0.541065771515926,
+      "discovery_action_cohens_d": -1.3516409864948806,
+      "eval_action_cohens_d": -1.279393829641863,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.006082324910534834
+    },
+    {
+      "feature_id": 13198,
+      "discovery_corr_log_odds": 0.5589163782452911,
+      "eval_corr_log_odds": 0.5608140883392506,
+      "discovery_action_cohens_d": 0.9932302320055181,
+      "eval_action_cohens_d": 1.0055421031065828,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004821156059956428
+    },
+    {
+      "feature_id": 18819,
+      "discovery_corr_log_odds": -0.5586663414728563,
+      "eval_corr_log_odds": -0.5944322430326382,
+      "discovery_action_cohens_d": -0.7795268021160501,
+      "eval_action_cohens_d": -0.7788742045637577,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004517639698474578
+    },
+    {
+      "feature_id": 327,
+      "discovery_corr_log_odds": -0.5586463656102388,
+      "eval_corr_log_odds": -0.5817978067180771,
+      "discovery_action_cohens_d": -0.8066583037906463,
+      "eval_action_cohens_d": -0.7583254721976793,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0042527677614743135
+    },
+    {
+      "feature_id": 26464,
+      "discovery_corr_log_odds": 0.5585427854567713,
+      "eval_corr_log_odds": 0.525500078317391,
+      "discovery_action_cohens_d": 0.9179201980126337,
+      "eval_action_cohens_d": 0.7631882675614908,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.006357780868181479
+    },
+    {
+      "feature_id": 16916,
+      "discovery_corr_log_odds": 0.5585222221369877,
+      "eval_corr_log_odds": 0.5280537174333739,
+      "discovery_action_cohens_d": 0.852383924245546,
+      "eval_action_cohens_d": 0.7517202906826453,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.002479086722300509
+    },
+    {
+      "feature_id": 25661,
+      "discovery_corr_log_odds": -0.5584794488205247,
+      "eval_corr_log_odds": -0.6077023263942142,
+      "discovery_action_cohens_d": -1.0304242428025396,
+      "eval_action_cohens_d": -0.9921443959432642,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0037793146204379915
+    },
+    {
+      "feature_id": 24071,
+      "discovery_corr_log_odds": -0.5584750477640474,
+      "eval_corr_log_odds": -0.6034121870957669,
+      "discovery_action_cohens_d": -1.2617369583539104,
+      "eval_action_cohens_d": -1.31364533725184,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.006359439638851753
+    },
+    {
+      "feature_id": 18071,
+      "discovery_corr_log_odds": 0.5580090061058652,
+      "eval_corr_log_odds": 0.7140218379339243,
+      "discovery_action_cohens_d": 0.8033983760276684,
+      "eval_action_cohens_d": 1.0676011367178533,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0067079472876372176
+    },
+    {
+      "feature_id": 8544,
+      "discovery_corr_log_odds": -0.5579948187880059,
+      "eval_corr_log_odds": -0.6268251563400435,
+      "discovery_action_cohens_d": -0.8104801779254012,
+      "eval_action_cohens_d": -0.8874569158083152,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004253342186072816
+    },
+    {
+      "feature_id": 24732,
+      "discovery_corr_log_odds": 0.5579680107278285,
+      "eval_corr_log_odds": 0.6273045871733869,
+      "discovery_action_cohens_d": 0.7017558891687234,
+      "eval_action_cohens_d": 0.7553716017644181,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004566161611781483
+    },
+    {
+      "feature_id": 6514,
+      "discovery_corr_log_odds": 0.5578380766154106,
+      "eval_corr_log_odds": 0.5008921046675116,
+      "discovery_action_cohens_d": 0.7617110615833866,
+      "eval_action_cohens_d": 0.6550783411224006,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005159205156926106
+    },
+    {
+      "feature_id": 18697,
+      "discovery_corr_log_odds": -0.5573251126774247,
+      "eval_corr_log_odds": -0.5509789806861015,
+      "discovery_action_cohens_d": -0.9044016579774977,
+      "eval_action_cohens_d": -0.84240983933972,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.00740084157114782
+    },
+    {
+      "feature_id": 15254,
+      "discovery_corr_log_odds": -0.5568748023969009,
+      "eval_corr_log_odds": -0.5835687237566209,
+      "discovery_action_cohens_d": -0.9699662845401427,
+      "eval_action_cohens_d": -0.9526383139795673,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.007224334051668803
+    },
+    {
+      "feature_id": 15794,
+      "discovery_corr_log_odds": -0.5566756433878773,
+      "eval_corr_log_odds": -0.5791979221453653,
+      "discovery_action_cohens_d": -1.2670545503026802,
+      "eval_action_cohens_d": -1.2544009547904191,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005288943568229716
+    },
+    {
+      "feature_id": 20561,
+      "discovery_corr_log_odds": -0.5565916840927024,
+      "eval_corr_log_odds": -0.5094886466278622,
+      "discovery_action_cohens_d": -1.2953578620350226,
+      "eval_action_cohens_d": -1.2202789552602276,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004000483396112465
+    },
+    {
+      "feature_id": 24411,
+      "discovery_corr_log_odds": -0.5563920266809774,
+      "eval_corr_log_odds": -0.574535318590043,
+      "discovery_action_cohens_d": -1.4068040394371397,
+      "eval_action_cohens_d": -1.4555140045927504,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.01141005371179435
+    },
+    {
+      "feature_id": 28538,
+      "discovery_corr_log_odds": -0.5560240732371726,
+      "eval_corr_log_odds": -0.7088633857403575,
+      "discovery_action_cohens_d": -0.9926213369212302,
+      "eval_action_cohens_d": -1.2161154056607648,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0049533661699179615
+    },
+    {
+      "feature_id": 18801,
+      "discovery_corr_log_odds": -0.5559000947281431,
+      "eval_corr_log_odds": -0.5811147857999487,
+      "discovery_action_cohens_d": -1.0275992205534643,
+      "eval_action_cohens_d": -1.056157238828028,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004145530550132925
+    },
+    {
+      "feature_id": 26169,
+      "discovery_corr_log_odds": 0.5555490889010678,
+      "eval_corr_log_odds": 0.5920150223335001,
+      "discovery_action_cohens_d": 0.9836283394310441,
+      "eval_action_cohens_d": 1.0234778250879621,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.008933652292927167
+    },
+    {
+      "feature_id": 27877,
+      "discovery_corr_log_odds": -0.5554356274534175,
+      "eval_corr_log_odds": -0.7126426446600534,
+      "discovery_action_cohens_d": -0.8380924234766096,
+      "eval_action_cohens_d": -1.0478671783783566,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004426205833020438
+    },
+    {
+      "feature_id": 12015,
+      "discovery_corr_log_odds": -0.5552848933144922,
+      "eval_corr_log_odds": -0.5827969690972794,
+      "discovery_action_cohens_d": -1.027889876824425,
+      "eval_action_cohens_d": -0.9909510406843133,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0059366903644504435
+    },
+    {
+      "feature_id": 16572,
+      "discovery_corr_log_odds": -0.55525540863082,
+      "eval_corr_log_odds": -0.542108394439779,
+      "discovery_action_cohens_d": -1.526682055360103,
+      "eval_action_cohens_d": -1.441514023072234,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.00652708203674101
+    },
+    {
+      "feature_id": 15403,
+      "discovery_corr_log_odds": 0.5551047905253103,
+      "eval_corr_log_odds": 0.551915268152918,
+      "discovery_action_cohens_d": 0.5511803181637303,
+      "eval_action_cohens_d": 0.5587953992353829,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.003150496963224313
+    },
+    {
+      "feature_id": 8820,
+      "discovery_corr_log_odds": 0.555005490691079,
+      "eval_corr_log_odds": 0.6142358146696837,
+      "discovery_action_cohens_d": 1.1173751266516583,
+      "eval_action_cohens_d": 1.1519641198368593,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004560938366288898
+    },
+    {
+      "feature_id": 28210,
+      "discovery_corr_log_odds": -0.5548507115046055,
+      "eval_corr_log_odds": -0.6278452857839729,
+      "discovery_action_cohens_d": -1.1663514878262622,
+      "eval_action_cohens_d": -1.202409984649004,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.006566697710158044
+    },
+    {
+      "feature_id": 14500,
+      "discovery_corr_log_odds": -0.5547893157232185,
+      "eval_corr_log_odds": -0.6163952435612882,
+      "discovery_action_cohens_d": -1.039916345203786,
+      "eval_action_cohens_d": -1.0848040017468823,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0062305333820596685
+    },
+    {
+      "feature_id": 12348,
+      "discovery_corr_log_odds": -0.5547474687384963,
+      "eval_corr_log_odds": -0.7118845063097541,
+      "discovery_action_cohens_d": -1.0562417054879971,
+      "eval_action_cohens_d": -1.2852472087347184,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004942498280013156
+    },
+    {
+      "feature_id": 25268,
+      "discovery_corr_log_odds": 0.5546123356251447,
+      "eval_corr_log_odds": 0.6573082746731174,
+      "discovery_action_cohens_d": 0.8475930643333175,
+      "eval_action_cohens_d": 1.0254365182609921,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0036051576502927913
+    },
+    {
+      "feature_id": 4710,
+      "discovery_corr_log_odds": 0.5543951544115517,
+      "eval_corr_log_odds": 0.6522691372475966,
+      "discovery_action_cohens_d": 0.7709533313308835,
+      "eval_action_cohens_d": 0.951270607857344,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005383452481922935
+    },
+    {
+      "feature_id": 11169,
+      "discovery_corr_log_odds": -0.5542408312547134,
+      "eval_corr_log_odds": -0.6120217287504872,
+      "discovery_action_cohens_d": -1.226710489741965,
+      "eval_action_cohens_d": -1.202725535112113,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004728220581724785
+    },
+    {
+      "feature_id": 590,
+      "discovery_corr_log_odds": -0.5541416523036101,
+      "eval_corr_log_odds": -0.6112631950273172,
+      "discovery_action_cohens_d": -1.060880334724077,
+      "eval_action_cohens_d": -1.1238354737456986,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004024497738186531
+    },
+    {
+      "feature_id": 26815,
+      "discovery_corr_log_odds": -0.5540980972672888,
+      "eval_corr_log_odds": -0.5948385112870891,
+      "discovery_action_cohens_d": -1.2777689378834818,
+      "eval_action_cohens_d": -1.350908900883617,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004321395148966535
+    },
+    {
+      "feature_id": 4366,
+      "discovery_corr_log_odds": -0.5540786295297249,
+      "eval_corr_log_odds": -0.6043648564031286,
+      "discovery_action_cohens_d": -1.182892893849775,
+      "eval_action_cohens_d": -1.2635151883593245,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004224653853781773
+    },
+    {
+      "feature_id": 26165,
+      "discovery_corr_log_odds": 0.5540139512904403,
+      "eval_corr_log_odds": 0.6401454586022776,
+      "discovery_action_cohens_d": 0.9029327147147175,
+      "eval_action_cohens_d": 1.0517935392721978,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.006890774084590497
+    },
+    {
+      "feature_id": 28670,
+      "discovery_corr_log_odds": 0.5538345150416978,
+      "eval_corr_log_odds": 0.5928060800349356,
+      "discovery_action_cohens_d": 0.7922920442667825,
+      "eval_action_cohens_d": 0.8425439297734991,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004800580565723979
+    },
+    {
+      "feature_id": 21556,
+      "discovery_corr_log_odds": -0.5536130288243096,
+      "eval_corr_log_odds": -0.5745552584765079,
+      "discovery_action_cohens_d": -1.4330885721693478,
+      "eval_action_cohens_d": -1.397369742328088,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.006473941220637054
+    },
+    {
+      "feature_id": 584,
+      "discovery_corr_log_odds": -0.5534855080577206,
+      "eval_corr_log_odds": -0.5921036139015684,
+      "discovery_action_cohens_d": -1.2067559750713768,
+      "eval_action_cohens_d": -1.2316835281598246,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.00795398869088215
+    },
+    {
+      "feature_id": 25856,
+      "discovery_corr_log_odds": 0.5533687839306235,
+      "eval_corr_log_odds": 0.621329663241271,
+      "discovery_action_cohens_d": 0.7728462672573413,
+      "eval_action_cohens_d": 0.7952111861250669,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.00405195543047001
+    },
+    {
+      "feature_id": 26239,
+      "discovery_corr_log_odds": 0.5533377065974288,
+      "eval_corr_log_odds": 0.5385015135688316,
+      "discovery_action_cohens_d": 0.8559586556089233,
+      "eval_action_cohens_d": 0.802873068894526,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004297504005652222
+    },
+    {
+      "feature_id": 3516,
+      "discovery_corr_log_odds": 0.5530749136370706,
+      "eval_corr_log_odds": 0.5620138273619542,
+      "discovery_action_cohens_d": 0.8974051366970266,
+      "eval_action_cohens_d": 0.9070188766598448,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.003665724448498673
+    },
+    {
+      "feature_id": 5455,
+      "discovery_corr_log_odds": 0.552829278856605,
+      "eval_corr_log_odds": 0.5981056374377195,
+      "discovery_action_cohens_d": 0.5858621538733552,
+      "eval_action_cohens_d": 0.6199977486411681,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004234070056204464
+    },
+    {
+      "feature_id": 27695,
+      "discovery_corr_log_odds": 0.5527981108533213,
+      "eval_corr_log_odds": 0.5736524401519916,
+      "discovery_action_cohens_d": 0.8096578877996452,
+      "eval_action_cohens_d": 0.8933165682216255,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004582920526605171
+    },
+    {
+      "feature_id": 14268,
+      "discovery_corr_log_odds": 0.5526900107580627,
+      "eval_corr_log_odds": 0.6062873624028575,
+      "discovery_action_cohens_d": 1.139048574258219,
+      "eval_action_cohens_d": 1.1346102281797035,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0036365066662217547
+    },
+    {
+      "feature_id": 21884,
+      "discovery_corr_log_odds": -0.5523603204490157,
+      "eval_corr_log_odds": -0.6289524049906163,
+      "discovery_action_cohens_d": -1.0982046739889746,
+      "eval_action_cohens_d": -1.122700720711852,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0062532235639922145
+    },
+    {
+      "feature_id": 1194,
+      "discovery_corr_log_odds": -0.5521766781288481,
+      "eval_corr_log_odds": -0.5540535170157868,
+      "discovery_action_cohens_d": -1.20953085547472,
+      "eval_action_cohens_d": -1.246356050206279,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0034673791054631686
+    },
+    {
+      "feature_id": 640,
+      "discovery_corr_log_odds": -0.552157416199089,
+      "eval_corr_log_odds": -0.5743220708480746,
+      "discovery_action_cohens_d": -1.3096578600956514,
+      "eval_action_cohens_d": -1.3383964275942395,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.007365941166176387
+    },
+    {
+      "feature_id": 18424,
+      "discovery_corr_log_odds": -0.5515133796792611,
+      "eval_corr_log_odds": -0.6259225534132999,
+      "discovery_action_cohens_d": -0.6810371717367293,
+      "eval_action_cohens_d": -0.7890671923430754,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0027678326077484913
+    },
+    {
+      "feature_id": 16112,
+      "discovery_corr_log_odds": -0.5514358651740536,
+      "eval_corr_log_odds": -0.5897519220845234,
+      "discovery_action_cohens_d": -1.250467121761652,
+      "eval_action_cohens_d": -1.272940322288895,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.007615581353589013
+    },
+    {
+      "feature_id": 20453,
+      "discovery_corr_log_odds": -0.5514096287395789,
+      "eval_corr_log_odds": -0.5885837706257484,
+      "discovery_action_cohens_d": -1.333549897636749,
+      "eval_action_cohens_d": -1.3913350348774536,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004385850490059391
+    },
+    {
+      "feature_id": 6831,
+      "discovery_corr_log_odds": -0.5512537410594044,
+      "eval_corr_log_odds": -0.6009748531383345,
+      "discovery_action_cohens_d": -1.0820348301444258,
+      "eval_action_cohens_d": -1.1109082336538163,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004628713558320142
+    },
+    {
+      "feature_id": 17965,
+      "discovery_corr_log_odds": 0.5511918998324004,
+      "eval_corr_log_odds": 0.503540392929239,
+      "discovery_action_cohens_d": 0.7798189019566375,
+      "eval_action_cohens_d": 0.5283913455383402,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004312327445699382
+    },
+    {
+      "feature_id": 8294,
+      "discovery_corr_log_odds": -0.5511752851128705,
+      "eval_corr_log_odds": -0.5693244110623668,
+      "discovery_action_cohens_d": -1.2353265840494325,
+      "eval_action_cohens_d": -1.1848546228159327,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004596390009530352
+    },
+    {
+      "feature_id": 24503,
+      "discovery_corr_log_odds": 0.5510660379996998,
+      "eval_corr_log_odds": 0.539876519208602,
+      "discovery_action_cohens_d": 1.1377807141747447,
+      "eval_action_cohens_d": 1.1417364659248077,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004903741214504977
+    },
+    {
+      "feature_id": 15104,
+      "discovery_corr_log_odds": -0.5509791486528434,
+      "eval_corr_log_odds": -0.5517412024397789,
+      "discovery_action_cohens_d": -0.8887974330930144,
+      "eval_action_cohens_d": -0.8867248964186679,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004154548955512789
+    },
+    {
+      "feature_id": 24887,
+      "discovery_corr_log_odds": 0.5508167710952074,
+      "eval_corr_log_odds": 0.5065670599280327,
+      "discovery_action_cohens_d": 0.9518356897715136,
+      "eval_action_cohens_d": 0.7936512109614345,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005807884751947237
+    },
+    {
+      "feature_id": 3628,
+      "discovery_corr_log_odds": 0.5504118818769965,
+      "eval_corr_log_odds": 0.6195593863556608,
+      "discovery_action_cohens_d": 0.5617296761136368,
+      "eval_action_cohens_d": 0.6698858587857267,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.002845952858643963
+    },
+    {
+      "feature_id": 8012,
+      "discovery_corr_log_odds": -0.5500831206028866,
+      "eval_corr_log_odds": -0.6307953057753279,
+      "discovery_action_cohens_d": -0.9079000719141743,
+      "eval_action_cohens_d": -1.0008527668180223,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.00558326557009007
+    },
+    {
+      "feature_id": 9076,
+      "discovery_corr_log_odds": 0.5500550077965547,
+      "eval_corr_log_odds": 0.6117599608090989,
+      "discovery_action_cohens_d": 0.9951073474784515,
+      "eval_action_cohens_d": 1.0967712572464814,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.00328561364925394
+    },
+    {
+      "feature_id": 24060,
+      "discovery_corr_log_odds": -0.5500429012098932,
+      "eval_corr_log_odds": -0.6347196181135547,
+      "discovery_action_cohens_d": -1.1632710868686424,
+      "eval_action_cohens_d": -1.2698805073348796,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004527462662663283
+    },
+    {
+      "feature_id": 9115,
+      "discovery_corr_log_odds": 0.5500093771233513,
+      "eval_corr_log_odds": 0.5853386462561369,
+      "discovery_action_cohens_d": 0.9437711750910046,
+      "eval_action_cohens_d": 0.945867738632274,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.003683942279820164
+    },
+    {
+      "feature_id": 10606,
+      "discovery_corr_log_odds": -0.5494542180645791,
+      "eval_corr_log_odds": -0.5914719734822056,
+      "discovery_action_cohens_d": -1.186374361866245,
+      "eval_action_cohens_d": -1.2295703593315903,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005209314360756822
+    },
+    {
+      "feature_id": 27934,
+      "discovery_corr_log_odds": 0.5493339116481483,
+      "eval_corr_log_odds": 0.5968996989033255,
+      "discovery_action_cohens_d": 0.9321104540211613,
+      "eval_action_cohens_d": 1.048251627637828,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004092633717533177
+    },
+    {
+      "feature_id": 14914,
+      "discovery_corr_log_odds": 0.5492693977812994,
+      "eval_corr_log_odds": 0.5791416156399516,
+      "discovery_action_cohens_d": 0.6534538304312943,
+      "eval_action_cohens_d": 0.6663501191451693,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005111949691904724
+    },
+    {
+      "feature_id": 21079,
+      "discovery_corr_log_odds": -0.5490656387840993,
+      "eval_corr_log_odds": -0.6211611374346345,
+      "discovery_action_cohens_d": -0.8868972571575493,
+      "eval_action_cohens_d": -0.8841404723922318,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004758708692799721
+    },
+    {
+      "feature_id": 29,
+      "discovery_corr_log_odds": -0.5490508694983448,
+      "eval_corr_log_odds": -0.5772732289731171,
+      "discovery_action_cohens_d": -1.115265238081251,
+      "eval_action_cohens_d": -1.1160189179889353,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.007400975953215137
+    },
+    {
+      "feature_id": 12756,
+      "discovery_corr_log_odds": -0.5487553667985732,
+      "eval_corr_log_odds": -0.6213894349003068,
+      "discovery_action_cohens_d": -0.8067041732478833,
+      "eval_action_cohens_d": -0.9483372016261122,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0053027688373821534
+    },
+    {
+      "feature_id": 6359,
+      "discovery_corr_log_odds": -0.5487338813913549,
+      "eval_corr_log_odds": -0.5326732109928671,
+      "discovery_action_cohens_d": -0.723014469269633,
+      "eval_action_cohens_d": -0.6897440065677148,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004361480534891522
+    },
+    {
+      "feature_id": 10768,
+      "discovery_corr_log_odds": -0.5487076189962892,
+      "eval_corr_log_odds": -0.5436096208646055,
+      "discovery_action_cohens_d": -1.104380532266072,
+      "eval_action_cohens_d": -0.966915744165103,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004854539560391675
+    },
+    {
+      "feature_id": 20511,
+      "discovery_corr_log_odds": -0.5485342725788293,
+      "eval_corr_log_odds": -0.6150338352775077,
+      "discovery_action_cohens_d": -0.7669430026533967,
+      "eval_action_cohens_d": -0.798559888094232,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005523087730477174
+    },
+    {
+      "feature_id": 19382,
+      "discovery_corr_log_odds": -0.5485236391864519,
+      "eval_corr_log_odds": -0.5196180931544933,
+      "discovery_action_cohens_d": -1.2547998299234493,
+      "eval_action_cohens_d": -1.1328098501301866,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.007548553073558441
+    },
+    {
+      "feature_id": 9048,
+      "discovery_corr_log_odds": -0.5483855020822793,
+      "eval_corr_log_odds": -0.549283113723911,
+      "discovery_action_cohens_d": -1.1276482113797164,
+      "eval_action_cohens_d": -1.0335520763109252,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0045108376726518
+    },
+    {
+      "feature_id": 2013,
+      "discovery_corr_log_odds": 0.5483805799786702,
+      "eval_corr_log_odds": 0.6072893103581547,
+      "discovery_action_cohens_d": 0.7761015482430892,
+      "eval_action_cohens_d": 0.8630253268458737,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.002957339875898649
+    },
+    {
+      "feature_id": 15153,
+      "discovery_corr_log_odds": -0.5482066972140518,
+      "eval_corr_log_odds": -0.6650966577678178,
+      "discovery_action_cohens_d": -0.7385393837915067,
+      "eval_action_cohens_d": -0.9346931021547531,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.003288955793498533
+    },
+    {
+      "feature_id": 9334,
+      "discovery_corr_log_odds": -0.5481541826565255,
+      "eval_corr_log_odds": -0.5171412578641704,
+      "discovery_action_cohens_d": -1.1259121347172751,
+      "eval_action_cohens_d": -0.9575911616213696,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005797480513525203
+    },
+    {
+      "feature_id": 4672,
+      "discovery_corr_log_odds": -0.5477772966926373,
+      "eval_corr_log_odds": -0.6019249034634686,
+      "discovery_action_cohens_d": -0.8361440324989959,
+      "eval_action_cohens_d": -0.8814367223410143,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.006350311986103534
+    },
+    {
+      "feature_id": 8850,
+      "discovery_corr_log_odds": -0.5477317309459433,
+      "eval_corr_log_odds": -0.5862017017955181,
+      "discovery_action_cohens_d": -0.8121691214741831,
+      "eval_action_cohens_d": -0.8213178435589776,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004982345514924529
+    },
+    {
+      "feature_id": 16085,
+      "discovery_corr_log_odds": -0.5477195856878158,
+      "eval_corr_log_odds": -0.5930395208047434,
+      "discovery_action_cohens_d": -1.095758709635554,
+      "eval_action_cohens_d": -1.038507839102396,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004430780695753571
+    },
+    {
+      "feature_id": 13936,
+      "discovery_corr_log_odds": 0.5476853135131656,
+      "eval_corr_log_odds": 0.6436963697158656,
+      "discovery_action_cohens_d": 0.8916493860597484,
+      "eval_action_cohens_d": 1.0565723943801473,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0028417761452235587
+    },
+    {
+      "feature_id": 8750,
+      "discovery_corr_log_odds": -0.5474832211151549,
+      "eval_corr_log_odds": -0.5655880432799547,
+      "discovery_action_cohens_d": -0.9668261431871759,
+      "eval_action_cohens_d": -0.9487615750650348,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0042198984391377155
+    },
+    {
+      "feature_id": 5482,
+      "discovery_corr_log_odds": 0.5470986297190253,
+      "eval_corr_log_odds": 0.6356709672309734,
+      "discovery_action_cohens_d": 0.800657417812125,
+      "eval_action_cohens_d": 0.8880860584551928,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.006999563227071953
+    },
+    {
+      "feature_id": 26048,
+      "discovery_corr_log_odds": -0.5470807180241005,
+      "eval_corr_log_odds": -0.5379328330789243,
+      "discovery_action_cohens_d": -0.5866429591548104,
+      "eval_action_cohens_d": -0.5854835315283986,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0052773070973467446
+    },
+    {
+      "feature_id": 14670,
+      "discovery_corr_log_odds": -0.5468075720195967,
+      "eval_corr_log_odds": -0.5844877874466582,
+      "discovery_action_cohens_d": -0.994472604482491,
+      "eval_action_cohens_d": -0.9702836582227504,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004143580920184129
+    },
+    {
+      "feature_id": 14239,
+      "discovery_corr_log_odds": 0.5460176398750692,
+      "eval_corr_log_odds": 0.5868039414917161,
+      "discovery_action_cohens_d": 0.3615196158295145,
+      "eval_action_cohens_d": 0.418029691205354,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004580240633370235
+    },
+    {
+      "feature_id": 12591,
+      "discovery_corr_log_odds": -0.5454369511020207,
+      "eval_corr_log_odds": -0.5274030281275112,
+      "discovery_action_cohens_d": -1.164519047377259,
+      "eval_action_cohens_d": -1.107834675523676,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.003561914286918535
+    },
+    {
+      "feature_id": 3908,
+      "discovery_corr_log_odds": -0.5454282487394965,
+      "eval_corr_log_odds": -0.5411215666037791,
+      "discovery_action_cohens_d": -1.5378208421100192,
+      "eval_action_cohens_d": -1.4720798432601934,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005909740007236643
+    },
+    {
+      "feature_id": 11189,
+      "discovery_corr_log_odds": -0.5453584460832647,
+      "eval_corr_log_odds": -0.6367688551302472,
+      "discovery_action_cohens_d": -1.0249682450631783,
+      "eval_action_cohens_d": -1.077935217390548,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005082252991968718
+    },
+    {
+      "feature_id": 25237,
+      "discovery_corr_log_odds": -0.5453347463530704,
+      "eval_corr_log_odds": -0.5364594894852127,
+      "discovery_action_cohens_d": -1.1169140054727402,
+      "eval_action_cohens_d": -1.0889994474023006,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005433379002992653
+    },
+    {
+      "feature_id": 28203,
+      "discovery_corr_log_odds": -0.5451455445409153,
+      "eval_corr_log_odds": -0.579021320041827,
+      "discovery_action_cohens_d": -1.4472343706444273,
+      "eval_action_cohens_d": -1.378681823346166,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0034489520608058464
+    },
+    {
+      "feature_id": 28055,
+      "discovery_corr_log_odds": -0.5450830559290482,
+      "eval_corr_log_odds": -0.5683465789073285,
+      "discovery_action_cohens_d": -1.1822054379895344,
+      "eval_action_cohens_d": -1.1920449376238913,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.007869244088439845
+    },
+    {
+      "feature_id": 21458,
+      "discovery_corr_log_odds": 0.5448737694692084,
+      "eval_corr_log_odds": 0.5406953477031028,
+      "discovery_action_cohens_d": 0.5451868129984888,
+      "eval_action_cohens_d": 0.5070424161476549,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0037954328636100056
+    },
+    {
+      "feature_id": 447,
+      "discovery_corr_log_odds": 0.5448394447396271,
+      "eval_corr_log_odds": 0.5964520373828301,
+      "discovery_action_cohens_d": 1.3036082295075186,
+      "eval_action_cohens_d": 1.3620570351200743,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0033438584452375117
+    },
+    {
+      "feature_id": 21965,
+      "discovery_corr_log_odds": -0.5447034838888829,
+      "eval_corr_log_odds": -0.5948458463121763,
+      "discovery_action_cohens_d": -0.8821613099726644,
+      "eval_action_cohens_d": -0.857258783671936,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.00643060095572544
+    },
+    {
+      "feature_id": 4465,
+      "discovery_corr_log_odds": 0.5445878952590666,
+      "eval_corr_log_odds": 0.5661696832089405,
+      "discovery_action_cohens_d": 0.6832776927635953,
+      "eval_action_cohens_d": 0.6868829943509801,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.00557892565839145
+    },
+    {
+      "feature_id": 26232,
+      "discovery_corr_log_odds": -0.5440821507519342,
+      "eval_corr_log_odds": -0.6118050523971892,
+      "discovery_action_cohens_d": -0.7442795201416064,
+      "eval_action_cohens_d": -0.8031869583352944,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.009464950287137773
+    },
+    {
+      "feature_id": 22831,
+      "discovery_corr_log_odds": -0.5440760977095452,
+      "eval_corr_log_odds": -0.6295533109566152,
+      "discovery_action_cohens_d": -0.7047604364312869,
+      "eval_action_cohens_d": -0.7045220819933607,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0056840930054339375
+    },
+    {
+      "feature_id": 23416,
+      "discovery_corr_log_odds": 0.5439270571218754,
+      "eval_corr_log_odds": 0.5910343634034262,
+      "discovery_action_cohens_d": 0.9538947002520942,
+      "eval_action_cohens_d": 1.011610621504176,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004408457815459318
+    },
+    {
+      "feature_id": 10907,
+      "discovery_corr_log_odds": -0.5439205253871449,
+      "eval_corr_log_odds": -0.5723825512584299,
+      "discovery_action_cohens_d": -1.167984959500347,
+      "eval_action_cohens_d": -1.1828364446749735,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.010744570882578967
+    },
+    {
+      "feature_id": 12562,
+      "discovery_corr_log_odds": -0.543826733933323,
+      "eval_corr_log_odds": -0.600619837023807,
+      "discovery_action_cohens_d": -1.2151450562297519,
+      "eval_action_cohens_d": -1.2233961684689902,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.006034580964816404
+    },
+    {
+      "feature_id": 6542,
+      "discovery_corr_log_odds": -0.5433797022218114,
+      "eval_corr_log_odds": -0.6032694606355903,
+      "discovery_action_cohens_d": -0.932211031865823,
+      "eval_action_cohens_d": -1.0534157777799686,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005262052140604944
+    },
+    {
+      "feature_id": 1453,
+      "discovery_corr_log_odds": 0.5433466423566053,
+      "eval_corr_log_odds": 0.5335564838398148,
+      "discovery_action_cohens_d": 1.0952710652304003,
+      "eval_action_cohens_d": 1.024086247812834,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0057340987155995345
+    },
+    {
+      "feature_id": 13527,
+      "discovery_corr_log_odds": -0.5432914556607298,
+      "eval_corr_log_odds": -0.5977039644643926,
+      "discovery_action_cohens_d": -1.2345787870462224,
+      "eval_action_cohens_d": -1.2261783383534155,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004449133981779405
+    },
+    {
+      "feature_id": 9466,
+      "discovery_corr_log_odds": -0.5430872660908007,
+      "eval_corr_log_odds": -0.6331890802125203,
+      "discovery_action_cohens_d": -0.9716496701987124,
+      "eval_action_cohens_d": -0.9514170367710515,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0034746946328114187
+    },
+    {
+      "feature_id": 15767,
+      "discovery_corr_log_odds": -0.5429740793552343,
+      "eval_corr_log_odds": -0.5425241044846937,
+      "discovery_action_cohens_d": -0.8710833141376644,
+      "eval_action_cohens_d": -0.7545841100045619,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.007188036350904186
+    },
+    {
+      "feature_id": 27672,
+      "discovery_corr_log_odds": -0.5429440368492923,
+      "eval_corr_log_odds": -0.5722092118114372,
+      "discovery_action_cohens_d": -1.0366691378290596,
+      "eval_action_cohens_d": -1.056309680376938,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.007041529332536367
+    },
+    {
+      "feature_id": 5578,
+      "discovery_corr_log_odds": 0.5425800789543597,
+      "eval_corr_log_odds": 0.5115602760021434,
+      "discovery_action_cohens_d": 0.8844376666373256,
+      "eval_action_cohens_d": 0.8654144597366119,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.007076604449422192
+    },
+    {
+      "feature_id": 23040,
+      "discovery_corr_log_odds": 0.5425061254507781,
+      "eval_corr_log_odds": 0.5658734441468234,
+      "discovery_action_cohens_d": 0.7500967637786621,
+      "eval_action_cohens_d": 0.6786554869723138,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.008104788658520148
+    },
+    {
+      "feature_id": 14865,
+      "discovery_corr_log_odds": -0.5423680067384845,
+      "eval_corr_log_odds": -0.5241148079663105,
+      "discovery_action_cohens_d": -1.4763096000894176,
+      "eval_action_cohens_d": -1.4410479362392836,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005132979095565521
+    },
+    {
+      "feature_id": 188,
+      "discovery_corr_log_odds": -0.5422902630492408,
+      "eval_corr_log_odds": -0.515140807047326,
+      "discovery_action_cohens_d": -1.240010927559254,
+      "eval_action_cohens_d": -1.0971637798748115,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.00855618337279797
+    },
+    {
+      "feature_id": 1965,
+      "discovery_corr_log_odds": 0.5421436748914913,
+      "eval_corr_log_odds": 0.639039893046033,
+      "discovery_action_cohens_d": 0.7624039317435,
+      "eval_action_cohens_d": 0.9934481478827187,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.003589589912372596
+    },
+    {
+      "feature_id": 1888,
+      "discovery_corr_log_odds": -0.5418958453889947,
+      "eval_corr_log_odds": -0.5101882972155749,
+      "discovery_action_cohens_d": -0.751964349739548,
+      "eval_action_cohens_d": -0.5217833659174599,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.003165874039527078
+    },
+    {
+      "feature_id": 21499,
+      "discovery_corr_log_odds": 0.5418324401746235,
+      "eval_corr_log_odds": 0.645156192326424,
+      "discovery_action_cohens_d": 1.0423744499540002,
+      "eval_action_cohens_d": 1.1599268993587937,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0048887699690061395
+    },
+    {
+      "feature_id": 17816,
+      "discovery_corr_log_odds": 0.5417208517365467,
+      "eval_corr_log_odds": 0.5772783507634419,
+      "discovery_action_cohens_d": 1.030136107210627,
+      "eval_action_cohens_d": 1.0464510515534633,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005542441701077569
+    },
+    {
+      "feature_id": 1759,
+      "discovery_corr_log_odds": -0.5411464223374448,
+      "eval_corr_log_odds": -0.5732886755922227,
+      "discovery_action_cohens_d": -1.0164757593794989,
+      "eval_action_cohens_d": -1.056793633948544,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004117480331644387
+    },
+    {
+      "feature_id": 17628,
+      "discovery_corr_log_odds": 0.541004782392819,
+      "eval_corr_log_odds": 0.6167191102836029,
+      "discovery_action_cohens_d": 0.49160532164846116,
+      "eval_action_cohens_d": 0.6279806101567856,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0074633822161486035
+    },
+    {
+      "feature_id": 5273,
+      "discovery_corr_log_odds": -0.5409436947092363,
+      "eval_corr_log_odds": -0.5464564053474383,
+      "discovery_action_cohens_d": -1.1626202001990293,
+      "eval_action_cohens_d": -1.1155762253838248,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.007293957065561954
+    },
+    {
+      "feature_id": 6824,
+      "discovery_corr_log_odds": -0.5409390849560166,
+      "eval_corr_log_odds": -0.5870031939693873,
+      "discovery_action_cohens_d": -0.7784712848836912,
+      "eval_action_cohens_d": -0.7674802804553708,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.010035694510128578
+    },
+    {
+      "feature_id": 7048,
+      "discovery_corr_log_odds": 0.5408709631746342,
+      "eval_corr_log_odds": 0.5492965739871639,
+      "discovery_action_cohens_d": 0.5393105678006349,
+      "eval_action_cohens_d": 0.5415253163311836,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005453060534695332
+    },
+    {
+      "feature_id": 6949,
+      "discovery_corr_log_odds": -0.5408576730816101,
+      "eval_corr_log_odds": -0.4962409238035493,
+      "discovery_action_cohens_d": -1.0623525838814474,
+      "eval_action_cohens_d": -0.9853064476173634,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005690438538441652
+    },
+    {
+      "feature_id": 18387,
+      "discovery_corr_log_odds": 0.5407936390387917,
+      "eval_corr_log_odds": 0.4278450131153899,
+      "discovery_action_cohens_d": 1.2174037032945964,
+      "eval_action_cohens_d": 0.990414003541418,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004010253321105012
+    },
+    {
+      "feature_id": 18059,
+      "discovery_corr_log_odds": -0.540669879876315,
+      "eval_corr_log_odds": -0.5179326496362564,
+      "discovery_action_cohens_d": -0.8011284509170534,
+      "eval_action_cohens_d": -0.7145594212374314,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004997394085821004
+    },
+    {
+      "feature_id": 1696,
+      "discovery_corr_log_odds": 0.5406467040665408,
+      "eval_corr_log_odds": 0.5089818126666026,
+      "discovery_action_cohens_d": 0.5406483632944872,
+      "eval_action_cohens_d": 0.4576344575950302,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004744462504757001
+    },
+    {
+      "feature_id": 11300,
+      "discovery_corr_log_odds": -0.5406411510183553,
+      "eval_corr_log_odds": -0.5313688771929175,
+      "discovery_action_cohens_d": -1.3801984779996899,
+      "eval_action_cohens_d": -1.313866030657025,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.006283218336247321
+    },
+    {
+      "feature_id": 11993,
+      "discovery_corr_log_odds": 0.5405648298812497,
+      "eval_corr_log_odds": 0.5636392817880597,
+      "discovery_action_cohens_d": 0.9575179363296045,
+      "eval_action_cohens_d": 0.9422713689348732,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.007083622555473038
+    },
+    {
+      "feature_id": 9258,
+      "discovery_corr_log_odds": -0.5399510474274224,
+      "eval_corr_log_odds": -0.5066530141296794,
+      "discovery_action_cohens_d": -0.9908892029302326,
+      "eval_action_cohens_d": -0.9662585556517531,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.002946308522474209
+    },
+    {
+      "feature_id": 157,
+      "discovery_corr_log_odds": -0.5398206262863706,
+      "eval_corr_log_odds": -0.5759621821196076,
+      "discovery_action_cohens_d": -0.9497920779173008,
+      "eval_action_cohens_d": -0.9491649709173465,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.008814930890530167
+    },
+    {
+      "feature_id": 26246,
+      "discovery_corr_log_odds": 0.5396995413445349,
+      "eval_corr_log_odds": 0.532814814434893,
+      "discovery_action_cohens_d": 1.1239832547044057,
+      "eval_action_cohens_d": 0.9658353328387307,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.003143515723538074
+    },
+    {
+      "feature_id": 17543,
+      "discovery_corr_log_odds": -0.5396238519491082,
+      "eval_corr_log_odds": -0.6424022563712122,
+      "discovery_action_cohens_d": -1.008148945460245,
+      "eval_action_cohens_d": -1.2132737865724887,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004028986134592889
+    },
+    {
+      "feature_id": 5697,
+      "discovery_corr_log_odds": 0.5396018299662785,
+      "eval_corr_log_odds": 0.5707993751912358,
+      "discovery_action_cohens_d": 1.2083102882548558,
+      "eval_action_cohens_d": 1.1869228463581996,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.003665891220740872
+    },
+    {
+      "feature_id": 20409,
+      "discovery_corr_log_odds": 0.5395965488935057,
+      "eval_corr_log_odds": 0.5095523138276353,
+      "discovery_action_cohens_d": 1.0559600233252548,
+      "eval_action_cohens_d": 1.0188749283256409,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.003082991987152069
+    },
+    {
+      "feature_id": 23209,
+      "discovery_corr_log_odds": -0.5392626890611718,
+      "eval_corr_log_odds": -0.5387222478847258,
+      "discovery_action_cohens_d": -1.1794806930848516,
+      "eval_action_cohens_d": -1.0366818480612885,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.007535903976449008
+    },
+    {
+      "feature_id": 26283,
+      "discovery_corr_log_odds": -0.5391992993275329,
+      "eval_corr_log_odds": -0.4903759203647656,
+      "discovery_action_cohens_d": -1.2562687900921226,
+      "eval_action_cohens_d": -1.2443436361985016,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.002771153445577328
+    },
+    {
+      "feature_id": 3816,
+      "discovery_corr_log_odds": -0.5391308425145177,
+      "eval_corr_log_odds": -0.5893951741047498,
+      "discovery_action_cohens_d": -1.3231400233395887,
+      "eval_action_cohens_d": -1.4364210721718764,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005064642354248944
+    },
+    {
+      "feature_id": 26706,
+      "discovery_corr_log_odds": -0.5389887682885827,
+      "eval_corr_log_odds": -0.5674037758592848,
+      "discovery_action_cohens_d": -0.8885408217324945,
+      "eval_action_cohens_d": -0.9038646692747592,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004414599503372057
+    },
+    {
+      "feature_id": 18560,
+      "discovery_corr_log_odds": 0.538856929696349,
+      "eval_corr_log_odds": 0.6114640560605873,
+      "discovery_action_cohens_d": 0.5200985339723807,
+      "eval_action_cohens_d": 0.5954013020697603,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004844309246047492
+    },
+    {
+      "feature_id": 4512,
+      "discovery_corr_log_odds": -0.5383661298107807,
+      "eval_corr_log_odds": -0.5903889638006897,
+      "discovery_action_cohens_d": -0.8612612444693137,
+      "eval_action_cohens_d": -0.8560096895242053,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005403172688606056
+    },
+    {
+      "feature_id": 25610,
+      "discovery_corr_log_odds": 0.5382812958641168,
+      "eval_corr_log_odds": 0.4915903644397804,
+      "discovery_action_cohens_d": 0.9296910915776863,
+      "eval_action_cohens_d": 0.901680232913008,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.004539151647604043
+    },
+    {
+      "feature_id": 19263,
+      "discovery_corr_log_odds": -0.5382622646010272,
+      "eval_corr_log_odds": -0.5303780702456987,
+      "discovery_action_cohens_d": -1.098401874696612,
+      "eval_action_cohens_d": -1.0503831033551345,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0034761267485991644
+    },
+    {
+      "feature_id": 7842,
+      "discovery_corr_log_odds": -0.5382598322933991,
+      "eval_corr_log_odds": -0.5895754280486545,
+      "discovery_action_cohens_d": -1.0136626275266865,
+      "eval_action_cohens_d": -1.0667604095855887,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.006789326359016983
+    },
+    {
+      "feature_id": 6804,
+      "discovery_corr_log_odds": 0.5377878124945523,
+      "eval_corr_log_odds": 0.5418161132512277,
+      "discovery_action_cohens_d": 1.08944959005201,
+      "eval_action_cohens_d": 1.1005148919226193,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005293952554338377
+    },
+    {
+      "feature_id": 7650,
+      "discovery_corr_log_odds": -0.5377272095336039,
+      "eval_corr_log_odds": -0.6668995695929616,
+      "discovery_action_cohens_d": -0.8293951364842785,
+      "eval_action_cohens_d": -1.0351883337424455,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005058788837728385
+    },
+    {
+      "feature_id": 3727,
+      "discovery_corr_log_odds": 0.5372864704001107,
+      "eval_corr_log_odds": 0.5677928068690209,
+      "discovery_action_cohens_d": 1.2126349632337081,
+      "eval_action_cohens_d": 1.2466799343293662,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005985311499100926
+    },
+    {
+      "feature_id": 5529,
+      "discovery_corr_log_odds": -0.5371868766532064,
+      "eval_corr_log_odds": -0.5670453332067453,
+      "discovery_action_cohens_d": -1.168810443662204,
+      "eval_action_cohens_d": -1.0505399711408254,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005393106337066229
+    },
+    {
+      "feature_id": 7117,
+      "discovery_corr_log_odds": -0.5367512850065608,
+      "eval_corr_log_odds": -0.5459523715071096,
+      "discovery_action_cohens_d": -0.8010896205210489,
+      "eval_action_cohens_d": -0.7525314557781777,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.005189302221683201
+    },
+    {
+      "feature_id": 25597,
+      "discovery_corr_log_odds": -0.5367261973938651,
+      "eval_corr_log_odds": -0.6215461127882906,
+      "discovery_action_cohens_d": -0.976363223659785,
+      "eval_action_cohens_d": -1.096643578346719,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0042070047172937846
+    },
+    {
+      "feature_id": 21065,
+      "discovery_corr_log_odds": -0.5367070886938881,
+      "eval_corr_log_odds": -0.595961192475962,
+      "discovery_action_cohens_d": -0.9045146327328369,
+      "eval_action_cohens_d": -0.9597908228550098,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.008984702953170482
+    },
+    {
+      "feature_id": 14069,
+      "discovery_corr_log_odds": 0.5363230068037196,
+      "eval_corr_log_odds": 0.4982364835349327,
+      "discovery_action_cohens_d": 0.7575751071467623,
+      "eval_action_cohens_d": 0.5345084482450297,
+      "discovery_prevalence": 1.0,
+      "discovery_scale": 0.0027532747184716294
+    }
+  ],
+  "limitations": [
+    "Feature association is predictive, not causal.",
+    "Causal claims require the separate held-out steering stage and its controls.",
+    "Feature names or semantic interpretations are not inferred automatically."
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "name": "payoff_scale_invariance",
+  "runPhase": "pilot",
+  "description": "Paired diagnostic that multiplies every stage payoff and terminal prize by one positive factor while preserving progress, private risk, horizon, seeds, parser, and agents.",
+  "games": [
+    "ai_race_risk_10",
+    "ai_race_risk_60",
+    "ai_race_risk_90"
+  ],
+  "agents": "companies_default",
+  "languages": ["en"],
+  "models": ["LocalQwen"],
+  "useOffline": true,
+  "offlineSettings": "offline_settings",
+  "payoffScales": [0.1, 1.0, 10.0, 100.0],
+  "payoffScaleAssignment": "fully_crossed_within_seed",
+  "repetitions": 32,
+  "seed": 260726,
+  "maxParseRetries": 3,
+  "samplingSeedApplied": true,
+  "verbose": false
+}

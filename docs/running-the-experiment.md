@@ -64,7 +64,7 @@ Script tái tạo / cập nhật:
 ```bash
 STAGE=/tmp/ai_race_dataset
 rsync -a --delete-excluded \
-  --exclude='.git' --exclude='arXiv-2607.26034v1' --exclude='__pycache__' \
+  --exclude='.git' --exclude='references/papers/sources/arXiv-2607.26034v1' --exclude='__pycache__' \
   --exclude='*.pyc' --exclude='.venv' --exclude='*.egg-info' --exclude='.env' \
   --exclude='results/derived' --exclude='.pytest_cache' \
   ./ "$STAGE"/
@@ -84,7 +84,7 @@ kaggle datasets version -p "$STAGE" -m "sync <git-sha>" --dir-mode zip
 `--dir-mode zip` nén từng thư mục top-level để upload nhanh; Kaggle **tự giải nén** nên
 cấu trúc thư mục giữ nguyên khi mount.
 
-`arXiv-2607.26034v1/` bị loại (3.4 MB PDF, không dùng khi chạy). **Bắt buộc giữ:**
+`references/papers/sources/arXiv-2607.26034v1/` bị loại (không dùng khi chạy). **Bắt buộc giữ:**
 `ai_race/` (gồm `configs/` và `prompts/`) và `FAIRGAME/` — notebook assert cả ba.
 
 Kiểm tra dataset sau khi upload khớp với repo local:

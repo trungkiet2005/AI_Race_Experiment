@@ -61,7 +61,7 @@ trong `analysis_manifest.json:mechanics_checks_passed`, không có mục nào fa
 ### 1.1. Vì sao persona vẫn confound dù chạy trong CÙNG một session
 
 Khác với pilot Gemini (persona confound vì mỗi cell chạy ở batch/thời điểm khác nhau), **44 config
-OpenAI này chạy trong đúng một lần gọi `run_openai_stage.py`**, cùng source revision, cùng
+OpenAI này chạy trong đúng một lần gọi `scripts/run_openai_stage.py`**, cùng source revision, cùng
 package version. Nhưng analyser vẫn báo:
 
 > `persona_condition varies across 44 cells (...) but never within a protocol signature`

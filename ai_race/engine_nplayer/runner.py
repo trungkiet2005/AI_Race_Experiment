@@ -12,6 +12,7 @@ the number of players.
 """
 from __future__ import annotations
 
+import argparse
 import json
 from collections.abc import Callable, Sequence
 from datetime import datetime, timezone
@@ -435,3 +436,34 @@ def run_experiment(
     write_races_csv(all_results, output_root / "races.csv")
     write_players_csv(all_results, output_root / "players.csv")
     return all_results
+
+
+def _parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "experiment",
+        nargs="?",
+        default=str(CONFIGS_DIR / "experiment" / "baseline_nplayer_n3.json"),
+    )
+    parser.add_argument("--output", type=Path)
+    parser.add_argument("--mock", choices=["safe", "unsafe", "random"])
+    return parser.parse_args()
+
+
+def main() -> None:
+    """Mirrors ``ai_race.runner.run_experiment.main`` for the N-player engine.
+
+    Was missing until now: this module has always been importable and callable
+    (Kaggle notebooks under kaggle/experiments/n-player-variant/ call
+    ``run_experiment()`` directly), but had no ``python -m
+    ai_race.engine_nplayer.runner <config> --output <dir>`` entry point.
+    """
+    args = _parse_args()
+    exp = validate_experiment(load_json(args.experiment))
+    output = args.output or RESULTS_DIR / exp["name"]
+    results = run_experiment(exp, output_root=Path(output), mock_strategy=args.mock)
+    print(f"Saved {len(results)} AI races to {output}")
+
+
+if __name__ == "__main__":
+    main()

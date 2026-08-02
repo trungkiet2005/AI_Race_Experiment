@@ -1,0 +1,399 @@
+{
+  "schema_version": "ai-race-context-fixed-state-run-v1",
+  "status": "completed",
+  "evidence_class": "diagnostic_comprehension_failed",
+  "started_utc": "2026-08-01T08:55:31.981811+00:00",
+  "completed_utc": "2026-08-01T08:57:26.224652+00:00",
+  "lane": "b",
+  "profile": "pilot",
+  "skins": [
+    "abstract_contest",
+    "crystal_guild_contract",
+    "colony_life_support",
+    "fictional_cartography"
+  ],
+  "protocols": {
+    "replay": "ai-race-context-fixed-state-replay-v1",
+    "comprehension": "ai-race-context-comprehension-gate-v1",
+    "context_skin": "ai-race-context-skin-v1",
+    "action_codes": "opaque-pq-balanced-v1"
+  },
+  "source_sha256": "9087f11a6b4db7cd80bd06f5cd7d03d72a89232863a4be57cb0d70ecf7a13447",
+  "experiment_config_sha256": "1961aadfb3f0c6c76f19eb88b068a279265434228f6e61cce1b2e08d5bc0d1d4",
+  "game_config_sha256": {
+    "ai_race_risk_10": "c7cc0f83c60bffcce61dcf6d1abe90bc25961083a193c1bbf454dad8526f330b",
+    "ai_race_risk_60": "35a6f0af03199af3099e25ddd3ba90938c1f3f05fd6051bb1104d9c342bc93bb",
+    "ai_race_risk_90": "a676137698ef58c80163fe3a68a950ba75226df895baa949ddebc292b719f286"
+  },
+  "template_sha256": {
+    "abstract_contest/safe_p": "e521655c13eba0b189faa5991ca848c6d7c95129d11d51fe9eb4bff44d293848",
+    "abstract_contest/safe_q": "89d839fc56b7194224f7bf2e7888df5ddd79618c91a31f45bf09dfc25d293f67",
+    "crystal_guild_contract/safe_p": "8df2dc00577c0583e83c511dd80f8ba6d1674516a06d732f40ea0bb8543b2213",
+    "crystal_guild_contract/safe_q": "6eb88b672533851514d01d610cdd39b26edf0cb9da182dd792b80484ea04dec8",
+    "colony_life_support/safe_p": "697cff5cb64d19d4d737231865dfcef5d1b916b8b1a7f59a7dd5c4679b1c6fa6",
+    "colony_life_support/safe_q": "ec47327d21da496f79f8ccd0e1a93a12c588a6e857faa7ba6a0e048ce90e2b82",
+    "fictional_cartography/safe_p": "110fe9485ff505413038db2acecb7edd94255ae2f825c21775930e8621e31957",
+    "fictional_cartography/safe_q": "5df9024c7c5db13e88ca32870b2a9b3fd79fcb21e196645c34f3996b53233224"
+  },
+  "model": {
+    "name": "qwen2.5:7b-instruct-fp16",
+    "digest": "59805ce4a4046be2d8f63231a78daacd2e66f5dccf1a64d0d138ebeeb26ff16c",
+    "size": 15237866977,
+    "details": {
+      "parent_model": "/Users/ollama/.ollama/models/blobs/sha256-678e1e0883636c4234928f23fd208337f790456121124a1986cbf1b806baeadb",
+      "format": "gguf",
+      "family": "qwen2",
+      "families": [
+        "qwen2"
+      ],
+      "parameter_size": "7.6B",
+      "quantization_level": "F16",
+      "context_length": 32768,
+      "embedding_length": 3584
+    },
+    "engine": "ollama"
+  },
+  "hardware": {
+    "hostname": "nb-b43b17b4-d969-4c10-a95c-929ed8b71e8a-57bfddc5d7-5h9rt",
+    "gpu_name": "NVIDIA H100 80GB HBM3",
+    "ollama_version": "0.30.8",
+    "python": "3.10.12"
+  },
+  "decoding": {
+    "comprehension_temperature": 0.0,
+    "replay_temperature": 0.0,
+    "max_tokens": 16,
+    "workers": 16,
+    "batch_size": 128,
+    "max_parse_retries": 2,
+    "seed_requested": true
+  },
+  "state_bank": {
+    "generator": "real AIRaceGame with deterministic scripted actions",
+    "selection": "deterministic round-stratified selection",
+    "states_per_risk": 32,
+    "n_states": 96,
+    "base_seed": 260726,
+    "artifact": {
+      "path": "reachable_states.jsonl",
+      "bytes": 202402,
+      "sha256": "bdc02b6e95d4622e20f5bbce4686319a35ef14557c3ce68cb15f9c1bf85ec4dc"
+    }
+  },
+  "expected_comprehension_rows": 128,
+  "expected_replay_rows": 768,
+  "admission": {
+    "passed": false,
+    "rule": "every skin/action-mapping cell must pass the frozen thresholds",
+    "overall": {
+      "passed": false,
+      "n": 128,
+      "semantic_accuracy": 0.578125,
+      "strict_valid_rate": 0.359375,
+      "minimum_overall_semantic_accuracy": 0.9,
+      "minimum_domain_semantic_accuracy": 0.75,
+      "by_domain": {
+        "rule_recall": {
+          "n": 32,
+          "semantic_accuracy": 1.0,
+          "strict_valid_rate": 0.0
+        },
+        "stage_payoff": {
+          "n": 32,
+          "semantic_accuracy": 1.0,
+          "strict_valid_rate": 0.3125
+        },
+        "state_update": {
+          "n": 32,
+          "semantic_accuracy": 0.125,
+          "strict_valid_rate": 0.125
+        },
+        "terminal_scoring": {
+          "n": 32,
+          "semantic_accuracy": 0.1875,
+          "strict_valid_rate": 1.0
+        }
+      }
+    },
+    "by_cell": {
+      "abstract_contest/safe_p": {
+        "passed": false,
+        "n": 16,
+        "semantic_accuracy": 0.5,
+        "strict_valid_rate": 0.5625,
+        "minimum_overall_semantic_accuracy": 0.9,
+        "minimum_domain_semantic_accuracy": 0.75,
+        "by_domain": {
+          "rule_recall": {
+            "n": 4,
+            "semantic_accuracy": 1.0,
+            "strict_valid_rate": 0.0
+          },
+          "stage_payoff": {
+            "n": 4,
+            "semantic_accuracy": 1.0,
+            "strict_valid_rate": 0.5
+          },
+          "state_update": {
+            "n": 4,
+            "semantic_accuracy": 0.0,
+            "strict_valid_rate": 0.75
+          },
+          "terminal_scoring": {
+            "n": 4,
+            "semantic_accuracy": 0.0,
+            "strict_valid_rate": 1.0
+          }
+        }
+      },
+      "abstract_contest/safe_q": {
+        "passed": false,
+        "n": 16,
+        "semantic_accuracy": 0.5625,
+        "strict_valid_rate": 0.375,
+        "minimum_overall_semantic_accuracy": 0.9,
+        "minimum_domain_semantic_accuracy": 0.75,
+        "by_domain": {
+          "rule_recall": {
+            "n": 4,
+            "semantic_accuracy": 1.0,
+            "strict_valid_rate": 0.0
+          },
+          "stage_payoff": {
+            "n": 4,
+            "semantic_accuracy": 1.0,
+            "strict_valid_rate": 0.25
+          },
+          "state_update": {
+            "n": 4,
+            "semantic_accuracy": 0.25,
+            "strict_valid_rate": 0.25
+          },
+          "terminal_scoring": {
+            "n": 4,
+            "semantic_accuracy": 0.0,
+            "strict_valid_rate": 1.0
+          }
+        }
+      },
+      "colony_life_support/safe_p": {
+        "passed": false,
+        "n": 16,
+        "semantic_accuracy": 0.5625,
+        "strict_valid_rate": 0.3125,
+        "minimum_overall_semantic_accuracy": 0.9,
+        "minimum_domain_semantic_accuracy": 0.75,
+        "by_domain": {
+          "rule_recall": {
+            "n": 4,
+            "semantic_accuracy": 1.0,
+            "strict_valid_rate": 0.0
+          },
+          "stage_payoff": {
+            "n": 4,
+            "semantic_accuracy": 1.0,
+            "strict_valid_rate": 0.25
+          },
+          "state_update": {
+            "n": 4,
+            "semantic_accuracy": 0.0,
+            "strict_valid_rate": 0.0
+          },
+          "terminal_scoring": {
+            "n": 4,
+            "semantic_accuracy": 0.25,
+            "strict_valid_rate": 1.0
+          }
+        }
+      },
+      "colony_life_support/safe_q": {
+        "passed": false,
+        "n": 16,
+        "semantic_accuracy": 0.625,
+        "strict_valid_rate": 0.3125,
+        "minimum_overall_semantic_accuracy": 0.9,
+        "minimum_domain_semantic_accuracy": 0.75,
+        "by_domain": {
+          "rule_recall": {
+            "n": 4,
+            "semantic_accuracy": 1.0,
+            "strict_valid_rate": 0.0
+          },
+          "stage_payoff": {
+            "n": 4,
+            "semantic_accuracy": 1.0,
+            "strict_valid_rate": 0.25
+          },
+          "state_update": {
+            "n": 4,
+            "semantic_accuracy": 0.25,
+            "strict_valid_rate": 0.0
+          },
+          "terminal_scoring": {
+            "n": 4,
+            "semantic_accuracy": 0.25,
+            "strict_valid_rate": 1.0
+          }
+        }
+      },
+      "crystal_guild_contract/safe_p": {
+        "passed": false,
+        "n": 16,
+        "semantic_accuracy": 0.625,
+        "strict_valid_rate": 0.375,
+        "minimum_overall_semantic_accuracy": 0.9,
+        "minimum_domain_semantic_accuracy": 0.75,
+        "by_domain": {
+          "rule_recall": {
+            "n": 4,
+            "semantic_accuracy": 1.0,
+            "strict_valid_rate": 0.0
+          },
+          "stage_payoff": {
+            "n": 4,
+            "semantic_accuracy": 1.0,
+            "strict_valid_rate": 0.5
+          },
+          "state_update": {
+            "n": 4,
+            "semantic_accuracy": 0.25,
+            "strict_valid_rate": 0.0
+          },
+          "terminal_scoring": {
+            "n": 4,
+            "semantic_accuracy": 0.25,
+            "strict_valid_rate": 1.0
+          }
+        }
+      },
+      "crystal_guild_contract/safe_q": {
+        "passed": false,
+        "n": 16,
+        "semantic_accuracy": 0.625,
+        "strict_valid_rate": 0.3125,
+        "minimum_overall_semantic_accuracy": 0.9,
+        "minimum_domain_semantic_accuracy": 0.75,
+        "by_domain": {
+          "rule_recall": {
+            "n": 4,
+            "semantic_accuracy": 1.0,
+            "strict_valid_rate": 0.0
+          },
+          "stage_payoff": {
+            "n": 4,
+            "semantic_accuracy": 1.0,
+            "strict_valid_rate": 0.25
+          },
+          "state_update": {
+            "n": 4,
+            "semantic_accuracy": 0.25,
+            "strict_valid_rate": 0.0
+          },
+          "terminal_scoring": {
+            "n": 4,
+            "semantic_accuracy": 0.25,
+            "strict_valid_rate": 1.0
+          }
+        }
+      },
+      "fictional_cartography/safe_p": {
+        "passed": false,
+        "n": 16,
+        "semantic_accuracy": 0.5625,
+        "strict_valid_rate": 0.3125,
+        "minimum_overall_semantic_accuracy": 0.9,
+        "minimum_domain_semantic_accuracy": 0.75,
+        "by_domain": {
+          "rule_recall": {
+            "n": 4,
+            "semantic_accuracy": 1.0,
+            "strict_valid_rate": 0.0
+          },
+          "stage_payoff": {
+            "n": 4,
+            "semantic_accuracy": 1.0,
+            "strict_valid_rate": 0.25
+          },
+          "state_update": {
+            "n": 4,
+            "semantic_accuracy": 0.0,
+            "strict_valid_rate": 0.0
+          },
+          "terminal_scoring": {
+            "n": 4,
+            "semantic_accuracy": 0.25,
+            "strict_valid_rate": 1.0
+          }
+        }
+      },
+      "fictional_cartography/safe_q": {
+        "passed": false,
+        "n": 16,
+        "semantic_accuracy": 0.5625,
+        "strict_valid_rate": 0.3125,
+        "minimum_overall_semantic_accuracy": 0.9,
+        "minimum_domain_semantic_accuracy": 0.75,
+        "by_domain": {
+          "rule_recall": {
+            "n": 4,
+            "semantic_accuracy": 1.0,
+            "strict_valid_rate": 0.0
+          },
+          "stage_payoff": {
+            "n": 4,
+            "semantic_accuracy": 1.0,
+            "strict_valid_rate": 0.25
+          },
+          "state_update": {
+            "n": 4,
+            "semantic_accuracy": 0.0,
+            "strict_valid_rate": 0.0
+          },
+          "terminal_scoring": {
+            "n": 4,
+            "semantic_accuracy": 0.25,
+            "strict_valid_rate": 1.0
+          }
+        }
+      }
+    }
+  },
+  "coverage": {
+    "passed": true,
+    "n_states": 96,
+    "expected_cells_per_state": 8,
+    "n_rows": 768,
+    "expected_rows": 768,
+    "incomplete_state_ids": [],
+    "duplicate_state_ids": [],
+    "parse_failure_rows": 0
+  },
+  "artifacts": {
+    "comprehension_raw": {
+      "path": "comprehension_raw.jsonl",
+      "bytes": 364479,
+      "sha256": "a93a103e731f35ff8fd193c9ffd177c8800e337b099a14a8b5418733e8e8d641"
+    },
+    "comprehension_admission": {
+      "path": "comprehension_admission.json",
+      "bytes": 7108,
+      "sha256": "3f6a64f10350783b261db6191ea10d849c751b32d37bc29c7460be20d0d9f3a5"
+    },
+    "replay_raw": {
+      "path": "replay_raw.jsonl",
+      "bytes": 2602190,
+      "sha256": "007447ec74583fd8402b50f1d1fbe11f852168b59077ab5b848764fb128561ae"
+    },
+    "paired_estimand_input": {
+      "path": "paired_estimand_input.csv",
+      "bytes": 196083,
+      "sha256": "696e7fd7a3e5a53485b6c6b2ddf317539a55c4df109bca83aa753dcf506815f4"
+    },
+    "paired_coverage": {
+      "path": "paired_coverage.json",
+      "bytes": 198,
+      "sha256": "f7ef32c0f8ff318343c35df3f1dc2ba090e1e30895d5db9fa9a6996a65b1bf57"
+    }
+  },
+  "error": null
+}

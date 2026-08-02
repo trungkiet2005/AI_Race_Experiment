@@ -4,7 +4,7 @@ from __future__ import annotations
 from collections.abc import Callable, Sequence
 from typing import Any
 
-from ai_race.engine.round import parse_action, response_text
+from ai_race.engine.round import parse_action, raw_response_text
 
 
 def _attempt_record(
@@ -19,7 +19,7 @@ def _attempt_record(
         "attempt": int(attempt),
         "sampling_seed": int(sampling_seed) if sampling_seed_applied else None,
         "sampling_seed_applied": bool(sampling_seed_applied),
-        "raw_response": response_text(response),
+        "raw_response": raw_response_text(response),
         "parse_failed": bool(parse_failed),
         "parsed_action": None if parse_failed else action.value,
     }

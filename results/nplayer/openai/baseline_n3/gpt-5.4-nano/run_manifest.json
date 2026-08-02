@@ -1,0 +1,49 @@
+{
+  "schema_version": "ai-race-nplayer-results-v1",
+  "created_utc": "2026-08-01T07:44:34.311871+00:00",
+  "experiment": {
+    "name": "openai_baseline_nplayer_n3",
+    "runPhase": "pilot",
+    "description": "N-player baseline, 3 companies, via direct OpenAI API (backend='openai'). Neutral races across risk treatments 0.1/0.6/0.9. Uses ai_race/engine_nplayer, not the two-player engine.",
+    "games": [
+      "ai_race_nplayer_n3_risk_10",
+      "ai_race_nplayer_n3_risk_60",
+      "ai_race_nplayer_n3_risk_90"
+    ],
+    "agents": "companies_nplayer_default_n3",
+    "languages": [
+      "en"
+    ],
+    "models": [
+      "gpt-5.4-nano",
+      "gpt-5-nano"
+    ],
+    "useOffline": false,
+    "backend": "openai",
+    "samplingSeedApplied": false,
+    "proxyOptions": {
+      "temperature": 0.7,
+      "max_tokens": 256,
+      "timeout": 120,
+      "max_transport_retries": 6,
+      "concurrency": 4
+    },
+    "repetitions": 10,
+    "seed": 260726,
+    "maxParseRetries": 3,
+    "verbose": true
+  },
+  "model": "gpt-5.4-nano",
+  "run_phase": "pilot",
+  "agents_name": "companies_nplayer_default_n3",
+  "persona_condition": "none",
+  "persona_roles": [
+    "",
+    "",
+    ""
+  ],
+  "persona_sha256": "35bfa60ff1593ddae018f8abeea445a1c6768736ba5bd7bf84630954182b85c8",
+  "status": "completed",
+  "n_races": 30,
+  "n_turns": 765
+}

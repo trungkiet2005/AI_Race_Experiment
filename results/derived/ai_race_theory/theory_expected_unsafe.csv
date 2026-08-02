@@ -1,0 +1,7 @@
+max_private_risk,parameter_point,beta,mutation_regime,nominal_mu,population_size,expected_unsafe_frequency
+0.1,reference,2.0,small_mutation_limit,0.02,100,0.9999999999999993
+0.1,best_fit,0.01,small_mutation_limit,0.05,100,0.9999999999997917
+0.6,reference,2.0,small_mutation_limit,0.02,100,0.9999999999999992
+0.6,best_fit,0.01,small_mutation_limit,0.05,100,0.9306236497959823
+0.9,reference,2.0,small_mutation_limit,0.02,100,0.009708735903001047
+0.9,best_fit,0.01,small_mutation_limit,0.05,100,0.06392921881137294

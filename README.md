@@ -5,8 +5,8 @@ AI-development race. Two model-controlled companies repeatedly choose between
 **Safe** and **Unsafe** development. Unsafe development is faster and pays more in
 the current round, but it accumulates a private setback risk for a race winner.
 
-The environment is adapted from Fernández Domingos and Han (2026), *Falling Behind
-Drives Unsafe Development in an Idealised AI Race Experiment* (arXiv:2607.26034).
+The environment is adapted from Fernández Domingos and Han (2026), _Falling Behind
+Drives Unsafe Development in an Idealised AI Race Experiment_ (arXiv:2607.26034).
 The source study used human participants; this project is an LLM adaptation and does
 not present its future model outputs as a replication of human cognition.
 
@@ -17,9 +17,9 @@ not present its future model outputs as a replication of human cognition.
 - Stage payoff matrix (row = own action, column = opponent action):
 
   | own \ opponent | Safe | Unsafe |
-  |---|---:|---:|
-  | Safe | 1.0 | 0.6 |
-  | Unsafe | 2.4 | 2.0 |
+  | -------------- | ---: | -----: |
+  | Safe           |  1.0 |    0.6 |
+  | Unsafe         |  2.4 |    2.0 |
 
 - The race lasts at least five rounds. After every completed round from round 5
   onward, it stops with probability `0.2`, so the expected duration is 9 rounds.
@@ -42,10 +42,12 @@ kaggle/
   benchmarks/            Kaggle Benchmark task for frontier/API models
   setup/                 Offline-wheel preparation notes and script
 references/papers/
-  markdown/              AI-readable summary of the one retained reference paper
-  pdf/                   The single retained AI Race source PDF
+  markdown/              AI-readable research notes
+  pdf/                   Retained reference-paper PDFs
+  sources/               Publisher/arXiv source bundles
+scripts/                 Operational experiment runners
 strategy_analysis/       AS/AU/CS/CAS trajectory classification
-results/                 Analysis scripts and admitted pilot tables/hashes
+results/                 Single canonical home for raw runs, analyses, reports, QA, and publication PDFs
 paper/                   Manuscript with bounded pilot audit evidence
 slides/                  AI Race presentation outline
 ```
@@ -159,7 +161,7 @@ ledger.
 
 The canonical presentation source is
 [`slides/ai_race_research_deck.tex`](slides/ai_race_research_deck.tex). The compiled
-21-slide PDF is written to `output/pdf/ai_race_research_deck.pdf`; see
+26-frame PDF is written to `results/artifacts/publication/ai_race_research_deck.pdf`; see
 [`slides/README.md`](slides/README.md) for build commands. A browser-based companion
 deck is also available at `http://localhost:8000/slides/`.
 The versioned multi-prompt robustness protocol, evidence survey, treatment
