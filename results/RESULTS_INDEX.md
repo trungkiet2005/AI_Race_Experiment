@@ -4,9 +4,9 @@
 
 ## At a glance
 
-- Canonical files (excluding reproducible `_build/`): **1,529**
-- Total canonical size: **551.69 MiB**
-- Parsed manifest records: **197**
+- Canonical files (excluding reproducible `_build/`): **1,542**
+- Total canonical size: **553.93 MiB**
+- Parsed manifest records: **199**
 - Invalid manifest JSON files: **0**
 - Exact duplicate hash groups: **50** (archives may intentionally retain immutable copies)
 
@@ -193,7 +193,7 @@ Every rendered chart, publication PDF, and interactive HTML surface in the canon
 | Evidence class | Manifest records |
 |---|---:|
 | `diagnostic` | 11 |
-| `failed-or-incomplete` | 2 |
+| `failed-or-incomplete` | 4 |
 | `pilot` | 170 |
 | `unclassified` | 14 |
 
@@ -326,6 +326,8 @@ Every rendered chart, publication PDF, and interactive HTML surface in the canon
 | `results/frontier/persona/S_CA_coop_adv/google-gemini-3-flash-preview/run_manifest.json` | completed | pilot | google/gemini-3-flash-preview | 9 | 126 |
 | `results/frontier/persona/S_CC_coop_coop/google-gemini-3-flash-preview/run_manifest.json` | completed | pilot | google/gemini-3-flash-preview | 30 | 558 |
 | `results/impact_upgrade/analysis_manifest.json` | complete | diagnostic |  |  |  |
+| `results/kaggle-benchmarks/_n3-smoke/claude-haiku-4-5-20251001/run_manifest.json` | failed | failed-or-incomplete | anthropic-claude-haiku-4-5-20251001 | 0 | 0 |
+| `results/kaggle-benchmarks/_task-creation/ai-race-nplayer-baseline-n3-v1/results/ai_race_nplayer_baseline_n3/google-gemini-3-flash-preview/run_manifest.json` | failed | failed-or-incomplete | google-gemini-3-flash-preview | 0 | 540 |
 | `results/kaggle-benchmarks/ai-race-baseline/4/claude-haiku-4-5-20251001/357889/results/ai_race_baseline/run_manifest.json` | protocol_failed | failed-or-incomplete | anthropic-claude-haiku-4-5-20251001 | 9 | 126 |
 | `results/kaggle-benchmarks/ai-race-baseline/7/claude-haiku-4-5-20251001/357935/results/ai_race_baseline/run_manifest.json` | completed | pilot | anthropic-claude-haiku-4-5-20251001 | 9 | 126 |
 | `results/nplayer/nplayer-riskaware/qwen2.5-14b-instruct/persona_nplayer_baseline_risk_1_n3/run_manifest.json` | completed | pilot | qwen2.5-14b-instruct | 6 | 99 |

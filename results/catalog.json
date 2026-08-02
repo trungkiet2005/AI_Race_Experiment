@@ -1,9 +1,9 @@
 {
   "schema_version": "ai-race.results-catalog.v1",
-  "generated_utc": "2026-08-02T00:35:20.162939+00:00",
+  "generated_utc": "2026-08-02T00:36:19.363593+00:00",
   "canonical_root": "results/",
-  "file_count": 1529,
-  "total_bytes": 578486623,
+  "file_count": 1542,
+  "total_bytes": 580840056,
   "size_by_top_level": {
     "README.md": {
       "files": 1,
@@ -26,8 +26,8 @@
       "bytes": 2182549
     },
     "kaggle-benchmarks": {
-      "files": 15,
-      "bytes": 2065357
+      "files": 28,
+      "bytes": 4418790
     },
     "notebooks": {
       "files": 1,
@@ -50,7 +50,7 @@
       "bytes": 22961
     }
   },
-  "manifest_count": 197,
+  "manifest_count": 199,
   "manifest_errors": [],
   "duplicate_groups": [
     {
@@ -417,13 +417,13 @@
       "path": "artifacts/publication/ai_race_paper.pdf",
       "top_level": "artifacts",
       "bytes": 475255,
-      "sha256": "9023cad9717d7a1677124a78bf9ef2cb44176a916203e06206017955de0a6f23"
+      "sha256": "7adf0528bddd5a1be80959b5ccd8d2681a8043b697c9a1f7974c3cffd5dece6f"
     },
     {
       "path": "artifacts/publication/ai_race_research_deck.pdf",
       "top_level": "artifacts",
       "bytes": 618614,
-      "sha256": "384d4ae67b42ad3389e263414227988d41bea34e4f2c0e3c1d5bafa5ee5a84fe"
+      "sha256": "8e6af995eec8fdd3793ad433c3182b77e9b8cfce5a661f90500e3f610aea48ee"
     },
     {
       "path": "artifacts/qa/latex/deck_final_p1.png",
@@ -5374,6 +5374,84 @@
       "top_level": "impact_upgrade",
       "bytes": 22000,
       "sha256": "46f486135ad31a073a0df3707542811cfc1c4f4f5486d5bc28e600b42218db7e"
+    },
+    {
+      "path": "kaggle-benchmarks/_dataset-audit/dataset-metadata.json",
+      "top_level": "kaggle-benchmarks",
+      "bytes": 377,
+      "sha256": "5eb33bbb93156128ccaade95753e21d17c6ce0b3130fd67553632d6bcf6de730"
+    },
+    {
+      "path": "kaggle-benchmarks/_dataset-audit/files/ai_race__engine__game.py/game.py",
+      "top_level": "kaggle-benchmarks",
+      "bytes": 13823,
+      "sha256": "bf9239d51f8555fd1f8c1c4c5e8e57c1a379ce10b623dfe553b70231fc6c14e5"
+    },
+    {
+      "path": "kaggle-benchmarks/_dataset-audit/files/ai_race__engine__round.py/round.py",
+      "top_level": "kaggle-benchmarks",
+      "bytes": 2948,
+      "sha256": "a664a0bd818327927c0054e169bc6d0dce9a1a90bf65b38ad544b080dcf930d5"
+    },
+    {
+      "path": "kaggle-benchmarks/_dataset-audit/files/ai_race__engine_nplayer__game.py/game.py",
+      "top_level": "kaggle-benchmarks",
+      "bytes": 15224,
+      "sha256": "932880cfbdfee74eb60bffd2313cc4e7073bf3c069a00f088b019cd846917bdf"
+    },
+    {
+      "path": "kaggle-benchmarks/_dataset-audit/files/ai_race__engine_nplayer__scoring.py/scoring.py",
+      "top_level": "kaggle-benchmarks",
+      "bytes": 6675,
+      "sha256": "87d72caa4da5c0654cf1bca2d2fb2397972239358568dd96674147e586c47acb"
+    },
+    {
+      "path": "kaggle-benchmarks/_dataset-audit/files/ai_race__engine_nplayer__state.py/state.py",
+      "top_level": "kaggle-benchmarks",
+      "bytes": 12051,
+      "sha256": "8cddb967456ba74f5ded2fe09eb36773aaf0a9b0d3332cb990759873dde04eac"
+    },
+    {
+      "path": "kaggle-benchmarks/_dataset-audit/runner.py",
+      "top_level": "kaggle-benchmarks",
+      "bytes": 17044,
+      "sha256": "3b9f554df0d937d39dbcc62160ad8251654a526fa28537dd877b4279189741ff"
+    },
+    {
+      "path": "kaggle-benchmarks/_n3-smoke/claude-haiku-4-5-20251001/run_manifest.json",
+      "top_level": "kaggle-benchmarks",
+      "bytes": 3286,
+      "sha256": "1e1679b721779a9985000808f68777f66b8cc57f2db63defba1740499001794e"
+    },
+    {
+      "path": "kaggle-benchmarks/_task-creation/ai-race-nplayer-baseline-n3-v1/ai-race-nplayer-baseline-n3-run_id_Run_1_google_gemini-3-flash-preview.run.json",
+      "top_level": "kaggle-benchmarks",
+      "bytes": 9116,
+      "sha256": "c04bae57c961a216d3643abc92bbfac853e5849bc491fd2d185aa4bb55744922"
+    },
+    {
+      "path": "kaggle-benchmarks/_task-creation/ai-race-nplayer-baseline-n3-v1/ai-race-nplayer-baseline-n3.task.json",
+      "top_level": "kaggle-benchmarks",
+      "bytes": 5404,
+      "sha256": "953dd27ea6b2ca1d18cb874a459f9c1413c31a8e296bb4e2ca2a73683e70da75"
+    },
+    {
+      "path": "kaggle-benchmarks/_task-creation/ai-race-nplayer-baseline-n3-v1/new-benchmark-task-7dbe2.log",
+      "top_level": "kaggle-benchmarks",
+      "bytes": 1666,
+      "sha256": "5870fb9d7f2518d354a8d50201189ddb8b3aef0070c8a87c3ab7da050b25efad"
+    },
+    {
+      "path": "kaggle-benchmarks/_task-creation/ai-race-nplayer-baseline-n3-v1/results/ai_race_nplayer_baseline_n3/google-gemini-3-flash-preview/run_manifest.json",
+      "top_level": "kaggle-benchmarks",
+      "bytes": 3309,
+      "sha256": "46e49c94d5b9a7757bdb92e25eb67c442e38da14b1d09f84106ddcd10e009d96"
+    },
+    {
+      "path": "kaggle-benchmarks/_task-creation/ai-race-nplayer-baseline-n3-v1/results/ai_race_nplayer_baseline_n3/google-gemini-3-flash-preview/turns.jsonl",
+      "top_level": "kaggle-benchmarks",
+      "bytes": 2262510,
+      "sha256": "67daabc4791462adaa9690b6914a72872ce2eb354fa17fd1f719922e95f7e2cc"
     },
     {
       "path": "kaggle-benchmarks/ai-race-baseline/4/claude-haiku-4-5-20251001/357889/ai-race-baseline-run_id_Run_1_anthropic_claude-haiku-4-520251001.run.json",

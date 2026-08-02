@@ -1,6 +1,6 @@
 {
   "schema_version": "ai-race.impact-release.v1",
-  "git_base_revision": "4c5dbe9e855ced7d959d4c69f04564700d7fbfa4",
+  "git_base_revision": "b07ae73814d4215ba18777b11653c57912f68317",
   "working_tree_dirty": true,
   "file_count": 69,
   "files": {
@@ -90,19 +90,19 @@
     },
     "results/artifacts/publication/ai_race_paper.pdf": {
       "bytes": 475255,
-      "sha256": "9023cad9717d7a1677124a78bf9ef2cb44176a916203e06206017955de0a6f23"
+      "sha256": "7adf0528bddd5a1be80959b5ccd8d2681a8043b697c9a1f7974c3cffd5dece6f"
     },
     "results/artifacts/publication/ai_race_research_deck.pdf": {
       "bytes": 618614,
-      "sha256": "384d4ae67b42ad3389e263414227988d41bea34e4f2c0e3c1d5bafa5ee5a84fe"
+      "sha256": "8e6af995eec8fdd3793ad433c3182b77e9b8cfce5a661f90500e3f610aea48ee"
     },
     "results/catalog.csv": {
-      "bytes": 46858,
-      "sha256": "ba3fb450c0a3932740603e8f7f4a46a707b5f3200f8651f58b30cc270887f7aa"
+      "bytes": 47507,
+      "sha256": "002da4a4071fa47ddf080087de06c9adcdd8ee0f12dd8853de295fa553781786"
     },
     "results/catalog.json": {
-      "bytes": 388154,
-      "sha256": "1d02c938587cb873c65ae47cfd1c6efa1e86df38bbef52be1825d989180bf45b"
+      "bytes": 391615,
+      "sha256": "1bd9971267a199953f326c3ad0934aca4a2d05179e84040b896e258a3d833a07"
     },
     "results/derived/payoff_scale_contract/README.md": {
       "bytes": 428,
@@ -246,11 +246,11 @@
     },
     "results/migration_manifest.json": {
       "bytes": 10093,
-      "sha256": "6593f23aee5d1a7acfdc4fd7382fb8974a4c94a0c3de128e1bce0badfc104bb3"
+      "sha256": "484ab76d8e4a1399899b9de585ba3c1cbe3f1558c3be53398bd3133ce3e8b4a7"
     },
     "results/RESULTS_INDEX.md": {
-      "bytes": 54008,
-      "sha256": "8a370320ba06ef644f4cbe6e58c182f9ee28c661bfa6f89fc0af20c65a1597d7"
+      "bytes": 54408,
+      "sha256": "056ce856c4c9ffdb1a0d4645ce7981dfdbd6738f377960d3cb4cf7008df2506c"
     },
     "results/scripts/analyze_payoff_scale_behavior.py": {
       "bytes": 15558,
