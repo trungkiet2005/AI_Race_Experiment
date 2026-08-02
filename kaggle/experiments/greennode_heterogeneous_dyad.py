@@ -294,6 +294,7 @@ class HeterogeneousJournal:
                 orientation=meta["orientation"],
                 self_identity_condition=meta["self_identity_condition"],
                 opponent_identity_condition=meta["opponent_identity_condition"],
+                persona_condition=meta["persona_condition"],
                 admission_passed=bool(
                     self.admission_by_model[model_key].get("passed", False)
                 ),

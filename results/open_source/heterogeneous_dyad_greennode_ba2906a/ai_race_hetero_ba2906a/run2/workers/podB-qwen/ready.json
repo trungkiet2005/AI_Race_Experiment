@@ -1,0 +1,73 @@
+{
+  "decoding": {
+    "batch_size": 4,
+    "do_sample": false,
+    "max_new_tokens": 16,
+    "sampling_seed_applied": false,
+    "temperature": 0.0
+  },
+  "hardware": {
+    "checks": {
+      "bf16_supported": true,
+      "compute_capability": true,
+      "cuda_available": true,
+      "free_vram": true,
+      "single_gpu": true
+    },
+    "hostname": "nb-17c64ac4-3f70-43b9-8d6f-579c209b038d-5d7d76f986-nc55c",
+    "model_key": "qwen25_7b",
+    "model_short_name": "qwen2.5-7b-instruct",
+    "observed": {
+      "bf16_supported": true,
+      "compute_capability": [
+        9,
+        0
+      ],
+      "cuda_available": true,
+      "free_vram_gib": 39.08917236328125,
+      "gpu_count": 1,
+      "gpu_name": "NVIDIA H100 80GB HBM3 MIG 4g.40gb",
+      "total_vram_gib": 39.375
+    },
+    "passed": true,
+    "python": "3.10.12",
+    "required": {
+      "bf16": true,
+      "gpu_count": 1,
+      "min_compute_capability": [
+        8,
+        0
+      ],
+      "min_free_vram_gib": 18.0
+    },
+    "torch": "2.4.0a0+07cecf4168.nv24.05"
+  },
+  "hostname": "nb-17c64ac4-3f70-43b9-8d6f-579c209b038d-5d7d76f986-nc55c",
+  "model": {
+    "family": "Qwen2.5",
+    "repo_id": "Qwen/Qwen2.5-7B-Instruct",
+    "revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+    "short_name": "qwen2.5-7b-instruct"
+  },
+  "model_key": "qwen25_7b",
+  "protocol": "ai-race-heterogeneous-dyad-v1",
+  "runtime_layout": {
+    "hf_device_map": {
+      "": "0"
+    },
+    "parameter_devices": [
+      "cuda:0"
+    ],
+    "parameter_dtypes": [
+      "torch.bfloat16"
+    ]
+  },
+  "started_utc": "2026-08-02T05:26:03.609738+00:00",
+  "status": "ready",
+  "tokenizer": {
+    "chat_template_sha256": "cd8e9439f0570856fd70470bf8889ebd8b5d1107207f67a5efb46e342330527f",
+    "class": "Qwen2TokenizerFast",
+    "vocab_size": 151665
+  },
+  "worker_id": "podB-qwen"
+}
