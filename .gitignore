@@ -140,3 +140,6 @@ Thumbs.db
 # and its run_manifest.json files embed a live GCP API key. Kept local only; the key
 # must be rotated before any of this is ever published.
 /results/frontier/gemini/
+# Keep Python bytecode ignored even inside selectively unignored results trees.
+**/__pycache__/
+**/*.py[cod]
