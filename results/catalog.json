@@ -1,9 +1,9 @@
 {
   "schema_version": "ai-race.results-catalog.v1",
-  "generated_utc": "2026-08-02T02:46:45.453584+00:00",
+  "generated_utc": "2026-08-02T02:48:39.925881+00:00",
   "canonical_root": "results/",
-  "file_count": 1554,
-  "total_bytes": 581092035,
+  "file_count": 1989,
+  "total_bytes": 804178581,
   "size_by_top_level": {
     "README.md": {
       "files": 1,
@@ -13,48 +13,52 @@
       "files": 34,
       "bytes": 3408077
     },
+    "cross_provider": {
+      "files": 35,
+      "bytes": 14445611
+    },
     "derived": {
-      "files": 101,
-      "bytes": 8168823
+      "files": 172,
+      "bytes": 14808022
     },
     "failed_runs": {
       "files": 5,
-      "bytes": 5331
+      "bytes": 5301
     },
     "frontier": {
-      "files": 660,
-      "bytes": 257245987
+      "files": 811,
+      "bytes": 330968231
     },
     "impact_upgrade": {
       "files": 38,
-      "bytes": 2421083
+      "bytes": 2414300
     },
     "kaggle-benchmarks": {
-      "files": 28,
-      "bytes": 4418790
+      "files": 35,
+      "bytes": 4440484
     },
     "notebooks": {
       "files": 1,
       "bytes": 844990
     },
     "nplayer": {
-      "files": 37,
-      "bytes": 9918581
+      "files": 207,
+      "bytes": 138084876
     },
     "open_source": {
       "files": 615,
-      "bytes": 293818542
+      "bytes": 293817728
     },
     "scripts": {
-      "files": 33,
-      "bytes": 790417
+      "files": 34,
+      "bytes": 889547
     },
     "visualization_insight_full.md": {
       "files": 1,
       "bytes": 22961
     }
   },
-  "manifest_count": 199,
+  "manifest_count": 250,
   "manifest_errors": [],
   "duplicate_groups": [
     {
@@ -69,6 +73,13 @@
       "paths": [
         "frontier/.gitkeep",
         "open_source/.gitkeep"
+      ]
+    },
+    {
+      "sha256": "07c5a54e71103a3e94fe52cb847bbdb85aeb499e3c3c3aa6c2e71f8c338aaae9",
+      "paths": [
+        "frontier/persona/R5_R4_risk_matrix/all_results.csv",
+        "frontier/persona/R5_R4_risk_matrix/google-gemini-3-flash-preview/all_results.csv"
       ]
     },
     {
@@ -135,6 +146,13 @@
       ]
     },
     {
+      "sha256": "23cd10669a0c5b6fd4d0f635e6f3aef6f99ec1cf0ae21fa6132c8f6cdc457ce0",
+      "paths": [
+        "frontier/persona/R5_R2_risk_matrix/all_results.csv",
+        "frontier/persona/R5_R2_risk_matrix/google-gemini-3-flash-preview/all_results.csv"
+      ]
+    },
+    {
       "sha256": "25288d47c65e1a319a849999b8f6db705cddc939494c40c37ce6f9742a87ae32",
       "paths": [
         "open_source/activation_sae/causal_selfplay/fast-sae-pilot-L12-v1/race_shards/ai_race_risk_60__qwen-qwen2.5-7b-instruct-a09a35458c70-constrained-sequence__en__companies_default__rep0000.npz",
@@ -146,6 +164,13 @@
       "paths": [
         "frontier/persona/R0_neutral/all_results.csv",
         "frontier/persona/R0_neutral/google-gemini-3-flash-preview/all_results.csv"
+      ]
+    },
+    {
+      "sha256": "27565df64e371402633fc7621c18fdf8388f38d22070e10de794ac6edc1cb634",
+      "paths": [
+        "frontier/persona/R5_R6_risk_matrix/all_results.csv",
+        "frontier/persona/R5_R6_risk_matrix/google-gemini-3-flash-preview/all_results.csv"
       ]
     },
     {
@@ -178,6 +203,13 @@
         "derived/agent_check_openai/persona_contrasts_round2plus.csv",
         "derived/agent_check_persona/persona_contrasts.csv",
         "derived/agent_check_persona/persona_contrasts_round2plus.csv"
+      ]
+    },
+    {
+      "sha256": "3be80124d247f622021bc95622516bc0bb98f07b8074276c7c0784b444b645b6",
+      "paths": [
+        "frontier/persona/R4_R2_risk_matrix/all_results.csv",
+        "frontier/persona/R4_R2_risk_matrix/google-gemini-3-flash-preview/all_results.csv"
       ]
     },
     {
@@ -216,10 +248,24 @@
       ]
     },
     {
+      "sha256": "67f81bb6f1e199540ea15087dd8ed995d4a793e5a52c051478d261432570bc2a",
+      "paths": [
+        "derived/two_player_paper_analysis/tables/fig06_persona_effects_source.csv",
+        "derived/two_player_paper_analysis/tables/persona_effect_estimates.csv"
+      ]
+    },
+    {
       "sha256": "706355543caa8e3cfd4131c73b07efd3a94696037e4afa5f9409e5f640fb2dd4",
       "paths": [
         "frontier/persona/R1_R1_risk_matrix/all_results.csv",
         "frontier/persona/R1_R1_risk_matrix/google-gemini-3-flash-preview/all_results.csv"
+      ]
+    },
+    {
+      "sha256": "72dc4a26b5deadd6c0ed5d9d9547a501c3324dc927c50c7f3ff1d34af2fe2058",
+      "paths": [
+        "kaggle-benchmarks/_local-debug/2026-08-01/ai-race-baseline.task.json",
+        "kaggle-benchmarks/ai-race-baseline/4/claude-haiku-4-5-20251001/357889/ai-race-baseline.task.json"
       ]
     },
     {
@@ -251,6 +297,13 @@
       ]
     },
     {
+      "sha256": "83e1988cdfea7fe281c5b8229f34b7422d7da40d07f7a5169cbfe05ba5b63f84",
+      "paths": [
+        "derived/two_player_paper_analysis/tables/baseline_payoff_estimates.csv",
+        "derived/two_player_paper_analysis/tables/fig05_safety_payoff_frontier_source.csv"
+      ]
+    },
+    {
       "sha256": "84485838bb0aec98ee1a50fbdbfb0b1e1fb08ccedb588515e4c117529e2e7fee",
       "paths": [
         "open_source/activation_sae/surface_n600_strict_pre_action/surface_n600_strict_pre_action_layers_20_25/samples.csv",
@@ -271,6 +324,13 @@
       "paths": [
         "open_source/context_skin_pilot/analysis_live_pilot_t0/fixed_state_context_rates.csv",
         "open_source/context_skin_pilot/analysis_live_pilot_t07/fixed_state_context_rates.csv"
+      ]
+    },
+    {
+      "sha256": "9a2892c484fd7f0b9de77129d734a403a28614dcfca73814f05aba09c1deb3e6",
+      "paths": [
+        "frontier/persona/R5_R1_risk_matrix/all_results.csv",
+        "frontier/persona/R5_R1_risk_matrix/google-gemini-3-flash-preview/all_results.csv"
       ]
     },
     {
@@ -302,10 +362,24 @@
       ]
     },
     {
+      "sha256": "a714bdf745bec58fc7cf736fd94a476f3aadc57bfa21fad89c58c6a84fe38537",
+      "paths": [
+        "frontier/persona/R5_R3_risk_matrix/all_results.csv",
+        "frontier/persona/R5_R3_risk_matrix/google-gemini-3-flash-preview/all_results.csv"
+      ]
+    },
+    {
       "sha256": "a822af2ddce89f589d3d0fb95b1edbd97a48ed33b00a4a15c75c73781e11ccbc",
       "paths": [
         "open_source/prompt_sensitivity_pilot/xai_auto_vector_encoder/xai_prompt_surface_summary.csv",
         "open_source/prompt_sensitivity_pilot/xai_auto_vector_encoder_no_response/xai_prompt_surface_summary.csv"
+      ]
+    },
+    {
+      "sha256": "ae008e69f6e24250f113acc86245089d6610826bb00698c841bcfff679137894",
+      "paths": [
+        "frontier/persona/R5_R5_risk_matrix/all_results.csv",
+        "frontier/persona/R5_R5_risk_matrix/google-gemini-3-flash-preview/all_results.csv"
       ]
     },
     {
@@ -344,6 +418,13 @@
       ]
     },
     {
+      "sha256": "c6ad83099e504f5900a9047eb2ef89127842ef52c2de0482d5ba2948732ac640",
+      "paths": [
+        "frontier/persona/R4_R3_risk_matrix/all_results.csv",
+        "frontier/persona/R4_R3_risk_matrix/google-gemini-3-flash-preview/all_results.csv"
+      ]
+    },
+    {
       "sha256": "c763092bf52ba90d9928a4e63a0a21f4c7b09f00c4d4848db4d84fc417a70606",
       "paths": [
         "frontier/persona/R2_R4_risk_matrix/all_results.csv",
@@ -378,6 +459,17 @@
       "paths": [
         "frontier/persona/Rplus_risk_seeking/all_results.csv",
         "frontier/persona/Rplus_risk_seeking/google-gemini-3-flash-preview/all_results.csv"
+      ]
+    },
+    {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "paths": [
+        "cross_provider/gemini_claude/run.stderr.log",
+        "cross_provider/gemini_openai/queued_full.stderr.log",
+        "cross_provider/gemini_openai/run.stderr.log",
+        "cross_provider/openai_claude/remaining_reps.stderr.log",
+        "cross_provider/openai_claude/run.stderr.log",
+        "failed_runs/kaggle_crossmodel_scaffold_smoke_v1/ai-race-impact-admission.log"
       ]
     },
     {
@@ -620,6 +712,216 @@
       "top_level": "artifacts",
       "bytes": 46871,
       "sha256": "2e7e6393126a643f2011fdaf641cb6f32cd7c42547644cd50f5dac1e4ea9a54d"
+    },
+    {
+      "path": "cross_provider/figures/expected_end_rounds.png",
+      "top_level": "cross_provider",
+      "bytes": 109257,
+      "sha256": "ccc16c2e25c8e02ea65838aae9eee29be627f80d7b3ae25206f9809f888a9411"
+    },
+    {
+      "path": "cross_provider/figures/n3_group_escalation_response.png",
+      "top_level": "cross_provider",
+      "bytes": 135026,
+      "sha256": "8310f2bd0816a6b2ca9c417a08fce8355d5b70981fafb881b13b0ba4df18614f"
+    },
+    {
+      "path": "cross_provider/figures/n3_individual_unsafe_rate.png",
+      "top_level": "cross_provider",
+      "bytes": 53494,
+      "sha256": "f0863d903f4df87971d133e0826003b6c6660533f61a96d5f9f298679332c90d"
+    },
+    {
+      "path": "cross_provider/figures/n3_joint_action_composition.png",
+      "top_level": "cross_provider",
+      "bytes": 40667,
+      "sha256": "6fa6388a77fe0d75d06bb57f54b7cd925e05e48a14124478392df637c7499189"
+    },
+    {
+      "path": "cross_provider/figures/n3_terminal_outcomes.png",
+      "top_level": "cross_provider",
+      "bytes": 64828,
+      "sha256": "2c510dae7e0366023a5723e3c9796c0ff2cf237e16138551cc31c683527fe126"
+    },
+    {
+      "path": "cross_provider/figures/pair_reciprocity.png",
+      "top_level": "cross_provider",
+      "bytes": 76304,
+      "sha256": "823bf14a14f1d440a41afacff266029cfc0381e83095937345a0cf3aa986bc0d"
+    },
+    {
+      "path": "cross_provider/figures/pair_stage_payoff.png",
+      "top_level": "cross_provider",
+      "bytes": 75837,
+      "sha256": "d44ab0466a40ab75cf0dffbf796f0a250f0ea1728efc747ef079b794a30b6432"
+    },
+    {
+      "path": "cross_provider/figures/pair_unsafe_rate.png",
+      "top_level": "cross_provider",
+      "bytes": 74210,
+      "sha256": "ad1d350b393848e568967b7abac245f1f4c685ddf672713005dbb6ab27a0707a"
+    },
+    {
+      "path": "cross_provider/figures/pair_unsafe_trajectory.png",
+      "top_level": "cross_provider",
+      "bytes": 605519,
+      "sha256": "ed84a565ebf2dd3ec778e8ab58239b717f525f8f35ff6d2e6c637bd040d114df"
+    },
+    {
+      "path": "cross_provider/gemini_claude/google-gemini-3.5-flash-lite__vs__anthropic-claude-haiku-4.5-bedrock/all_results.csv",
+      "top_level": "cross_provider",
+      "bytes": 19861,
+      "sha256": "29e07f1a7f0616f73eb3ed5128f8a15b540d37d69b7bda96d49325fb4f328379"
+    },
+    {
+      "path": "cross_provider/gemini_claude/google-gemini-3.5-flash-lite__vs__anthropic-claude-haiku-4.5-bedrock/players.csv",
+      "top_level": "cross_provider",
+      "bytes": 20835,
+      "sha256": "01457ffabd10c9fc2b16925e00700cbe56204167293f397a04757bc2f414d3a8"
+    },
+    {
+      "path": "cross_provider/gemini_claude/google-gemini-3.5-flash-lite__vs__anthropic-claude-haiku-4.5-bedrock/races.csv",
+      "top_level": "cross_provider",
+      "bytes": 14486,
+      "sha256": "e04c1fe8cbec0cc023722e664e7872c7a8c0e1d1e92b742bdd6d315b41e9d375"
+    },
+    {
+      "path": "cross_provider/gemini_claude/google-gemini-3.5-flash-lite__vs__anthropic-claude-haiku-4.5-bedrock/turns.jsonl",
+      "top_level": "cross_provider",
+      "bytes": 3109021,
+      "sha256": "66ef79265b6e78ffb5f1466b3c25204d4d36da19bf33dab6ba9a5ebfe063c0a6"
+    },
+    {
+      "path": "cross_provider/gemini_claude/run.stderr.log",
+      "top_level": "cross_provider",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cross_provider/gemini_claude/run.stdout.log",
+      "top_level": "cross_provider",
+      "bytes": 39498,
+      "sha256": "ef097d986d98e8b48e38b06443973907f1ddfcb4d602bfe2a0f78de83f652e54"
+    },
+    {
+      "path": "cross_provider/gemini_openai/google-gemini-3.5-flash-lite__vs__openai-gpt-5.6-luna-bedrock/all_results.csv",
+      "top_level": "cross_provider",
+      "bytes": 19429,
+      "sha256": "f0ac3921f886aa1d315fbd37e1941bb136df966cdde7c7d311e150928fc753ee"
+    },
+    {
+      "path": "cross_provider/gemini_openai/google-gemini-3.5-flash-lite__vs__openai-gpt-5.6-luna-bedrock/players.csv",
+      "top_level": "cross_provider",
+      "bytes": 19591,
+      "sha256": "65d8376f2576183ab668901c9574649231b5980db3d082dc9978229342582fbf"
+    },
+    {
+      "path": "cross_provider/gemini_openai/google-gemini-3.5-flash-lite__vs__openai-gpt-5.6-luna-bedrock/races.csv",
+      "top_level": "cross_provider",
+      "bytes": 13906,
+      "sha256": "733b3747243a09e916abbb7aeead1016d7c86e7bded9efec73076c2160412912"
+    },
+    {
+      "path": "cross_provider/gemini_openai/google-gemini-3.5-flash-lite__vs__openai-gpt-5.6-luna-bedrock/turns.jsonl",
+      "top_level": "cross_provider",
+      "bytes": 2021513,
+      "sha256": "a7b257b1e29a13b68fe785fd7195776d77ffc3437f8be7c1446e8d34c95d7a80"
+    },
+    {
+      "path": "cross_provider/gemini_openai/queued_full.stderr.log",
+      "top_level": "cross_provider",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cross_provider/gemini_openai/queued_full.stdout.log",
+      "top_level": "cross_provider",
+      "bytes": 37840,
+      "sha256": "7489fffd1ec4144ae1b5750720c1f20c637fd97ac618d4709d7e98eb79d35436"
+    },
+    {
+      "path": "cross_provider/gemini_openai/run.stderr.log",
+      "top_level": "cross_provider",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cross_provider/gemini_openai/run.stdout.log",
+      "top_level": "cross_provider",
+      "bytes": 876,
+      "sha256": "f194810fa556cf5fd58447a7a3371a13e48928a93bc18ddc2c6b00572d12b08f"
+    },
+    {
+      "path": "cross_provider/gemini_openai_claude_n3/openai-gpt-5.6-luna-bedrock__vs__anthropic-claude-haiku-4.5-bedrock__vs__google-gemini-3.5-flash-lite/players.csv",
+      "top_level": "cross_provider",
+      "bytes": 43332,
+      "sha256": "a6578856a0f8a1df5dc168a1da08f1939c3de92448901b2fec55d971287ac335"
+    },
+    {
+      "path": "cross_provider/gemini_openai_claude_n3/openai-gpt-5.6-luna-bedrock__vs__anthropic-claude-haiku-4.5-bedrock__vs__google-gemini-3.5-flash-lite/races.csv",
+      "top_level": "cross_provider",
+      "bytes": 14392,
+      "sha256": "d85903297250443c7a4f7a8497e207028047bd96f7bd3dc1ada71546a6e73b3e"
+    },
+    {
+      "path": "cross_provider/gemini_openai_claude_n3/openai-gpt-5.6-luna-bedrock__vs__anthropic-claude-haiku-4.5-bedrock__vs__google-gemini-3.5-flash-lite/turns.jsonl",
+      "top_level": "cross_provider",
+      "bytes": 4911558,
+      "sha256": "68d02c19adbec9daef2321656fbc92fe9c5de0a12a564e4204c6ca8093cb65b0"
+    },
+    {
+      "path": "cross_provider/openai_claude/openai-gpt-5.6-luna-bedrock__vs__anthropic-claude-haiku-4.5-bedrock/all_results.csv",
+      "top_level": "cross_provider",
+      "bytes": 19274,
+      "sha256": "9de5fdb794b1f1939ba6b102595a090885f2eed5ee957c868f0d77771cb78f37"
+    },
+    {
+      "path": "cross_provider/openai_claude/openai-gpt-5.6-luna-bedrock__vs__anthropic-claude-haiku-4.5-bedrock/players.csv",
+      "top_level": "cross_provider",
+      "bytes": 19985,
+      "sha256": "79464413808fa2047c1f8b78f39e52bdbdc695b549f8b9252c5f9908444d79e3"
+    },
+    {
+      "path": "cross_provider/openai_claude/openai-gpt-5.6-luna-bedrock__vs__anthropic-claude-haiku-4.5-bedrock/races.csv",
+      "top_level": "cross_provider",
+      "bytes": 13957,
+      "sha256": "f2c63088d2c7707eabbcfe2b4374958dbad1d20c6dd4f3d06eff66bf91078f07"
+    },
+    {
+      "path": "cross_provider/openai_claude/openai-gpt-5.6-luna-bedrock__vs__anthropic-claude-haiku-4.5-bedrock/turns.jsonl",
+      "top_level": "cross_provider",
+      "bytes": 2822760,
+      "sha256": "3a6304cbf8e37d67828f4461f2d05ce912910bb6fc1dbdc273c0e9bd647cfac2"
+    },
+    {
+      "path": "cross_provider/openai_claude/remaining_reps.stderr.log",
+      "top_level": "cross_provider",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cross_provider/openai_claude/remaining_reps.stdout.log",
+      "top_level": "cross_provider",
+      "bytes": 36448,
+      "sha256": "e62861df9896245ffcb06d17210f5c88cc06c00076ba64fcfa53e9110d327131"
+    },
+    {
+      "path": "cross_provider/openai_claude/run.stderr.log",
+      "top_level": "cross_provider",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "cross_provider/openai_claude/run.stdout.log",
+      "top_level": "cross_provider",
+      "bytes": 2734,
+      "sha256": "120e2c64b119c162c5587050f1f5462520444d289be63ca7b6af39215c0a68a8"
+    },
+    {
+      "path": "cross_provider/plot_analysis.py",
+      "top_level": "cross_provider",
+      "bytes": 9173,
+      "sha256": "d929c1011167a0ca693e84d557737c2c1abc9a74e0da7e526b8a208553a614f9"
     },
     {
       "path": "derived/agent_check_frontier_baseline/analysis_manifest.json",
@@ -1228,6 +1530,432 @@
       "sha256": "f4ca5f185317dc67ffd7ea7a33508c4a791125c0ca3cd32684e42327f4ed92c0"
     },
     {
+      "path": "derived/two_player_paper_analysis/analysis_manifest.json",
+      "top_level": "derived",
+      "bytes": 2019,
+      "sha256": "8dc7e59ddfa3bc3aba6edf0a2c0e02d4af9b576cfa6885a76f954e152f0d074e"
+    },
+    {
+      "path": "derived/two_player_paper_analysis/figures/fig01_baseline_risk_response.pdf",
+      "top_level": "derived",
+      "bytes": 24816,
+      "sha256": "31acedcc25265116d9b906e81340dde398eac788d8c46e8da196548b408ef9cf"
+    },
+    {
+      "path": "derived/two_player_paper_analysis/figures/fig01_baseline_risk_response.png",
+      "top_level": "derived",
+      "bytes": 450792,
+      "sha256": "ecd9fe8202a26023c950744169f2f70c99cfee42d5a48f93f300ab90e78471e8"
+    },
+    {
+      "path": "derived/two_player_paper_analysis/figures/fig01_baseline_risk_response.svg",
+      "top_level": "derived",
+      "bytes": 73088,
+      "sha256": "4385a459afbb0e24f8f9debce72cd95472248d9ad21b1e931bfd16140b4b2eae"
+    },
+    {
+      "path": "derived/two_player_paper_analysis/figures/fig01b_protocol_robustness_baselines.pdf",
+      "top_level": "derived",
+      "bytes": 23562,
+      "sha256": "5c0b7ba930fd04bf235ea6de5bc0be2d1085e75b819cc7cbbc5257db867c7e20"
+    },
+    {
+      "path": "derived/two_player_paper_analysis/figures/fig01b_protocol_robustness_baselines.png",
+      "top_level": "derived",
+      "bytes": 264511,
+      "sha256": "ea9901e79ce482dd1c41fa4499d62e2dfc5e428cc53a705fe552b083c9337c82"
+    },
+    {
+      "path": "derived/two_player_paper_analysis/figures/fig01b_protocol_robustness_baselines.svg",
+      "top_level": "derived",
+      "bytes": 58051,
+      "sha256": "540494c43607a31519f87de335bd539a89c5c778e8ef590e8d22960e1e15d3c3"
+    },
+    {
+      "path": "derived/two_player_paper_analysis/figures/fig02_initialization_and_dynamics.pdf",
+      "top_level": "derived",
+      "bytes": 29207,
+      "sha256": "e866dd054d5e8e99e6883d777a968ecc10516443f176e3c24f0f952083dbb008"
+    },
+    {
+      "path": "derived/two_player_paper_analysis/figures/fig02_initialization_and_dynamics.png",
+      "top_level": "derived",
+      "bytes": 655090,
+      "sha256": "7915936bea6aff4695ba5fede2a4a807758c5af7b92f18bde3a241b9dad41255"
+    },
+    {
+      "path": "derived/two_player_paper_analysis/figures/fig02_initialization_and_dynamics.svg",
+      "top_level": "derived",
+      "bytes": 102300,
+      "sha256": "ff8f226410709d917bf5946a5e47aa24e1f247e61d4d12fbf7d21597272b8158"
+    },
+    {
+      "path": "derived/two_player_paper_analysis/figures/fig03_conditional_dynamics.pdf",
+      "top_level": "derived",
+      "bytes": 30033,
+      "sha256": "683827f3041caf15e05ea3809f7474ce986b39bab2db4b7e1755a13775c1f759"
+    },
+    {
+      "path": "derived/two_player_paper_analysis/figures/fig03_conditional_dynamics.png",
+      "top_level": "derived",
+      "bytes": 414666,
+      "sha256": "8cd93665b93b194c6be9ec303acc16a19573a47528ec27295d1c3dcc655fb9b9"
+    },
+    {
+      "path": "derived/two_player_paper_analysis/figures/fig03_conditional_dynamics.svg",
+      "top_level": "derived",
+      "bytes": 101377,
+      "sha256": "69a5a695577c7fb8ffef3ae64843ee01a021c3b2e9e737917bf27536453c0c32"
+    },
+    {
+      "path": "derived/two_player_paper_analysis/figures/fig04_strategy_composition.pdf",
+      "top_level": "derived",
+      "bytes": 21882,
+      "sha256": "91a6e737187f8516ba21faedcf481c549459a95840e33c7691fa76a074465c4d"
+    },
+    {
+      "path": "derived/two_player_paper_analysis/figures/fig04_strategy_composition.png",
+      "top_level": "derived",
+      "bytes": 189445,
+      "sha256": "edf203d91f471dece59de58a9dd5cefc26fe7120f1042b1734a0191e16434935"
+    },
+    {
+      "path": "derived/two_player_paper_analysis/figures/fig04_strategy_composition.svg",
+      "top_level": "derived",
+      "bytes": 75469,
+      "sha256": "d408ef9d6a87c51ec48bd94ab9c3d6df3c00255a597ec06b850f0c4f69d3fe25"
+    },
+    {
+      "path": "derived/two_player_paper_analysis/figures/fig05_safety_payoff_frontier.pdf",
+      "top_level": "derived",
+      "bytes": 25404,
+      "sha256": "e843ecffea9d8a7768e78ecf9bf66892af04a444a0ccec0eee6c3cb05cb371a0"
+    },
+    {
+      "path": "derived/two_player_paper_analysis/figures/fig05_safety_payoff_frontier.png",
+      "top_level": "derived",
+      "bytes": 397132,
+      "sha256": "710122101c64a10e10fc5e0b17d850d3068297c0f2516ee0e18f9eb8f5b1498a"
+    },
+    {
+      "path": "derived/two_player_paper_analysis/figures/fig05_safety_payoff_frontier.svg",
+      "top_level": "derived",
+      "bytes": 93383,
+      "sha256": "ead20d2c4ac1d216b3be20edc03e8d3c2e11cf5f5e8f45a8a0edf5f62a514df0"
+    },
+    {
+      "path": "derived/two_player_paper_analysis/figures/fig06_persona_effects.pdf",
+      "top_level": "derived",
+      "bytes": 27376,
+      "sha256": "a0b18d54c13067d7b258c2f14c2124d70a43ce370431257ffe6f2ccc7e04de7a"
+    },
+    {
+      "path": "derived/two_player_paper_analysis/figures/fig06_persona_effects.png",
+      "top_level": "derived",
+      "bytes": 396863,
+      "sha256": "c3baf976dffc164b1269dd975e06fa46a1522ab1503a5bf1abf8cccf015d3f5d"
+    },
+    {
+      "path": "derived/two_player_paper_analysis/figures/fig06_persona_effects.svg",
+      "top_level": "derived",
+      "bytes": 112586,
+      "sha256": "5029652ac82fd1c10db1c14336254f14bde25afd0160f17c75e7390f45cffa59"
+    },
+    {
+      "path": "derived/two_player_paper_analysis/figures/fig07_persona_role_asymmetry.pdf",
+      "top_level": "derived",
+      "bytes": 23370,
+      "sha256": "b4a47995743dba55b453ca0171ca2430863babdde0db96147044c75b084f2d3b"
+    },
+    {
+      "path": "derived/two_player_paper_analysis/figures/fig07_persona_role_asymmetry.png",
+      "top_level": "derived",
+      "bytes": 283475,
+      "sha256": "6fee87df927e56e17bef6b7f11bb5352d0f818d0264299bfcaf9ac4f6a939495"
+    },
+    {
+      "path": "derived/two_player_paper_analysis/figures/fig07_persona_role_asymmetry.svg",
+      "top_level": "derived",
+      "bytes": 70545,
+      "sha256": "109f35a6926d7b03c12550c8285dc6525bf344b503b94783979a2c8842b243c9"
+    },
+    {
+      "path": "derived/two_player_paper_analysis/figures/fig08_gpt_risk_persona_surfaces.pdf",
+      "top_level": "derived",
+      "bytes": 40738,
+      "sha256": "404f9a413da466a8b8cb1847c72590dd712e4dbc76c92b1b40813d35648fdb63"
+    },
+    {
+      "path": "derived/two_player_paper_analysis/figures/fig08_gpt_risk_persona_surfaces.png",
+      "top_level": "derived",
+      "bytes": 315208,
+      "sha256": "33d77e7b682ba90484c9f952ac62eddce93c2ae55d5bafe0d985f1ee5ec16e18"
+    },
+    {
+      "path": "derived/two_player_paper_analysis/figures/fig08_gpt_risk_persona_surfaces.svg",
+      "top_level": "derived",
+      "bytes": 94456,
+      "sha256": "3aa321077794636585548ad8eeadeddaf460214c37dadbc7cf6b7a0077ebc7da"
+    },
+    {
+      "path": "derived/two_player_paper_analysis/figures/fig09_gemini_risk_persona_partial.pdf",
+      "top_level": "derived",
+      "bytes": 27116,
+      "sha256": "55fba6eb791f46652347c6d346fee1ae1ccf59d8cd7203b1a7fd470e68c349ba"
+    },
+    {
+      "path": "derived/two_player_paper_analysis/figures/fig09_gemini_risk_persona_partial.png",
+      "top_level": "derived",
+      "bytes": 235838,
+      "sha256": "055aea8abc837c1a382f0c65beffe3fe3095675bf53c85fb01fc9f16ec9c9d51"
+    },
+    {
+      "path": "derived/two_player_paper_analysis/figures/fig09_gemini_risk_persona_partial.svg",
+      "top_level": "derived",
+      "bytes": 78562,
+      "sha256": "46f5f9c5fbe8062ede3871a4fb4089d9d551816b9df1f83b5a8aff287e7d1fc9"
+    },
+    {
+      "path": "derived/two_player_paper_analysis/figures/fig10_surface_sensitivity.pdf",
+      "top_level": "derived",
+      "bytes": 29213,
+      "sha256": "e4dd8057958fb44a5e3bd5cbb5796335d6aa833f0706f494651384067f47b69a"
+    },
+    {
+      "path": "derived/two_player_paper_analysis/figures/fig10_surface_sensitivity.png",
+      "top_level": "derived",
+      "bytes": 463184,
+      "sha256": "0bca9dd92336f9a5258383c5a67a9ec46120a7ad9d4f6c2d19cc0ed2ab0178d1"
+    },
+    {
+      "path": "derived/two_player_paper_analysis/figures/fig10_surface_sensitivity.svg",
+      "top_level": "derived",
+      "bytes": 107980,
+      "sha256": "8050047710113ac67a4fcbc08081efc32d983515aa387a18a97fb014af3cecc9"
+    },
+    {
+      "path": "derived/two_player_paper_analysis/figures/fig11_context_temperature_diagnostic.pdf",
+      "top_level": "derived",
+      "bytes": 33336,
+      "sha256": "7416e9dc5b1b6e682b3d582d8b99ac3151319adaa46f2262e10ebe2cbb360c8a"
+    },
+    {
+      "path": "derived/two_player_paper_analysis/figures/fig11_context_temperature_diagnostic.png",
+      "top_level": "derived",
+      "bytes": 330458,
+      "sha256": "579c0d2bc48f8b5c99c2558781946b8bb7674032755b03a142e4be1c07a15ba6"
+    },
+    {
+      "path": "derived/two_player_paper_analysis/figures/fig11_context_temperature_diagnostic.svg",
+      "top_level": "derived",
+      "bytes": 80922,
+      "sha256": "4c777df56a4ae1f2912044fe61abb2d04254b0bed3c2b6ae4f8d0a6d689b003a"
+    },
+    {
+      "path": "derived/two_player_paper_analysis/figures/fig12_evidence_inventory.pdf",
+      "top_level": "derived",
+      "bytes": 21052,
+      "sha256": "35263e3b151e121265bff11228d372a4225afe2df329b97043d012dd69dd7b21"
+    },
+    {
+      "path": "derived/two_player_paper_analysis/figures/fig12_evidence_inventory.png",
+      "top_level": "derived",
+      "bytes": 281326,
+      "sha256": "988d15725f295b8f22216044590025c68aa282f720325cc0b432be5a33c60a43"
+    },
+    {
+      "path": "derived/two_player_paper_analysis/figures/fig12_evidence_inventory.svg",
+      "top_level": "derived",
+      "bytes": 62314,
+      "sha256": "dd670e7fd48208321f88577f799478933b1b3adfbf863f3c0b3d0a1f85a9f20e"
+    },
+    {
+      "path": "derived/two_player_paper_analysis/figures/fig13_repeat_run_stability.pdf",
+      "top_level": "derived",
+      "bytes": 19848,
+      "sha256": "ba17b064c284ca01c6aeedcd9b5af08f575c76f2eb12446c5f892fdb41e71179"
+    },
+    {
+      "path": "derived/two_player_paper_analysis/figures/fig13_repeat_run_stability.png",
+      "top_level": "derived",
+      "bytes": 245373,
+      "sha256": "f6a3a9cb9801637692d3718de6fda31203f88a40c5197a9ab44556be0c8956cf"
+    },
+    {
+      "path": "derived/two_player_paper_analysis/figures/fig13_repeat_run_stability.svg",
+      "top_level": "derived",
+      "bytes": 49966,
+      "sha256": "d97fc31eab8f3e8608e47d96424b750f48e1b3ac9a93cefff6773e001ec839b3"
+    },
+    {
+      "path": "derived/two_player_paper_analysis/quality_checks.json",
+      "top_level": "derived",
+      "bytes": 13063,
+      "sha256": "4fa20d2cb3878afb036c70c3e4047c7e899a4ccffeb76bd9bf54f01f8cdd13b8"
+    },
+    {
+      "path": "derived/two_player_paper_analysis/report/two_player_eda_report.md",
+      "top_level": "derived",
+      "bytes": 6666,
+      "sha256": "fdd8e3ec8593e806450ac898e7fdd45b33a13e3b7dd2585f87f7fc55686d141f"
+    },
+    {
+      "path": "derived/two_player_paper_analysis/tables/baseline_initialization_estimates.csv",
+      "top_level": "derived",
+      "bytes": 2821,
+      "sha256": "371ac854125dd5d15d76c77f7c180a501ac528d9a95d0c1e6eac43572ec99b96"
+    },
+    {
+      "path": "derived/two_player_paper_analysis/tables/baseline_lag_profile_estimates.csv",
+      "top_level": "derived",
+      "bytes": 2017,
+      "sha256": "fa7a47a30f645c0d9e8a00e30072eccf59af29f99d54743db48ee181dafdbc23"
+    },
+    {
+      "path": "derived/two_player_paper_analysis/tables/baseline_payoff_estimates.csv",
+      "top_level": "derived",
+      "bytes": 3531,
+      "sha256": "83e1988cdfea7fe281c5b8229f34b7422d7da40d07f7a5169cbfe05ba5b63f84"
+    },
+    {
+      "path": "derived/two_player_paper_analysis/tables/baseline_position_estimates.csv",
+      "top_level": "derived",
+      "bytes": 1496,
+      "sha256": "211f5e4d2546cab85e3be841fcb60726c00d94265aa5728ef4f25434500ca6c2"
+    },
+    {
+      "path": "derived/two_player_paper_analysis/tables/baseline_risk_contrasts.csv",
+      "top_level": "derived",
+      "bytes": 3082,
+      "sha256": "0559f489d49062740277b32d3efca33edc5d5163c622bf04d20d635d02b45501"
+    },
+    {
+      "path": "derived/two_player_paper_analysis/tables/baseline_risk_estimates.csv",
+      "top_level": "derived",
+      "bytes": 2251,
+      "sha256": "2fb22e7d1bf9fa191ac937a08c5b0f4661cd8627d5e584f9adb3bd2ee20bd946"
+    },
+    {
+      "path": "derived/two_player_paper_analysis/tables/baseline_round_estimates.csv",
+      "top_level": "derived",
+      "bytes": 16894,
+      "sha256": "7450aa1918404406496ff898510e0b7f9394be41c128899df9a82fd714c685e7"
+    },
+    {
+      "path": "derived/two_player_paper_analysis/tables/dataset_inventory.csv",
+      "top_level": "derived",
+      "bytes": 47238,
+      "sha256": "1503f6da39ea7b0d42f576e48ea0236b314a3d976ec69ffa26a4e10493bcb313"
+    },
+    {
+      "path": "derived/two_player_paper_analysis/tables/fig01_baseline_risk_response_source.csv",
+      "top_level": "derived",
+      "bytes": 2807,
+      "sha256": "5119275c981d2b39b830a1a9a77e2c4541cb7ebd429629ba7abfd2e5f94196f8"
+    },
+    {
+      "path": "derived/two_player_paper_analysis/tables/fig01b_protocol_robustness_baselines_source.csv",
+      "top_level": "derived",
+      "bytes": 1190,
+      "sha256": "b4131e55e3d7ca1aca300d7f7d2dfbb79a12d7693d01e5d536351df39b398c1b"
+    },
+    {
+      "path": "derived/two_player_paper_analysis/tables/fig02_initialization_and_dynamics_source.csv",
+      "top_level": "derived",
+      "bytes": 15760,
+      "sha256": "d459b9fb54e7392ab81e3002859bd4823208810b2aaa646019b91ea8a4dd3858"
+    },
+    {
+      "path": "derived/two_player_paper_analysis/tables/fig03_conditional_dynamics_source.csv",
+      "top_level": "derived",
+      "bytes": 3861,
+      "sha256": "8bc07cc44aa5f70f1dfcbd970a619f04a12ef18d637922b14535f606936dc25c"
+    },
+    {
+      "path": "derived/two_player_paper_analysis/tables/fig04_strategy_composition_source.csv",
+      "top_level": "derived",
+      "bytes": 1918,
+      "sha256": "3bb3e7df8f9a4259f6070bcfae49a718deb25e465d37f89f1ab5d7cb66354c51"
+    },
+    {
+      "path": "derived/two_player_paper_analysis/tables/fig05_safety_payoff_frontier_source.csv",
+      "top_level": "derived",
+      "bytes": 3531,
+      "sha256": "83e1988cdfea7fe281c5b8229f34b7422d7da40d07f7a5169cbfe05ba5b63f84"
+    },
+    {
+      "path": "derived/two_player_paper_analysis/tables/fig06_persona_effects_source.csv",
+      "top_level": "derived",
+      "bytes": 2240,
+      "sha256": "67f81bb6f1e199540ea15087dd8ed995d4a793e5a52c051478d261432570bc2a"
+    },
+    {
+      "path": "derived/two_player_paper_analysis/tables/fig07_persona_role_asymmetry_source.csv",
+      "top_level": "derived",
+      "bytes": 2277,
+      "sha256": "9b2979429063121a478d6ef3b33068a4964a9588564cdeef175c48e6428bc819"
+    },
+    {
+      "path": "derived/two_player_paper_analysis/tables/fig08_gpt_risk_persona_surfaces_source.csv",
+      "top_level": "derived",
+      "bytes": 12187,
+      "sha256": "1e5dacbf7e9bbccc4338ae25b36c55ee4e03299c4a9112197c69d1e4418e0182"
+    },
+    {
+      "path": "derived/two_player_paper_analysis/tables/fig09_gemini_risk_persona_partial_source.csv",
+      "top_level": "derived",
+      "bytes": 3190,
+      "sha256": "cd1563df76e668f8c9ea621ae46f58eef79ee0c5322e5287fdc7305fb084acfd"
+    },
+    {
+      "path": "derived/two_player_paper_analysis/tables/fig10_surface_sensitivity_source.csv",
+      "top_level": "derived",
+      "bytes": 3293,
+      "sha256": "efcb454384de1453f0867f6b589694275a5f7be3d0a42748cd608b1851f59f39"
+    },
+    {
+      "path": "derived/two_player_paper_analysis/tables/fig11_context_temperature_diagnostic_source.csv",
+      "top_level": "derived",
+      "bytes": 4171,
+      "sha256": "0ee2c6371b244c1fc150cbf081d2ba71fe05bac194fab93c143311712d064d4b"
+    },
+    {
+      "path": "derived/two_player_paper_analysis/tables/fig12_evidence_inventory_source.csv",
+      "top_level": "derived",
+      "bytes": 382,
+      "sha256": "78b9ee0dceb0cded5a25cf39e4f3d49bff13068e290606b5b614070c0559d3f2"
+    },
+    {
+      "path": "derived/two_player_paper_analysis/tables/fig13_repeat_run_stability_source.csv",
+      "top_level": "derived",
+      "bytes": 490,
+      "sha256": "968e8e625ec722ba018f7c6935e9c192ce948f2d73e5be1aee6134a6872ef814"
+    },
+    {
+      "path": "derived/two_player_paper_analysis/tables/persona_effect_estimates.csv",
+      "top_level": "derived",
+      "bytes": 2240,
+      "sha256": "67f81bb6f1e199540ea15087dd8ed995d4a793e5a52c051478d261432570bc2a"
+    },
+    {
+      "path": "derived/two_player_paper_analysis/tables/persona_role_effects.csv",
+      "top_level": "derived",
+      "bytes": 366,
+      "sha256": "234e8dab3366c6699014c48d9c7130b9a526c6eeda68e215b39d2d3f4d085728"
+    },
+    {
+      "path": "derived/two_player_paper_analysis/tables/persona_role_rates.csv",
+      "top_level": "derived",
+      "bytes": 1618,
+      "sha256": "8741f67648e8e1ba1cc0b2b5ec8f2e06341815417c7627a3e27f148ab5602ee0"
+    },
+    {
+      "path": "derived/two_player_paper_analysis/tables/risk_persona_matrix_rates.csv",
+      "top_level": "derived",
+      "bytes": 15287,
+      "sha256": "695b29c6e5acafeb51e3253056ce1920b16ecb47f798f5bda809a14ef2efda9c"
+    },
+    {
       "path": "failed_runs/kaggle_crossmodel_scaffold_smoke_v1/ai-race-impact-admission.log",
       "top_level": "failed_runs",
       "bytes": 0,
@@ -1242,14 +1970,14 @@
     {
       "path": "failed_runs/kaggle_crossmodel_scaffold_smoke_v2/ai-race-impact-admission.log",
       "top_level": "failed_runs",
-      "bytes": 1727,
-      "sha256": "37c9824fd150252f6342f17e62cb732655ee7d9359c2c336208da077ac888200"
+      "bytes": 1712,
+      "sha256": "2cb2fe4f28a877bfe3407a1f666b95ec15d283a41eb73a4f73d0a90801f963c4"
     },
     {
       "path": "failed_runs/kaggle_crossmodel_scaffold_smoke_v3/ai-race-impact-admission.log",
       "top_level": "failed_runs",
-      "bytes": 1808,
-      "sha256": "f815804e41fd7743fdc28457a3443a5f317da78a8a8afc332b64c67783ce5888"
+      "bytes": 1793,
+      "sha256": "4a6869bb0eef0fc28746629b452626d7ad9ddcb425f9aae42c793b931b912ecb"
     },
     {
       "path": "failed_runs/kaggle_crossmodel_scaffold_smoke_v4/README.md",
@@ -1412,6 +2140,258 @@
       "top_level": "frontier",
       "bytes": 1474,
       "sha256": "d2909bb3534d2af8fe476bf379b733402210f9420676dbb087ff5f9b0c0f25b5"
+    },
+    {
+      "path": "frontier/openai/_logs/stage/openai_persona_baseline_adv_adv.log",
+      "top_level": "frontier",
+      "bytes": 73547,
+      "sha256": "fd76d31fffd7de4255e800c1544604fad5b69ddbabba7bb8c2ef93a04febdff9"
+    },
+    {
+      "path": "frontier/openai/_logs/stage/openai_persona_baseline_adv_coop.log",
+      "top_level": "frontier",
+      "bytes": 73576,
+      "sha256": "044a865cb8bf0e1a2198df1a85dfd5a53bda44550e0087746422830bc27b6485"
+    },
+    {
+      "path": "frontier/openai/_logs/stage/openai_persona_baseline_coop_adv.log",
+      "top_level": "frontier",
+      "bytes": 74293,
+      "sha256": "a8c2399dc51f998d6ac12304585493bddb556bff52fddf9f7ce66529b69e8c7d"
+    },
+    {
+      "path": "frontier/openai/_logs/stage/openai_persona_baseline_coop_coop.log",
+      "top_level": "frontier",
+      "bytes": 73593,
+      "sha256": "e426b3ffa4279eb67a1ea684501de75186a42a0a23802781d8db1f8f00a861a4"
+    },
+    {
+      "path": "frontier/openai/_logs/stage/openai_persona_baseline_risk_1_1.log",
+      "top_level": "frontier",
+      "bytes": 73254,
+      "sha256": "352ce4ddad52e2799f93396ee585ce33e7913b4bdaf254ec4297d21037eab721"
+    },
+    {
+      "path": "frontier/openai/_logs/stage/openai_persona_baseline_risk_1_2.log",
+      "top_level": "frontier",
+      "bytes": 73596,
+      "sha256": "d0359b2a0ac95c8348917204b400d122d540913f4c841621ed24deca03619cf8"
+    },
+    {
+      "path": "frontier/openai/_logs/stage/openai_persona_baseline_risk_1_3.log",
+      "top_level": "frontier",
+      "bytes": 73703,
+      "sha256": "3b566c04e67d8af5270f1ab682e71363012b99978e5f94be1907084d65f61574"
+    },
+    {
+      "path": "frontier/openai/_logs/stage/openai_persona_baseline_risk_1_4.log",
+      "top_level": "frontier",
+      "bytes": 74254,
+      "sha256": "165eaf4d2db981f6202ece325e5d321fd2effda397ac0b6f546ae2a19113f64f"
+    },
+    {
+      "path": "frontier/openai/_logs/stage/openai_persona_baseline_risk_1_5.log",
+      "top_level": "frontier",
+      "bytes": 74598,
+      "sha256": "5a13838ac0dfc909e5fe07bba8f5563ebcd2334628b6355f92a7ecea67cba21a"
+    },
+    {
+      "path": "frontier/openai/_logs/stage/openai_persona_baseline_risk_1_6.log",
+      "top_level": "frontier",
+      "bytes": 75127,
+      "sha256": "86ae90cac2c665f18a495cddf0c921c4fec042084d6f28a093b81701270a7b10"
+    },
+    {
+      "path": "frontier/openai/_logs/stage/openai_persona_baseline_risk_2_1.log",
+      "top_level": "frontier",
+      "bytes": 73471,
+      "sha256": "fd76a4eb68d9173623ab52ccb2bf53bc04434eabcb46d08894b3ba8395173e35"
+    },
+    {
+      "path": "frontier/openai/_logs/stage/openai_persona_baseline_risk_2_2.log",
+      "top_level": "frontier",
+      "bytes": 72985,
+      "sha256": "2d311be733bc233dfbb1005623d5b3c1f06e3e7bcb6f603c60c0da411afb5231"
+    },
+    {
+      "path": "frontier/openai/_logs/stage/openai_persona_baseline_risk_2_3.log",
+      "top_level": "frontier",
+      "bytes": 74144,
+      "sha256": "1c84d2a7f4dfaf6f67e5d5b122fda2b8de1049e0bccf6d86c3008d7b8055cbe8"
+    },
+    {
+      "path": "frontier/openai/_logs/stage/openai_persona_baseline_risk_2_4.log",
+      "top_level": "frontier",
+      "bytes": 74787,
+      "sha256": "5dad5f76bc3a6092192207931882ac01d39ccea1fc449982576a829c93f11e1d"
+    },
+    {
+      "path": "frontier/openai/_logs/stage/openai_persona_baseline_risk_2_5.log",
+      "top_level": "frontier",
+      "bytes": 75214,
+      "sha256": "444c9e0a147241b0c976001227e8b67e9b4b0857753e274536f35e041ae12b39"
+    },
+    {
+      "path": "frontier/openai/_logs/stage/openai_persona_baseline_risk_2_6.log",
+      "top_level": "frontier",
+      "bytes": 74366,
+      "sha256": "ef7b9591c752ed40284cbd0577c312f09ffe553f57c0cfdab356267e80e042fc"
+    },
+    {
+      "path": "frontier/openai/_logs/stage/openai_persona_baseline_risk_3_1.log",
+      "top_level": "frontier",
+      "bytes": 74014,
+      "sha256": "f40320e56e19629f5f8946b2103637831ef9ab1651c659f057a7db5a36576285"
+    },
+    {
+      "path": "frontier/openai/_logs/stage/openai_persona_baseline_risk_3_2.log",
+      "top_level": "frontier",
+      "bytes": 74094,
+      "sha256": "af770ddfce7702b60896fff82d4dd3b193f5b3a08b65d9ab0b2d4718f708bcea"
+    },
+    {
+      "path": "frontier/openai/_logs/stage/openai_persona_baseline_risk_3_3.log",
+      "top_level": "frontier",
+      "bytes": 74820,
+      "sha256": "4590cb37fcd0a757f31332e90b1a5e6943ab86e964b65eb164c413d182dbd005"
+    },
+    {
+      "path": "frontier/openai/_logs/stage/openai_persona_baseline_risk_3_4.log",
+      "top_level": "frontier",
+      "bytes": 74464,
+      "sha256": "5d39000326f9ab62349c886c6306d7f03a5c4aa827c391f72c346b9c2164cefd"
+    },
+    {
+      "path": "frontier/openai/_logs/stage/openai_persona_baseline_risk_3_5.log",
+      "top_level": "frontier",
+      "bytes": 75521,
+      "sha256": "f1de6c64854bcb3362c89ed8d5d9294fd7ce039a1a0cad71f78d857b4d2ac21d"
+    },
+    {
+      "path": "frontier/openai/_logs/stage/openai_persona_baseline_risk_3_6.log",
+      "top_level": "frontier",
+      "bytes": 74157,
+      "sha256": "05882b01115b480e65f38dddc1a6c4bf1eee525810186ab03c39ebd5c33e3541"
+    },
+    {
+      "path": "frontier/openai/_logs/stage/openai_persona_baseline_risk_4_1.log",
+      "top_level": "frontier",
+      "bytes": 73894,
+      "sha256": "43f3ebed74648ba195db556b4e664b6ff5e7ded0468e00f9e1d94b6afdd1334a"
+    },
+    {
+      "path": "frontier/openai/_logs/stage/openai_persona_baseline_risk_4_2.log",
+      "top_level": "frontier",
+      "bytes": 73657,
+      "sha256": "c0d3555d75e0cf52d3598b9767b9fa8d214e10efba3697ef048a84428b403f08"
+    },
+    {
+      "path": "frontier/openai/_logs/stage/openai_persona_baseline_risk_4_3.log",
+      "top_level": "frontier",
+      "bytes": 73808,
+      "sha256": "b673d4d07555727daafea41b45404ac89ab585214504fd9f64e9c07fb3fb3fe7"
+    },
+    {
+      "path": "frontier/openai/_logs/stage/openai_persona_baseline_risk_4_4.log",
+      "top_level": "frontier",
+      "bytes": 73113,
+      "sha256": "b48debfc0b44c4e5e8e5931f5cc2950cac4223faa495efa5f925ec7609ad3391"
+    },
+    {
+      "path": "frontier/openai/_logs/stage/openai_persona_baseline_risk_4_5.log",
+      "top_level": "frontier",
+      "bytes": 73500,
+      "sha256": "732765f9a9f8036d027ec0369855783f9af8befbf7db60dd76e76c9576e16bb9"
+    },
+    {
+      "path": "frontier/openai/_logs/stage/openai_persona_baseline_risk_4_6.log",
+      "top_level": "frontier",
+      "bytes": 73508,
+      "sha256": "b80e4cddbbc05c3e8990b66fd642889e1b4bac49f76cc934fc5d7b4942442c78"
+    },
+    {
+      "path": "frontier/openai/_logs/stage/openai_persona_baseline_risk_5_1.log",
+      "top_level": "frontier",
+      "bytes": 73081,
+      "sha256": "a3b0eb4b97365c8b009d7e311a80fbce1afdd676c3bdcce6b2cab671de728df7"
+    },
+    {
+      "path": "frontier/openai/_logs/stage/openai_persona_baseline_risk_5_2.log",
+      "top_level": "frontier",
+      "bytes": 73603,
+      "sha256": "6a6e0fd62f32350183622477886d77a4dd41c1ada304b3e67d8d7a4a61eb5549"
+    },
+    {
+      "path": "frontier/openai/_logs/stage/openai_persona_baseline_risk_5_3.log",
+      "top_level": "frontier",
+      "bytes": 73310,
+      "sha256": "966b1b80d01a43270576de14a2ec06fcb7c5abbb01483444fd6b73dd1b12c9dc"
+    },
+    {
+      "path": "frontier/openai/_logs/stage/openai_persona_baseline_risk_5_4.log",
+      "top_level": "frontier",
+      "bytes": 73394,
+      "sha256": "49e14eafadd7711f411fa39a5d280a7ffdee3784c99b704654c2047f55b41a3f"
+    },
+    {
+      "path": "frontier/openai/_logs/stage/openai_persona_baseline_risk_5_5.log",
+      "top_level": "frontier",
+      "bytes": 73551,
+      "sha256": "fcb604a6ec95628fb8e0589c6322f37b66d0df1bc86d7956a9ff5ccda30cea44"
+    },
+    {
+      "path": "frontier/openai/_logs/stage/openai_persona_baseline_risk_5_6.log",
+      "top_level": "frontier",
+      "bytes": 74263,
+      "sha256": "b5d2c1102355c978c7caa23b8767d86375819b39cfd9933aae5fa764120c1729"
+    },
+    {
+      "path": "frontier/openai/_logs/stage/openai_persona_baseline_risk_6_1.log",
+      "top_level": "frontier",
+      "bytes": 73365,
+      "sha256": "77cf00ccb92c0deaf6d28cae440b7b7c57ceed7be87fccfc9623fda6725adbed"
+    },
+    {
+      "path": "frontier/openai/_logs/stage/openai_persona_baseline_risk_6_2.log",
+      "top_level": "frontier",
+      "bytes": 73142,
+      "sha256": "c7964049bfe6d0d0f63d83cf3563312906260acbb0760d833479f5997f8de2dc"
+    },
+    {
+      "path": "frontier/openai/_logs/stage/openai_persona_baseline_risk_6_3.log",
+      "top_level": "frontier",
+      "bytes": 73412,
+      "sha256": "6c7a226d27bcd90da992af7bff5202272a9e1de6d3111fc5141aadcd57539853"
+    },
+    {
+      "path": "frontier/openai/_logs/stage/openai_persona_baseline_risk_6_4.log",
+      "top_level": "frontier",
+      "bytes": 73504,
+      "sha256": "f8a7dcea5a8cdf756dc0e029a5def6df7ee0330e56cb0909d59981e4447cce6a"
+    },
+    {
+      "path": "frontier/openai/_logs/stage/openai_persona_baseline_risk_6_5.log",
+      "top_level": "frontier",
+      "bytes": 73695,
+      "sha256": "afd8691ca5f5ac254843768e99adfcbc9469f34196af71610caa161ec54072e3"
+    },
+    {
+      "path": "frontier/openai/_logs/stage/openai_persona_baseline_risk_6_6.log",
+      "top_level": "frontier",
+      "bytes": 73802,
+      "sha256": "fd7e7a067efec12a30617a564729d04e45884469096578a4f55af0eeccb0d233"
+    },
+    {
+      "path": "frontier/openai/_logs/stage/openai_persona_baseline_risk_seeking.log",
+      "top_level": "frontier",
+      "bytes": 77361,
+      "sha256": "82a027298d2e68820f0eb6c51d8592f2c79f3fabd542f382e927584c32339354"
+    },
+    {
+      "path": "frontier/openai/_logs/stage/run_openai_stage.log",
+      "top_level": "frontier",
+      "bytes": 5760,
+      "sha256": "2d2ffaa51b76a4225ffe5212cc3b9efedd9908c9542b7627b81de3ff3444d4df"
     },
     {
       "path": "frontier/openai/baseline/all_results.csv",
@@ -4896,44 +5876,110 @@
     {
       "path": "frontier/persona/R3_R4_risk_matrix/all_results.csv",
       "top_level": "frontier",
-      "bytes": 18208,
-      "sha256": "e731c512e8b3eb1f9873a87df89b11161c963aedb5c81f82411efe0574e1aa67"
+      "bytes": 18226,
+      "sha256": "4d940a24319881340d9c9de239f2435c40d426f92182a53ba15033d8eefcbd07"
     },
     {
       "path": "frontier/persona/R3_R4_risk_matrix/google-gemini-3-flash-preview/all_results.csv",
       "top_level": "frontier",
-      "bytes": 8963,
-      "sha256": "c29f4a34463c2e2f5846b4a5206c8b1141711498d95b6607b796d45669900bb2"
+      "bytes": 26600,
+      "sha256": "2a5353670ffaac7bb2b5539fff9ea6171bc4a58e95d2bc6d0bddf508ba27f3eb"
     },
     {
       "path": "frontier/persona/R3_R4_risk_matrix/google-gemini-3-flash-preview/players.csv",
       "top_level": "frontier",
-      "bytes": 6368,
-      "sha256": "5e0054487ce941c6fc2fb0cb85c5def2c8ac80cfddfa6ea2eb58b6a0e26b38da"
+      "bytes": 21507,
+      "sha256": "465abb95ddc9bc0f1d69f104d97978156b69dfeebe2fd20c6d1f0fab4d5d9025"
     },
     {
       "path": "frontier/persona/R3_R4_risk_matrix/google-gemini-3-flash-preview/races.csv",
       "top_level": "frontier",
-      "bytes": 5975,
-      "sha256": "74bdcf5aa01ff416df7c073b686564176e8c810cd7142778a558a66dd33cd9c8"
+      "bytes": 17632,
+      "sha256": "93c052ba082793e797994360b741dc11a4b346e8c6e2271789a586307efef749"
     },
     {
       "path": "frontier/persona/R3_R4_risk_matrix/google-gemini-3-flash-preview/run_manifest.json",
       "top_level": "frontier",
       "bytes": 1369,
-      "sha256": "95b0ec056312fd8ecc663f51ebc418930d1ccb165865cecc81690f9befb6fc42"
+      "sha256": "a01577f4b852dc16066c271b3742f00ccd295a989b9cfa53971b9220040d08b6"
     },
     {
       "path": "frontier/persona/R3_R4_risk_matrix/google-gemini-3-flash-preview/turns.jsonl",
       "top_level": "frontier",
-      "bytes": 568664,
-      "sha256": "7a9bbc63318716807991896164737c562d43f1e297afd83ce5f93b91ef4f3f6d"
+      "bytes": 2581984,
+      "sha256": "440a17af4a403531ebf503fae26115897c970d956da633a45ac6dc585eee54e0"
+    },
+    {
+      "path": "frontier/persona/R3_R5_risk_matrix/all_results.csv",
+      "top_level": "frontier",
+      "bytes": 18431,
+      "sha256": "0e996bc93baa32deaa80244eafbdebbbf562062cfe209f5396dc0745eec5e7a7"
+    },
+    {
+      "path": "frontier/persona/R3_R5_risk_matrix/google-gemini-3-flash-preview/all_results.csv",
+      "top_level": "frontier",
+      "bytes": 26934,
+      "sha256": "757a833d11800c85a721a88b64e01d2ad6b90c65baf6395c08c2b376c471c721"
+    },
+    {
+      "path": "frontier/persona/R3_R5_risk_matrix/google-gemini-3-flash-preview/players.csv",
+      "top_level": "frontier",
+      "bytes": 21665,
+      "sha256": "c36db0ba8dd75fb3e1da036320c980fd4d3d81b69591c5d8953bfe8f80aaea9e"
+    },
+    {
+      "path": "frontier/persona/R3_R5_risk_matrix/google-gemini-3-flash-preview/races.csv",
+      "top_level": "frontier",
+      "bytes": 17838,
+      "sha256": "e0bb06db185750b22116078a68446ac0854aaa901c4ba9dd6225a0a6a0d480d7"
     },
     {
       "path": "frontier/persona/R3_R5_risk_matrix/google-gemini-3-flash-preview/run_manifest.json",
       "top_level": "frontier",
-      "bytes": 1364,
-      "sha256": "bf314bf903c777c974e8b21ecd93d51bdb7f7bfd2adb8f0be3b522769c9a5fe1"
+      "bytes": 1369,
+      "sha256": "67d06e407f1eabd0a0b97d11cc41e1530fd2a49def48e8d527ff43f1d9599a65"
+    },
+    {
+      "path": "frontier/persona/R3_R5_risk_matrix/google-gemini-3-flash-preview/turns.jsonl",
+      "top_level": "frontier",
+      "bytes": 2585580,
+      "sha256": "bacf734285deff639ddaaa0600efd3a0558c280fd9095f30e59d426d23a15e5f"
+    },
+    {
+      "path": "frontier/persona/R3_R6_risk_matrix/all_results.csv",
+      "top_level": "frontier",
+      "bytes": 18214,
+      "sha256": "65b3867dc16c91ad9059f31aadd220e52ef9fc31070a0423cd67063d9c4ae20f"
+    },
+    {
+      "path": "frontier/persona/R3_R6_risk_matrix/google-gemini-3-flash-preview/all_results.csv",
+      "top_level": "frontier",
+      "bytes": 30177,
+      "sha256": "c59de346545784410991bca84d0e2d9dbdddf57359a40607089e2142f2324ff1"
+    },
+    {
+      "path": "frontier/persona/R3_R6_risk_matrix/google-gemini-3-flash-preview/players.csv",
+      "top_level": "frontier",
+      "bytes": 24338,
+      "sha256": "4202c9047fa1972f9cecb95394196e027d0b5917e2707425e9ad16a850db8e99"
+    },
+    {
+      "path": "frontier/persona/R3_R6_risk_matrix/google-gemini-3-flash-preview/races.csv",
+      "top_level": "frontier",
+      "bytes": 19821,
+      "sha256": "0cce4554f9538defc5720e6feeb764682a835d5340097c7741e9dfce4b656c21"
+    },
+    {
+      "path": "frontier/persona/R3_R6_risk_matrix/google-gemini-3-flash-preview/run_manifest.json",
+      "top_level": "frontier",
+      "bytes": 1369,
+      "sha256": "90c324a7d26e03e361c7cb50a25a364302309881ecde7231b10f9bc8988dda48"
+    },
+    {
+      "path": "frontier/persona/R3_R6_risk_matrix/google-gemini-3-flash-preview/turns.jsonl",
+      "top_level": "frontier",
+      "bytes": 2731838,
+      "sha256": "d05d98ef8226aa0e608fe479b22ea661540a53763755f452eeee60b2ef8ca52d"
     },
     {
       "path": "frontier/persona/R4_R1_risk_matrix/all_results.csv",
@@ -4972,28 +6018,616 @@
       "sha256": "5b4c80cc997b500a5dfa4c23a8c9fd43a128b2bfeaf4daa204896c04cf0fe447"
     },
     {
+      "path": "frontier/persona/R4_R2_risk_matrix/all_results.csv",
+      "top_level": "frontier",
+      "bytes": 18525,
+      "sha256": "3be80124d247f622021bc95622516bc0bb98f07b8074276c7c0784b444b645b6"
+    },
+    {
+      "path": "frontier/persona/R4_R2_risk_matrix/google-gemini-3-flash-preview/all_results.csv",
+      "top_level": "frontier",
+      "bytes": 18525,
+      "sha256": "3be80124d247f622021bc95622516bc0bb98f07b8074276c7c0784b444b645b6"
+    },
+    {
+      "path": "frontier/persona/R4_R2_risk_matrix/google-gemini-3-flash-preview/players.csv",
+      "top_level": "frontier",
+      "bytes": 15887,
+      "sha256": "c29c2359785af624a9e647f728a9730fb02fa76a8d3ae80f9c09c74b25ac04d9"
+    },
+    {
+      "path": "frontier/persona/R4_R2_risk_matrix/google-gemini-3-flash-preview/races.csv",
+      "top_level": "frontier",
+      "bytes": 12736,
+      "sha256": "954cedaf6f4b72958c3571de0a41125582afc5f3ba958aa0710665e308ccf758"
+    },
+    {
       "path": "frontier/persona/R4_R2_risk_matrix/google-gemini-3-flash-preview/run_manifest.json",
       "top_level": "frontier",
-      "bytes": 1364,
-      "sha256": "df1c90952b896359e79639b864ecddb1d5d16b3665a371454da328c50f213bc2"
+      "bytes": 1369,
+      "sha256": "2ae5dd41bcabf100adaae8e5f0f00398c27f9054d4d8a8aaeff33a55a8dfcdb0"
     },
     {
       "path": "frontier/persona/R4_R2_risk_matrix/google-gemini-3-flash-preview/turns.jsonl",
       "top_level": "frontier",
-      "bytes": 226866,
-      "sha256": "dbf50fc79c42072057c2b2028b7a16814bbe76a25bb1150833763b34f068d4ee"
+      "bytes": 2249136,
+      "sha256": "ff5fa1496ac8617db647569f5f30bff5b5df733ddf24964dc17e3d48d7f2ce40"
+    },
+    {
+      "path": "frontier/persona/R4_R3_risk_matrix/all_results.csv",
+      "top_level": "frontier",
+      "bytes": 18247,
+      "sha256": "c6ad83099e504f5900a9047eb2ef89127842ef52c2de0482d5ba2948732ac640"
+    },
+    {
+      "path": "frontier/persona/R4_R3_risk_matrix/google-gemini-3-flash-preview/all_results.csv",
+      "top_level": "frontier",
+      "bytes": 18247,
+      "sha256": "c6ad83099e504f5900a9047eb2ef89127842ef52c2de0482d5ba2948732ac640"
+    },
+    {
+      "path": "frontier/persona/R4_R3_risk_matrix/google-gemini-3-flash-preview/players.csv",
+      "top_level": "frontier",
+      "bytes": 15405,
+      "sha256": "61b68e316267cba0fcd7593ddcf38b26d7a2d497cfcdbda316ba6a7575c67932"
+    },
+    {
+      "path": "frontier/persona/R4_R3_risk_matrix/google-gemini-3-flash-preview/races.csv",
+      "top_level": "frontier",
+      "bytes": 12182,
+      "sha256": "6048bd535380761d7207e764fbc87a9882eaf4ac9741afe4f50004ab2e5df579"
+    },
+    {
+      "path": "frontier/persona/R4_R3_risk_matrix/google-gemini-3-flash-preview/run_manifest.json",
+      "top_level": "frontier",
+      "bytes": 1369,
+      "sha256": "8517e4b38adcef1bc3ee11bcab2943194ccde0a60314067eda13c694c57a11d4"
+    },
+    {
+      "path": "frontier/persona/R4_R3_risk_matrix/google-gemini-3-flash-preview/turns.jsonl",
+      "top_level": "frontier",
+      "bytes": 2239218,
+      "sha256": "80ef500624c3e226e7ab50667b135e5d7ff5cac9729384e23b5321d3b0310564"
+    },
+    {
+      "path": "frontier/persona/R4_R4_risk_matrix/all_results.csv",
+      "top_level": "frontier",
+      "bytes": 18317,
+      "sha256": "81a063880a2bd1f48ad69887769ec928b7b547aef53a469434ba6cad3129413b"
+    },
+    {
+      "path": "frontier/persona/R4_R4_risk_matrix/google-gemini-3-flash-preview/all_results.csv",
+      "top_level": "frontier",
+      "bytes": 36069,
+      "sha256": "cf1eecdaec5d67f0ff604cf6d64262276f78ef314caad978c8b114dc293c575c"
+    },
+    {
+      "path": "frontier/persona/R4_R4_risk_matrix/google-gemini-3-flash-preview/players.csv",
+      "top_level": "frontier",
+      "bytes": 30607,
+      "sha256": "df082f21cdd45363e65733bb9a702986f436126050d77fb3dc3fecc21db0d12b"
+    },
+    {
+      "path": "frontier/persona/R4_R4_risk_matrix/google-gemini-3-flash-preview/races.csv",
+      "top_level": "frontier",
+      "bytes": 23866,
+      "sha256": "74d478e2e4eede40f0527e50268e2313473fe73b720f48507cdd7400f1050802"
+    },
+    {
+      "path": "frontier/persona/R4_R4_risk_matrix/google-gemini-3-flash-preview/run_manifest.json",
+      "top_level": "frontier",
+      "bytes": 1369,
+      "sha256": "177c5f4d3555d3ce52f47d257619522c5d52d3c6163ec4e1a53f5f5f6bbc4328"
+    },
+    {
+      "path": "frontier/persona/R4_R4_risk_matrix/google-gemini-3-flash-preview/turns.jsonl",
+      "top_level": "frontier",
+      "bytes": 4254687,
+      "sha256": "7aa7f8478352c798eb8887d4f768e54530f4f0810a32bae78e0492dbd82b20b3"
+    },
+    {
+      "path": "frontier/persona/R4_R5_risk_matrix/all_results.csv",
+      "top_level": "frontier",
+      "bytes": 18156,
+      "sha256": "91ffa77edf542c1a9aefbcc6be95fa213c0fa99035bc360b25b52322f03e15a7"
+    },
+    {
+      "path": "frontier/persona/R4_R5_risk_matrix/google-gemini-3-flash-preview/all_results.csv",
+      "top_level": "frontier",
+      "bytes": 53371,
+      "sha256": "8c27d0b748275f0688e3fc54c183213e0e92445b488369675320f18e13468a9d"
+    },
+    {
+      "path": "frontier/persona/R4_R5_risk_matrix/google-gemini-3-flash-preview/players.csv",
+      "top_level": "frontier",
+      "bytes": 45211,
+      "sha256": "751fd81dc1b5cfc6f9f9a2628b9a43c00d4fa4f95c98ce924556f4819c5926af"
+    },
+    {
+      "path": "frontier/persona/R4_R5_risk_matrix/google-gemini-3-flash-preview/races.csv",
+      "top_level": "frontier",
+      "bytes": 34996,
+      "sha256": "033bfb5498487c54eff5e837aa9dae1014cb424c4af7310f242103d65cdb5a9a"
+    },
+    {
+      "path": "frontier/persona/R4_R5_risk_matrix/google-gemini-3-flash-preview/run_manifest.json",
+      "top_level": "frontier",
+      "bytes": 1369,
+      "sha256": "bf0a6dc59b0bcf87c4ed2cd34c32d10487462c34f3f451aea22d249fc784c7a7"
+    },
+    {
+      "path": "frontier/persona/R4_R5_risk_matrix/google-gemini-3-flash-preview/turns.jsonl",
+      "top_level": "frontier",
+      "bytes": 6043114,
+      "sha256": "986ce285fd0fb9174a4daef8560cdf1289a19d2b696d51c193a9c3a48cae2c5b"
+    },
+    {
+      "path": "frontier/persona/R4_R6_risk_matrix/all_results.csv",
+      "top_level": "frontier",
+      "bytes": 17995,
+      "sha256": "202d624e8c2cd9ec4e9595c3c57616e528a82522356f4a6b5d89c3574267889e"
+    },
+    {
+      "path": "frontier/persona/R4_R6_risk_matrix/google-gemini-3-flash-preview/all_results.csv",
+      "top_level": "frontier",
+      "bytes": 52990,
+      "sha256": "de2b1f8549f6e4da705460de5ffe14a355ba85249aeffe559e45a6aa1ec4deb8"
+    },
+    {
+      "path": "frontier/persona/R4_R6_risk_matrix/google-gemini-3-flash-preview/players.csv",
+      "top_level": "frontier",
+      "bytes": 44680,
+      "sha256": "1914d2cf7ae7053f16c0823911c9ed0c478208894bdae6309fc278177d8fbd5b"
+    },
+    {
+      "path": "frontier/persona/R4_R6_risk_matrix/google-gemini-3-flash-preview/races.csv",
+      "top_level": "frontier",
+      "bytes": 34549,
+      "sha256": "4a70f54abdd80b45514bacb46c51bc4772bac5185f5c123a59403d413dfbb4e3"
+    },
+    {
+      "path": "frontier/persona/R4_R6_risk_matrix/google-gemini-3-flash-preview/run_manifest.json",
+      "top_level": "frontier",
+      "bytes": 1369,
+      "sha256": "0887574a5e45f504ace12a191bd736911e5bcd526417d66ed7a3871411a5cd1a"
+    },
+    {
+      "path": "frontier/persona/R4_R6_risk_matrix/google-gemini-3-flash-preview/turns.jsonl",
+      "top_level": "frontier",
+      "bytes": 5802472,
+      "sha256": "ec560f6d892e5811b657672f2e2f50aaaf20d0cb54da839b59d1ce4ecfdc3adc"
+    },
+    {
+      "path": "frontier/persona/R5_R1_risk_matrix/all_results.csv",
+      "top_level": "frontier",
+      "bytes": 18877,
+      "sha256": "9a2892c484fd7f0b9de77129d734a403a28614dcfca73814f05aba09c1deb3e6"
+    },
+    {
+      "path": "frontier/persona/R5_R1_risk_matrix/google-gemini-3-flash-preview/all_results.csv",
+      "top_level": "frontier",
+      "bytes": 18877,
+      "sha256": "9a2892c484fd7f0b9de77129d734a403a28614dcfca73814f05aba09c1deb3e6"
+    },
+    {
+      "path": "frontier/persona/R5_R1_risk_matrix/google-gemini-3-flash-preview/players.csv",
+      "top_level": "frontier",
+      "bytes": 16063,
+      "sha256": "a4a68cf27fe155c6513544281fe1da6527c0920e4ff00ecbb8baf952edb4ddde"
+    },
+    {
+      "path": "frontier/persona/R5_R1_risk_matrix/google-gemini-3-flash-preview/races.csv",
+      "top_level": "frontier",
+      "bytes": 12940,
+      "sha256": "122ae98dd44774609cd6b3744c93f42b25aa3424218fe2067bec454dfefdd9e9"
     },
     {
       "path": "frontier/persona/R5_R1_risk_matrix/google-gemini-3-flash-preview/run_manifest.json",
       "top_level": "frontier",
-      "bytes": 1364,
-      "sha256": "0892037454ab7bd7a5004211a579938868a11432d95eaa410a59ecbc2bf0ff83"
+      "bytes": 1369,
+      "sha256": "d8b429bc59d3d4b29aa9b745813026785e24bef411dea9f03f37a5ab04c9c997"
     },
     {
       "path": "frontier/persona/R5_R1_risk_matrix/google-gemini-3-flash-preview/turns.jsonl",
       "top_level": "frontier",
-      "bytes": 703421,
-      "sha256": "752f4dd5aef1cabd5365f5c6e06725c1b34cb777720c41e6e40036884c756d10"
+      "bytes": 2254986,
+      "sha256": "2763f994767172d53700c01b0dc98d63d3786c671fbc8179a89621be7900f36e"
+    },
+    {
+      "path": "frontier/persona/R5_R2_risk_matrix/all_results.csv",
+      "top_level": "frontier",
+      "bytes": 18782,
+      "sha256": "23cd10669a0c5b6fd4d0f635e6f3aef6f99ec1cf0ae21fa6132c8f6cdc457ce0"
+    },
+    {
+      "path": "frontier/persona/R5_R2_risk_matrix/google-gemini-3-flash-preview/all_results.csv",
+      "top_level": "frontier",
+      "bytes": 18782,
+      "sha256": "23cd10669a0c5b6fd4d0f635e6f3aef6f99ec1cf0ae21fa6132c8f6cdc457ce0"
+    },
+    {
+      "path": "frontier/persona/R5_R2_risk_matrix/google-gemini-3-flash-preview/players.csv",
+      "top_level": "frontier",
+      "bytes": 15884,
+      "sha256": "5392ebbdb6d073d81397a8c277a9272788034cfa5c44ec577b8959fe6dd25844"
+    },
+    {
+      "path": "frontier/persona/R5_R2_risk_matrix/google-gemini-3-flash-preview/races.csv",
+      "top_level": "frontier",
+      "bytes": 12761,
+      "sha256": "5db8668ff2bf727d14003fe098f3bad6d9439864add935cd1d6464870fc5b9fd"
+    },
+    {
+      "path": "frontier/persona/R5_R2_risk_matrix/google-gemini-3-flash-preview/run_manifest.json",
+      "top_level": "frontier",
+      "bytes": 1369,
+      "sha256": "877b7527cc0ba51b21ec534f19c8e540ba1ec8f0e37d02a730d90a97f931881e"
+    },
+    {
+      "path": "frontier/persona/R5_R2_risk_matrix/google-gemini-3-flash-preview/turns.jsonl",
+      "top_level": "frontier",
+      "bytes": 2256958,
+      "sha256": "839a408e90c622cde98e03d55563df39053213fbc53a0a26f5e5b68ccce6c9a4"
+    },
+    {
+      "path": "frontier/persona/R5_R3_risk_matrix/all_results.csv",
+      "top_level": "frontier",
+      "bytes": 18241,
+      "sha256": "a714bdf745bec58fc7cf736fd94a476f3aadc57bfa21fad89c58c6a84fe38537"
+    },
+    {
+      "path": "frontier/persona/R5_R3_risk_matrix/google-gemini-3-flash-preview/all_results.csv",
+      "top_level": "frontier",
+      "bytes": 18241,
+      "sha256": "a714bdf745bec58fc7cf736fd94a476f3aadc57bfa21fad89c58c6a84fe38537"
+    },
+    {
+      "path": "frontier/persona/R5_R3_risk_matrix/google-gemini-3-flash-preview/players.csv",
+      "top_level": "frontier",
+      "bytes": 15301,
+      "sha256": "262caa7f9786143cb8b5c40787f744eeaf43742b4df2329e5530b0a32dc0eefe"
+    },
+    {
+      "path": "frontier/persona/R5_R3_risk_matrix/google-gemini-3-flash-preview/races.csv",
+      "top_level": "frontier",
+      "bytes": 12122,
+      "sha256": "6e72f38f5647fb0f38a475923dbe255e2a4543a23e330ffcf0cdf79a6ed8b6b4"
+    },
+    {
+      "path": "frontier/persona/R5_R3_risk_matrix/google-gemini-3-flash-preview/run_manifest.json",
+      "top_level": "frontier",
+      "bytes": 1369,
+      "sha256": "59e9d6ca26bac2c82e4eade8e14ffe8be88433e4745c75d1e35ccd7629c484a7"
+    },
+    {
+      "path": "frontier/persona/R5_R3_risk_matrix/google-gemini-3-flash-preview/turns.jsonl",
+      "top_level": "frontier",
+      "bytes": 2240331,
+      "sha256": "24c3b7bab91cfeb0c6d3a92e969f3cad311f3bcae8637b0b3fbd98f0810b245b"
+    },
+    {
+      "path": "frontier/persona/R5_R4_risk_matrix/all_results.csv",
+      "top_level": "frontier",
+      "bytes": 17931,
+      "sha256": "07c5a54e71103a3e94fe52cb847bbdb85aeb499e3c3c3aa6c2e71f8c338aaae9"
+    },
+    {
+      "path": "frontier/persona/R5_R4_risk_matrix/google-gemini-3-flash-preview/all_results.csv",
+      "top_level": "frontier",
+      "bytes": 17931,
+      "sha256": "07c5a54e71103a3e94fe52cb847bbdb85aeb499e3c3c3aa6c2e71f8c338aaae9"
+    },
+    {
+      "path": "frontier/persona/R5_R4_risk_matrix/google-gemini-3-flash-preview/players.csv",
+      "top_level": "frontier",
+      "bytes": 14973,
+      "sha256": "bf073428d676d467c41f723641c1597e4c3f6e44d39a175e442277e48fd19727"
+    },
+    {
+      "path": "frontier/persona/R5_R4_risk_matrix/google-gemini-3-flash-preview/races.csv",
+      "top_level": "frontier",
+      "bytes": 11750,
+      "sha256": "4ef4061fee5810198685918313469856c30e5e7b1995bb9e65e699d378bd87ee"
+    },
+    {
+      "path": "frontier/persona/R5_R4_risk_matrix/google-gemini-3-flash-preview/run_manifest.json",
+      "top_level": "frontier",
+      "bytes": 1369,
+      "sha256": "a82c510a309d2576f56848bfca1ef09dc7b0039fe36da8652f4532fce8bd677b"
+    },
+    {
+      "path": "frontier/persona/R5_R4_risk_matrix/google-gemini-3-flash-preview/turns.jsonl",
+      "top_level": "frontier",
+      "bytes": 2237382,
+      "sha256": "856e3eee0883eceb21c186e21e91603189abc3d8028d9a45987e53795ea7ad35"
+    },
+    {
+      "path": "frontier/persona/R5_R5_risk_matrix/all_results.csv",
+      "top_level": "frontier",
+      "bytes": 17715,
+      "sha256": "ae008e69f6e24250f113acc86245089d6610826bb00698c841bcfff679137894"
+    },
+    {
+      "path": "frontier/persona/R5_R5_risk_matrix/google-gemini-3-flash-preview/all_results.csv",
+      "top_level": "frontier",
+      "bytes": 17715,
+      "sha256": "ae008e69f6e24250f113acc86245089d6610826bb00698c841bcfff679137894"
+    },
+    {
+      "path": "frontier/persona/R5_R5_risk_matrix/google-gemini-3-flash-preview/players.csv",
+      "top_level": "frontier",
+      "bytes": 14743,
+      "sha256": "75a4c75a280ff6f95519751396b53ce6c5633542de22eab2eb8ddb544387f4ad"
+    },
+    {
+      "path": "frontier/persona/R5_R5_risk_matrix/google-gemini-3-flash-preview/races.csv",
+      "top_level": "frontier",
+      "bytes": 11500,
+      "sha256": "7b7b6fcb65f8bf68028b3bf88d098c752fd19b0448903113e2f9218d5c77d254"
+    },
+    {
+      "path": "frontier/persona/R5_R5_risk_matrix/google-gemini-3-flash-preview/run_manifest.json",
+      "top_level": "frontier",
+      "bytes": 1369,
+      "sha256": "0ba798a23951b2467f4c0ff68547a32c1b5f2f855813503f34c740664802d87b"
+    },
+    {
+      "path": "frontier/persona/R5_R5_risk_matrix/google-gemini-3-flash-preview/turns.jsonl",
+      "top_level": "frontier",
+      "bytes": 2238098,
+      "sha256": "d7f5506dab2538608f07e25eeded84312e98225b19585bbefcec8192172197c2"
+    },
+    {
+      "path": "frontier/persona/R5_R6_risk_matrix/all_results.csv",
+      "top_level": "frontier",
+      "bytes": 17715,
+      "sha256": "27565df64e371402633fc7621c18fdf8388f38d22070e10de794ac6edc1cb634"
+    },
+    {
+      "path": "frontier/persona/R5_R6_risk_matrix/google-gemini-3-flash-preview/all_results.csv",
+      "top_level": "frontier",
+      "bytes": 17715,
+      "sha256": "27565df64e371402633fc7621c18fdf8388f38d22070e10de794ac6edc1cb634"
+    },
+    {
+      "path": "frontier/persona/R5_R6_risk_matrix/google-gemini-3-flash-preview/players.csv",
+      "top_level": "frontier",
+      "bytes": 14743,
+      "sha256": "a0ea234b09d6590bb4d76e4469929b6162bcad626168b64e4d860c1c8e71c838"
+    },
+    {
+      "path": "frontier/persona/R5_R6_risk_matrix/google-gemini-3-flash-preview/races.csv",
+      "top_level": "frontier",
+      "bytes": 11500,
+      "sha256": "3fd9db4b983f8fec9f37d7d6cd1f67442e06aeb0e438203cf251599506c31880"
+    },
+    {
+      "path": "frontier/persona/R5_R6_risk_matrix/google-gemini-3-flash-preview/run_manifest.json",
+      "top_level": "frontier",
+      "bytes": 1369,
+      "sha256": "fb990db0ba7235dc38fe531021d4621c2161fe9e1f7e95ae808005cca59562f4"
+    },
+    {
+      "path": "frontier/persona/R5_R6_risk_matrix/google-gemini-3-flash-preview/turns.jsonl",
+      "top_level": "frontier",
+      "bytes": 2238046,
+      "sha256": "e85b51d5451b391aefd11a873a11de1395abd16d286f36b633fc124869a8b066"
+    },
+    {
+      "path": "frontier/persona/R6_R1_risk_matrix/all_results.csv",
+      "top_level": "frontier",
+      "bytes": 19040,
+      "sha256": "46e6badadd03d5f36712875347400b4cd31806a4705ba421a05c91f9c9dad436"
+    },
+    {
+      "path": "frontier/persona/R6_R1_risk_matrix/google-gemini-3-flash-preview/all_results.csv",
+      "top_level": "frontier",
+      "bytes": 42105,
+      "sha256": "71f0cef66e673e0698cb8660247faa3db02242b8467bc61ce2dcda29aee385d4"
+    },
+    {
+      "path": "frontier/persona/R6_R1_risk_matrix/google-gemini-3-flash-preview/players.csv",
+      "top_level": "frontier",
+      "bytes": 35081,
+      "sha256": "b625194a5350214669866cc5052a797cf85b3f565956590a1c060fd4fbb4ddcf"
+    },
+    {
+      "path": "frontier/persona/R6_R1_risk_matrix/google-gemini-3-flash-preview/races.csv",
+      "top_level": "frontier",
+      "bytes": 28487,
+      "sha256": "d52571d731cbd1a782082da01ef00b8868f8385e7f54cdf86344ce586162844f"
+    },
+    {
+      "path": "frontier/persona/R6_R1_risk_matrix/google-gemini-3-flash-preview/run_manifest.json",
+      "top_level": "frontier",
+      "bytes": 1369,
+      "sha256": "e3139f2274854946804a9b935f5be96c35b7348121522d3f0e361a612ac903f9"
+    },
+    {
+      "path": "frontier/persona/R6_R1_risk_matrix/google-gemini-3-flash-preview/turns.jsonl",
+      "top_level": "frontier",
+      "bytes": 4460117,
+      "sha256": "76660836eb125cb6c6f71592386fc27a5cbba8241a98b7c4371824cf82a1d787"
+    },
+    {
+      "path": "frontier/persona/R6_R2_risk_matrix/all_results.csv",
+      "top_level": "frontier",
+      "bytes": 18799,
+      "sha256": "99ea3fcdd6a222022215ea7af983db05cb6405668949f587d0aa6ff9a87b25d0"
+    },
+    {
+      "path": "frontier/persona/R6_R2_risk_matrix/google-gemini-3-flash-preview/all_results.csv",
+      "top_level": "frontier",
+      "bytes": 57349,
+      "sha256": "6e1b36c932de056d945b5c807f6f05e0c91ff53cf2f7e43109fad563dc6a98b1"
+    },
+    {
+      "path": "frontier/persona/R6_R2_risk_matrix/google-gemini-3-flash-preview/players.csv",
+      "top_level": "frontier",
+      "bytes": 47226,
+      "sha256": "0ea3d42fc85a19b177baa51d59e87d1aa4c4dff7f281c008ffa3762cb67d5d92"
+    },
+    {
+      "path": "frontier/persona/R6_R2_risk_matrix/google-gemini-3-flash-preview/races.csv",
+      "top_level": "frontier",
+      "bytes": 38427,
+      "sha256": "c3447f929c5b336f0abffe64ed1b48e2cdf458068f4919a20be93d5e7c477d1a"
+    },
+    {
+      "path": "frontier/persona/R6_R2_risk_matrix/google-gemini-3-flash-preview/run_manifest.json",
+      "top_level": "frontier",
+      "bytes": 1369,
+      "sha256": "11888d7ca7051ba8f736a64ad9033544e3a623659f0e6a0eb36564854822e599"
+    },
+    {
+      "path": "frontier/persona/R6_R2_risk_matrix/google-gemini-3-flash-preview/turns.jsonl",
+      "top_level": "frontier",
+      "bytes": 5547785,
+      "sha256": "494198846648e23c0bef576a970c71d10e6a10762a809281f49f96f0b1a5973d"
+    },
+    {
+      "path": "frontier/persona/R6_R3_risk_matrix/all_results.csv",
+      "top_level": "frontier",
+      "bytes": 18222,
+      "sha256": "cba4835b139e8c26927f7fac18256020b1852947ff6f3f5280dc54e38e04091a"
+    },
+    {
+      "path": "frontier/persona/R6_R3_risk_matrix/google-gemini-3-flash-preview/all_results.csv",
+      "top_level": "frontier",
+      "bytes": 50871,
+      "sha256": "8bf3e4fc9ce342b821671434254cb5f36050631b59d8bc77f317aaf95f8547c8"
+    },
+    {
+      "path": "frontier/persona/R6_R3_risk_matrix/google-gemini-3-flash-preview/players.csv",
+      "top_level": "frontier",
+      "bytes": 42192,
+      "sha256": "968686dfab0bc5a9dfe440150c7b1c79a04785abdf79b916aa326827afeb4767"
+    },
+    {
+      "path": "frontier/persona/R6_R3_risk_matrix/google-gemini-3-flash-preview/races.csv",
+      "top_level": "frontier",
+      "bytes": 33330,
+      "sha256": "3e1d0e67b7d23145a7c6782c89d22cd2a1156914f6bdcb83f079f56d9eb40835"
+    },
+    {
+      "path": "frontier/persona/R6_R3_risk_matrix/google-gemini-3-flash-preview/run_manifest.json",
+      "top_level": "frontier",
+      "bytes": 1369,
+      "sha256": "290077c07947c5fdd48a546941c20d7c0ba004905a3072e5411fac1e922a418a"
+    },
+    {
+      "path": "frontier/persona/R6_R3_risk_matrix/google-gemini-3-flash-preview/turns.jsonl",
+      "top_level": "frontier",
+      "bytes": 4589700,
+      "sha256": "4366d93ebe44fae948c16961f768831ebf9cd5dd0e9f6247873294ea6ec6315b"
+    },
+    {
+      "path": "frontier/persona/R6_R4_risk_matrix/all_results.csv",
+      "top_level": "frontier",
+      "bytes": 17938,
+      "sha256": "578517b99ae8dc3eb3a1b05bc92bb1c7943266a389a9eb498c4b55baae7c51f7"
+    },
+    {
+      "path": "frontier/persona/R6_R4_risk_matrix/google-gemini-3-flash-preview/all_results.csv",
+      "top_level": "frontier",
+      "bytes": 43607,
+      "sha256": "12cc594c45f73eca7ec29f91bb1895ecd25000c1aa07bfbbd069f43e37fad531"
+    },
+    {
+      "path": "frontier/persona/R6_R4_risk_matrix/google-gemini-3-flash-preview/players.csv",
+      "top_level": "frontier",
+      "bytes": 35602,
+      "sha256": "f52fc9a0595d827684db0cd43b15a6c6f37844238d236c1da1bc9e546193a3af"
+    },
+    {
+      "path": "frontier/persona/R6_R4_risk_matrix/google-gemini-3-flash-preview/races.csv",
+      "top_level": "frontier",
+      "bytes": 28249,
+      "sha256": "fba49a55130f52e3fafc17db8ad8dc834e7ac6e7ed270aaafbe0ad940b1065a1"
+    },
+    {
+      "path": "frontier/persona/R6_R4_risk_matrix/google-gemini-3-flash-preview/run_manifest.json",
+      "top_level": "frontier",
+      "bytes": 1369,
+      "sha256": "af91c42b83bf619334dd02d4b898d8fcfda8a37e5f1b1ccc312bfe8af6fe83cb"
+    },
+    {
+      "path": "frontier/persona/R6_R4_risk_matrix/google-gemini-3-flash-preview/turns.jsonl",
+      "top_level": "frontier",
+      "bytes": 4594338,
+      "sha256": "04a7d82464005366056ba36cec4b8042f223bb496235f58cba82f2706b4d9e93"
+    },
+    {
+      "path": "frontier/persona/R6_R5_risk_matrix/all_results.csv",
+      "top_level": "frontier",
+      "bytes": 17715,
+      "sha256": "31fef8fd02824cc6f116daee6e693d65210efd87c3e9456b8c6cf922b6249ba2"
+    },
+    {
+      "path": "frontier/persona/R6_R5_risk_matrix/google-gemini-3-flash-preview/all_results.csv",
+      "top_level": "frontier",
+      "bytes": 32313,
+      "sha256": "169f7bb811250b9e8afb79e62177a57a5c0d3a0a24f85896a80311a006e2d2a6"
+    },
+    {
+      "path": "frontier/persona/R6_R5_risk_matrix/google-gemini-3-flash-preview/players.csv",
+      "top_level": "frontier",
+      "bytes": 26338,
+      "sha256": "ced229c638fd38a2328340da37680345002028c15cf5383ff9e6e3b1e38ab799"
+    },
+    {
+      "path": "frontier/persona/R6_R5_risk_matrix/google-gemini-3-flash-preview/races.csv",
+      "top_level": "frontier",
+      "bytes": 20794,
+      "sha256": "e0737f942858c8b1a06db8f65ecb163e950168bbb73526e1477e23778d1c856e"
+    },
+    {
+      "path": "frontier/persona/R6_R5_risk_matrix/google-gemini-3-flash-preview/run_manifest.json",
+      "top_level": "frontier",
+      "bytes": 1369,
+      "sha256": "05fab77b58747de4ecc39fb598c614f608d27c81c13fd01db3a71c5718faf64f"
+    },
+    {
+      "path": "frontier/persona/R6_R5_risk_matrix/google-gemini-3-flash-preview/turns.jsonl",
+      "top_level": "frontier",
+      "bytes": 3289059,
+      "sha256": "96c01aff561839d9b1355ea0e01336329b87f4366cbe99453d75918b8bf84cbc"
+    },
+    {
+      "path": "frontier/persona/R6_R6_risk_matrix/all_results.csv",
+      "top_level": "frontier",
+      "bytes": 17715,
+      "sha256": "454e22e47711fbc83d0e8fa70ca18d0c641e435b6f42c188f92ef66e0424a605"
+    },
+    {
+      "path": "frontier/persona/R6_R6_risk_matrix/google-gemini-3-flash-preview/all_results.csv",
+      "top_level": "frontier",
+      "bytes": 49439,
+      "sha256": "fafb9b9e7cdb96119bb6fdf1586beeaf3dc8e3ef5b77193836c0e13cfc98144a"
+    },
+    {
+      "path": "frontier/persona/R6_R6_risk_matrix/google-gemini-3-flash-preview/players.csv",
+      "top_level": "frontier",
+      "bytes": 40812,
+      "sha256": "af97e464ba7aaca8f0a8f466a85fc6540609e93cdb8882d788ac8589d83cdda5"
+    },
+    {
+      "path": "frontier/persona/R6_R6_risk_matrix/google-gemini-3-flash-preview/races.csv",
+      "top_level": "frontier",
+      "bytes": 31758,
+      "sha256": "42f7f4b91713431354b58fb62b6961863ba09d445d5e464c856dd23ce57db6db"
+    },
+    {
+      "path": "frontier/persona/R6_R6_risk_matrix/google-gemini-3-flash-preview/run_manifest.json",
+      "top_level": "frontier",
+      "bytes": 1369,
+      "sha256": "8dd945d454a7558b95e9d866c234ed3af3f6b8cb9706caf381cbe1017136daf4"
+    },
+    {
+      "path": "frontier/persona/R6_R6_risk_matrix/google-gemini-3-flash-preview/turns.jsonl",
+      "top_level": "frontier",
+      "bytes": 5787505,
+      "sha256": "d79164789342c4272e7adc829696e599441bf1ee17bbcbd5683982fe96d021d6"
     },
     {
       "path": "frontier/persona/Rminus_risk_averse/all_results.csv",
@@ -5226,20 +6860,20 @@
     {
       "path": "impact_upgrade/analysis_manifest.json",
       "top_level": "impact_upgrade",
-      "bytes": 5852,
-      "sha256": "e6094f746922cf0b29c5c6e0fa74b598daebaba07d08e26cf93a49d809bc1ddf"
+      "bytes": 5731,
+      "sha256": "aa3af7aec803f4821f8e876f9ba247edfff8c11c5b093e0feb60a9997b6a257c"
     },
     {
       "path": "impact_upgrade/artifact.json",
       "top_level": "impact_upgrade",
-      "bytes": 64424,
-      "sha256": "248ce6d154b5780a91220784b739bbefda31b03e6d41fe0d696716e49086fe6c"
+      "bytes": 62877,
+      "sha256": "8d5513a81a3b8d2e0929f9a4f9d63daa1408df9ac5b10667e471eaa0fcdf16d6"
     },
     {
       "path": "impact_upgrade/data/context_direct_vs_live.csv",
       "top_level": "impact_upgrade",
-      "bytes": 2564,
-      "sha256": "56b91429c0a5532bca57c2c4c7abc51c7435d3ba3f20935c3dc4e97dc38efe51"
+      "bytes": 2556,
+      "sha256": "b68a5b1b8aac8e0f179763615da35d232a65387eff5e69ae517bf48d3018bb1f"
     },
     {
       "path": "impact_upgrade/data/context_mapping_interaction.csv",
@@ -5268,8 +6902,8 @@
     {
       "path": "impact_upgrade/data/trajectory_demo.json",
       "top_level": "impact_upgrade",
-      "bytes": 108041,
-      "sha256": "cc446d0de269645c8f10fc2be11a4a16e70cd7fff944996850b88eae8e5157f1"
+      "bytes": 108040,
+      "sha256": "656e92da5c53bd025b957e85efe7a8507ad7e83ec95e7b9099391051f27728f3"
     },
     {
       "path": "impact_upgrade/data/trajectory_divergence_curve.csv",
@@ -5394,14 +7028,14 @@
     {
       "path": "impact_upgrade/impact_report.html",
       "top_level": "impact_upgrade",
-      "bytes": 465904,
-      "sha256": "22dd8dd9f12b537c6e2863d86bd6141983f3ebf0a14822d9c545335e7e8a616e"
+      "bytes": 460917,
+      "sha256": "986d0dbe8565105e89d44b7b1474341c8adcbbd59cbcc2161f5d8f2796ba85a9"
     },
     {
       "path": "impact_upgrade/impact_report.md",
       "top_level": "impact_upgrade",
-      "bytes": 11049,
-      "sha256": "0832f913877134b4b8d23d0d92c44a55cf4b5ed6639620b024d6f4e1073187cd"
+      "bytes": 10967,
+      "sha256": "c1c8b458efcc88df636323fc07125bf3f3a2d485d1adb05d360fdbdc669c6117"
     },
     {
       "path": "impact_upgrade/power/context_mapping_power.pdf",
@@ -5424,14 +7058,14 @@
     {
       "path": "impact_upgrade/power/power_grid.csv",
       "top_level": "impact_upgrade",
-      "bytes": 2106,
-      "sha256": "5e536199b16ac7d40c2164b8e216202514eef7bc042c333e555a64493352caba"
+      "bytes": 2077,
+      "sha256": "6cc8bd75b3d0ea11890c0fa75536fdc82cfd059561fc43964cf2dc9b42574a79"
     },
     {
       "path": "impact_upgrade/power/variance_proxy.csv",
       "top_level": "impact_upgrade",
-      "bytes": 477,
-      "sha256": "b5958cbe8accd8bca2ba43970db9707ceeb51bc5a99731a3b393a33c065f4169"
+      "bytes": 469,
+      "sha256": "ca5835be184bd3a050e851bdbbf612b8b45b70ed302fff06aacdeac74093a41e"
     },
     {
       "path": "impact_upgrade/README.md",
@@ -5486,6 +7120,48 @@
       "top_level": "kaggle-benchmarks",
       "bytes": 17044,
       "sha256": "3b9f554df0d937d39dbcc62160ad8251654a526fa28537dd877b4279189741ff"
+    },
+    {
+      "path": "kaggle-benchmarks/_local-debug/2026-08-01/ai-race-baseline-run_id_Run_1_llm.run.json",
+      "top_level": "kaggle-benchmarks",
+      "bytes": 8456,
+      "sha256": "76a372739263141c619a58f6d720037598979ba7e006502ae6cdc55a7cc51377"
+    },
+    {
+      "path": "kaggle-benchmarks/_local-debug/2026-08-01/ai-race-baseline.task.json",
+      "top_level": "kaggle-benchmarks",
+      "bytes": 7129,
+      "sha256": "72dc4a26b5deadd6c0ed5d9d9547a501c3324dc927c50c7f3ff1d34af2fe2058"
+    },
+    {
+      "path": "kaggle-benchmarks/_local-debug/2026-08-01/connectivity-ping-run_id_Run_1_google_gemini-3-flash-preview.run.json",
+      "top_level": "kaggle-benchmarks",
+      "bytes": 2439,
+      "sha256": "138be05221affd531b4e6e15e19c03d9bd3165c73d176021d525f5197abf761e"
+    },
+    {
+      "path": "kaggle-benchmarks/_local-debug/2026-08-01/connectivity-ping-run_id_Run_1_llm.run.json",
+      "top_level": "kaggle-benchmarks",
+      "bytes": 2634,
+      "sha256": "07350b0abee90c70f2c731e537e3ebd9676c0c4881631d5754e9f8b84a1afdcb"
+    },
+    {
+      "path": "kaggle-benchmarks/_local-debug/2026-08-01/connectivity-ping.task.json",
+      "top_level": "kaggle-benchmarks",
+      "bytes": 372,
+      "sha256": "af119a09ed6220539a373c48c09728a25bac600c72e237f2d5dc85ad8c1a2609"
+    },
+    {
+      "path": "kaggle-benchmarks/_local-debug/2026-08-01/debug-llm-type-run_id_Run_1_google_gemini-3-flash-preview.run.json",
+      "top_level": "kaggle-benchmarks",
+      "bytes": 612,
+      "sha256": "e010af21126135c1c9f1a292cee2c674ce375ab50875ad892215bcb5de7d35cf"
+    },
+    {
+      "path": "kaggle-benchmarks/_local-debug/2026-08-01/debug-llm-type.task.json",
+      "top_level": "kaggle-benchmarks",
+      "bytes": 52,
+      "sha256": "6ade278a714862314e24152e1fe967a47866ad87870fa2d9916707b21d735e75"
     },
     {
       "path": "kaggle-benchmarks/_n3-smoke/claude-haiku-4-5-20251001/run_manifest.json",
@@ -5622,8 +7298,8 @@
     {
       "path": "nplayer/ANALYSIS_qwen2.5-14b-instruct.md",
       "top_level": "nplayer",
-      "bytes": 8325,
-      "sha256": "0e9582ffe5e477db2a70e865a0d235c29252442c42a9dd710d86a92ec0904e1e"
+      "bytes": 14147,
+      "sha256": "d62732af2478bf9866a3e8af212831025694ed1611f8d0f6b0c0e2bcf084f831"
     },
     {
       "path": "nplayer/analyze_nplayer_results.py",
@@ -5834,6 +7510,1026 @@
       "top_level": "nplayer",
       "bytes": 1250,
       "sha256": "8cd40b0e019845438554c19135fff161f1494d5bf038b86fce1d1f3091174b4f"
+    },
+    {
+      "path": "nplayer/openai/baseline_n3/gpt-5-nano/players.csv",
+      "top_level": "nplayer",
+      "bytes": 26249,
+      "sha256": "e1e468d2ecc07b556f82ad58a95ac0c8d66638f2867fd9963ed31ea92ecb740e"
+    },
+    {
+      "path": "nplayer/openai/baseline_n3/gpt-5-nano/races.csv",
+      "top_level": "nplayer",
+      "bytes": 8722,
+      "sha256": "1973ee09528e8fa3627235b561aabd2d1ac8aca3c82bb5d9692cdd5103458532"
+    },
+    {
+      "path": "nplayer/openai/baseline_n3/gpt-5-nano/run_manifest.json",
+      "top_level": "nplayer",
+      "bytes": 1331,
+      "sha256": "61a17fc0e6f2d551d591eb6dbb8d3fe24e6c851faf02be46bc6ef244f28b0f46"
+    },
+    {
+      "path": "nplayer/openai/baseline_n3/gpt-5-nano/turns.jsonl",
+      "top_level": "nplayer",
+      "bytes": 3304057,
+      "sha256": "78c04803cab9f6506b30d1fb17eaec1c9f68823676da5e3be69d5da1ecd84c13"
+    },
+    {
+      "path": "nplayer/openai/baseline_n3/gpt-5.4-nano/players.csv",
+      "top_level": "nplayer",
+      "bytes": 26009,
+      "sha256": "b31f48ef312e923ee760505db5c5d73a163a36baf3464e84441c4fd91d653730"
+    },
+    {
+      "path": "nplayer/openai/baseline_n3/gpt-5.4-nano/races.csv",
+      "top_level": "nplayer",
+      "bytes": 8772,
+      "sha256": "0751ae3064ff66795968916ea9c2745c8d912e2992425528db2ef41171a7c5a6"
+    },
+    {
+      "path": "nplayer/openai/baseline_n3/gpt-5.4-nano/run_manifest.json",
+      "top_level": "nplayer",
+      "bytes": 1333,
+      "sha256": "1931f12183154073545221dc6db8b3536aa9766f3ccb5aacffa1b4edfe210953"
+    },
+    {
+      "path": "nplayer/openai/baseline_n3/gpt-5.4-nano/turns.jsonl",
+      "top_level": "nplayer",
+      "bytes": 3310160,
+      "sha256": "d6335efe4d1918b214ebcae12883c2020fed9ec27b84d8d282f7e5e211755ca1"
+    },
+    {
+      "path": "nplayer/openai/baseline_n3/players.csv",
+      "top_level": "nplayer",
+      "bytes": 51981,
+      "sha256": "bc656566f6dcb4afab64217b91445bfe8f0ef4098daf465497cc76f0bdbdbe23"
+    },
+    {
+      "path": "nplayer/openai/baseline_n3/races.csv",
+      "top_level": "nplayer",
+      "bytes": 17315,
+      "sha256": "7db595a6020312263c3ffc86d5130a6bade472d7e45dd7cde22dacc41395e093"
+    },
+    {
+      "path": "nplayer/openai/baseline_n4/gpt-5-nano/players.csv",
+      "top_level": "nplayer",
+      "bytes": 36473,
+      "sha256": "7d5a93b74b1ed441067751c268cb3fa119b068aa5705fa38932823a7f459f28c"
+    },
+    {
+      "path": "nplayer/openai/baseline_n4/gpt-5-nano/races.csv",
+      "top_level": "nplayer",
+      "bytes": 8900,
+      "sha256": "2f90d896250dd785781be88861148e07162164863623c26d94f1d211007eb148"
+    },
+    {
+      "path": "nplayer/openai/baseline_n4/gpt-5-nano/run_manifest.json",
+      "top_level": "nplayer",
+      "bytes": 1340,
+      "sha256": "4ff23beb2f693b970bbf057a27e1927c7382d1684c51e98acfb77a05c2780da6"
+    },
+    {
+      "path": "nplayer/openai/baseline_n4/gpt-5-nano/turns.jsonl",
+      "top_level": "nplayer",
+      "bytes": 4691710,
+      "sha256": "21adc3481335ce27101eeb4139e0a265170b76144101964f59345613f56d5f96"
+    },
+    {
+      "path": "nplayer/openai/baseline_n4/gpt-5.4-nano/players.csv",
+      "top_level": "nplayer",
+      "bytes": 36509,
+      "sha256": "9083d122d1378e6bc7972632e2ba963377abae434e81648660c5df3cd9467e82"
+    },
+    {
+      "path": "nplayer/openai/baseline_n4/gpt-5.4-nano/races.csv",
+      "top_level": "nplayer",
+      "bytes": 9230,
+      "sha256": "c979515ec7e0b98338ad71769d07e0bd584da1f366db040e8c8230efb363d3f0"
+    },
+    {
+      "path": "nplayer/openai/baseline_n4/gpt-5.4-nano/run_manifest.json",
+      "top_level": "nplayer",
+      "bytes": 1342,
+      "sha256": "e06f6f8013e6513e492f352e5208dba7ed7e4239158f4ee4e8f430770de26bc9"
+    },
+    {
+      "path": "nplayer/openai/baseline_n4/gpt-5.4-nano/turns.jsonl",
+      "top_level": "nplayer",
+      "bytes": 4709568,
+      "sha256": "0eaa5a143daa5edb70be380c3db03ac58ef10c6dd40368df0d863f2d638a74fa"
+    },
+    {
+      "path": "nplayer/openai/baseline_n4/players.csv",
+      "top_level": "nplayer",
+      "bytes": 72705,
+      "sha256": "095bed211f55c3097b689d4f099bedbd06e4ca32bdd7572bc9e239c45de3cd6b"
+    },
+    {
+      "path": "nplayer/openai/baseline_n4/races.csv",
+      "top_level": "nplayer",
+      "bytes": 17951,
+      "sha256": "5611d8f1a200f35e5587ef08341d768385ccf7ea9155238992288d4531527b82"
+    },
+    {
+      "path": "nplayer/openai/baseline_n5/gpt-5-nano/players.csv",
+      "top_level": "nplayer",
+      "bytes": 48041,
+      "sha256": "903d52cc7a22d7441cdde3e82d0622beccc364f343abe0ddc483c6cfcbcb1268"
+    },
+    {
+      "path": "nplayer/openai/baseline_n5/gpt-5-nano/races.csv",
+      "top_level": "nplayer",
+      "bytes": 8952,
+      "sha256": "dd27a22637953ed525573b0c86aa916ef411d834be2381c60dae7cd28a09bbf8"
+    },
+    {
+      "path": "nplayer/openai/baseline_n5/gpt-5-nano/run_manifest.json",
+      "top_level": "nplayer",
+      "bytes": 1348,
+      "sha256": "71651f2288fd4bf836c5af261f6ea4b6d2cf47397dd7aebe8b74c549d04cf213"
+    },
+    {
+      "path": "nplayer/openai/baseline_n5/gpt-5-nano/turns.jsonl",
+      "top_level": "nplayer",
+      "bytes": 6316092,
+      "sha256": "e084afd619d74c4c4cce9b42ef6b56b635eace061d937bc75e184fe4a724e3c4"
+    },
+    {
+      "path": "nplayer/openai/baseline_n5/gpt-5.4-nano/players.csv",
+      "top_level": "nplayer",
+      "bytes": 47730,
+      "sha256": "b59de99bdb8d6702105f24a55cc0277cf9ddb80e3c38b2c9ada4a065092fcb45"
+    },
+    {
+      "path": "nplayer/openai/baseline_n5/gpt-5.4-nano/races.csv",
+      "top_level": "nplayer",
+      "bytes": 9282,
+      "sha256": "0b5722a276295ec8237794cc5029b0786524778c524b8fa9bbdb3d222fa4b02b"
+    },
+    {
+      "path": "nplayer/openai/baseline_n5/gpt-5.4-nano/run_manifest.json",
+      "top_level": "nplayer",
+      "bytes": 1350,
+      "sha256": "d78a0f6e3c38526691b2b4d05edadf655861343b14faa820f4044ea3dd38255b"
+    },
+    {
+      "path": "nplayer/openai/baseline_n5/gpt-5.4-nano/turns.jsonl",
+      "top_level": "nplayer",
+      "bytes": 6324497,
+      "sha256": "977418246aba944268e06795fa14d4c59b4754d7764143ec9abb534aa0000c20"
+    },
+    {
+      "path": "nplayer/openai/baseline_n5/players.csv",
+      "top_level": "nplayer",
+      "bytes": 95494,
+      "sha256": "8744dcd13fc84cd312be8ace9515aaba2fd64938fc122d8e7ff7c79ef1e02615"
+    },
+    {
+      "path": "nplayer/openai/baseline_n5/races.csv",
+      "top_level": "nplayer",
+      "bytes": 18055,
+      "sha256": "210efd0f37abd74e0fc109daeba40cc309dcd08cac399e740721666d756a89c8"
+    },
+    {
+      "path": "nplayer/openai/coopadv/AAA/gpt-5-nano/players.csv",
+      "top_level": "nplayer",
+      "bytes": 27060,
+      "sha256": "cda0b9791de79c03039048db2654d302b2d24b1d78468528c166896cd6ba5a3c"
+    },
+    {
+      "path": "nplayer/openai/coopadv/AAA/gpt-5-nano/races.csv",
+      "top_level": "nplayer",
+      "bytes": 9644,
+      "sha256": "5dfc52e1b08652adcea904500605c1c8d5c3437186620c4a4cc959bd1fb63876"
+    },
+    {
+      "path": "nplayer/openai/coopadv/AAA/gpt-5-nano/run_manifest.json",
+      "top_level": "nplayer",
+      "bytes": 1458,
+      "sha256": "c6ddcacb1b66eacb2dd1904784ce3e12df620ba314c69a528673e06c926f4b1f"
+    },
+    {
+      "path": "nplayer/openai/coopadv/AAA/gpt-5-nano/turns.jsonl",
+      "top_level": "nplayer",
+      "bytes": 3465397,
+      "sha256": "38e973b537a9b9a505c9fa7aedcb848af98d9ee6f4c245e08a434d2d665a1add"
+    },
+    {
+      "path": "nplayer/openai/coopadv/AAA/gpt-5.4-nano/players.csv",
+      "top_level": "nplayer",
+      "bytes": 26616,
+      "sha256": "5f63650d6b69828466cc752fb7cf0dd6e4ae0dbee8b92b36d2dd3e27767f3978"
+    },
+    {
+      "path": "nplayer/openai/coopadv/AAA/gpt-5.4-nano/races.csv",
+      "top_level": "nplayer",
+      "bytes": 9946,
+      "sha256": "ad1108fe7131180d69e3b2a022474b25a0f6b73d4e73c7bdc36490b28c3f2ee9"
+    },
+    {
+      "path": "nplayer/openai/coopadv/AAA/gpt-5.4-nano/run_manifest.json",
+      "top_level": "nplayer",
+      "bytes": 1460,
+      "sha256": "bf6ef927126bcc46869912e2fad87c4e4fb8d2c9fcd7fe81960a92d10394b7b7"
+    },
+    {
+      "path": "nplayer/openai/coopadv/AAA/gpt-5.4-nano/turns.jsonl",
+      "top_level": "nplayer",
+      "bytes": 3466795,
+      "sha256": "86ad18b3cadeaa55dbfe6e479c7b0fbd55f78ac75dad59c2a727687f315ac3b2"
+    },
+    {
+      "path": "nplayer/openai/coopadv/AAA/players.csv",
+      "top_level": "nplayer",
+      "bytes": 53399,
+      "sha256": "d418c7029a1cdcac919fdcd8907f0dc4af992bd57786c0f6729e5df6198f1fef"
+    },
+    {
+      "path": "nplayer/openai/coopadv/AAA/races.csv",
+      "top_level": "nplayer",
+      "bytes": 19411,
+      "sha256": "dbcf64cd8f8e35fe50fefa0ba61aafb4e829698a170a5167c3afbe065066da06"
+    },
+    {
+      "path": "nplayer/openai/coopadv/AAC/gpt-5-nano/players.csv",
+      "top_level": "nplayer",
+      "bytes": 26910,
+      "sha256": "7aa0c2472da23768c67aa92deca38267573fd84b945bdb128fc62458f19a31c9"
+    },
+    {
+      "path": "nplayer/openai/coopadv/AAC/gpt-5-nano/races.csv",
+      "top_level": "nplayer",
+      "bytes": 9560,
+      "sha256": "87f2f0a40909028cd52e15c7c1c7a0290cb29722aa4812dbb08ebb1c0b9cbc6d"
+    },
+    {
+      "path": "nplayer/openai/coopadv/AAC/gpt-5-nano/run_manifest.json",
+      "top_level": "nplayer",
+      "bytes": 1458,
+      "sha256": "1132eb4e03be457477dc5ebfdd96c1f1a7e6682e5b2d036fa3c619bb669bf482"
+    },
+    {
+      "path": "nplayer/openai/coopadv/AAC/gpt-5-nano/turns.jsonl",
+      "top_level": "nplayer",
+      "bytes": 3457082,
+      "sha256": "45844c0b5fcc3a0e4e2e8340350b24b4d5c20b0d937ba7fa39231ba33dda484d"
+    },
+    {
+      "path": "nplayer/openai/coopadv/AAC/gpt-5.4-nano/players.csv",
+      "top_level": "nplayer",
+      "bytes": 26777,
+      "sha256": "7c733ec63453a0ed0382651f8c1b41f92060b6a280b365525ddea4e5c69529b0"
+    },
+    {
+      "path": "nplayer/openai/coopadv/AAC/gpt-5.4-nano/races.csv",
+      "top_level": "nplayer",
+      "bytes": 9792,
+      "sha256": "3c9309a83774ce2398f605a30f62c9597a4e5c88ff21b9ffd17fb5aba1ce33c2"
+    },
+    {
+      "path": "nplayer/openai/coopadv/AAC/gpt-5.4-nano/run_manifest.json",
+      "top_level": "nplayer",
+      "bytes": 1460,
+      "sha256": "f313b14dbbb2ba0a88b521b5368c43656bb1b6d7670617652f007e37d3aadbe6"
+    },
+    {
+      "path": "nplayer/openai/coopadv/AAC/gpt-5.4-nano/turns.jsonl",
+      "top_level": "nplayer",
+      "bytes": 3446115,
+      "sha256": "dda64f1da681db0280c63e935840dda6163453f18c71d6e278835a01b0fa790e"
+    },
+    {
+      "path": "nplayer/openai/coopadv/AAC/players.csv",
+      "top_level": "nplayer",
+      "bytes": 53410,
+      "sha256": "1fea72ea3141712e0ae4ba894abf710dc08f1b131ad78518bdc3ac6ea843fc4c"
+    },
+    {
+      "path": "nplayer/openai/coopadv/AAC/races.csv",
+      "top_level": "nplayer",
+      "bytes": 19173,
+      "sha256": "09a39999d086b5a46a6716fd33631cd096a00ec7ac5418915fcf0a44113ad3e2"
+    },
+    {
+      "path": "nplayer/openai/coopadv/ACA/gpt-5-nano/players.csv",
+      "top_level": "nplayer",
+      "bytes": 26841,
+      "sha256": "237f7b05c0bf3e1baff963ce3e415420c5b7f051752fd516b4603579cb522901"
+    },
+    {
+      "path": "nplayer/openai/coopadv/ACA/gpt-5-nano/races.csv",
+      "top_level": "nplayer",
+      "bytes": 9546,
+      "sha256": "73f313cdb92e6d49fdf49c862b425eff4fccbb8084d4f39dcd8d9a5585b12464"
+    },
+    {
+      "path": "nplayer/openai/coopadv/ACA/gpt-5-nano/run_manifest.json",
+      "top_level": "nplayer",
+      "bytes": 1458,
+      "sha256": "7cbbb22ae4ed38b66f99db31584a91f88481db5291ba222ceda205dae8362cfb"
+    },
+    {
+      "path": "nplayer/openai/coopadv/ACA/gpt-5-nano/turns.jsonl",
+      "top_level": "nplayer",
+      "bytes": 3458621,
+      "sha256": "8ea90e057872987f2b940c02b56bd455c5fa5cf9e974bb51e5c1b480b2bbdb89"
+    },
+    {
+      "path": "nplayer/openai/coopadv/ACA/gpt-5.4-nano/players.csv",
+      "top_level": "nplayer",
+      "bytes": 26883,
+      "sha256": "615d238e4d9062886179be354e19809c6eeb9e7a48bdb796acb83af923f959b2"
+    },
+    {
+      "path": "nplayer/openai/coopadv/ACA/gpt-5.4-nano/races.csv",
+      "top_level": "nplayer",
+      "bytes": 9694,
+      "sha256": "4c65e17e90462f559ab41c0b6409222b88f39785c7e937cf39a4634df439f7a1"
+    },
+    {
+      "path": "nplayer/openai/coopadv/ACA/gpt-5.4-nano/run_manifest.json",
+      "top_level": "nplayer",
+      "bytes": 1460,
+      "sha256": "58dccbf387e14a79f81e129485f38539dab63014cbb2879c8618037658b809bb"
+    },
+    {
+      "path": "nplayer/openai/coopadv/ACA/gpt-5.4-nano/turns.jsonl",
+      "top_level": "nplayer",
+      "bytes": 3457786,
+      "sha256": "e3ce9c2068f651653845b3fb2e7a3d401c050a789ec351d79232e971f8e5baa7"
+    },
+    {
+      "path": "nplayer/openai/coopadv/ACA/players.csv",
+      "top_level": "nplayer",
+      "bytes": 53447,
+      "sha256": "30d56f5b474474ace77d74f16b074f6f87da7811c6ea1abc6af6236adfa90eae"
+    },
+    {
+      "path": "nplayer/openai/coopadv/ACA/races.csv",
+      "top_level": "nplayer",
+      "bytes": 19061,
+      "sha256": "a6b00c4c07939026825fbadaec41cec5b3f1ac4908f31f3fe9857f1c93074073"
+    },
+    {
+      "path": "nplayer/openai/coopadv/ACC/gpt-5-nano/players.csv",
+      "top_level": "nplayer",
+      "bytes": 26388,
+      "sha256": "9fca782b08ee8944b405e615fc6e2aaead894d4d10e70b4e54536df46a9b299a"
+    },
+    {
+      "path": "nplayer/openai/coopadv/ACC/gpt-5-nano/races.csv",
+      "top_level": "nplayer",
+      "bytes": 9518,
+      "sha256": "2f35aacab6aae06af0cbec95ad087c0a2729809cf84e4ae314c98ef930295231"
+    },
+    {
+      "path": "nplayer/openai/coopadv/ACC/gpt-5-nano/run_manifest.json",
+      "top_level": "nplayer",
+      "bytes": 1458,
+      "sha256": "9e8968f048d48a9bc2a6779577d520dce3c2a922fead4dd2756103e9baeb229f"
+    },
+    {
+      "path": "nplayer/openai/coopadv/ACC/gpt-5-nano/turns.jsonl",
+      "top_level": "nplayer",
+      "bytes": 3456327,
+      "sha256": "4209e73074bfb979b5b18cbc3e389aaa82af04a9827d3ce9344520a985f695e9"
+    },
+    {
+      "path": "nplayer/openai/coopadv/ACC/gpt-5.4-nano/players.csv",
+      "top_level": "nplayer",
+      "bytes": 27150,
+      "sha256": "05261acdfacaebf5d10fb4fd27fd38e48a8906e137c4ffa64e8176cdafd9a006"
+    },
+    {
+      "path": "nplayer/openai/coopadv/ACC/gpt-5.4-nano/races.csv",
+      "top_level": "nplayer",
+      "bytes": 9638,
+      "sha256": "982487403c30611cd0beae146d9d205e1e17308645b47046b452d4ba3ef55551"
+    },
+    {
+      "path": "nplayer/openai/coopadv/ACC/gpt-5.4-nano/run_manifest.json",
+      "top_level": "nplayer",
+      "bytes": 1460,
+      "sha256": "1caa3c502570b8f21bcfac700fb9fc8c67c17fd780bd6a75a7d25e2390e6ee83"
+    },
+    {
+      "path": "nplayer/openai/coopadv/ACC/gpt-5.4-nano/turns.jsonl",
+      "top_level": "nplayer",
+      "bytes": 3465989,
+      "sha256": "06549b62629ac98f083c1b6c3433f89f7046bfebf0275c8c2c9b290a8ff65e71"
+    },
+    {
+      "path": "nplayer/openai/coopadv/ACC/players.csv",
+      "top_level": "nplayer",
+      "bytes": 53261,
+      "sha256": "48574832a1b910f815e3c9c3262e16a12c4a8b47b697a9928443e6c576797b38"
+    },
+    {
+      "path": "nplayer/openai/coopadv/ACC/races.csv",
+      "top_level": "nplayer",
+      "bytes": 18977,
+      "sha256": "be1474784f3d02f5e1532eb9ed213dcbefaf9e2a0f37308eabc773744c4dc5a8"
+    },
+    {
+      "path": "nplayer/openai/coopadv/CAA/gpt-5-nano/players.csv",
+      "top_level": "nplayer",
+      "bytes": 26841,
+      "sha256": "8c84383f3a785597afb067cb179b0f109ba207531ed7afc95f39ca2dfb1cb0fe"
+    },
+    {
+      "path": "nplayer/openai/coopadv/CAA/gpt-5-nano/races.csv",
+      "top_level": "nplayer",
+      "bytes": 9602,
+      "sha256": "e4ea3889bfcd7367f9b1e500aef3ef1190b2d8b45f0a76717456879c17d40dd0"
+    },
+    {
+      "path": "nplayer/openai/coopadv/CAA/gpt-5-nano/run_manifest.json",
+      "top_level": "nplayer",
+      "bytes": 1458,
+      "sha256": "660741706b08a081059c415bcca80f549db557e1ab8b16acb76bf068c682ca4e"
+    },
+    {
+      "path": "nplayer/openai/coopadv/CAA/gpt-5-nano/turns.jsonl",
+      "top_level": "nplayer",
+      "bytes": 3457915,
+      "sha256": "c4b3236097f4dd8d2860cbda2680f69382d9b7fc5cdf849d94a7efd2a36aea6a"
+    },
+    {
+      "path": "nplayer/openai/coopadv/CAA/gpt-5.4-nano/players.csv",
+      "top_level": "nplayer",
+      "bytes": 26936,
+      "sha256": "f16c0e0abe1d7124cf51286719943ea0b0b75b4c4ebe34664bbaf842bc036abc"
+    },
+    {
+      "path": "nplayer/openai/coopadv/CAA/gpt-5.4-nano/races.csv",
+      "top_level": "nplayer",
+      "bytes": 9764,
+      "sha256": "000ac12f0217b3c0bf7a55bdfe2caecdd44c9df82fa795751a79f3d88553579c"
+    },
+    {
+      "path": "nplayer/openai/coopadv/CAA/gpt-5.4-nano/run_manifest.json",
+      "top_level": "nplayer",
+      "bytes": 1460,
+      "sha256": "fb120330c14806af37c68ccce7fc72c2130c6815bac5fd6045668abd57828fef"
+    },
+    {
+      "path": "nplayer/openai/coopadv/CAA/gpt-5.4-nano/turns.jsonl",
+      "top_level": "nplayer",
+      "bytes": 3456592,
+      "sha256": "c155d2a5cb439827743dcba9d00c8cf52a73ad0c7df43522de77a67a03285605"
+    },
+    {
+      "path": "nplayer/openai/coopadv/CAA/players.csv",
+      "top_level": "nplayer",
+      "bytes": 53500,
+      "sha256": "82ad9068bf8728ed2653edfbbda71ad79bb7b95ce64afdedec062d89a348c4b4"
+    },
+    {
+      "path": "nplayer/openai/coopadv/CAA/races.csv",
+      "top_level": "nplayer",
+      "bytes": 19187,
+      "sha256": "8b8b02459aea4a757aa5ac1e9263a5cc05d60c9049da3535e2f92d1b5eebb0c3"
+    },
+    {
+      "path": "nplayer/openai/coopadv/CAC/gpt-5-nano/players.csv",
+      "top_level": "nplayer",
+      "bytes": 26590,
+      "sha256": "cc73030a128c10235270869750fcd89a5d6f9ce7bd3ba4eed40890d2e87166b8"
+    },
+    {
+      "path": "nplayer/openai/coopadv/CAC/gpt-5-nano/races.csv",
+      "top_level": "nplayer",
+      "bytes": 9518,
+      "sha256": "c5ced62f31b0ed58dd2c969ccf1609c0fc078ca54ed949716966ad7b3e91c584"
+    },
+    {
+      "path": "nplayer/openai/coopadv/CAC/gpt-5-nano/run_manifest.json",
+      "top_level": "nplayer",
+      "bytes": 1458,
+      "sha256": "654f282df4da238eef9103e65888156909caf5b03d2dea6844435926098f4af2"
+    },
+    {
+      "path": "nplayer/openai/coopadv/CAC/gpt-5-nano/turns.jsonl",
+      "top_level": "nplayer",
+      "bytes": 3459163,
+      "sha256": "4035ea9f0b7ca43453d63d2d0864dcacfbea8ac2d6d75c6ce6312955926b112b"
+    },
+    {
+      "path": "nplayer/openai/coopadv/CAC/gpt-5.4-nano/players.csv",
+      "top_level": "nplayer",
+      "bytes": 27350,
+      "sha256": "28e50130b5b0e9fc8e5db6c5891d0ef21793d1496960009f42fc9016f11c8d4b"
+    },
+    {
+      "path": "nplayer/openai/coopadv/CAC/gpt-5.4-nano/races.csv",
+      "top_level": "nplayer",
+      "bytes": 9638,
+      "sha256": "c678772b2ff685b4ab754a6c264116209b0a81f8d7a8930202dc4ce6023e76c6"
+    },
+    {
+      "path": "nplayer/openai/coopadv/CAC/gpt-5.4-nano/run_manifest.json",
+      "top_level": "nplayer",
+      "bytes": 1460,
+      "sha256": "b2494459dd9c9b7af0adfa95426ef1f6e95d6578b1207e12ba1aab31528c15cf"
+    },
+    {
+      "path": "nplayer/openai/coopadv/CAC/gpt-5.4-nano/turns.jsonl",
+      "top_level": "nplayer",
+      "bytes": 3469982,
+      "sha256": "45500ea63fc51f51a577df85dc5d90d45f16f166d28e084bbea07374992a79a4"
+    },
+    {
+      "path": "nplayer/openai/coopadv/CAC/players.csv",
+      "top_level": "nplayer",
+      "bytes": 53663,
+      "sha256": "72f24a2f5517f0a696942ce41c11f892f660924c7aef9e2b18a96d687d3fb83d"
+    },
+    {
+      "path": "nplayer/openai/coopadv/CAC/races.csv",
+      "top_level": "nplayer",
+      "bytes": 18977,
+      "sha256": "af2c3c6049230c6dd721edb2ee7b8be6aed08f1b01d539adc82bc2683771a9ba"
+    },
+    {
+      "path": "nplayer/openai/coopadv/CCA/gpt-5-nano/players.csv",
+      "top_level": "nplayer",
+      "bytes": 26454,
+      "sha256": "c744d7cc8680f79c44e1415f442dfceab384fc4dcf9d47093dab15d7125a3375"
+    },
+    {
+      "path": "nplayer/openai/coopadv/CCA/gpt-5-nano/races.csv",
+      "top_level": "nplayer",
+      "bytes": 9518,
+      "sha256": "375f16c820ea7be075c274ca0d4a66c5d65258f853dac4f2c1519c8e609819ee"
+    },
+    {
+      "path": "nplayer/openai/coopadv/CCA/gpt-5-nano/run_manifest.json",
+      "top_level": "nplayer",
+      "bytes": 1458,
+      "sha256": "95751170a451d6b2e9878abb5f1718226a7a9814a3a494d54647ebebdab1a0c7"
+    },
+    {
+      "path": "nplayer/openai/coopadv/CCA/gpt-5-nano/turns.jsonl",
+      "top_level": "nplayer",
+      "bytes": 3457371,
+      "sha256": "1c4a5642220598f389831a499b0b59b1a2136b47d7ff0c2fc4d9ae1579f4a046"
+    },
+    {
+      "path": "nplayer/openai/coopadv/CCA/gpt-5.4-nano/players.csv",
+      "top_level": "nplayer",
+      "bytes": 27390,
+      "sha256": "3033bf6b7dfbeb679e05cb208a5be162583866dfe0574cac206944226eeffb5d"
+    },
+    {
+      "path": "nplayer/openai/coopadv/CCA/gpt-5.4-nano/races.csv",
+      "top_level": "nplayer",
+      "bytes": 9638,
+      "sha256": "8083d94eb4e56b84368edfd16eb8009cdfe3397a47a7118206ad0d83d0cd9c29"
+    },
+    {
+      "path": "nplayer/openai/coopadv/CCA/gpt-5.4-nano/run_manifest.json",
+      "top_level": "nplayer",
+      "bytes": 1460,
+      "sha256": "f14640c2ad115e45e8a12df83d645ea24fc0554fae1e7dbd1072b44608e7cd3a"
+    },
+    {
+      "path": "nplayer/openai/coopadv/CCA/gpt-5.4-nano/turns.jsonl",
+      "top_level": "nplayer",
+      "bytes": 3471225,
+      "sha256": "f809e565d4c9982645749e025925088c51dd99a4e127addc99f2c55166d8bc00"
+    },
+    {
+      "path": "nplayer/openai/coopadv/CCA/players.csv",
+      "top_level": "nplayer",
+      "bytes": 53567,
+      "sha256": "ed4ab38790df55aaf5e870c6d0bcd304342e8f834d0d9535fb0ba9a67c9cb07e"
+    },
+    {
+      "path": "nplayer/openai/coopadv/CCA/races.csv",
+      "top_level": "nplayer",
+      "bytes": 18977,
+      "sha256": "0c597f51ed445c177d80f585a11c70eb43a752fc70f62548b6bc61e213cb2d39"
+    },
+    {
+      "path": "nplayer/openai/coopadv/CCC/gpt-5-nano/players.csv",
+      "top_level": "nplayer",
+      "bytes": 26775,
+      "sha256": "3cc51a1e85d42f576c85787a0bbbb18e50ff6034ee7708e162cf945ee3ec2cce"
+    },
+    {
+      "path": "nplayer/openai/coopadv/CCC/gpt-5-nano/races.csv",
+      "top_level": "nplayer",
+      "bytes": 10302,
+      "sha256": "d0315874663d74c29f49c297a6c8932d2d33db92961c4f6e44b3cc09e05d3538"
+    },
+    {
+      "path": "nplayer/openai/coopadv/CCC/gpt-5-nano/run_manifest.json",
+      "top_level": "nplayer",
+      "bytes": 1458,
+      "sha256": "684dd4c99635ddca091dc7094be9027974dbb3c01e0b12e69612d33d7bcb9a45"
+    },
+    {
+      "path": "nplayer/openai/coopadv/CCC/gpt-5-nano/turns.jsonl",
+      "top_level": "nplayer",
+      "bytes": 3442418,
+      "sha256": "25953f55b04ca22020a7dd40d3ab322007bcc81d3342c313be73f6be86d4dacc"
+    },
+    {
+      "path": "nplayer/openai/coopadv/CCC/gpt-5.4-nano/players.csv",
+      "top_level": "nplayer",
+      "bytes": 27553,
+      "sha256": "6eb8d3f0f0684d9a39970afb9d2ffcbdffcb8a29686e1862f41837244fd82d9e"
+    },
+    {
+      "path": "nplayer/openai/coopadv/CCC/gpt-5.4-nano/races.csv",
+      "top_level": "nplayer",
+      "bytes": 9764,
+      "sha256": "bc3f7175e12f23936919621b73a2afc83a8bf8aba687d983ffd8b8d29eb421a9"
+    },
+    {
+      "path": "nplayer/openai/coopadv/CCC/gpt-5.4-nano/run_manifest.json",
+      "top_level": "nplayer",
+      "bytes": 1460,
+      "sha256": "8e2c37f6bde39bc55e204349236b182d9bd0f389b362c215747be83d6352c8cf"
+    },
+    {
+      "path": "nplayer/openai/coopadv/CCC/gpt-5.4-nano/turns.jsonl",
+      "top_level": "nplayer",
+      "bytes": 3469525,
+      "sha256": "9689e0c69c808ba291ec9251478e42f8d3940615a2ca0d9030bba8b307bebc32"
+    },
+    {
+      "path": "nplayer/openai/coopadv/CCC/players.csv",
+      "top_level": "nplayer",
+      "bytes": 54051,
+      "sha256": "7391356fb65f9ad5ccede8cc4546b33511ac17df77d493810f5b9c90fbe9d7a7"
+    },
+    {
+      "path": "nplayer/openai/coopadv/CCC/races.csv",
+      "top_level": "nplayer",
+      "bytes": 19887,
+      "sha256": "c41eaa887efaa622fa4df02c7aa11dbd27ab4dba8fae8728fe51195ffaf61e35"
+    },
+    {
+      "path": "nplayer/openai/risk/R1/gpt-5-nano/players.csv",
+      "top_level": "nplayer",
+      "bytes": 25763,
+      "sha256": "93f72b7491920251a5524a23cddfa06d732f9610e0633648af9591a2ae3b4f25"
+    },
+    {
+      "path": "nplayer/openai/risk/R1/gpt-5-nano/races.csv",
+      "top_level": "nplayer",
+      "bytes": 9336,
+      "sha256": "1a9ac7ac626f2afdd006c3bf04df59852791e81fec3b3b4898c511206f5be5a6"
+    },
+    {
+      "path": "nplayer/openai/risk/R1/gpt-5-nano/run_manifest.json",
+      "top_level": "nplayer",
+      "bytes": 1425,
+      "sha256": "83d1ec8330f42994aecf804b2586b85b40bfe9a11e6e9098094586b0a8a5e530"
+    },
+    {
+      "path": "nplayer/openai/risk/R1/gpt-5-nano/turns.jsonl",
+      "top_level": "nplayer",
+      "bytes": 3457938,
+      "sha256": "4bab8b1da1524239566bf2c5ef84a1107bc77ce84e0e1671403fef0f08a9cdac"
+    },
+    {
+      "path": "nplayer/openai/risk/R1/gpt-5.4-nano/players.csv",
+      "top_level": "nplayer",
+      "bytes": 26072,
+      "sha256": "cb7f1801df0cceaaf50f6ce263db380e019df0680038d4b49289abb9f89b9c0f"
+    },
+    {
+      "path": "nplayer/openai/risk/R1/gpt-5.4-nano/races.csv",
+      "top_level": "nplayer",
+      "bytes": 9344,
+      "sha256": "7af2412258bc0c55755e057617cf650ad55608cf13f05d598299c63a36cc8f46"
+    },
+    {
+      "path": "nplayer/openai/risk/R1/gpt-5.4-nano/run_manifest.json",
+      "top_level": "nplayer",
+      "bytes": 1427,
+      "sha256": "f706131cd717475c34ede3888ee9d234c724e4c3b8ff4f8860a85c80ab32bb80"
+    },
+    {
+      "path": "nplayer/openai/risk/R1/gpt-5.4-nano/turns.jsonl",
+      "top_level": "nplayer",
+      "bytes": 3457402,
+      "sha256": "56555accb514c2e12a1eb8788bfb6b8bb34684ed920f37eb7352c12528937e93"
+    },
+    {
+      "path": "nplayer/openai/risk/R1/players.csv",
+      "top_level": "nplayer",
+      "bytes": 51558,
+      "sha256": "dc4734a1c430ad3e749f327f7ce56f5b479a1aa33895be9010e8f12c66338f7f"
+    },
+    {
+      "path": "nplayer/openai/risk/R1/races.csv",
+      "top_level": "nplayer",
+      "bytes": 18501,
+      "sha256": "5b09704041a65427ecdde146846e30c26e7cd11f18c763cb17b6878fd54d54d3"
+    },
+    {
+      "path": "nplayer/openai/risk/R2/gpt-5-nano/players.csv",
+      "top_level": "nplayer",
+      "bytes": 26017,
+      "sha256": "895f427615747e5bef03c43ccf7c69774e62efea9944b57b88612da6ccf686fe"
+    },
+    {
+      "path": "nplayer/openai/risk/R2/gpt-5-nano/races.csv",
+      "top_level": "nplayer",
+      "bytes": 9140,
+      "sha256": "f87f66001b4c889d5c27f3de80fdfa5773e13a9b3c32d104ec2278273d09887f"
+    },
+    {
+      "path": "nplayer/openai/risk/R2/gpt-5-nano/run_manifest.json",
+      "top_level": "nplayer",
+      "bytes": 1425,
+      "sha256": "fa8dfc7a218fcfa34164ea7846d7700ae70b6cb23764206a1ff5fc100a9259af"
+    },
+    {
+      "path": "nplayer/openai/risk/R2/gpt-5-nano/turns.jsonl",
+      "top_level": "nplayer",
+      "bytes": 3461747,
+      "sha256": "8e1f5f6dc76230de394d30e768abb805d1f6bf293d5e6a8ab8c1840df34469b0"
+    },
+    {
+      "path": "nplayer/openai/risk/R2/gpt-5.4-nano/players.csv",
+      "top_level": "nplayer",
+      "bytes": 26092,
+      "sha256": "02cb0bf65cec8e193762841dbebdc5b6bb7e5af79e7c719ed387deadf6490dc4"
+    },
+    {
+      "path": "nplayer/openai/risk/R2/gpt-5.4-nano/races.csv",
+      "top_level": "nplayer",
+      "bytes": 9526,
+      "sha256": "dd66f3c0393eda364f924058d4a951e64dc92bc087dc9b245f780a7c42f405a2"
+    },
+    {
+      "path": "nplayer/openai/risk/R2/gpt-5.4-nano/run_manifest.json",
+      "top_level": "nplayer",
+      "bytes": 1427,
+      "sha256": "75452e07fe650670d98ac086f1790b171de8eda004fcbb910c7aab8e847b307b"
+    },
+    {
+      "path": "nplayer/openai/risk/R2/gpt-5.4-nano/turns.jsonl",
+      "top_level": "nplayer",
+      "bytes": 3455029,
+      "sha256": "f3c9fca496da137f5a795e3166425e46d5494c4908112aeac2bf70887abf66ad"
+    },
+    {
+      "path": "nplayer/openai/risk/R2/players.csv",
+      "top_level": "nplayer",
+      "bytes": 51832,
+      "sha256": "966c402d358f7d14c339732b8e975915387d35516e509aa5a4a76c07e8dd754c"
+    },
+    {
+      "path": "nplayer/openai/risk/R2/races.csv",
+      "top_level": "nplayer",
+      "bytes": 18487,
+      "sha256": "bca8e91a69ed7bac08840f7d7192ebec01ba4f459ebc9b6406c406032aeecf28"
+    },
+    {
+      "path": "nplayer/openai/risk/R3/gpt-5-nano/players.csv",
+      "top_level": "nplayer",
+      "bytes": 26464,
+      "sha256": "121f9d7e69e44a5044274c63bc6e64c53e2c4ee2c9de68fee92e4a6730d5e447"
+    },
+    {
+      "path": "nplayer/openai/risk/R3/gpt-5-nano/races.csv",
+      "top_level": "nplayer",
+      "bytes": 9042,
+      "sha256": "73de9f82e164656eba3a26c8a796801f7ceb633db850d5d68e31a2b52ac7b19e"
+    },
+    {
+      "path": "nplayer/openai/risk/R3/gpt-5-nano/run_manifest.json",
+      "top_level": "nplayer",
+      "bytes": 1425,
+      "sha256": "ac5531235ed95af55bb83fbb8db4fdbf1a5df2acea8368a018582a7bec95e468"
+    },
+    {
+      "path": "nplayer/openai/risk/R3/gpt-5-nano/turns.jsonl",
+      "top_level": "nplayer",
+      "bytes": 3460159,
+      "sha256": "7e626e90d26176ce025fd78a681f526bd32edc70d6fcd5369bf28f86f71b5dd7"
+    },
+    {
+      "path": "nplayer/openai/risk/R3/gpt-5.4-nano/players.csv",
+      "top_level": "nplayer",
+      "bytes": 25672,
+      "sha256": "73ddb688cfcb74a08de029c5b38fae046c87abc884ed93bd60bf97b97d44bf3c"
+    },
+    {
+      "path": "nplayer/openai/risk/R3/gpt-5.4-nano/races.csv",
+      "top_level": "nplayer",
+      "bytes": 9372,
+      "sha256": "b13cda0f922eab30afcde47792c71c49c33b18bb48cdccdb4c704434df639b75"
+    },
+    {
+      "path": "nplayer/openai/risk/R3/gpt-5.4-nano/run_manifest.json",
+      "top_level": "nplayer",
+      "bytes": 1427,
+      "sha256": "fe4869459144c5577e7c4647c76bb83ebce9cb606b84263e7482c74a3c6087a8"
+    },
+    {
+      "path": "nplayer/openai/risk/R3/gpt-5.4-nano/turns.jsonl",
+      "top_level": "nplayer",
+      "bytes": 3456951,
+      "sha256": "b0ad1a993cb36a246cf9f79d4874be00358b14f535e0e6dab43a04ef63f19ef5"
+    },
+    {
+      "path": "nplayer/openai/risk/R3/players.csv",
+      "top_level": "nplayer",
+      "bytes": 51859,
+      "sha256": "57d5858f915790a59fd55316c250d74265623c9e32bb8d59e1b064509ae41e25"
+    },
+    {
+      "path": "nplayer/openai/risk/R3/races.csv",
+      "top_level": "nplayer",
+      "bytes": 18235,
+      "sha256": "91e21174e3c239d4acfa43a51f64188d4a2ae060e04bbf9e14ff46ae708f2d59"
+    },
+    {
+      "path": "nplayer/openai/risk/R4/gpt-5-nano/players.csv",
+      "top_level": "nplayer",
+      "bytes": 26110,
+      "sha256": "ab8b903661f2f9b9c4d4a9a676f38b4aa174126da79dcb0611cf59e6f630964b"
+    },
+    {
+      "path": "nplayer/openai/risk/R4/gpt-5-nano/races.csv",
+      "top_level": "nplayer",
+      "bytes": 8986,
+      "sha256": "1756f4c84ac805d0e3291745059a54113303c4b35d07eff79a3792c11626bdc4"
+    },
+    {
+      "path": "nplayer/openai/risk/R4/gpt-5-nano/run_manifest.json",
+      "top_level": "nplayer",
+      "bytes": 1425,
+      "sha256": "9ac6ba46b3af1dba28e62c5527d68b08d59d530ec723042db484f9edf50a49c8"
+    },
+    {
+      "path": "nplayer/openai/risk/R4/gpt-5-nano/turns.jsonl",
+      "top_level": "nplayer",
+      "bytes": 3463514,
+      "sha256": "fd4ce81039669b64937f24f154a08cbc372b017be9505ba02bac8f733f4d2973"
+    },
+    {
+      "path": "nplayer/openai/risk/R4/gpt-5.4-nano/players.csv",
+      "top_level": "nplayer",
+      "bytes": 25317,
+      "sha256": "ba42f96078ae2f9709a542d290638adf3694e47c34f02ac2c0b427080da5dd57"
+    },
+    {
+      "path": "nplayer/openai/risk/R4/gpt-5.4-nano/races.csv",
+      "top_level": "nplayer",
+      "bytes": 9624,
+      "sha256": "c48ba2bc5d6401ba17f04a6faf94025645df0825da7da2dfb335ebdcc17aa42b"
+    },
+    {
+      "path": "nplayer/openai/risk/R4/gpt-5.4-nano/run_manifest.json",
+      "top_level": "nplayer",
+      "bytes": 1427,
+      "sha256": "3b0b79b4c7d6f23111e9131a56665c477b62f4111292a43e1ebc5aed4ca6c820"
+    },
+    {
+      "path": "nplayer/openai/risk/R4/gpt-5.4-nano/turns.jsonl",
+      "top_level": "nplayer",
+      "bytes": 3457370,
+      "sha256": "b359f8bca56f86187846974bd4936bc2e94fc8d923a7a19dfda5e8866db8e55c"
+    },
+    {
+      "path": "nplayer/openai/risk/R4/players.csv",
+      "top_level": "nplayer",
+      "bytes": 51150,
+      "sha256": "9a09efd79d9c4dd222eb7b34e7bb9adbbf79f7e8c2c277851592416d47228fbd"
+    },
+    {
+      "path": "nplayer/openai/risk/R4/races.csv",
+      "top_level": "nplayer",
+      "bytes": 18431,
+      "sha256": "6059096877ec96c0efe0a0244502a527b27ba7f0565fada6bba4329e378f22d2"
+    },
+    {
+      "path": "nplayer/openai/risk/R5/gpt-5-nano/players.csv",
+      "top_level": "nplayer",
+      "bytes": 26244,
+      "sha256": "51bc56dc649ba976204c7779bd24c0bc3aa8e8af7f9a7abf030762afc143f2c5"
+    },
+    {
+      "path": "nplayer/openai/risk/R5/gpt-5-nano/races.csv",
+      "top_level": "nplayer",
+      "bytes": 9028,
+      "sha256": "6c2c66a87af4c0657d7740eeb9ffcce7a35707351b540fa3be1a69e74ad85b30"
+    },
+    {
+      "path": "nplayer/openai/risk/R5/gpt-5-nano/run_manifest.json",
+      "top_level": "nplayer",
+      "bytes": 1425,
+      "sha256": "f98234fa40c3889ca5150d617ad14fdde2c4213b1398d9535a9e5a2643b01ab9"
+    },
+    {
+      "path": "nplayer/openai/risk/R5/gpt-5-nano/turns.jsonl",
+      "top_level": "nplayer",
+      "bytes": 3469395,
+      "sha256": "69791c759eafafeb61c66ebd765b8b1b890bb1906fbd884452c0e0ef7bb9b680"
+    },
+    {
+      "path": "nplayer/openai/risk/R5/gpt-5.4-nano/players.csv",
+      "top_level": "nplayer",
+      "bytes": 25631,
+      "sha256": "ba00aa56c08a3aff0f2614a554e66c27eafd4006a01bd58152f40c029b12d6cb"
+    },
+    {
+      "path": "nplayer/openai/risk/R5/gpt-5.4-nano/races.csv",
+      "top_level": "nplayer",
+      "bytes": 9792,
+      "sha256": "033db9f5dda8853e3302ecfa7e0cd97bee5574d27f955b223a8d65316577af25"
+    },
+    {
+      "path": "nplayer/openai/risk/R5/gpt-5.4-nano/run_manifest.json",
+      "top_level": "nplayer",
+      "bytes": 1427,
+      "sha256": "d7e09a0503882f924a2f7e7229a131cbb5974f24c6fb7dd0f060543bba8152cb"
+    },
+    {
+      "path": "nplayer/openai/risk/R5/gpt-5.4-nano/turns.jsonl",
+      "top_level": "nplayer",
+      "bytes": 3463727,
+      "sha256": "0191349f142d38b78e3a0a71693358e64bc694ea4701e4b83e9644ede10f3ab3"
+    },
+    {
+      "path": "nplayer/openai/risk/R5/players.csv",
+      "top_level": "nplayer",
+      "bytes": 51598,
+      "sha256": "ffc4936cafe3635dd44e26b2199300376fa767338f755313e102a91f6ef419dd"
+    },
+    {
+      "path": "nplayer/openai/risk/R5/races.csv",
+      "top_level": "nplayer",
+      "bytes": 18641,
+      "sha256": "33b2fba1eddb86cbe3f77ce800d3cafa25f7cd7c7d5483905dc1789c53ba2db7"
+    },
+    {
+      "path": "nplayer/openai/risk/R6/gpt-5-nano/players.csv",
+      "top_level": "nplayer",
+      "bytes": 26070,
+      "sha256": "3e72fd86a7d78c519e672974d45ef4447d2e646b76c1b038c3b06d2547d2b56d"
+    },
+    {
+      "path": "nplayer/openai/risk/R6/gpt-5-nano/races.csv",
+      "top_level": "nplayer",
+      "bytes": 9000,
+      "sha256": "bf4044113e871b98e7a2b10318b6a4d6323f3f0380498a95c61cf3efd9cdf871"
+    },
+    {
+      "path": "nplayer/openai/risk/R6/gpt-5-nano/run_manifest.json",
+      "top_level": "nplayer",
+      "bytes": 1425,
+      "sha256": "f02d609e3b496390113888d610d55032ae3a8da5a244c83edb5183db143ba642"
+    },
+    {
+      "path": "nplayer/openai/risk/R6/gpt-5-nano/turns.jsonl",
+      "top_level": "nplayer",
+      "bytes": 3471007,
+      "sha256": "0005f906faa2189d8ae440dd4f9526bbd62751fd7d97140aba59047f482bc196"
+    },
+    {
+      "path": "nplayer/openai/risk/R6/gpt-5.4-nano/players.csv",
+      "top_level": "nplayer",
+      "bytes": 25641,
+      "sha256": "030a13fed066c58ade7dfe54b68845aada6321fd1b9b6adac7db34b4b72c118d"
+    },
+    {
+      "path": "nplayer/openai/risk/R6/gpt-5.4-nano/races.csv",
+      "top_level": "nplayer",
+      "bytes": 9778,
+      "sha256": "5ee5bb7011290aca1df6c8abc08ba12d420a1c655a88624efa5ee4b29533cc1b"
+    },
+    {
+      "path": "nplayer/openai/risk/R6/gpt-5.4-nano/run_manifest.json",
+      "top_level": "nplayer",
+      "bytes": 1427,
+      "sha256": "8b2f2f66d244f01670aefcd81fc70f94c8c75779e721240b64f047ebe0a63865"
+    },
+    {
+      "path": "nplayer/openai/risk/R6/gpt-5.4-nano/turns.jsonl",
+      "top_level": "nplayer",
+      "bytes": 3464047,
+      "sha256": "e28e75d4124ce29dcda45c72986207188c6c5967d4b6df94809b7fce6e1ccc9b"
+    },
+    {
+      "path": "nplayer/openai/risk/R6/players.csv",
+      "top_level": "nplayer",
+      "bytes": 51434,
+      "sha256": "a290f0afb34fa4dbf605bd77e8336f3663fe072be19457915743ed3893694dc4"
+    },
+    {
+      "path": "nplayer/openai/risk/R6/races.csv",
+      "top_level": "nplayer",
+      "bytes": 18599,
+      "sha256": "b8c64e1f3a02a222b0f38df812c8f49493507eae010d4a2fbc65b0121362f08a"
     },
     {
       "path": "nplayer/rigorous_analysis.py",
@@ -7104,8 +9800,8 @@
     {
       "path": "open_source/context_skin_pilot/analysis_live_pilot_t0/analysis_summary.json",
       "top_level": "open_source",
-      "bytes": 7698,
-      "sha256": "ca906f4413195f72e615a8dd0f423b6d391d9c4285f440dae868f86a372195f1"
+      "bytes": 7495,
+      "sha256": "9906029bd2b5642fa3f92bef6625196930976e4caacdcd0c8707c0980d397330"
     },
     {
       "path": "open_source/context_skin_pilot/analysis_live_pilot_t0/comprehension_by_cell.csv",
@@ -7128,14 +9824,14 @@
     {
       "path": "open_source/context_skin_pilot/analysis_live_pilot_t0/context_skin_analysis.md",
       "top_level": "open_source",
-      "bytes": 8940,
-      "sha256": "9725c0d0d111cd9ce95f3ddc2f1e6f1889678485e344fd6103ea52527a721de7"
+      "bytes": 8848,
+      "sha256": "4d061989794fdb7d28844171cd293be864b33bac8e615b0cafa9902a8053f409"
     },
     {
       "path": "open_source/context_skin_pilot/analysis_live_pilot_t0/cross_protocol_effect_alignment.csv",
       "top_level": "open_source",
-      "bytes": 529,
-      "sha256": "72a079190dfe2185da726ac04058e4c21fab3652b6bd3e2e7fc9d29639b4c2a5"
+      "bytes": 521,
+      "sha256": "ebe163b28fc09b61b14a77a05bf7545f3a826bcf64b80ea8a098db883e4a4acf"
     },
     {
       "path": "open_source/context_skin_pilot/analysis_live_pilot_t0/figures/comprehension_admission.pdf",
@@ -7236,8 +9932,8 @@
     {
       "path": "open_source/context_skin_pilot/analysis_live_pilot_t0/paired_context_effects.csv",
       "top_level": "open_source",
-      "bytes": 8836,
-      "sha256": "ff645f5387feafd5623af93b1e2a6227fa9add1d440f43b687bede02cc9d7671"
+      "bytes": 8751,
+      "sha256": "6724da93d388edfa53c1e1b2c1d5337f8abf24098e5fa995011feda70cc3e672"
     },
     {
       "path": "open_source/context_skin_pilot/analysis_live_pilot_t0/paired_flip_directions.csv",
@@ -7248,14 +9944,14 @@
     {
       "path": "open_source/context_skin_pilot/analysis_live_pilot_t0/payoff_setback_summary.csv",
       "top_level": "open_source",
-      "bytes": 1073,
-      "sha256": "da7eaae5a7df3d2760762c90cc23ebaece0ff78b2b41206abbfb1d467b32aa62"
+      "bytes": 1064,
+      "sha256": "a97d6601fd639aa0204dc953ce994c048b550d1ed55b6166060e3f8793829014"
     },
     {
       "path": "open_source/context_skin_pilot/analysis_live_pilot_t0/planned_realistic_fictional_contrasts.csv",
       "top_level": "open_source",
-      "bytes": 1789,
-      "sha256": "6b071ae1f523bcffde974a12f97a6d077c07949f8d119cf4458605de8a614f28"
+      "bytes": 1779,
+      "sha256": "977661802d2e40c490ca1177ba3df2c43809bb5fec0e14d0fc79c2d3191cdd4c"
     },
     {
       "path": "open_source/context_skin_pilot/analysis_live_pilot_t0/quality_coverage.csv",
@@ -7266,8 +9962,8 @@
     {
       "path": "open_source/context_skin_pilot/analysis_live_pilot_t07/analysis_summary.json",
       "top_level": "open_source",
-      "bytes": 7701,
-      "sha256": "f2c8a0188786aa1de392ac0b34a7bade3bd2c3bc7a8f9c87f20a4f32164750a6"
+      "bytes": 7498,
+      "sha256": "ed50183dec4d63727e2fa860795cb7c900f3c02aadcf036840bf5fc9e9b9c3f3"
     },
     {
       "path": "open_source/context_skin_pilot/analysis_live_pilot_t07/comprehension_by_cell.csv",
@@ -7290,14 +9986,14 @@
     {
       "path": "open_source/context_skin_pilot/analysis_live_pilot_t07/context_skin_analysis.md",
       "top_level": "open_source",
-      "bytes": 8949,
-      "sha256": "f95596762a4b5bdc0b1212108b33a63e91b378aefbb20a0384ce86c7a5dd1a2f"
+      "bytes": 8857,
+      "sha256": "0570555ab10e4b6861e45fe69510969cd7cdee81ccafa64e9ef1af3c48b4b55a"
     },
     {
       "path": "open_source/context_skin_pilot/analysis_live_pilot_t07/cross_protocol_effect_alignment.csv",
       "top_level": "open_source",
-      "bytes": 545,
-      "sha256": "6c91fe24c6e23bb24f68e75fd497e8015a64dbbf542ff0729eb816673e7e6f00"
+      "bytes": 537,
+      "sha256": "ef28b1e1ca016da9e7c9482ec2131bd33ef2157333658528e92b43cfc5610fc3"
     },
     {
       "path": "open_source/context_skin_pilot/analysis_live_pilot_t07/figures/comprehension_admission.pdf",
@@ -7398,8 +10094,8 @@
     {
       "path": "open_source/context_skin_pilot/analysis_live_pilot_t07/paired_context_effects.csv",
       "top_level": "open_source",
-      "bytes": 9029,
-      "sha256": "43b46c619e0ddfe63c9e6cc730f9098239c4a772ac008257d3063fbfaa881448"
+      "bytes": 8944,
+      "sha256": "4f20829df7c59c7603bf5fccabda3fcf0ae178718a2e7b9044609727b3df7952"
     },
     {
       "path": "open_source/context_skin_pilot/analysis_live_pilot_t07/paired_flip_directions.csv",
@@ -7410,14 +10106,14 @@
     {
       "path": "open_source/context_skin_pilot/analysis_live_pilot_t07/payoff_setback_summary.csv",
       "top_level": "open_source",
-      "bytes": 1165,
-      "sha256": "66c64426e373673fb0b8ddab4a0f2c88a4fa1d8d3199d488e0b6e51b498da840"
+      "bytes": 1156,
+      "sha256": "c25c9b747cc88606392846ce43cf897136b39bbbb900abed8b1f016bdb6a524a"
     },
     {
       "path": "open_source/context_skin_pilot/analysis_live_pilot_t07/planned_realistic_fictional_contrasts.csv",
       "top_level": "open_source",
-      "bytes": 1785,
-      "sha256": "2655890a57872bf12d4c87d91abd8f37cc8cb8f44987d620ee589d22e1efe866"
+      "bytes": 1775,
+      "sha256": "e1a0996b16e665eeb26a96ead59ce385b801cb337e7b5d0dff350ac1f7f8b45b"
     },
     {
       "path": "open_source/context_skin_pilot/analysis_live_pilot_t07/quality_coverage.csv",
@@ -9608,6 +12304,12 @@
       "top_level": "scripts",
       "bytes": 12089,
       "sha256": "c0bcb328e088ef98aeb00d48d62532121a5166f1346eb672476fb79842de95ec"
+    },
+    {
+      "path": "scripts/analyze_two_player_paper_figures.py",
+      "top_level": "scripts",
+      "bytes": 99130,
+      "sha256": "5730e27a56c94e40ecf3b61c92830a1d0236140bf207a63f1105b957c60ad8ff"
     },
     {
       "path": "scripts/audit_gpu_archives.py",

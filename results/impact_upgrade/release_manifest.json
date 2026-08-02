@@ -32,8 +32,8 @@
       "sha256": "f69a93d9b13c41b7a7ec9d5aed7a18d8f0a760c3b1d7f02c7fc2899a3cbe8743"
     },
     "docs/demos/trajectory_lab/data.js": {
-      "bytes": 99547,
-      "sha256": "d6cc633eafe0095b1851739a10f715965df1cd4dba10a968566f40640368a586"
+      "bytes": 99546,
+      "sha256": "3ed9cb113ee0ff158d58a07be5d38064a2537be3cc978895c9285719dfc72ee4"
     },
     "docs/demos/trajectory_lab/index.html": {
       "bytes": 4714,
@@ -112,12 +112,12 @@
       "sha256": "8e6af995eec8fdd3793ad433c3182b77e9b8cfce5a661f90500e3f610aea48ee"
     },
     "results/catalog.csv": {
-      "bytes": 47507,
-      "sha256": "e69f737bf588c579d5fd1ace82d31fb96ce1d13c5a2105316b6a2a449854692f"
+      "bytes": 58323,
+      "sha256": "f4f9193b2f3b2eaae14e214fec93853751b064d639cfcd45237df608dd5f1b81"
     },
     "results/catalog.json": {
-      "bytes": 394364,
-      "sha256": "c02e34b7b32e9d3b2744d3c544504959d2c740b9caa57969c4d824acab38c293"
+      "bytes": 497828,
+      "sha256": "2fa0f364d80accafd362284267a4a58e65764bac9c54df9f01bbe98a3f0f800e"
     },
     "results/derived/payoff_scale_contract/README.md": {
       "bytes": 428,
@@ -136,16 +136,16 @@
       "sha256": "c52eeb522e5e4ea6f0e47a3dfd98551cd94fccf67b901e157316012e5fbfede7"
     },
     "results/impact_upgrade/analysis_manifest.json": {
-      "bytes": 5852,
-      "sha256": "e6094f746922cf0b29c5c6e0fa74b598daebaba07d08e26cf93a49d809bc1ddf"
+      "bytes": 5731,
+      "sha256": "aa3af7aec803f4821f8e876f9ba247edfff8c11c5b093e0feb60a9997b6a257c"
     },
     "results/impact_upgrade/artifact.json": {
-      "bytes": 64424,
-      "sha256": "248ce6d154b5780a91220784b739bbefda31b03e6d41fe0d696716e49086fe6c"
+      "bytes": 62877,
+      "sha256": "8d5513a81a3b8d2e0929f9a4f9d63daa1408df9ac5b10667e471eaa0fcdf16d6"
     },
     "results/impact_upgrade/data/context_direct_vs_live.csv": {
-      "bytes": 2564,
-      "sha256": "56b91429c0a5532bca57c2c4c7abc51c7435d3ba3f20935c3dc4e97dc38efe51"
+      "bytes": 2556,
+      "sha256": "b68a5b1b8aac8e0f179763615da35d232a65387eff5e69ae517bf48d3018bb1f"
     },
     "results/impact_upgrade/data/context_mapping_interaction.csv": {
       "bytes": 1137,
@@ -164,8 +164,8 @@
       "sha256": "9ad60484e92679fc08186ed9a39bdd1db4528176858b1265b2c6cee854830aec"
     },
     "results/impact_upgrade/data/trajectory_demo.json": {
-      "bytes": 108041,
-      "sha256": "cc446d0de269645c8f10fc2be11a4a16e70cd7fff944996850b88eae8e5157f1"
+      "bytes": 108040,
+      "sha256": "656e92da5c53bd025b957e85efe7a8507ad7e83ec95e7b9099391051f27728f3"
     },
     "results/impact_upgrade/data/trajectory_divergence_curve.csv": {
       "bytes": 6872,
@@ -248,12 +248,12 @@
       "sha256": "db01be5cd3b87251586306a894da58b1f93b4b2ebe9c57c07c5c9c7ea72d735d"
     },
     "results/impact_upgrade/impact_report.html": {
-      "bytes": 465904,
-      "sha256": "22dd8dd9f12b537c6e2863d86bd6141983f3ebf0a14822d9c545335e7e8a616e"
+      "bytes": 460917,
+      "sha256": "986d0dbe8565105e89d44b7b1474341c8adcbbd59cbcc2161f5d8f2796ba85a9"
     },
     "results/impact_upgrade/impact_report.md": {
-      "bytes": 11049,
-      "sha256": "0832f913877134b4b8d23d0d92c44a55cf4b5ed6639620b024d6f4e1073187cd"
+      "bytes": 10967,
+      "sha256": "c1c8b458efcc88df636323fc07125bf3f3a2d485d1adb05d360fdbdc669c6117"
     },
     "results/impact_upgrade/power/context_mapping_power.pdf": {
       "bytes": 25168,
@@ -268,12 +268,12 @@
       "sha256": "cbf94778c99752533a994820ca9aa988ab0cdace8c5de2f3b1a809017c6d2ccb"
     },
     "results/impact_upgrade/power/power_grid.csv": {
-      "bytes": 2106,
-      "sha256": "5e536199b16ac7d40c2164b8e216202514eef7bc042c333e555a64493352caba"
+      "bytes": 2077,
+      "sha256": "6cc8bd75b3d0ea11890c0fa75536fdc82cfd059561fc43964cf2dc9b42574a79"
     },
     "results/impact_upgrade/power/variance_proxy.csv": {
-      "bytes": 477,
-      "sha256": "b5958cbe8accd8bca2ba43970db9707ceeb51bc5a99731a3b393a33c065f4169"
+      "bytes": 469,
+      "sha256": "ca5835be184bd3a050e851bdbbf612b8b45b70ed302fff06aacdeac74093a41e"
     },
     "results/impact_upgrade/README.md": {
       "bytes": 2172,
@@ -288,8 +288,8 @@
       "sha256": "484ab76d8e4a1399899b9de585ba3c1cbe3f1558c3be53398bd3133ce3e8b4a7"
     },
     "results/RESULTS_INDEX.md": {
-      "bytes": 54614,
-      "sha256": "8e333685f05dea1a9a8ae6145336457e354703755a6346a83fa67bef64a6930f"
+      "bytes": 68869,
+      "sha256": "fb799448c540da416e513b617db7e741f110de9b53ed8f51d2cedb7587f3d46c"
     },
     "results/scripts/analyze_context_mapping_cross.py": {
       "bytes": 13808,
