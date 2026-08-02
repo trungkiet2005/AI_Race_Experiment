@@ -1,7 +1,7 @@
 {
   "schema_version": "ai-race.impact-release.v2",
   "identity": "content-addressed; independent of commit and worktree state",
-  "file_count": 83,
+  "file_count": 94,
   "files": {
     "ai_race/audit/payoff_scale.py": {
       "bytes": 2321,
@@ -280,8 +280,48 @@
       "sha256": "ca5835be184bd3a050e851bdbbf612b8b45b70ed302fff06aacdeac74093a41e"
     },
     "results/impact_upgrade/README.md": {
-      "bytes": 2172,
-      "sha256": "9e711ba9bc8cf2707524764a95b7444de85e568affebc54eea45652fa8bf8e8f"
+      "bytes": 2271,
+      "sha256": "cc7bcc2d4ab03f53ba9936096d99265d09cb63d464b32e81f9f1f295bdc42447"
+    },
+    "results/impact_upgrade/visual_atlas/context_effect_forest.pdf": {
+      "bytes": 26665,
+      "sha256": "aee09ee3f0768082a23ad5f99832fdda05266314048d62541a12f1db8aba5b23"
+    },
+    "results/impact_upgrade/visual_atlas/context_effect_forest.png": {
+      "bytes": 121121,
+      "sha256": "8e2dc9f20f5129a26f1942e110be5c80fb1aa8ecfc3c1204ee194e135a090284"
+    },
+    "results/impact_upgrade/visual_atlas/executive_visual_atlas.pdf": {
+      "bytes": 45460,
+      "sha256": "b61d40cfd2e8613cc6f58a2c47390347d95cf8a2e8df2129add8691f0f1a75ce"
+    },
+    "results/impact_upgrade/visual_atlas/executive_visual_atlas.png": {
+      "bytes": 588357,
+      "sha256": "8163cc7a82fce685d708adf675915f94dc6b733b844feddb7aeb4c7d4e201ab6"
+    },
+    "results/impact_upgrade/visual_atlas/index.html": {
+      "bytes": 3533,
+      "sha256": "d0ba8efbc9069f54ac386255f8f844636022427d2aea15d6f4a6b1e0ac25bfb2"
+    },
+    "results/impact_upgrade/visual_atlas/model_risk_heatmap.pdf": {
+      "bytes": 27705,
+      "sha256": "b7a976c2bd45df1eb0c093b52b0b41831ad81fe981837d20102d84396dfb95fd"
+    },
+    "results/impact_upgrade/visual_atlas/model_risk_heatmap.png": {
+      "bytes": 139279,
+      "sha256": "c64161c02429669de373b2b65537cb3b5590ec9b7a71e25a60ac40b6f4caf5ea"
+    },
+    "results/impact_upgrade/visual_atlas/README.md": {
+      "bytes": 1066,
+      "sha256": "5bdea3248583bd6588ca50e350741996cc399ddc8a264bce16d842e98a2bf869"
+    },
+    "results/impact_upgrade/visual_atlas/trajectory_divergence_heatmap.pdf": {
+      "bytes": 31013,
+      "sha256": "57d7f8104c6fad195bf436e7c99ff0f4c1d762d66b9af8324c6aa38626ee03c6"
+    },
+    "results/impact_upgrade/visual_atlas/trajectory_divergence_heatmap.png": {
+      "bytes": 102542,
+      "sha256": "bb5ed28dcd5f65ace98de38fa04a3e27e7a045cfea4fbb88359f73d19ca50124"
     },
     "results/impact_upgrade/xai_claim_audit.md": {
       "bytes": 22000,
@@ -314,6 +354,10 @@
     "results/scripts/analyze_state_scaffold_factorial.py": {
       "bytes": 23506,
       "sha256": "3cc172e803f86135d081b1fd3f90abcd6d1d138da2ce4594a9aaf922b56b34ed"
+    },
+    "results/scripts/build_visual_analytics_atlas.py": {
+      "bytes": 13936,
+      "sha256": "37b2f692db2e4427e1dcd3c06347ffd5c1aee9ea50858cd4e7dcf81fcfdfb94a"
     },
     "results/scripts/followup_analysis_common.py": {
       "bytes": 7725,

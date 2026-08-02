@@ -8,6 +8,7 @@ method reconstructions in explicit evidence classes rather than pooling them.
 
 - `impact_report.html` — validated self-contained technical report
 - `impact_report.md` — plain-text report source
+- `visual_atlas/README.md` — Seaborn/Matplotlib six-panel atlas and detailed paper-ready figures
 - `figures/` — paper-ready PNG and vector PDF figures
 - `data/` — source-backed tables and the trajectory-demo payload
 - `analysis_manifest.json` — hashes and quality-gate receipt

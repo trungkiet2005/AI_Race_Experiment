@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI Race Visual Analytics Atlas</title><style>
+:root{--ink:#0b132b;--muted:#64748b;--line:#dce3ed;--paper:#f8fafc;--blue:#2563eb}*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.55 Inter,ui-sans-serif,system-ui,sans-serif}
+main{width:min(1500px,94vw);margin:auto;padding:56px 0 80px}h1{font-size:clamp(2rem,4vw,4.4rem);line-height:1.02;margin:0 0 18px}
+.lede{max-width:900px;color:var(--muted);font-size:1.08rem;margin-bottom:40px}.chips{display:flex;gap:10px;flex-wrap:wrap;margin:24px 0 42px}
+.chips span{border:1px solid var(--line);background:white;border-radius:999px;padding:7px 12px;font-size:.86rem}
+article{background:white;border:1px solid var(--line);border-radius:20px;padding:22px;margin:24px 0;box-shadow:0 12px 36px #0b132b0a}
+header{display:flex;justify-content:space-between;align-items:start;gap:24px;margin-bottom:18px}h2{margin:0 0 4px;font-size:1.35rem}p{margin:0;color:var(--muted)}
+header a{white-space:nowrap;color:var(--blue);font-weight:700;text-decoration:none}.image{display:block;overflow:auto;border-radius:12px;background:#fff}
+img{display:block;width:100%;height:auto}footer{color:var(--muted);font-size:.88rem;margin-top:36px}
+@media(max-width:700px){main{padding-top:32px}article{padding:12px}header{display:block}header a{display:inline-block;margin-top:10px}}
+</style></head><body><main><h1>AI Race visual analytics atlas</h1>
+<p class="lede">A validity-first visual synthesis of the admitted results. Each panel preserves its own protocol, denominator, estimand, and uncertainty boundary.</p>
+<div class="chips"><span>Matplotlib 3.10</span><span>Seaborn 0.13</span><span>PNG 220 dpi</span><span>Vector PDF</span><span>No protocol pooling</span></div>
+<article><header><div><h2>Executive visual atlas</h2><p>Six linked views: model heterogeneity, mapping, direct/live effects, payoff, trajectory, and comprehension.</p></div><a href="executive_visual_atlas.pdf">Vector PDF</a></header><a class="image" href="executive_visual_atlas.png"><img src="executive_visual_atlas.png" alt="Executive visual atlas" loading="lazy"></a></article>
+<article><header><div><h2>Checkpoint × risk heatmap</h2><p>Exact player-level Unsafe rates across five checkpoints and three risk caps.</p></div><a href="model_risk_heatmap.pdf">Vector PDF</a></header><a class="image" href="model_risk_heatmap.png"><img src="model_risk_heatmap.png" alt="Checkpoint × risk heatmap" loading="lazy"></a></article>
+<article><header><div><h2>Dependency-aware context effects</h2><p>Fixed-state and live estimates with intervals at their correct clustering grains.</p></div><a href="context_effect_forest.pdf">Vector PDF</a></header><a class="image" href="context_effect_forest.png"><img src="context_effect_forest.png" alt="Dependency-aware context effects" loading="lazy"></a></article>
+<article><header><div><h2>Trajectory divergence by round</h2><p>Cumulative separation after identical round-1 decisions.</p></div><a href="trajectory_divergence_heatmap.pdf">Vector PDF</a></header><a class="image" href="trajectory_divergence_heatmap.png"><img src="trajectory_divergence_heatmap.png" alt="Trajectory divergence by round" loading="lazy"></a></article>
+<footer>Exploratory pilots unless explicitly labelled method validation. Mapping-conditioned findings remain replication targets because mapping follows repetition parity.</footer>
+</main></body></html>

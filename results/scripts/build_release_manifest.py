@@ -62,6 +62,7 @@ def delivery_paths() -> list[Path]:
         ROOT / "results" / "scripts" / "analyze_context_skin.py",
         ROOT / "results" / "scripts" / "analyze_context_temperature_robustness.py",
         ROOT / "results" / "scripts" / "simulate_context_mapping_power.py",
+        ROOT / "results" / "scripts" / "build_visual_analytics_atlas.py",
         # Global catalogs are rebuilt while unrelated experiment writers are active.
         # They are intentionally outside this immutable impact-package manifest.
         ROOT / "results" / "migration_manifest.json",
@@ -76,6 +77,7 @@ def delivery_paths() -> list[Path]:
     paths.extend(sorted((impact / "data").glob("*")))
     paths.extend(sorted((impact / "figures").glob("*")))
     paths.extend(sorted((impact / "power").glob("*")))
+    paths.extend(sorted((impact / "visual_atlas").glob("*")))
     paths.extend(sorted(impact.glob("demo_*.png")))
     paths.extend(sorted((ROOT / "results" / "derived" / "payoff_scale_contract").glob("*")))
     unique = {path.resolve() for path in paths if path.is_file()}
