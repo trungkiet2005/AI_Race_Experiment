@@ -84,16 +84,26 @@ def make_openai_send_batch(
     # finish_reason="length" — no exception is raised, so this cannot be
     # caught as an error. That silently turns into a 100% parse-failure race
     # (CLAUDE.md: one parse_failed decision voids the whole race), which is
-    # far worse than a loud crash. reasoning_effort="minimal" fixes it, but
-    # non-reasoning models (gpt-4o-mini, gpt-4.1-mini) 400 on that parameter
-    # ("Unrecognized request argument"), so it is only added after the
-    # empty-response signature is actually observed for this model.
-    #   None    -> not yet probed
-    #   "minimal" -> confirmed needed, send on every request
-    #   False   -> confirmed unsupported by this model, never send
+    # far worse than a loud crash. A low reasoning_effort fixes it, but the
+    # accepted value string is not consistent across model generations
+    # (gpt-5-nano/gpt-5-mini: "minimal"; gpt-5.6: 400 "Unsupported value:
+    # 'minimal' ... Supported values are: 'none', 'low', 'medium', 'high',
+    # 'xhigh'" — confirmed directly against gpt-5.6-luna/terra/sol on Bedrock
+    # Mantle, see ai_race/models/bedrock_mantle_direct.py). Candidates are
+    # tried in order and the first one that returns non-empty content wins.
+    # Non-reasoning models (gpt-4o-mini, gpt-4.1-mini) 400 on the whole
+    # parameter ("Unrecognized request argument"), not on its value, so it is
+    # only added after the empty-response signature is actually observed for
+    # this model.
+    #   None      -> not yet probed
+    #   "<value>" -> confirmed needed, send this value on every request
+    #   False     -> confirmed unsupported by this model, never send
+    _REASONING_EFFORT_CANDIDATES = ("minimal", "none")
     reasoning_effort_state: Optional[str] = None
 
-    def build_request(prompt: str, *, force_reasoning_effort: bool = False) -> dict[str, Any]:
+    def build_request(
+        prompt: str, *, force_reasoning_effort: Optional[str] = None
+    ) -> dict[str, Any]:
         request: dict[str, Any] = {
             "model": model_id,
             "messages": [{"role": "user", "content": prompt}],
@@ -104,8 +114,9 @@ def make_openai_send_batch(
         }
         if temperature_supported:
             request["temperature"] = float(temperature)
-        if reasoning_effort_state == "minimal" or force_reasoning_effort:
-            request["reasoning_effort"] = "minimal"
+        effort = force_reasoning_effort if force_reasoning_effort is not None else reasoning_effort_state
+        if effort:
+            request["reasoning_effort"] = effort
         return request
 
     def reasoning_tokens_spent(completion: Any) -> int:
@@ -115,32 +126,47 @@ def make_openai_send_batch(
     def probe_reasoning_effort(prompt: str) -> str:
         """Called once, only when a model's first empty response looks like
         a reasoning-budget exhaustion (empty content, reasoning_tokens > 0).
-        Tries the same prompt again with reasoning_effort forced on, and
-        remembers the outcome (needed / unsupported / doesn't help) for
-        every later prompt sent to this model in this run."""
+        Tries the same prompt again against each candidate effort value in
+        turn, and remembers the outcome (which value worked / nothing
+        helps) for every later prompt sent to this model in this run.
+
+        A BadRequestError on a candidate just moves on to the next one,
+        rather than trying to distinguish "this value is rejected" from
+        "the whole parameter is rejected" by matching on error text: real
+        error strings are not consistent enough across model generations to
+        match reliably (gpt-5.6's rejection of 'minimal' does not contain
+        the substring "reasoning_effort" at all), and the only cost of not
+        distinguishing them is one extra wasted call for a model that
+        rejects the parameter outright, versus every prompt afterward
+        silently losing this exact race to an unrecovered empty response."""
         nonlocal reasoning_effort_state
-        request = build_request(prompt, force_reasoning_effort=True)
-        try:
-            completion = client.chat.completions.create(**request)
-        except BadRequestError as error:
-            if "reasoning_effort" in str(error).lower():
-                reasoning_effort_state = False  # model rejects the param outright
-                return ""
-            raise
-        content = completion.choices[0].message.content or ""
-        reasoning_effort_state = "minimal" if content else False
+        for candidate in _REASONING_EFFORT_CANDIDATES:
+            request = build_request(prompt, force_reasoning_effort=candidate)
+            try:
+                completion = client.chat.completions.create(**request)
+            except BadRequestError:
+                continue  # this candidate value (or the whole param) is rejected; try the next one
+            content = completion.choices[0].message.content or ""
+            if content:
+                reasoning_effort_state = candidate
+                print(
+                    f"[openai_direct] {model_id!r} returned an empty message "
+                    "after spending its whole token budget on hidden "
+                    f"reasoning; sending reasoning_effort={candidate!r} for "
+                    "the rest of this run.",
+                    file=sys.stderr,
+                )
+                return content
+
+        reasoning_effort_state = False
         print(
             f"[openai_direct] {model_id!r} returned an empty message after "
-            "spending its whole token budget on hidden reasoning; "
-            + (
-                "sending reasoning_effort='minimal' for the rest of this run."
-                if content
-                else "reasoning_effort='minimal' did not help either; "
-                "leaving the empty response as a genuine parse failure."
-            ),
+            "spending its whole token budget on hidden reasoning; none of "
+            f"{_REASONING_EFFORT_CANDIDATES} helped; leaving the empty "
+            "response as a genuine parse failure.",
             file=sys.stderr,
         )
-        return content
+        return ""
 
     def one(prompt: str) -> str:
         nonlocal temperature_supported

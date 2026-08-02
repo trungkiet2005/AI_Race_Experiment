@@ -1,0 +1,297 @@
+{
+  "human": {
+    "0.1": {
+      "status": "ok",
+      "n_opp_unsafe": 497,
+      "n_opp_safe": 288,
+      "n_clusters": 98,
+      "effect_pp": 21.684970936731414,
+      "ci_low_pp": 12.147992358364242,
+      "ci_high_pp": 31.221949515098586,
+      "p_value": 8.329976305275598e-06
+    },
+    "0.6": {
+      "status": "ok",
+      "n_opp_unsafe": 510,
+      "n_opp_safe": 395,
+      "n_clusters": 105,
+      "effect_pp": 20.451724993795025,
+      "ci_low_pp": 11.295984523039598,
+      "ci_high_pp": 29.607465464550454,
+      "p_value": 1.1972459560598504e-05
+    },
+    "0.9": {
+      "status": "ok",
+      "n_opp_unsafe": 668,
+      "n_opp_safe": 546,
+      "n_clusters": 138,
+      "effect_pp": 18.30021276129066,
+      "ci_low_pp": 10.40125873385187,
+      "ci_high_pp": 26.19916678872945,
+      "p_value": 5.603486537040383e-06
+    }
+  },
+  "gpt-5-nano": {
+    "0.1": {
+      "status": "ok",
+      "n_opp_unsafe": 22,
+      "n_opp_safe": 310,
+      "n_clusters": 10,
+      "effect_pp": -7.096774193548389,
+      "ci_low_pp": -10.565029674216223,
+      "ci_high_pp": -3.6285187128805534,
+      "p_value": 6.059154205746097e-05
+    },
+    "0.6": {
+      "status": "ok",
+      "n_opp_unsafe": 18,
+      "n_opp_safe": 314,
+      "n_clusters": 10,
+      "effect_pp": 4.423213021939147,
+      "ci_low_pp": -10.91209561537579,
+      "ci_high_pp": 19.758521659254086,
+      "p_value": 0.5718569461886701
+    },
+    "0.9": {
+      "status": "ok",
+      "n_opp_unsafe": 30,
+      "n_opp_safe": 302,
+      "n_clusters": 10,
+      "effect_pp": -3.2671081677704263,
+      "ci_low_pp": -15.460511054164588,
+      "ci_high_pp": 8.926294718623733,
+      "p_value": 0.5994761371672772
+    }
+  },
+  "gpt-5.4-nano": {
+    "0.1": {
+      "status": "ok",
+      "n_opp_unsafe": 185,
+      "n_opp_safe": 147,
+      "n_clusters": 10,
+      "effect_pp": -0.8052950910094049,
+      "ci_low_pp": -8.741781843421407,
+      "ci_high_pp": 7.131191661402599,
+      "p_value": 0.8423624408702761
+    },
+    "0.6": {
+      "status": "ok",
+      "n_opp_unsafe": 163,
+      "n_opp_safe": 169,
+      "n_clusters": 10,
+      "effect_pp": -3.6047482484480975,
+      "ci_low_pp": -22.574707890125886,
+      "ci_high_pp": 15.365211393229691,
+      "p_value": 0.7095650817313979
+    },
+    "0.9": {
+      "status": "ok",
+      "n_opp_unsafe": 172,
+      "n_opp_safe": 160,
+      "n_clusters": 10,
+      "effect_pp": -3.924418604651151,
+      "ci_low_pp": -15.860560433139547,
+      "ci_high_pp": 8.011723223837247,
+      "p_value": 0.5193123189590194
+    }
+  },
+  "google/gemini-3-flash-preview": {
+    "0.1": {
+      "status": "not_identified",
+      "n_opp_unsafe": 330,
+      "n_opp_safe": 2
+    },
+    "0.6": {
+      "status": "ok",
+      "n_opp_unsafe": 241,
+      "n_opp_safe": 91,
+      "n_clusters": 10,
+      "effect_pp": 26.35994710683514,
+      "ci_low_pp": 15.078254689521126,
+      "ci_high_pp": 37.641639524149156,
+      "p_value": 4.660815719191079e-06
+    },
+    "0.9": {
+      "status": "ok",
+      "n_opp_unsafe": 191,
+      "n_opp_safe": 141,
+      "n_clusters": 10,
+      "effect_pp": 22.216033567264464,
+      "ci_low_pp": 13.157299247718512,
+      "ci_high_pp": 31.274767886810416,
+      "p_value": 1.5344134742307744e-06
+    }
+  },
+  "google/gemini-3.1-flash-lite-preview": {
+    "0.1": {
+      "status": "not_identified",
+      "n_opp_unsafe": 166,
+      "n_opp_safe": 0
+    },
+    "0.6": {
+      "status": "ok",
+      "n_opp_unsafe": 134,
+      "n_opp_safe": 32,
+      "n_clusters": 10,
+      "effect_pp": 42.0708955223881,
+      "ci_low_pp": 36.514852112020066,
+      "ci_high_pp": 47.626938932756126,
+      "p_value": 7.951840360649761e-50
+    },
+    "0.9": {
+      "status": "ok",
+      "n_opp_unsafe": 117,
+      "n_opp_safe": 49,
+      "n_clusters": 10,
+      "effect_pp": -12.262340833769397,
+      "ci_low_pp": -33.921693902671166,
+      "ci_high_pp": 9.397012235132374,
+      "p_value": 0.2671609174349492
+    }
+  },
+  "google/gemini-3.5-flash-lite": {
+    "0.1": {
+      "status": "ok",
+      "n_opp_unsafe": 136,
+      "n_opp_safe": 30,
+      "n_clusters": 10,
+      "effect_pp": 53.03921568627451,
+      "ci_low_pp": 39.85680636090537,
+      "ci_high_pp": 66.22162501164365,
+      "p_value": 3.1231630029995922e-15
+    },
+    "0.6": {
+      "status": "ok",
+      "n_opp_unsafe": 113,
+      "n_opp_safe": 53,
+      "n_clusters": 10,
+      "effect_pp": 40.140257138086554,
+      "ci_low_pp": 26.22177844648349,
+      "ci_high_pp": 54.05873582968962,
+      "p_value": 1.581798986998292e-08
+    },
+    "0.9": {
+      "status": "ok",
+      "n_opp_unsafe": 101,
+      "n_opp_safe": 65,
+      "n_clusters": 10,
+      "effect_pp": 41.94973343488199,
+      "ci_low_pp": 30.081616466791715,
+      "ci_high_pp": 53.81785040297227,
+      "p_value": 4.274288290066963e-12
+    }
+  },
+  "gpt-5.6-luna": {
+    "0.1": {
+      "status": "ok",
+      "n_opp_unsafe": 276,
+      "n_opp_safe": 56,
+      "n_clusters": 10,
+      "effect_pp": 10.817805383022746,
+      "ci_low_pp": -4.221749657257712,
+      "ci_high_pp": 25.857360423303206,
+      "p_value": 0.15860376940868537
+    },
+    "0.6": {
+      "status": "ok",
+      "n_opp_unsafe": 255,
+      "n_opp_safe": 77,
+      "n_clusters": 10,
+      "effect_pp": -0.4227145403616392,
+      "ci_low_pp": -13.70964192621294,
+      "ci_high_pp": 12.864212845489664,
+      "p_value": 0.9502801948486869
+    },
+    "0.9": {
+      "status": "ok",
+      "n_opp_unsafe": 224,
+      "n_opp_safe": 108,
+      "n_clusters": 10,
+      "effect_pp": 12.268518518518508,
+      "ci_low_pp": 0.041708531708449514,
+      "ci_high_pp": 24.49532850532857,
+      "p_value": 0.049223588310913204
+    }
+  },
+  "gpt-5.6-terra": {
+    "0.1": {
+      "status": "ok",
+      "n_opp_unsafe": 273,
+      "n_opp_safe": 59,
+      "n_clusters": 10,
+      "effect_pp": 30.51468305705597,
+      "ci_low_pp": 22.646921836856286,
+      "ci_high_pp": 38.38244427725565,
+      "p_value": 2.924611370583899e-14
+    },
+    "0.6": {
+      "status": "ok",
+      "n_opp_unsafe": 181,
+      "n_opp_safe": 151,
+      "n_clusters": 10,
+      "effect_pp": -5.576085763418824,
+      "ci_low_pp": -18.189764778594096,
+      "ci_high_pp": 7.037593251756448,
+      "p_value": 0.3862519052612218
+    },
+    "0.9": {
+      "status": "ok",
+      "n_opp_unsafe": 138,
+      "n_opp_safe": 194,
+      "n_clusters": 10,
+      "effect_pp": 21.051845211414918,
+      "ci_low_pp": 1.5759197486048064,
+      "ci_high_pp": 40.527770674225025,
+      "p_value": 0.03412792208793121
+    }
+  },
+  "claude-opus-5": {
+    "0.1": {
+      "status": "not_identified",
+      "n_opp_unsafe": 332,
+      "n_opp_safe": 0
+    },
+    "0.6": {
+      "status": "not_identified",
+      "n_opp_unsafe": 4,
+      "n_opp_safe": 328
+    },
+    "0.9": {
+      "status": "not_identified",
+      "n_opp_unsafe": 0,
+      "n_opp_safe": 332
+    }
+  },
+  "claude-sonnet-5": {
+    "0.1": {
+      "status": "ok",
+      "n_opp_unsafe": 282,
+      "n_opp_safe": 50,
+      "n_clusters": 10,
+      "effect_pp": 57.87234042553197,
+      "ci_low_pp": 51.88742525010226,
+      "ci_high_pp": 63.85725560096169,
+      "p_value": 4.229733574210302e-80
+    },
+    "0.6": {
+      "status": "ok",
+      "n_opp_unsafe": 70,
+      "n_opp_safe": 262,
+      "n_clusters": 10,
+      "effect_pp": 81.78844056706642,
+      "ci_low_pp": 72.3118673827771,
+      "ci_high_pp": 91.26501375135575,
+      "p_value": 3.449876141858951e-64
+    },
+    "0.9": {
+      "status": "ok",
+      "n_opp_unsafe": 74,
+      "n_opp_safe": 258,
+      "n_clusters": 10,
+      "effect_pp": 70.22836790278662,
+      "ci_low_pp": 64.68684316316468,
+      "ci_high_pp": 75.76989264240855,
+      "p_value": 3.4132264975271697e-136
+    }
+  }
+}

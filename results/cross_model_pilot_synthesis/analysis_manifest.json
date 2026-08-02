@@ -1,14 +1,8 @@
 {
   "schema": "cross-model-pilot-synthesis-v1",
-  "generated_by": "results/scripts/build_cross_model_pilot_synthesis.py",
-  "n_clean_run_dirs": 157,
+  "generated_by": "results/cross_model_pilot_synthesis/build_cross_model_pilot_synthesis.py",
+  "n_clean_run_dirs": 299,
   "excluded_run_dirs": {
-    "results/frontier/bedrock/persona/risk_matrix/R1_R3/us.anthropic.claude-opus-5": "run_manifest status=running",
-    "results/frontier/bedrock/persona/risk_matrix/R1_R4/us.anthropic.claude-opus-5": "run_manifest status=running",
-    "results/frontier/bedrock_mantle/luna/persona/risk_matrix/R3_R5/openai.gpt-5.6-luna": "run_manifest status=running",
-    "results/frontier/bedrock_mantle/luna/persona/risk_matrix/R3_R6/openai.gpt-5.6-luna": "run_manifest status=running",
-    "results/frontier/bedrock_mantle/terra/persona/risk_matrix/R3_R3/openai.gpt-5.6-terra": "run_manifest status=running",
-    "results/frontier/bedrock_mantle/terra/persona/risk_matrix/R3_R4/openai.gpt-5.6-terra": "run_manifest status=running",
     "results/frontier/gemini/persona/Rminus_risk_averse/gemini-3.1-pro-preview": "run_manifest status=failed",
     "results/frontier/gemini/persona/Rplus_risk_seeking/gemini-3.1-pro-preview": "run_manifest status=failed",
     "results/frontier/gemini/persona/risk_matrix/R1_R1/gemini-3.1-pro-preview": "run_manifest status=failed",
@@ -89,33 +83,93 @@
     ],
     "google/gemini-3.5-flash-lite": [
       "results/frontier/baseline/google-gemini-3.5-flash-lite"
+    ],
+    "gpt-5.6-luna": [
+      "results/frontier/bedrock_mantle/luna/baseline/openai.gpt-5.6-luna",
+      "results/frontier/bedrock_mantle/luna/persona/R0_neutral/openai.gpt-5.6-luna"
+    ],
+    "gpt-5.6-terra": [
+      "results/frontier/bedrock_mantle/terra/baseline/openai.gpt-5.6-terra",
+      "results/frontier/bedrock_mantle/terra/persona/R0_neutral/openai.gpt-5.6-terra"
+    ],
+    "claude-opus-5": [
+      "results/frontier/bedrock/baseline/us.anthropic.claude-opus-5",
+      "results/frontier/bedrock/persona/R0_neutral/us.anthropic.claude-opus-5"
+    ],
+    "claude-sonnet-5": [
+      "results/frontier/bedrock/baseline/us.anthropic.claude-sonnet-5",
+      "results/frontier/bedrock/persona/R0_neutral/us.anthropic.claude-sonnet-5"
     ]
   },
   "gradient_models": [
     "gpt-5-nano",
     "gpt-5.4-nano",
-    "google/gemini-3-flash-preview"
+    "google/gemini-3-flash-preview",
+    "openai.gpt-5.6-luna",
+    "openai.gpt-5.6-terra",
+    "us.anthropic.claude-opus-5",
+    "us.anthropic.claude-sonnet-5"
   ],
   "figures": {
-    "2p_position_effect_by_persona.png": "dcbcf07a0c3fd3f61b2a755bdf0189243bf1d94cd218f6d5e38afe9d91afb762",
-    "cross_model_risk_response_neutral.png": "48d460d715aa265edf96f380f8ecb6c7093b3018258c41de87706e6a0a507ff2",
-    "feature_importance_shap_heatmap.png": "c86f33336e5d34d0ed9f45704191913727381404cf4fa7e938601c045fa70d5f",
-    "feature_importance_shap_heatmap_gen56.png": "e6d5c6a31ae3565129fd8cd279c5ecfafb1ff8b540a390b86614675c18322270",
-    "gen56_within_role_risk_sensitivity.png": "55ec367468d1c1f7de0e7e47c39aad0d49555ac6a106e7add795b3aa4feeb004",
-    "human_effect_scorecard.png": "db2e145d5e906e2dd518ae0788979c071796f95a7586aaecd81b560969946829",
-    "human_vs_llm_distribution.png": "1df23d3ddaf17e17fdef9d66b26883bfd6786e2042d0b3f44c50963507252344",
-    "human_vs_llm_dynamic_coefficients.png": "1f49c952b42ad460d44406a87b429d5aa807441668779378ccf553599fead287",
-    "llm_human_cluster_projection.png": "d02c02ffdf76d2b98ec9837e6d5166346504de33aee10d2041a24849276b6241",
-    "llm_human_cluster_projection_gen56.png": "fe967136f010c9c56ce2fd38a7dce05d7d03e6737ee627e3cc37cab36f134a2b",
-    "nplayer_peer_composition_effect.png": "7a19fe16ebd69e6ca2310cf7fc174b7ff88a1c420c15f20b60e5197fe6653b71",
-    "nplayer_position_effect_sign_flip.png": "11a03d5d67b1b3ba736c8cf36b56eea629ec955d4dece0192b2ad618ee39930c",
-    "payoff_welfare_unsafe_vs_payoff.png": "d747c81babb95abca4d04daf0f4cfa180d42d3e00ef26362cd76e91bb10d6f0e",
-    "persona_role_gradient.png": "0a7662abf7b41fbc2f6b3d9fe3304b228a3c837422bd728eefe86b619ca346ea",
-    "persona_role_gradient_gen56.png": "4946ff73190bb28bfb9a53f9edb7ab8bdf8d5b97fdfab61db09cf7b48edec98f",
-    "round_trajectory_gen56.png": "064618015af429b642b2359ab51b63751312837aa98bee2c3c17d3c3323fefb9"
+    "2p_position_effect_by_persona.png": "151bc23d5258286f36d1e4c2b71158fc43e8358f0fd416da18e8e96f1573543a",
+    "canonical_strategy_classification.png": "833bb8cdd3485b29a34433a4cf3fa1c28522a97e3c71f6b1ab2161c43cd83ed9",
+    "cross_model_risk_response_neutral.png": "c2799d6bdb9ed3e6c1b7cdbe97d82121bf0b2e2cd844c3bcdcca521cda5fca9f",
+    "feature_importance_shap_heatmap.png": "16ca01be10bff6ec1c7f8fe4aaa5a26b9aeb026f2fdd20bfd844143e9a0f803d",
+    "human_effect_scorecard.png": "a1f7c0c5f3af58b5ef2db7fb4feb0b60c08232c26b33d24d0688d4b3e9db1009",
+    "human_vs_llm_distribution.png": "4f3bcd4806764203948c96b3d8d83259f9e062d2a8dc5b320d22f7f9fa08ff96",
+    "human_vs_llm_dynamic_coefficients.png": "5ef2552a2e0d7873db24704c8f1cbd4aeaf8bd9afccb182e77e643a766ca82f8",
+    "llm_human_cluster_projection.png": "e32e039ee3dd0df5b69e3e688d670878638993540715c5a59045e18468ff12e1",
+    "nplayer_peer_composition_effect.png": "8b1225c7fc88dcf83c204d02382c8033955b6abab6fad3f48fa311fb6befe2ee",
+    "nplayer_position_effect_sign_flip.png": "40202c5a70de3e098dd6c6a813375f3a5d876d80871c3289923eebfffccaf283",
+    "payoff_welfare_unsafe_vs_payoff.png": "3a0333fe3ca2f21bad5c4a524ada89b986ed9d8064e631e28082fd7173ca9570",
+    "persona_role_gradient_extended.png": "f086944849c3a31ef1292b75fd29be928bb02d976623abc2de9f5fcc00681f96",
+    "round_trajectory.png": "1f2c2fb7712f723de22e590758cfdd49987fc9d1a23c956f9f299ab557cf395f",
+    "social_persona_axis.png": "296d8df04e07d1ad6bbfcd8d32ac9fa5c03ec679f5fcf353597ada7ea66a9b0f",
+    "within_risk_reciprocity.png": "40ab7b903ab72a9564362a81e9ee6a66434916c469f049dad1e0f76edc53562b",
+    "within_role_risk_sensitivity.png": "72496a2b03f22c37e4c84110b0761eb6d0fb0a481f95d1abd7eb532656bff3c2"
   },
-  "pass5_scripts": [
-    "results/scripts/build_gen56_persona_gradient.py",
-    "results/scripts/build_gen56_full_extension.py"
-  ]
+  "generating_scripts": [
+    "results/cross_model_pilot_synthesis/analyze_behavioral_clustering.py",
+    "results/cross_model_pilot_synthesis/analyze_canonical_strategies.py",
+    "results/cross_model_pilot_synthesis/analyze_feature_importance.py",
+    "results/cross_model_pilot_synthesis/analyze_heterogeneity_test.py",
+    "results/cross_model_pilot_synthesis/analyze_human_vs_llm.py",
+    "results/cross_model_pilot_synthesis/analyze_payoff_welfare.py",
+    "results/cross_model_pilot_synthesis/analyze_social_persona_axis.py",
+    "results/cross_model_pilot_synthesis/analyze_within_risk_reciprocity.py",
+    "results/cross_model_pilot_synthesis/build_2p_position_persona.py",
+    "results/cross_model_pilot_synthesis/build_cross_model_pilot_synthesis.py",
+    "results/cross_model_pilot_synthesis/build_human_vs_llm_distribution_v3.py",
+    "results/cross_model_pilot_synthesis/build_llm_human_cluster_projection_v2.py",
+    "results/cross_model_pilot_synthesis/build_nplayer_position_persona.py",
+    "results/cross_model_pilot_synthesis/build_nplayer_synthesis.py",
+    "results/cross_model_pilot_synthesis/build_persona_gradient_extended.py",
+    "results/cross_model_pilot_synthesis/build_round_trajectory.py"
+  ],
+  "retired_scripts": {
+    "results/scripts/build_gen56_full_extension.py": "Pass 6: existed only to work around the missing GPT-5.6 neutral lane by pooling persona conditions; all four parts now computed for every checkpoint on neutral-lane data. Recoverable at 85a4d6b.",
+    "results/cross_model_pilot_synthesis/build_cross_model_pilot_synthesis.py::fig_persona_gradient": "Pass 7: removed. persona_role_gradient_extended.png supersedes it (7 checkpoints vs 3, plus the un-framed neutral anchor and faceting). persona_role_gradient.csv is still written and consumed.",
+    "results/scripts/build_human_vs_llm_distribution_v2.py": "Pass 7: deleted (never committed). Superseded by build_human_vs_llm_distribution_v3.py, and it wrote the same figure filename -- running it would have silently reverted the figure to the old 8-row design."
+  },
+  "new_run_dirs_by_pass": {
+    "pass6": {
+      "results/frontier/bedrock_mantle/luna/baseline": "completed, 558 turns, 0 parse failures",
+      "results/frontier/bedrock_mantle/luna/persona/R0_neutral": "completed, 558 turns, 0 parse failures",
+      "results/frontier/bedrock_mantle/luna/persona/S_AA_adv_adv": "completed, 558 turns, 0 parse failures",
+      "results/frontier/bedrock_mantle/luna/persona/S_AC_adv_coop": "completed, 558 turns, 0 parse failures",
+      "results/frontier/bedrock_mantle/luna/persona/S_CA_coop_adv": "completed, 558 turns, 0 parse failures",
+      "results/frontier/bedrock_mantle/luna/persona/S_CC_coop_coop": "completed, 558 turns, 0 parse failures",
+      "results/frontier/bedrock_mantle/terra/baseline": "completed, 558 turns, 0 parse failures",
+      "results/frontier/bedrock_mantle/terra/persona/R0_neutral": "completed, 558 turns, 0 parse failures",
+      "results/frontier/bedrock_mantle/terra/persona/S_AA_adv_adv": "completed, 558 turns, 0 parse failures",
+      "results/frontier/bedrock_mantle/terra/persona/S_AC_adv_coop": "completed, 558 turns, 0 parse failures",
+      "results/frontier/bedrock_mantle/terra/persona/S_CA_coop_adv": "completed, 558 turns, 0 parse failures",
+      "results/frontier/bedrock_mantle/terra/persona/S_CC_coop_coop": "completed, 558 turns, 0 parse failures"
+    },
+    "pass7": {
+      "results/frontier/bedrock/**/us.anthropic.claude-opus-5": "44 dirs, all completed, 0 parse failures",
+      "results/frontier/bedrock/**/us.anthropic.claude-sonnet-5": "44 dirs, all completed, 0 parse failures"
+    }
+  },
+  "figure_captions": "Pass 7: explanatory footnote blocks were removed from every figure at the user's request -- figures now carry only title/axes/legend, and all methodological caveats live in INSIGHTS.md beside each figure."
 }

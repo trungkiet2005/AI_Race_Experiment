@@ -1,0 +1,31 @@
+{
+  "name": "bedrock_persona_baseline_risk_seeking",
+  "runPhase": "pilot",
+  "description": "Persona condition R+ (both seats risk-seeking) via direct Amazon Bedrock Converse API (backend='bedrock'), models=Claude Opus 5, Claude Sonnet 5.",
+  "games": [
+    "ai_race_risk_10",
+    "ai_race_risk_60",
+    "ai_race_risk_90"
+  ],
+  "agents": "persona_risk_seeking",
+  "languages": [
+    "en"
+  ],
+  "models": [
+    "us.anthropic.claude-opus-5",
+    "us.anthropic.claude-sonnet-5"
+  ],
+  "useOffline": false,
+  "backend": "bedrock",
+  "samplingSeedApplied": false,
+  "proxyOptions": {
+    "temperature": 0.7,
+    "max_tokens": 256,
+    "max_transport_retries": 6,
+    "concurrency": 4
+  },
+  "repetitions": 10,
+  "seed": 260726,
+  "maxParseRetries": 3,
+  "verbose": true
+}

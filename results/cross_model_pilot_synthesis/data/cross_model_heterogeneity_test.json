@@ -1,26 +1,26 @@
 {
-  "n_decisions": 4464,
-  "n_models": 5,
-  "loglik_A_risk_only": -3038.231378666005,
-  "loglik_B_risk_x_model": -2059.6137133081666,
-  "loglik_C_model_only": -2236.9498980746885,
-  "loglik_intercept_only": -3083.1564303881432,
-  "pseudo_r2_A": 0.014571123147983589,
-  "pseudo_r2_B": 0.33197884713263204,
-  "pseudo_r2_C": 0.2744611088172495,
+  "n_decisions": 8928,
+  "n_models": 9,
+  "loglik_A_risk_only": -5705.94935837332,
+  "loglik_B_risk_x_model": -3930.868190610374,
+  "loglik_C_model_only": -5089.560011021076,
+  "loglik_intercept_only": -6165.745603713469,
+  "pseudo_r2_A": 0.07457269171665593,
+  "pseudo_r2_B": 0.36246669215265515,
+  "pseudo_r2_C": 0.17454265267286972,
   "lr_test_B_vs_A_slope_heterogeneity_given_common_slope_baseline": {
-    "lr_stat": 1957.2353307156773,
-    "df": 12,
+    "lr_stat": 3550.1623355258926,
+    "df": 24,
     "p_value": 0.0
   },
   "lr_test_C_vs_intercept_level_heterogeneity": {
-    "lr_stat": 1692.4130646269095,
-    "df": 4,
+    "lr_stat": 2152.3711853847853,
+    "df": 8,
     "p_value": 0.0
   },
   "lr_test_B_vs_C_slope_heterogeneity_beyond_level": {
-    "lr_stat": 354.6723695330438,
-    "df": 10,
-    "p_value": 4.061651890949211e-70
+    "lr_stat": 2317.3836408214047,
+    "df": 18,
+    "p_value": 0.0
   }
 }

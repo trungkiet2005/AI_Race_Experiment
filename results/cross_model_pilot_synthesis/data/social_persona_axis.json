@@ -1,0 +1,1500 @@
+{
+  "gpt-5-nano": {
+    "n_obs": 2232,
+    "n_races": 120,
+    "cell_means": [
+      {
+        "own_adversarial": 0,
+        "opponent_adversarial": 0,
+        "mean": 0.0,
+        "size": 558,
+        "n_races": 30
+      },
+      {
+        "own_adversarial": 0,
+        "opponent_adversarial": 1,
+        "mean": 0.01971326164874552,
+        "size": 558,
+        "n_races": 60
+      },
+      {
+        "own_adversarial": 1,
+        "opponent_adversarial": 0,
+        "mean": 0.517921146953405,
+        "size": 558,
+        "n_races": 60
+      },
+      {
+        "own_adversarial": 1,
+        "opponent_adversarial": 1,
+        "mean": 0.3978494623655914,
+        "size": 558,
+        "n_races": 30
+      }
+    ],
+    "all_rounds_fit": {
+      "status": "unstable_separation",
+      "n_obs": 2232,
+      "n_races": 120,
+      "n_clusters": 10,
+      "terms": {
+        "Intercept": {
+          "coef": -22.522531078144766,
+          "se": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "p_value": NaN,
+          "unstable": true
+        },
+        "own_adversarial": {
+          "coef": 22.594246386325725,
+          "se": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "p_value": NaN,
+          "unstable": true
+        },
+        "opponent_adversarial": {
+          "coef": 18.615977544262226,
+          "se": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "p_value": NaN,
+          "unstable": true
+        },
+        "own_adversarial:opponent_adversarial": {
+          "coef": -19.102126630362335,
+          "se": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "p_value": NaN,
+          "unstable": true
+        }
+      }
+    },
+    "round1_only_fit": {
+      "status": "unstable_separation",
+      "n_obs": 240,
+      "n_races": 120,
+      "n_clusters": 10,
+      "terms": {
+        "Intercept": {
+          "coef": -25.35266783567805,
+          "se": 117.2314380749853,
+          "ci_low": -255.12206431848688,
+          "ci_high": 204.41672864713075,
+          "p_value": 0.8287837766006946,
+          "unstable": true
+        },
+        "own_adversarial": {
+          "coef": 23.48086565873423,
+          "se": 113.257112436124,
+          "ci_low": -198.4989957090723,
+          "ci_high": 245.46072702654072,
+          "p_value": 0.8357571900214128,
+          "unstable": true
+        },
+        "opponent_adversarial": {
+          "coef": -2.502737740138825,
+          "se": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "p_value": NaN,
+          "unstable": false
+        },
+        "own_adversarial:opponent_adversarial": {
+          "coef": 1.007244087083774,
+          "se": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "p_value": NaN,
+          "unstable": false
+        }
+      }
+    },
+    "round1_cell_means": [
+      {
+        "own_adversarial": 0,
+        "opponent_adversarial": 0,
+        "mean": 0.0,
+        "size": 60,
+        "n_races": 30
+      },
+      {
+        "own_adversarial": 0,
+        "opponent_adversarial": 1,
+        "mean": 0.0,
+        "size": 60,
+        "n_races": 60
+      },
+      {
+        "own_adversarial": 1,
+        "opponent_adversarial": 0,
+        "mean": 0.13333333333333333,
+        "size": 60,
+        "n_races": 60
+      },
+      {
+        "own_adversarial": 1,
+        "opponent_adversarial": 1,
+        "mean": 0.03333333333333333,
+        "size": 60,
+        "n_races": 30
+      }
+    ],
+    "lpm_all_rounds": {
+      "status": "ok",
+      "n_players": 180,
+      "n_races": 120,
+      "n_clusters": 10,
+      "terms": {
+        "Intercept": {
+          "coef_pp": 9.44247049485592e-14,
+          "se_pp": 1.807542134202599e-08,
+          "ci_low_pp": -3.5427080411052644e-08,
+          "ci_high_pp": 3.542726926046254e-08,
+          "p_value": null,
+          "degenerate_zero_variance": true
+        },
+        "own_adversarial": {
+          "coef_pp": 51.93076830576824,
+          "se_pp": 0.8284249886625747,
+          "ci_low_pp": 50.30708516409659,
+          "ci_high_pp": 53.55445144743989,
+          "p_value": 0.0,
+          "degenerate_zero_variance": false
+        },
+        "opponent_adversarial": {
+          "coef_pp": 1.8762395012394284,
+          "se_pp": 0.45313539767058064,
+          "ci_low_pp": 0.9881104416848552,
+          "ci_high_pp": 2.764368560794002,
+          "p_value": 3.4644163859862625e-05,
+          "degenerate_zero_variance": false
+        },
+        "own_adversarial:opponent_adversarial": {
+          "coef_pp": -14.390327265327135,
+          "se_pp": 1.3254372188867813,
+          "ci_low_pp": -16.98813647811416,
+          "ci_high_pp": -11.792518052540112,
+          "p_value": 1.8463365403790498e-27,
+          "degenerate_zero_variance": false
+        }
+      }
+    },
+    "lpm_round1": {
+      "status": "ok",
+      "n_players": 180,
+      "n_races": 120,
+      "n_clusters": 10,
+      "terms": {
+        "Intercept": {
+          "coef_pp": 2.0066109442655564e-14,
+          "se_pp": 1.616714833708803e-07,
+          "ci_low_pp": -3.1687026466798226e-07,
+          "ci_high_pp": 3.168703048002011e-07,
+          "p_value": null,
+          "degenerate_zero_variance": true
+        },
+        "own_adversarial": {
+          "coef_pp": 13.333333333333321,
+          "se_pp": 4.884324085611893,
+          "ci_low_pp": 3.7602340367124802,
+          "ci_high_pp": 22.906432629954164,
+          "p_value": 0.006336860961923571,
+          "degenerate_zero_variance": false
+        },
+        "opponent_adversarial": {
+          "coef_pp": -1.1116640249450222e-14,
+          "se_pp": 1.7524771190810282e-07,
+          "ci_low_pp": -3.434792148295729e-07,
+          "ci_high_pp": 3.434791925962925e-07,
+          "p_value": null,
+          "degenerate_zero_variance": true
+        },
+        "own_adversarial:opponent_adversarial": {
+          "coef_pp": -9.999999999999984,
+          "se_pp": 4.482163178249243,
+          "ci_low_pp": -18.784878402200082,
+          "ci_high_pp": -1.2151215977998842,
+          "p_value": 0.02567678518376482,
+          "degenerate_zero_variance": false
+        }
+      }
+    }
+  },
+  "gpt-5.4-nano": {
+    "n_obs": 2232,
+    "n_races": 120,
+    "cell_means": [
+      {
+        "own_adversarial": 0,
+        "opponent_adversarial": 0,
+        "mean": 0.025089605734767026,
+        "size": 558,
+        "n_races": 30
+      },
+      {
+        "own_adversarial": 0,
+        "opponent_adversarial": 1,
+        "mean": 0.05913978494623656,
+        "size": 558,
+        "n_races": 60
+      },
+      {
+        "own_adversarial": 1,
+        "opponent_adversarial": 0,
+        "mean": 0.8064516129032258,
+        "size": 558,
+        "n_races": 60
+      },
+      {
+        "own_adversarial": 1,
+        "opponent_adversarial": 1,
+        "mean": 0.7204301075268817,
+        "size": 558,
+        "n_races": 30
+      }
+    ],
+    "all_rounds_fit": {
+      "status": "ok",
+      "n_obs": 2232,
+      "n_races": 120,
+      "n_clusters": 10,
+      "terms": {
+        "Intercept": {
+          "coef": -3.6598919172406865,
+          "se": 0.4061334724316737,
+          "ci_low": -4.4558988961229575,
+          "ci_high": -2.863884938358415,
+          "p_value": 2.0316523271775578e-19,
+          "unstable": false
+        },
+        "own_adversarial": {
+          "coef": 5.087008272880832,
+          "se": 0.487584387083151,
+          "ci_low": 4.131360434773819,
+          "ci_high": 6.042656110987845,
+          "p_value": 1.7511295315712822e-25,
+          "unstable": false
+        },
+        "opponent_adversarial": {
+          "coef": 0.8930012161155438,
+          "se": 0.37107203938386024,
+          "ci_low": 0.16571338325334928,
+          "ci_high": 1.6202890489777384,
+          "p_value": 0.016104260845023605,
+          "unstable": false
+        },
+        "own_adversarial:opponent_adversarial": {
+          "coef": -1.373521490386205,
+          "se": 0.4229225418904757,
+          "ci_low": -2.2024344407416696,
+          "ci_high": -0.5446085400307403,
+          "p_value": 0.0011634578118473581,
+          "unstable": false
+        }
+      }
+    },
+    "round1_only_fit": {
+      "status": "unstable_separation",
+      "n_obs": 240,
+      "n_races": 120,
+      "n_clusters": 10,
+      "terms": {
+        "Intercept": {
+          "coef": -25.413990055844735,
+          "se": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "p_value": NaN,
+          "unstable": true
+        },
+        "own_adversarial": {
+          "coef": 26.907915081126337,
+          "se": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "p_value": NaN,
+          "unstable": true
+        },
+        "opponent_adversarial": {
+          "coef": -2.524074439190276,
+          "se": 1296.60085790839,
+          "ci_low": -2543.815058263371,
+          "ci_high": 2538.7669093849904,
+          "p_value": 0.9984467704605644,
+          "unstable": true
+        },
+        "own_adversarial:opponent_adversarial": {
+          "coef": 2.5240744392184733,
+          "se": 882.1810428714434,
+          "ci_low": -1726.518997432796,
+          "ci_high": 1731.567146311233,
+          "p_value": 0.9977171156715733,
+          "unstable": true
+        }
+      }
+    },
+    "round1_cell_means": [
+      {
+        "own_adversarial": 0,
+        "opponent_adversarial": 0,
+        "mean": 0.0,
+        "size": 60,
+        "n_races": 30
+      },
+      {
+        "own_adversarial": 0,
+        "opponent_adversarial": 1,
+        "mean": 0.0,
+        "size": 60,
+        "n_races": 60
+      },
+      {
+        "own_adversarial": 1,
+        "opponent_adversarial": 0,
+        "mean": 0.8166666666666667,
+        "size": 60,
+        "n_races": 60
+      },
+      {
+        "own_adversarial": 1,
+        "opponent_adversarial": 1,
+        "mean": 0.8166666666666667,
+        "size": 60,
+        "n_races": 30
+      }
+    ],
+    "lpm_all_rounds": {
+      "status": "ok",
+      "n_players": 180,
+      "n_races": 120,
+      "n_clusters": 10,
+      "terms": {
+        "Intercept": {
+          "coef_pp": 2.151022588522733,
+          "se_pp": 0.7150675433889646,
+          "ci_low_pp": 0.7495159569668299,
+          "ci_high_pp": 3.552529220078636,
+          "p_value": 0.0026285285473912367,
+          "degenerate_zero_variance": false
+        },
+        "own_adversarial": {
+          "coef_pp": 78.93264374514366,
+          "se_pp": 2.2613064256621014,
+          "ci_low_pp": 74.50056459283695,
+          "ci_high_pp": 83.36472289745039,
+          "p_value": 6.077178736710323e-267,
+          "degenerate_zero_variance": false
+        },
+        "opponent_adversarial": {
+          "coef_pp": 3.389534077033966,
+          "se_pp": 1.488465483809571,
+          "ci_low_pp": 0.4721953365362203,
+          "ci_high_pp": 6.306872817531713,
+          "p_value": 0.022774266005412182,
+          "degenerate_zero_variance": false
+        },
+        "own_adversarial:opponent_adversarial": {
+          "coef_pp": -12.594814907314694,
+          "se_pp": 2.7768486329415953,
+          "ci_low_pp": -18.03733821839951,
+          "ci_high_pp": -7.152291596229883,
+          "p_value": 5.742620861014936e-06,
+          "degenerate_zero_variance": false
+        }
+      }
+    },
+    "lpm_round1": {
+      "status": "ok",
+      "n_players": 180,
+      "n_races": 120,
+      "n_clusters": 10,
+      "terms": {
+        "Intercept": {
+          "coef_pp": 1.470571418123278e-13,
+          "se_pp": NaN,
+          "ci_low_pp": NaN,
+          "ci_high_pp": NaN,
+          "p_value": NaN,
+          "degenerate_zero_variance": false
+        },
+        "own_adversarial": {
+          "coef_pp": 81.66666666666654,
+          "se_pp": 5.285580356800279,
+          "ci_low_pp": 71.30711952994562,
+          "ci_high_pp": 92.02621380338746,
+          "p_value": 7.446439031218087e-54,
+          "degenerate_zero_variance": false
+        },
+        "opponent_adversarial": {
+          "coef_pp": -1.1896968945321957e-13,
+          "se_pp": NaN,
+          "ci_low_pp": NaN,
+          "ci_high_pp": NaN,
+          "p_value": NaN,
+          "degenerate_zero_variance": false
+        },
+        "own_adversarial:opponent_adversarial": {
+          "coef_pp": 1.942890293094024e-13,
+          "se_pp": 7.923419944311709,
+          "ci_low_pp": -15.529617725237117,
+          "ci_high_pp": 15.529617725237504,
+          "p_value": 0.9999999999999805,
+          "degenerate_zero_variance": false
+        }
+      }
+    }
+  },
+  "google/gemini-3-flash-preview": {
+    "n_obs": 936,
+    "n_races": 57,
+    "cell_means": [
+      {
+        "own_adversarial": 0,
+        "opponent_adversarial": 0,
+        "mean": 0.0,
+        "size": 558,
+        "n_races": 30
+      },
+      {
+        "own_adversarial": 0,
+        "opponent_adversarial": 1,
+        "mean": 0.09523809523809523,
+        "size": 126,
+        "n_races": 18
+      },
+      {
+        "own_adversarial": 1,
+        "opponent_adversarial": 0,
+        "mean": 0.4444444444444444,
+        "size": 126,
+        "n_races": 18
+      },
+      {
+        "own_adversarial": 1,
+        "opponent_adversarial": 1,
+        "mean": 0.9841269841269841,
+        "size": 126,
+        "n_races": 9
+      }
+    ],
+    "all_rounds_fit": {
+      "status": "unstable_separation",
+      "n_obs": 936,
+      "n_races": 57,
+      "n_clusters": 10,
+      "terms": {
+        "Intercept": {
+          "coef": -29.8246214372224,
+          "se": 1098.702645477909,
+          "ci_low": -2183.2422362928037,
+          "ci_high": 2123.5929934183587,
+          "p_value": 0.9783438377019025,
+          "unstable": true
+        },
+        "own_adversarial": {
+          "coef": 29.601477885907194,
+          "se": 858.8953837437243,
+          "ci_low": -1653.8025407395016,
+          "ci_high": 1713.0054965113159,
+          "p_value": 0.9725066780629666,
+          "unstable": true
+        },
+        "opponent_adversarial": {
+          "coef": 27.57332963861304,
+          "se": 776.9001389889081,
+          "ci_low": -1495.122962363809,
+          "ci_high": 1550.2696216410352,
+          "p_value": 0.9716878463391649,
+          "unstable": true
+        },
+        "own_adversarial:opponent_adversarial": {
+          "coef": -23.22305170224483,
+          "se": 897.0872111081516,
+          "ci_low": -1781.4816764657023,
+          "ci_high": 1735.0355730612125,
+          "p_value": 0.9793473311961561,
+          "unstable": true
+        }
+      }
+    },
+    "round1_only_fit": {
+      "status": "unstable_separation",
+      "n_obs": 114,
+      "n_races": 57,
+      "n_clusters": 10,
+      "terms": {
+        "Intercept": {
+          "coef": -31.73091200633627,
+          "se": 1.9995112877586765,
+          "ci_low": -35.64988211702458,
+          "ci_high": -27.81194189564796,
+          "p_value": 1.0333189919177135e-56,
+          "unstable": true
+        },
+        "own_adversarial": {
+          "coef": 50.30339220742897,
+          "se": 2.206832551809521,
+          "ci_low": 45.97807988597169,
+          "ci_high": 54.62870452888625,
+          "p_value": 5.212483940462112e-115,
+          "unstable": true
+        },
+        "opponent_adversarial": {
+          "coef": -9.090437279751088,
+          "se": 44954.76560494019,
+          "ci_low": -88118.81195640251,
+          "ci_high": 88100.631081843,
+          "p_value": 0.9998386573834959,
+          "unstable": true
+        },
+        "own_adversarial:opponent_adversarial": {
+          "coef": 1.9098903544221737,
+          "se": 44954.00472445967,
+          "ci_low": -88106.32033042997,
+          "ci_high": 88110.14011113881,
+          "p_value": 0.999966101528985,
+          "unstable": true
+        }
+      }
+    },
+    "round1_cell_means": [
+      {
+        "own_adversarial": 0,
+        "opponent_adversarial": 0,
+        "mean": 0.0,
+        "size": 60,
+        "n_races": 30
+      },
+      {
+        "own_adversarial": 0,
+        "opponent_adversarial": 1,
+        "mean": 0.0,
+        "size": 18,
+        "n_races": 18
+      },
+      {
+        "own_adversarial": 1,
+        "opponent_adversarial": 0,
+        "mean": 1.0,
+        "size": 18,
+        "n_races": 18
+      },
+      {
+        "own_adversarial": 1,
+        "opponent_adversarial": 1,
+        "mean": 1.0,
+        "size": 18,
+        "n_races": 9
+      }
+    ],
+    "lpm_all_rounds": {
+      "status": "ok",
+      "n_players": 75,
+      "n_races": 57,
+      "n_clusters": 10,
+      "terms": {
+        "Intercept": {
+          "coef_pp": -1.3653310302404238e-14,
+          "se_pp": NaN,
+          "ci_low_pp": NaN,
+          "ci_high_pp": NaN,
+          "p_value": NaN,
+          "degenerate_zero_variance": false
+        },
+        "own_adversarial": {
+          "coef_pp": 46.31393298059966,
+          "se_pp": 5.00137377716094,
+          "ci_low_pp": 36.511420504141164,
+          "ci_high_pp": 56.11644545705815,
+          "p_value": 2.0396882762639746e-20,
+          "degenerate_zero_variance": false
+        },
+        "opponent_adversarial": {
+          "coef_pp": 9.24162257495589,
+          "se_pp": 2.106684383333354,
+          "ci_low_pp": 5.112597056829544,
+          "ci_high_pp": 13.370648093082238,
+          "p_value": 1.150255716126195e-05,
+          "degenerate_zero_variance": false
+        },
+        "own_adversarial:opponent_adversarial": {
+          "coef_pp": 42.85714285714283,
+          "se_pp": 4.3549338204126595,
+          "ci_low_pp": 34.3216294140786,
+          "ci_high_pp": 51.39265630020707,
+          "p_value": 7.492108408683191e-23,
+          "degenerate_zero_variance": false
+        }
+      }
+    },
+    "lpm_round1": {
+      "status": "ok",
+      "n_players": 75,
+      "n_races": 57,
+      "n_clusters": 10,
+      "terms": {
+        "Intercept": {
+          "coef_pp": -2.0942228755599118e-14,
+          "se_pp": 7.126697579241905e-15,
+          "ci_low_pp": -3.491029933962204e-14,
+          "ci_high_pp": -6.9741581715761954e-15,
+          "p_value": null,
+          "degenerate_zero_variance": true
+        },
+        "own_adversarial": {
+          "coef_pp": 100.00000000000004,
+          "se_pp": 1.8676571904249535e-14,
+          "ci_low_pp": 100.0,
+          "ci_high_pp": 100.00000000000009,
+          "p_value": null,
+          "degenerate_zero_variance": true
+        },
+        "opponent_adversarial": {
+          "coef_pp": -1.2162480161617697e-14,
+          "se_pp": 1.7699264561391127e-14,
+          "ci_low_pp": -4.685240125479042e-14,
+          "ci_high_pp": 2.2527440931555026e-14,
+          "p_value": null,
+          "degenerate_zero_variance": true
+        },
+        "own_adversarial:opponent_adversarial": {
+          "coef_pp": -2.4980018054066022e-14,
+          "se_pp": 7.196198532559338e-15,
+          "ci_low_pp": -3.908430800348231e-14,
+          "ci_high_pp": -1.0875728104649732e-14,
+          "p_value": null,
+          "degenerate_zero_variance": true
+        }
+      }
+    }
+  },
+  "gpt-5.6-luna": {
+    "n_obs": 2232,
+    "n_races": 120,
+    "cell_means": [
+      {
+        "own_adversarial": 0,
+        "opponent_adversarial": 0,
+        "mean": 0.026881720430107527,
+        "size": 558,
+        "n_races": 30
+      },
+      {
+        "own_adversarial": 0,
+        "opponent_adversarial": 1,
+        "mean": 0.4229390681003584,
+        "size": 558,
+        "n_races": 60
+      },
+      {
+        "own_adversarial": 1,
+        "opponent_adversarial": 0,
+        "mean": 0.7347670250896058,
+        "size": 558,
+        "n_races": 60
+      },
+      {
+        "own_adversarial": 1,
+        "opponent_adversarial": 1,
+        "mean": 0.8870967741935484,
+        "size": 558,
+        "n_races": 30
+      }
+    ],
+    "all_rounds_fit": {
+      "status": "ok",
+      "n_obs": 2232,
+      "n_races": 120,
+      "n_clusters": 10,
+      "terms": {
+        "Intercept": {
+          "coef": -3.5890591188317185,
+          "se": 0.3502016058170269,
+          "ci_low": -4.275441653561184,
+          "ci_high": -2.9026765841022533,
+          "p_value": 1.201305112999712e-24,
+          "unstable": false
+        },
+        "own_adversarial": {
+          "coef": 4.608004004765956,
+          "se": 0.3626307521304921,
+          "ci_low": 3.8972607909035197,
+          "ci_high": 5.318747218628392,
+          "p_value": 5.396437839541583e-37,
+          "unstable": false
+        },
+        "opponent_adversarial": {
+          "coef": 3.2783393783129204,
+          "se": 0.3846695114517821,
+          "ci_low": 2.52440098991681,
+          "ci_high": 4.032277766709031,
+          "p_value": 1.561685572716643e-17,
+          "unstable": false
+        },
+        "own_adversarial:opponent_adversarial": {
+          "coef": -2.2358612280699988,
+          "se": 0.3759919753116763,
+          "ci_low": -2.9727919581569573,
+          "ci_high": -1.4989304979830402,
+          "p_value": 2.738255720001571e-09,
+          "unstable": false
+        }
+      }
+    },
+    "round1_only_fit": {
+      "status": "unstable_separation",
+      "n_obs": 240,
+      "n_races": 120,
+      "n_clusters": 10,
+      "terms": {
+        "Intercept": {
+          "coef": -3.3672958299435254,
+          "se": 0.6940247314469219,
+          "ci_low": -4.7275593079595755,
+          "ci_high": -2.0070323519274753,
+          "p_value": 1.223222877916557e-06,
+          "unstable": false
+        },
+        "own_adversarial": {
+          "coef": 30.67338801582009,
+          "se": 0.7708397163870004,
+          "ci_low": 29.162569933848502,
+          "ci_high": 32.18420609779168,
+          "p_value": 0.0,
+          "unstable": true
+        },
+        "opponent_adversarial": {
+          "coef": -0.71024161395806,
+          "se": 1.3288173484590111,
+          "ci_low": -3.3146757589697327,
+          "ci_high": 1.894192531053613,
+          "p_value": 0.5930015099112238,
+          "unstable": false
+        },
+        "own_adversarial:opponent_adversarial": {
+          "coef": 3.7269786926063584,
+          "se": 1.3288173484590113,
+          "ci_low": 1.1225445475946851,
+          "ci_high": 6.331412837618032,
+          "p_value": 0.0050358178806569134,
+          "unstable": false
+        }
+      }
+    },
+    "round1_cell_means": [
+      {
+        "own_adversarial": 0,
+        "opponent_adversarial": 0,
+        "mean": 0.03333333333333333,
+        "size": 60,
+        "n_races": 30
+      },
+      {
+        "own_adversarial": 0,
+        "opponent_adversarial": 1,
+        "mean": 0.016666666666666666,
+        "size": 60,
+        "n_races": 60
+      },
+      {
+        "own_adversarial": 1,
+        "opponent_adversarial": 0,
+        "mean": 1.0,
+        "size": 60,
+        "n_races": 60
+      },
+      {
+        "own_adversarial": 1,
+        "opponent_adversarial": 1,
+        "mean": 1.0,
+        "size": 60,
+        "n_races": 30
+      }
+    ],
+    "lpm_all_rounds": {
+      "status": "ok",
+      "n_players": 180,
+      "n_races": 120,
+      "n_clusters": 10,
+      "terms": {
+        "Intercept": {
+          "coef_pp": 3.0988594738596253,
+          "se_pp": 1.3222751608368821,
+          "ci_low_pp": 0.5072477809674288,
+          "ci_high_pp": 5.690471166751822,
+          "p_value": 0.019099593963191466,
+          "degenerate_zero_variance": false
+        },
+        "own_adversarial": {
+          "coef_pp": 69.62553650053644,
+          "se_pp": 2.2016493632328666,
+          "ci_low_pp": 65.31038304201448,
+          "ci_high_pp": 73.9406899590584,
+          "p_value": 1.713341412119102e-219,
+          "degenerate_zero_variance": false
+        },
+        "opponent_adversarial": {
+          "coef_pp": 37.269133644133554,
+          "se_pp": 3.0438466336144883,
+          "ci_low_pp": 31.303303867785676,
+          "ci_high_pp": 43.234963420481435,
+          "p_value": 1.8069127898165804e-34,
+          "degenerate_zero_variance": false
+        },
+        "own_adversarial:opponent_adversarial": {
+          "coef_pp": -21.532428219928082,
+          "se_pp": 3.822181214540546,
+          "ci_low_pp": -29.02376574281311,
+          "ci_high_pp": -14.041090697043051,
+          "p_value": 1.765428661497915e-08,
+          "degenerate_zero_variance": false
+        }
+      }
+    },
+    "lpm_round1": {
+      "status": "ok",
+      "n_players": 180,
+      "n_races": 120,
+      "n_clusters": 10,
+      "terms": {
+        "Intercept": {
+          "coef_pp": 3.3333333333335045,
+          "se_pp": 2.2410815891246205,
+          "ci_low_pp": -1.059105867766543,
+          "ci_high_pp": 7.7257725344335535,
+          "p_value": 0.1369152535812327,
+          "degenerate_zero_variance": false
+        },
+        "own_adversarial": {
+          "coef_pp": 96.66666666666653,
+          "se_pp": 2.2410815891246187,
+          "ci_low_pp": 92.27422746556648,
+          "ci_high_pp": 101.05910586776656,
+          "p_value": 0.0,
+          "degenerate_zero_variance": false
+        },
+        "opponent_adversarial": {
+          "coef_pp": -1.6666666666668044,
+          "se_pp": 3.0171484259177515,
+          "ci_low_pp": -7.5801689174773115,
+          "ci_high_pp": 4.246835584143704,
+          "p_value": 0.5806757209044192,
+          "degenerate_zero_variance": false
+        },
+        "own_adversarial:opponent_adversarial": {
+          "coef_pp": 1.6666666666669272,
+          "se_pp": 3.0171484259177483,
+          "ci_low_pp": -4.246835584143574,
+          "ci_high_pp": 7.580168917477429,
+          "p_value": 0.5806757209043909,
+          "degenerate_zero_variance": false
+        }
+      }
+    }
+  },
+  "gpt-5.6-terra": {
+    "n_obs": 2232,
+    "n_races": 120,
+    "cell_means": [
+      {
+        "own_adversarial": 0,
+        "opponent_adversarial": 0,
+        "mean": 0.0,
+        "size": 558,
+        "n_races": 30
+      },
+      {
+        "own_adversarial": 0,
+        "opponent_adversarial": 1,
+        "mean": 0.2670250896057348,
+        "size": 558,
+        "n_races": 60
+      },
+      {
+        "own_adversarial": 1,
+        "opponent_adversarial": 0,
+        "mean": 0.5913978494623656,
+        "size": 558,
+        "n_races": 60
+      },
+      {
+        "own_adversarial": 1,
+        "opponent_adversarial": 1,
+        "mean": 0.8189964157706093,
+        "size": 558,
+        "n_races": 30
+      }
+    ],
+    "all_rounds_fit": {
+      "status": "unstable_separation",
+      "n_obs": 2232,
+      "n_races": 120,
+      "n_clusters": 10,
+      "terms": {
+        "Intercept": {
+          "coef": -22.52259921370982,
+          "se": 0.7340340977609509,
+          "ci_low": -23.961279608745638,
+          "ci_high": -21.083918818674004,
+          "p_value": 9.503350118535884e-207,
+          "unstable": true
+        },
+        "own_adversarial": {
+          "coef": 22.89234623887535,
+          "se": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "p_value": NaN,
+          "unstable": true
+        },
+        "opponent_adversarial": {
+          "coef": 21.512830363192013,
+          "se": 0.12571250009913043,
+          "ci_low": 21.26643839059123,
+          "ci_high": 21.759222335792796,
+          "p_value": 0.0,
+          "unstable": true
+        },
+        "own_adversarial:opponent_adversarial": {
+          "coef": -20.373014514027027,
+          "se": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "p_value": NaN,
+          "unstable": true
+        }
+      }
+    },
+    "round1_only_fit": {
+      "status": "unstable_separation",
+      "n_obs": 240,
+      "n_races": 120,
+      "n_clusters": 10,
+      "terms": {
+        "Intercept": {
+          "coef": -25.40978369837599,
+          "se": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "p_value": NaN,
+          "unstable": true
+        },
+        "own_adversarial": {
+          "coef": 26.337770469990637,
+          "se": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "p_value": NaN,
+          "unstable": true
+        },
+        "opponent_adversarial": {
+          "coef": -2.522596747329456,
+          "se": 465.4798510542853,
+          "ci_low": -914.8463403427974,
+          "ci_high": 909.8011468481385,
+          "p_value": 0.9956760080137275,
+          "unstable": true
+        },
+        "own_adversarial:opponent_adversarial": {
+          "coef": 2.9809043368323884,
+          "se": 88.09226757200902,
+          "ci_low": -169.676767420771,
+          "ci_high": 175.6385760944358,
+          "p_value": 0.973005987993721,
+          "unstable": true
+        }
+      }
+    },
+    "round1_cell_means": [
+      {
+        "own_adversarial": 0,
+        "opponent_adversarial": 0,
+        "mean": 0.0,
+        "size": 60,
+        "n_races": 30
+      },
+      {
+        "own_adversarial": 0,
+        "opponent_adversarial": 1,
+        "mean": 0.0,
+        "size": 60,
+        "n_races": 60
+      },
+      {
+        "own_adversarial": 1,
+        "opponent_adversarial": 0,
+        "mean": 0.7166666666666667,
+        "size": 60,
+        "n_races": 60
+      },
+      {
+        "own_adversarial": 1,
+        "opponent_adversarial": 1,
+        "mean": 0.8,
+        "size": 60,
+        "n_races": 30
+      }
+    ],
+    "lpm_all_rounds": {
+      "status": "ok",
+      "n_players": 180,
+      "n_races": 120,
+      "n_clusters": 10,
+      "terms": {
+        "Intercept": {
+          "coef_pp": 1.196373952492993e-13,
+          "se_pp": NaN,
+          "ci_low_pp": NaN,
+          "ci_high_pp": NaN,
+          "p_value": NaN,
+          "degenerate_zero_variance": false
+        },
+        "own_adversarial": {
+          "coef_pp": 59.6973466348466,
+          "se_pp": 0.9416502772597148,
+          "ci_low_pp": 57.85174600538541,
+          "ci_high_pp": 61.5429472643078,
+          "p_value": 0.0,
+          "degenerate_zero_variance": false
+        },
+        "opponent_adversarial": {
+          "coef_pp": 24.978528416028347,
+          "se_pp": 1.8119976257116717,
+          "ci_low_pp": 21.427078329561382,
+          "ci_high_pp": 28.52997850249531,
+          "p_value": 3.1342809684164512e-43,
+          "degenerate_zero_variance": false
+        },
+        "own_adversarial:opponent_adversarial": {
+          "coef_pp": -2.4828805453804224,
+          "se_pp": 1.8011122883036916,
+          "ci_low_pp": -6.01299576256818,
+          "ci_high_pp": 1.047234671807335,
+          "p_value": 0.16804087296077874,
+          "degenerate_zero_variance": false
+        }
+      }
+    },
+    "lpm_round1": {
+      "status": "ok",
+      "n_players": 180,
+      "n_races": 120,
+      "n_clusters": 10,
+      "terms": {
+        "Intercept": {
+          "coef_pp": 1.2765190705014798e-13,
+          "se_pp": 7.230168536810325e-08,
+          "ci_low_pp": -1.4170857169112192e-07,
+          "ci_high_pp": 1.41708826994936e-07,
+          "p_value": null,
+          "degenerate_zero_variance": true
+        },
+        "own_adversarial": {
+          "coef_pp": 71.66666666666659,
+          "se_pp": 2.567481505183876,
+          "ci_low_pp": 66.63449538553351,
+          "ci_high_pp": 76.69883794779967,
+          "p_value": 1.8442212146926902e-171,
+          "degenerate_zero_variance": false
+        },
+        "opponent_adversarial": {
+          "coef_pp": -1.035906379403662e-13,
+          "se_pp": 7.230168536810309e-08,
+          "ci_low_pp": -1.4170880293366662e-07,
+          "ci_high_pp": 1.4170859575239073e-07,
+          "p_value": null,
+          "degenerate_zero_variance": true
+        },
+        "own_adversarial:opponent_adversarial": {
+          "coef_pp": 8.333333333333497,
+          "se_pp": 3.7584080823044284,
+          "ci_low_pp": 0.966988852812567,
+          "ci_high_pp": 15.699677813854429,
+          "p_value": 0.026605957811318883,
+          "degenerate_zero_variance": false
+        }
+      }
+    }
+  },
+  "claude-opus-5": {
+    "n_obs": 2232,
+    "n_races": 120,
+    "cell_means": [
+      {
+        "own_adversarial": 0,
+        "opponent_adversarial": 0,
+        "mean": 0.0,
+        "size": 558,
+        "n_races": 30
+      },
+      {
+        "own_adversarial": 0,
+        "opponent_adversarial": 1,
+        "mean": 0.5931899641577061,
+        "size": 558,
+        "n_races": 60
+      },
+      {
+        "own_adversarial": 1,
+        "opponent_adversarial": 0,
+        "mean": 0.6899641577060932,
+        "size": 558,
+        "n_races": 60
+      },
+      {
+        "own_adversarial": 1,
+        "opponent_adversarial": 1,
+        "mean": 0.9946236559139785,
+        "size": 558,
+        "n_races": 30
+      }
+    ],
+    "all_rounds_fit": {
+      "status": "unstable_separation",
+      "n_obs": 2232,
+      "n_races": 120,
+      "n_clusters": 10,
+      "terms": {
+        "Intercept": {
+          "coef": -22.522532951870733,
+          "se": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "p_value": NaN,
+          "unstable": true
+        },
+        "own_adversarial": {
+          "coef": 23.322484691276,
+          "se": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "p_value": NaN,
+          "unstable": true
+        },
+        "opponent_adversarial": {
+          "coef": 22.899701309425343,
+          "se": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "p_value": NaN,
+          "unstable": true
+        },
+        "own_adversarial:opponent_adversarial": {
+          "coef": -18.479297216056864,
+          "se": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "p_value": NaN,
+          "unstable": true
+        }
+      }
+    },
+    "round1_only_fit": {
+      "status": "non_estimable",
+      "reason": "LinAlgError: Singular matrix",
+      "n_races": 120
+    },
+    "round1_cell_means": [
+      {
+        "own_adversarial": 0,
+        "opponent_adversarial": 0,
+        "mean": 0.0,
+        "size": 60,
+        "n_races": 30
+      },
+      {
+        "own_adversarial": 0,
+        "opponent_adversarial": 1,
+        "mean": 0.0,
+        "size": 60,
+        "n_races": 60
+      },
+      {
+        "own_adversarial": 1,
+        "opponent_adversarial": 0,
+        "mean": 1.0,
+        "size": 60,
+        "n_races": 60
+      },
+      {
+        "own_adversarial": 1,
+        "opponent_adversarial": 1,
+        "mean": 1.0,
+        "size": 60,
+        "n_races": 30
+      }
+    ],
+    "lpm_all_rounds": {
+      "status": "ok",
+      "n_players": 180,
+      "n_races": 120,
+      "n_clusters": 10,
+      "terms": {
+        "Intercept": {
+          "coef_pp": 1.462336146440912e-13,
+          "se_pp": NaN,
+          "ci_low_pp": NaN,
+          "ci_high_pp": NaN,
+          "p_value": NaN,
+          "degenerate_zero_variance": false
+        },
+        "own_adversarial": {
+          "coef_pp": 66.95041763791761,
+          "se_pp": 2.2519040020570884,
+          "ci_low_pp": 62.5367668972441,
+          "ci_high_pp": 71.3640683785911,
+          "p_value": 3.0914660485240026e-194,
+          "degenerate_zero_variance": false
+        },
+        "opponent_adversarial": {
+          "coef_pp": 55.95321114071105,
+          "se_pp": 3.503998347970437,
+          "ci_low_pp": 49.085500576801145,
+          "ci_high_pp": 62.82092170462094,
+          "p_value": 2.1219361667762885e-57,
+          "degenerate_zero_variance": false
+        },
+        "own_adversarial:opponent_adversarial": {
+          "coef_pp": -23.903628778628683,
+          "se_pp": 5.404165530772344,
+          "ci_low_pp": -34.49559858543526,
+          "ci_high_pp": -13.311658971822101,
+          "p_value": 9.725598743635556e-06,
+          "degenerate_zero_variance": false
+        }
+      }
+    },
+    "lpm_round1": {
+      "status": "ok",
+      "n_players": 180,
+      "n_races": 120,
+      "n_clusters": 10,
+      "terms": {
+        "Intercept": {
+          "coef_pp": 1.733206100312765e-13,
+          "se_pp": 5.826384422354124e-14,
+          "ci_low_pp": 5.912557375228358e-14,
+          "ci_high_pp": 2.875156463102694e-13,
+          "p_value": null,
+          "degenerate_zero_variance": true
+        },
+        "own_adversarial": {
+          "coef_pp": 99.99999999999984,
+          "se_pp": 5.079954308261202e-14,
+          "ci_low_pp": 99.99999999999974,
+          "ci_high_pp": 99.99999999999994,
+          "p_value": null,
+          "degenerate_zero_variance": true
+        },
+        "opponent_adversarial": {
+          "coef_pp": -1.3796721225236323e-13,
+          "se_pp": 4.637936689224298e-14,
+          "ci_low_pp": -2.2886910098692886e-13,
+          "ci_high_pp": -4.706532351779762e-14,
+          "p_value": null,
+          "degenerate_zero_variance": true
+        },
+        "own_adversarial:opponent_adversarial": {
+          "coef_pp": 2.609024107869118e-13,
+          "se_pp": 9.116517373781727e-14,
+          "ci_low_pp": 8.222195361645317e-14,
+          "ci_high_pp": 4.395828679573704e-13,
+          "p_value": null,
+          "degenerate_zero_variance": true
+        }
+      }
+    }
+  },
+  "claude-sonnet-5": {
+    "n_obs": 2232,
+    "n_races": 120,
+    "cell_means": [
+      {
+        "own_adversarial": 0,
+        "opponent_adversarial": 0,
+        "mean": 0.0,
+        "size": 558,
+        "n_races": 30
+      },
+      {
+        "own_adversarial": 0,
+        "opponent_adversarial": 1,
+        "mean": 0.3602150537634409,
+        "size": 558,
+        "n_races": 60
+      },
+      {
+        "own_adversarial": 1,
+        "opponent_adversarial": 0,
+        "mean": 0.6792114695340502,
+        "size": 558,
+        "n_races": 60
+      },
+      {
+        "own_adversarial": 1,
+        "opponent_adversarial": 1,
+        "mean": 0.8494623655913979,
+        "size": 558,
+        "n_races": 30
+      }
+    ],
+    "all_rounds_fit": {
+      "status": "unstable_separation",
+      "n_obs": 2232,
+      "n_races": 120,
+      "n_clusters": 10,
+      "terms": {
+        "Intercept": {
+          "coef": -22.520891133826257,
+          "se": 1.7330699670255871,
+          "ci_low": -25.917645851884426,
+          "ci_high": -19.12413641576809,
+          "p_value": 1.3095604228340994e-38,
+          "unstable": true
+        },
+        "own_adversarial": {
+          "coef": 23.271041532689587,
+          "se": 1.6936044281466234,
+          "ci_low": 19.951637849464653,
+          "ci_high": 26.59044521591452,
+          "p_value": 5.804025078966097e-43,
+          "unstable": true
+        },
+        "opponent_adversarial": {
+          "coef": 21.946460259748,
+          "se": 1.6149653837802123,
+          "ci_low": 18.781186271259877,
+          "ci_high": 25.111734248236125,
+          "p_value": 4.626647290552016e-42,
+          "unstable": true
+        },
+        "own_adversarial:opponent_adversarial": {
+          "coef": -20.96622013543725,
+          "se": 1.4368718154595645,
+          "ci_low": -23.78243714413868,
+          "ci_high": -18.15000312673582,
+          "p_value": 3.1778450124222524e-48,
+          "unstable": true
+        }
+      }
+    },
+    "round1_only_fit": {
+      "status": "non_estimable",
+      "reason": "LinAlgError: Singular matrix",
+      "n_races": 120
+    },
+    "round1_cell_means": [
+      {
+        "own_adversarial": 0,
+        "opponent_adversarial": 0,
+        "mean": 0.0,
+        "size": 60,
+        "n_races": 30
+      },
+      {
+        "own_adversarial": 0,
+        "opponent_adversarial": 1,
+        "mean": 0.0,
+        "size": 60,
+        "n_races": 60
+      },
+      {
+        "own_adversarial": 1,
+        "opponent_adversarial": 0,
+        "mean": 1.0,
+        "size": 60,
+        "n_races": 60
+      },
+      {
+        "own_adversarial": 1,
+        "opponent_adversarial": 1,
+        "mean": 1.0,
+        "size": 60,
+        "n_races": 30
+      }
+    ],
+    "lpm_all_rounds": {
+      "status": "ok",
+      "n_players": 180,
+      "n_races": 120,
+      "n_clusters": 10,
+      "terms": {
+        "Intercept": {
+          "coef_pp": 1.4234251059703991e-13,
+          "se_pp": NaN,
+          "ci_low_pp": NaN,
+          "ci_high_pp": NaN,
+          "p_value": NaN,
+          "degenerate_zero_variance": false
+        },
+        "own_adversarial": {
+          "coef_pp": 68.11735255485252,
+          "se_pp": 0.5377344637842767,
+          "ci_low_pp": 67.06341237258938,
+          "ci_high_pp": 69.17129273711565,
+          "p_value": 0.0,
+          "degenerate_zero_variance": false
+        },
+        "opponent_adversarial": {
+          "coef_pp": 34.63833157583148,
+          "se_pp": 1.7456879432248522,
+          "ci_low_pp": 31.216846078864968,
+          "ci_high_pp": 38.059817072798,
+          "p_value": 1.2863962239997326e-87,
+          "degenerate_zero_variance": false
+        },
+        "own_adversarial:opponent_adversarial": {
+          "coef_pp": -18.332096144596015,
+          "se_pp": 1.22276817595008,
+          "ci_low_pp": -20.728677730899907,
+          "ci_high_pp": -15.935514558292125,
+          "p_value": 8.245924743075922e-51,
+          "degenerate_zero_variance": false
+        }
+      }
+    },
+    "lpm_round1": {
+      "status": "ok",
+      "n_players": 180,
+      "n_races": 120,
+      "n_clusters": 10,
+      "terms": {
+        "Intercept": {
+          "coef_pp": 1.733206100312765e-13,
+          "se_pp": 5.826384422354124e-14,
+          "ci_low_pp": 5.912557375228358e-14,
+          "ci_high_pp": 2.875156463102694e-13,
+          "p_value": null,
+          "degenerate_zero_variance": true
+        },
+        "own_adversarial": {
+          "coef_pp": 99.99999999999984,
+          "se_pp": 5.079954308261202e-14,
+          "ci_low_pp": 99.99999999999974,
+          "ci_high_pp": 99.99999999999994,
+          "p_value": null,
+          "degenerate_zero_variance": true
+        },
+        "opponent_adversarial": {
+          "coef_pp": -1.3796721225236323e-13,
+          "se_pp": 4.637936689224298e-14,
+          "ci_low_pp": -2.2886910098692886e-13,
+          "ci_high_pp": -4.706532351779762e-14,
+          "p_value": null,
+          "degenerate_zero_variance": true
+        },
+        "own_adversarial:opponent_adversarial": {
+          "coef_pp": 2.609024107869118e-13,
+          "se_pp": 9.116517373781727e-14,
+          "ci_low_pp": 8.222195361645317e-14,
+          "ci_high_pp": 4.395828679573704e-13,
+          "p_value": null,
+          "degenerate_zero_variance": true
+        }
+      }
+    }
+  }
+}

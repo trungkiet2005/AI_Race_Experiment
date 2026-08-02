@@ -1,0 +1,31 @@
+{
+  "name": "openai_luna_persona_baseline_risk_3_5",
+  "runPhase": "pilot",
+  "description": "Persona condition R3-R5 (risk-preference matrix cell 3,5 of 6x6; Eckel-Grossman gamble scale, paper SI Task 1) via direct OpenAI API (backend='openai'), model=gpt-5.6-luna. Isolated from openai_persona_baseline_risk_* (which already has completed gpt-5.4-nano/gpt-5-nano pilot data) so this run cannot reset that data.",
+  "games": [
+    "ai_race_risk_10",
+    "ai_race_risk_60",
+    "ai_race_risk_90"
+  ],
+  "agents": "persona_risk_3_5",
+  "languages": [
+    "en"
+  ],
+  "models": [
+    "gpt-5.6-luna"
+  ],
+  "useOffline": false,
+  "backend": "openai",
+  "samplingSeedApplied": false,
+  "proxyOptions": {
+    "temperature": 0.7,
+    "max_tokens": 256,
+    "timeout": 120,
+    "max_transport_retries": 6,
+    "concurrency": 1
+  },
+  "repetitions": 10,
+  "seed": 260726,
+  "maxParseRetries": 3,
+  "verbose": true
+}

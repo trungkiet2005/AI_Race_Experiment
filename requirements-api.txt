@@ -2,6 +2,8 @@
 anthropic>=0.39
 openai>=1.40
 mistralai>=1.0
+boto3>=1.39  # Bedrock Converse backend; needs Bedrock API key (AWS_BEARER_TOKEN_BEDROCK) support
+google-genai>=1.0
 python-dotenv>=1.0
 kaggle>=1.7
 kaggle-benchmarks

@@ -1,0 +1,207 @@
+[
+  {
+    "population": "human",
+    "n_trajectories": 341,
+    "median_horizon": 8.0,
+    "pct_unique_best": 70.7,
+    "pct_degenerate_strategy_set": 11.1,
+    "pct_beats_chance": 2.6,
+    "mean_best_mismatch_rate": 0.2517,
+    "mean_null_median_mismatch": 0.2373,
+    "share_all_unique": {
+      "AS": 21.6,
+      "AU": 36.5,
+      "CS": 18.7,
+      "CAS": 23.2
+    },
+    "share_beats_chance_unique": {
+      "AS": 0.0,
+      "AU": 0.0,
+      "CS": 33.3,
+      "CAS": 66.7
+    },
+    "n_beats_chance_unique": 9
+  },
+  {
+    "population": "gpt-5-nano",
+    "n_trajectories": 120,
+    "median_horizon": 9.0,
+    "pct_unique_best": 41.7,
+    "pct_degenerate_strategy_set": 57.5,
+    "pct_beats_chance": 0.0,
+    "mean_best_mismatch_rate": 0.0728,
+    "mean_null_median_mismatch": 0.0697,
+    "share_all_unique": {
+      "AS": 94.0,
+      "AU": 0.0,
+      "CS": 6.0,
+      "CAS": 0.0
+    },
+    "share_beats_chance_unique": {},
+    "n_beats_chance_unique": 0
+  },
+  {
+    "population": "gpt-5.4-nano",
+    "n_trajectories": 120,
+    "median_horizon": 9.0,
+    "pct_unique_best": 80.0,
+    "pct_degenerate_strategy_set": 0.0,
+    "pct_beats_chance": 0.0,
+    "mean_best_mismatch_rate": 0.3217,
+    "mean_null_median_mismatch": 0.2864,
+    "share_all_unique": {
+      "AS": 31.2,
+      "AU": 37.5,
+      "CS": 18.8,
+      "CAS": 12.5
+    },
+    "share_beats_chance_unique": {},
+    "n_beats_chance_unique": 0
+  },
+  {
+    "population": "google/gemini-3-flash-preview",
+    "n_trajectories": 120,
+    "median_horizon": 9.0,
+    "pct_unique_best": 50.0,
+    "pct_degenerate_strategy_set": 31.7,
+    "pct_beats_chance": 1.7,
+    "mean_best_mismatch_rate": 0.1839,
+    "mean_null_median_mismatch": 0.1776,
+    "share_all_unique": {
+      "AS": 5.0,
+      "AU": 40.0,
+      "CS": 3.3,
+      "CAS": 51.7
+    },
+    "share_beats_chance_unique": {
+      "AS": 0.0,
+      "AU": 0.0,
+      "CS": 0.0,
+      "CAS": 100.0
+    },
+    "n_beats_chance_unique": 2
+  },
+  {
+    "population": "google/gemini-3.1-flash-lite-preview",
+    "n_trajectories": 60,
+    "median_horizon": 9.0,
+    "pct_unique_best": 48.3,
+    "pct_degenerate_strategy_set": 33.3,
+    "pct_beats_chance": 0.0,
+    "mean_best_mismatch_rate": 0.1447,
+    "mean_null_median_mismatch": 0.1465,
+    "share_all_unique": {
+      "AS": 0.0,
+      "AU": 69.0,
+      "CS": 0.0,
+      "CAS": 31.0
+    },
+    "share_beats_chance_unique": {},
+    "n_beats_chance_unique": 0
+  },
+  {
+    "population": "google/gemini-3.5-flash-lite",
+    "n_trajectories": 60,
+    "median_horizon": 9.0,
+    "pct_unique_best": 76.7,
+    "pct_degenerate_strategy_set": 8.3,
+    "pct_beats_chance": 3.3,
+    "mean_best_mismatch_rate": 0.1823,
+    "mean_null_median_mismatch": 0.2312,
+    "share_all_unique": {
+      "AS": 0.0,
+      "AU": 28.3,
+      "CS": 0.0,
+      "CAS": 71.7
+    },
+    "share_beats_chance_unique": {
+      "AS": 0.0,
+      "AU": 0.0,
+      "CS": 0.0,
+      "CAS": 100.0
+    },
+    "n_beats_chance_unique": 2
+  },
+  {
+    "population": "gpt-5.6-luna",
+    "n_trajectories": 120,
+    "median_horizon": 9.0,
+    "pct_unique_best": 83.3,
+    "pct_degenerate_strategy_set": 0.8,
+    "pct_beats_chance": 0.0,
+    "mean_best_mismatch_rate": 0.2103,
+    "mean_null_median_mismatch": 0.2233,
+    "share_all_unique": {
+      "AS": 0.0,
+      "AU": 77.0,
+      "CS": 4.0,
+      "CAS": 19.0
+    },
+    "share_beats_chance_unique": {},
+    "n_beats_chance_unique": 0
+  },
+  {
+    "population": "gpt-5.6-terra",
+    "n_trajectories": 120,
+    "median_horizon": 9.0,
+    "pct_unique_best": 78.3,
+    "pct_degenerate_strategy_set": 0.0,
+    "pct_beats_chance": 3.3,
+    "mean_best_mismatch_rate": 0.2652,
+    "mean_null_median_mismatch": 0.2619,
+    "share_all_unique": {
+      "AS": 17.0,
+      "AU": 37.2,
+      "CS": 13.8,
+      "CAS": 31.9
+    },
+    "share_beats_chance_unique": {
+      "AS": 0.0,
+      "AU": 0.0,
+      "CS": 50.0,
+      "CAS": 50.0
+    },
+    "n_beats_chance_unique": 4
+  },
+  {
+    "population": "claude-opus-5",
+    "n_trajectories": 120,
+    "median_horizon": 9.0,
+    "pct_unique_best": 1.7,
+    "pct_degenerate_strategy_set": 96.7,
+    "pct_beats_chance": 0.0,
+    "mean_best_mismatch_rate": 0.0016,
+    "mean_null_median_mismatch": 0.0031,
+    "share_all_unique": {
+      "AS": 0.0,
+      "AU": 0.0,
+      "CS": 100.0,
+      "CAS": 0.0
+    },
+    "share_beats_chance_unique": {},
+    "n_beats_chance_unique": 0
+  },
+  {
+    "population": "claude-sonnet-5",
+    "n_trajectories": 120,
+    "median_horizon": 9.0,
+    "pct_unique_best": 55.0,
+    "pct_degenerate_strategy_set": 35.8,
+    "pct_beats_chance": 6.7,
+    "mean_best_mismatch_rate": 0.084,
+    "mean_null_median_mismatch": 0.1579,
+    "share_all_unique": {
+      "AS": 0.0,
+      "AU": 7.6,
+      "CS": 77.3,
+      "CAS": 15.2
+    },
+    "share_beats_chance_unique": {
+      "AS": 0.0,
+      "AU": 0.0,
+      "CS": 100.0,
+      "CAS": 0.0
+    },
+    "n_beats_chance_unique": 8
+  }
+]

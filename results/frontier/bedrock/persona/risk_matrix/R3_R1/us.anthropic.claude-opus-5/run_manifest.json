@@ -1,0 +1,106 @@
+{
+  "created_utc": "2026-08-02T05:24:06.567220+00:00",
+  "experiment": {
+    "name": "bedrock_persona_baseline_risk_3_1",
+    "runPhase": "pilot",
+    "description": "Persona condition R3-R1 (risk-preference matrix cell 3,1 of 6x6; Eckel-Grossman gamble scale, paper SI Task 1) via direct Amazon Bedrock Converse API (backend='bedrock'), models=Claude Opus 5, Claude Sonnet 5.",
+    "games": [
+      "ai_race_risk_10",
+      "ai_race_risk_60",
+      "ai_race_risk_90"
+    ],
+    "agents": "persona_risk_3_1",
+    "languages": [
+      "en"
+    ],
+    "models": [
+      "us.anthropic.claude-opus-5",
+      "us.anthropic.claude-sonnet-5"
+    ],
+    "useOffline": false,
+    "backend": "bedrock",
+    "samplingSeedApplied": false,
+    "proxyOptions": {
+      "temperature": 0.7,
+      "max_tokens": 256,
+      "max_transport_retries": 6,
+      "concurrency": 4
+    },
+    "repetitions": 10,
+    "seed": 260726,
+    "maxParseRetries": 3,
+    "verbose": true
+  },
+  "model": "us.anthropic.claude-opus-5",
+  "run_phase": "pilot",
+  "agents_name": "persona_risk_3_1",
+  "agents_config_sha256": "9e9623087b61c9098c8b9a73adc757f843ed8f24144b3b9cd307a33bee3468f3",
+  "persona_condition": "R3-R1",
+  "persona_roles": [
+    "risk-3",
+    "risk-1"
+  ],
+  "persona_sha256": "7cb33fec559dcfe00dd503ccd6e1c830726a9d03da77501b0441f513230fb8db",
+  "status": "completed",
+  "n_races": 30,
+  "n_turns": 558,
+  "schema_version": "ai-race-proxy-run-v1",
+  "source_sha256": "aa63744635d7dedea5e623a684cae43700adeaeed3246eb871751438dbf6f6a7",
+  "prompt_version": "ai-race-fairgame-v3",
+  "prompt_sha256": "27086bd80378c25e859d03527a5ae55c1046f231ef7b914db9cb3c3b4fb2df3e",
+  "model_route": "us.anthropic.claude-opus-5",
+  "llm_backend_mro": [
+    "bedrock"
+  ],
+  "mechanism": {
+    "minimum_rounds": 5,
+    "stop_probability": 0.2,
+    "risk_levels": [
+      0.1,
+      0.6,
+      0.9
+    ],
+    "race_prize": 100.0,
+    "stage_payoff": {
+      "safe": {
+        "safe": 1.0,
+        "unsafe": 0.6
+      },
+      "unsafe": {
+        "safe": 2.4,
+        "unsafe": 2.0
+      }
+    },
+    "progress": {
+      "safe": 1.0,
+      "unsafe": 1.5
+    }
+  },
+  "package_versions": {
+    "numpy": "2.4.6",
+    "pandas": "2.3.3",
+    "openai": "2.51.0",
+    "torch": null,
+    "transformers": null,
+    "vllm": null
+  },
+  "decoding": {
+    "temperature_requested": null,
+    "temperature_forwarded_by_sdk": null,
+    "temperature_effective": null,
+    "temperature_effective_confirmed": false,
+    "temperature_status": "backend_bedrock_not_yet_documented_for_ai-race-proxy-run-v1",
+    "output_token_limit_parameter": "unknown",
+    "output_token_limit": 0,
+    "max_parse_retries": 0,
+    "max_transport_retries": 0
+  },
+  "sampling_seed_provenance": {
+    "requested": null,
+    "forwarded_by_sdk": null,
+    "applied": null,
+    "applied_known": false,
+    "status": "backend_bedrock_not_yet_documented_for_ai-race-proxy-run-v1",
+    "strip_detection": "not_audited"
+  }
+}

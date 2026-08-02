@@ -1,0 +1,31 @@
+{
+  "name": "mantle_luna_persona_baseline_coop_coop",
+  "runPhase": "pilot",
+  "description": "Persona condition S_CC (both seats cooperative, symmetric) via Amazon Bedrock's bedrock-mantle endpoint (backend='bedrock-mantle'), model=GPT-5.6 Luna.",
+  "games": [
+    "ai_race_risk_10",
+    "ai_race_risk_60",
+    "ai_race_risk_90"
+  ],
+  "agents": "persona_coop_coop",
+  "languages": [
+    "en"
+  ],
+  "models": [
+    "openai.gpt-5.6-luna"
+  ],
+  "useOffline": false,
+  "backend": "bedrock-mantle",
+  "samplingSeedApplied": false,
+  "proxyOptions": {
+    "temperature": 0.7,
+    "max_tokens": 256,
+    "reasoning_effort": "none",
+    "max_transport_retries": 6,
+    "concurrency": 4
+  },
+  "repetitions": 10,
+  "seed": 260726,
+  "maxParseRetries": 3,
+  "verbose": true
+}

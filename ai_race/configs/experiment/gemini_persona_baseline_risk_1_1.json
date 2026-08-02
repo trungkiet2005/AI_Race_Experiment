@@ -1,0 +1,30 @@
+{
+  "name": "gemini_persona_baseline_risk_1_1",
+  "runPhase": "pilot",
+  "description": "Persona condition R1-R1 (risk-preference matrix cell 1,1 of 6x6; Eckel-Grossman gamble scale, paper SI Task 1) via direct Google Gemini API (backend='gemini'), model=Gemini 3.1 Pro.",
+  "games": [
+    "ai_race_risk_10",
+    "ai_race_risk_60",
+    "ai_race_risk_90"
+  ],
+  "agents": "persona_risk_1_1",
+  "languages": [
+    "en"
+  ],
+  "models": [
+    "gemini-3.1-pro-preview"
+  ],
+  "useOffline": false,
+  "backend": "gemini",
+  "samplingSeedApplied": false,
+  "proxyOptions": {
+    "temperature": 0.7,
+    "max_tokens": 256,
+    "max_transport_retries": 6,
+    "concurrency": 4
+  },
+  "repetitions": 10,
+  "seed": 260726,
+  "maxParseRetries": 3,
+  "verbose": true
+}

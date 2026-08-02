@@ -41,6 +41,8 @@ api = [
   "anthropic>=0.39",
   "mistralai>=1.0",
   "openai>=1.40",
+  "boto3>=1.39",
+  "google-genai>=1.0",
   "python-dotenv>=1.0",
 ]
 kaggle-benchmark = [

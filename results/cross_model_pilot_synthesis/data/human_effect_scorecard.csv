@@ -4,3 +4,7 @@ gpt-5.4-nano,not_replicated,not_replicated,not_replicated,not_replicated,replica
 google/gemini-3-flash-preview,inconclusive,inconclusive,inconclusive,inconclusive,not_replicated,replicated,not_replicated,replicated
 google/gemini-3.1-flash-lite-preview,inconclusive,inconclusive,inconclusive,inconclusive,not_replicated,replicated,not_replicated,replicated
 google/gemini-3.5-flash-lite,inconclusive,inconclusive,inconclusive,inconclusive,not_replicated,replicated,replicated,replicated
+gpt-5.6-luna,inconclusive,inconclusive,inconclusive,inconclusive,not_replicated,replicated,not_replicated,replicated
+gpt-5.6-terra,inconclusive,inconclusive,inconclusive,inconclusive,not_replicated,replicated,replicated,not_replicated
+claude-opus-5,inconclusive,inconclusive,inconclusive,inconclusive,not_replicated,replicated,not_replicated,replicated
+claude-sonnet-5,inconclusive,inconclusive,inconclusive,inconclusive,replicated,replicated,replicated,replicated

@@ -1,0 +1,9 @@
+model,persona,mean_unsafe_rate,n_players
+gpt-5.6-luna,Rminus_risk_averse,0.3848506817256817,60
+gpt-5.6-luna,Rplus_risk_seeking,0.9530518093018093,60
+gpt-5.6-terra,Rminus_risk_averse,0.19391067266067266,60
+gpt-5.6-terra,Rplus_risk_seeking,1.0,60
+claude-opus-5,Rminus_risk_averse,0.0681439393939394,60
+claude-opus-5,Rplus_risk_seeking,1.0,60
+claude-sonnet-5,Rminus_risk_averse,0.0,60
+claude-sonnet-5,Rplus_risk_seeking,0.9125797582047582,60

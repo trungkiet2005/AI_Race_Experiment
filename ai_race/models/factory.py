@@ -126,13 +126,24 @@ def get_send_batch(
     verbatim as the OpenAI model id, no abstract-name indirection, bounded
     ``max_tokens``), ``"nvidia"`` (direct call to NVIDIA's OpenAI-compatible
     API Catalog via :mod:`ai_race.models.nvidia_direct`, ``model_name`` used
-    verbatim, e.g. ``"deepseek-ai/deepseek-v4-flash"``), or ``"auto"``, which
-    resolves from the legacy ``offline`` flag.
+    verbatim, e.g. ``"deepseek-ai/deepseek-v4-flash"``), ``"bedrock"`` (direct
+    call to Amazon Bedrock's Converse API via
+    :mod:`ai_race.models.bedrock_direct`, ``model_name`` used verbatim as the
+    Bedrock model id / inference-profile id), ``"bedrock-mantle"`` (direct
+    call to Amazon Bedrock's separate ``bedrock-mantle`` endpoint via
+    :mod:`ai_race.models.bedrock_mantle_direct`, which serves OpenAI's
+    GPT-5.6 family over the Responses API; ``model_name`` used verbatim,
+    e.g. ``"openai.gpt-5.6-luna"``), ``"gemini"`` (direct call to the Google
+    Gemini API via :mod:`ai_race.models.gemini_direct`, ``model_name`` used
+    verbatim), or ``"auto"``, which resolves from the legacy ``offline``
+    flag.
     """
     backend = str(backend or "auto").lower()
     if backend == "auto":
         backend = "offline" if offline else "api"
-    if backend not in {"offline", "proxy", "api", "openai", "nvidia"}:
+    if backend not in {
+        "offline", "proxy", "api", "openai", "nvidia", "bedrock", "bedrock-mantle", "gemini",
+    }:
         raise ValueError(f"Unsupported model backend: {backend!r}")
 
     if backend == "proxy":
@@ -160,6 +171,21 @@ def get_send_batch(
         from ai_race.models.nvidia_direct import make_nvidia_send_batch
 
         return make_nvidia_send_batch(model_name, **(proxy_options or {}))
+
+    if backend == "bedrock":
+        from ai_race.models.bedrock_direct import make_bedrock_send_batch
+
+        return make_bedrock_send_batch(model_name, **(proxy_options or {}))
+
+    if backend == "bedrock-mantle":
+        from ai_race.models.bedrock_mantle_direct import make_bedrock_mantle_send_batch
+
+        return make_bedrock_mantle_send_batch(model_name, **(proxy_options or {}))
+
+    if backend == "gemini":
+        from ai_race.models.gemini_direct import make_gemini_send_batch
+
+        return make_gemini_send_batch(model_name, **(proxy_options or {}))
 
     from FAIRGAME.src.llm_connectors.llm_factory_connector import ChatModelFactory
 
