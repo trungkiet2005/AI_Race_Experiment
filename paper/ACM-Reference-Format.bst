@@ -1,4 +1,4 @@
-﻿%%% -*-BibTeX-*-
+%%% -*-BibTeX-*-
 %%% ====================================================================
 %%%  @BibTeX-style-file{
 %%%     author          = "Nelson H. F. Beebe, Boris Veytsman and Gerald Murray",
