@@ -1,0 +1,6 @@
+priority,experiment,gap_closed,design_size,compute_cost,demo_value,claim_if_passes,current_status
+P0,Fully crossed context x mapping,"Mapping previously tied to repetition parity","1536 races: 8 contexts x 2 mappings x 3 risks x 32 seeds",medium,very_high,"Replicated checkpoint-scoped mapping gate; still diagnostic if comprehension fails",launch_ready_nodeport_blocked
+P1,Comprehension-admitted cross-family replication,"One failed-admission Qwen checkpoint","At least 3 model families on one frozen grid",high,high,"Cross-family behavioral robustness for admitted cells",designed_not_staged
+P1,Replay-to-fork feedback decomposition,"Live-minus-fixed units are not commensurable","Matched state replay plus paired endogenous forks",medium,very_high,"Direct prompt effect separated from feedback amplification",design_recommended
+P2,Per-turn opaque-ID randomization,"Stable code policy and position prior remain possible","Paired mapping schedules within races",medium,high,"Position sensitivity under unstable IDs",design_recommended
+P2,SAE causal promotion,"One discovery flip and non-neutral reconstruction","At least 10 discovery flips plus empirical random-direction null",high,medium,"Feature-specific direct control if target exceeds controls",blocked_by_discovery_support

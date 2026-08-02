@@ -20,6 +20,24 @@ are displayed separately and are never pooled.
 | Context FAST-SAE | two layers; 1,312 interventions/layer | L20 held-out AUC .985; 0 intervention flips | L20 is useful for capture/diagnostic association | steering claim rejected |
 | EGT reconstruction | 36 seeded chains; 3 risks x 3 regimes x 4 chains | AU -> CAS -> CS strong-selection ordering recovered | faithful reconstruction of disclosed reduced model | not bitwise reproduction; private author code/seeds unavailable |
 
+### Prepared validity-closing experiments (no model result claimed)
+
+Three follow-ups are now executable under frozen, hash-checked protocols:
+
+- **Context × opaque mapping:** 1,536 unique races, with all eight contexts on
+  both GPU lanes and even/odd repetition sharding.
+- **Positive payoff-scale stress test:** 384 unique races at scales
+  `0.1/1/10/100`, backed by a real exhaustive engine contract covering 21,844
+  joint-action sequences and 1,048,512 terminal comparisons; all mechanical
+  cells passed with maximum normalized error `1.421e-14`.
+- **Computation scaffold:** 768 factorial races plus 192 character-length
+  placebo races. Round-1 effects are direct prompt contrasts; later symmetric
+  self-play differences are game-level total intervention effects.
+
+These are protocol and mechanical-contract artifacts, not GPU behavioral
+findings. GreenNode accepted the network connection but rejected the available
+SSH key, so no synthetic completion or result was written.
+
 ### 1. Payoff-preserving context changes behavior after feedback
 
 At temperature 0, all paired first-round context contrasts were exactly zero.

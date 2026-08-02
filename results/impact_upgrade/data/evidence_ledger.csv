@@ -1,0 +1,9 @@
+study,evidence_class,models,races,decisions_or_rows,quality_gate,paper_use
+"Qwen context skins, T=0",diagnostic,1,768,13680,Mechanics/coverage pass; comprehension admission fails,Validity boundary and hypothesis generation
+"Qwen context skins, T=0.7",diagnostic robustness,1,768,13680,Matched protocol and CRN; separate temperature stratum,Temperature stability only; never pooled with T=0
+OpenAI baseline/persona grid,pilot,2,2640,49104,Mechanics pass; local manifest leaves persona/protocol confounded,Cross-model descriptive replication
+Gemini baseline/persona grid,pilot,3,177,3168,Mechanics pass; small persona cells and unverified protocol signatures,Cross-model descriptive replication
+FAST-SAE context representation,association,1,0,384,Held-out probes pass; max intervention flip=0.0%,"Representation result, not causal controller"
+FAST-SAE self-play intervention,exploratory causal audit,1,114,984,Matched random/unrelated controls; strongest target-control CIs include zero,Negative causal result / stopping rule
+EGTTools transition parity,paper-ready method validation,0,0,0,Transition max error 1.11e-16; stationary max error 7.63e-15,Validates independent evolutionary reconstruction
+N=3 Qwen extension,pilot,1,96,0,Mechanics/CRN pass; persona n=2 races per cell,"Scalability demo, not main estimand"

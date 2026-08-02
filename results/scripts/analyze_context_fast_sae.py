@@ -59,7 +59,11 @@ def sha256_file(path: Path, chunk_size: int = 1024 * 1024) -> str:
 def atomic_text(path: Path, value: str) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     temporary = path.with_suffix(path.suffix + f".tmp-{os.getpid()}")
-    temporary.write_text(value, encoding="utf-8")
+    # Keep audited byte counts and hashes stable across Windows/Linux checkouts.
+    with temporary.open("w", encoding="utf-8", newline="\n") as handle:
+        handle.write(value)
+        handle.flush()
+        os.fsync(handle.fileno())
     os.replace(temporary, path)
 
 
@@ -77,7 +81,12 @@ def atomic_csv(path: Path, rows: list[dict[str, Any]]) -> None:
     temporary = path.with_suffix(path.suffix + f".tmp-{os.getpid()}")
     columns = list(rows[0])
     with temporary.open("w", encoding="utf-8", newline="") as handle:
-        writer = csv.DictWriter(handle, fieldnames=columns, extrasaction="raise")
+        writer = csv.DictWriter(
+            handle,
+            fieldnames=columns,
+            extrasaction="raise",
+            lineterminator="\n",
+        )
         writer.writeheader()
         writer.writerows(rows)
         handle.flush()

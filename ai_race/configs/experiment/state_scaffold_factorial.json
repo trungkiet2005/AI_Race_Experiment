@@ -1,0 +1,30 @@
+{
+  "name": "state_scaffold_factorial",
+  "runPhase": "pilot",
+  "description": "Information-equivalent 2x2 computation-aid factorial crossing exact state transitions and conditional terminal scoring under both opaque action mappings.",
+  "games": [
+    "ai_race_risk_10",
+    "ai_race_risk_60",
+    "ai_race_risk_90"
+  ],
+  "agents": "context_skin_neutral",
+  "languages": ["en"],
+  "models": ["LocalQwen"],
+  "useOffline": true,
+  "offlineSettings": "offline_settings",
+  "contextSkins": ["abstract_contest"],
+  "actionCodeMappings": ["safe_p", "safe_q"],
+  "scaffoldConditions": [
+    "none",
+    "transition",
+    "terminal",
+    "transition_terminal",
+    "length_placebo"
+  ],
+  "assignment": "fully_crossed_within_seed",
+  "repetitions": 32,
+  "seed": 260726,
+  "maxParseRetries": 3,
+  "samplingSeedApplied": true,
+  "verbose": false
+}

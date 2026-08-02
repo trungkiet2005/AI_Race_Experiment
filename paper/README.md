@@ -4,7 +4,7 @@ This directory contains the manuscript for the project’s **LLM-agent AI Race e
 
 ## Current status
 
-The manuscript reports a bounded, diagnostic game-understanding and calculator-aided behavioral pilot. Confirmatory risk-treatment and dynamic-state analyses remain pending. Pilot evidence is explicitly excluded from later confirmatory pooling.
+The manuscript reports bounded diagnostic evidence: a game-understanding and calculator-aided behavioral audit, a five-checkpoint descriptive baseline, payoff-preserving context and mapping stress tests, FAST-SAE controls, and an EGTTools-validated reconstruction. Confirmatory risk-treatment and dynamic-state analyses remain pending. Pilot evidence is explicitly excluded from later confirmatory pooling.
 
 The focal prior work—Fernández Domingos and Han (2026), arXiv:2607.26034—is a study of **human participants** plus an evolutionary model. It motivates the environment and planned analyses but is not evidence about LLM behaviour. See the project’s [AI-readable source note](../references/papers/markdown/falling-behind-ai-race.md).
 
@@ -41,13 +41,13 @@ All figures must distinguish source-study values from this project’s estimates
 
 ## Build policy
 
-The stable manuscript preview is written to `references/output/pdf/ai_race_paper.pdf`. From the repository root, build with:
+The stable manuscript preview is written to
+`results/artifacts/publication/ai_race_paper.pdf`. From the repository root, build
+both the paper and deck with:
 
 ```bash
-pdflatex -output-directory=references/output/pdf -jobname=ai_race_paper paper/main.tex
-bibtex references/output/pdf/ai_race_paper
-pdflatex -output-directory=references/output/pdf -jobname=ai_race_paper paper/main.tex
-pdflatex -output-directory=references/output/pdf -jobname=ai_race_paper paper/main.tex
+python scripts/build_publication.py
 ```
 
-Generated auxiliary files remain untracked; the named PDF preview is tracked.
+Generated auxiliary files stay under the ignored `results/_build/latex/` tree;
+only the two named PDFs under `results/artifacts/publication/` are tracked.
