@@ -1,0 +1,5 @@
+effect_id,name,kind,test,human_value,llm_value,criterion,verdict,strata_spread
+E5,contrast_0.6_vs_0.9,contrast,equivalence,-0.027,0.0368100892197588,|d| < 0.2,replicated,-0.135 to +0.330 across 6 persona strata
+E6,contrast_0.1_vs_0.6,contrast,directional_effect_size,0.341,0.0965528216437012,positive and |d| > 0.2,not_replicated,-0.465 to +0.433 across 6 persona strata
+E7,phi_U_overall,level,interval,0.584,0.5378276815776816,"within [0.4, 0.75]",replicated,
+E8,share_AS,strategy_share,upper_bound,,0.4485714285714285,share < 0.1,not_replicated,

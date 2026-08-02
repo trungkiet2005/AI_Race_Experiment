@@ -1,0 +1,118 @@
+{
+  "figA_human_reference": {
+    "rows": 6,
+    "sources": [
+      "results/open_source/prompt_sensitivity_pilot/clustered_logit_coefficients.csv (specification==6)",
+      "results/open_source/prompt_sensitivity_pilot/logit_robustness_jackknife.csv (variant=='full')",
+      "Fernandez Domingos & Han (2026) Table 1 model 6 (human beta and SE)"
+    ],
+    "notes": "LLM intervals are the 95% cluster-robust CIs already in the CSV, NOT the +/-1 SE bars the superseded scorecard drew. Human CIs are beta +/- 1.96*SE; the SEs are transcribed from the free-text description column of human_comparison.csv because no machine-readable human_se field exists."
+  },
+  "figA_side_table": {
+    "rows": 4,
+    "sources": [
+      "results/open_source/prompt_sensitivity_pilot/human_comparison.csv",
+      "results/open_source/prompt_sensitivity_pilot/treatment_contrasts_round2plus.csv",
+      "results/open_source/prompt_sensitivity_pilot/strategy_summary_player.csv"
+    ],
+    "notes": "E8 has no published human value (human_value is empty upstream). E8's LLM denominator is 67 players with a unique nearest-strategy label, not the full pilot roster -- ties are kept unlabelled by strategy_analysis/classify.py."
+  },
+  "figB_surface_variants": {
+    "rows": 18,
+    "sources": [
+      "results/open_source/surface_sensitivity_pilot/variant_summary.csv"
+    ],
+    "notes": "unsafe_rate intervals are cluster-bootstrap over 10 repetition blocks and are marginal: each variant was resampled on its own seed stream, so differences between them have no valid interval here and delta_vs_canonical is reported as a point value only."
+  },
+  "figB_pooling_check": {
+    "rows": 5,
+    "sources": [
+      "results/open_source/surface_sensitivity_pilot/risk_variant_summary.csv"
+    ],
+    "notes": "Justifies pooling risk in figure B: between-variant spread exceeds within-variant spread across risk by roughly 15x and the rank order is preserved at all three risk levels."
+  },
+  "figC_levels": {
+    "rows": 18,
+    "sources": [
+      "results/cross_provider/openai_claude/openai-gpt-5.6-luna-bedrock__vs__anthropic-claude-haiku-4.5-bedrock/turns.jsonl",
+      "results/cross_provider/gemini_claude/google-gemini-3.5-flash-lite__vs__anthropic-claude-haiku-4.5-bedrock/turns.jsonl",
+      "results/cross_provider/gemini_openai/google-gemini-3.5-flash-lite__vs__openai-gpt-5.6-luna-bedrock/turns.jsonl"
+    ],
+    "notes": "Cell mean is the mean of per-repetition rates (the CRN block is the sampling unit, not the decision). Two-player mechanism only; the N=3 run is excluded."
+  },
+  "figC_paired_delta": {
+    "rows": 12,
+    "sources": [
+      "results/cross_provider/openai_claude/openai-gpt-5.6-luna-bedrock__vs__anthropic-claude-haiku-4.5-bedrock/turns.jsonl",
+      "results/cross_provider/gemini_claude/google-gemini-3.5-flash-lite__vs__anthropic-claude-haiku-4.5-bedrock/turns.jsonl",
+      "results/cross_provider/gemini_openai/google-gemini-3.5-flash-lite__vs__openai-gpt-5.6-luna-bedrock/turns.jsonl"
+    ],
+    "notes": "Paired within-model, between-opponent contrast on matched repetition blocks; 95% t-interval on the n=10 per-rep differences. This is the estimand the superseded sorted forest discarded by computing unpaired marginal intervals."
+  },
+  "figD_position": {
+    "rows": 15,
+    "sources": [
+      "results/derived/two_player_paper_analysis/tables/baseline_position_estimates.csv"
+    ],
+    "notes": "Ahead and Behind carry identical n by construction: every asymmetric round contributes exactly one of each. Five checkpoints, 10 CRN blocks each, all with SHA-256 run manifests."
+  },
+  "figD_contrast": {
+    "rows": 5,
+    "sources": [
+      "results/derived/two_player_paper_analysis/tables/baseline_position_estimates.csv"
+    ],
+    "notes": "Point contrast only: the upstream table publishes marginal intervals per position, not a paired interval on the difference."
+  },
+  "figE_risk_response": {
+    "rows": 15,
+    "sources": [
+      "results/derived/two_player_paper_analysis/tables/fig01_baseline_risk_response_source.csv"
+    ],
+    "notes": "Two Gemini cells at risk 0.1 are saturated (20/20 player-races Unsafe), so every bootstrap resample equals 1.0 and the interval is degenerate by construction rather than precise."
+  },
+  "figE_contrast": {
+    "rows": 5,
+    "sources": [
+      "results/derived/two_player_paper_analysis/tables/fig01_baseline_risk_response_source.csv"
+    ],
+    "notes": "holm_p_high_vs_low upstream was adjusted over a SEVEN-model family, not the five plotted; p-values are therefore kept out of the figure. The two smallest Wilcoxon p-values sit at the n=10 signed-rank floor of 2/2^10."
+  },
+  "figF_rates": {
+    "rows": 6,
+    "sources": [
+      "results/derived/two_player_paper_analysis/tables/fig13_repeat_run_stability_source.csv"
+    ],
+    "notes": "Panel A: aggregate risk response of the two independent unseeded pilots."
+  },
+  "figF_agreement_pooled": {
+    "rows": 3,
+    "sources": [
+      "git a81a8c8:ai_race/results/_api_5games_allrisk/google-gemini-3-flash-preview/turns.jsonl",
+      "results\\frontier\\baseline\\google-gemini-3-flash-preview\\turns.jsonl"
+    ],
+    "notes": "Chance agreement and Cohen's kappa are computed here, not upstream. At risk 0.1 both runs are uniformly Unsafe so agreement is forced to 1.0 and kappa is undefined; the 65% figures at risk 0.6/0.9 sit only slightly above chance."
+  },
+  "figF_agreement_per_seed": {
+    "rows": 15,
+    "sources": [
+      "git a81a8c8:ai_race/results/_api_5games_allrisk/google-gemini-3-flash-preview/turns.jsonl",
+      "results\\frontier\\baseline\\google-gemini-3-flash-preview\\turns.jsonl"
+    ],
+    "notes": "Five shared race seeds per risk level; these are the clusters the pooled rate averages over."
+  },
+  "figF_agreement_per_decision": {
+    "rows": 222,
+    "sources": [
+      "git a81a8c8:ai_race/results/_api_5games_allrisk/google-gemini-3-flash-preview/turns.jsonl",
+      "results\\frontier\\baseline\\google-gemini-3-flash-preview\\turns.jsonl"
+    ],
+    "notes": "Every matched decision, so the figure can show the 222 units themselves rather than three summary heights."
+  },
+  "figG_comprehension": {
+    "rows": 10,
+    "sources": [
+      "results\\open_source\\context_skin_pilot\\analysis_live_pilot_t0\\comprehension_by_domain.csv"
+    ],
+    "notes": "Wilson 95% intervals, absent upstream. The frozen gate applies to semantic accuracy only (>=90% overall, >=75% per domain); strict format validity is not gated, so the two metrics are drawn against different references. Rule recall's 0% strict rate is a true zero, not missing data."
+  }
+}

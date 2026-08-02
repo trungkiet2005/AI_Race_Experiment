@@ -1,0 +1,6 @@
+model,model_label,max_private_risk,estimate,ci95_low,ci95_high,n_blocks,n_observations,section,risk_low,risk_high,contrast,wilcoxon_p,holm_p_high_vs_low
+google/gemini-3-flash-preview,Gemini 3 Flash,,-0.461021964146964,-0.513513986013986,-0.4049478889166388,10,,high_minus_low,0.1,0.9,90% − 10%,0.001953125,0.013671875
+google/gemini-3.1-flash-lite-preview,Gemini 3.1 Flash-Lite,,-0.3005605505605506,-0.3314358558108558,-0.2703859473859474,10,,high_minus_low,0.1,0.9,90% − 10%,0.001953125,0.013671875
+google/gemini-3.5-flash-lite,Gemini 3.5 Flash-Lite,,-0.2120741758241758,-0.2884667658730159,-0.1366433531746032,10,,high_minus_low,0.1,0.9,90% − 10%,0.00390625,0.01953125
+gpt-5-nano,GPT-5 nano,,0.0220321345321345,-0.0518057706182706,0.1080306186868686,10,,high_minus_low,0.1,0.9,90% − 10%,0.677734375,1.0
+gpt-5.4-nano,GPT-5.4 nano,,-0.010166847041847,-0.064781746031746,0.0381597222222221,10,,high_minus_low,0.1,0.9,90% − 10%,0.8125,1.0

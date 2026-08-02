@@ -1,0 +1,16 @@
+model,model_label,max_private_risk,estimate,ci95_low,ci95_high,n_blocks,n_observations,section,risk_low,risk_high,contrast,wilcoxon_p,holm_p_high_vs_low,saturated
+google/gemini-3-flash-preview,Gemini 3 Flash,0.1,1.0,1.0,1.0,10,20.0,risk_response,,,,,,True
+google/gemini-3-flash-preview,Gemini 3 Flash,0.6,0.7234827672327673,0.690581213924964,0.7545635232822733,10,20.0,risk_response,,,,,,False
+google/gemini-3-flash-preview,Gemini 3 Flash,0.9,0.5389780358530359,0.4862951163419914,0.5959730876762127,10,20.0,risk_response,,,,,,False
+google/gemini-3.1-flash-lite-preview,Gemini 3.1 Flash-Lite,0.1,1.0,1.0,1.0,10,20.0,risk_response,,,,,,True
+google/gemini-3.1-flash-lite-preview,Gemini 3.1 Flash-Lite,0.6,0.8011124986124987,0.7738169538794539,0.8256604437229437,10,20.0,risk_response,,,,,,False
+google/gemini-3.1-flash-lite-preview,Gemini 3.1 Flash-Lite,0.9,0.6994394494394495,0.6674276695526695,0.7307886557886557,10,20.0,risk_response,,,,,,False
+google/gemini-3.5-flash-lite,Gemini 3.5 Flash-Lite,0.1,0.8380462592962594,0.7849400113775115,0.8993715659340659,10,20.0,risk_response,,,,,,False
+google/gemini-3.5-flash-lite,Gemini 3.5 Flash-Lite,0.6,0.7076616439116439,0.6542612110112109,0.7637011009823508,10,20.0,risk_response,,,,,,False
+google/gemini-3.5-flash-lite,Gemini 3.5 Flash-Lite,0.9,0.6259720834720834,0.5943137591575091,0.6615576749639249,10,20.0,risk_response,,,,,,False
+gpt-5-nano,GPT-5 nano,0.1,0.123038628038628,0.0712240537240537,0.1721198593073593,10,20.0,risk_response,,,,,,False
+gpt-5-nano,GPT-5 nano,0.6,0.1513369963369963,0.0863449328449328,0.2163409645909645,10,20.0,risk_response,,,,,,False
+gpt-5-nano,GPT-5 nano,0.9,0.1450707625707625,0.0843240093240093,0.2060392524142524,10,20.0,risk_response,,,,,,False
+gpt-5.4-nano,GPT-5.4 nano,0.1,0.5769413919413919,0.5195892094017094,0.6353144078144078,10,20.0,risk_response,,,,,,False
+gpt-5.4-nano,GPT-5.4 nano,0.6,0.4956769619269619,0.4351388888888888,0.5545511363636362,10,20.0,risk_response,,,,,,False
+gpt-5.4-nano,GPT-5.4 nano,0.9,0.5667745448995449,0.5298926767676768,0.6074001172438672,10,20.0,risk_response,,,,,,False

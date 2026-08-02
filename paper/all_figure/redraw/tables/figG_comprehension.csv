@@ -1,0 +1,11 @@
+domain,metric,value,ci_low,ci_high,n,gated
+rule_recall,semantic accuracy,1.0,0.9433739770288436,1.0,64,True
+rule_recall,strict format validity,0.0,0.0,0.056626022971156334,64,False
+stage_payoff,semantic accuracy,0.984375,0.9166570109970937,0.9972365292495987,64,True
+stage_payoff,strict format validity,0.34375,0.2392297503546903,0.46596588182379606,64,False
+state_update,semantic accuracy,0.125,0.06472165392620802,0.22774786330215924,64,True
+state_update,strict format validity,0.078125,0.03383067809543546,0.1701975287864777,64,False
+terminal_scoring,semantic accuracy,0.171875,0.09877641267316228,0.2821344149016591,64,True
+terminal_scoring,strict format validity,0.921875,0.8298024712135222,0.9661693219045645,64,False
+OVERALL,semantic accuracy,0.5703125,0.5090725840232575,0.6294733608908748,256,True
+OVERALL,strict format validity,0.3359375,0.28088230961874894,0.39584381891494247,256,False
