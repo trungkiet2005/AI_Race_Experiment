@@ -1,0 +1,112 @@
+{
+  "schema": "cross-model-pilot-synthesis-v1",
+  "generated_by": "results/scripts/build_cross_model_pilot_synthesis.py",
+  "n_clean_run_dirs": 157,
+  "excluded_run_dirs": {
+    "results/frontier/bedrock/persona/risk_matrix/R1_R3/us.anthropic.claude-opus-5": "run_manifest status=running",
+    "results/frontier/bedrock/persona/risk_matrix/R1_R4/us.anthropic.claude-opus-5": "run_manifest status=running",
+    "results/frontier/bedrock_mantle/luna/persona/risk_matrix/R3_R5/openai.gpt-5.6-luna": "run_manifest status=running",
+    "results/frontier/bedrock_mantle/luna/persona/risk_matrix/R3_R6/openai.gpt-5.6-luna": "run_manifest status=running",
+    "results/frontier/bedrock_mantle/terra/persona/risk_matrix/R3_R3/openai.gpt-5.6-terra": "run_manifest status=running",
+    "results/frontier/bedrock_mantle/terra/persona/risk_matrix/R3_R4/openai.gpt-5.6-terra": "run_manifest status=running",
+    "results/frontier/gemini/persona/Rminus_risk_averse/gemini-3.1-pro-preview": "run_manifest status=failed",
+    "results/frontier/gemini/persona/Rplus_risk_seeking/gemini-3.1-pro-preview": "run_manifest status=failed",
+    "results/frontier/gemini/persona/risk_matrix/R1_R1/gemini-3.1-pro-preview": "run_manifest status=failed",
+    "results/frontier/gemini/persona/risk_matrix/R1_R2/gemini-3.1-pro-preview": "run_manifest status=failed",
+    "results/frontier/gemini/persona/risk_matrix/R1_R3/gemini-3.1-pro-preview": "run_manifest status=failed",
+    "results/frontier/gemini/persona/risk_matrix/R1_R4/gemini-3.1-pro-preview": "run_manifest status=failed",
+    "results/frontier/gemini/persona/risk_matrix/R1_R5/gemini-3.1-pro-preview": "run_manifest status=failed",
+    "results/frontier/gemini/persona/risk_matrix/R1_R6/gemini-3.1-pro-preview": "run_manifest status=failed",
+    "results/frontier/gemini/persona/risk_matrix/R2_R1/gemini-3.1-pro-preview": "run_manifest status=failed",
+    "results/frontier/gemini/persona/risk_matrix/R2_R2/gemini-3.1-pro-preview": "run_manifest status=failed",
+    "results/frontier/gemini/persona/risk_matrix/R2_R3/gemini-3.1-pro-preview": "run_manifest status=failed",
+    "results/frontier/gemini/persona/risk_matrix/R2_R4/gemini-3.1-pro-preview": "run_manifest status=failed",
+    "results/frontier/gemini/persona/risk_matrix/R2_R5/gemini-3.1-pro-preview": "run_manifest status=failed",
+    "results/frontier/gemini/persona/risk_matrix/R2_R6/gemini-3.1-pro-preview": "run_manifest status=failed",
+    "results/frontier/gemini/persona/risk_matrix/R3_R1/gemini-3.1-pro-preview": "run_manifest status=failed",
+    "results/frontier/gemini/persona/risk_matrix/R3_R2/gemini-3.1-pro-preview": "run_manifest status=failed",
+    "results/frontier/gemini/persona/risk_matrix/R3_R3/gemini-3.1-pro-preview": "run_manifest status=failed",
+    "results/frontier/gemini/persona/risk_matrix/R3_R4/gemini-3.1-pro-preview": "run_manifest status=failed",
+    "results/frontier/gemini/persona/risk_matrix/R3_R5/gemini-3.1-pro-preview": "run_manifest status=failed",
+    "results/frontier/gemini/persona/risk_matrix/R3_R6/gemini-3.1-pro-preview": "run_manifest status=failed",
+    "results/frontier/gemini/persona/risk_matrix/R4_R1/gemini-3.1-pro-preview": "run_manifest status=failed",
+    "results/frontier/gemini/persona/risk_matrix/R4_R2/gemini-3.1-pro-preview": "run_manifest status=failed",
+    "results/frontier/gemini/persona/risk_matrix/R4_R3/gemini-3.1-pro-preview": "run_manifest status=failed",
+    "results/frontier/gemini/persona/risk_matrix/R4_R4/gemini-3.1-pro-preview": "run_manifest status=failed",
+    "results/frontier/gemini/persona/risk_matrix/R4_R5/gemini-3.1-pro-preview": "run_manifest status=running",
+    "results/frontier/gemini/persona/risk_matrix/R4_R6/gemini-3.1-pro-preview": "run_manifest status=running",
+    "results/frontier/gemini/persona/risk_matrix/R5_R1/gemini-3.1-pro-preview": "run_manifest status=failed",
+    "results/frontier/gemini/persona/risk_matrix/R5_R2/gemini-3.1-pro-preview": "run_manifest status=failed",
+    "results/frontier/gemini/persona/risk_matrix/R5_R3/gemini-3.1-pro-preview": "run_manifest status=failed",
+    "results/frontier/gemini/persona/risk_matrix/R5_R4/gemini-3.1-pro-preview": "run_manifest status=failed",
+    "results/frontier/gemini/persona/risk_matrix/R5_R5/gemini-3.1-pro-preview": "run_manifest status=failed",
+    "results/frontier/gemini/persona/risk_matrix/R5_R6/gemini-3.1-pro-preview": "run_manifest status=failed",
+    "results/frontier/gemini/persona/risk_matrix/R6_R1/gemini-3.1-pro-preview": "run_manifest status=failed",
+    "results/frontier/gemini/persona/risk_matrix/R6_R2/gemini-3.1-pro-preview": "run_manifest status=failed",
+    "results/frontier/gemini/persona/risk_matrix/R6_R3/gemini-3.1-pro-preview": "run_manifest status=failed",
+    "results/frontier/gemini/persona/risk_matrix/R6_R4/gemini-3.1-pro-preview": "run_manifest status=failed",
+    "results/frontier/gemini/persona/risk_matrix/R6_R5/gemini-3.1-pro-preview": "run_manifest status=failed",
+    "results/frontier/gemini/persona/risk_matrix/R6_R6/gemini-3.1-pro-preview": "run_manifest status=failed",
+    "results/frontier/nvidia/baseline/deepseek-ai-deepseek-v4-flash": "run_manifest status=failed",
+    "results/frontier/nvidia/persona/R0_neutral/deepseek-ai-deepseek-v4-flash": "run_manifest status=running",
+    "results/frontier/openai_luna/persona/risk_matrix/R1_R1/gpt-5.6-luna": "run_manifest status=failed",
+    "results/frontier/openai_luna/persona/risk_matrix/R1_R2/gpt-5.6-luna": "run_manifest status=running",
+    "results/frontier/openai_terra/persona/risk_matrix/R1_R3/gpt-5.6-terra": "run_manifest status=failed",
+    "results/frontier/openai_terra/persona/risk_matrix/R1_R4/gpt-5.6-terra": "run_manifest status=failed",
+    "results/frontier/openai_terra/persona/risk_matrix/R1_R5/gpt-5.6-terra": "run_manifest status=failed",
+    "results/frontier/openai_terra/persona/risk_matrix/R1_R6/gpt-5.6-terra": "run_manifest status=running",
+    "results/frontier/openai_terra/persona/risk_matrix/R2_R1/gpt-5.6-terra": "run_manifest status=running",
+    "results/frontier/persona/R3_R2_risk_matrix/google-gemini-3-flash-preview": "manifest declares 558 turns/30 races; files contain 642 turns/42 races",
+    "results/frontier/persona/R3_R3_risk_matrix/google-gemini-3-flash-preview": "manifest declares 558 turns/30 races; files contain 642 turns/42 races",
+    "results/frontier/persona/R3_R4_risk_matrix/google-gemini-3-flash-preview": "manifest declares 558 turns/30 races; files contain 642 turns/42 races",
+    "results/frontier/persona/R3_R5_risk_matrix/google-gemini-3-flash-preview": "manifest declares 558 turns/30 races; files contain 642 turns/42 races",
+    "results/frontier/persona/R3_R6_risk_matrix/google-gemini-3-flash-preview": "manifest declares 558 turns/30 races; files contain 678 turns/48 races",
+    "results/frontier/persona/R4_R4_risk_matrix/google-gemini-3-flash-preview": "manifest declares 558 turns/30 races; files contain 1056 turns/60 races",
+    "results/frontier/persona/R4_R5_risk_matrix/google-gemini-3-flash-preview": "manifest declares 558 turns/30 races; files contain 1494 turns/90 races",
+    "results/frontier/persona/R4_R6_risk_matrix/google-gemini-3-flash-preview": "manifest declares 558 turns/30 races; files contain 1434 turns/90 races",
+    "results/frontier/persona/R6_R1_risk_matrix/google-gemini-3-flash-preview": "manifest declares 558 turns/30 races; files contain 1098 turns/66 races",
+    "results/frontier/persona/R6_R2_risk_matrix/google-gemini-3-flash-preview": "manifest declares 558 turns/30 races; files contain 1368 turns/90 races",
+    "results/frontier/persona/R6_R3_risk_matrix/google-gemini-3-flash-preview": "manifest declares 558 turns/30 races; files contain 1134 turns/84 races",
+    "results/frontier/persona/R6_R4_risk_matrix/google-gemini-3-flash-preview": "manifest declares 558 turns/30 races; files contain 1140 turns/72 races",
+    "results/frontier/persona/R6_R5_risk_matrix/google-gemini-3-flash-preview": "manifest declares 558 turns/30 races; files contain 816 turns/54 races",
+    "results/frontier/persona/R6_R6_risk_matrix/google-gemini-3-flash-preview": "manifest declares 558 turns/30 races; files contain 1434 turns/84 races"
+  },
+  "neutral_lane_inputs": {
+    "gpt-5-nano": [
+      "results/frontier/openai/baseline/gpt-5-nano",
+      "results/frontier/openai/persona/R0_neutral/gpt-5-nano"
+    ],
+    "gpt-5.4-nano": [
+      "results/frontier/openai/baseline/gpt-5.4-nano",
+      "results/frontier/openai/persona/R0_neutral/gpt-5.4-nano"
+    ],
+    "google/gemini-3-flash-preview": [
+      "results/frontier/baseline/google-gemini-3-flash-preview",
+      "results/frontier/persona/R0_neutral/google-gemini-3-flash-preview"
+    ],
+    "google/gemini-3.1-flash-lite-preview": [
+      "results/frontier/baseline/google-gemini-3.1-flash-lite-preview"
+    ],
+    "google/gemini-3.5-flash-lite": [
+      "results/frontier/baseline/google-gemini-3.5-flash-lite"
+    ]
+  },
+  "gradient_models": [
+    "gpt-5-nano",
+    "gpt-5.4-nano",
+    "google/gemini-3-flash-preview"
+  ],
+  "figures": {
+    "2p_position_effect_by_persona.png": "dcbcf07a0c3fd3f61b2a755bdf0189243bf1d94cd218f6d5e38afe9d91afb762",
+    "cross_model_risk_response_neutral.png": "48d460d715aa265edf96f380f8ecb6c7093b3018258c41de87706e6a0a507ff2",
+    "feature_importance_shap_heatmap.png": "c86f33336e5d34d0ed9f45704191913727381404cf4fa7e938601c045fa70d5f",
+    "human_effect_scorecard.png": "db2e145d5e906e2dd518ae0788979c071796f95a7586aaecd81b560969946829",
+    "human_vs_llm_distribution.png": "1df23d3ddaf17e17fdef9d66b26883bfd6786e2042d0b3f44c50963507252344",
+    "human_vs_llm_dynamic_coefficients.png": "1f49c952b42ad460d44406a87b429d5aa807441668779378ccf553599fead287",
+    "llm_human_cluster_projection.png": "d02c02ffdf76d2b98ec9837e6d5166346504de33aee10d2041a24849276b6241",
+    "nplayer_peer_composition_effect.png": "7a19fe16ebd69e6ca2310cf7fc174b7ff88a1c420c15f20b60e5197fe6653b71",
+    "nplayer_position_effect_sign_flip.png": "11a03d5d67b1b3ba736c8cf36b56eea629ec955d4dece0192b2ad618ee39930c",
+    "payoff_welfare_unsafe_vs_payoff.png": "d747c81babb95abca4d04daf0f4cfa180d42d3e00ef26362cd76e91bb10d6f0e",
+    "persona_role_gradient.png": "0a7662abf7b41fbc2f6b3d9fe3304b228a3c837422bd728eefe86b619ca346ea"
+  }
+}

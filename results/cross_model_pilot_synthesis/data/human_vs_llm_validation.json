@@ -1,0 +1,103 @@
+{
+  "fig2a_n_by_risk": {
+    "0.1": 98,
+    "0.6": 105,
+    "0.9": 138
+  },
+  "fig2a_mean_by_risk": {
+    "0.1": 0.6415711205350745,
+    "0.6": 0.5578422037148135,
+    "0.9": 0.5581364838229826
+  },
+  "fig2a_contrasts": {
+    "0.1_vs_0.6": {
+      "cohens_d": 0.3701092633198551,
+      "t": 2.6350546299963695,
+      "p": 0.009068113616257244,
+      "p_bonferroni": 0.027204340848771734
+    },
+    "0.6_vs_0.9": {
+      "cohens_d": -0.0013133256370323433,
+      "t": -0.010141529960745969,
+      "p": 0.9919167585338456,
+      "p_bonferroni": 1.0
+    },
+    "0.1_vs_0.9": {
+      "cohens_d": 0.3713092105925834,
+      "t": 2.810815255080706,
+      "p": 0.00536028041992001,
+      "p_bonferroni": 0.016080841259760028
+    }
+  },
+  "readme_expected_n_by_risk": {
+    "0.1": 98,
+    "0.6": 105,
+    "0.9": 138
+  },
+  "readme_expected_d": {
+    "0.1_vs_0.6": 0.341,
+    "0.6_vs_0.9": -0.027,
+    "0.1_vs_0.9": 0.322
+  },
+  "table1_analysed_sample": {
+    "n_obs": 2888,
+    "n_clusters": 172,
+    "n_participants": 338
+  },
+  "readme_expected_table1_sample": {
+    "n_obs": 2888,
+    "n_clusters": 172,
+    "n_participants": 338
+  },
+  "table1_coefficients_this_refit": {
+    "own_prev_unsafe": {
+      "coef": -0.195108768991678,
+      "se": 0.19172790977991755,
+      "p": 0.30885209861678764
+    },
+    "opponent_prev_unsafe": {
+      "coef": 0.6057348101948765,
+      "se": 0.1916108086034289,
+      "p": 0.0015707913312262886
+    },
+    "progress_gap_before": {
+      "coef": -0.2948893411235671,
+      "se": 0.14928568355763677,
+      "p": 0.04823006377641848
+    },
+    "first_round_unsafe": {
+      "coef": 0.2173043040606666,
+      "se": 0.11573520057234486,
+      "p": 0.06043603413357471
+    }
+  },
+  "human_reference_json_values": {
+    "opponent_prev_unsafe": 0.607,
+    "progress_gap_before": -0.296,
+    "first_round_unsafe": 0.217,
+    "own_prev_unsafe": -0.193
+  },
+  "fig_s1_rounds_per_game": {
+    "n_games": 173,
+    "mean": 9.560693641618498,
+    "median": 8.0
+  },
+  "llm_realised_horizon": {
+    "n_races": 240,
+    "mean": 9.3,
+    "median": 9.0
+  },
+  "fig2c_winner_loser_human": {
+    "winner_mean": 0.6428182107270048,
+    "n_winners": 211,
+    "loser_mean": 0.4833507192820487,
+    "n_losers": 130,
+    "note": "won_race taken from each participant's final round_number row (see comment); the raw field is not constant per participant as the README states."
+  },
+  "fig2c_winner_loser_llm_pooled": {
+    "winner_mean": 0.6278366608422787,
+    "n_winners": 89,
+    "loser_mean": 0.42364876072741237,
+    "n_losers": 89
+  }
+}

@@ -1,0 +1,13 @@
+model,persona_role,peer_adv,mean,count
+gpt-5-nano,adversarial,0,0.5751587301587301,90
+gpt-5-nano,adversarial,1,0.5539285714285714,180
+gpt-5-nano,adversarial,2,0.5086243386243386,90
+gpt-5-nano,cooperative,0,0.0020833333333333333,90
+gpt-5-nano,cooperative,1,0.007959656084656081,180
+gpt-5-nano,cooperative,2,0.005952380952380951,90
+gpt-5.4-nano,adversarial,0,0.9315939153439154,90
+gpt-5.4-nano,adversarial,1,0.8933564814814815,180
+gpt-5.4-nano,adversarial,2,0.8965740740740741,90
+gpt-5.4-nano,cooperative,0,0.20216931216931214,90
+gpt-5.4-nano,cooperative,1,0.2146494708994709,180
+gpt-5.4-nano,cooperative,2,0.21490740740740738,90
