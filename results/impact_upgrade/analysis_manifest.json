@@ -19,10 +19,10 @@
     "evidence_ledger_rows": 8
   },
   "inputs": {
-    "analysis/openai/derived/unsafe_by_risk_model_player.csv": "f1c72b0437f4e70a496b6c4bf328d83639feaa0c68191efa4a1d4da7dd7b4ae0",
-    "analysis/openai/derived/analysis_manifest.json": "a6fb2838af5275f76292c9d64e94ae7364b1d047c724ca9e6124cd9c25189058",
-    "analysis/frontier/derived/unsafe_by_risk_model_player.csv": "175ab40bebecbc8dd438675ac4da03e5b3536f73a619d0a8bf76dc4f03e9d093",
-    "analysis/frontier/derived/analysis_manifest.json": "1b66fee5c2d5c97eda1d523aa3d1fceb2344b349703ba0f534ad1caf42a1408c",
+    "results/reports/openai/derived/unsafe_by_risk_model_player.csv": "f1c72b0437f4e70a496b6c4bf328d83639feaa0c68191efa4a1d4da7dd7b4ae0",
+    "results/reports/openai/derived/analysis_manifest.json": "a6fb2838af5275f76292c9d64e94ae7364b1d047c724ca9e6124cd9c25189058",
+    "results/reports/frontier/derived/unsafe_by_risk_model_player.csv": "175ab40bebecbc8dd438675ac4da03e5b3536f73a619d0a8bf76dc4f03e9d093",
+    "results/reports/frontier/derived/analysis_manifest.json": "1b66fee5c2d5c97eda1d523aa3d1fceb2344b349703ba0f534ad1caf42a1408c",
     "results/open_source/context_skin_pilot/analysis_live_pilot_t0/paired_context_effects.csv": "ff645f5387feafd5623af93b1e2a6227fa9add1d440f43b687bede02cc9d7671",
     "results/open_source/context_skin_pilot/analysis_live_pilot_t0/analysis_summary.json": "ca906f4413195f72e615a8dd0f423b6d391d9c4285f440dae868f86a372195f1",
     "results/open_source/activation_sae/context_fast_sae_analysis/summary.json": "ff8660d4bb67a3e16e10fa4c4b5e797b67007a2388d77eb56b518c7aa5f05b9f",

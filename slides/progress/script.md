@@ -488,7 +488,7 @@ thể trên slide, không cần nhớ thuộc lòng.
 
 ### Trang 32 — Tham chiếu chính
 **Thành phần trên slide:** card trích dẫn đầy đủ paper gốc (tên, tác giả, arXiv ID, link), và
-1 dòng chỉ tới tài liệu dự án (`CLAUDE.md`, `PROJECT.md`, `analysis/`).
+1 dòng chỉ tới tài liệu dự án (`CLAUDE.md`, `PROJECT.md`, `results/`).
 
 **Dùng khi:** kết thúc phần Q&A, hoặc ai hỏi "paper gốc là gì, đọc ở đâu."
 
@@ -504,4 +504,4 @@ thể trên slide, không cần nhớ thuộc lòng.
 - **Nếu bị cắt thời gian:** có thể bỏ trang 12, 16, 17, 21 (các slide persona chi tiết) mà
   không làm gãy mạch — mạch chính (φ_U theo risk → hồi quy → E1–E8) vẫn đủ để tới phần tổng hợp.
 - **Không tự thêm số liệu ngoài deck** khi bị hỏi khó — nếu không có trong 4 báo cáo nguồn hoặc
-  backup, trả lời "chưa có dữ liệu để trả lời chính xác, sẽ kiểm tra lại trong `analysis/`."
+  backup, trả lời "chưa có dữ liệu để trả lời chính xác, sẽ kiểm tra lại trong `results/`."

@@ -128,6 +128,6 @@ slides/*.xdv
 .DS_Store
 Thumbs.db
 # Clean generated artifact artifacts
-/docs/reports/**/*.tmp-*.verification-failure.png
-/docs/reports/**/*candidate.html
-/docs/reports/**/*fail.png
+/results/reports/**/*.tmp-*.verification-failure.png
+/results/reports/**/*candidate.html
+/results/reports/**/*fail.png

@@ -13,7 +13,7 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parent
 PY = REPO / ".venv-kaggle/bin/python"
-LOG_DIR = REPO / "logs_openai_nplayer_stage"
+LOG_DIR = REPO / "results/frontier/openai/_logs/nplayer_stage"
 
 MAX_PARALLEL_JOBS = 2
 

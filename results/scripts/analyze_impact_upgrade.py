@@ -302,7 +302,7 @@ def context_decomposition() -> pd.DataFrame:
 def cross_model_baselines() -> pd.DataFrame:
     frames = []
     for provider in ["openai", "frontier"]:
-        path = ROOT / f"analysis/{provider}/derived/unsafe_by_risk_model_player.csv"
+        path = ROOT / f"results/reports/{provider}/derived/unsafe_by_risk_model_player.csv"
         frame = pd.read_csv(path)
         frame = frame[frame["persona_condition"] == "none"].copy()
         frame["provider"] = provider
