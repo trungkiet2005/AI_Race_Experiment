@@ -1,0 +1,537 @@
+{
+  "figures": {
+    "fig01_baseline_risk_response": {
+      "pdf": {
+        "bytes": 24816,
+        "exists": true,
+        "sha256": "31acedcc25265116d9b906e81340dde398eac788d8c46e8da196548b408ef9cf"
+      },
+      "png": {
+        "bytes": 450792,
+        "dpi": [
+          599.9988,
+          599.9988
+        ],
+        "exists": true,
+        "pixels": [
+          4257,
+          1947
+        ],
+        "sha256": "ecd9fe8202a26023c950744169f2f70c99cfee42d5a48f93f300ab90e78471e8"
+      },
+      "svg": {
+        "bytes": 75461,
+        "exists": true,
+        "sha256": "fe4ccf0468331c361dbb818656e534b0d6854a23aa1cc26f28ebf71fdf94d98e"
+      },
+      "tiff": {
+        "bytes": 33153722,
+        "dpi": [
+          600.0,
+          600.0
+        ],
+        "exists": true,
+        "pixels": [
+          4257,
+          1947
+        ],
+        "sha256": "ae20b566ef6e2c78c83858df46cecf6cf874b6065ce29f51d249c55eca0a7ded"
+      }
+    },
+    "fig01b_protocol_robustness_baselines": {
+      "pdf": {
+        "bytes": 23562,
+        "exists": true,
+        "sha256": "5c0b7ba930fd04bf235ea6de5bc0be2d1085e75b819cc7cbbc5257db867c7e20"
+      },
+      "png": {
+        "bytes": 264511,
+        "dpi": [
+          599.9988,
+          599.9988
+        ],
+        "exists": true,
+        "pixels": [
+          4257,
+          1707
+        ],
+        "sha256": "ea9901e79ce482dd1c41fa4499d62e2dfc5e428cc53a705fe552b083c9337c82"
+      },
+      "svg": {
+        "bytes": 60083,
+        "exists": true,
+        "sha256": "2c28d50d887dd61362019ab337942259c0576e437bd2b7ccf5904537aa41b613"
+      },
+      "tiff": {
+        "bytes": 29067002,
+        "dpi": [
+          600.0,
+          600.0
+        ],
+        "exists": true,
+        "pixels": [
+          4257,
+          1707
+        ],
+        "sha256": "43654c50b9390df5ead5115d94f41603f53c46eb71569fd7a4378021ef393777"
+      }
+    },
+    "fig02_initialization_and_dynamics": {
+      "pdf": {
+        "bytes": 29207,
+        "exists": true,
+        "sha256": "e866dd054d5e8e99e6883d777a968ecc10516443f176e3c24f0f952083dbb008"
+      },
+      "png": {
+        "bytes": 655090,
+        "dpi": [
+          599.9988,
+          599.9988
+        ],
+        "exists": true,
+        "pixels": [
+          4396,
+          3193
+        ],
+        "sha256": "7915936bea6aff4695ba5fede2a4a807758c5af7b92f18bde3a241b9dad41255"
+      },
+      "svg": {
+        "bytes": 105258,
+        "exists": true,
+        "sha256": "474032b239b882a07f1aced112d22ff0910299e867cf6752bf3f834dc2b1ba9a"
+      },
+      "tiff": {
+        "bytes": 56145918,
+        "dpi": [
+          600.0,
+          600.0
+        ],
+        "exists": true,
+        "pixels": [
+          4396,
+          3193
+        ],
+        "sha256": "284b7a698d86d8e283240cdb8e036fde299e5432d1bbbf61879670da5cd332b4"
+      }
+    },
+    "fig03_conditional_dynamics": {
+      "pdf": {
+        "bytes": 30033,
+        "exists": true,
+        "sha256": "683827f3041caf15e05ea3809f7474ce986b39bab2db4b7e1755a13775c1f759"
+      },
+      "png": {
+        "bytes": 414666,
+        "dpi": [
+          599.9988,
+          599.9988
+        ],
+        "exists": true,
+        "pixels": [
+          4700,
+          2428
+        ],
+        "sha256": "8cd93665b93b194c6be9ec303acc16a19573a47528ec27295d1c3dcc655fb9b9"
+      },
+      "svg": {
+        "bytes": 104381,
+        "exists": true,
+        "sha256": "1bf0609c272245a9e45da1177cd403749190eaec98670a35a33a5a1012a29c62"
+      },
+      "tiff": {
+        "bytes": 45646606,
+        "dpi": [
+          600.0,
+          600.0
+        ],
+        "exists": true,
+        "pixels": [
+          4700,
+          2428
+        ],
+        "sha256": "e63e2fe599f0d0c30d6ebf1a723d8a8b0738ec05a3e4922e2053a65d8b286421"
+      }
+    },
+    "fig04_strategy_composition": {
+      "pdf": {
+        "bytes": 21882,
+        "exists": true,
+        "sha256": "91a6e737187f8516ba21faedcf481c549459a95840e33c7691fa76a074465c4d"
+      },
+      "png": {
+        "bytes": 189445,
+        "dpi": [
+          599.9988,
+          599.9988
+        ],
+        "exists": true,
+        "pixels": [
+          4257,
+          2141
+        ],
+        "sha256": "edf203d91f471dece59de58a9dd5cefc26fe7120f1042b1734a0191e16434935"
+      },
+      "svg": {
+        "bytes": 78184,
+        "exists": true,
+        "sha256": "54bbf7c4e2e53ea33c8b5c4c220a02467100c59e509726487de386415431b13c"
+      },
+      "tiff": {
+        "bytes": 36457154,
+        "dpi": [
+          600.0,
+          600.0
+        ],
+        "exists": true,
+        "pixels": [
+          4257,
+          2141
+        ],
+        "sha256": "3116cfcb64e870cec9191c50eee2bdb25571331049a0d49245e1509108928908"
+      }
+    },
+    "fig05_safety_payoff_frontier": {
+      "pdf": {
+        "bytes": 25404,
+        "exists": true,
+        "sha256": "e843ecffea9d8a7768e78ecf9bf66892af04a444a0ccec0eee6c3cb05cb371a0"
+      },
+      "png": {
+        "bytes": 397132,
+        "dpi": [
+          599.9988,
+          599.9988
+        ],
+        "exists": true,
+        "pixels": [
+          4257,
+          2007
+        ],
+        "sha256": "710122101c64a10e10fc5e0b17d850d3068297c0f2516ee0e18f9eb8f5b1498a"
+      },
+      "svg": {
+        "bytes": 96298,
+        "exists": true,
+        "sha256": "94ec1fab484adb21738a080b0caea543431cd7317ee9c5f1f4fd4305d2e6d4a7"
+      },
+      "tiff": {
+        "bytes": 34175402,
+        "dpi": [
+          600.0,
+          600.0
+        ],
+        "exists": true,
+        "pixels": [
+          4257,
+          2007
+        ],
+        "sha256": "6a5accbe721db77102512fe99065de3340458aa84c8b5a51eed324756cced827"
+      }
+    },
+    "fig06_persona_effects": {
+      "pdf": {
+        "bytes": 27376,
+        "exists": true,
+        "sha256": "a0b18d54c13067d7b258c2f14c2124d70a43ce370431257ffe6f2ccc7e04de7a"
+      },
+      "png": {
+        "bytes": 396863,
+        "dpi": [
+          599.9988,
+          599.9988
+        ],
+        "exists": true,
+        "pixels": [
+          4257,
+          3327
+        ],
+        "sha256": "c3baf976dffc164b1269dd975e06fa46a1522ab1503a5bf1abf8cccf015d3f5d"
+      },
+      "svg": {
+        "bytes": 116091,
+        "exists": true,
+        "sha256": "1d27b7c76eaac2011114492a1d20a9ecd7605f4213c497ac0b194e46237e8b9e"
+      },
+      "tiff": {
+        "bytes": 56652362,
+        "dpi": [
+          600.0,
+          600.0
+        ],
+        "exists": true,
+        "pixels": [
+          4257,
+          3327
+        ],
+        "sha256": "c1e5148779f6dad5140cdd606617cb1510785a0e85a2e1434a0e3577efeff734"
+      }
+    },
+    "fig07_persona_role_asymmetry": {
+      "pdf": {
+        "bytes": 23370,
+        "exists": true,
+        "sha256": "b4a47995743dba55b453ca0171ca2430863babdde0db96147044c75b084f2d3b"
+      },
+      "png": {
+        "bytes": 283475,
+        "dpi": [
+          599.9988,
+          599.9988
+        ],
+        "exists": true,
+        "pixels": [
+          4257,
+          1947
+        ],
+        "sha256": "6fee87df927e56e17bef6b7f11bb5352d0f818d0264299bfcaf9ac4f6a939495"
+      },
+      "svg": {
+        "bytes": 72822,
+        "exists": true,
+        "sha256": "1fc7aa5551b0390b9406e57ef08825ecaa1e788c173369087a9e19b0e257f276"
+      },
+      "tiff": {
+        "bytes": 33153722,
+        "dpi": [
+          600.0,
+          600.0
+        ],
+        "exists": true,
+        "pixels": [
+          4257,
+          1947
+        ],
+        "sha256": "e054db33437906c28462b0f1747843fd7f131289d4af67037b106a71e0f66b08"
+      }
+    },
+    "fig08_gpt_risk_persona_surfaces": {
+      "pdf": {
+        "bytes": 40738,
+        "exists": true,
+        "sha256": "404f9a413da466a8b8cb1847c72590dd712e4dbc76c92b1b40813d35648fdb63"
+      },
+      "png": {
+        "bytes": 315208,
+        "dpi": [
+          599.9988,
+          599.9988
+        ],
+        "exists": true,
+        "pixels": [
+          4252,
+          3327
+        ],
+        "sha256": "33d77e7b682ba90484c9f952ac62eddce93c2ae55d5bafe0d985f1ee5ec16e18"
+      },
+      "svg": {
+        "bytes": 96910,
+        "exists": true,
+        "sha256": "20760b010e20af79e5ebb6f24625648f98d254e18724e50e6821befaa0af300d"
+      },
+      "tiff": {
+        "bytes": 56585822,
+        "dpi": [
+          600.0,
+          600.0
+        ],
+        "exists": true,
+        "pixels": [
+          4252,
+          3327
+        ],
+        "sha256": "dbb959f5ecd74945fc78c57a6aed6ee927b6355eb8f4859b2620d9a6a1c1a075"
+      }
+    },
+    "fig09_gemini_risk_persona_partial": {
+      "pdf": {
+        "bytes": 27116,
+        "exists": true,
+        "sha256": "55fba6eb791f46652347c6d346fee1ae1ccf59d8cd7203b1a7fd470e68c349ba"
+      },
+      "png": {
+        "bytes": 235838,
+        "dpi": [
+          599.9988,
+          599.9988
+        ],
+        "exists": true,
+        "pixels": [
+          4254,
+          1797
+        ],
+        "sha256": "055aea8abc837c1a382f0c65beffe3fe3095675bf53c85fb01fc9f16ec9c9d51"
+      },
+      "svg": {
+        "bytes": 80950,
+        "exists": true,
+        "sha256": "12b9e2b220bb94ebb0dbac7a61e2719a766008cac325e3b117d533e8712e2acc"
+      },
+      "tiff": {
+        "bytes": 30577958,
+        "dpi": [
+          600.0,
+          600.0
+        ],
+        "exists": true,
+        "pixels": [
+          4254,
+          1797
+        ],
+        "sha256": "1178f5624712904387b55b85a747256c6788db707c462373970c0e8e2551dc19"
+      }
+    },
+    "fig10_surface_sensitivity": {
+      "pdf": {
+        "bytes": 29213,
+        "exists": true,
+        "sha256": "e4dd8057958fb44a5e3bd5cbb5796335d6aa833f0706f494651384067f47b69a"
+      },
+      "png": {
+        "bytes": 463184,
+        "dpi": [
+          599.9988,
+          599.9988
+        ],
+        "exists": true,
+        "pixels": [
+          4257,
+          3684
+        ],
+        "sha256": "0bca9dd92336f9a5258383c5a67a9ec46120a7ad9d4f6c2d19cc0ed2ab0178d1"
+      },
+      "svg": {
+        "bytes": 111294,
+        "exists": true,
+        "sha256": "a1b2684e3751f3d5bb425c4c245a32716fe24087e8d9090198432a500eba3248"
+      },
+      "tiff": {
+        "bytes": 62731358,
+        "dpi": [
+          600.0,
+          600.0
+        ],
+        "exists": true,
+        "pixels": [
+          4257,
+          3684
+        ],
+        "sha256": "93b9c1595088d22a1341004a37efca0c209d849b62fa36bdf36e95020abd46a1"
+      }
+    },
+    "fig11_context_temperature_diagnostic": {
+      "pdf": {
+        "bytes": 33336,
+        "exists": true,
+        "sha256": "7416e9dc5b1b6e682b3d582d8b99ac3151319adaa46f2262e10ebe2cbb360c8a"
+      },
+      "png": {
+        "bytes": 330458,
+        "dpi": [
+          599.9988,
+          599.9988
+        ],
+        "exists": true,
+        "pixels": [
+          4254,
+          2427
+        ],
+        "sha256": "579c0d2bc48f8b5c99c2558781946b8bb7674032755b03a142e4be1c07a15ba6"
+      },
+      "svg": {
+        "bytes": 83215,
+        "exists": true,
+        "sha256": "b0bf008c79d1f56a37dafafe913b1ec8749f37c9e844a2246d0b255699d980f2"
+      },
+      "tiff": {
+        "bytes": 41298038,
+        "dpi": [
+          600.0,
+          600.0
+        ],
+        "exists": true,
+        "pixels": [
+          4254,
+          2427
+        ],
+        "sha256": "d28e2f24b80844f6d16255428efe4e4f8ad36330327d310c43bf471510bc277c"
+      }
+    },
+    "fig12_evidence_inventory": {
+      "pdf": {
+        "bytes": 21052,
+        "exists": true,
+        "sha256": "35263e3b151e121265bff11228d372a4225afe2df329b97043d012dd69dd7b21"
+      },
+      "png": {
+        "bytes": 281326,
+        "dpi": [
+          599.9988,
+          599.9988
+        ],
+        "exists": true,
+        "pixels": [
+          4387,
+          2157
+        ],
+        "sha256": "988d15725f295b8f22216044590025c68aa282f720325cc0b432be5a33c60a43"
+      },
+      "svg": {
+        "bytes": 64474,
+        "exists": true,
+        "sha256": "a72b1e85d6dfd40b76aee637383589b2785461d1e34a17d9501b07aa5a8e1282"
+      },
+      "tiff": {
+        "bytes": 37851242,
+        "dpi": [
+          600.0,
+          600.0
+        ],
+        "exists": true,
+        "pixels": [
+          4387,
+          2157
+        ],
+        "sha256": "caa3469afe4efaa3c12b66cf76d5d9cf15f96668091f545bfc5ea9effe512545"
+      }
+    },
+    "fig13_repeat_run_stability": {
+      "pdf": {
+        "bytes": 19848,
+        "exists": true,
+        "sha256": "ba17b064c284ca01c6aeedcd9b5af08f575c76f2eb12446c5f892fdb41e71179"
+      },
+      "png": {
+        "bytes": 245373,
+        "dpi": [
+          599.9988,
+          599.9988
+        ],
+        "exists": true,
+        "pixels": [
+          4257,
+          1797
+        ],
+        "sha256": "f6a3a9cb9801637692d3718de6fda31203f88a40c5197a9ab44556be0c8956cf"
+      },
+      "svg": {
+        "bytes": 51735,
+        "exists": true,
+        "sha256": "065f4ae1421e5232f492254d12df2186f29deb5c520eb50f2d9ffb3d73cfce04"
+      },
+      "tiff": {
+        "bytes": 30599522,
+        "dpi": [
+          600.0,
+          600.0
+        ],
+        "exists": true,
+        "pixels": [
+          4257,
+          1797
+        ],
+        "sha256": "e155728270d2c3fe2212fd8eee4892ff7e6ee188c6cc06503c724de25f787173"
+      }
+    }
+  },
+  "status": "passed"
+}

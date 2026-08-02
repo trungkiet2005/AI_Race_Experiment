@@ -1,0 +1,16 @@
+model,model_label,position,estimate,ci95_low,ci95_high,n_blocks,n_observations
+google/gemini-3-flash-preview,Gemini 3 Flash,Ahead,0.0,0.0,0.0,10,35
+google/gemini-3-flash-preview,Gemini 3 Flash,Behind,1.0,1.0,1.0,10,35
+google/gemini-3-flash-preview,Gemini 3 Flash,Tied,0.7538318966564057,0.710053749020965,0.7938584331911077,10,428
+google/gemini-3.1-flash-lite-preview,Gemini 3.1 Flash-Lite,Ahead,0.0,0.0,0.0,10,26
+google/gemini-3.1-flash-lite-preview,Gemini 3.1 Flash-Lite,Behind,1.0,1.0,1.0,10,26
+google/gemini-3.1-flash-lite-preview,Gemini 3.1 Flash-Lite,Tied,0.844500918062223,0.8224877675438687,0.8640105221995287,10,446
+google/gemini-3.5-flash-lite,Gemini 3.5 Flash-Lite,Ahead,0.05500000000000001,0.013333333333333332,0.1,10,64
+google/gemini-3.5-flash-lite,Gemini 3.5 Flash-Lite,Behind,1.0,1.0,1.0,10,64
+google/gemini-3.5-flash-lite,Gemini 3.5 Flash-Lite,Tied,0.7342976190476189,0.7036428571428572,0.7651291491596639,10,370
+gpt-5-nano,GPT-5 nano,Ahead,0.0777020202020202,0.01111111111111111,0.1591079545454543,10,67
+gpt-5-nano,GPT-5 nano,Behind,0.34386363636363637,0.2758257575757575,0.408030303030303,10,67
+gpt-5-nano,GPT-5 nano,Tied,0.15266234506487586,0.09644896542126365,0.21572070704603194,10,364
+gpt-5.4-nano,GPT-5.4 nano,Ahead,0.6208165669289567,0.5594161827332559,0.6745446302537954,10,188
+gpt-5.4-nano,GPT-5.4 nano,Behind,0.5790257849558014,0.5190129049495058,0.6453498176335146,10,188
+gpt-5.4-nano,GPT-5.4 nano,Tied,0.45916666666666667,0.3636904761904762,0.5397619047619048,10,122

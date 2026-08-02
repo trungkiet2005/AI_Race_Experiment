@@ -1,0 +1,36 @@
+model,model_label,lag_profile,estimate,ci95_low,ci95_high,n_blocks,n_observations,section,position
+google/gemini-3-flash-preview,Gemini 3 Flash,SS,0.6316666666666666,0.5266666666666667,0.7483333333333333,10,54,lag_profile,
+google/gemini-3-flash-preview,Gemini 3 Flash,SU,0.9091666666666667,0.8358333333333332,0.97,10,68,lag_profile,
+google/gemini-3-flash-preview,Gemini 3 Flash,US,0.26305555555555554,0.18694444444444444,0.33138888888888884,10,68,lag_profile,
+google/gemini-3-flash-preview,Gemini 3 Flash,UU,0.7935555353304209,0.7480281826416337,0.8348522358886346,10,308,lag_profile,
+google/gemini-3.1-flash-lite-preview,Gemini 3.1 Flash-Lite,SS,0.9833333333333334,0.95,1.0,10,32,lag_profile,
+google/gemini-3.1-flash-lite-preview,Gemini 3.1 Flash-Lite,SU,1.0,1.0,1.0,10,49,lag_profile,
+google/gemini-3.1-flash-lite-preview,Gemini 3.1 Flash-Lite,US,0.4408333333333333,0.39247916666666666,0.4875,10,49,lag_profile,
+google/gemini-3.1-flash-lite-preview,Gemini 3.1 Flash-Lite,UU,0.8194991297402288,0.7897937146455625,0.8466479815323564,10,368,lag_profile,
+google/gemini-3.5-flash-lite,Gemini 3.5 Flash-Lite,SS,0.6898148148148149,0.5138888888888888,0.8611111111111112,9,36,lag_profile,
+google/gemini-3.5-flash-lite,Gemini 3.5 Flash-Lite,SU,0.8891991341991341,0.8267405303030303,0.9459415584415585,10,112,lag_profile,
+google/gemini-3.5-flash-lite,Gemini 3.5 Flash-Lite,US,0.2956660006660007,0.23044684482184483,0.3636147186147186,10,112,lag_profile,
+google/gemini-3.5-flash-lite,Gemini 3.5 Flash-Lite,UU,0.7660507792860733,0.7360507792860733,0.798611111111111,10,238,lag_profile,
+gpt-5-nano,GPT-5 nano,SS,0.20982012594638158,0.13103895411016514,0.30939692982456146,10,388,lag_profile,
+gpt-5-nano,GPT-5 nano,SU,0.09833333333333334,0.025,0.18,10,47,lag_profile,
+gpt-5-nano,GPT-5 nano,US,0.0975,0.02,0.19,10,47,lag_profile,
+gpt-5-nano,GPT-5 nano,UU,0.0,0.0,0.0,6,16,lag_profile,
+gpt-5.4-nano,GPT-5.4 nano,SS,0.6133333333333333,0.5466666666666666,0.6658333333333333,10,110,lag_profile,
+gpt-5.4-nano,GPT-5.4 nano,SU,0.611558229352347,0.5470817152618622,0.678833503098209,10,122,lag_profile,
+gpt-5.4-nano,GPT-5.4 nano,US,0.6266730328495035,0.5209394894321365,0.7083420550038197,10,122,lag_profile,
+gpt-5.4-nano,GPT-5.4 nano,UU,0.4076358363858363,0.2955357142857143,0.49762393162393154,10,144,lag_profile,
+google/gemini-3-flash-preview,Gemini 3 Flash,,0.0,0.0,0.0,10,35,position,Ahead
+google/gemini-3-flash-preview,Gemini 3 Flash,,1.0,1.0,1.0,10,35,position,Behind
+google/gemini-3-flash-preview,Gemini 3 Flash,,0.7538318966564057,0.710053749020965,0.7938584331911077,10,428,position,Tied
+google/gemini-3.1-flash-lite-preview,Gemini 3.1 Flash-Lite,,0.0,0.0,0.0,10,26,position,Ahead
+google/gemini-3.1-flash-lite-preview,Gemini 3.1 Flash-Lite,,1.0,1.0,1.0,10,26,position,Behind
+google/gemini-3.1-flash-lite-preview,Gemini 3.1 Flash-Lite,,0.844500918062223,0.8224877675438687,0.8640105221995287,10,446,position,Tied
+google/gemini-3.5-flash-lite,Gemini 3.5 Flash-Lite,,0.05500000000000001,0.013333333333333332,0.1,10,64,position,Ahead
+google/gemini-3.5-flash-lite,Gemini 3.5 Flash-Lite,,1.0,1.0,1.0,10,64,position,Behind
+google/gemini-3.5-flash-lite,Gemini 3.5 Flash-Lite,,0.7342976190476189,0.7036428571428572,0.7651291491596639,10,370,position,Tied
+gpt-5-nano,GPT-5 nano,,0.0777020202020202,0.01111111111111111,0.1591079545454543,10,67,position,Ahead
+gpt-5-nano,GPT-5 nano,,0.34386363636363637,0.2758257575757575,0.408030303030303,10,67,position,Behind
+gpt-5-nano,GPT-5 nano,,0.15266234506487586,0.09644896542126365,0.21572070704603194,10,364,position,Tied
+gpt-5.4-nano,GPT-5.4 nano,,0.6208165669289567,0.5594161827332559,0.6745446302537954,10,188,position,Ahead
+gpt-5.4-nano,GPT-5.4 nano,,0.5790257849558014,0.5190129049495058,0.6453498176335146,10,188,position,Behind
+gpt-5.4-nano,GPT-5.4 nano,,0.45916666666666667,0.3636904761904762,0.5397619047619048,10,122,position,Tied

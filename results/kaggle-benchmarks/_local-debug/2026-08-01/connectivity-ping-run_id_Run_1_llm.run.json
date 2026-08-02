@@ -1,0 +1,29 @@
+{
+  "taskVersion": {
+    "versionNumber": 1,
+    "name": "connectivity-ping",
+    "description": "",
+    "definition": "@kbench.task(name=\"connectivity-ping\")\ndef connectivity_ping(llm) -> dict:\n    response = llm.prompt(\"Reply with exactly one word: PONG\")\n    kbench.assertions.assert_in(\n        \"PONG\", response.upper(), expectation=\"Model must echo PONG\"\n    )\n    return {\"response\": response}\n"
+  },
+  "modelVersion": {
+    "slug": "llm"
+  },
+  "state": "BENCHMARK_TASK_RUN_STATE_ERRORED",
+  "startTime": "2026-08-01T07:08:40.135335Z",
+  "endTime": "2026-08-01T07:08:40.146224Z",
+  "conversations": [
+    {
+      "id": "connectivity-ping-12f3a4bc",
+      "metrics": {},
+      "modelVersionSlug": "model_version_slug for conversation is DEPRECATED"
+    }
+  ],
+  "results": [
+    {
+      "type": "AGGREGATED",
+      "booleanResult": false
+    }
+  ],
+  "pyRunId": "connectivity-ping-Run #1",
+  "errorMessage": "Traceback (most recent call last):\n  File \"C:\\Users\\huynh\\anaconda3\\Lib\\site-packages\\kaggle_benchmarks\\tasks.py\", line 171, in run\n    run.result = self.func(*args, **kwargs)\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"D:\\AI_PhD\\GameTheory\\AI_Race_Experiment\\kaggle\\benchmarks\\connectivity_ping.py\", line 16, in connectivity_ping\n    response = llm.prompt(\"Reply with exactly one word: PONG\")\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\huynh\\anaconda3\\Lib\\site-packages\\kaggle_benchmarks\\actors\\llms.py\", line 259, in prompt\n    response = self.respond(schema=schema, **kwargs, **extra)\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\huynh\\anaconda3\\Lib\\site-packages\\kaggle_benchmarks\\chats.py\", line 124, in wrapper\n    result = func(self, *args, **kwargs)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\huynh\\anaconda3\\Lib\\site-packages\\kaggle_benchmarks\\actors\\llms.py\", line 326, in respond\n    invoke_response = self.invoke(\n                      ^^^^^^^^^^^^\n  File \"C:\\Users\\huynh\\anaconda3\\Lib\\site-packages\\kaggle_benchmarks\\__init__.py\", line 53, in invoke\n    raise_for_missing_model_proxy_config()\n  File \"C:\\Users\\huynh\\anaconda3\\Lib\\site-packages\\kaggle_benchmarks\\kaggle\\model_proxy.py\", line 47, in raise_for_missing_model_proxy_config\n    raise ValueError(msg)\nValueError: \n\nMissing environment variables for Kaggle authentication:\n\n  - MODEL_PROXY_URL\n  - MODEL_PROXY_API_KEY\n\nAuthenticate by running:\n----------------------\npip install kaggle\nkaggle benchmarks auth\n----------------------\n\n"
+}

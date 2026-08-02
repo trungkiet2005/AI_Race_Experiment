@@ -1,0 +1,10 @@
+family,artifacts,race_rows,turns,admitted_artifacts,excluded_artifacts
+other AI Race artifact,1,15,222,0,1
+Claude KBench baseline,2,18,252,1,1
+game-understanding,1,84,1404,0,1
+frontier baseline,6,150,2790,5,1
+persona-sensitivity,5,372,5850,1,4
+core persona,22,567,10422,21,1
+surface-sensitivity,5,648,11340,1,4
+context skin,32,1584,27936,0,32
+risk-persona matrix,92,2676,49656,86,6

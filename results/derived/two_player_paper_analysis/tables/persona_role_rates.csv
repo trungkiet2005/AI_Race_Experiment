@@ -1,0 +1,16 @@
+model_label,role_pair,own_role,opponent_role,estimate,ci95_low,ci95_high,n_blocks,n_observations
+GPT-5 nano,Adv vs Adv,adversarial,adversarial,0.3941668054168054,0.3650462962962963,0.42213638213638216,10,60
+GPT-5 nano,Adv vs Coo,adversarial,cooperative,0.519307683057683,0.4819568429255929,0.5559686823593072,20,60
+GPT-5 nano,Coo vs Adv,cooperative,adversarial,0.01876239501239501,0.008877840909090908,0.030326025247900238,20,60
+GPT-5 nano,Coo vs Coo,cooperative,cooperative,0.0,0.0,0.0,10,60
+GPT-5.4 nano,Adv vs Adv,adversarial,adversarial,0.7187838550338551,0.6828511303511304,0.7534665750915751,10,60
+GPT-5.4 nano,Adv vs Coo,adversarial,cooperative,0.8108366633366633,0.7722373217060717,0.8461529419654419,20,60
+GPT-5.4 nano,Coo vs Adv,cooperative,adversarial,0.05540556665556664,0.03269625282125282,0.07990255230880228,20,60
+GPT-5.4 nano,Coo vs Coo,cooperative,cooperative,0.021510225885225887,0.009615079365079365,0.0360824239417989,10,60
+Gemini 3 Flash,Adv vs Adv,adversarial,adversarial,0.9841269841269842,0.9523809523809524,1.0,3,18
+Gemini 3 Flash,Adv vs Coo,adversarial,cooperative,0.4631393298059964,0.3774250440917107,0.5396825396825397,6,18
+Gemini 3 Flash,Coo vs Adv,cooperative,adversarial,0.09241622574955909,0.03950617283950617,0.15434744268077566,6,18
+Gemini 3 Flash,Coo vs Coo,cooperative,cooperative,0.0,0.0,0.0,10,60
+Qwen2.5 7B,Adv vs Adv,adversarial,adversarial,0.7774148999148999,0.7494472101972102,0.8099203643578642,10,60
+Qwen2.5 7B,Adv vs Coo,adversarial,cooperative,0.9218316637066636,0.8929249812687313,0.9504699247511748,20,60
+Qwen2.5 7B,Coo vs Adv,cooperative,adversarial,0.0,0.0,0.0,20,60
