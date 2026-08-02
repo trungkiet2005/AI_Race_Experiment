@@ -1,7 +1,6 @@
 {
-  "schema_version": "ai-race.impact-release.v1",
-  "git_base_revision": "b07ae73814d4215ba18777b11653c57912f68317",
-  "working_tree_dirty": true,
+  "schema_version": "ai-race.impact-release.v2",
+  "identity": "content-addressed; independent of commit and worktree state",
   "file_count": 69,
   "files": {
     "ai_race/audit/payoff_scale.py": {
@@ -102,7 +101,7 @@
     },
     "results/catalog.json": {
       "bytes": 391615,
-      "sha256": "1bd9971267a199953f326c3ad0934aca4a2d05179e84040b896e258a3d833a07"
+      "sha256": "f66868c27e47a44674c4f4768d4af8628c10ae38a0ecf52ada0f453fd4f20702"
     },
     "results/derived/payoff_scale_contract/README.md": {
       "bytes": 428,

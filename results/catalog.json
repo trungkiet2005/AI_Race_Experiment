@@ -1,9 +1,9 @@
 {
   "schema_version": "ai-race.results-catalog.v1",
-  "generated_utc": "2026-08-02T00:36:19.363593+00:00",
+  "generated_utc": "2026-08-02T00:39:14.245120+00:00",
   "canonical_root": "results/",
   "file_count": 1542,
-  "total_bytes": 580840056,
+  "total_bytes": 580839773,
   "size_by_top_level": {
     "README.md": {
       "files": 1,
@@ -43,7 +43,7 @@
     },
     "scripts": {
       "files": 32,
-      "bytes": 776740
+      "bytes": 776457
     },
     "visualization_insight_full.md": {
       "files": 1,
@@ -9560,8 +9560,8 @@
     {
       "path": "scripts/build_release_manifest.py",
       "top_level": "scripts",
-      "bytes": 5256,
-      "sha256": "99deac5ec7b294df3a0a5a91f3b1987432171402031aa2fb514fc9bf9abb9b22"
+      "bytes": 4973,
+      "sha256": "1df5c00fe1a19c0c988a677b44e51f2f337d24c7a1155110e356bbf48c57cb09"
     },
     {
       "path": "scripts/build_results_catalog.py",

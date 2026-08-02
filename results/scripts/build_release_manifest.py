@@ -4,7 +4,6 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
-import subprocess
 from pathlib import Path
 
 
@@ -74,23 +73,14 @@ def delivery_paths() -> list[Path]:
     return sorted(unique, key=lambda path: path.as_posix().lower())
 
 
-def git_value(*args: str) -> str | None:
-    result = subprocess.run(
-        ["git", *args], cwd=ROOT, capture_output=True, text=True, check=False
-    )
-    value = result.stdout.strip()
-    return value or None
-
-
 def build_manifest() -> dict:
     files = {}
     for path in delivery_paths():
         relative = path.relative_to(ROOT).as_posix()
         files[relative] = {"bytes": path.stat().st_size, "sha256": sha256(path)}
     return {
-        "schema_version": "ai-race.impact-release.v1",
-        "git_base_revision": git_value("rev-parse", "HEAD"),
-        "working_tree_dirty": bool(git_value("status", "--porcelain")),
+        "schema_version": "ai-race.impact-release.v2",
+        "identity": "content-addressed; independent of commit and worktree state",
         "file_count": len(files),
         "files": files,
     }
