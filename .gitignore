@@ -107,6 +107,9 @@ slides/*.xdv
 /tmp/
 /results/_build/
 
+# Never deposit participant re-identification data.
+**/_id_mapping_DO_NOT_DEPOSIT.csv
+
 # OS
 .DS_Store
 Thumbs.db
