@@ -5,7 +5,7 @@
     "surface": "report",
     "title": "AI Race Evidence Synthesis and Impact Upgrade",
     "description": "Technical report covering cross-model pilots, context/mapping sensitivity, trajectory divergence, comprehension, XAI, and EGT validation.",
-    "generatedAt": "2026-08-02T00:35:16+00:00",
+    "generatedAt": "2026-08-02T02:17:59+00:00",
     "cards": [
       {
         "id": "model_card",
@@ -240,6 +240,45 @@
             }
           ]
         }
+      },
+      {
+        "id": "power_chart",
+        "title": "Power is governed by independent repetition streams",
+        "subtitle": "Conservative pilot-residual sensitivity; familywise alpha 0.05 across seven contexts.",
+        "type": "line",
+        "dataset": "power",
+        "sourceId": "power",
+        "valueFormat": "percent",
+        "encodings": {
+          "x": {
+            "field": "n_crn_repetition_streams",
+            "type": "quantitative",
+            "label": "Independent CRN streams"
+          },
+          "y": {
+            "field": "power_holm_single_step",
+            "type": "quantitative",
+            "label": "Estimated power"
+          },
+          "color": {
+            "field": "true_interaction",
+            "type": "nominal",
+            "label": "True interaction"
+          },
+          "tooltip": [
+            {
+              "field": "true_interaction",
+              "type": "quantitative",
+              "label": "Interaction",
+              "format": "percent"
+            },
+            {
+              "field": "monte_carlo_se",
+              "type": "quantitative",
+              "label": "Monte Carlo SE"
+            }
+          ]
+        }
       }
     ],
     "tables": [
@@ -332,6 +371,11 @@
         "id": "comprehension",
         "label": "Comprehension admission",
         "path": "results/open_source/context_skin_pilot/analysis_live_pilot_t0/comprehension_by_domain.csv"
+      },
+      {
+        "id": "power",
+        "label": "Prospective power sensitivity",
+        "path": "results/impact_upgrade/power/power_grid.csv"
       }
     ],
     "blocks": [
@@ -343,7 +387,7 @@
       {
         "id": "summary",
         "type": "markdown",
-        "body": "# AI Race evidence synthesis and impact upgrade\n\n## Technical summary\n\nThe upgraded evidence changes the paper's strongest defensible story. The result is not that one language model has a stable level of risk appetite. It is that **strategic behavior is jointly determined by model checkpoint, prompt surface, semantic framing, and endogenous trajectory feedback—even when payoff mechanics are unchanged**.\n\nFive baseline checkpoints cover sharply different regimes: GPT-5 nano remains near 12–15% Unsafe, GPT-5.4 nano is U-shaped near 50–58%, while the three Gemini checkpoints begin at 84–100% Unsafe under 10% risk and decline as risk rises. These are cross-provider pilots and are never pooled inferentially, but they falsify any simple one-model generalization.\n\nThe Qwen context experiment provides a more controlled mechanism result. All paired first-round decisions agree, yet fixed-state replay detects direct context effects up to 16.7 percentage points and live trajectories reach a 34.0-point aggregate gap. The crucial new interaction is stronger: **the context effect is entirely gated by opaque action-code mapping in this pilot**. When Safe is code Q, the seven contexts produce no divergence from the abstract reference; when Safe is code P, six contexts diverge in every paired player trajectory, with the largest Unsafe-rate difference reaching 68.0 points. Mapping is balanced but assigned by repetition parity, so this is a high-priority replication target rather than a mapping-causal estimate.\n\nThe validity boundary is equally important. Qwen passes rule recall (100%) and stage payoff (98.4%), but state updating is 12.5% and terminal scoring 17.2%; the preregistered comprehension admission gate therefore fails. SAE probes can predict action-associated representations (held-out AUC up to 0.985), but context steering causes no action flips in the context run, and the self-play target-minus-control intervention contrasts do not establish a reliable causal controller. Those negative results are retained, not hidden.\n\n"
+        "body": "# AI Race evidence synthesis and impact upgrade\n\n## Technical summary\n\nThe upgraded evidence changes the paper's strongest defensible story. The result is not that one language model has a stable level of risk appetite. It is that **strategic behavior is jointly determined by model checkpoint, prompt surface, semantic framing, and endogenous trajectory feedback—even when payoff mechanics are unchanged**.\n\nFive baseline checkpoints cover sharply different regimes: GPT-5 nano remains near 12–15% Unsafe, GPT-5.4 nano is U-shaped near 50–58%, while the three Gemini checkpoints begin at 84–100% Unsafe under 10% risk and decline as risk rises. These are cross-provider pilots and are never pooled inferentially, but they falsify any simple one-model generalization.\n\nThe Qwen context experiment provides a more controlled mechanism result. All paired first-round decisions agree, yet fixed-state replay detects direct context effects up to 16.7 percentage points and live trajectories reach a 34.0-point aggregate gap. The crucial new interaction is stronger: **the context effect is entirely gated by opaque action-code mapping in this pilot**. When Safe is code Q, the seven contexts produce no divergence from the abstract reference; when Safe is code P, six contexts diverge in every paired player trajectory, with the largest Unsafe-rate difference reaching 68.0 points. Mapping is balanced but assigned by repetition parity, so this is a high-priority replication target rather than a mapping-causal estimate.\n\nThe inference audit corrected an important dependency error before the follow-up launch. All three risk treatments reuse `base_seed + repetition`, so the project has **32 independent CRN repetition streams, not 96 risk-by-repetition clusters**. Historical context intervals and figures have been recomputed with risk strata inside the repetition cluster. The frozen 32-stream mapping grid therefore remains diagnostic. A prospective residual-bootstrap sensitivity uses the largest observed context-delta spread as a conservative variance proxy: 96 independent streams deliver estimated power 0.937 for a 15-point interaction after a seven-test multiplicity screen; this is a design calculation, not a behavioral result.\n\nThe validity boundary is equally important. Qwen passes rule recall (100%) and stage payoff (98.4%), but state updating is 12.5% and terminal scoring 17.2%; the preregistered comprehension admission gate therefore fails. SAE probes can predict action-associated representations (held-out AUC up to 0.985), but context steering causes no action flips in the context run, and the self-play target-minus-control intervention contrasts do not establish a reliable causal controller. Those negative results are retained, not hidden.\n\n"
       },
       {
         "id": "metrics",
@@ -396,9 +440,19 @@
         "chartId": "comprehension_chart"
       },
       {
+        "id": "power_text",
+        "type": "markdown",
+        "body": "### Power and stopping are prospective\n\nRisk strata reuse the same `base_seed + repetition` stream, so the independent unit is repetition. The 32-stream run remains diagnostic. A separate 96-stream replication is frozen for a 15-point interaction, fixed N, Holm family size seven, and no optional continuation; estimated design power is **93.7%** under the conservative pilot-residual sensitivity."
+      },
+      {
+        "id": "power_block",
+        "type": "chart",
+        "chartId": "power_chart"
+      },
+      {
         "id": "rest",
         "type": "markdown",
-        "body": "## Scope, data, methodology, limitations, next experiments, and further questions\n\n\n\nThe synthesis covers 768 Qwen T=0 context races (13,680 decisions), a separate matched T=0.7 stratum of the same size, 2,640 OpenAI pilot races (49,104 decisions), 177 Gemini pilot races (3,168 decisions), an N=3 Qwen pilot, FAST-SAE representation and intervention audits, and an independent EGTTools transition validation. Temperature strata and provider protocols are not pooled.\n\nThe player-level Unsafe rate averages each player's trajectory before aggregation. Mapping-stratified live contrasts compare the same risk, repetition, player seat, and mapping against the abstract context. Kaplan–Meier curves treat race termination as censoring. The fixed-state estimand compares prompts on identical replayed states. Terminal payoff differences are realized, so they include setback draws fixed by common-random-number block.\n\n## Methodology and quality gates\n\nEvery source is admitted through explicit checks: manifest status and phase, model and prompt identity, expected cell coverage, zero parse failures where claimed, player/turn count reconciliation, canonical mechanics, and common-random-number alignment. The impact script fails closed on missing contexts, risks, mappings, rows, or inconsistent horizons. Output tables and figures are hashed in `analysis_manifest.json`.\n\nThe EGT reconstruction is labelled faithful rather than bitwise because the original paper has not released its private code and seeds. The independent transition matrix matches the pinned EGTTools implementation to 1.11e-16 and its stationary distribution to 7.63e-15 in the validation case.\n\n## Limitations, uncertainty, and robustness boundary\n\n- Context findings remain **diagnostic** because the comprehension admission gate fails.\n- OpenAI and Gemini results are **pilots**; their local-run manifests do not identify persona effects cleanly across protocol signatures.\n- Mapping is balanced but assigned by repetition parity in the completed live context runs. The mapping interaction is therefore a replication target, not a clean mapping main effect.\n- Decisions within a race are dependent. Turn-weighted rates are descriptive, not independent Bernoulli trials.\n- The live-minus-fixed gap combines repeated prompt exposure and endogenous state feedback; it is not a causal mediation effect.\n- SAE feature association is not feature causation. The strongest controlled intervention contrasts do not support a reliable action controller.\n- N=3 persona cells have two races each and belong in the demo/appendix, not the headline claim.\n\n## Recommended next experiments\n\n1. **Launch the frozen fully crossed mapping × context pilot.** For every seed, execute both Safe=P and Safe=Q across all eight contexts. The checked-in protocol fixes 1,536 races, paired estimands, Holm correction, failure gates, and promotion rules. This closes the largest identified confound at the lowest compute cost while retaining the failed-comprehension diagnostic boundary.\n2. **Admission-gated cross-family replication.** Run at least three model families at one fixed decoding setting; analyze gameplay only for model/configuration cells that pass rule recall, state transition, terminal scoring, and expected-payoff thresholds.\n3. **Direct-versus-feedback replay.** Freeze a logged state sequence, replay all contexts at each state, then separately launch endogenous trajectories from the same first divergence. This creates commensurable direct and feedback estimands.\n4. **Opaque-ID randomization per decision.** Randomize labels on every turn and decode after response to test whether position bias persists when a stable code policy cannot form.\n5. **Causal SAE promotion rule.** Increase discovery action flips, pre-register feature selection on discovery races, and require target steering to exceed matched-random and unrelated-feature controls on held-out states and live races.\n\n## Further questions\n\n- Why does context have leverage only under one opaque mapping: token prior, recency, instruction position, or a learned code policy?\n- Which comprehension failure best predicts later divergence after controlling for model and first-round choice?\n- Are the Gemini risk slopes stable under the same action mapping and prompt template used for Qwen?\n- Does trajectory feedback amplify context because of self-consistency, opponent imitation, progress-gap response, or terminal-risk calculation?\n- Can a neutral verified state tool improve payoff without itself becoming a new framing treatment?\n\n## Literature alignment\n\nThe result aligns with recent work showing that equivalent strategic games can change under narrative context ([Same Game, Different Story](https://arxiv.org/abs/2607.19670)) and that framing shapes LLM decisions ([Framing the Game](https://arxiv.org/abs/2503.04840)). It also addresses the warning that some apparent prompt sensitivity can be an evaluation artifact ([Hua et al., EMNLP 2025](https://aclanthology.org/2025.emnlp-main.1006/)): here actions are parsed as exact opaque codes, mechanics are recomputed from raw logs, and divergence changes enacted trajectories, so the main effect is not a fuzzy answer-matching artifact. The XAI boundary follows SAE work that separates representation discovery from controlled intervention ([SAIF](https://arxiv.org/abs/2502.11356), [FAST](https://arxiv.org/abs/2506.07691), [RouteSAE](https://arxiv.org/abs/2503.08200)).\n"
+        "body": "## Scope, data, methodology, limitations, next experiments, and further questions\n\n\n\nThe synthesis covers 768 Qwen T=0 context races (13,680 decisions), a separate matched T=0.7 stratum of the same size, 2,640 OpenAI pilot races (49,104 decisions), 177 Gemini pilot races (3,168 decisions), an N=3 Qwen pilot, FAST-SAE representation and intervention audits, and an independent EGTTools transition validation. Temperature strata and provider protocols are not pooled.\n\nThe player-level Unsafe rate averages each player's trajectory before aggregation. Mapping-stratified live contrasts compare the same risk, repetition, player seat, and mapping against the abstract context. Kaplan–Meier curves treat race termination as censoring. The fixed-state estimand compares prompts on identical replayed states. Terminal payoff differences are realized, so they include setback draws fixed by common-random-number block.\n\n## Methodology and quality gates\n\nEvery source is admitted through explicit checks: manifest status and phase, model and prompt identity, expected cell coverage, zero parse failures where claimed, player/turn count reconciliation, canonical mechanics, and common-random-number alignment. The impact script fails closed on missing contexts, risks, mappings, rows, or inconsistent horizons. Output tables and figures are hashed in `analysis_manifest.json`.\n\nThe EGT reconstruction is labelled faithful rather than bitwise because the original paper has not released its private code and seeds. The independent transition matrix matches the pinned EGTTools implementation to 1.11e-16 and its stationary distribution to 7.63e-15 in the validation case.\n\n## Limitations, uncertainty, and robustness boundary\n\n- Context findings remain **diagnostic** because the comprehension admission gate fails.\n- Earlier context uncertainty used risk-by-repetition clusters. The corrected analysis clusters by repetition because risk strata share the same RNG stream; estimates are unchanged but intervals are wider where dependence matters.\n- OpenAI and Gemini results are **pilots**; their local-run manifests do not identify persona effects cleanly across protocol signatures.\n- Mapping is balanced but assigned by repetition parity in the completed live context runs. The mapping interaction is therefore a replication target, not a clean mapping main effect.\n- Decisions within a race are dependent. Turn-weighted rates are descriptive, not independent Bernoulli trials.\n- The live-minus-fixed gap combines repeated prompt exposure and endogenous state feedback; it is not a causal mediation effect.\n- SAE feature association is not feature causation. The strongest controlled intervention contrasts do not support a reliable action controller.\n- N=3 persona cells have two races each and belong in the demo/appendix, not the headline claim.\n\n## Recommended next experiments\n\n1. **Complete admission before gameplay, then run the fully crossed diagnostic.** For every seed, execute both Safe=P and Safe=Q across all eight contexts only after provenance and comprehension are recorded. The checked-in 1,536-race grid remains diagnostic; the independent 96-stream replication is the frozen confirmatory target.\n2. **Admission-gated cross-family replication.** Run at least three model families at one fixed decoding setting; analyze gameplay only for model/configuration cells that pass rule recall, state transition, terminal scoring, and expected-payoff thresholds.\n3. **Direct-versus-feedback replay.** Freeze a logged state sequence, replay all contexts at each state, then separately launch endogenous trajectories from the same first divergence. This creates commensurable direct and feedback estimands.\n4. **Opaque-ID randomization per decision.** Randomize labels on every turn and decode after response to test whether position bias persists when a stable code policy cannot form.\n5. **Causal SAE promotion rule.** Increase discovery action flips, pre-register feature selection on discovery races, and require target steering to exceed matched-random and unrelated-feature controls on held-out states and live races.\n\n## Further questions\n\n- Why does context have leverage only under one opaque mapping: token prior, recency, instruction position, or a learned code policy?\n- Which comprehension failure best predicts later divergence after controlling for model and first-round choice?\n- Are the Gemini risk slopes stable under the same action mapping and prompt template used for Qwen?\n- Does trajectory feedback amplify context because of self-consistency, opponent imitation, progress-gap response, or terminal-risk calculation?\n- Can a neutral verified state tool improve payoff without itself becoming a new framing treatment?\n\n## Literature alignment\n\nThe result aligns with recent work showing that equivalent strategic games can change under narrative context ([Same Game, Different Story](https://arxiv.org/abs/2607.19670)) and that framing shapes LLM decisions ([Framing the Game](https://arxiv.org/abs/2503.04840)). It also addresses the warning that some apparent prompt sensitivity can be an evaluation artifact ([Hua et al., EMNLP 2025](https://aclanthology.org/2025.emnlp-main.1006/)): here actions are parsed as exact opaque codes, mechanics are recomputed from raw logs, and divergence changes enacted trajectories, so the main effect is not a fuzzy answer-matching artifact. The XAI boundary follows SAE work that separates representation discovery from controlled intervention ([SAIF](https://arxiv.org/abs/2502.11356), [FAST](https://arxiv.org/abs/2506.07691), [RouteSAE](https://arxiv.org/abs/2503.08200)).\n"
       },
       {
         "id": "context_table_block",
@@ -414,7 +468,7 @@
   },
   "snapshot": {
     "version": 1,
-    "generatedAt": "2026-08-02T00:35:16+00:00",
+    "generatedAt": "2026-08-02T02:17:59+00:00",
     "status": "ready",
     "datasets": {
       "headlines": [
@@ -770,7 +824,7 @@
           "live_ci_low_pp": 0.0,
           "live_ci_high_pp": 0.0,
           "live_paired_rows": 192,
-          "live_clusters": 96,
+          "live_clusters": 32,
           "fixed_direct_effect_pp": 3.125,
           "fixed_ci_low_pp": 1.0416666667,
           "fixed_ci_high_pp": 5.7291666667,
@@ -782,10 +836,10 @@
         {
           "context": "logistics_contract",
           "live_effect_pp": 33.9965757452,
-          "live_ci_low_pp": 27.2019004769,
-          "live_ci_high_pp": 40.7666895672,
+          "live_ci_low_pp": 22.9628708965,
+          "live_ci_high_pp": 46.1826336279,
           "live_paired_rows": 192,
-          "live_clusters": 96,
+          "live_clusters": 32,
           "fixed_direct_effect_pp": 15.625,
           "fixed_ci_low_pp": 10.9375,
           "fixed_ci_high_pp": 20.3125,
@@ -797,10 +851,10 @@
         {
           "context": "crystal_guild_contract",
           "live_effect_pp": 29.5841224747,
-          "live_ci_low_pp": 23.8660095904,
-          "live_ci_high_pp": 35.6991173995,
+          "live_ci_low_pp": 19.0891335227,
+          "live_ci_high_pp": 39.8716066919,
           "live_paired_rows": 192,
-          "live_clusters": 96,
+          "live_clusters": 32,
           "fixed_direct_effect_pp": 15.1041666667,
           "fixed_ci_low_pp": 10.4166666667,
           "fixed_ci_high_pp": 19.7916666667,
@@ -812,10 +866,10 @@
         {
           "context": "hospital_deployment",
           "live_effect_pp": 22.2848661245,
-          "live_ci_low_pp": 17.6940452317,
-          "live_ci_high_pp": 27.025695837,
+          "live_ci_low_pp": 14.3780776515,
+          "live_ci_high_pp": 30.3421746184,
           "live_paired_rows": 192,
-          "live_clusters": 96,
+          "live_clusters": 32,
           "fixed_direct_effect_pp": 11.4583333333,
           "fixed_ci_low_pp": 7.2916666667,
           "fixed_ci_high_pp": 16.1458333333,
@@ -827,10 +881,10 @@
         {
           "context": "colony_life_support",
           "live_effect_pp": 20.892503466,
-          "live_ci_low_pp": 16.5919514152,
-          "live_ci_high_pp": 25.2180492502,
+          "live_ci_low_pp": 13.6085239651,
+          "live_ci_high_pp": 28.2884219029,
           "live_paired_rows": 192,
-          "live_clusters": 96,
+          "live_clusters": 32,
           "fixed_direct_effect_pp": 9.375,
           "fixed_ci_low_pp": 5.7291666667,
           "fixed_ci_high_pp": 13.0338541667,
@@ -842,10 +896,10 @@
         {
           "context": "robotic_expedition",
           "live_effect_pp": 13.1219362745,
-          "live_ci_low_pp": 10.2766567328,
-          "live_ci_high_pp": 15.9656932375,
+          "live_ci_low_pp": 8.3333333333,
+          "live_ci_high_pp": 18.0607383578,
           "live_paired_rows": 192,
-          "live_clusters": 96,
+          "live_clusters": 32,
           "fixed_direct_effect_pp": 12.5,
           "fixed_ci_low_pp": 8.3333333333,
           "fixed_ci_high_pp": 16.6666666667,
@@ -857,10 +911,10 @@
         {
           "context": "fictional_cartography",
           "live_effect_pp": 23.3629802931,
-          "live_ci_low_pp": 18.4939212901,
-          "live_ci_high_pp": 28.232503497,
+          "live_ci_low_pp": 15.2659406566,
+          "live_ci_high_pp": 31.713151738,
           "live_paired_rows": 192,
-          "live_clusters": 96,
+          "live_clusters": 32,
           "fixed_direct_effect_pp": 16.6666666667,
           "fixed_ci_low_pp": 11.9791666667,
           "fixed_ci_high_pp": 21.3541666667,
@@ -980,6 +1034,288 @@
           "semantic_accuracy": 0.171875,
           "strict_valid_rate": 0.921875,
           "n": 64
+        }
+      ],
+      "power": [
+        {
+          "n_crn_repetition_streams": 16,
+          "true_interaction": 0.05,
+          "power_holm_single_step": 0.0129,
+          "monte_carlo_se": 0.0011284321,
+          "simulations": 10000,
+          "familywise_alpha": 0.05,
+          "holm_family_size": 7,
+          "screening_alpha": 0.0071428571
+        },
+        {
+          "n_crn_repetition_streams": 16,
+          "true_interaction": 0.1,
+          "power_holm_single_step": 0.0375,
+          "monte_carlo_se": 0.0018998355,
+          "simulations": 10000,
+          "familywise_alpha": 0.05,
+          "holm_family_size": 7,
+          "screening_alpha": 0.0071428571
+        },
+        {
+          "n_crn_repetition_streams": 16,
+          "true_interaction": 0.15,
+          "power_holm_single_step": 0.1065,
+          "monte_carlo_se": 0.003084765,
+          "simulations": 10000,
+          "familywise_alpha": 0.05,
+          "holm_family_size": 7,
+          "screening_alpha": 0.0071428571
+        },
+        {
+          "n_crn_repetition_streams": 16,
+          "true_interaction": 0.2,
+          "power_holm_single_step": 0.2265,
+          "monte_carlo_se": 0.004185663,
+          "simulations": 10000,
+          "familywise_alpha": 0.05,
+          "holm_family_size": 7,
+          "screening_alpha": 0.0071428571
+        },
+        {
+          "n_crn_repetition_streams": 32,
+          "true_interaction": 0.05,
+          "power_holm_single_step": 0.0242,
+          "monte_carlo_se": 0.0015366965,
+          "simulations": 10000,
+          "familywise_alpha": 0.05,
+          "holm_family_size": 7,
+          "screening_alpha": 0.0071428571
+        },
+        {
+          "n_crn_repetition_streams": 32,
+          "true_interaction": 0.1,
+          "power_holm_single_step": 0.1101,
+          "monte_carlo_se": 0.0031301436,
+          "simulations": 10000,
+          "familywise_alpha": 0.05,
+          "holm_family_size": 7,
+          "screening_alpha": 0.0071428571
+        },
+        {
+          "n_crn_repetition_streams": 32,
+          "true_interaction": 0.15,
+          "power_holm_single_step": 0.3051,
+          "monte_carlo_se": 0.0046044977,
+          "simulations": 10000,
+          "familywise_alpha": 0.05,
+          "holm_family_size": 7,
+          "screening_alpha": 0.0071428571
+        },
+        {
+          "n_crn_repetition_streams": 32,
+          "true_interaction": 0.2,
+          "power_holm_single_step": 0.695,
+          "monte_carlo_se": 0.0046040743,
+          "simulations": 10000,
+          "familywise_alpha": 0.05,
+          "holm_family_size": 7,
+          "screening_alpha": 0.0071428571
+        },
+        {
+          "n_crn_repetition_streams": 64,
+          "true_interaction": 0.05,
+          "power_holm_single_step": 0.054,
+          "monte_carlo_se": 0.002260177,
+          "simulations": 10000,
+          "familywise_alpha": 0.05,
+          "holm_family_size": 7,
+          "screening_alpha": 0.0071428571
+        },
+        {
+          "n_crn_repetition_streams": 64,
+          "true_interaction": 0.1,
+          "power_holm_single_step": 0.3463,
+          "monte_carlo_se": 0.004757902,
+          "simulations": 10000,
+          "familywise_alpha": 0.05,
+          "holm_family_size": 7,
+          "screening_alpha": 0.0071428571
+        },
+        {
+          "n_crn_repetition_streams": 64,
+          "true_interaction": 0.15,
+          "power_holm_single_step": 0.7533,
+          "monte_carlo_se": 0.0043109061,
+          "simulations": 10000,
+          "familywise_alpha": 0.05,
+          "holm_family_size": 7,
+          "screening_alpha": 0.0071428571
+        },
+        {
+          "n_crn_repetition_streams": 64,
+          "true_interaction": 0.2,
+          "power_holm_single_step": 0.9727,
+          "monte_carlo_se": 0.0016295616,
+          "simulations": 10000,
+          "familywise_alpha": 0.05,
+          "holm_family_size": 7,
+          "screening_alpha": 0.0071428571
+        },
+        {
+          "n_crn_repetition_streams": 96,
+          "true_interaction": 0.05,
+          "power_holm_single_step": 0.09,
+          "monte_carlo_se": 0.0028618176,
+          "simulations": 10000,
+          "familywise_alpha": 0.05,
+          "holm_family_size": 7,
+          "screening_alpha": 0.0071428571
+        },
+        {
+          "n_crn_repetition_streams": 96,
+          "true_interaction": 0.1,
+          "power_holm_single_step": 0.5421,
+          "monte_carlo_se": 0.0049822444,
+          "simulations": 10000,
+          "familywise_alpha": 0.05,
+          "holm_family_size": 7,
+          "screening_alpha": 0.0071428571
+        },
+        {
+          "n_crn_repetition_streams": 96,
+          "true_interaction": 0.15,
+          "power_holm_single_step": 0.9368,
+          "monte_carlo_se": 0.0024332234,
+          "simulations": 10000,
+          "familywise_alpha": 0.05,
+          "holm_family_size": 7,
+          "screening_alpha": 0.0071428571
+        },
+        {
+          "n_crn_repetition_streams": 96,
+          "true_interaction": 0.2,
+          "power_holm_single_step": 0.999,
+          "monte_carlo_se": 0.0003160696,
+          "simulations": 10000,
+          "familywise_alpha": 0.05,
+          "holm_family_size": 7,
+          "screening_alpha": 0.0071428571
+        },
+        {
+          "n_crn_repetition_streams": 128,
+          "true_interaction": 0.05,
+          "power_holm_single_step": 0.1347,
+          "monte_carlo_se": 0.0034140286,
+          "simulations": 10000,
+          "familywise_alpha": 0.05,
+          "holm_family_size": 7,
+          "screening_alpha": 0.0071428571
+        },
+        {
+          "n_crn_repetition_streams": 128,
+          "true_interaction": 0.1,
+          "power_holm_single_step": 0.7313,
+          "monte_carlo_se": 0.0044328355,
+          "simulations": 10000,
+          "familywise_alpha": 0.05,
+          "holm_family_size": 7,
+          "screening_alpha": 0.0071428571
+        },
+        {
+          "n_crn_repetition_streams": 128,
+          "true_interaction": 0.15,
+          "power_holm_single_step": 0.9896,
+          "monte_carlo_se": 0.0010144871,
+          "simulations": 10000,
+          "familywise_alpha": 0.05,
+          "holm_family_size": 7,
+          "screening_alpha": 0.0071428571
+        },
+        {
+          "n_crn_repetition_streams": 128,
+          "true_interaction": 0.2,
+          "power_holm_single_step": 1.0,
+          "monte_carlo_se": 0.0,
+          "simulations": 10000,
+          "familywise_alpha": 0.05,
+          "holm_family_size": 7,
+          "screening_alpha": 0.0071428571
+        },
+        {
+          "n_crn_repetition_streams": 160,
+          "true_interaction": 0.05,
+          "power_holm_single_step": 0.1915,
+          "monte_carlo_se": 0.0039348158,
+          "simulations": 10000,
+          "familywise_alpha": 0.05,
+          "holm_family_size": 7,
+          "screening_alpha": 0.0071428571
+        },
+        {
+          "n_crn_repetition_streams": 160,
+          "true_interaction": 0.1,
+          "power_holm_single_step": 0.8484,
+          "monte_carlo_se": 0.0035863274,
+          "simulations": 10000,
+          "familywise_alpha": 0.05,
+          "holm_family_size": 7,
+          "screening_alpha": 0.0071428571
+        },
+        {
+          "n_crn_repetition_streams": 160,
+          "true_interaction": 0.15,
+          "power_holm_single_step": 0.9987,
+          "monte_carlo_se": 0.0003603207,
+          "simulations": 10000,
+          "familywise_alpha": 0.05,
+          "holm_family_size": 7,
+          "screening_alpha": 0.0071428571
+        },
+        {
+          "n_crn_repetition_streams": 160,
+          "true_interaction": 0.2,
+          "power_holm_single_step": 1.0,
+          "monte_carlo_se": 0.0,
+          "simulations": 10000,
+          "familywise_alpha": 0.05,
+          "holm_family_size": 7,
+          "screening_alpha": 0.0071428571
+        },
+        {
+          "n_crn_repetition_streams": 192,
+          "true_interaction": 0.05,
+          "power_holm_single_step": 0.2456,
+          "monte_carlo_se": 0.0043044238,
+          "simulations": 10000,
+          "familywise_alpha": 0.05,
+          "holm_family_size": 7,
+          "screening_alpha": 0.0071428571
+        },
+        {
+          "n_crn_repetition_streams": 192,
+          "true_interaction": 0.1,
+          "power_holm_single_step": 0.9121,
+          "monte_carlo_se": 0.0028314941,
+          "simulations": 10000,
+          "familywise_alpha": 0.05,
+          "holm_family_size": 7,
+          "screening_alpha": 0.0071428571
+        },
+        {
+          "n_crn_repetition_streams": 192,
+          "true_interaction": 0.15,
+          "power_holm_single_step": 0.9999,
+          "monte_carlo_se": 9.9995e-05,
+          "simulations": 10000,
+          "familywise_alpha": 0.05,
+          "holm_family_size": 7,
+          "screening_alpha": 0.0071428571
+        },
+        {
+          "n_crn_repetition_streams": 192,
+          "true_interaction": 0.2,
+          "power_holm_single_step": 1.0,
+          "monte_carlo_se": 0.0,
+          "simulations": 10000,
+          "familywise_alpha": 0.05,
+          "holm_family_size": 7,
+          "screening_alpha": 0.0071428571
         }
       ],
       "evidence": [
@@ -1169,6 +1505,26 @@
         "description": "Semantic and strict-valid accuracy by game-understanding domain.",
         "tables_used": [
           "results/open_source/context_skin_pilot/analysis_live_pilot_t0/comprehension_by_domain.csv"
+        ],
+        "filters": [
+          "Evidence classes remain separate; no cross-protocol inferential pooling"
+        ],
+        "metric_definitions": [
+          "Unsafe rate is the within-player enacted Unsafe fraction unless a block says otherwise.",
+          "Live context effects compare paired player trajectories under common random numbers.",
+          "Fixed-state effects replay identical states and therefore isolate direct prompt response at those states."
+        ]
+      }
+    },
+    {
+      "id": "power",
+      "query": {
+        "engine": "python",
+        "language": "sql",
+        "sql": "SELECT * FROM power_grid",
+        "description": "Monte Carlo design sensitivity by independent CRN repetition streams and smallest interaction.",
+        "tables_used": [
+          "results/impact_upgrade/power/power_grid.csv"
         ],
         "filters": [
           "Evidence classes remain separate; no cross-protocol inferential pooling"

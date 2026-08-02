@@ -477,9 +477,7 @@ def summarize_contrasts(rows: pd.DataFrame, repetitions: int) -> pd.DataFrame:
                 "estimand_scope": key[2],
                 "contrast": key[3],
                 "n_player_blocks": len(subset),
-                "n_crn_blocks": subset.groupby(
-                    ["max_private_risk", "rep"], observed=True
-                ).ngroups,
+                "n_crn_blocks": int(subset["rep"].nunique()),
                 "estimate": subset["estimate"].mean(),
                 "ci95_low": low,
                 "ci95_high": high,

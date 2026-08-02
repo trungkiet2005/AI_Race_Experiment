@@ -1,0 +1,19 @@
+{
+  "schema_version": "ai-race-context-mapping-power-sensitivity-v1",
+  "status": "complete",
+  "evidence_class": "prospective_design_sensitivity_not_behavioral_result",
+  "seed": 260802,
+  "simulations": 10000,
+  "variance_proxy_context": "logistics_contract",
+  "variance_proxy_sd": 0.3458083857158611,
+  "se_soi": 0.15,
+  "target_power": 0.8,
+  "frozen_confirmatory_blocks": 96,
+  "diagnostic_blocks": 32,
+  "decision": "Keep the 32-block run diagnostic. A future confirmatory replication uses 96 independent repetition streams to target a 15 pp interaction; re-estimation or optional continuation from the diagnostic result is prohibited.",
+  "limitations": [
+    "The source pilot confounds mapping with repetition parity.",
+    "Residual spread is a conservative context-delta proxy, not an identified mapping-interaction variance.",
+    "The Monte Carlo rejection rule uses a multiplicity-adjusted t statistic; the final analysis remains the frozen sign-flip/bootstrap analysis."
+  ]
+}

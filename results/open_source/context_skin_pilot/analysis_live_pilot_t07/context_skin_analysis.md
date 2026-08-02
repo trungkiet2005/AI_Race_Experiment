@@ -6,7 +6,7 @@
 
 - **Coverage and provenance passed.** 8 skins, 768 live races, 13680 live decisions, 96 fixed states, and 1536 replay cells were reconciled. There were 0 live and 0 fixed-state final parse failures.
 - **No first-round context effect was observed in the pilot live run.** Every paired first-round estimate was exactly 0 pp.
-- **Later behavior separated across skins.** The largest fixed-state difference versus the abstract control was Fictional cartography at +16.7 pp (95% bootstrap CI +12.0 to +21.4 pp); the largest live full-trajectory difference was Logistics contract at +24.7 pp (95% bootstrap CI +19.3 to +30.2 pp). Both rankings remain exploratory.
+- **Later behavior separated across skins.** The largest fixed-state difference versus the abstract control was Fictional cartography at +16.7 pp (95% bootstrap CI +12.0 to +21.4 pp); the largest live full-trajectory difference was Logistics contract at +24.7 pp (95% bootstrap CI +16.0 to +34.0 pp). Both rankings remain exploratory.
 - **The admission failure is substantive, not cosmetic.** State-update semantic accuracy was 12.5%; terminal-scoring accuracy was 17.2%. Behavior below therefore diagnoses prompt-conditioned output, not verified understanding of the game.
 - **Opaque mapping dominated semantic action rates.** When P denoted Safe (`safe_p`), the live semantic Unsafe rate was 43.1% across 6,240 decisions; when Q denoted Safe (`safe_q`), it was 0.0% across 7,440. This is why mapping remains explicit in every primary table.
 - **Planned semantic contrasts were selective.** Live intervals excluding zero occurred only for: Neutral exploration (+6.1 pp). These intervals remain exploratory and do not estimate a general realism effect.

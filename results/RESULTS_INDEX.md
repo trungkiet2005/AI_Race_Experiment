@@ -4,11 +4,11 @@
 
 ## At a glance
 
-- Canonical files (excluding reproducible `_build/`): **1,542**
-- Total canonical size: **553.93 MiB**
-- Parsed manifest records: **199**
+- Canonical files (excluding reproducible `_build/`): **1,989**
+- Total canonical size: **766.92 MiB**
+- Parsed manifest records: **250**
 - Invalid manifest JSON files: **0**
-- Exact duplicate hash groups: **50** (archives may intentionally retain immutable copies)
+- Exact duplicate hash groups: **62** (archives may intentionally retain immutable copies)
 
 Evidence labels are conservative: a completed pilot stays `pilot`; a prepared or diagnostic artifact is never promoted by directory name alone.
 
@@ -34,7 +34,7 @@ Evidence labels are conservative: a completed pilot stays `pilot`; a prepared or
 - [Payoff-scale mechanical contract](derived/payoff_scale_contract/README.md)
 - [Experiment impact roadmap](../docs/experiments/impact_experiment_program.md)
 
-## Complete visual artifact map (149)
+## Complete visual artifact map (202)
 
 Every rendered chart, publication PDF, and interactive HTML surface in the canonical results root is linked below. The narrative synthesis embeds the decision-relevant subset in `visualization_insight_full.md`.
 
@@ -72,6 +72,57 @@ Every rendered chart, publication PDF, and interactive HTML surface in the canon
 - [`artifacts/qa/latex/paper_p16-16.png`](<artifacts/qa/latex/paper_p16-16.png>)
 - [`artifacts/qa/latex/paper_p8-08.png`](<artifacts/qa/latex/paper_p8-08.png>)
 - [`artifacts/qa/latex/paper_p9-09.png`](<artifacts/qa/latex/paper_p9-09.png>)
+- [`cross_provider/figures/expected_end_rounds.png`](<cross_provider/figures/expected_end_rounds.png>)
+- [`cross_provider/figures/n3_group_escalation_response.png`](<cross_provider/figures/n3_group_escalation_response.png>)
+- [`cross_provider/figures/n3_individual_unsafe_rate.png`](<cross_provider/figures/n3_individual_unsafe_rate.png>)
+- [`cross_provider/figures/n3_joint_action_composition.png`](<cross_provider/figures/n3_joint_action_composition.png>)
+- [`cross_provider/figures/n3_terminal_outcomes.png`](<cross_provider/figures/n3_terminal_outcomes.png>)
+- [`cross_provider/figures/pair_reciprocity.png`](<cross_provider/figures/pair_reciprocity.png>)
+- [`cross_provider/figures/pair_stage_payoff.png`](<cross_provider/figures/pair_stage_payoff.png>)
+- [`cross_provider/figures/pair_unsafe_rate.png`](<cross_provider/figures/pair_unsafe_rate.png>)
+- [`cross_provider/figures/pair_unsafe_trajectory.png`](<cross_provider/figures/pair_unsafe_trajectory.png>)
+- [`derived/two_player_paper_analysis/figures/fig01_baseline_risk_response.pdf`](<derived/two_player_paper_analysis/figures/fig01_baseline_risk_response.pdf>)
+- [`derived/two_player_paper_analysis/figures/fig01_baseline_risk_response.png`](<derived/two_player_paper_analysis/figures/fig01_baseline_risk_response.png>)
+- [`derived/two_player_paper_analysis/figures/fig01_baseline_risk_response.svg`](<derived/two_player_paper_analysis/figures/fig01_baseline_risk_response.svg>)
+- [`derived/two_player_paper_analysis/figures/fig01b_protocol_robustness_baselines.pdf`](<derived/two_player_paper_analysis/figures/fig01b_protocol_robustness_baselines.pdf>)
+- [`derived/two_player_paper_analysis/figures/fig01b_protocol_robustness_baselines.png`](<derived/two_player_paper_analysis/figures/fig01b_protocol_robustness_baselines.png>)
+- [`derived/two_player_paper_analysis/figures/fig01b_protocol_robustness_baselines.svg`](<derived/two_player_paper_analysis/figures/fig01b_protocol_robustness_baselines.svg>)
+- [`derived/two_player_paper_analysis/figures/fig02_initialization_and_dynamics.pdf`](<derived/two_player_paper_analysis/figures/fig02_initialization_and_dynamics.pdf>)
+- [`derived/two_player_paper_analysis/figures/fig02_initialization_and_dynamics.png`](<derived/two_player_paper_analysis/figures/fig02_initialization_and_dynamics.png>)
+- [`derived/two_player_paper_analysis/figures/fig02_initialization_and_dynamics.svg`](<derived/two_player_paper_analysis/figures/fig02_initialization_and_dynamics.svg>)
+- [`derived/two_player_paper_analysis/figures/fig03_conditional_dynamics.pdf`](<derived/two_player_paper_analysis/figures/fig03_conditional_dynamics.pdf>)
+- [`derived/two_player_paper_analysis/figures/fig03_conditional_dynamics.png`](<derived/two_player_paper_analysis/figures/fig03_conditional_dynamics.png>)
+- [`derived/two_player_paper_analysis/figures/fig03_conditional_dynamics.svg`](<derived/two_player_paper_analysis/figures/fig03_conditional_dynamics.svg>)
+- [`derived/two_player_paper_analysis/figures/fig04_strategy_composition.pdf`](<derived/two_player_paper_analysis/figures/fig04_strategy_composition.pdf>)
+- [`derived/two_player_paper_analysis/figures/fig04_strategy_composition.png`](<derived/two_player_paper_analysis/figures/fig04_strategy_composition.png>)
+- [`derived/two_player_paper_analysis/figures/fig04_strategy_composition.svg`](<derived/two_player_paper_analysis/figures/fig04_strategy_composition.svg>)
+- [`derived/two_player_paper_analysis/figures/fig05_safety_payoff_frontier.pdf`](<derived/two_player_paper_analysis/figures/fig05_safety_payoff_frontier.pdf>)
+- [`derived/two_player_paper_analysis/figures/fig05_safety_payoff_frontier.png`](<derived/two_player_paper_analysis/figures/fig05_safety_payoff_frontier.png>)
+- [`derived/two_player_paper_analysis/figures/fig05_safety_payoff_frontier.svg`](<derived/two_player_paper_analysis/figures/fig05_safety_payoff_frontier.svg>)
+- [`derived/two_player_paper_analysis/figures/fig06_persona_effects.pdf`](<derived/two_player_paper_analysis/figures/fig06_persona_effects.pdf>)
+- [`derived/two_player_paper_analysis/figures/fig06_persona_effects.png`](<derived/two_player_paper_analysis/figures/fig06_persona_effects.png>)
+- [`derived/two_player_paper_analysis/figures/fig06_persona_effects.svg`](<derived/two_player_paper_analysis/figures/fig06_persona_effects.svg>)
+- [`derived/two_player_paper_analysis/figures/fig07_persona_role_asymmetry.pdf`](<derived/two_player_paper_analysis/figures/fig07_persona_role_asymmetry.pdf>)
+- [`derived/two_player_paper_analysis/figures/fig07_persona_role_asymmetry.png`](<derived/two_player_paper_analysis/figures/fig07_persona_role_asymmetry.png>)
+- [`derived/two_player_paper_analysis/figures/fig07_persona_role_asymmetry.svg`](<derived/two_player_paper_analysis/figures/fig07_persona_role_asymmetry.svg>)
+- [`derived/two_player_paper_analysis/figures/fig08_gpt_risk_persona_surfaces.pdf`](<derived/two_player_paper_analysis/figures/fig08_gpt_risk_persona_surfaces.pdf>)
+- [`derived/two_player_paper_analysis/figures/fig08_gpt_risk_persona_surfaces.png`](<derived/two_player_paper_analysis/figures/fig08_gpt_risk_persona_surfaces.png>)
+- [`derived/two_player_paper_analysis/figures/fig08_gpt_risk_persona_surfaces.svg`](<derived/two_player_paper_analysis/figures/fig08_gpt_risk_persona_surfaces.svg>)
+- [`derived/two_player_paper_analysis/figures/fig09_gemini_risk_persona_partial.pdf`](<derived/two_player_paper_analysis/figures/fig09_gemini_risk_persona_partial.pdf>)
+- [`derived/two_player_paper_analysis/figures/fig09_gemini_risk_persona_partial.png`](<derived/two_player_paper_analysis/figures/fig09_gemini_risk_persona_partial.png>)
+- [`derived/two_player_paper_analysis/figures/fig09_gemini_risk_persona_partial.svg`](<derived/two_player_paper_analysis/figures/fig09_gemini_risk_persona_partial.svg>)
+- [`derived/two_player_paper_analysis/figures/fig10_surface_sensitivity.pdf`](<derived/two_player_paper_analysis/figures/fig10_surface_sensitivity.pdf>)
+- [`derived/two_player_paper_analysis/figures/fig10_surface_sensitivity.png`](<derived/two_player_paper_analysis/figures/fig10_surface_sensitivity.png>)
+- [`derived/two_player_paper_analysis/figures/fig10_surface_sensitivity.svg`](<derived/two_player_paper_analysis/figures/fig10_surface_sensitivity.svg>)
+- [`derived/two_player_paper_analysis/figures/fig11_context_temperature_diagnostic.pdf`](<derived/two_player_paper_analysis/figures/fig11_context_temperature_diagnostic.pdf>)
+- [`derived/two_player_paper_analysis/figures/fig11_context_temperature_diagnostic.png`](<derived/two_player_paper_analysis/figures/fig11_context_temperature_diagnostic.png>)
+- [`derived/two_player_paper_analysis/figures/fig11_context_temperature_diagnostic.svg`](<derived/two_player_paper_analysis/figures/fig11_context_temperature_diagnostic.svg>)
+- [`derived/two_player_paper_analysis/figures/fig12_evidence_inventory.pdf`](<derived/two_player_paper_analysis/figures/fig12_evidence_inventory.pdf>)
+- [`derived/two_player_paper_analysis/figures/fig12_evidence_inventory.png`](<derived/two_player_paper_analysis/figures/fig12_evidence_inventory.png>)
+- [`derived/two_player_paper_analysis/figures/fig12_evidence_inventory.svg`](<derived/two_player_paper_analysis/figures/fig12_evidence_inventory.svg>)
+- [`derived/two_player_paper_analysis/figures/fig13_repeat_run_stability.pdf`](<derived/two_player_paper_analysis/figures/fig13_repeat_run_stability.pdf>)
+- [`derived/two_player_paper_analysis/figures/fig13_repeat_run_stability.png`](<derived/two_player_paper_analysis/figures/fig13_repeat_run_stability.png>)
+- [`derived/two_player_paper_analysis/figures/fig13_repeat_run_stability.svg`](<derived/two_player_paper_analysis/figures/fig13_repeat_run_stability.svg>)
 - [`impact_upgrade/demo_mobile_final.png`](<impact_upgrade/demo_mobile_final.png>)
 - [`impact_upgrade/demo_playing_final.png`](<impact_upgrade/demo_playing_final.png>)
 - [`impact_upgrade/figures/context_direct_vs_live.pdf`](<impact_upgrade/figures/context_direct_vs_live.pdf>)
@@ -87,6 +138,8 @@ Every rendered chart, publication PDF, and interactive HTML surface in the canon
 - [`impact_upgrade/figures/xai_decodability_vs_control.pdf`](<impact_upgrade/figures/xai_decodability_vs_control.pdf>)
 - [`impact_upgrade/figures/xai_decodability_vs_control.png`](<impact_upgrade/figures/xai_decodability_vs_control.png>)
 - [`impact_upgrade/impact_report.html`](<impact_upgrade/impact_report.html>)
+- [`impact_upgrade/power/context_mapping_power.pdf`](<impact_upgrade/power/context_mapping_power.pdf>)
+- [`impact_upgrade/power/context_mapping_power.png`](<impact_upgrade/power/context_mapping_power.png>)
 - [`open_source/activation_sae/causal_selfplay/fast-sae-pilot-L12-v1/analysis/figures/association_selected_features.pdf`](<open_source/activation_sae/causal_selfplay/fast-sae-pilot-L12-v1/analysis/figures/association_selected_features.pdf>)
 - [`open_source/activation_sae/causal_selfplay/fast-sae-pilot-L12-v1/analysis/figures/association_selected_features.png`](<open_source/activation_sae/causal_selfplay/fast-sae-pilot-L12-v1/analysis/figures/association_selected_features.png>)
 - [`open_source/activation_sae/causal_selfplay/fast-sae-pilot-L12-v1/analysis/figures/fixed_state_dose_response.pdf`](<open_source/activation_sae/causal_selfplay/fast-sae-pilot-L12-v1/analysis/figures/fixed_state_dose_response.pdf>)
@@ -192,10 +245,10 @@ Every rendered chart, publication PDF, and interactive HTML surface in the canon
 
 | Evidence class | Manifest records |
 |---|---:|
-| `diagnostic` | 11 |
+| `diagnostic` | 12 |
 | `failed-or-incomplete` | 4 |
-| `pilot` | 170 |
-| `unclassified` | 14 |
+| `pilot` | 223 |
+| `unclassified` | 11 |
 
 ## Run and analysis manifests
 
@@ -204,6 +257,7 @@ Every rendered chart, publication PDF, and interactive HTML surface in the canon
 | `results/derived/agent_check_frontier_baseline/analysis_manifest.json` | recorded | unclassified |  |  |  |
 | `results/derived/agent_check_openai/analysis_manifest.json` | recorded | unclassified |  |  |  |
 | `results/derived/agent_check_persona/analysis_manifest.json` | recorded | unclassified |  |  |  |
+| `results/derived/two_player_paper_analysis/analysis_manifest.json` | complete | diagnostic |  |  |  |
 | `results/frontier/api_5games_allrisk/google-gemini-3-flash-preview/run_manifest.json` | completed | pilot | google/gemini-3-flash-preview | 15 | 222 |
 | `results/frontier/baseline/google-gemini-3-flash-preview/run_manifest.json` | completed | pilot | google/gemini-3-flash-preview | 30 | 558 |
 | `results/frontier/baseline/google-gemini-3.1-flash-lite-preview/run_manifest.json` | completed | pilot | google/gemini-3.1-flash-lite-preview | 30 | 558 |
@@ -315,10 +369,26 @@ Every rendered chart, publication PDF, and interactive HTML surface in the canon
 | `results/frontier/persona/R3_R2_risk_matrix/google-gemini-3-flash-preview/run_manifest.json` | completed | pilot | google/gemini-3-flash-preview | 30 | 558 |
 | `results/frontier/persona/R3_R3_risk_matrix/google-gemini-3-flash-preview/run_manifest.json` | completed | pilot | google/gemini-3-flash-preview | 30 | 558 |
 | `results/frontier/persona/R3_R4_risk_matrix/google-gemini-3-flash-preview/run_manifest.json` | completed | pilot | google/gemini-3-flash-preview | 30 | 558 |
-| `results/frontier/persona/R3_R5_risk_matrix/google-gemini-3-flash-preview/run_manifest.json` | running | unclassified | google/gemini-3-flash-preview | 0 | 0 |
+| `results/frontier/persona/R3_R5_risk_matrix/google-gemini-3-flash-preview/run_manifest.json` | completed | pilot | google/gemini-3-flash-preview | 30 | 558 |
+| `results/frontier/persona/R3_R6_risk_matrix/google-gemini-3-flash-preview/run_manifest.json` | completed | pilot | google/gemini-3-flash-preview | 30 | 558 |
 | `results/frontier/persona/R4_R1_risk_matrix/google-gemini-3-flash-preview/run_manifest.json` | completed | pilot | google/gemini-3-flash-preview | 30 | 558 |
-| `results/frontier/persona/R4_R2_risk_matrix/google-gemini-3-flash-preview/run_manifest.json` | running | unclassified | google/gemini-3-flash-preview | 0 | 0 |
-| `results/frontier/persona/R5_R1_risk_matrix/google-gemini-3-flash-preview/run_manifest.json` | running | unclassified | google/gemini-3-flash-preview | 0 | 0 |
+| `results/frontier/persona/R4_R2_risk_matrix/google-gemini-3-flash-preview/run_manifest.json` | completed | pilot | google/gemini-3-flash-preview | 30 | 558 |
+| `results/frontier/persona/R4_R3_risk_matrix/google-gemini-3-flash-preview/run_manifest.json` | completed | pilot | google/gemini-3-flash-preview | 30 | 558 |
+| `results/frontier/persona/R4_R4_risk_matrix/google-gemini-3-flash-preview/run_manifest.json` | completed | pilot | google/gemini-3-flash-preview | 30 | 558 |
+| `results/frontier/persona/R4_R5_risk_matrix/google-gemini-3-flash-preview/run_manifest.json` | completed | pilot | google/gemini-3-flash-preview | 30 | 558 |
+| `results/frontier/persona/R4_R6_risk_matrix/google-gemini-3-flash-preview/run_manifest.json` | completed | pilot | google/gemini-3-flash-preview | 30 | 558 |
+| `results/frontier/persona/R5_R1_risk_matrix/google-gemini-3-flash-preview/run_manifest.json` | completed | pilot | google/gemini-3-flash-preview | 30 | 558 |
+| `results/frontier/persona/R5_R2_risk_matrix/google-gemini-3-flash-preview/run_manifest.json` | completed | pilot | google/gemini-3-flash-preview | 30 | 558 |
+| `results/frontier/persona/R5_R3_risk_matrix/google-gemini-3-flash-preview/run_manifest.json` | completed | pilot | google/gemini-3-flash-preview | 30 | 558 |
+| `results/frontier/persona/R5_R4_risk_matrix/google-gemini-3-flash-preview/run_manifest.json` | completed | pilot | google/gemini-3-flash-preview | 30 | 558 |
+| `results/frontier/persona/R5_R5_risk_matrix/google-gemini-3-flash-preview/run_manifest.json` | completed | pilot | google/gemini-3-flash-preview | 30 | 558 |
+| `results/frontier/persona/R5_R6_risk_matrix/google-gemini-3-flash-preview/run_manifest.json` | completed | pilot | google/gemini-3-flash-preview | 30 | 558 |
+| `results/frontier/persona/R6_R1_risk_matrix/google-gemini-3-flash-preview/run_manifest.json` | completed | pilot | google/gemini-3-flash-preview | 30 | 558 |
+| `results/frontier/persona/R6_R2_risk_matrix/google-gemini-3-flash-preview/run_manifest.json` | completed | pilot | google/gemini-3-flash-preview | 30 | 558 |
+| `results/frontier/persona/R6_R3_risk_matrix/google-gemini-3-flash-preview/run_manifest.json` | completed | pilot | google/gemini-3-flash-preview | 30 | 558 |
+| `results/frontier/persona/R6_R4_risk_matrix/google-gemini-3-flash-preview/run_manifest.json` | completed | pilot | google/gemini-3-flash-preview | 30 | 558 |
+| `results/frontier/persona/R6_R5_risk_matrix/google-gemini-3-flash-preview/run_manifest.json` | completed | pilot | google/gemini-3-flash-preview | 30 | 558 |
+| `results/frontier/persona/R6_R6_risk_matrix/google-gemini-3-flash-preview/run_manifest.json` | completed | pilot | google/gemini-3-flash-preview | 30 | 558 |
 | `results/frontier/persona/Rminus_risk_averse/google-gemini-3-flash-preview/run_manifest.json` | completed | pilot | google/gemini-3-flash-preview | 30 | 558 |
 | `results/frontier/persona/Rplus_risk_seeking/google-gemini-3-flash-preview/run_manifest.json` | completed | pilot | google/gemini-3-flash-preview | 30 | 558 |
 | `results/frontier/persona/S_AA_adv_adv/google-gemini-3-flash-preview/run_manifest.json` | completed | pilot | google/gemini-3-flash-preview | 9 | 126 |
@@ -339,6 +409,40 @@ Every rendered chart, publication PDF, and interactive HTML surface in the canon
 | `results/nplayer/nplayer-riskaware/run_manifest.json` | recorded | unclassified |  |  |  |
 | `results/nplayer/nplayer_nonpersona/qwen2.5-14b-instruct/baseline_nplayer_n3/run_manifest.json` | completed | pilot | qwen2.5-14b-instruct | 60 | 1584 |
 | `results/nplayer/nplayer_nonpersona/run_manifest.json` | recorded | unclassified |  |  |  |
+| `results/nplayer/openai/baseline_n3/gpt-5-nano/run_manifest.json` | completed | pilot | gpt-5-nano | 30 | 765 |
+| `results/nplayer/openai/baseline_n3/gpt-5.4-nano/run_manifest.json` | completed | pilot | gpt-5.4-nano | 30 | 765 |
+| `results/nplayer/openai/baseline_n4/gpt-5-nano/run_manifest.json` | completed | pilot | gpt-5-nano | 30 | 1020 |
+| `results/nplayer/openai/baseline_n4/gpt-5.4-nano/run_manifest.json` | completed | pilot | gpt-5.4-nano | 30 | 1020 |
+| `results/nplayer/openai/baseline_n5/gpt-5-nano/run_manifest.json` | completed | pilot | gpt-5-nano | 30 | 1275 |
+| `results/nplayer/openai/baseline_n5/gpt-5.4-nano/run_manifest.json` | completed | pilot | gpt-5.4-nano | 30 | 1275 |
+| `results/nplayer/openai/coopadv/AAA/gpt-5-nano/run_manifest.json` | completed | pilot | gpt-5-nano | 30 | 765 |
+| `results/nplayer/openai/coopadv/AAA/gpt-5.4-nano/run_manifest.json` | completed | pilot | gpt-5.4-nano | 30 | 765 |
+| `results/nplayer/openai/coopadv/AAC/gpt-5-nano/run_manifest.json` | completed | pilot | gpt-5-nano | 30 | 765 |
+| `results/nplayer/openai/coopadv/AAC/gpt-5.4-nano/run_manifest.json` | completed | pilot | gpt-5.4-nano | 30 | 765 |
+| `results/nplayer/openai/coopadv/ACA/gpt-5-nano/run_manifest.json` | completed | pilot | gpt-5-nano | 30 | 765 |
+| `results/nplayer/openai/coopadv/ACA/gpt-5.4-nano/run_manifest.json` | completed | pilot | gpt-5.4-nano | 30 | 765 |
+| `results/nplayer/openai/coopadv/ACC/gpt-5-nano/run_manifest.json` | completed | pilot | gpt-5-nano | 30 | 765 |
+| `results/nplayer/openai/coopadv/ACC/gpt-5.4-nano/run_manifest.json` | completed | pilot | gpt-5.4-nano | 30 | 765 |
+| `results/nplayer/openai/coopadv/CAA/gpt-5-nano/run_manifest.json` | completed | pilot | gpt-5-nano | 30 | 765 |
+| `results/nplayer/openai/coopadv/CAA/gpt-5.4-nano/run_manifest.json` | completed | pilot | gpt-5.4-nano | 30 | 765 |
+| `results/nplayer/openai/coopadv/CAC/gpt-5-nano/run_manifest.json` | completed | pilot | gpt-5-nano | 30 | 765 |
+| `results/nplayer/openai/coopadv/CAC/gpt-5.4-nano/run_manifest.json` | completed | pilot | gpt-5.4-nano | 30 | 765 |
+| `results/nplayer/openai/coopadv/CCA/gpt-5-nano/run_manifest.json` | completed | pilot | gpt-5-nano | 30 | 765 |
+| `results/nplayer/openai/coopadv/CCA/gpt-5.4-nano/run_manifest.json` | completed | pilot | gpt-5.4-nano | 30 | 765 |
+| `results/nplayer/openai/coopadv/CCC/gpt-5-nano/run_manifest.json` | completed | pilot | gpt-5-nano | 30 | 765 |
+| `results/nplayer/openai/coopadv/CCC/gpt-5.4-nano/run_manifest.json` | completed | pilot | gpt-5.4-nano | 30 | 765 |
+| `results/nplayer/openai/risk/R1/gpt-5-nano/run_manifest.json` | completed | pilot | gpt-5-nano | 30 | 765 |
+| `results/nplayer/openai/risk/R1/gpt-5.4-nano/run_manifest.json` | completed | pilot | gpt-5.4-nano | 30 | 765 |
+| `results/nplayer/openai/risk/R2/gpt-5-nano/run_manifest.json` | completed | pilot | gpt-5-nano | 30 | 765 |
+| `results/nplayer/openai/risk/R2/gpt-5.4-nano/run_manifest.json` | completed | pilot | gpt-5.4-nano | 30 | 765 |
+| `results/nplayer/openai/risk/R3/gpt-5-nano/run_manifest.json` | completed | pilot | gpt-5-nano | 30 | 765 |
+| `results/nplayer/openai/risk/R3/gpt-5.4-nano/run_manifest.json` | completed | pilot | gpt-5.4-nano | 30 | 765 |
+| `results/nplayer/openai/risk/R4/gpt-5-nano/run_manifest.json` | completed | pilot | gpt-5-nano | 30 | 765 |
+| `results/nplayer/openai/risk/R4/gpt-5.4-nano/run_manifest.json` | completed | pilot | gpt-5.4-nano | 30 | 765 |
+| `results/nplayer/openai/risk/R5/gpt-5-nano/run_manifest.json` | completed | pilot | gpt-5-nano | 30 | 765 |
+| `results/nplayer/openai/risk/R5/gpt-5.4-nano/run_manifest.json` | completed | pilot | gpt-5.4-nano | 30 | 765 |
+| `results/nplayer/openai/risk/R6/gpt-5-nano/run_manifest.json` | completed | pilot | gpt-5-nano | 30 | 765 |
+| `results/nplayer/openai/risk/R6/gpt-5.4-nano/run_manifest.json` | completed | pilot | gpt-5.4-nano | 30 | 765 |
 | `results/open_source/activation_sae/causal_selfplay/fast-sae-pilot-L12-v1/analysis/analysis_manifest.json` | recorded | unclassified |  |  |  |
 | `results/open_source/activation_sae/causal_selfplay/fast-sae-pilot-L12-v1/manifest.json` | complete | pilot |  |  |  |
 | `results/open_source/activation_sae/causal_selfplay/fast-sae-smoke-L12-v2/manifest.json` | complete | diagnostic |  |  |  |

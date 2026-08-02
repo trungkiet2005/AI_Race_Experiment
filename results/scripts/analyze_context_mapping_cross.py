@@ -43,8 +43,19 @@ def discover(root: Path) -> list[tuple[Path, dict[str, Any]]]:
         manifest = json.loads(path.read_text(encoding="utf-8"))
         if manifest.get("schema_version") == SCHEMA:
             runs.append((path.parent, manifest))
-    if len(runs) != len(SKINS):
-        raise ValueError(f"Expected {len(SKINS)} completed skin runs, found {len(runs)}")
+    expected = 2 * len(SKINS)
+    if len(runs) != expected:
+        raise ValueError(
+            f"Expected {expected} lane-by-skin runs (two lanes x {len(SKINS)} skins), "
+            f"found {len(runs)}"
+        )
+    cells = {
+        (manifest.get("lane"), manifest.get("context_skin", {}).get("id"))
+        for _, manifest in runs
+    }
+    expected_cells = {(lane, skin) for lane in ("a", "b") for skin in SKINS}
+    if cells != expected_cells:
+        raise ValueError("Expected exactly one run for every lane-by-skin cell")
     return runs
 
 
@@ -84,6 +95,7 @@ def load_and_validate(root: Path) -> tuple[pd.DataFrame, dict[str, Any], list[Pa
         if int(races["parse_failures"].sum()) != int(turns["parse_failed"].sum()):
             raise ValueError(f"Parse-failure accounting mismatch in {run_dir}")
         players["skin_id"] = manifest["context_skin"]["id"]
+        players["lane"] = manifest["lane"]
         players["mapping_id"] = players["prompt_version"].astype(str).str.rsplit(":", n=1).str[-1]
         frames.append(players)
         total_races += len(races)
@@ -107,6 +119,16 @@ def load_and_validate(root: Path) -> tuple[pd.DataFrame, dict[str, Any], list[Pa
     expected_rows = len(SKINS) * len(RISKS) * 32 * 2 * len(MAPPINGS)
     if len(players) != expected_rows:
         raise ValueError(f"Expected {expected_rows} player rows, found {len(players)}")
+    expected_reps = {
+        "a": set(range(0, 32, 2)),
+        "b": set(range(1, 32, 2)),
+    }
+    observed_reps = {
+        lane: set(group["rep"].unique())
+        for lane, group in players.groupby("lane", observed=True)
+    }
+    if observed_reps != expected_reps:
+        raise ValueError("Lane repetition shards must be disjoint even/odd sets spanning 0..31")
     mapping_counts = players.groupby(key[:-1], dropna=False)["mapping_id"].nunique()
     if not (mapping_counts == len(MAPPINGS)).all():
         raise ValueError("A paired block is missing an opaque mapping")
@@ -154,7 +176,7 @@ def paired_rows(players: pd.DataFrame) -> pd.DataFrame:
 
 def cluster_bootstrap(values: pd.DataFrame, repetitions: int) -> tuple[float, float]:
     cluster = (
-        values.groupby(["max_private_risk", "rep"], observed=True)["interaction_did"]
+        values.groupby("rep", observed=True)["interaction_did"]
         .mean()
         .to_numpy()
     )
@@ -165,7 +187,7 @@ def cluster_bootstrap(values: pd.DataFrame, repetitions: int) -> tuple[float, fl
 
 def sign_flip_p(values: pd.DataFrame, repetitions: int) -> float:
     cluster = (
-        values.groupby(["max_private_risk", "rep"], observed=True)["interaction_did"]
+        values.groupby("rep", observed=True)["interaction_did"]
         .mean()
         .to_numpy()
     )
@@ -192,23 +214,45 @@ def holm(p_values: list[float]) -> list[float]:
 def summarize(rows: pd.DataFrame, repetitions: int) -> pd.DataFrame:
     results = []
     for context, subset in rows.groupby("context", sort=False):
-        low, high = cluster_bootstrap(subset, repetitions)
-        results.append(
-            {
-                "context": context,
-                "n_player_blocks": len(subset),
-                "safe_p_context_delta": subset["safe_p"].mean(),
-                "safe_q_context_delta": subset["safe_q"].mean(),
-                "interaction_did": subset["interaction_did"].mean(),
-                "ci95_low": low,
-                "ci95_high": high,
-                "sign_flip_p": sign_flip_p(subset, repetitions),
-            }
+        scopes: list[tuple[str, pd.DataFrame, float | None]] = [
+            ("pooled", subset, None)
+        ]
+        scopes.extend(
+            (
+                f"risk_{risk:g}",
+                risk_rows,
+                float(risk),
+            )
+            for risk, risk_rows in subset.groupby("max_private_risk", sort=True)
         )
+        for scope, scope_rows, risk in scopes:
+            low, high = cluster_bootstrap(scope_rows, repetitions)
+            results.append(
+                {
+                    "scope": scope,
+                    "max_private_risk": risk,
+                    "context": context,
+                    "n_player_blocks": len(scope_rows),
+                    "n_crn_repetitions": int(scope_rows["rep"].nunique()),
+                    "safe_p_context_delta": scope_rows["safe_p"].mean(),
+                    "safe_q_context_delta": scope_rows["safe_q"].mean(),
+                    "interaction_did": scope_rows["interaction_did"].mean(),
+                    "ci95_low": low,
+                    "ci95_high": high,
+                    "sign_flip_p": sign_flip_p(scope_rows, repetitions),
+                }
+            )
     result = pd.DataFrame(results)
-    result["holm_p"] = holm(result["sign_flip_p"].tolist())
+    result["holm_p"] = float("nan")
+    for _, indices in result.groupby("scope", sort=False).groups.items():
+        positions = list(indices)
+        result.loc[positions, "holm_p"] = holm(
+            result.loc[positions, "sign_flip_p"].tolist()
+        )
     result["replicated_direction"] = result["interaction_did"] > 0
     result["promotion_passed"] = (
+        (result["scope"] == "pooled")
+        &
         result["replicated_direction"]
         & (result["ci95_low"] > 0)
         & (result["holm_p"] < 0.05)
@@ -217,7 +261,7 @@ def summarize(rows: pd.DataFrame, repetitions: int) -> pd.DataFrame:
 
 
 def plot_summary(summary: pd.DataFrame, output: Path) -> None:
-    ordered = summary.sort_values("interaction_did")
+    ordered = summary[summary["scope"] == "pooled"].sort_values("interaction_did")
     y = np.arange(len(ordered))
     fig, ax = plt.subplots(figsize=(10, 5.8))
     ax.axvline(0, color="#64748b", linewidth=1)

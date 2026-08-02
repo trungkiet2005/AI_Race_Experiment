@@ -17,7 +17,7 @@ from kaggle.experiments.greennode_context_skin import (
     build_fully_crossed_context_games,
     mechanism_sha256,
 )
-from results.scripts.analyze_context_mapping_cross import holm, paired_rows
+from results.scripts.analyze_context_mapping_cross import discover, holm, paired_rows
 
 
 def _experiment(*, repetitions: int = 2) -> dict:
@@ -129,3 +129,24 @@ def test_holm_adjustment_is_monotone_in_sorted_p_values() -> None:
     by_raw = sorted(zip(raw, adjusted))
     assert all(by_raw[index][1] <= by_raw[index + 1][1] for index in range(2))
     assert all(raw_value <= adjusted_value <= 1 for raw_value, adjusted_value in zip(raw, adjusted))
+
+
+def test_analysis_discovery_requires_both_lanes_for_every_skin(tmp_path) -> None:
+    for lane in ("a", "b"):
+        for skin in SKINS:
+            directory = tmp_path / lane / skin
+            directory.mkdir(parents=True)
+            (directory / "run_manifest.json").write_text(
+                __import__("json").dumps(
+                    {
+                        "schema_version": "ai-race-context-mapping-cross-run-v1",
+                        "lane": lane,
+                        "context_skin": {"id": skin},
+                    }
+                ),
+                encoding="utf-8",
+            )
+    assert len(discover(tmp_path)) == 2 * len(SKINS)
+    (tmp_path / "b" / next(iter(SKINS)) / "run_manifest.json").unlink()
+    with pytest.raises(ValueError, match="two lanes"):
+        discover(tmp_path)

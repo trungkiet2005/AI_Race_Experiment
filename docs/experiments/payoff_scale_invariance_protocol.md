@@ -34,7 +34,8 @@ and protocol; it does not by itself identify the internal cause.
 4. Rescaled final-payoff equality among pairs whose action trajectories remain
    identical.
 
-Intervals resample the `(risk, repetition)` block. The three non-reference
+Intervals resample repetition streams; the three risk strata sharing
+`base_seed + repetition` remain inside the same cluster. The three non-reference
 factors use Holm correction. Decision rows are never treated as independent
 trials.
 

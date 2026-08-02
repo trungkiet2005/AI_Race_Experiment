@@ -1,0 +1,21 @@
+{
+  "id": "daosyduyminh/ai-race-impact-admission",
+  "title": "AI Race Impact Admission",
+  "code_file": "kaggle_crossmodel_scaffold_admission.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_tpu": false,
+  "enable_internet": false,
+  "keywords": ["llm", "game-theory", "robustness"],
+  "dataset_sources": ["daosyduyminh/ai-race-admission-source"],
+  "competition_sources": [],
+  "kernel_sources": [],
+  "model_sources": [
+    "qwen-lm/qwen2.5/Transformers/7b-instruct/1",
+    "qwen-lm/qwen2.5/Transformers/14b-instruct/1",
+    "google/gemma-2/Transformers/gemma-2-9b-it/2"
+  ],
+  "machine_shape": "NvidiaRtxPro6000"
+}

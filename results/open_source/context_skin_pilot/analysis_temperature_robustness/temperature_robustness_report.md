@@ -2,7 +2,7 @@
 
 ## Bottom line
 
-Temperature 0.7 changed full-trajectory Unsafe behavior by +3.04 percentage points relative to temperature 0.0 (race-cluster 95% interval [+2.19, +3.97] pp). The overall first-round change was +0.00 pp [+0.00, +0.00]. Mean action agreement was 88.2%, while only 62.6% of complete player trajectories remained identical.
+Temperature 0.7 changed full-trajectory Unsafe behavior by +3.04 percentage points relative to temperature 0.0 (race-cluster 95% interval [+1.62, +4.59] pp). The overall first-round change was +0.00 pp [+0.00, +0.00]. Mean action agreement was 88.2%, while only 62.6% of complete player trajectories remained identical.
 
 This is a **diagnostic robustness comparison**, not a comprehension-admitted behavioral estimate. The common comprehension audit failed (`admission_passed=false`; 256 probe rows), so neither temperature condition supports a claim that the model understood the game. Temperature-zero repetitions are common-random-number environment seeds, not independent stochastic model draws.
 

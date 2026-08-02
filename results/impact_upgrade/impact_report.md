@@ -8,6 +8,8 @@ Five baseline checkpoints cover sharply different regimes: GPT-5 nano remains ne
 
 The Qwen context experiment provides a more controlled mechanism result. All paired first-round decisions agree, yet fixed-state replay detects direct context effects up to 16.7 percentage points and live trajectories reach a 34.0-point aggregate gap. The crucial new interaction is stronger: **the context effect is entirely gated by opaque action-code mapping in this pilot**. When Safe is code Q, the seven contexts produce no divergence from the abstract reference; when Safe is code P, six contexts diverge in every paired player trajectory, with the largest Unsafe-rate difference reaching 68.0 points. Mapping is balanced but assigned by repetition parity, so this is a high-priority replication target rather than a mapping-causal estimate.
 
+The inference audit corrected an important dependency error before the follow-up launch. All three risk treatments reuse `base_seed + repetition`, so the project has **32 independent CRN repetition streams, not 96 risk-by-repetition clusters**. Historical context intervals and figures have been recomputed with risk strata inside the repetition cluster. The frozen 32-stream mapping grid therefore remains diagnostic. A prospective residual-bootstrap sensitivity uses the largest observed context-delta spread as a conservative variance proxy: 96 independent streams deliver estimated power 0.937 for a 15-point interaction after a seven-test multiplicity screen; this is a design calculation, not a behavioral result.
+
 The validity boundary is equally important. Qwen passes rule recall (100%) and stage payoff (98.4%), but state updating is 12.5% and terminal scoring 17.2%; the preregistered comprehension admission gate therefore fails. SAE probes can predict action-associated representations (held-out AUC up to 0.985), but context steering causes no action flips in the context run, and the self-play target-minus-control intervention contrasts do not establish a reliable causal controller. Those negative results are retained, not hidden.
 
 ## Key findings and visual evidence
@@ -32,6 +34,10 @@ All 1,344 paired player-trajectory comparisons agree in round 1. Divergence begi
 
 The FAST-SAE pipeline has pinned model/SAE revisions, held-out splits, matched random and unrelated-feature controls, and live self-play. It detects predictive representations, but the intervention evidence does not clear the causal bar. This distinguishes *decodable information* from *behavioral control* and makes the XAI section more credible.
 
+### 6. Power and stopping are now prospective
+
+The 32-stream run is fixed as a diagnostic replication and cannot be promoted after seeing a favorable result. A separate 96-stream confirmatory target is frozen for a 15-point smallest effect of scientific interest, 80% target power, Holm family size seven, fixed N, and no optional continuation. Because the pilot mapping assignment is confounded, the power model is deliberately labelled a conservative sensitivity analysis.
+
 ## Scope, data, and metric definitions
 
 The synthesis covers 768 Qwen T=0 context races (13,680 decisions), a separate matched T=0.7 stratum of the same size, 2,640 OpenAI pilot races (49,104 decisions), 177 Gemini pilot races (3,168 decisions), an N=3 Qwen pilot, FAST-SAE representation and intervention audits, and an independent EGTTools transition validation. Temperature strata and provider protocols are not pooled.
@@ -47,6 +53,7 @@ The EGT reconstruction is labelled faithful rather than bitwise because the orig
 ## Limitations, uncertainty, and robustness boundary
 
 - Context findings remain **diagnostic** because the comprehension admission gate fails.
+- Earlier context uncertainty used risk-by-repetition clusters. The corrected analysis clusters by repetition because risk strata share the same RNG stream; estimates are unchanged but intervals are wider where dependence matters.
 - OpenAI and Gemini results are **pilots**; their local-run manifests do not identify persona effects cleanly across protocol signatures.
 - Mapping is balanced but assigned by repetition parity in the completed live context runs. The mapping interaction is therefore a replication target, not a clean mapping main effect.
 - Decisions within a race are dependent. Turn-weighted rates are descriptive, not independent Bernoulli trials.
@@ -56,7 +63,7 @@ The EGT reconstruction is labelled faithful rather than bitwise because the orig
 
 ## Recommended next experiments
 
-1. **Launch the frozen fully crossed mapping × context pilot.** For every seed, execute both Safe=P and Safe=Q across all eight contexts. The checked-in protocol fixes 1,536 races, paired estimands, Holm correction, failure gates, and promotion rules. This closes the largest identified confound at the lowest compute cost while retaining the failed-comprehension diagnostic boundary.
+1. **Complete admission before gameplay, then run the fully crossed diagnostic.** For every seed, execute both Safe=P and Safe=Q across all eight contexts only after provenance and comprehension are recorded. The checked-in 1,536-race grid remains diagnostic; the independent 96-stream replication is the frozen confirmatory target.
 2. **Admission-gated cross-family replication.** Run at least three model families at one fixed decoding setting; analyze gameplay only for model/configuration cells that pass rule recall, state transition, terminal scoring, and expected-payoff thresholds.
 3. **Direct-versus-feedback replay.** Freeze a logged state sequence, replay all contexts at each state, then separately launch endogenous trajectories from the same first divergence. This creates commensurable direct and feedback estimands.
 4. **Opaque-ID randomization per decision.** Randomize labels on every turn and decode after response to test whether position bias persists when a stable code policy cannot form.

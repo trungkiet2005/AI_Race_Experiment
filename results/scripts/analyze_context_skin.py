@@ -189,10 +189,31 @@ def _verify_fixed_artifacts(run: RunInput) -> None:
         path = run.path / artifact["path"]
         if not path.is_file():
             raise ValueError(f"Missing fixed-state artifact {label}: {path}")
-        if int(artifact.get("bytes", path.stat().st_size)) != path.stat().st_size:
+        payload = path.read_bytes()
+        expected_bytes = int(artifact.get("bytes", len(payload)))
+        expected_sha = artifact.get("sha256")
+
+        def matches(candidate: bytes) -> bool:
+            return len(candidate) == expected_bytes and (
+                not expected_sha
+                or hashlib.sha256(candidate).hexdigest() == expected_sha
+            )
+
+        if matches(payload):
+            continue
+        # Git can normalize CRLF/LF on checkout even when the immutable source
+        # manifest recorded transport bytes.  Admit only an exact hash match
+        # after a pure newline conversion; no other content drift is tolerated.
+        newline_candidates = []
+        if b"\r\n" in payload:
+            newline_candidates.append(payload.replace(b"\r\n", b"\n"))
+        if b"\n" in payload and b"\r\n" not in payload:
+            newline_candidates.append(payload.replace(b"\n", b"\r\n"))
+        if any(matches(candidate) for candidate in newline_candidates):
+            continue
+        if len(payload) != expected_bytes:
             raise ValueError(f"Artifact size mismatch: {path}")
-        if artifact.get("sha256") and sha256_file(path) != artifact["sha256"]:
-            raise ValueError(f"Artifact SHA-256 mismatch: {path}")
+        raise ValueError(f"Artifact SHA-256 mismatch: {path}")
 
 
 def _read_jsonl(path: Path) -> pd.DataFrame:
@@ -475,7 +496,7 @@ def paired_effects(data: AnalysisData, repetitions: int) -> tuple[pd.DataFrame, 
     ):
         for context_index, context in enumerate(contexts):
             paired = _paired_rows(frame, context, ABSTRACT, turn_keys, "unsafe")
-            paired["cluster_id"] = paired["max_private_risk"].astype(str) + "/" + paired["rep"].astype(str)
+            paired["cluster_id"] = paired["rep"].astype(str)
             rows.append(_effect_row(paired, context=context, reference=ABSTRACT, estimand=phase, cluster="cluster_id", repetitions=repetitions, seed=BOOTSTRAP_SEED + context_index))
             for risk in sorted(paired["max_private_risk"].unique()):
                 risk_rows = paired[paired["max_private_risk"] == risk].copy()
@@ -500,7 +521,7 @@ def paired_effects(data: AnalysisData, repetitions: int) -> tuple[pd.DataFrame, 
 
 def payoff_setback_summary(data: AnalysisData, repetitions: int) -> pd.DataFrame:
     frame = data.live_players.copy()
-    frame["cluster_id"] = frame["max_private_risk"].astype(str) + "/" + frame["rep"].astype(str)
+    frame["cluster_id"] = frame["rep"].astype(str)
     rows = []
     for context_index, context in enumerate(SKIN_ORDER):
         subset = frame[frame["skin_id"] == context]
@@ -525,8 +546,8 @@ def planned_contrasts(data: AnalysisData, repetitions: int) -> pd.DataFrame:
     )
     for pair_index, (realistic, fictional, family) in enumerate(PLANNED_PAIRS):
         for estimand, frame, keys, cluster_parts in (
-            ("live_first_round", data.live_turns[data.live_turns["round"] == 1], turn_keys, ["max_private_risk", "rep"]),
-            ("live_full_trajectory", live_full, turn_keys, ["max_private_risk", "rep"]),
+            ("live_first_round", data.live_turns[data.live_turns["round"] == 1], turn_keys, ["rep"]),
+            ("live_full_trajectory", live_full, turn_keys, ["rep"]),
             ("fixed_state_direct", data.replay, ["state_id", "mapping_id"], ["state_id"]),
         ):
             paired = _paired_rows(frame, fictional, realistic, keys, "unsafe")
@@ -1136,7 +1157,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             "method": "paired percentile cluster bootstrap",
             "repetitions": args.bootstrap_repetitions,
             "seed": BOOTSTRAP_SEED,
-            "live_cluster": "risk/repetition race cluster",
+            "live_cluster": "repetition CRN stream (risk strata share base_seed + rep)",
             "fixed_cluster": "state_id",
         },
         "input_roots": {

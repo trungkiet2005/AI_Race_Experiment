@@ -30,6 +30,7 @@ def delivery_paths() -> list[Path]:
         impact / "README.md",
         impact / "experiment_gap_audit.md",
         impact / "xai_claim_audit.md",
+        impact / "aamas_review_and_experiment_decision.md",
         ROOT / "docs" / "demos" / "trajectory_lab" / "index.html",
         ROOT / "docs" / "demos" / "trajectory_lab" / "styles.css",
         ROOT / "docs" / "demos" / "trajectory_lab" / "app.js",
@@ -39,6 +40,7 @@ def delivery_paths() -> list[Path]:
         ROOT / "docs" / "experiments" / "state_scaffold_factorial_protocol.md",
         ROOT / "docs" / "experiments" / "belief_action_coherence_protocol.md",
         ROOT / "docs" / "experiments" / "impact_experiment_program.md",
+        ROOT / "docs" / "experiments" / "prospective_power_and_stopping_plan.md",
         ROOT / "ai_race" / "configs" / "experiment" / "context_mapping_fully_crossed.json",
         ROOT / "ai_race" / "configs" / "experiment" / "payoff_scale_invariance.json",
         ROOT / "ai_race" / "configs" / "experiment" / "state_scaffold_factorial.json",
@@ -46,6 +48,9 @@ def delivery_paths() -> list[Path]:
         ROOT / "kaggle" / "experiments" / "greennode_payoff_scale.py",
         ROOT / "kaggle" / "experiments" / "greennode_state_scaffold.py",
         ROOT / "kaggle" / "experiments" / "greennode_scaffold_comprehension.py",
+        ROOT / "kaggle" / "experiments" / "kaggle_crossmodel_scaffold_admission.py",
+        ROOT / "kaggle" / "impact_kernel" / "kernel-metadata.json",
+        ROOT / "kaggle" / "impact_kernel" / "dataset-metadata.json",
         ROOT / "ai_race" / "audit" / "payoff_scale.py",
         ROOT / "ai_race" / "audit" / "state_scaffold.py",
         ROOT / "ai_race" / "audit" / "scaffold_comprehension.py",
@@ -53,6 +58,10 @@ def delivery_paths() -> list[Path]:
         ROOT / "results" / "scripts" / "analyze_payoff_scale_behavior.py",
         ROOT / "results" / "scripts" / "analyze_payoff_scale_contract.py",
         ROOT / "results" / "scripts" / "analyze_state_scaffold_factorial.py",
+        ROOT / "results" / "scripts" / "analyze_context_mapping_cross.py",
+        ROOT / "results" / "scripts" / "analyze_context_skin.py",
+        ROOT / "results" / "scripts" / "analyze_context_temperature_robustness.py",
+        ROOT / "results" / "scripts" / "simulate_context_mapping_power.py",
         ROOT / "results" / "RESULTS_INDEX.md",
         ROOT / "results" / "catalog.csv",
         ROOT / "results" / "catalog.json",
@@ -67,6 +76,7 @@ def delivery_paths() -> list[Path]:
     ]
     paths.extend(sorted((impact / "data").glob("*")))
     paths.extend(sorted((impact / "figures").glob("*")))
+    paths.extend(sorted((impact / "power").glob("*")))
     paths.extend(sorted(impact.glob("demo_*.png")))
     paths.extend(sorted((ROOT / "results" / "derived" / "payoff_scale_contract").glob("*")))
     unique = {path.resolve() for path in paths if path.is_file()}

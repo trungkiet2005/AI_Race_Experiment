@@ -84,3 +84,26 @@ def test_discovery_rejects_silent_pooling_of_incompatible_cohorts(tmp_path: Path
         )
     with pytest.raises(ValueError, match="Multiple incompatible cohorts"):
         analysis.discover_runs([tmp_path], analysis.LIVE_SCHEMA)
+
+
+def test_fixed_artifact_verifier_accepts_only_hash_exact_newline_transport(tmp_path: Path):
+    payload_crlf = b"a,b\r\n1,2\r\n"
+    payload_lf = payload_crlf.replace(b"\r\n", b"\n")
+    artifact = tmp_path / "paired.csv"
+    artifact.write_bytes(payload_lf)
+    run = analysis.RunInput(
+        tmp_path,
+        {
+            "artifacts": {
+                "paired": {
+                    "path": artifact.name,
+                    "bytes": len(payload_crlf),
+                    "sha256": __import__("hashlib").sha256(payload_crlf).hexdigest(),
+                }
+            }
+        },
+    )
+    analysis._verify_fixed_artifacts(run)
+    artifact.write_bytes(payload_lf + b"3,4\n")
+    with pytest.raises(ValueError, match="mismatch"):
+        analysis._verify_fixed_artifacts(run)

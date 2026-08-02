@@ -61,7 +61,7 @@
     "method": "paired percentile cluster bootstrap",
     "repetitions": 5000,
     "seed": 260801,
-    "live_cluster": "risk/repetition race cluster",
+    "live_cluster": "repetition CRN stream (risk strata share base_seed + rep)",
     "fixed_cluster": "state_id"
   },
   "input_roots": {
@@ -83,7 +83,7 @@
     },
     "paired_context_effects.csv": {
       "rows": 84,
-      "sha256": "921a0210bb0029aacdf03aa973ee3651bf514564c72fd2ef2d5aa0293c8ea330"
+      "sha256": "ff645f5387feafd5623af93b1e2a6227fa9add1d440f43b687bede02cc9d7671"
     },
     "paired_flip_directions.csv": {
       "rows": 14,
@@ -91,11 +91,11 @@
     },
     "payoff_setback_summary.csv": {
       "rows": 8,
-      "sha256": "187c4bbee082617264a395f2b95abf40bbc098565080ac31b18cfe4245146105"
+      "sha256": "da7eaae5a7df3d2760762c90cc23ebaece0ff78b2b41206abbfb1d467b32aa62"
     },
     "planned_realistic_fictional_contrasts.csv": {
       "rows": 9,
-      "sha256": "f464918f94cbc4cfdf5cc5fe58165155d142b0528c5eade1c7afe972d87ef719"
+      "sha256": "6b071ae1f523bcffde974a12f97a6d077c07949f8d119cf4458605de8a614f28"
     },
     "comprehension_by_domain.csv": {
       "rows": 4,
@@ -115,7 +115,7 @@
     },
     "cross_protocol_effect_alignment.csv": {
       "rows": 7,
-      "sha256": "ce46bb84e4d1269aa555c9bfcaa7386bc00a2fb5d53e5ea816012ea943f73a3b"
+      "sha256": "72a079190dfe2185da726ac04058e4c21fab3652b6bd3e2e7fc9d29639b4c2a5"
     }
   },
   "figures": {
@@ -126,17 +126,17 @@
       },
       "pdf": {
         "bytes": 35843,
-        "sha256": "3ccda538db9ae5666c15129cc606ec4e2a320d87450c6b4e0109fc8687f3dfd8"
+        "sha256": "652a0f2ea44af1959524b3aa26524ad55b35546d5992d2537553a2d64fb75972"
       }
     },
     "paired_context_effects": {
       "png": {
-        "bytes": 137610,
-        "sha256": "19ad5cf4ab2e97d307fef09c6d48de38bc512e6d16f84bd3959790f066b0371e"
+        "bytes": 136318,
+        "sha256": "825ea34363a00f4582d49aba8502dc9420edb5d22b90e4c95d547a0346550635"
       },
       "pdf": {
-        "bytes": 26678,
-        "sha256": "760d25f31abc4cc67b6e8a994d91ada3e7f43f5bdde173d97740a6154d8c28f6"
+        "bytes": 26188,
+        "sha256": "a7d75ec410d3925000779e080d438426729cf97e1ad9ea0f3fe56c341bf6084b"
       }
     },
     "paired_flip_directions": {
@@ -146,27 +146,27 @@
       },
       "pdf": {
         "bytes": 26224,
-        "sha256": "76bbbbbcbfd402c81f873c9cc65ec48b6a4f3416e5a5c53e034791ffe46bcf38"
+        "sha256": "fef87674a47b28a908ca70f9676f621688948ed5a1d1493743e0d9c8fb19ec86"
       }
     },
     "live_payoff_setback": {
       "png": {
-        "bytes": 148322,
-        "sha256": "c42326cef45189ae26fde97b6e6313412e50198b3f9c77a05a05c601fbb4f25a"
+        "bytes": 144985,
+        "sha256": "76fcba8476884eee2845c00b51421a507bf60c2698b8f12aa10a1d9f822a4bbb"
       },
       "pdf": {
-        "bytes": 29326,
-        "sha256": "12398406319d9f395a61c60477041ea77a17a8880d7cdf3a963a2c29dc3f8d38"
+        "bytes": 28797,
+        "sha256": "baeff7417ca9f21baf282b436a008db56b9839aca724755594662dd1a461a1c3"
       }
     },
     "planned_realistic_fictional_contrasts": {
       "png": {
-        "bytes": 103401,
-        "sha256": "cad2593a2a6632384a8268027d6b7f214e44582168da22c57f27d185e0667ec4"
+        "bytes": 103494,
+        "sha256": "0df131524fa45dbd63e021722e6825ca1dcd5170d962d7fc4656d906eeb3d365"
       },
       "pdf": {
-        "bytes": 24154,
-        "sha256": "260607dbe8d8f1025767bd2631d77885d775e6e1fe0cc0f6df7b1f0386a7b0b0"
+        "bytes": 24173,
+        "sha256": "dafaad17dbbe5ad61a354401164a3a17525d528c9215dbd67d2e16a067419f22"
       }
     },
     "context_mapping_diagnostic": {
@@ -176,7 +176,7 @@
       },
       "pdf": {
         "bytes": 29573,
-        "sha256": "b0e660a78f9bce93981596fa334464c67d84a929443fd1bacdfd5ee252adb5f5"
+        "sha256": "582031ad984b32286b2ee9fef9ba4fb06d36c6f4f9c6b4321dcd0ae5e91a9bcd"
       }
     },
     "comprehension_admission": {
@@ -186,18 +186,18 @@
       },
       "pdf": {
         "bytes": 34893,
-        "sha256": "a2d2ef52f7f7da64de212605e205f2fa140dabf20cfd40846ab9bf16148bc35e"
+        "sha256": "bed74407a0829c3a7cd86ce2fe4b186d779575c284bf5c0c8e4ed4bc662e4ead"
       }
     }
   },
   "report": {
     "path": "context_skin_analysis.md",
-    "sha256": "2a7479b54335b64410a9c8cbd9815a449d48a1dcc1a577af661a211a166b1abd"
+    "sha256": "9725c0d0d111cd9ce95f3ddc2f1e6f1889678485e344fd6103ea52527a721de7"
   },
   "claim_boundary": "diagnostic only; comprehension admission failed",
   "cross_protocol_diagnostic": {
     "n_contexts": 7,
-    "pearson_r_live_full_vs_fixed": 0.8512583491737137,
+    "pearson_r_live_full_vs_fixed": 0.8512583491737136,
     "same_direction_contexts": 6,
     "warning": "descriptive only; decoding temperatures match but comprehension admission failed"
   }
