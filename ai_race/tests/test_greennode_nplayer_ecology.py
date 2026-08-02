@@ -1,11 +1,14 @@
 """CPU-only contract tests for the frozen GreenNode N-player ecology registry."""
 from __future__ import annotations
 
+import copy
+import json
 from collections import Counter
 from types import SimpleNamespace
 
 import pytest
 
+from ai_race.runner.seat_routed import run_games_seat_routed
 from kaggle.experiments import greennode_nplayer_ecology as ecology
 
 
@@ -256,6 +259,51 @@ def test_response_envelope_validation_is_fail_closed() -> None:
                 request_id="request-1",
                 expected_count=1,
             )
+
+
+def test_journal_persists_raw_prompts_responses_hashes_and_routes(
+    games: list, tmp_path
+) -> None:
+    game = copy.deepcopy(_pick(games, "opaque_endpoint_ids", n_players=3))
+    journal = ecology.EcologyJournal(
+        tmp_path,
+        checkpoint_admission={
+            "qwen25_7b": {"passed": False},
+            "mistral7_01": {"passed": False},
+        },
+    )
+
+    def dispatch(requests):
+        return ["ACTION: SAFE" for _ in requests]
+
+    results = run_games_seat_routed(
+        [game],
+        dispatch,
+        prompt_transform=ecology.ecology_prompt,
+        max_parse_retries=0,
+        on_round_complete=journal.record_round,
+    )
+    assert len(results) == 1
+    assert journal.race_count == 1
+    assert journal.player_count == 3
+    assert journal.turn_count == results[0].n_rounds * 3
+
+    turn = json.loads(
+        (tmp_path / "turns.jsonl").read_text(encoding="utf-8").splitlines()[0]
+    )
+    assert turn["raw_response"] == "ACTION: SAFE"
+    assert "[REGISTERED OPAQUE ENDPOINT-ID DISCLOSURE]" in turn["prompt"]
+    assert len(turn["prompt_sha256"]) == 64
+    assert turn["seat_model_key"] == "qwen25_7b"
+    assert turn["seat_worker_id"] == "worker-qwen"
+    assert turn["exact_protocol_admission_passed"] is False
+
+    race = json.loads(
+        (tmp_path / "races.jsonl").read_text(encoding="utf-8").splitlines()[0]
+    )
+    assert race["module_id"] == "opaque_endpoint_ids"
+    assert race["alliance_mechanism"] is False
+    assert len(race["prompt_audit"]) == journal.turn_count
 
 
 def test_exact_protocol_admission_gate_requires_explicit_diagnostic_override() -> None:

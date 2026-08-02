@@ -755,11 +755,11 @@ class EcologyJournal:
             return
 
         race = result.to_dict()
+        race.update(meta)
         race.update(
             protocol=PROTOCOL,
             evidence_class="diagnostic_unadmitted",
             exact_protocol_admission_passed=False,
-            **meta,
             prompt_audit=[
                 {
                     "round": round_number,
