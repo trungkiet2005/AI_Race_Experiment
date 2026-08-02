@@ -1,0 +1,756 @@
+\documentclass[8pt,aspectratio=169]{beamer}
+\usetheme[progressbar=frametitle, block=fill]{metropolis}
+
+\usepackage{fontspec}
+\setsansfont{FiraSans}[
+  Path=/usr/local/texlive/2026/texmf-dist/fonts/opentype/public/fira/,
+  Extension=.otf,
+  UprightFont=*-Light,
+  BoldFont=*-Regular,
+  ItalicFont=*-LightItalic,
+  BoldItalicFont=*-Italic
+]
+\setmainfont{FiraSans}[
+  Path=/usr/local/texlive/2026/texmf-dist/fonts/opentype/public/fira/,
+  Extension=.otf,
+  UprightFont=*-Light,
+  BoldFont=*-Regular,
+  ItalicFont=*-LightItalic,
+  BoldItalicFont=*-Italic
+]
+\setmonofont{FiraMono}[
+  Path=/usr/local/texlive/2026/texmf-dist/fonts/opentype/public/fira/,
+  Extension=.otf,
+  UprightFont=*-Regular,
+  BoldFont=*-Medium,
+  ItalicFont=*-Oblique,
+  BoldItalicFont=*-MediumOblique
+]
+\usepackage[vietnamese]{babel}
+\usepackage{amsmath,amssymb,amsfonts,mathtools,bm}
+\usepackage{graphicx,booktabs,array,multirow,colortbl}
+\usepackage{tikz,pgfplots}
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{shapes.geometric,arrows.meta,positioning,fit,backgrounds,calc,decorations.pathreplacing}
+\usepackage{xcolor,hyperref,appendixnumberbeamer,microtype}
+
+\graphicspath{{figures/}{../../results/runs_all/figures/two_moons/}{../../results/runs_all/figures/two_moons/deep/}}
+
+\definecolor{deepblue}{HTML}{1B3A6B}
+\definecolor{skyblue}{HTML}{3A7CA5}
+\definecolor{accent}{HTML}{F4A261}
+\definecolor{teal}{HTML}{2A9D8F}
+\definecolor{violet}{HTML}{5E548E}
+\definecolor{lightgray}{HTML}{F0F0F0}
+\definecolor{proposegreen}{HTML}{1B6B3A}
+\definecolor{highlight}{HTML}{C0392B}
+
+\setbeamercolor{frametitle}{bg=deepblue}
+\setbeamercolor{progress bar}{fg=accent,bg=skyblue!30}
+\setbeamercolor{alerted text}{fg=accent}
+\setbeamercolor{block title}{bg=skyblue!20,fg=deepblue}
+\setbeamercolor{block body}{bg=lightgray}
+\setbeamercolor{block title example}{bg=teal!20,fg=teal!80!black}
+\setbeamercolor{block body example}{bg=teal!5}
+\setbeamercolor{block title alerted}{bg=accent!25,fg=deepblue}
+\setbeamercolor{block body alerted}{bg=accent!8}
+\setbeamercolor{palette primary}{bg=deepblue}
+\setbeamerfont{title}{size=\Large,series=\bfseries}
+\setbeamerfont{frametitle}{size=\normalsize,series=\bfseries}
+\metroset{sectionpage=progressbar}
+
+\newcommand{\hl}[1]{\textcolor{accent}{\textbf{#1}}}
+\newcommand{\tc}[1]{\textcolor{teal}{#1}}
+\newcommand{\bad}[1]{\textcolor{highlight}{\textbf{#1}}}
+\newcommand{\good}[1]{\textcolor{proposegreen}{\textbf{#1}}}
+\newcommand{\opt}[1]{\texttt{#1}}
+
+% --- F9 optimizer colours (khớp OPT_COLORS trong verification_common.py) ---
+\definecolor{optsgd}{HTML}{1f77b4}
+\definecolor{optsgdm}{HTML}{17becf}
+\definecolor{optadam}{HTML}{9467bd}
+\definecolor{optadah}{HTML}{d62728}
+\definecolor{optsassha}{HTML}{ff7f0e}
+\definecolor{optsophia}{HTML}{8c564b}
+\definecolor{optkfac}{HTML}{2ca02c}
+% một mục legend: màu, kiểu nét (dashed/solid), nhãn
+\newcommand{\optline}[3]{\tikz[baseline=-0.5ex]{\draw[#1,line width=1.4pt,#2](0,0)--(0.45,0);}~#3}
+% dải legend đầy đủ cho hình F9 (nét đứt = 1st-order, nét liền = 2nd-order)
+\newcommand{\fninelegend}{%
+  \footnotesize
+  \optline{optsgd}{dashed}{SGD}\enspace
+  \optline{optsgdm}{dashed}{SGD-mom}\enspace
+  \optline{optadam}{dashed}{Adam}\enspace
+  \optline{optadah}{solid}{AdaHessian}\enspace
+  \optline{optsassha}{solid}{SASSHA}\enspace
+  \optline{optsophia}{solid}{SophiaH}\enspace
+  \optline{optkfac}{solid}{KFAC}%
+  \\[1pt]{\scriptsize nét đứt = 1st-order \quad nét liền = 2nd-order}%
+}
+
+\title{Optimizer có giúp làm thuyên giảm\\Loss of Plasticity?}
+\subtitle{Mức độ \& cơ chế --- soi trên two-moons\\Báo cáo tiến độ nghiên cứu}
+\author{Nguyễn Lâm Phú Quý, Bàng Mỹ Linh}
+\date{\today}
+
+\begin{document}
+
+\begin{frame}[plain]
+  \titlepage
+\end{frame}
+
+\begin{frame}{Nội dung trình bày}
+  \setbeamertemplate{section in toc}[sections numbered]
+  \tableofcontents[hideallsubsections]
+\end{frame}
+
+\section{Bối cảnh \& câu hỏi gốc}
+
+\begin{frame}{Loss of Plasticity là gì?}
+\vspace{1.0em}
+\begin{block}{Định nghĩa}
+\large
+Trong học liên tục, mạng có thể \textbf{không chỉ quên task cũ}, mà còn
+\hl{mất dần khả năng học task mới}. Hiện tượng này gọi là
+\textit{Loss of Plasticity} (LoP).
+\end{block}
+
+\vspace{1.0em}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\begin{alertblock}{Không phải câu hỏi forgetting}
+\small
+Không hỏi ``còn nhớ task cũ không?''; tín hiệu chính là:
+\[
+\text{task mới tới} \quad \Rightarrow \quad
+\text{còn fit được task hiện tại không?}
+\]
+\end{alertblock}
+
+\column{0.48\textwidth}
+\begin{exampleblock}{Góc nhìn cơ chế}
+\small
+Gradient descent có thể rơi vào các \textbf{invariant submanifold}: một khi vào đó, gradient gần như chỉ chạy bên trong bẫy, nên capacity hữu ích cho task mới bị khóa lại.
+\end{exampleblock}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Các dấu hiệu cơ chế cần đo}
+\small
+\begin{columns}[T]
+\column{0.48\textwidth}
+\begin{alertblock}{Dormant / frozen units}
+Unit gần như không kích hoạt trên dữ liệu hiện tại; gradient về trọng số vào biến mất $\Rightarrow$ capacity bị đóng băng.
+\end{alertblock}
+
+\begin{alertblock}{Cloned / duplicate units}
+Các unit dư thừa có activation giống nhau. Theo ajoudaki-lop, nếu chúng nhận forward/backward giống nhau thì gradient cũng giống nhau, nên training có thể giữ nguyên cấu trúc clone.
+\end{alertblock}
+
+\begin{alertblock}{Rank collapse}
+Effective rank / stable rank của activation giảm $\Rightarrow$ biểu diễn mất đa dạng, nhiều unit nhưng ít chiều hữu ích.
+\end{alertblock}
+
+\column{0.48\textwidth}
+\begin{alertblock}{Weight explosion}
+$\|W\|$ tăng mạnh $\Rightarrow$ activation dễ trôi vào vùng chết / bão hòa.
+\end{alertblock}
+
+\begin{alertblock}{Hessian spectral collapse}
+Phổ curvature co hẹp hoặc suy biến $\Rightarrow$ mất các hướng cong hữu ích để học task mới.
+\end{alertblock}
+
+\begin{exampleblock}{Điểm chung}
+Các metric này không phải kết luận riêng lẻ; chúng là các cửa sổ để xem optimizer đang đẩy mạng vào bẫy nào.
+\end{exampleblock}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Optimizer bậc 2 đã chạy rộng trên nhiều benchmark}
+\small
+\begin{block}{Bối cảnh}
+Hướng \textbf{optimizer bậc 2} không chỉ có một curve đẹp: bộ thí nghiệm trải rộng trên \textbf{MLP, ConvNet, ResNet, PPO}, với \textbf{CBP} làm baseline giữ plasticity và nhiều optimizer curvature-aware kết hợp SDP.
+\end{block}
+
+\vspace{0.35em}
+\centering
+\renewcommand{\arraystretch}{1.14}
+\resizebox{0.96\linewidth}{!}{%
+\begin{tabular}{p{0.22\linewidth}p{0.30\linewidth}p{0.27\linewidth}p{0.22\linewidth}}
+\toprule
+Benchmark & Quy mô đã chạy & Các phương pháp so sánh & Tín hiệu mạnh nhất \\
+\midrule
+Permuted-MNIST & 800 tasks, MLP 2000$\times$2, no BN, 5 seeds
+& CBP; K-FAC (NGD); AdaHessian/SophiaH/SASSHA $\pm$ SDP
+& K-FAC (no SDP): 0.00 dormant, rank 1733.6; AdaHessian+SDP: 97.04 acc \\
+ImageNet32 binary & 2000 binary tasks, ConvNet, no BN, 5 seeds
+& CBP; AdaHessian/SophiaH/SASSHA $\pm$ SDP
+& SASSHA+SDP: 90.09 acc, 0.00 dormant \\
+CIFAR-100 incremental & 20 tasks $\times$ 5 classes, ResNet-18+BN, 5 seeds
+& SGD/Adam, CBP, K-FAC (NGD), Hessian methods, SDP
+& SASSHA+SDP: 71.35 acc, 0.20 dormant \\
+Ant-v4 PPO & 50M env steps, policy MLP, 5 seeds
+& AdaHessian+SDP, SASSHA+SDP, ACKTR/OPC ref.
+& AdaHessian+SDP: return 3361.9; SASSHA+SDP: 1.12 dormant \\
+\bottomrule
+\end{tabular}}
+
+\begin{exampleblock}{Ý chính}
+Optimizer bậc 2 đã được kiểm chứng trên nhiều regime LoP thực; phần two-moons tiếp theo là bước \textbf{soi cơ chế} cho riêng câu hỏi optimizer-only.
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}{So với CBP: curvature-aware + SDP có thể vượt baseline mạnh}
+\small
+\centering
+\renewcommand{\arraystretch}{1.14}
+\resizebox{0.92\linewidth}{!}{%
+\begin{tabular}{llccc}
+\toprule
+Benchmark & Method & Final Acc.~$\uparrow$ & Dormant~$\downarrow$ & Stable rank~$\uparrow$ \\
+\midrule
+\multirow{3}{*}{Permuted-MNIST}
+& CBP & $95.77_{\pm0.12}$ & $0.04_{\pm0.01}$ & $1473_{\pm42}$ \\
+& \good{K-FAC (NGD), no SDP} & $95.70$ & $\mathbf{0.00}$ & $\mathbf{1733.6}$ \\
+& \good{AdaHessian+SDP} & $\mathbf{97.04}_{\pm0.14}$ & $1.41_{\pm0.18}$ & $1674_{\pm39}$ \\
+\midrule
+\multirow{2}{*}{ImageNet32 binary}
+& CBP & $89.62_{\pm0.31}$ & $0.02_{\pm0.01}$ & $\mathbf{118.81}_{\pm3.2}$ \\
+& \good{SASSHA+SDP} & $\mathbf{90.09}_{\pm0.28}$ & $\mathbf{0.00}_{\pm0.00}$ & $112.84_{\pm2.6}$ \\
+\bottomrule
+\end{tabular}}
+
+\vspace{0.2em}
+{\scriptsize $\uparrow$ cao hơn = tốt hơn;\quad $\downarrow$ thấp hơn = tốt hơn.}
+
+\vspace{0.45em}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\begin{alertblock}{Vượt CBP ở accuracy}
+\small
+MNIST: +1.27 điểm acc và rank cao hơn.\\
+ImageNet32: +0.47 điểm acc, dormant về 0.00.
+\end{alertblock}
+\column{0.48\textwidth}
+\begin{block}{K-FAC: tín hiệu optimizer-only}
+\small
+Đáng chú ý: \good{K-FAC không cần SDP} đã đạt dormant \textbf{0.00} và rank cao nhất (1733.6), ngang CBP — gợi ý chính \textbf{preconditioner} có thể tự giữ plasticity, đúng câu hỏi ta đang theo.
+\end{block}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Kết quả bổ sung: CIFAR-100 và RL cũng có tín hiệu mạnh}
+\small
+\centering
+\renewcommand{\arraystretch}{1.13}
+\resizebox{0.94\linewidth}{!}{%
+\begin{tabular}{llccc}
+\toprule
+Setting & Method & Performance~$\uparrow$ & Dormant~$\downarrow$ & Ghi chú \\
+\midrule
+\multirow{3}{*}{CIFAR-100, ResNet-18+BN}
+& AdaHessian & $62.4_{\pm1.1}$ acc & $4.1_{\pm0.4}$ & baseline Hessian \\
+& \good{AdaHessian+SDP} & $71.2_{\pm0.8}$ acc & $1.8_{\pm0.3}$ & +8.8 điểm acc \\
+& \good{SASSHA+SDP} & $\mathbf{71.35}_{\pm0.7}$ acc & $\mathbf{0.20}$ & dormant gần 0 \\
+\midrule
+\multirow{3}{*}{Ant-v4 PPO, 50M steps}
+& \good{AdaHessian+SDP} & $\mathbf{3361.9}_{\pm184}$ return & $3.50_{\pm0.42}$ & rank $237.1_{\pm8.2}$ \\
+& \good{SASSHA+SDP} & $2939.9_{\pm212}$ return & $\mathbf{1.12}_{\pm0.18}$ & rank $235.1_{\pm9.1}$ \\
+& ACKTR + OPC & $4135.5$ return & $\mathbf{0.0}$ & tham chiếu (K-FAC RL) \\
+\bottomrule
+\end{tabular}}
+
+\vspace{0.2em}
+{\scriptsize $\uparrow$ cao hơn = tốt hơn;\quad $\downarrow$ thấp hơn = tốt hơn.}
+
+\vspace{0.35em}
+\begin{alertblock}{Nhưng đây vẫn là kết quả có can thiệp}
+\small
+SDP tái định hình phổ trọng số ở task boundary; CBP thì thay neuron low-utility. Vì vậy câu hỏi còn mở là: \textbf{nếu bỏ mọi can thiệp, bản thân optimizer/preconditioner làm gì với cơ chế LoP?}
+\end{alertblock}
+\end{frame}
+
+\begin{frame}{Từ benchmark sang phân tích cơ chế}
+\vspace{0.2em}
+\begin{alertblock}{Khả quan, nhưng bức tranh quá phân tán}
+\small
+Tín hiệu tốt nhưng trải mỏng trên \hl{nhiều benchmark $\times$ nhiều optimizer $\times$ nhiều can thiệp} --- mỗi ô là một con số riêng, khó gộp thành một câu chuyện thống nhất để \textbf{nghiên cứu và viết bài}.
+\end{alertblock}
+
+\vspace{0.6em}
+\centering
+\begin{tikzpicture}[
+  font=\footnotesize,
+  scatter/.style={rectangle, rounded corners=3pt, draw=highlight, fill=highlight!8,
+    text width=4.1cm, align=center, inner sep=6pt},
+  unified/.style={rectangle, rounded corners=3pt, draw=proposegreen, fill=proposegreen!10,
+    text width=4.1cm, align=center, inner sep=6pt},
+  flow/.style={-{Stealth[length=3mm]}, line width=1pt, accent}
+]
+\node[scatter] (a) {\bad{4 benchmark $\times$ 7 optimizer}\\$\times$ \{SDP, OPC, CBP, $\gamma$\}\\[2pt] \textit{bảng số rời rạc}};
+\node[unified, right=2.4cm of a] (b) {\good{Một khung cơ chế chung}\\dormant · rank · sharpness · route\\[2pt] \textit{giải thích thống nhất}};
+\draw[flow] (a) -- node[above=1pt]{\scriptsize chuyển góc nhìn} (b);
+\end{tikzpicture}
+
+\vspace{0.6em}
+\begin{exampleblock}{Vì sao chọn mechanism analysis}
+\small
+\begin{itemize}\setlength\itemsep{1pt}
+\item \tc{Tự nhiên hơn}: trả lời \emph{tại sao} LoP xảy ra, thay vì chỉ xếp hạng con số.
+\item \tc{Tổng quát hơn}: một lời giải áp cho mọi optimizer, ít lệ thuộc benchmark/can thiệp cụ thể.
+\item \tc{Đo được mức độ \& cơ chế}: đúng câu hỏi ``optimizer giúp ở mức nào, nhờ cơ chế nào''.
+\end{itemize}
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Câu hỏi nghiên cứu}
+\vspace{0.4em}
+\begin{center}
+\fcolorbox{accent}{accent!10}{%
+\begin{minipage}{0.84\textwidth}
+\centering
+\vspace{0.5em}
+{\Large\textbf{Optimizer --- chỉ qua preconditioner}}\\[0.25em]
+{\Large$\Delta\theta=-\eta P^{-1}\nabla_\theta\mathcal L$}\\[0.35em]
+{\large có giúp \hl{làm thuyên giảm} LoP không?}\\[0.5em]
+\textbf{(1) Ở mức độ nào? \qquad (2) Nhờ cơ chế nào?}
+\vspace{0.5em}
+\end{minipage}}
+\end{center}
+
+\vspace{1em}
+\begin{columns}[c]
+\column{0.43\textwidth}
+\centering
+\bad{1st-order}\\[0.3em]
+$\Delta\theta=-\eta\nabla\mathcal L$\\
+\scriptsize Gradient-only, không dùng curvature trực tiếp.
+\column{0.10\textwidth}
+\centering
+{\Large vs.}
+\column{0.43\textwidth}
+\centering
+\good{Curvature-aware}\\[0.3em]
+$\Delta\theta=-\eta P^{-1}\nabla\mathcal L$\\
+\scriptsize Precondition bằng Hessian / Fisher / sharpness.
+\end{columns}
+
+\vspace{0.8em}
+\begin{exampleblock}{Giả thuyết ngây thơ H}
+\textit{1st-order kẹt trong sub-manifold cũ; curvature-aware optimizer thoát sang basin mới.}
+\end{exampleblock}
+\end{frame}
+
+\section{Testbed two-moons}
+
+\begin{frame}{Vì sao two-moons \& thiết kế thí nghiệm}
+\begin{columns}[T]
+\column{0.50\textwidth}
+\begin{block}{Mục tiêu}
+Tách bạch cơ chế optimizer khỏi can thiệp: \textbf{không SDP, không EMA, không CBP, không shrink-and-perturb}.
+\end{block}
+
+\begin{itemize}\small
+\item Stream: \hl{200 task}, xoay mượt \hl{1.8$^\circ$/task}, không revisit.
+\item Mạng: MLP ReLU \hl{512$\times$4}, 3 epoch/task.
+\item Factorial: 7 optimizer $\times$ 2 BatchNorm $\times$ \hl{seed 42}.
+\item Optimizer: SGD, SGD-mom, Adam, AdaHessian, SophiaH, SASSHA, KFAC.
+\end{itemize}
+
+\begin{block}{Quy ước ký hiệu}
+\small \textbf{BN=0} = \textbf{không} BatchNorm; \quad \textbf{BN=1} = \textbf{có} BatchNorm.
+\end{block}
+
+\column{0.47\textwidth}
+\begin{exampleblock}{Điểm mấu chốt}
+Log đủ \texttt{theta\_points}: $201\times790{,}530$ tham số. Từ đó tái dựng bằng numpy từng unit trong 2048 hidden units; sai số validate dormant: \hl{0.0000}.
+\end{exampleblock}
+
+\begin{block}{6 cơ chế đo}
+\small dormant, effective rank, NTK condition number, trajectory curvature, avg $\|W\|$, participation ratio.
+\end{block}
+\end{columns}
+\end{frame}
+
+\section{Phán quyết chính}
+
+\begin{frame}{F9: zoom theo từng nhóm cơ chế}
+\begin{columns}[T]
+\column{0.49\textwidth}
+\begin{block}{Convention}
+\small
+\textbf{Nét đứt} = 1st-order; \textbf{nét liền} = curvature-aware.\\[0.35em]
+Mỗi nhóm sau phóng to 2 hàng cơ chế, giữ hai cột BN=0 / BN=1 (\textbf{BN=0}=không BatchNorm, \textbf{BN=1}=có BatchNorm).
+\end{block}
+
+\column{0.49\textwidth}
+\begin{alertblock}{Takeaway trước khi zoom}
+\small
+Nếu H đúng theo trục 1st/2nd, nét đứt và nét liền phải tách rõ. Nhưng tín hiệu nổi bật lại là \bad{Adam} + \bad{SophiaH}: một 1st-order, một 2nd-order clamped.
+\end{alertblock}
+\end{columns}
+
+\vspace{0.6em}
+\begin{columns}[T]
+\column{0.52\textwidth}
+\centering
+\small
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{lll}
+\toprule
+Frame & Nhóm cơ chế & Ý nghĩa khi zoom \\
+\midrule
+F9-A & rank + frozen units & Capacity có sụp? \\
+F9-B & NTK + trajectory & Hình học tối ưu suy biến? \\
+F9-C & weight + participation & Norm/subspace khóa lại? \\
+\bottomrule
+\end{tabular}
+
+\column{0.46\textwidth}
+\begin{block}{Tinh chỉnh câu hỏi nghiên cứu}
+\small
+$\Rightarrow$ Câu hỏi nên đặt \textbf{chi tiết hơn}: khác biệt về LoP có thể đến từ \textbf{dạng preconditioner} của optimizer, chứ không phải ranh giới 1st/2nd-order.
+\end{block}
+\end{columns}
+\end{frame}
+
+\begin{frame}{F9-A: Capacity collapse --- rank + frozen units}
+\centering
+\includegraphics[width=\linewidth,trim=0 733bp 0 45bp,clip]{F9_lop_mechanism.png}
+
+\vspace{0.15em}{\centering\fninelegend\par}\vspace{0.25em}
+\begin{alertblock}{Tín hiệu capacity}
+\small
+Ở BN=0, \bad{SophiaH} tăng frozen rất sớm và effective-rank rơi xuống đáy; \bad{Adam} cũng là death/rank-collapse route. Sang BN=1, đa số optimizer được cứu khỏi frozen, nhưng Adam vẫn tụt rank và dormant leo cao. Capacity collapse vì vậy không đi theo nét đứt/liền.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}{F9-B: Degeneracy signals --- NTK + trajectory}
+\centering
+\includegraphics[width=\linewidth,trim=0 401bp 0 395bp,clip]{F9_lop_mechanism.png}
+
+\vspace{0.15em}{\centering\fninelegend\par}\vspace{0.25em}
+\begin{alertblock}{Tín hiệu hình học tối ưu}
+\small
+NTK condition đẩy \bad{Adam}/\bad{SophiaH} lên nhiều bậc độ lớn, cùng hướng với frozen/rank collapse. Trajectory curvature chỉ là tín hiệu phụ: stream two-moons tự xoay nên đường đi cong là tự nhiên, không đủ để gán nguyên nhân LoP.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}{F9-C: Norm/subspace --- weight + participation}
+\centering
+\includegraphics[width=\linewidth,trim=0 69bp 0 695bp,clip]{F9_lop_mechanism.png}
+
+\vspace{0.15em}{\centering\fninelegend\par}\vspace{0.25em}
+\begin{alertblock}{Tín hiệu norm/subspace}
+\small
+Norm cho thấy \bad{SophiaH} là ca blow-up rõ nhất, không phải toàn bộ nhóm 1st-order. Participation ratio lại đặt SGD ở ít chiều nhất, hơi hợp giả thuyết subspace-trap ban đầu, nhưng lành tính trong regime này vì SGD vẫn giữ accuracy.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}{Từ F9: vì sao trục 1st/2nd chưa đủ}
+\small
+\begin{columns}[T]
+\column{0.56\textwidth}
+\renewcommand{\arraystretch}{1.15}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{p{0.26\linewidth}p{0.66\linewidth}}
+\toprule
+Cơ chế & Quan sát sơ bộ trên two-moons \\
+\midrule
+Dormant & BN=0: SophiaH, Adam cao vọt; optimizer còn lại thấp. \\
+Eff. rank & SophiaH / Adam sụp mạnh; SGD-mom sụp qua route khác. \\
+NTK cond. & Adam + SophiaH suy biến rõ nhất. \\
+$\|W\|$ & Blow-up nằm ở SophiaH, không phải toàn bộ 1st-order. \\
+Participation ratio & SGD ít chiều nhất, nhưng không mất accuracy. \\
+\bottomrule
+\end{tabular}}
+
+\column{0.41\textwidth}
+\begin{alertblock}{Tín hiệu thay thế, chưa phải kết luận}
+Một trục đáng nghi:
+\[
+\bad{\text{diagonal/clamped adaptive}}
+\quad \text{vs.} \quad
+\good{\text{full curvature-aware}}.
+\]
+Adam và SophiaH cùng rơi vào nhóm đầu, dù khác ``bậc'' optimizer.
+\end{alertblock}
+
+\begin{exampleblock}{Cần kiểm chứng}
+\centering
+\textbf{$\geq$5 seed + regime đột ngột} trước khi phát biểu lại thành claim chính.
+\end{exampleblock}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Dormancy cao không chỉ có một nghĩa: churn vs frozen-trap}
+\centering
+\small
+\renewcommand{\arraystretch}{1.15}
+\resizebox{0.88\linewidth}{!}{%
+\begin{tabular}{lcccc}
+\toprule
+Optimizer (BN=0) & \%dead TB & $P(\text{hồi sinh}|\text{chết})$ & $P(\text{chết}|\text{sống})$ & \%chết vĩnh viễn \\
+\midrule
+sgd & 9.3 & 8.5 & 0.9 & 2.7 \\
+sgd\_momentum & 9.2 & 6.4 & 0.7 & 2.0 \\
+\bad{adam} & \bad{56.3} & \bad{13.6} & \bad{18.0} & \textbf{0.0} \\
+adahessian & 10.3 & 8.6 & 1.0 & 2.4 \\
+\bad{sophiah} & \bad{81.5} & \bad{2.1} & 9.9 & \bad{15.6} \\
+\good{sassha} & 7.4 & \good{12.9} & 1.0 & \good{1.2} \\
+kfac & 9.4 & 8.7 & 0.9 & 4.0 \\
+\bottomrule
+\end{tabular}}
+
+\vspace{0.4em}
+\begin{alertblock}{Hai kiểu dormancy khác nhau}
+\bad{Adam} = churn hỗn loạn: chết nhiều nhưng hồi sinh/đổi trạng thái mạnh. \bad{SophiaH} = frozen-trap thật: hồi sinh yếu và có 15.6\% unit chết xuyên suốt.
+\end{alertblock}
+\end{frame}
+
+\section{Đào sâu cơ chế}
+
+\begin{frame}{Ba route chuyển trạng thái: death, cloning, diversifying}
+\begin{columns}[T]
+\column{0.55\textwidth}
+\centering
+\includegraphics[width=\linewidth,height=0.68\textheight,keepaspectratio]{F16_state_routes.png}
+\column{0.42\textwidth}
+\small
+\renewcommand{\arraystretch}{1.1}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{lrrrl}
+\toprule
+Opt & $\Delta$dead & $\Delta$clone & $\Delta$unique & Route \\
+\midrule
+sgd & -0.3 & -4.9 & +5.1 & \good{diversify} \\
+adahessian & -0.7 & -2.2 & +2.9 & \good{diversify} \\
+sassha & -2.3 & -0.3 & +2.6 & \good{diversify} \\
+kfac & -1.4 & -3.7 & +5.0 & \good{diversify} \\
+sgd-mom & +1.4 & +5.8 & -7.2 & cloning \\
+\bad{adam} & +48.1 & -43.7 & -4.5 & \bad{death} \\
+\bad{sophiah} & +39.4 & -36.2 & -3.3 & \bad{death} \\
+\bottomrule
+\end{tabular}}
+
+\begin{alertblock}{Hướng chuyển trạng thái mới là tín hiệu}
+Cloning là trạng thái khởi đầu chung do dữ liệu 2-D; cái phân biệt là \textbf{hướng chuyển trạng thái}. Nhóm khỏe đi từ cloned sang unique, SGD-mom tăng clone, còn Adam/SophiaH chuyển capacity sang dead.
+\end{alertblock}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Structural vs flicker death: lõi chết có thật}
+\begin{columns}[T]
+\column{0.55\textwidth}
+\centering
+\includegraphics[width=\linewidth,height=0.68\textheight,keepaspectratio]{F19_structural_vs_flicker.png}
+\column{0.42\textwidth}
+\small
+\begin{block}{Cách đo}
+Cố định $\theta_{\mathrm{final}}$, quét dead trên đủ 200 hướng dữ liệu. \textbf{Structural dead} = chết trên mọi hướng; flicker = chết ở hướng cuối nhưng sống ở hướng khác.
+\end{block}
+
+\renewcommand{\arraystretch}{1.12}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{lrrr}
+\toprule
+Opt & dead@final & structural & flicker \\
+\midrule
+sgd & 11.0 & 7.2 & 3.8 \\
+\bad{adam} & 62.7 & \bad{55.1} & 7.6 \\
+adahessian & 11.2 & 6.2 & 4.9 \\
+\bad{sophiah} & 88.6 & \bad{78.3} & 10.3 \\
+sassha & 9.4 & 5.8 & 3.7 \\
+kfac & 9.8 & 5.8 & 4.0 \\
+\bottomrule
+\end{tabular}}
+\end{columns}
+
+\begin{alertblock}{Lõi chết sau cùng}
+Flicker chỉ là lề mỏng 2--10\%; Adam và SophiaH vẫn giết một lõi capacity cấu trúc rất lớn ở mô hình cuối. Vì vậy ``Adam không chết vĩnh viễn theo thời gian'' không mâu thuẫn với structural dead 55\%.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}{Recovery: data-driven hay weight-driven?}
+\begin{columns}[T]
+\column{0.55\textwidth}
+\centering
+\includegraphics[width=\linewidth,height=0.68\textheight,keepaspectratio]{F18_data_vs_weight_recovery.png}
+\column{0.42\textwidth}
+\small
+\renewcommand{\arraystretch}{1.12}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{lrrr}
+\toprule
+Opt & total rev. & data & \% data-driven \\
+\midrule
+kfac & 8.7 & 8.6 & \good{99} \\
+sgd & 8.5 & 8.0 & 94 \\
+adahessian & 8.6 & 7.7 & 90 \\
+sgd-mom & 6.4 & 5.4 & 84 \\
+sassha & 12.9 & 10.7 & 82 \\
+sophiah & 2.1 & 1.4 & 67 \\
+\bad{adam} & 13.6 & 0.8 & \bad{6} \\
+\bottomrule
+\end{tabular}}
+
+\begin{block}{Diễn giải}
+Đa số unit ``hồi sinh'' vì dữ liệu xoay qua phía khác của hyperplane, không phải vì trọng số dead học lại.
+\end{block}
+\end{columns}
+
+\begin{alertblock}{Ngoại lệ Adam}
+Adam là ngoại lệ weight-driven: churn do chính preconditioner adaptive khuấy trọng số, khác nhóm còn lại. Với đa số optimizer, recovery chủ yếu là data-driven flicker khi probe xoay.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}{Frozen-weight trapping: cần bỏ nhiễu weight decay}
+\centering
+\small
+\renewcommand{\arraystretch}{1.16}
+\resizebox{0.86\linewidth}{!}{%
+\begin{tabular}{lccc}
+\toprule
+Opt & Ratio thô $\|\Delta w_{\rm dead}\|/\|\Delta w_{\rm alive}\|$ & Ratio tiếp tuyến sạch wd & \% chuyển động dead là radial decay \\
+\midrule
+kfac & 0.005 & 0.005 & 5 \\
+sgd & 0.708 & \bad{0.027} & \bad{99} \\
+sgd\_momentum & 0.831 & \bad{0.028} & \bad{100} \\
+sophiah & 0.032 & 0.029 & 20 \\
+adahessian & 0.467 & 0.082 & 88 \\
+adam & 0.189 & 0.123 & 70 \\
+sassha & 0.246 & 0.153 & 49 \\
+\bottomrule
+\end{tabular}}
+
+\vspace{0.6em}
+\begin{alertblock}{Gradient thật gần như không tới dead units}
+Sau khi bỏ thành phần co radial do weight decay, dead unit nhận rất ít gradient ở gần như mọi optimizer. Trapping invariant-submanifold là cơ chế vững, nhưng riêng nó chưa tạo accuracy-LoP trong regime này.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}{Sharpness theo cả quá trình: trend quan trọng hơn mức tuyệt đối}
+\begin{columns}[T]
+\column{0.56\textwidth}
+\centering
+\includegraphics[width=\linewidth,height=0.67\textheight,keepaspectratio]{F20_sharpness_process.png}
+\column{0.41\textwidth}
+\small
+\renewcommand{\arraystretch}{1.1}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{lcc}
+\toprule
+Opt & $\lambda_1^{\max}$ đầu $\to$ cuối & Trend \\
+\midrule
+sgd & 111.7 $\to$ 19.0 & phẳng dần \\
+sgd-mom & 55.3 $\to$ 2.9 & phẳng dần \\
+adam & 14.9 $\to$ 3.0 & phẳng dần \\
+adahessian & 117.7 $\to$ 15.6 & phẳng dần \\
+\bad{sophiah} & \bad{7.7 $\to$ 40.5} & \bad{sắc dần} \\
+sassha & 2.2 $\to$ 0.29 & phẳng nhất \\
+kfac & 191.4 $\to$ 88.6 & cao nhưng giảm \\
+\bottomrule
+\end{tabular}}
+
+\begin{alertblock}{Trend mới là tín hiệu}
+KFAC giữ sharpness cao nhưng không collapse; SophiaH là ca duy nhất sắc dần dài hạn và cũng collapse nặng nhất. Mức sharpness một điểm không đủ đọc cơ chế.
+\end{alertblock}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Collapse theo độ sâu \& vai trò BatchNorm}
+\begin{columns}[T]
+\column{0.50\textwidth}
+\centering
+\includegraphics[width=\linewidth,height=0.66\textheight,keepaspectratio]{F11_depth_and_decomp.png}
+\column{0.48\textwidth}
+\centering
+\includegraphics[width=\linewidth,height=0.66\textheight,keepaspectratio]{F11b_depth_BN1.png}
+\end{columns}
+
+\begin{alertblock}{BN cứu nhiều thứ, trừ Adam}
+Death route cộng dồn ở layer sâu. BatchNorm cứu rank+dormancy cho hầu hết optimizer, nhưng \bad{Adam $\times$ BatchNorm} là ca bệnh lý riêng: dormant vẫn leo rất cao.
+\end{alertblock}
+\end{frame}
+
+\section{Plasticity \& giới hạn}
+
+\begin{frame}{Regime này chưa tạo accuracy-LoP: rank không dự báo acc}
+\centering
+\includegraphics[height=0.68\textheight,keepaspectratio]{F9_rank_vs_plasticity.png}
+
+\begin{alertblock}{Scatter chính}
+Các cell trải từ rank giảm mạnh đến rank tăng, nhưng $\Delta$test\_acc(late--early) vẫn $\geq 0$. Trong regime xoay mượt này, rank-collapse chưa chuyển thành loss of plasticity ở mức accuracy.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}{Giới hạn cần giữ khi diễn giải}
+\begin{columns}[T]
+\column{0.49\textwidth}
+\begin{alertblock}{Thống kê}
+\begin{itemize}\small
+\item Chỉ \hl{n=1, seed 42}; chưa có error band.
+\item Regime drift mượt không tạo accuracy-level LoP.
+\item Cần thêm abrupt regime 16$\times$90$^\circ$ và benchmark cao chiều.
+\end{itemize}
+\end{alertblock}
+
+\column{0.49\textwidth}
+\begin{alertblock}{Đo lường}
+\begin{itemize}\small
+\item Tái dựng per-unit chỉ chắc cho BN=0; BN=1 thiếu running stats trong \texttt{theta\_points}.
+\item Effective rank có trần $\approx$64 do probe batch, init thấp vì input 2-D.
+\item KFAC \texttt{weight\_decay=0} là confound cho phân tích weight movement.
+\end{itemize}
+\end{alertblock}
+\end{columns}
+
+\begin{exampleblock}{Nguyên tắc báo cáo}
+Chỉ nói \textbf{tín hiệu cơ chế sơ bộ}; tránh phát biểu ``optimizer X gây LoP'' từ dữ liệu two-moons này.
+\end{exampleblock}
+\end{frame}
+
+\section{Tổng kết \& hướng tiếp}
+
+\begin{frame}{H$'$: giả thuyết đề xuất để kiểm chứng}
+\begin{alertblock}{H$'$ --- trạng thái: tín hiệu 1 seed, chưa xác nhận}
+\textit{Optimizer adaptive theo tọa độ có clamp/saturation} như \bad{Adam, SophiaH} có thể dễ rơi vào bẫy \textbf{frozen-unit + rank-collapse} hơn các optimizer \textit{curvature-aware không-chéo} như \good{KFAC, SASSHA, AdaHessian}. Trục này có thể trực giao với phân đôi 1st/2nd.
+\end{alertblock}
+
+\centering
+\small
+\renewcommand{\arraystretch}{1.12}
+\resizebox{0.9\linewidth}{!}{%
+\begin{tabular}{lcccc}
+\toprule
+Opt & Route & Structural dead & Recovery mode & Sharpness trend \\
+\midrule
+sgd & diversifying & 7.2 & data-driven & phẳng dần \\
+sgd-mom & cloning & 7.4 & data-driven & phẳng dần \\
+\bad{adam} & \bad{death} & \bad{55.1} & \bad{weight-driven churn} & phẳng dần \\
+adahessian & diversifying & 6.2 & data-driven & phẳng dần \\
+\bad{sophiah} & \bad{death} & \bad{78.3} & mixed/weak recovery & \bad{sắc dần} \\
+\good{sassha} & diversifying & 5.8 & data-driven & phẳng nhất \\
+\good{kfac} & diversifying & 5.8 & data-driven & cao nhưng giảm \\
+\bottomrule
+\end{tabular}}
+
+\end{frame}
+
+\begin{frame}{Việc cần làm tiếp}
+\begin{enumerate}\small
+\item \textbf{Scale seed}: chạy $\geq$5 seed cho two-moons để có error band và kiểm tra độ ổn định của H$'$.
+\item \textbf{Test trên nhiều setting/dataset khác}: abrupt two-moons 16$\times$90$^\circ$, permuted-MNIST, class-incremental/CIFAR để có accuracy collapse thật.
+\end{enumerate}
+
+\vspace{0.5em}
+\begin{exampleblock}{Câu trả lời hiện tại}
+Optimizer có dấu hiệu ảnh hưởng mạnh đến \textbf{cơ chế} LoP, nhưng trên two-moons drift mượt chưa đủ để trả lời chắc về \textbf{mức độ thuyên giảm plasticity loss}.
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}[standout]
+Cảm ơn --- rất mong nhận được góp ý.
+\end{frame}
+
+\end{document}

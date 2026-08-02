@@ -2,9 +2,30 @@
 \usetheme[progressbar=frametitle, block=fill]{metropolis}
 
 \usepackage{fontspec}
-\setmainfont{Helvetica Neue}
-\setsansfont{Helvetica Neue}
-\setmonofont{Menlo}
+\setsansfont{FiraSans}[
+  Path=/usr/local/texlive/2026basic/texmf-dist/fonts/opentype/public/fira/,
+  Extension=.otf,
+  UprightFont=*-Light,
+  BoldFont=*-Regular,
+  ItalicFont=*-LightItalic,
+  BoldItalicFont=*-Italic
+]
+\setmainfont{FiraSans}[
+  Path=/usr/local/texlive/2026basic/texmf-dist/fonts/opentype/public/fira/,
+  Extension=.otf,
+  UprightFont=*-Light,
+  BoldFont=*-Regular,
+  ItalicFont=*-LightItalic,
+  BoldItalicFont=*-Italic
+]
+\setmonofont{FiraMono}[
+  Path=/usr/local/texlive/2026basic/texmf-dist/fonts/opentype/public/fira/,
+  Extension=.otf,
+  UprightFont=*-Regular,
+  BoldFont=*-Medium,
+  ItalicFont=*-Oblique,
+  BoldItalicFont=*-MediumOblique
+]
 
 \usepackage{amsmath,amssymb,amsfonts,mathtools,bm}
 \usepackage{graphicx,booktabs,array,multirow,colortbl}
@@ -15,95 +36,40 @@
 \usepackage{xcolor,hyperref,appendixnumberbeamer,microtype}
 
 % ---------------------------------------------------------------------------
-% RaceInk palette (giữ bản sắc đã thiết lập trong ai_race_research_deck.tex)
+% Bảng màu — lấy nguyên từ Presentation/refs.tex
 % ---------------------------------------------------------------------------
-\definecolor{RaceInk}{HTML}{07111F}
-\definecolor{RaceNavy}{HTML}{0E1B2D}
-\definecolor{RacePaper}{HTML}{F3F1EB}
-\definecolor{RaceCyan}{HTML}{28D7DC}
-\definecolor{RaceCyanDark}{HTML}{007E89}
-\definecolor{RaceAmber}{HTML}{FFB547}
-\definecolor{RaceLime}{HTML}{D8FF55}
-\definecolor{RaceMuted}{HTML}{697586}
-\definecolor{RaceRed}{HTML}{FF795F}
-\definecolor{RaceGreenDk}{HTML}{0F8A5F}
+\definecolor{deepblue}{HTML}{1B3A6B}
+\definecolor{skyblue}{HTML}{3A7CA5}
+\definecolor{accent}{HTML}{F4A261}
+\definecolor{teal}{HTML}{2A9D8F}
+\definecolor{violet}{HTML}{5E548E}
 \definecolor{lightgray}{HTML}{F0F0F0}
+\definecolor{proposegreen}{HTML}{1B6B3A}
+\definecolor{highlight}{HTML}{C0392B}
 
-% ---------------------------------------------------------------------------
-% Theme wiring: khung metropolis (bám refs.tex) + màu RaceInk (bám dự án)
-% ---------------------------------------------------------------------------
-\setbeamercolor{background canvas}{bg=RacePaper}
-\setbeamercolor{normal text}{fg=RaceInk,bg=RacePaper}
-\setbeamercolor{frametitle}{bg=RaceInk,fg=RacePaper}
-\setbeamercolor{progress bar}{fg=RaceAmber,bg=RaceCyan!30}
-\setbeamercolor{alerted text}{fg=RaceRed}
-\setbeamercolor{block title}{bg=RaceCyanDark!22,fg=RaceInk}
+\setbeamercolor{frametitle}{bg=deepblue}
+\setbeamercolor{progress bar}{fg=accent,bg=skyblue!30}
+\setbeamercolor{alerted text}{fg=accent}
+\setbeamercolor{block title}{bg=skyblue!20,fg=deepblue}
 \setbeamercolor{block body}{bg=lightgray}
-\setbeamercolor{block title example}{bg=RaceCyan!28,fg=RaceCyanDark}
-\setbeamercolor{block body example}{bg=RaceCyan!6}
-\setbeamercolor{block title alerted}{bg=RaceAmber!32,fg=RaceInk}
-\setbeamercolor{block body alerted}{bg=RaceAmber!10}
-\setbeamercolor{palette primary}{bg=RaceInk,fg=RacePaper}
-\setbeamercolor{title}{fg=RaceInk}
-\setbeamercolor{section in toc}{fg=RaceInk}
+\setbeamercolor{block title example}{bg=teal!20,fg=teal!80!black}
+\setbeamercolor{block body example}{bg=teal!5}
+\setbeamercolor{block title alerted}{bg=accent!25,fg=deepblue}
+\setbeamercolor{block body alerted}{bg=accent!8}
+\setbeamercolor{palette primary}{bg=deepblue}
 \setbeamerfont{title}{size=\Large,series=\bfseries}
 \setbeamerfont{frametitle}{size=\normalsize,series=\bfseries}
 \metroset{sectionpage=progressbar}
-\setbeamertemplate{itemize item}{\color{RaceCyanDark}$\blacktriangleright$}
-\setbeamertemplate{itemize subitem}{\color{RaceAmber}$\bullet$}
-\setbeamertemplate{navigation symbols}{}
 
-% ---------------------------------------------------------------------------
-% Macro ngữ nghĩa (bám refs.tex: hl/tc/bad/good), ánh xạ sang RaceInk
-% ---------------------------------------------------------------------------
-\newcommand{\hl}[1]{\textcolor{RaceAmber!80!black}{\textbf{#1}}}
-\newcommand{\tc}[1]{\textcolor{RaceCyanDark}{#1}}
-\newcommand{\bad}[1]{\textcolor{RaceRed}{\textbf{#1}}}
-\newcommand{\good}[1]{\textcolor{RaceGreenDk}{\textbf{#1}}}
+\newcommand{\hl}[1]{\textcolor{accent}{\textbf{#1}}}
+\newcommand{\tc}[1]{\textcolor{teal}{#1}}
+\newcommand{\bad}[1]{\textcolor{highlight}{\textbf{#1}}}
+\newcommand{\good}[1]{\textcolor{proposegreen}{\textbf{#1}}}
+\newcommand{\opt}[1]{\texttt{#1}}
 \newcommand{\cmark}{\ding{51}}
 \newcommand{\xmark}{\ding{55}}
-
-% ---------------------------------------------------------------------------
-% Chip nhãn
-% ---------------------------------------------------------------------------
-\newcommand{\pilotchip}{\tikz[baseline=-0.5ex]\node[fill=RaceInk,text=RaceLime,rounded corners=3pt,inner xsep=6pt,inner ysep=3pt,font=\tiny\bfseries]{PILOT --- CHƯA CONFIRMATORY};}
-\newcommand{\sourcechip}{\tikz[baseline=-0.5ex]\node[draw=RaceCyanDark,text=RaceCyanDark,rounded corners=3pt,inner xsep=6pt,inner ysep=3pt,font=\tiny\bfseries]{NGHIÊN CỨU NGUỒN --- NGƯỜI};}
-\newcommand{\llmchip}[1]{\tikz[baseline=-0.5ex]\node[draw=RaceInk,text=RaceInk,rounded corners=3pt,inner xsep=6pt,inner ysep=3pt,font=\tiny\bfseries]{#1};}
-
-% ---------------------------------------------------------------------------
-% Footline
-% ---------------------------------------------------------------------------
-\setbeamertemplate{footline}{%
-  \ifnum\inserttotalframenumber>0%
-    \pgfmathsetlengthmacro{\progresswidth}{\paperwidth*\insertframenumber/\inserttotalframenumber}%
-    \hbox{\color{RaceCyanDark}\rule{\progresswidth}{0.7pt}}%
-  \fi%
-  \leavevmode\hbox{%
-  \begin{beamercolorbox}[wd=.78\paperwidth,ht=3.2ex,dp=1.4ex,leftskip=.5cm]{normal text}%
-    \color{RaceMuted}\tiny\bfseries AI RACE LAB \hspace{0.5em}|\hspace{0.5em} PROGRESS REPORT --- DỮ LIỆU PILOT
-  \end{beamercolorbox}%
-  \begin{beamercolorbox}[wd=.22\paperwidth,ht=3.2ex,dp=1.4ex,rightskip=.5cm plus1fil]{normal text}%
-    \color{RaceMuted}\tiny\bfseries \insertframenumber\ / \inserttotalframenumber
-  \end{beamercolorbox}}}
-
-% ---------------------------------------------------------------------------
-% Khung tối (nhấn mạnh), giữ nguyên ý tưởng từ ai_race_research_deck.tex
-% ---------------------------------------------------------------------------
-\newenvironment{darkframe}[1]{%
-  \setbeamercolor{background canvas}{bg=RaceInk}%
-  \setbeamercolor{normal text}{fg=RacePaper,bg=RaceInk}%
-  \setbeamercolor{frametitle}{fg=RacePaper,bg=RaceInk}%
-  \setbeamercolor{block title}{fg=RaceCyan,bg=RaceNavy}%
-  \setbeamercolor{block body}{fg=RacePaper,bg=RaceNavy}%
-  \begin{frame}{#1}%
-}{%
-  \end{frame}%
-  \setbeamercolor{background canvas}{bg=RacePaper}%
-  \setbeamercolor{normal text}{fg=RaceInk,bg=RacePaper}%
-  \setbeamercolor{frametitle}{fg=RacePaper,bg=RaceInk}%
-  \setbeamercolor{block title}{bg=RaceCyanDark!22,fg=RaceInk}%
-  \setbeamercolor{block body}{bg=lightgray}%
-}
+% Ô chip màu cho lưới E1--E8 (plain tabular+colorbox, tránh lỗi TikZ matrix với nội dung phức tạp)
+\newcommand{\chipcell}[3]{\colorbox{#1}{\begin{minipage}[c][1.2cm][c]{0.22\linewidth}\centering\color{white}\scriptsize #2\par\vspace{2pt}#3\end{minipage}}}
 
 % ---------------------------------------------------------------------------
 % Style pgfplots dùng chung
@@ -111,39 +77,46 @@
 \pgfplotsset{
   raceaxis/.style={
     width=\linewidth, height=4.1cm,
-    tick label style={font=\scriptsize,text=RaceInk},
-    label style={font=\scriptsize,text=RaceInk},
-    title style={font=\scriptsize\bfseries,text=RaceInk},
-    axis line style={RaceMuted},
-    tick style={RaceMuted},
-    grid=major, grid style={RaceMuted!18},
+    tick label style={font=\scriptsize},
+    label style={font=\scriptsize},
+    title style={font=\scriptsize\bfseries},
+    axis line style={gray},
+    tick style={gray},
+    grid=major, grid style={gray!18},
     legend style={font=\tiny,draw=none,fill=none,at={(0.5,-0.32)},anchor=north,legend columns=-1},
     legend cell align=left,
     axis x line*=bottom, axis y line*=left,
     ymin=0, ymax=1.02,
+  },
+  % Biến thể cho xbar chart có trục Y symbolic (tên biến/persona) — KHÔNG được
+  % đặt ymin/ymax numeric, vì trục giá trị ở đây là X, còn Y là danh mục chữ.
+  raceaxisbar/.style={
+    width=\linewidth, height=4.1cm,
+    tick label style={font=\scriptsize},
+    label style={font=\scriptsize},
+    title style={font=\scriptsize\bfseries},
+    axis line style={gray},
+    tick style={gray},
+    grid=major, grid style={gray!18},
+    legend style={font=\tiny,draw=none,fill=none,at={(0.5,-0.32)},anchor=north,legend columns=-1},
+    legend cell align=left,
+    axis x line*=bottom, axis y line*=left,
+    % Mỗi màu là 1 \addplot riêng (1 thanh/lệnh) — tắt auto bar-shift/cluster
+    % của pgfplots, nếu không các thanh sẽ bị coi là nhiều series cần xếp
+    % cạnh nhau và lệch/chồng lên nhau thay vì nằm đúng hàng category.
+    every axis plot post/.append style={/pgfplots/bar shift=0pt},
   }
 }
 
 \title{AI Race: LLM có hành xử như người không?}
-\subtitle{Progress report --- \pilotchip\ \\[2pt]\small 4 lần chạy pilot: baseline (Qwen/Gemma), frontier (Gemini), openai (GPT-nano), N-player (Qwen)}
+\subtitle{Báo cáo tiến độ --- PILOT, chưa confirmatory\\4 lần chạy pilot: baseline (Qwen/Gemma), frontier (Gemini), openai (GPT-nano), N-player (Qwen)}
 \author{AI Race Lab}
 \date{\today}
 
 \begin{document}
 
 \begin{frame}[plain]
-\begin{tikzpicture}[remember picture,overlay]
-  \fill[RaceInk] (current page.south west) rectangle (current page.north east);
-  \fill[RaceCyan] ([xshift=10.8cm]current page.south west) rectangle (current page.north east);
-\end{tikzpicture}
-\vspace{0.5cm}
-{\color{RaceCyan}\scriptsize\bfseries LLM BEHAVIOR $\times$ STRATEGIC SAFETY --- SO SÁNH XUYÊN MÔ HÌNH 4 MODEL}\par
-\vspace{0.5cm}
-{\color{white}\fontsize{32}{35}\selectfont\bfseries AI Race: LLM có hành xử\\như người không?}\par
-\vspace{0.4cm}
-{\color{white!65}\large Báo cáo tiến độ --- 4 lần chạy pilot đã có kết quả}\par
-\vfill
-\pilotchip\hspace{0.4cm}{\color{white!55}\small Không dùng số liệu pilot làm bằng chứng confirmatory}
+  \titlepage
 \end{frame}
 
 \begin{frame}{Nội dung trình bày}
@@ -157,15 +130,16 @@
 \begin{columns}[T]
 \column{0.55\textwidth}
 \centering
+\resizebox{\linewidth}{!}{%
 \begin{tikzpicture}[node distance=.22cm,font=\scriptsize]
-\tikzset{rs/.style={fill=RaceNavy,text=white,rounded corners=5pt,minimum width=1.85cm,minimum height=1.5cm,align=center,inner sep=4pt},arr/.style={-{Stealth},RaceMuted,thick}}
-\node[rs] (a) {\textcolor{RaceCyan}{\bfseries QUAN SÁT}\\[2pt]cùng trạng thái};
-\node[rs,right=of a] (b) {\textcolor{RaceCyan}{\bfseries CHỌN}\\[2pt]Safe / Unsafe};
-\node[rs,right=of b] (c) {\textcolor{RaceCyan}{\bfseries CỬA}\\[2pt]ẩn đến khi reveal};
-\node[rs,right=of c] (d) {\textcolor{RaceCyan}{\bfseries CẬP NHẬT}\\[2pt]payoff + tiến độ};
-\node[rs,draw=RaceAmber,right=of d] (e) {\textcolor{RaceAmber}{\bfseries DỪNG?}\\[2pt]sau vòng 5: 20\%};
+\tikzset{rs/.style={fill=deepblue,text=white,rounded corners=5pt,minimum width=1.85cm,minimum height=1.5cm,align=center,inner sep=4pt},arr/.style={-{Stealth},gray,thick}}
+\node[rs] (a) {\textcolor{skyblue!60!white}{\bfseries QUAN SÁT}\\[2pt]cùng trạng thái};
+\node[rs,right=of a] (b) {\textcolor{skyblue!60!white}{\bfseries CHỌN}\\[2pt]Safe / Unsafe};
+\node[rs,right=of b] (c) {\textcolor{skyblue!60!white}{\bfseries CỬA}\\[2pt]ẩn đến khi reveal};
+\node[rs,right=of c] (d) {\textcolor{skyblue!60!white}{\bfseries CẬP NHẬT}\\[2pt]payoff + tiến độ};
+\node[rs,draw=accent,right=of d] (e) {\textcolor{accent}{\bfseries DỪNG?}\\[2pt]sau vòng 5: 20\%};
 \draw[arr] (a)--(b); \draw[arr] (b)--(c); \draw[arr] (c)--(d); \draw[arr] (d)--(e);
-\end{tikzpicture}
+\end{tikzpicture}}
 \vspace{0.4cm}
 \[
 q_i = p_{\max}\cdot\frac{n_i^{U}}{T}
@@ -194,34 +168,34 @@ q_i = p_{\max}\cdot\frac{n_i^{U}}{T}
 \begin{columns}[T,onlytextwidth]
 \column{0.24\textwidth}
 \begin{beamercolorbox}[sep=.3cm,rounded=true]{normal text}
-\llmchip{BASELINE}\par\vspace{4pt}
+{\scriptsize\bfseries\color{deepblue} BASELINE}\par\vspace{4pt}
 {\bfseries Qwen2.5-14B\\Gemma-3-12B}\par\vspace{6pt}
-{\Large\bfseries\color{RaceCyanDark} 60}\,race\\
-{\small\color{RaceMuted}558 quyết định}\par\vspace{4pt}
+{\Large\bfseries\color{skyblue} 60}\,race\\
+{\small\color{gray}558 quyết định}\par\vspace{4pt}
 {\tiny 2-player, 10 rep}
 \end{beamercolorbox}
 \column{0.24\textwidth}
 \begin{beamercolorbox}[sep=.3cm,rounded=true]{normal text}
-\llmchip{FRONTIER}\par\vspace{4pt}
+{\scriptsize\bfseries\color{deepblue} FRONTIER}\par\vspace{4pt}
 {\bfseries 3\texttimes\ Gemini 3\\+ 5 cell persona}\par\vspace{6pt}
-{\Large\bfseries\color{RaceCyanDark} 177}\,race\\
-{\small\color{RaceMuted}3.168 quyết định}\par\vspace{4pt}
+{\Large\bfseries\color{skyblue} 177}\,race\\
+{\small\color{gray}3.168 quyết định}\par\vspace{4pt}
 {\tiny proxy Kaggle}
 \end{beamercolorbox}
 \column{0.24\textwidth}
 \begin{beamercolorbox}[sep=.3cm,rounded=true]{normal text}
-\llmchip{OPENAI}\par\vspace{4pt}
+{\scriptsize\bfseries\color{deepblue} OPENAI}\par\vspace{4pt}
 {\bfseries gpt-5-nano\\gpt-5.4-nano}\par\vspace{6pt}
-{\Large\bfseries\color{RaceCyanDark} 2.640}\,race\\
-{\small\color{RaceMuted}49.104 quyết định}\par\vspace{4pt}
+{\Large\bfseries\color{skyblue} 2.640}\,race\\
+{\small\color{gray}49.104 quyết định}\par\vspace{4pt}
 {\tiny +ma trận rủi ro 6\texttimes6}
 \end{beamercolorbox}
 \column{0.24\textwidth}
 \begin{beamercolorbox}[sep=.3cm,rounded=true]{normal text}
-\llmchip{N-PLAYER}\par\vspace{4pt}
+{\scriptsize\bfseries\color{deepblue} N-PLAYER}\par\vspace{4pt}
 {\bfseries Qwen2.5-14B\\(N=3)}\par\vspace{6pt}
-{\Large\bfseries\color{RaceCyanDark} 60}\,race\\
-{\small\color{RaceMuted}1.404 quyết định (từ vòng 2)}\par\vspace{4pt}
+{\Large\bfseries\color{skyblue} 60}\,race\\
+{\small\color{gray}1.404 quyết định (từ vòng 2)}\par\vspace{4pt}
 {\tiny +persona Eckel-Grossman}
 \end{beamercolorbox}
 \end{columns}
@@ -279,7 +253,7 @@ CRN block & \good{\cmark} 10 & \good{\cmark} 30 & \good{\cmark} 20 & \good{\cmar
   xtick=data, xlabel={$p_{\max}$},
   ylabel={$\phi_U$ (Gemma)}, ymax=1,
 ]
-\addplot[fill=RaceRed,draw=none] coordinates {(0.1,0.000) (0.6,0.000) (0.9,0.000)};
+\addplot[fill=highlight,draw=none] coordinates {(0.1,0.000) (0.6,0.000) (0.9,0.000)};
 \end{axis}
 \end{tikzpicture}
 \vspace{0.4em}
@@ -303,12 +277,13 @@ CRN block & \good{\cmark} 10 & \good{\cmark} 30 & \good{\cmark} 20 & \good{\cmar
   ylabel={Tỷ lệ Unsafe},
   ymax=0.8,
   legend style={font=\tiny,draw=none,fill=none,at={(0.5,-0.30)},anchor=north,legend columns=-1},
+  nodes near coords, nodes near coords style={font=\tiny},
 ]
-\addplot[fill=RaceCyanDark,draw=none] coordinates {(1,0.00)(2,0.00)(3,0.00)(4,0.00)};
+\addplot[fill=skyblue,draw=none] coordinates {(1,0.00)(2,0.00)(3,0.00)(4,0.00)};
 \addlegendentry{Safe tuyệt đối (vòng 1--4)}
-\addplot[fill=RaceAmber,draw=none] coordinates {(5,0.283)(6,0.521)(7,0.354)(8,0.690)(9,0.194)(10,0.583)};
+\addplot[fill=accent,draw=none] coordinates {(5,0.283)(6,0.521)(7,0.354)(8,0.690)(9,0.194)(10,0.583)};
 \addlegendentry{Sau \texttt{minRounds=5}}
-\draw[RaceInk,dashed,thick] (axis cs:4.5,0) -- (axis cs:4.5,0.8);
+\draw[deepblue,dashed,thick] (axis cs:4.5,0) -- (axis cs:4.5,0.8);
 \end{axis}
 \end{tikzpicture}
 \begin{exampleblock}{Diễn giải}
@@ -327,11 +302,11 @@ CRN block & \good{\cmark} 10 & \good{\cmark} 30 & \good{\cmark} 20 & \good{\cmar
   enlarge x limits=0.25,
   legend style={font=\tiny,draw=none,fill=none,at={(0.5,-0.30)},anchor=north,legend columns=-1},
 ]
-\addplot[fill=RaceCyanDark,draw=none] coordinates {(0.1,0.385)(0.6,0.125)(0.9,0.300)};
+\addplot[fill=skyblue,draw=none] coordinates {(0.1,0.385)(0.6,0.125)(0.9,0.300)};
 \addlegendentry{Dẫn trước (+0,5)}
-\addplot[fill=RaceMuted,draw=none] coordinates {(0.1,0.157)(0.6,0.123)(0.9,0.137)};
+\addplot[fill=gray,draw=none] coordinates {(0.1,0.157)(0.6,0.123)(0.9,0.137)};
 \addlegendentry{Hòa (0,0)}
-\addplot[fill=RaceAmber,draw=none] coordinates {(0.1,0.769)(0.6,0.938)(0.9,0.800)};
+\addplot[fill=accent,draw=none] coordinates {(0.1,0.769)(0.6,0.938)(0.9,0.800)};
 \addlegendentry{Bị dẫn (--0,5)}
 \end{axis}
 \end{tikzpicture}
@@ -342,13 +317,13 @@ CRN block & \good{\cmark} 10 & \good{\cmark} 30 & \good{\cmark} 20 & \good{\cmar
 
 \begin{frame}{Chia lượt, không phải quán tính --- ma trận chuyển trạng thái (vòng $\geq$5)}
 \centering
-\begin{tikzpicture}[cell/.style={rectangle,draw=RaceInk!15,minimum width=3.4cm,minimum height=1.7cm,align=center,font=\small}]
-\matrix (m) [matrix of nodes, nodes=cell, column sep=2pt, row sep=2pt, nodes in empty cells]{
-|[fill=RacePaper,font=\bfseries\small]| own $\backslash$ opp$_{t-1}$ & |[fill=RacePaper,font=\bfseries\small]| Safe & |[fill=RacePaper,font=\bfseries\small]| Unsafe \\
-|[fill=RacePaper,font=\bfseries\small]| Safe & |[fill=RaceCyanDark!35]| 0,404\\[2pt]{\tiny n=146} & |[fill=RaceAmber!85]| \textbf{0,892}\\[2pt]{\tiny n=65} \\
-|[fill=RacePaper,font=\bfseries\small]| Unsafe & |[fill=RaceCyanDark!12]| 0,154\\[2pt]{\tiny n=65} & |[fill=RaceCyanDark!4]| \textbf{0,048}\\[2pt]{\tiny n=42} \\
-};
-\end{tikzpicture}
+\renewcommand{\arraystretch}{2.2}
+\begin{tabular}{@{}l|cc@{}}
+own $\backslash$ opp$_{t-1}$ & \textbf{Safe} & \textbf{Unsafe} \\
+\hline
+\textbf{Safe} & \cellcolor{skyblue!35}\shortstack{0,404\\{\tiny n=146}} & \cellcolor{accent!85}\shortstack{\textbf{0,892}\\{\tiny n=65}} \\
+\textbf{Unsafe} & \cellcolor{skyblue!12}\shortstack{0,154\\{\tiny n=65}} & \cellcolor{skyblue!4}\shortstack{\textbf{0,048}\\{\tiny n=42}} \\
+\end{tabular}
 \vspace{0.4em}
 \begin{exampleblock}{Đọc ma trận}
 \small Đối thủ vừa Unsafe, mình vừa Safe $\Rightarrow$ \hl{89,2\%} mình chuyển Unsafe. Nhưng mình vừa Unsafe xong $\Rightarrow$ gần như chắc chắn lui về Safe (\hl{4,8\%}). \textbf{Chia lượt}, không phải momentum.
@@ -358,22 +333,23 @@ CRN block & \good{\cmark} 10 & \good{\cmark} 30 & \good{\cmark} 20 & \good{\cmar
 \begin{frame}{Hệ số hồi quy Qwen (đặc tả 2, N=498, 10 cluster)}
 \centering
 \begin{tikzpicture}
-\pgfplotsset{raceaxis}
+\pgfplotsset{raceaxisbar}
 \begin{axis}[
   xbar, bar width=8pt,
   width=0.85\linewidth, height=4.6cm,
-  symbolic y coords={ΔS (progress gap),opponent(t-1)=U,own(t-1)=U,pmax=0,9,pmax=0,6},
+  symbolic y coords={ΔS (progress gap),opponent(t-1)=U,own(t-1)=U,risk 0.9,risk 0.6},
   ytick=data, y dir=reverse,
   xlabel={$\hat\beta$}, xmin=-3, xmax=3,
   ymajorgrids=false,
+  extra x ticks={0}, extra x tick labels={},
+  extra x tick style={grid=major,grid style={deepblue,thick},major tick length=0pt},
   nodes near coords, nodes near coords style={font=\tiny},
 ]
-\addplot[xbar,fill=RaceRed,draw=none] coordinates {(-0.642,pmax=0,6)};
-\addplot[xbar,fill=RaceRed,draw=none] coordinates {(-0.320,pmax=0,9)};
-\addplot[xbar,fill=RaceRed,draw=none] coordinates {(-2.234,own(t-1)=U)};
-\addplot[xbar,fill=RaceGreenDk,draw=none] coordinates {(2.339,opponent(t-1)=U)};
-\addplot[xbar,fill=RaceRed,draw=none] coordinates {(-0.717,ΔS (progress gap))};
-\draw[RaceMuted] (axis cs:0,0) -- (axis cs:0,1);
+\addplot[xbar,fill=highlight,draw=none] coordinates {(-0.642,{risk 0.6})};
+\addplot[xbar,fill=highlight,draw=none] coordinates {(-0.320,{risk 0.9})};
+\addplot[xbar,fill=highlight,draw=none] coordinates {(-2.234,{own(t-1)=U})};
+\addplot[xbar,fill=proposegreen,draw=none] coordinates {(2.339,{opponent(t-1)=U})};
+\addplot[xbar,fill=highlight,draw=none] coordinates {(-0.717,{ΔS (progress gap)})};
 \end{axis}
 \end{tikzpicture}
 \begin{alertblock}{Cẩn thận}
@@ -393,13 +369,13 @@ CRN block & \good{\cmark} 10 & \good{\cmark} 30 & \good{\cmark} 20 & \good{\cmar
   ylabel={$\phi_U$}, ymax=1.05,
   legend style={font=\tiny,draw=none,fill=none,at={(0.5,-0.30)},anchor=north,legend columns=-1},
 ]
-\addplot[RaceMuted,dashed,thick,mark=*,mark options={fill=RaceMuted}] coordinates {(0.1,0.64)(0.6,0.56)(0.9,0.56)};
+\addplot[gray,dashed,thick,mark=*,mark options={fill=gray}] coordinates {(0.1,0.64)(0.6,0.56)(0.9,0.56)};
 \addlegendentry{Người (paper, tham chiếu)}
-\addplot[RaceCyanDark,thick,mark=*,mark options={fill=RaceCyanDark}] coordinates {(0.1,1.000)(0.6,0.723)(0.9,0.539)};
+\addplot[skyblue,thick,mark=*,mark options={fill=skyblue}] coordinates {(0.1,1.000)(0.6,0.723)(0.9,0.539)};
 \addlegendentry{gemini-3-flash-preview}
-\addplot[RaceAmber,thick,mark=square*,mark options={fill=RaceAmber}] coordinates {(0.1,1.000)(0.6,0.801)(0.9,0.699)};
+\addplot[accent,thick,mark=square*,mark options={fill=accent}] coordinates {(0.1,1.000)(0.6,0.801)(0.9,0.699)};
 \addlegendentry{gemini-3.1-flash-lite}
-\addplot[RaceRed,thick,mark=triangle*,mark options={fill=RaceRed}] coordinates {(0.1,0.838)(0.6,0.708)(0.9,0.626)};
+\addplot[highlight,thick,mark=triangle*,mark options={fill=highlight}] coordinates {(0.1,0.838)(0.6,0.708)(0.9,0.626)};
 \addlegendentry{gemini-3.5-flash-lite}
 \end{axis}
 \end{tikzpicture}
@@ -411,7 +387,7 @@ CRN block & \good{\cmark} 10 & \good{\cmark} 30 & \good{\cmark} 20 & \good{\cmar
 \begin{frame}{Persona: risk-averse khóa cứng, "adversarial" không đơn điệu}
 \centering
 \begin{tikzpicture}
-\pgfplotsset{raceaxis}
+\pgfplotsset{raceaxisbar}
 \begin{axis}[
   xbar, bar width=9pt,
   width=0.82\linewidth, height=4.6cm,
@@ -419,12 +395,12 @@ CRN block & \good{\cmark} 10 & \good{\cmark} 30 & \good{\cmark} 20 & \good{\cmar
   ytick=data, xlabel={$\phi_U$ trung bình 3 risk}, xmin=0, xmax=1.05,
   nodes near coords, nodes near coords style={font=\tiny},
 ]
-\addplot[xbar,fill=RaceCyanDark,draw=none] coordinates {(0.135,R-- (risk-averse))};
-\addplot[xbar,fill=RaceCyanDark,draw=none] coordinates {(0.241,S\_AC (ghế adv.))};
-\addplot[xbar,fill=RaceCyanDark,draw=none] coordinates {(0.314,S\_CA (ghế coop.))};
-\addplot[xbar,fill=RaceMuted,draw=none] coordinates {(0.754,Baseline)};
-\addplot[xbar,fill=RaceAmber,draw=none] coordinates {(0.774,R0 trung lập)};
-\addplot[xbar,fill=RaceRed,draw=none] coordinates {(0.984,S\_AA (2 ghế adversarial))};
+\addplot[xbar,fill=skyblue,draw=none] coordinates {(0.135,{R-- (risk-averse)})};
+\addplot[xbar,fill=skyblue,draw=none] coordinates {(0.241,{S\_AC (ghế adv.)})};
+\addplot[xbar,fill=skyblue,draw=none] coordinates {(0.314,{S\_CA (ghế coop.)})};
+\addplot[xbar,fill=gray,draw=none] coordinates {(0.754,{Baseline})};
+\addplot[xbar,fill=accent,draw=none] coordinates {(0.774,{R0 trung lập})};
+\addplot[xbar,fill=highlight,draw=none] coordinates {(0.984,{S\_AA (2 ghế adversarial)})};
 \end{axis}
 \end{tikzpicture}
 \begin{exampleblock}{Nghịch lý}
@@ -435,21 +411,22 @@ CRN block & \good{\cmark} 10 & \good{\cmark} 30 & \good{\cmark} 20 & \good{\cmar
 \begin{frame}{Hồi quy panel Gemini (đặc tả 6, N=2.814, 30 cluster)}
 \centering
 \begin{tikzpicture}
-\pgfplotsset{raceaxis}
+\pgfplotsset{raceaxisbar}
 \begin{axis}[
   xbar, bar width=8pt,
   width=0.85\linewidth, height=4.6cm,
-  symbolic y coords={ΔS (progress gap),opponent(t-1)=U,own(t-1)=U,Unsafe vòng 1,pmax=0,9,pmax=0,6},
+  symbolic y coords={ΔS (progress gap),opponent(t-1)=U,own(t-1)=U,Unsafe vòng 1,risk 0.9,risk 0.6},
   ytick=data, xlabel={$\hat\beta$}, xmin=-3.2, xmax=2.2,
+  extra x ticks={0}, extra x tick labels={},
+  extra x tick style={grid=major,grid style={deepblue,thick},major tick length=0pt},
   nodes near coords, nodes near coords style={font=\tiny},
 ]
-\addplot[xbar,fill=RaceRed,draw=none] coordinates {(-2.116,pmax=0,6)};
-\addplot[xbar,fill=RaceRed,draw=none] coordinates {(-2.791,pmax=0,9)};
-\addplot[xbar,fill=RaceGreenDk,draw=none] coordinates {(1.674,Unsafe vòng 1)};
-\addplot[xbar,fill=RaceMuted,draw=none] coordinates {(-0.595,own(t-1)=U)};
-\addplot[xbar,fill=RaceGreenDk,draw=none] coordinates {(1.486,opponent(t-1)=U)};
-\addplot[xbar,fill=RaceMuted,draw=none] coordinates {(-0.224,ΔS (progress gap))};
-\draw[RaceMuted] (axis cs:0,0) -- (axis cs:0,1);
+\addplot[xbar,fill=highlight,draw=none] coordinates {(-2.116,{risk 0.6})};
+\addplot[xbar,fill=highlight,draw=none] coordinates {(-2.791,{risk 0.9})};
+\addplot[xbar,fill=proposegreen,draw=none] coordinates {(1.674,{Unsafe vòng 1})};
+\addplot[xbar,fill=gray,draw=none] coordinates {(-0.595,{own(t-1)=U})};
+\addplot[xbar,fill=proposegreen,draw=none] coordinates {(1.486,{opponent(t-1)=U})};
+\addplot[xbar,fill=gray,draw=none] coordinates {(-0.224,{ΔS (progress gap)})};
 \end{axis}
 \end{tikzpicture}
 \begin{exampleblock}{Khớp hướng người, nhưng mạnh hơn nhiều}
@@ -459,18 +436,18 @@ CRN block & \good{\cmark} 10 & \good{\cmark} 30 & \good{\cmark} 20 & \good{\cmar
 
 \begin{frame}{8 hiệu ứng người--LLM (E1--E8): 4/8 replicated}
 \centering
-\begin{tikzpicture}[chip/.style={rectangle,rounded corners=4pt,minimum width=3.55cm,minimum height=1.15cm,align=center,font=\scriptsize,inner sep=4pt}]
-\matrix[row sep=3pt,column sep=3pt]{
-\node[chip,fill=RaceGreenDk!85,text=white] {\textbf{E1} opponent(t-1)\\replicated (mạnh hơn)}; &
-\node[chip,fill=RaceRed!80,text=white] {\textbf{E2} $\Delta S$\\not replicated}; &
-\node[chip,fill=RaceGreenDk!85,text=white] {\textbf{E3} vòng 1\\replicated}; &
-\node[chip,fill=RaceRed!80,text=white] {\textbf{E4} own(t-1)$\approx$0\\not replicated}; \\
-\node[chip,fill=RaceRed!80,text=white] {\textbf{E5} 0,6 vs 0,9 $\approx$0\\not replicated}; &
-\node[chip,fill=RaceGreenDk!85,text=white] {\textbf{E6} 0,1 vs 0,6\\replicated (d=3,08)}; &
-\node[chip,fill=RaceGreenDk!85,text=white] {\textbf{E7} $\phi_U$ tổng\\replicated (0,624)}; &
-\node[chip,fill=RaceRed!80,text=white] {\textbf{E8} share AS\\not replicated}; \\
-};
-\end{tikzpicture}
+\renewcommand{\arraystretch}{1}
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{cccc}
+\chipcell{proposegreen!85}{\textbf{E1} opponent(t-1)}{replicated (mạnh hơn)} &
+\chipcell{highlight!80}{\textbf{E2} $\Delta S$}{not replicated} &
+\chipcell{proposegreen!85}{\textbf{E3} vòng 1}{replicated} &
+\chipcell{highlight!80}{\textbf{E4} own(t-1)$\approx$0}{not replicated} \\[3pt]
+\chipcell{highlight!80}{\textbf{E5} 0,6 vs 0,9 $\approx$0}{not replicated} &
+\chipcell{proposegreen!85}{\textbf{E6} 0,1 vs 0,6}{replicated (d=3,08)} &
+\chipcell{proposegreen!85}{\textbf{E7} $\phi_U$ tổng}{replicated (0,624)} &
+\chipcell{highlight!80}{\textbf{E8} share AS}{not replicated} \\
+\end{tabular}
 \vspace{0.4em}
 \begin{exampleblock}{Lưu ý về cách chấm}
 \scriptsize "Replicated" chỉ xét \textbf{dấu} và ngưỡng ý nghĩa, không xét độ lớn có bằng người hay không. E1/E3/E6 "replicated" nhưng hệ số lớn hơn người 2--9 lần.
@@ -489,11 +466,11 @@ CRN block & \good{\cmark} 10 & \good{\cmark} 30 & \good{\cmark} 20 & \good{\cmar
   ylabel={$\phi_U$}, ymax=1.05,
   legend style={font=\tiny,draw=none,fill=none,at={(0.5,-0.30)},anchor=north,legend columns=-1},
 ]
-\addplot[RaceMuted,dashed,thick,mark=*,mark options={fill=RaceMuted}] coordinates {(0.1,0.64)(0.6,0.56)(0.9,0.56)};
+\addplot[gray,dashed,thick,mark=*,mark options={fill=gray}] coordinates {(0.1,0.64)(0.6,0.56)(0.9,0.56)};
 \addlegendentry{Người (tham chiếu)}
-\addplot[RaceCyanDark,thick,mark=*,mark options={fill=RaceCyanDark}] coordinates {(0.1,0.123)(0.6,0.151)(0.9,0.145)};
+\addplot[skyblue,thick,mark=*,mark options={fill=skyblue}] coordinates {(0.1,0.123)(0.6,0.151)(0.9,0.145)};
 \addlegendentry{gpt-5-nano}
-\addplot[RaceAmber,thick,mark=square*,mark options={fill=RaceAmber}] coordinates {(0.1,0.577)(0.6,0.496)(0.9,0.567)};
+\addplot[accent,thick,mark=square*,mark options={fill=accent}] coordinates {(0.1,0.577)(0.6,0.496)(0.9,0.567)};
 \addlegendentry{gpt-5.4-nano}
 \end{axis}
 \end{tikzpicture}
@@ -514,9 +491,9 @@ CRN block & \good{\cmark} 10 & \good{\cmark} 30 & \good{\cmark} 20 & \good{\cmar
   ylabel={$\phi_U$ trung bình}, ymax=1.05,
   legend style={font=\tiny,draw=none,fill=none,at={(0.5,-0.42)},anchor=north,legend columns=-1},
 ]
-\addplot[fill=RaceCyanDark,draw=none] coordinates {(S\_CC,0.000)(R--,0.052)(R0,0.015)(Baseline,0.140)(S\_AC,0.236)(S\_CA,0.302)(S\_AA,0.394)(R+,0.414)};
+\addplot[fill=skyblue,draw=none] coordinates {(S\_CC,0.000)(R--,0.052)(R0,0.015)(Baseline,0.140)(S\_AC,0.236)(S\_CA,0.302)(S\_AA,0.394)(R+,0.414)};
 \addlegendentry{gpt-5-nano}
-\addplot[fill=RaceAmber,draw=none] coordinates {(S\_CC,0.022)(R--,0.141)(R0,0.504)(Baseline,0.547)(S\_AC,0.430)(S\_CA,0.436)(S\_AA,0.719)(R+,0.940)};
+\addplot[fill=accent,draw=none] coordinates {(S\_CC,0.022)(R--,0.141)(R0,0.504)(Baseline,0.547)(S\_AC,0.430)(S\_CA,0.436)(S\_AA,0.719)(R+,0.940)};
 \addlegendentry{gpt-5.4-nano}
 \end{axis}
 \end{tikzpicture}
@@ -527,17 +504,19 @@ CRN block & \good{\cmark} 10 & \good{\cmark} 30 & \good{\cmark} 20 & \good{\cmar
 
 \begin{frame}{Ma trận rủi ro 6\texttimes6 (gpt-5.4-nano): mình chi phối, đối thủ bù trừ}
 \centering
-\begin{tikzpicture}[cellh/.style={rectangle,draw=RaceInk!12,minimum width=1.05cm,minimum height=0.58cm,font=\tiny,align=center}]
-\matrix (h) [matrix of nodes, nodes=cellh, column sep=1pt, row sep=1pt]{
-|[fill=RacePaper,font=\bfseries]| own$\backslash$opp & |[fill=RacePaper,font=\bfseries]| 1 & |[fill=RacePaper,font=\bfseries]| 2 & |[fill=RacePaper,font=\bfseries]| 3 & |[fill=RacePaper,font=\bfseries]| 4 & |[fill=RacePaper,font=\bfseries]| 5 & |[fill=RacePaper,font=\bfseries]| 6\\
-|[fill=RacePaper,font=\bfseries]| 1 & |[fill=RaceAmber!0]| ,002 & |[fill=RaceAmber!0]| ,004 & |[fill=RaceAmber!0]| ,002 & |[fill=RaceAmber!0]| ,000 & |[fill=RaceAmber!1]| ,008 & |[fill=RaceAmber!1]| ,006\\
-|[fill=RacePaper,font=\bfseries]| 2 & |[fill=RaceAmber!0]| ,000 & |[fill=RaceAmber!0]| ,000 & |[fill=RaceAmber!0]| ,003 & |[fill=RaceAmber!1]| ,006 & |[fill=RaceAmber!0]| ,003 & |[fill=RaceAmber!0]| ,002\\
-|[fill=RacePaper,font=\bfseries]| 3 & |[fill=RaceAmber!48]| ,479 & |[fill=RaceAmber!46]| ,463 & |[fill=RaceAmber!39]| ,385 & |[fill=RaceAmber!30]| ,300 & |[fill=RaceAmber!25]| ,252 & |[fill=RaceAmber!25]| ,250\\
-|[fill=RacePaper,font=\bfseries]| 4 & |[fill=RaceAmber!63]| ,628 & |[fill=RaceAmber!58]| ,581 & |[fill=RaceAmber!51]| ,506 & |[fill=RaceAmber!45]| ,446 & |[fill=RaceAmber!39]| ,390 & |[fill=RaceAmber!35]| ,345\\
-|[fill=RacePaper,font=\bfseries]| 5 & |[fill=RaceAmber!83]| ,833 & |[fill=RaceAmber!87]| ,869 & |[fill=RaceAmber!83]| ,834 & |[fill=RaceAmber!80]| ,796 & |[fill=RaceAmber!73]| ,729 & |[fill=RaceAmber!70]| ,702\\
-|[fill=RacePaper,font=\bfseries]| 6 & |[fill=RaceAmber!98]| ,982 & |[fill=RaceAmber!98]| ,982 & |[fill=RaceAmber!98]| ,983 & |[fill=RaceAmber!99]| ,991 & |[fill=RaceAmber!99]| ,985 & |[fill=RaceAmber!99]| ,988\\
-};
-\end{tikzpicture}
+\renewcommand{\arraystretch}{1.6}
+\setlength{\tabcolsep}{2pt}
+{\small
+\begin{tabular}{@{}r|cccccc@{}}
+own$\backslash$opp & 1 & 2 & 3 & 4 & 5 & 6 \\
+\hline
+1 & \cellcolor{accent!0}{,002} & \cellcolor{accent!0}{,004} & \cellcolor{accent!0}{,002} & \cellcolor{accent!0}{,000} & \cellcolor{accent!1}{,008} & \cellcolor{accent!1}{,006} \\
+2 & \cellcolor{accent!0}{,000} & \cellcolor{accent!0}{,000} & \cellcolor{accent!0}{,003} & \cellcolor{accent!1}{,006} & \cellcolor{accent!0}{,003} & \cellcolor{accent!0}{,002} \\
+3 & \cellcolor{accent!48}{,479} & \cellcolor{accent!46}{,463} & \cellcolor{accent!39}{,385} & \cellcolor{accent!30}{,300} & \cellcolor{accent!25}{,252} & \cellcolor{accent!25}{,250} \\
+4 & \cellcolor{accent!63}{,628} & \cellcolor{accent!58}{,581} & \cellcolor{accent!51}{,506} & \cellcolor{accent!45}{,446} & \cellcolor{accent!39}{,390} & \cellcolor{accent!35}{,345} \\
+5 & \cellcolor{accent!83}{,833} & \cellcolor{accent!87}{,869} & \cellcolor{accent!83}{,834} & \cellcolor{accent!80}{,796} & \cellcolor{accent!73}{,729} & \cellcolor{accent!70}{,702} \\
+6 & \cellcolor{accent!98}{\textbf{,982}} & \cellcolor{accent!98}{\textbf{,982}} & \cellcolor{accent!98}{\textbf{,983}} & \cellcolor{accent!99}{\textbf{,991}} & \cellcolor{accent!99}{\textbf{,985}} & \cellcolor{accent!99}{\textbf{,988}} \\
+\end{tabular}}
 \vspace{0.3em}
 \begin{columns}[T]
 \column{0.5\textwidth}
@@ -554,20 +533,21 @@ CRN block & \good{\cmark} 10 & \good{\cmark} 30 & \good{\cmark} 20 & \good{\cmar
 \begin{frame}{Hồi quy panel GPT-nano: \bad{đảo dấu hoàn toàn} --- phát hiện nổi bật nhất}
 \centering
 \begin{tikzpicture}
-\pgfplotsset{raceaxis}
+\pgfplotsset{raceaxisbar}
 \begin{axis}[
   xbar, bar width=8pt,
   width=0.85\linewidth, height=4.4cm,
-  symbolic y coords={own$\times$opp(t-1),ΔS (progress gap),opponent(t-1)=U,Unsafe vòng 1,pmax=0,9},
+  symbolic y coords={own$\times$opp(t-1),ΔS (progress gap),opponent(t-1)=U,Unsafe vòng 1,risk 0.9},
   ytick=data, xlabel={$\hat\beta$}, xmin=-1.3, xmax=1.0,
+  extra x ticks={0}, extra x tick labels={},
+  extra x tick style={grid=major,grid style={deepblue,thick},major tick length=0pt},
   nodes near coords, nodes near coords style={font=\tiny},
 ]
-\addplot[xbar,fill=RaceMuted,draw=none] coordinates {(-0.126,pmax=0,9)};
-\addplot[xbar,fill=RaceGreenDk,draw=none] coordinates {(0.635,Unsafe vòng 1)};
-\addplot[xbar,fill=RaceRed,draw=none] coordinates {(-1.016,opponent(t-1)=U)};
-\addplot[xbar,fill=RaceRed,draw=none] coordinates {(0.490,ΔS (progress gap))};
-\addplot[xbar,fill=RaceMuted,draw=none] coordinates {(-0.655,own$\times$opp(t-1))};
-\draw[RaceMuted] (axis cs:0,-0.4) -- (axis cs:0,1);
+\addplot[xbar,fill=gray,draw=none] coordinates {(-0.126,{risk 0.9})};
+\addplot[xbar,fill=proposegreen,draw=none] coordinates {(0.635,{Unsafe vòng 1})};
+\addplot[xbar,fill=highlight,draw=none] coordinates {(-1.016,{opponent(t-1)=U})};
+\addplot[xbar,fill=highlight,draw=none] coordinates {(0.490,{ΔS (progress gap)})};
+\addplot[xbar,fill=gray,draw=none] coordinates {(-0.655,{own$\times$opp(t-1)})};
 \end{axis}
 \end{tikzpicture}
 \begin{alertblock}{Người: opp(t-1) \good{+0,607}, $\Delta S$ \good{--0,296} --- ở đây cả hai \bad{đảo dấu}}
@@ -577,18 +557,18 @@ CRN block & \good{\cmark} 10 & \good{\cmark} 30 & \good{\cmark} 20 & \good{\cmar
 
 \begin{frame}{8 hiệu ứng người--LLM (E1--E8): chỉ 2/8, và 2 cái đảo dấu}
 \centering
-\begin{tikzpicture}[chip/.style={rectangle,rounded corners=4pt,minimum width=3.55cm,minimum height=1.15cm,align=center,font=\scriptsize,inner sep=4pt}]
-\matrix[row sep=3pt,column sep=3pt]{
-\node[chip,fill=RaceRed!85,text=white] {\textbf{E1} opponent(t-1)\\\bad{đảo dấu}: --1,016}; &
-\node[chip,fill=RaceRed!85,text=white] {\textbf{E2} $\Delta S$\\\bad{đảo dấu}: +0,490}; &
-\node[chip,fill=RaceGreenDk!85,text=white] {\textbf{E3} vòng 1\\replicated}; &
-\node[chip,fill=RaceRed!80,text=white] {\textbf{E4} own(t-1)$\approx$0\\not replicated}; \\
-\node[chip,fill=RaceGreenDk!85,text=white] {\textbf{E5} 0,6 vs 0,9$\approx$0\\replicated}; &
-\node[chip,fill=RaceRed!80,text=white] {\textbf{E6} 0,1 vs 0,6\\not replicated ($\approx$0)}; &
-\node[chip,fill=RaceRed!80,text=white] {\textbf{E7} $\phi_U$ tổng\\not replicated (0,353)}; &
-\node[chip,fill=RaceRed!80,text=white] {\textbf{E8} share AS\\not repl. (0,562)}; \\
-};
-\end{tikzpicture}
+\renewcommand{\arraystretch}{1}
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{cccc}
+\chipcell{highlight!85}{\textbf{E1} opponent(t-1)}{\textbf{đảo dấu}: --1,016} &
+\chipcell{highlight!85}{\textbf{E2} $\Delta S$}{\textbf{đảo dấu}: +0,490} &
+\chipcell{proposegreen!85}{\textbf{E3} vòng 1}{replicated} &
+\chipcell{highlight!80}{\textbf{E4} own(t-1)$\approx$0}{not replicated} \\[3pt]
+\chipcell{proposegreen!85}{\textbf{E5} 0,6 vs 0,9$\approx$0}{replicated} &
+\chipcell{highlight!80}{\textbf{E6} 0,1 vs 0,6}{not replicated ($\approx$0)} &
+\chipcell{highlight!80}{\textbf{E7} $\phi_U$ tổng}{not replicated (0,353)} &
+\chipcell{highlight!80}{\textbf{E8} share AS}{not repl. (0,562)} \\
+\end{tabular}
 \begin{exampleblock}{Khác Gemini không chỉ ở \textit{số lượng} mà ở \textit{kiểu}}
 \scriptsize Gemini "not replicated" vẫn đúng dấu. GPT-nano ở E1/E2 \bad{đảo dấu hoàn toàn}. Bảng gộp 44 cell rất không đồng nhất --- đọc như trung bình thô.
 \end{exampleblock}
@@ -607,7 +587,7 @@ CRN block & \good{\cmark} 10 & \good{\cmark} 30 & \good{\cmark} 20 & \good{\cmar
   ylabel={$\phi_U$}, ymax=0.85,
   nodes near coords, nodes near coords style={font=\scriptsize},
 ]
-\addplot[fill=RaceCyanDark,draw=none] coordinates {(0.1,0.69)(0.6,0.57)(0.9,0.47)};
+\addplot[fill=skyblue,draw=none] coordinates {(0.1,0.69)(0.6,0.57)(0.9,0.47)};
 \end{axis}
 \end{tikzpicture}
 \begin{exampleblock}{So với lý thuyết quần thể}
@@ -618,12 +598,12 @@ CRN block & \good{\cmark} 10 & \good{\cmark} 30 & \good{\cmark} 20 & \good{\cmar
 \begin{frame}{Persona Eckel-Grossman lấn át hoàn toàn tín hiệu rủi ro thực}
 \centering
 \begin{tikzpicture}[scale=1]
-\draw[RaceMuted,thick] (0,0) -- (9,0) node[right,font=\scriptsize]{mức persona R1$\to$R6};
-\draw[RaceMuted,thick] (0,0) -- (0,3.3) node[above,font=\scriptsize]{$\phi_U$};
-\draw[RaceRed,thick] (0.5,0.15) -- (2.5,0.15) -- (2.5,3) -- (4.5,3) -- (4.5,0.15) -- (6.5,0.15) -- (6.5,3) -- (8.5,3);
-\node[font=\tiny,RaceRed] at (4.5,-0.35) {5/6 mức: bậc thang $\approx$0\%\,/\,100\%};
-\node[RaceCyanDark,circle,fill=RaceCyanDark,minimum size=4pt,inner sep=0pt] at (1.5,0.9) {};
-\node[font=\tiny,RaceCyanDark,align=center] at (1.5,1.4) {riêng mức\\"trung tính"\\vẫn nhạy $p_{\max}$ thật};
+\draw[gray,thick] (0,0) -- (9,0) node[right,font=\scriptsize]{mức persona R1$\to$R6};
+\draw[gray,thick] (0,0) -- (0,3.3) node[above,font=\scriptsize]{$\phi_U$};
+\draw[highlight,thick] (0.5,0.15) -- (2.5,0.15) -- (2.5,3) -- (4.5,3) -- (4.5,0.15) -- (6.5,0.15) -- (6.5,3) -- (8.5,3);
+\node[font=\tiny,highlight] at (4.5,-0.35) {5/6 mức: bậc thang $\approx$0\%\,/\,100\%};
+\node[skyblue,circle,fill=skyblue,minimum size=4pt,inner sep=0pt] at (1.5,0.9) {};
+\node[font=\tiny,skyblue,align=center] at (1.5,1.4) {riêng mức\\"trung tính"\\vẫn nhạy $p_{\max}$ thật};
 \end{tikzpicture}
 \begin{alertblock}{Đọc cẩn thận}
 \small Sơ đồ minh họa định tính (không phải số đo chính xác từng mức). Chỉ \hl{2 race/ô} --- không đưa vào hồi quy được, cần xác nhận lại bằng confirmatory run.
@@ -636,11 +616,11 @@ CRN block & \good{\cmark} 10 & \good{\cmark} 30 & \good{\cmark} 20 & \good{\cmar
 \centering
 \begin{tikzpicture}[
   font=\footnotesize,
-  scatter/.style={rectangle, rounded corners=3pt, draw=RaceRed, fill=RaceRed!8,
+  scatter/.style={rectangle, rounded corners=3pt, draw=highlight, fill=highlight!8,
     text width=3.0cm, align=center, inner sep=6pt},
-  unified/.style={rectangle, rounded corners=3pt, draw=RaceGreenDk, fill=RaceGreenDk!10,
+  unified/.style={rectangle, rounded corners=3pt, draw=proposegreen, fill=proposegreen!10,
     text width=3.6cm, align=center, inner sep=8pt},
-  flow/.style={-{Stealth[length=3mm]}, line width=1pt, RaceAmber}
+  flow/.style={-{Stealth[length=3mm]}, line width=1pt, accent}
 ]
 \node[scatter] (a) {\bad{Baseline}\\Gemma: 0.000\\Qwen: chia lượt};
 \node[scatter,below=6pt of a] (b) {\bad{Frontier}\\Gemini: giảm đơn điệu};
@@ -664,15 +644,15 @@ CRN block & \good{\cmark} 10 & \good{\cmark} 30 & \good{\cmark} 20 & \good{\cmar
   ylabel={$\phi_U$}, ymax=1.0,
   legend style={font=\tiny,draw=none,fill=none,at={(0.5,-0.32)},anchor=north,legend columns=3},
 ]
-\addplot[RaceMuted,dashed,thick,mark=*,mark options={fill=RaceMuted}] coordinates {(0.1,0.64)(0.6,0.56)(0.9,0.56)};
+\addplot[gray,dashed,thick,mark=*,mark options={fill=gray}] coordinates {(0.1,0.64)(0.6,0.56)(0.9,0.56)};
 \addlegendentry{Người (phẳng)}
-\addplot[RaceCyanDark,thick,mark=square*,mark options={fill=RaceCyanDark}] coordinates {(0.1,0.946)(0.6,0.744)(0.9,0.621)};
+\addplot[skyblue,thick,mark=square*,mark options={fill=skyblue}] coordinates {(0.1,0.946)(0.6,0.744)(0.9,0.621)};
 \addlegendentry{Gemini (TB 3 model, giảm dốc)}
-\addplot[RaceAmber,thick,mark=triangle*,mark options={fill=RaceAmber}] coordinates {(0.1,0.350)(0.6,0.324)(0.9,0.356)};
+\addplot[accent,thick,mark=triangle*,mark options={fill=accent}] coordinates {(0.1,0.350)(0.6,0.324)(0.9,0.356)};
 \addlegendentry{GPT-nano (TB 2 model, chữ U)}
-\addplot[RaceRed,thick,mark=diamond*,mark options={fill=RaceRed}] coordinates {(0.1,0.239)(0.6,0.173)(0.9,0.196)};
+\addplot[highlight,thick,mark=diamond*,mark options={fill=highlight}] coordinates {(0.1,0.239)(0.6,0.173)(0.9,0.196)};
 \addlegendentry{Qwen 2-player}
-\addplot[RaceGreenDk,thick,mark=*,mark options={fill=RaceGreenDk}] coordinates {(0.1,0.69)(0.6,0.57)(0.9,0.47)};
+\addplot[proposegreen,thick,mark=*,mark options={fill=proposegreen}] coordinates {(0.1,0.69)(0.6,0.57)(0.9,0.47)};
 \addlegendentry{Qwen 3-player}
 \end{axis}
 \end{tikzpicture}
@@ -687,39 +667,41 @@ CRN block & \good{\cmark} 10 & \good{\cmark} 30 & \good{\cmark} 20 & \good{\cmar
 \column{0.5\textwidth}
 \centering{\scriptsize\bfseries opponent(t-1) = Unsafe}
 \begin{tikzpicture}
-\pgfplotsset{raceaxis}
+\pgfplotsset{raceaxisbar}
 \begin{axis}[
   xbar, bar width=8pt,
   width=\linewidth, height=4.3cm,
-  symbolic y coords={Qwen 3p (+1,472),Qwen 2p (+2,339),GPT-nano (--1,016),Gemini (+1,486),Người (+0,607)},
+  symbolic y coords={Qwen 3p (+1.472),Qwen 2p (+2.339),GPT-nano (--1.016),Gemini (+1.486),Người (+0.607)},
   ytick=data, y tick label style={font=\tiny}, xlabel={$\hat\beta$},
   xmin=-1.5, xmax=2.8,
+  extra x ticks={0}, extra x tick labels={},
+  extra x tick style={grid=major,grid style={deepblue,thick},major tick length=0pt},
 ]
-\addplot[xbar,fill=RaceInk,draw=none] coordinates {(0.607,Người (+0,607))};
-\addplot[xbar,fill=RaceGreenDk,draw=none] coordinates {(1.486,Gemini (+1,486))};
-\addplot[xbar,fill=RaceRed,draw=none] coordinates {(-1.016,GPT-nano (--1,016))};
-\addplot[xbar,fill=RaceGreenDk,draw=none] coordinates {(2.339,Qwen 2p (+2,339))};
-\addplot[xbar,fill=RaceGreenDk,draw=none] coordinates {(1.472,Qwen 3p (+1,472))};
-\draw[RaceMuted] (axis cs:0,-0.5) -- (axis cs:0,1);
+\addplot[xbar,fill=deepblue,draw=none] coordinates {(0.607,{Người (+0.607)})};
+\addplot[xbar,fill=proposegreen,draw=none] coordinates {(1.486,{Gemini (+1.486)})};
+\addplot[xbar,fill=highlight,draw=none] coordinates {(-1.016,{GPT-nano (--1.016)})};
+\addplot[xbar,fill=proposegreen,draw=none] coordinates {(2.339,{Qwen 2p (+2.339)})};
+\addplot[xbar,fill=proposegreen,draw=none] coordinates {(1.472,{Qwen 3p (+1.472)})};
 \end{axis}
 \end{tikzpicture}
 \column{0.5\textwidth}
 \centering{\scriptsize\bfseries ΔS (progress gap before)}
 \begin{tikzpicture}
-\pgfplotsset{raceaxis}
+\pgfplotsset{raceaxisbar}
 \begin{axis}[
   xbar, bar width=8pt,
   width=\linewidth, height=4.3cm,
-  symbolic y coords={Qwen 3p ($\approx$0, n.s.),Qwen 2p (--0,717),GPT-nano (+0,490),Gemini (--0,224, n.s.),Người (--0,296)},
+  symbolic y coords={Qwen 3p ($\approx$0 n.s.),Qwen 2p (--0.717),GPT-nano (+0.490),Gemini (--0.224 n.s.),Người (--0.296)},
   ytick=data, y tick label style={font=\tiny}, xlabel={$\hat\beta$},
   xmin=-1.0, xmax=0.7,
+  extra x ticks={0}, extra x tick labels={},
+  extra x tick style={grid=major,grid style={deepblue,thick},major tick length=0pt},
 ]
-\addplot[xbar,fill=RaceInk,draw=none] coordinates {(-0.296,Người (--0,296))};
-\addplot[xbar,fill=RaceGreenDk,draw=none] coordinates {(-0.224,Gemini (--0,224, n.s.))};
-\addplot[xbar,fill=RaceRed,draw=none] coordinates {(0.490,GPT-nano (+0,490))};
-\addplot[xbar,fill=RaceGreenDk,draw=none] coordinates {(-0.717,Qwen 2p (--0,717))};
-\addplot[xbar,fill=RaceMuted,draw=none] coordinates {(0.032,Qwen 3p ($\approx$0, n.s.))};
-\draw[RaceMuted] (axis cs:0,-0.5) -- (axis cs:0,1);
+\addplot[xbar,fill=deepblue,draw=none] coordinates {(-0.296,{Người (--0.296)})};
+\addplot[xbar,fill=proposegreen,draw=none] coordinates {(-0.224,{Gemini (--0.224 n.s.)})};
+\addplot[xbar,fill=highlight,draw=none] coordinates {(0.490,{GPT-nano (+0.490)})};
+\addplot[xbar,fill=proposegreen,draw=none] coordinates {(-0.717,{Qwen 2p (--0.717)})};
+\addplot[xbar,fill=gray,draw=none] coordinates {(0.032,{Qwen 3p ($\approx$0 n.s.)})};
 \end{axis}
 \end{tikzpicture}
 \end{columns}
@@ -739,7 +721,7 @@ CRN block & \good{\cmark} 10 & \good{\cmark} 30 & \good{\cmark} 20 & \good{\cmar
   ylabel={Số hiệu ứng / 8}, ymax=8.6,
   nodes near coords,
 ]
-\addplot[fill=RaceGreenDk,draw=none] coordinates {(Gemini,4)(GPT-nano,2)};
+\addplot[fill=proposegreen,draw=none] coordinates {(Gemini,4)(GPT-nano,2)};
 \end{axis}
 \end{tikzpicture}
 \begin{exampleblock}{Khác nhau cả ở \textit{loại} không-khớp}
@@ -795,7 +777,7 @@ CRN block & \good{\cmark} 10 & \good{\cmark} 30 & \good{\cmark} 20 & \good{\cmar
 
 \begin{frame}[standout]
 Bốn model, bốn hành vi khác nhau --- kể cả \bad{đảo dấu} hiệu ứng trung tâm của paper người.\\[8pt]
-\small\color{RaceLime} Chưa đủ confirmatory để kết luận --- nhưng đủ để không giả định LLM hành xử như người, hay giống nhau.
+\small\color{accent} Chưa đủ confirmatory để kết luận --- nhưng đủ để không giả định LLM hành xử như người, hay giống nhau.
 \end{frame}
 
 \begin{frame}[standout]
@@ -825,7 +807,7 @@ Hội tụ? & có & có & \bad{không} & có (spec 1--2) & có \\
 {\scriptsize Nguồn: \texttt{analysis/baseline.md} \S4.4; \texttt{analysis/frontier/report.md} \S4; \texttt{analysis/openai/report.md} \S5; \texttt{analysis/nplayer/derived/clustered\_logit\_coefficients.csv} spec 3.}
 \end{frame}
 
-\begin{frame}{Backup 2 --- Provenance \& lệnh tái tạo}
+\begin{frame}[fragile]{Backup 2 --- Provenance \& lệnh tái tạo}
 \scriptsize
 \begin{block}{4 file nguồn (không tính lại từ CSV thô)}
 \texttt{analysis/baseline.md} \textbullet\ \texttt{analysis/frontier/report.md} \textbullet\ \texttt{analysis/openai/report.md} \textbullet\ \texttt{analysis/nplayer/report.md}
@@ -846,14 +828,14 @@ Hội tụ? & có & có & \bad{không} & có (spec 1--2) & có \\
 
 \begin{frame}{Tham chiếu chính}
 \begin{beamercolorbox}[sep=.5cm,rounded=true]{normal text}
-{\scriptsize\color{RaceCyanDark}\bfseries 2026 --- ARXIV:2607.26034}\par\vspace{.25cm}
+{\scriptsize\color{skyblue}\bfseries 2026 --- ARXIV:2607.26034}\par\vspace{.25cm}
 {\large\bfseries Falling Behind Drives Unsafe Development\\in an Idealised AI Race Experiment}\par\vspace{.2cm}
 {\normalsize E. Fernández Domingos \& T. A. Han}\par\vspace{.35cm}
-{\color{RaceCyanDark}\texttt{https://arxiv.org/abs/2607.26034}}
+{\color{skyblue}\texttt{https://arxiv.org/abs/2607.26034}}
 \end{beamercolorbox}
 \vspace{0.6em}
 {\small\bfseries TÀI LIỆU DỰ ÁN}\par
-{\color{RaceMuted}\small Engine, prompt, config, test và kế hoạch phân tích được lưu trong repo này (\texttt{CLAUDE.md}, \texttt{PROJECT.md}, \texttt{analysis/}).}
+{\color{gray}\small Engine, prompt, config, test và kế hoạch phân tích được lưu trong repo này (\texttt{CLAUDE.md}, \texttt{PROJECT.md}, \texttt{analysis/}).}
 \end{frame}
 
 \end{document}

@@ -76,6 +76,21 @@ Data flows config → games → lockstep batch → journal → analyser.
 - **Parse failures contaminate the whole race.** One `parse_failed=true` decision excludes the entire race from every behavioural estimand, because the Safe fallback propagates into later state. Don't loosen `parse_action` to raise the apparent success rate.
 - Exactly two players everywhere. `GameConfig` rejects `nPlayers != 2`, and scoring/recording assume two-element lists.
 
+## Analyzing LLM behavioral results
+
+When asked to "analyze" or "visualize" a run under `results/` (2-player or N-player), match the
+rigor already established in `analysis/frontier/` (`results/scripts/analyze_ai_race.py`), not just
+means/proportions. That baseline includes, wherever the sample size allows it: a cluster-robust
+panel logistic regression (cluster on the CRN block — pair or `rep`, whichever repetitions share
+common-random-number draws), nearest-strategy classification by Hamming distance (AS/AU/CS[/CAS]),
+confidence intervals on every reported proportion (not point estimates alone), and an explicit
+theory-vs-experiment comparison against `ai_race/theory/` or `N-Player/theory/` — search over the
+free parameter (e.g. beta) for the best qualitative fit rather than checking one arbitrarily-picked
+value. Persona/small-N cells that can't support inference (zero variance, <5 independent races)
+stay strictly descriptive — say so explicitly rather than fitting a model that will silently fail
+or mean nothing. See `analysis/nplayer/report.md`'s "Đối chiếu độ sâu" table for a worked example
+of holding an N-player pilot to this same bar, and what stayed descriptive-only and why.
+
 ## Conventions
 
 - Python ≥3.10, `from __future__ import annotations`, dataclasses for records, module docstrings that state *why* a design is the way it is. Comments explain non-obvious protocol reasoning, not mechanics.

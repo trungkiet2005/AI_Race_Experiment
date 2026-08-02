@@ -1,6 +1,6 @@
 {
   "schema_version": "ai-race-results-v1",
-  "created_utc": "2026-08-01T06:37:56.054591+00:00",
+  "created_utc": "2026-08-01T06:50:43.435580+00:00",
   "experiment": {
     "name": "api_persona_baseline_risk_4_2",
     "runPhase": "pilot",
@@ -43,7 +43,7 @@
     "risk-2"
   ],
   "persona_sha256": "a2897a0246fa6583097b1f8458eff373d9be3fe590fb4419eb9791d59447a7a2",
-  "status": "running",
-  "n_races": 0,
-  "n_turns": 0
+  "status": "completed",
+  "n_races": 30,
+  "n_turns": 558
 }

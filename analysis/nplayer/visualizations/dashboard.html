@@ -159,31 +159,62 @@
   </div>
 
   <div class="card">
-    <h2>1. Tỷ lệ UNSAFE theo mức rủi ro, theo persona</h2>
+    <h2>1. Tỷ lệ UNSAFE theo mức rủi ro, theo persona (Wilson 95% CI)</h2>
     <p class="sub">
       Baseline (không persona, xám) làm tham chiếu; R1–R6 là 6 mức persona rủi ro
       Eckel-Grossman (R1 = chọn cược an toàn nhất, R6 = chọn cược rủi ro nhất), áp giống nhau
-      cho cả 3 ghế. n = 528 lượt/ô (baseline), n = 33 lượt/ô (mỗi persona × risk).
+      cho cả 3 ghế. n = 528 lượt/ô (baseline), n = 33 lượt/ô (mỗi persona × risk). Đường kẻ trên
+      mỗi cột là khoảng tin cậy 95% Wilson cho một tỷ lệ — R1/R2/R4/R5/R6 có CI gần 0 vì tỷ lệ
+      quan sát đúng bằng 0%/100% (không phải do thiếu dữ liệu).
     </p>
     <div id="chart1"></div>
     <details class="tv"><summary>Xem bảng dữ liệu</summary><div id="table1"></div></details>
   </div>
 
   <div class="card">
-    <h2>2. Đối chiếu lý thuyết N-Player vs thực nghiệm (baseline)</h2>
+    <h2>2. Đối chiếu lý thuyết N-Player vs thực nghiệm (baseline, β tối ưu)</h2>
     <p class="sub">
       "Lý thuyết" = tần suất chiến lược AU (luôn UNSAFE) tại phân phối dừng small-mutation-limit
-      (<code>N-Player/theory/stationary.py</code>, Z=100, β=0.1, cùng tham số cơ chế của run:
-      n=3, s=1.5, b=4, c=1, B=100, W=9). "Thực nghiệm" = tỷ lệ UNSAFE mỗi lượt quyết định thật.
-      Hai đại lượng đo hai cơ chế khác nhau (chọn lọc tiến hóa quần thể dài hạn vs suy luận
-      trong-ngữ-cảnh của một model) — chỉ nên so sánh <i>hướng</i>, không so sánh độ lớn/hình dạng.
+      (<code>N-Player/theory/stationary.py</code>, Z=100, cùng tham số cơ chế của run: n=3,
+      s=1.5, b=4, c=1, B=100, W=9), với <b>β dò tìm bằng grid search</b> (log-scale, 200 điểm từ
+      10⁻⁴ đến 10¹) để cực tiểu hóa tổng bình phương sai khác so với 3 điểm thực nghiệm — không
+      chốt một β tùy ý. β tối ưu ở đây rất nhỏ (chọn lọc yếu, gần trôi dạt trung tính); ngay cả ở
+      mức khớp tốt nhất, lý thuyết vẫn dự đoán độ dốc giảm theo risk mạnh hơn thực tế (khớp gần
+      đúng ở risk=0.1, nhưng thấp hơn thực nghiệm rõ rệt ở risk=0.6/0.9) — mô hình quần thể dự
+      đoán LLM sẽ giảm Unsafe nhanh hơn so với những gì quan sát được. Hai đại lượng vẫn đo hai cơ
+      chế khác nhau (chọn lọc tiến hóa quần thể dài hạn vs suy luận trong-ngữ-cảnh của một model).
     </p>
     <div id="chart2"></div>
     <details class="tv"><summary>Xem bảng dữ liệu</summary><div id="table2"></div></details>
   </div>
 
   <div class="card">
-    <h2>3. Hiệu ứng vòng 1: luôn mở màn bằng UNSAFE</h2>
+    <h2>3. Hồi quy logistic panel cluster-robust (baseline, đặc tả 3)</h2>
+    <p class="sub">
+      <code>unsafe ~ C(risk) + own(t-1) × others(t-1) tỷ lệ Unsafe × ΔS(t-1)</code>. Cluster theo
+      <code>rep</code> (20 cluster — mỗi rep chia sẻ cùng horizon/setback draw qua cả 3 mức risk,
+      đã xác nhận bằng kiểm tra CRN). N = 1.404 quyết định (vòng ≥ 2). Chấm = hệ số, đường = CI
+      95%. Chấm đặc = p &lt; 0,05. <b>Đặc tả 4–6 (thêm <code>first_round_unsafe</code>) không ước
+      lượng được</b>: biến này là hằng số (=1) trong mẫu này — mọi race đều mở màn bằng UNSAFE —
+      nên cộng tuyến hoàn toàn với intercept.
+    </p>
+    <div id="chart7"></div>
+    <details class="tv"><summary>Xem bảng dữ liệu</summary><div id="table7"></div></details>
+  </div>
+
+  <div class="card">
+    <h2>4. Phân bố chiến lược gần nhất theo mức rủi ro (baseline)</h2>
+    <p class="sub">
+      Phân loại Hamming distance đến 3 chiến lược tham chiếu N-player (AS/AU/CS — không có CAS,
+      paper N-player không định nghĩa) trên toàn bộ 180 player-race của baseline.
+      "Tie/Other" = hòa giữa nhiều chiến lược. Không quan sát thấy CS nào là gần nhất duy nhất.
+    </p>
+    <div id="chart8"></div>
+    <details class="tv"><summary>Xem bảng dữ liệu</summary><div id="table8"></div></details>
+  </div>
+
+  <div class="card">
+    <h2>5. Hiệu ứng vòng 1: luôn mở màn bằng UNSAFE</h2>
     <p class="sub">
       Tỷ lệ UNSAFE ở vòng 1 (chưa có tín hiệu đối thủ) so với vòng 2 trở đi, baseline không
       persona. Vòng 1 = 100% UNSAFE ở cả 3 mức rủi ro; phân hóa theo risk chỉ xuất hiện từ vòng 2.
@@ -193,7 +224,7 @@
   </div>
 
   <div class="card">
-    <h2>4. Hành vi theo vị thế trong cuộc đua (baseline)</h2>
+    <h2>6. Hành vi theo vị thế trong cuộc đua (baseline)</h2>
     <p class="sub">
       Tỷ lệ UNSAFE khi đang dẫn đầu / bị dẫn / hòa (so với tiến độ cao nhất của đối thủ trước khi
       ra quyết định). Ở risk thấp, nhóm "hòa" UNSAFE nhiều nhất; phân hóa theo vị thế mờ dần khi
@@ -204,7 +235,7 @@
   </div>
 
   <div class="card">
-    <h2>5. Tỷ lệ setback trong nhóm dẫn đầu (baseline)</h2>
+    <h2>7. Tỷ lệ setback trong nhóm dẫn đầu (baseline)</h2>
     <p class="sub">
       Trong số người chơi đủ điều kiện chịu setback (thắng hoặc hòa ở cuối race), tỷ lệ thực sự bị
       setback — tăng theo <code>max_private_risk</code> đúng như thiết kế cơ chế (không phải phát
@@ -215,7 +246,7 @@
   </div>
 
   <div class="card">
-    <h2>6. Chi tiết persona × risk</h2>
+    <h2>8. Chi tiết persona × risk</h2>
     <p class="sub">Bảng đầy đủ ứng với biểu đồ 1, kèm cỡ mẫu (số lượt quyết định) mỗi ô.</p>
     <div id="table6"></div>
   </div>
@@ -308,9 +339,21 @@ function groupedBar(containerId, categories, series, colors, opts) {
         x: x + 1, y: y, width: Math.max(barW - 2, 1), height: Math.max(barH, 1),
         rx: 3, fill: colors[si % colors.length]
       });
-      rect.addEventListener('mousemove', (e) => showTip(e, `<b>${s.label}</b><br>${opts.xLabel || 'Risk'} = ${cat}<br>${opts.yLabel || 'tỷ lệ'} = ${v.toFixed(3)}`));
+      const hasCi = Array.isArray(s.lo) && Array.isArray(s.hi);
+      const tipCi = hasCi ? `<br>CI 95%: [${s.lo[ci].toFixed(3)}, ${s.hi[ci].toFixed(3)}]` : '';
+      rect.addEventListener('mousemove', (e) => showTip(e, `<b>${s.label}</b><br>${opts.xLabel || 'Risk'} = ${cat}<br>${opts.yLabel || 'tỷ lệ'} = ${v.toFixed(3)}${tipCi}`));
       rect.addEventListener('mouseleave', hideTip);
       svg.appendChild(rect);
+
+      if (hasCi) {
+        const cx = x + Math.max(barW - 2, 1) / 2 + 1;
+        const yLo = marginT + plotH - (s.lo[ci] / yMax) * plotH;
+        const yHi = marginT + plotH - (s.hi[ci] / yMax) * plotH;
+        const capW = Math.max((barW - 2) * 0.35, 3);
+        svg.appendChild(svgEl('line', {x1: cx, x2: cx, y1: yHi, y2: yLo, stroke: 'var(--text-primary)', 'stroke-width': 1.4, opacity: 0.65}));
+        svg.appendChild(svgEl('line', {x1: cx - capW / 2, x2: cx + capW / 2, y1: yHi, y2: yHi, stroke: 'var(--text-primary)', 'stroke-width': 1.4, opacity: 0.65}));
+        svg.appendChild(svgEl('line', {x1: cx - capW / 2, x2: cx + capW / 2, y1: yLo, y2: yLo, stroke: 'var(--text-primary)', 'stroke-width': 1.4, opacity: 0.65}));
+      }
     });
   });
 
@@ -339,7 +382,7 @@ function dataTable(containerId, categories, series, catHeader) {
 // Chart 1: unsafe rate by risk x condition (baseline muted + 6 persona colors)
 {
   const d = DATA.unsafe_by_risk_condition;
-  const series = d.series.map(s => ({label: s.label, values: s.values}));
+  const series = d.series.map(s => ({label: s.label, values: s.values, lo: s.lo, hi: s.hi}));
   const colors = [MUTED].concat(SERIES_COLORS);
   groupedBar('chart1', d.risks.map(r => 'risk = ' + r), series, colors, {yLabel: 'tỷ lệ UNSAFE', h: 300});
   dataTable('table1', d.risks.map(r => 'risk = ' + r), series, 'Treatment');
@@ -383,6 +426,124 @@ function dataTable(containerId, categories, series, catHeader) {
   let html = '<table class="data-table"><thead><tr><th>Persona</th><th>Risk</th><th>Tỷ lệ UNSAFE</th><th>n lượt</th></tr></thead><tbody>';
   DATA.persona_detail_table.forEach(r => {
     html += `<tr><td>${r.persona}</td><td>${r.risk}</td><td>${r.mean.toFixed(3)}</td><td>${r.n}</td></tr>`;
+  });
+  html += '</tbody></table>';
+  container.innerHTML = html;
+}
+
+// ---- Forest plot (cluster-robust logit coefficients) ----
+function forest(containerId, terms) {
+  const container = document.getElementById(containerId);
+  const W = 1080, rowH = 34, marginL = 230, marginR = 40, marginT = 14, marginB = 34;
+  const H = marginT + marginB + terms.length * rowH;
+  const plotW = W - marginL - marginR;
+  const svg = svgEl('svg', {viewBox: `0 0 ${W} ${H}`, width: '100%', height: H});
+
+  let lo = Math.min(...terms.map(t => t.lo), 0);
+  let hi = Math.max(...terms.map(t => t.hi), 0);
+  const pad = (hi - lo) * 0.08;
+  lo -= pad; hi += pad;
+  const xOf = v => marginL + ((v - lo) / (hi - lo)) * plotW;
+
+  const zeroX = xOf(0);
+  svg.appendChild(svgEl('line', {x1: zeroX, x2: zeroX, y1: marginT, y2: marginT + terms.length * rowH, stroke: 'var(--text-muted)', 'stroke-width': 1, 'stroke-dasharray': '3,3'}));
+
+  [lo, lo + (hi - lo) * 0.25, lo + (hi - lo) * 0.5, lo + (hi - lo) * 0.75, hi].forEach(v => {
+    const x = xOf(v);
+    const t = svgEl('text', {x, y: marginT + terms.length * rowH + 18, class: 'axis-label', 'text-anchor': 'middle'});
+    t.textContent = v.toFixed(1);
+    svg.appendChild(t);
+  });
+  svg.appendChild(svgEl('line', {x1: marginL, x2: W - marginR, y1: marginT + terms.length * rowH, y2: marginT + terms.length * rowH, class: 'axis-line'}));
+
+  terms.forEach((t, i) => {
+    const y = marginT + i * rowH + rowH / 2;
+    const label = svgEl('text', {x: marginL - 12, y: y + 4, class: 'bar-label', 'text-anchor': 'end'});
+    label.textContent = t.term;
+    svg.appendChild(label);
+
+    const x1 = xOf(t.lo), x2 = xOf(t.hi), xc = xOf(t.coef);
+    const sig = t.p < 0.05;
+    const color = t.coef >= 0 ? 'var(--series-3)' : 'var(--series-2)';
+    svg.appendChild(svgEl('line', {x1, x2, y1: y, y2: y, stroke: color, 'stroke-width': 2}));
+    const dot = svgEl('circle', {cx: xc, cy: y, r: 5.5, fill: sig ? color : 'var(--surface-1)', stroke: color, 'stroke-width': 2});
+    dot.addEventListener('mousemove', (e) => showTip(e, `<b>${t.term}</b><br>coef = ${t.coef.toFixed(3)}<br>95% CI [${t.lo.toFixed(3)}, ${t.hi.toFixed(3)}]<br>p = ${t.p < 0.001 ? '< 0.001' : t.p.toFixed(3)}`));
+    dot.addEventListener('mouseleave', hideTip);
+    svg.appendChild(dot);
+  });
+
+  container.innerHTML = '';
+  container.appendChild(svg);
+  legend(container, [
+    {label: 'coef ≥ 0', color: 'var(--series-3)'},
+    {label: 'coef < 0', color: 'var(--series-2)'},
+    {label: 'chấm đặc = p < 0.05, chấm rỗng = không có ý nghĩa', color: 'var(--text-muted)'},
+  ]);
+}
+forest('chart7', DATA.logit_forest);
+{
+  const container = document.getElementById('table7');
+  let html = '<table class="data-table"><thead><tr><th>Term</th><th>Coef</th><th>CI 95% thấp</th><th>CI 95% cao</th><th>p</th></tr></thead><tbody>';
+  DATA.logit_forest.forEach(t => {
+    html += `<tr><td>${t.term}</td><td>${t.coef.toFixed(3)}</td><td>${t.lo.toFixed(3)}</td><td>${t.hi.toFixed(3)}</td><td>${t.p < 0.001 ? '< 0.001' : t.p.toFixed(3)}</td></tr>`;
+  });
+  html += '</tbody></table>';
+  container.innerHTML = html;
+}
+
+// ---- 100% stacked bar (strategy mix) ----
+function stackedBar(containerId, risks, categories, series) {
+  const container = document.getElementById(containerId);
+  const W = 720, H = 190, marginL = 70, marginR = 200, marginT = 10, marginB = 30;
+  const plotW = W - marginL - marginR, plotH = H - marginT - marginB;
+  const svg = svgEl('svg', {viewBox: `0 0 ${W} ${H}`, width: '100%', height: H, style: 'max-width:760px'});
+
+  const barH = (plotH / risks.length) * 0.62;
+  const gap = (plotH / risks.length) * 0.38;
+  const colors = SERIES_COLORS.concat(['var(--text-muted)']);
+
+  [0, 0.25, 0.5, 0.75, 1.0].forEach(v => {
+    const x = marginL + v * plotW;
+    svg.appendChild(svgEl('line', {x1: x, x2: x, y1: marginT, y2: marginT + plotH, class: 'grid-line'}));
+    const t = svgEl('text', {x, y: marginT + plotH + 16, class: 'axis-label', 'text-anchor': 'middle'});
+    t.textContent = (v * 100).toFixed(0) + '%';
+    svg.appendChild(t);
+  });
+
+  series.forEach((s, ri) => {
+    const y = marginT + ri * (barH + gap) + gap / 2;
+    const lbl = svgEl('text', {x: marginL - 10, y: y + barH / 2 + 4, class: 'axis-label', 'text-anchor': 'end'});
+    lbl.textContent = 'risk = ' + s.risk;
+    svg.appendChild(lbl);
+
+    let acc = 0;
+    s.shares.forEach((share, ci) => {
+      if (share <= 0) return;
+      const x = marginL + acc * plotW;
+      const w = share * plotW;
+      const rect = svgEl('rect', {x: x + 0.5, y, width: Math.max(w - 1, 0), height: barH, fill: colors[ci], rx: 2});
+      rect.addEventListener('mousemove', (e) => showTip(e, `<b>${categories[ci]}</b> · risk = ${s.risk}<br>${(share * 100).toFixed(1)}% (n = ${Math.round(share * s.total)}/${s.total})`));
+      rect.addEventListener('mouseleave', hideTip);
+      svg.appendChild(rect);
+      acc += share;
+    });
+  });
+
+  container.innerHTML = '';
+  container.appendChild(svg);
+  legend(container, categories.map((c, i) => ({label: c, color: colors[i]})));
+}
+stackedBar('chart8', DATA.strategy_mix.risks, DATA.strategy_mix.categories, DATA.strategy_mix.series);
+{
+  const container = document.getElementById('table8');
+  const d = DATA.strategy_mix;
+  let html = '<table class="data-table"><thead><tr><th>Risk</th>';
+  d.categories.forEach(c => html += `<th>${c}</th>`);
+  html += '</tr></thead><tbody>';
+  d.series.forEach(s => {
+    html += `<tr><td>${s.risk}</td>`;
+    s.shares.forEach(v => html += `<td>${(v * 100).toFixed(1)}%</td>`);
+    html += '</tr>';
   });
   html += '</tbody></table>';
   container.innerHTML = html;

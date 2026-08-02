@@ -1,0 +1,56 @@
+Chay 17 job, toi da 2 job song song. Log tung job o /Users/phu-quynguyen-lam/Downloads/HCMMUT-Research-Camp/AI_Race_Experiment/logs_openai_nplayer_stage/
+[1/17] openai_baseline_nplayer_n3: OK sau 8.4 phut
+[2/17] openai_baseline_nplayer_n4: OK sau 10.9 phut
+[3/17] openai_persona_nplayer_baseline_coopadv_AAA_n3: OK sau 10.4 phut
+[4/17] openai_baseline_nplayer_n5: OK sau 13.8 phut
+[5/17] openai_persona_nplayer_baseline_coopadv_AAC_n3: OK sau 7.7 phut
+[6/17] openai_persona_nplayer_baseline_coopadv_ACA_n3: OK sau 7.4 phut
+[7/17] openai_persona_nplayer_baseline_coopadv_ACC_n3: OK sau 7.9 phut
+[8/17] openai_persona_nplayer_baseline_coopadv_CAA_n3: OK sau 8.0 phut
+[9/17] openai_persona_nplayer_baseline_coopadv_CAC_n3: OK sau 7.8 phut
+[10/17] openai_persona_nplayer_baseline_coopadv_CCA_n3: OK sau 7.8 phut
+[11/17] openai_persona_nplayer_baseline_risk_1_n3: OK sau 8.1 phut
+[12/17] openai_persona_nplayer_baseline_coopadv_CCC_n3: OK sau 8.8 phut
+[13/17] openai_persona_nplayer_baseline_risk_2_n3: OK sau 8.7 phut
+[14/17] openai_persona_nplayer_baseline_risk_3_n3: OK sau 8.7 phut
+[15/17] openai_persona_nplayer_baseline_risk_5_n3: OK sau 8.7 phut
+[16/17] openai_persona_nplayer_baseline_risk_4_n3: OK sau 8.8 phut
+Chay 17 job, toi da 2 job song song. Log tung job o /Users/phu-quynguyen-lam/Downloads/HCMMUT-Research-Camp/AI_Race_Experiment/logs_openai_nplayer_stage/
+[1/17] openai_baseline_nplayer_n4: SKIP sau 0.0 phut
+[2/17] openai_baseline_nplayer_n3: SKIP sau 0.0 phut
+[3/17] openai_baseline_nplayer_n5: SKIP sau 0.0 phut
+[4/17] openai_persona_nplayer_baseline_coopadv_AAA_n3: SKIP sau 0.0 phut
+[5/17] openai_persona_nplayer_baseline_coopadv_ACA_n3: SKIP sau 0.0 phut
+[6/17] openai_persona_nplayer_baseline_coopadv_AAC_n3: SKIP sau 0.0 phut
+[7/17] openai_persona_nplayer_baseline_coopadv_CAA_n3: SKIP sau 0.0 phut
+[8/17] openai_persona_nplayer_baseline_coopadv_ACC_n3: SKIP sau 0.0 phut
+[9/17] openai_persona_nplayer_baseline_coopadv_CAC_n3: SKIP sau 0.0 phut
+[10/17] openai_persona_nplayer_baseline_coopadv_CCA_n3: SKIP sau 0.0 phut
+[11/17] openai_persona_nplayer_baseline_coopadv_CCC_n3: SKIP sau 0.0 phut
+[12/17] openai_persona_nplayer_baseline_risk_1_n3: SKIP sau 0.0 phut
+[13/17] openai_persona_nplayer_baseline_risk_2_n3: SKIP sau 0.0 phut
+[14/17] openai_persona_nplayer_baseline_risk_3_n3: SKIP sau 0.0 phut
+[15/17] openai_persona_nplayer_baseline_risk_4_n3: SKIP sau 0.0 phut
+[16/17] openai_persona_nplayer_baseline_risk_5_n3: SKIP sau 0.0 phut
+[17/17] openai_persona_nplayer_baseline_risk_6_n3: OK sau 6.0 phut
+
+======================================================================
+TONG KET STAGE (song song, max 2 job)
+======================================================================
+SKIP                   0.0 phut  openai_baseline_nplayer_n4
+SKIP                   0.0 phut  openai_baseline_nplayer_n3
+SKIP                   0.0 phut  openai_baseline_nplayer_n5
+SKIP                   0.0 phut  openai_persona_nplayer_baseline_coopadv_AAA_n3
+SKIP                   0.0 phut  openai_persona_nplayer_baseline_coopadv_ACA_n3
+SKIP                   0.0 phut  openai_persona_nplayer_baseline_coopadv_AAC_n3
+SKIP                   0.0 phut  openai_persona_nplayer_baseline_coopadv_CAA_n3
+SKIP                   0.0 phut  openai_persona_nplayer_baseline_coopadv_ACC_n3
+SKIP                   0.0 phut  openai_persona_nplayer_baseline_coopadv_CAC_n3
+SKIP                   0.0 phut  openai_persona_nplayer_baseline_coopadv_CCA_n3
+SKIP                   0.0 phut  openai_persona_nplayer_baseline_coopadv_CCC_n3
+SKIP                   0.0 phut  openai_persona_nplayer_baseline_risk_1_n3
+SKIP                   0.0 phut  openai_persona_nplayer_baseline_risk_2_n3
+SKIP                   0.0 phut  openai_persona_nplayer_baseline_risk_3_n3
+SKIP                   0.0 phut  openai_persona_nplayer_baseline_risk_4_n3
+SKIP                   0.0 phut  openai_persona_nplayer_baseline_risk_5_n3
+OK                     6.0 phut  openai_persona_nplayer_baseline_risk_6_n3
