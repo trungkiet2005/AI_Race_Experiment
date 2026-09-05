@@ -128,6 +128,11 @@ slides/*.xdv
 # Never deposit participant re-identification data.
 **/_id_mapping_DO_NOT_DEPOSIT.csv
 
+# pdflatex console dumps from paper build passes.
+paper/*.txt
+# Local LaTeX output tree.
+/output/
+
 # OS
 .DS_Store
 Thumbs.db
