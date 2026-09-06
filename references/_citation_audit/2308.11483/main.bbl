@@ -1,0 +1,171 @@
+\begin{thebibliography}{24}
+\expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
+
+\bibitem[{Anil et~al.(2023)Anil, Dai, Firat, Johnson, Lepikhin, Passos,
+  Shakeri, Taropa, Bailey, Chen et~al.}]{anil2023palm}
+Rohan Anil, Andrew~M Dai, Orhan Firat, Melvin Johnson, Dmitry Lepikhin,
+  Alexandre Passos, Siamak Shakeri, Emanuel Taropa, Paige Bailey, Zhifeng Chen,
+  et~al. 2023.
+\newblock Palm 2 technical report.
+\newblock \emph{arXiv preprint arXiv:2305.10403}.
+
+\bibitem[{Chowdhery et~al.(2022)Chowdhery, Narang, Devlin, Bosma, Mishra,
+  Roberts, Barham, Chung, Sutton, Gehrmann et~al.}]{chowdhery2022palm}
+Aakanksha Chowdhery, Sharan Narang, Jacob Devlin, Maarten Bosma, Gaurav Mishra,
+  Adam Roberts, Paul Barham, Hyung~Won Chung, Charles Sutton, Sebastian
+  Gehrmann, et~al. 2022.
+\newblock Palm: Scaling language modeling with pathways.
+\newblock \emph{arXiv preprint arXiv:2204.02311}.
+
+\bibitem[{Clark et~al.(2020)Clark, Etzioni, Khot, Khashabi, Mishra, Richardson,
+  Sabharwal, Schoenick, Tafjord, Tandon et~al.}]{clark2020f}
+Peter Clark, Oren Etzioni, Tushar Khot, Daniel Khashabi, Bhavana Mishra, Kyle
+  Richardson, Ashish Sabharwal, Carissa Schoenick, Oyvind Tafjord, Niket
+  Tandon, et~al. 2020.
+\newblock From ‘f’to ‘a’on the ny regents science exams: An overview of
+  the aristo project.
+\newblock \emph{AI Magazine}, 41(4):39--53.
+
+\bibitem[{Hendrycks et~al.(2020)Hendrycks, Burns, Basart, Zou, Mazeika, Song,
+  and Steinhardt}]{hendrycks2020measuring}
+Dan Hendrycks, Collin Burns, Steven Basart, Andy Zou, Mantas Mazeika, Dawn
+  Song, and Jacob Steinhardt. 2020.
+\newblock Measuring massive multitask language understanding.
+\newblock \emph{arXiv preprint arXiv:2009.03300}.
+
+\bibitem[{Hou et~al.(2023)Hou, Zhang, Lin, Lu, Xie, McAuley, and
+  Zhao}]{hou2023large}
+Yupeng Hou, Junjie Zhang, Zihan Lin, Hongyu Lu, Ruobing Xie, Julian McAuley,
+  and Wayne~Xin Zhao. 2023.
+\newblock Large language models are zero-shot rankers for recommender systems.
+\newblock \emph{arXiv preprint arXiv:2305.08845}.
+
+\bibitem[{Li{\'e}vin et~al.(2022)Li{\'e}vin, Hother, and
+  Winther}]{lievin2022can}
+Valentin Li{\'e}vin, Christoffer~Egeberg Hother, and Ole Winther. 2022.
+\newblock Can large language models reason about medical questions?
+\newblock \emph{arXiv preprint arXiv:2207.08143}.
+
+\bibitem[{OpenAI(2023)}]{openai2023gpt-4}
+OpenAI. 2023.
+\newblock Gpt-4 technical report.
+\newblock \emph{arXiv preprint arXiv:2303.08774}.
+
+\bibitem[{Ouyang et~al.(2022)Ouyang, Wu, Jiang, Almeida, Wainwright, Mishkin,
+  Zhang, Agarwal, Slama, Ray et~al.}]{ouyang2022training}
+Long Ouyang, Jeffrey Wu, Xu~Jiang, Diogo Almeida, Carroll Wainwright, Pamela
+  Mishkin, Chong Zhang, Sandhini Agarwal, Katarina Slama, Alex Ray, et~al.
+  2022.
+\newblock Training language models to follow instructions with human feedback.
+\newblock \emph{Advances in Neural Information Processing Systems},
+  35:27730--27744.
+
+\bibitem[{Perez and Ribeiro(2022)}]{perez2022ignore}
+F{\'a}bio Perez and Ian Ribeiro. 2022.
+\newblock Ignore previous prompt: Attack techniques for language models.
+\newblock \emph{arXiv preprint arXiv:2211.09527}.
+
+\bibitem[{Reimers and Gurevych(2019)}]{reimers2019sentence}
+Nils Reimers and Iryna Gurevych. 2019.
+\newblock Sentence-bert: Sentence embeddings using siamese bert-networks.
+\newblock \emph{arXiv preprint arXiv:1908.10084}.
+
+\bibitem[{Richardson et~al.(2013)Richardson, Burges, and
+  Renshaw}]{richardson2013mctest}
+Matthew Richardson, Christopher~JC Burges, and Erin Renshaw. 2013.
+\newblock Mctest: A challenge dataset for the open-domain machine comprehension
+  of text.
+\newblock In \emph{Proceedings of the 2013 conference on empirical methods in
+  natural language processing}, pages 193--203.
+
+\bibitem[{Robinson et~al.(2022)Robinson, Rytting, and
+  Wingate}]{robinson2022leveraging}
+Joshua Robinson, Christopher~Michael Rytting, and David Wingate. 2022.
+\newblock Leveraging large language models for multiple choice question
+  answering.
+\newblock \emph{arXiv preprint arXiv:2210.12353}.
+
+\bibitem[{Savelka et~al.(2023)Savelka, Agarwal, Bogart, and
+  Sakr}]{savelka2023large}
+Jaromir Savelka, Arav Agarwal, Christopher Bogart, and Majd Sakr. 2023.
+\newblock Large language models (gpt) struggle to answer multiple-choice
+  questions about code.
+\newblock \emph{arXiv preprint arXiv:2303.08033}.
+
+\bibitem[{Srivastava et~al.(2022)Srivastava, Rastogi, Rao, Shoeb, Abid, Fisch,
+  Brown, Santoro, Gupta, Garriga-Alonso et~al.}]{srivastava2022beyond}
+Aarohi Srivastava, Abhinav Rastogi, Abhishek Rao, Abu Awal~Md Shoeb, Abubakar
+  Abid, Adam Fisch, Adam~R Brown, Adam Santoro, Aditya Gupta, Adri{\`a}
+  Garriga-Alonso, et~al. 2022.
+\newblock Beyond the imitation game: Quantifying and extrapolating the
+  capabilities of language models.
+\newblock \emph{arXiv preprint arXiv:2206.04615}.
+
+\bibitem[{Stickland and Murray(2020)}]{stickland2020diverse}
+Asa~Cooper Stickland and Iain Murray. 2020.
+\newblock Diverse ensembles improve calibration.
+\newblock \emph{arXiv preprint arXiv:2007.04206}.
+
+\bibitem[{Talmor et~al.(2018)Talmor, Herzig, Lourie, and
+  Berant}]{talmor2018commonsenseqa}
+Alon Talmor, Jonathan Herzig, Nicholas Lourie, and Jonathan Berant. 2018.
+\newblock Commonsenseqa: A question answering challenge targeting commonsense
+  knowledge.
+\newblock \emph{arXiv preprint arXiv:1811.00937}.
+
+\bibitem[{Touvron et~al.(2023)Touvron, Lavril, Izacard, Martinet, Lachaux,
+  Lacroix, Rozi{\`e}re, Goyal, Hambro, Azhar et~al.}]{touvron2023llama}
+Hugo Touvron, Thibaut Lavril, Gautier Izacard, Xavier Martinet, Marie-Anne
+  Lachaux, Timoth{\'e}e Lacroix, Baptiste Rozi{\`e}re, Naman Goyal, Eric
+  Hambro, Faisal Azhar, et~al. 2023.
+\newblock Llama: Open and efficient foundation language models.
+\newblock \emph{arXiv preprint arXiv:2302.13971}.
+
+\bibitem[{Wang et~al.(2023{\natexlab{a}})Wang, Liu, Park, Chen, and
+  Xiao}]{wang2023adversarial}
+Jiongxiao Wang, Zichen Liu, Keun~Hee Park, Muhao Chen, and Chaowei Xiao.
+  2023{\natexlab{a}}.
+\newblock Adversarial demonstration attacks on large language models.
+\newblock \emph{arXiv preprint arXiv:2305.14950}.
+
+\bibitem[{Wang et~al.(2023{\natexlab{b}})Wang, Li, Chen, Zhu, Lin, Cao, Liu,
+  Liu, and Sui}]{wang2023large}
+Peiyi Wang, Lei Li, Liang Chen, Dawei Zhu, Binghuai Lin, Yunbo Cao, Qi~Liu,
+  Tianyu Liu, and Zhifang Sui. 2023{\natexlab{b}}.
+\newblock Large language models are not fair evaluators.
+\newblock \emph{arXiv preprint arXiv:2305.17926}.
+
+\bibitem[{Wei et~al.(2023)Wei, Haghtalab, and Steinhardt}]{wei2023jailbroken}
+Alexander Wei, Nika Haghtalab, and Jacob Steinhardt. 2023.
+\newblock Jailbroken: How does llm safety training fail?
+\newblock \emph{arXiv preprint arXiv:2307.02483}.
+
+\bibitem[{Wolf et~al.(2023)Wolf, Wies, Levine, and
+  Shashua}]{wolf2023fundamental}
+Yotam Wolf, Noam Wies, Yoav Levine, and Amnon Shashua. 2023.
+\newblock Fundamental limitations of alignment in large language models.
+\newblock \emph{arXiv preprint arXiv:2304.11082}.
+
+\bibitem[{Zhao et~al.(2021)Zhao, Wallace, Feng, Klein, and
+  Singh}]{zhao2021calibrate}
+Zihao Zhao, Eric Wallace, Shi Feng, Dan Klein, and Sameer Singh. 2021.
+\newblock Calibrate before use: Improving few-shot performance of language
+  models.
+\newblock In \emph{International Conference on Machine Learning}, pages
+  12697--12706. PMLR.
+
+\bibitem[{Zhu et~al.(2023)Zhu, Wang, Zhou, Wang, Chen, Wang, Yang, Ye, Gong,
+  Zhang et~al.}]{zhu2023promptbench}
+Kaijie Zhu, Jindong Wang, Jiaheng Zhou, Zichen Wang, Hao Chen, Yidong Wang,
+  Linyi Yang, Wei Ye, Neil~Zhenqiang Gong, Yue Zhang, et~al. 2023.
+\newblock Promptbench: Towards evaluating the robustness of large language
+  models on adversarial prompts.
+\newblock \emph{arXiv preprint arXiv:2306.04528}.
+
+\bibitem[{Zou et~al.(2023)Zou, Wang, Kolter, and Fredrikson}]{zou2023universal}
+Andy Zou, Zifan Wang, J~Zico Kolter, and Matt Fredrikson. 2023.
+\newblock Universal and transferable adversarial attacks on aligned language
+  models.
+\newblock \emph{arXiv preprint arXiv:2307.15043}.
+
+\end{thebibliography}

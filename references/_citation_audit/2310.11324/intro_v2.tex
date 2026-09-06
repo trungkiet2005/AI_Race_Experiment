@@ -1,0 +1,57 @@
+As the capabilities of LLMs have rapidly improved, their sensitivity to input prompt features has been used to optimize performance via prompt engineering \citep{white2023prompt}. 
+However, there has been little work in characterizing this sensitivity, especially to seemingly innocuous feature choices that preserve prompt meaning and intent.
+In this work, we analyze the sensitivity of widely used, open-source LLMs to a class of features that should not influence a prompt's interpretation%the interpretation of a prompt
+: formatting choices.
+We find that pre-trained LLMs are sensitive to these choices in unpredictable ways, with accuracy varying in up to 76 points~for~\mbox{LLaMA-2-13B} between equivalent formats, and $\sim$10 accuracy points on average across 50+ tasks and several models. % when sampling only 10 formats. 
+We also show that this variance is not eliminated by adding few-shot examples, increasing model size, or instruction tuning.
+% Large Language Models' capabilities have been rapidly improving, yet the sensitivity of text generations to the input prompts still stands as a significant challenge. Two semantically equivalent prompts may result in completely different generations, in turn yielding wildly different user experiences.
+
+%% 2. *Performance variance across prompts has been a problem but swept under the rug, also see this shocking result maybe?*: Prompt design is important and the process is usually not discussed nor reported because we assume it doesn't matter when compared to other stuff like the variance across the dataset being tested. Anecdotal evidence has been shared that this is not always the case, and some papers enumerate formats to show that although the values themselves change, trends stay the same. This is especially not true in in-context learning, where the researchers introduce systematic biases.
+Designing prompt templates is a critical part of effectively using a pre-trained language model.
+This design process includes making choices about wording, choosing few-shot examples for in-context learning, and making decisions about seemingly trivial features like formatting.
+% wording choices, few-shot examples for in-context learning, and seemingly trivial choices like formatting. %When performing inference at scale for evaluation or deployment, researchers and practitioners construct templates that reflect these design choices. 
+This process, and often even the resulting templates, is rarely reported or discussed in research papers%\as{where? In NLP papers? Here's where we can restrict our scope to be more about benchmarking than general purpose LLM usage}
+, under the assumption that performance variance across these choices is insignificant compared to variance across data points or models.
+%or between different underlying LLMs
+%However, researchers and practitioners
+However, some anecdotal evidence points to formatting choices actually having a significant influence on model behavior~\citep{armenaghatweets}. 
+In some cases, researchers report a limited number of manually generated formats to show that scaling trends hold despite performance being significantly different~\citep{schick2021self}. 
+The assumption that formatting does not influence overall model performance may become problematic when improvements over existing approaches are attributed to the %choices unrelated to prompt design, e.g., 
+amount and source of training data, number of parameters, or model architecture, without also accounting for changes in prompt format. 
+Ignoring variance across formats may also negatively affect user experience, e.g. if users inadvertently choose formats the LLM does not perform well on.
+% Nonetheless, there has not been systematic analysis of these variances is cumbersome, requiring manual formatting enumeration and linearly more computational resources.
+
+%% 3. *Negative impacts of ignoring prompt format variance*: This misconception is especially bad because we might be misattributing performance improvements to training data/params/architecture. //// also bad when the claims are stuff like "models have ToM" but this is not true across formats /// also bad if we assume end users will have access to the model and expect a certain performance level, and super problematic if used for societal-relevant tasks.
+
+%if LLMs are advertised to have a specific accuracy for certain tasks. %. Moreover, this may negatively impact user experience [...]
+
+% Therefore, even if we fixed a format to compare two models, formatting choice could be affecting each model differently.
+
+%% 4. *Our suggestion: report performance ranges instead of a single prompt format; reporting a single format is not enough because they don't correlate*
+Our proposed tool, \toolname{}, enables a systematic analysis of these variances across a wide set of semantically equivalent prompt formats within a user-specified computational budget.
+We find that choices in formatting few-shot examples during in-context learning introduce spurious biases that may lead to significantly different conclusions in model performance. 
+The sensitivity to formatting choices that we discover across widely-used, open-source models suggests that future research would benefit from reporting a performance \textit{spread} over a sufficient sample of plausible formats, instead of simply reporting the formatting used and its performance, as is currently standard.
+%report the formatting used and its performance, but rather report a range of performance conditioned on plausible formats. 
+Moreover, we argue that this reporting is crucial when comparing the performance of different models, as we show the influence of formatting choices only weakly correlates between models, thus making and fixing a formatting choice could introduce a significant confounding factor.
+
+%% 5. *Our technical solution to enable it and its benefits*
+%% 6. *Analysis beyond the tooling*
+Fully exploring the space of prompt formats is intractable, as computation costs scale linearly with the number of formats considered. \toolname{} efficiently explores the space of prompt formats under a user-specified computational budget using Bayesian optimization. 
+\toolname{} does not require access to the model weights, allowing its use on API-gated models: we find a spread up to \tbdone{56} accuracy points with a median spread of \tbdone{6.4} accuracy points with GPT3.5 across 320 formats and \tbdone{53} tasks at a cost of under 10USD on average per task. 
+Beyond facilitating evaluation, we also propose a suite of analyses to further characterize model sensitivity to formatting. Among other results,  we show that the separability of continuous prompt embeddings correlates with the spread observed in task performance. % \as{I'd suggest a different result to highlight here, as the PCA experiment is somewhat difficult to describe succinctly}
+
+
+%prompt formats induce easily identifiable different internal representations of the prompt, suggesting that even though we cannot predict performance for a specific format a priori, prompt formatting is a consistent transformation of its model-internal representation.
+%\as{what's the output distribution here?}\mel{the output distribution meaning the vector we apply PCA to}.
+
+% \as{we should present the tool as a suite of analyses beyond just looking at accuracy drops, including all of the plots and experiments we did}
+
+% Our analysis shows that prompt formats are consistent transformations.
+
+% To ensure we only measure variance across formats users may choose, we define a grammar that parses an existing given format and explores the set of semantically equivalent, reasonable formats. 
+%We explore the set of plausible prompt formats, to reflect variance in performance 
+% Intuitively, language models should have similar accuracy regardless of formatting since meaning remains unchanged, yet our experiments in LLaMA show high variance in many tasks.
+
+%This robustness measure could go beyond formatting and also address prompt wording robustness, which is known to affect even the largest models available. We believe that the technical solutions to measure this variance should be black-box and minimize the evaluation cost: gradient-based approaches leave out the possibility of evaluating costly API-based models. Prompt-wording robustness is crucial for claims of emergent capabilities like theory of mind.
+
+% We expect each model to have its own biases, and show that these performance distributions may often overlap, leading to the conclusion that some SoTA claims may not be really valid.

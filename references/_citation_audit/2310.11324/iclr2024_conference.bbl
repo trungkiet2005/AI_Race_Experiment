@@ -1,0 +1,215 @@
+\begin{thebibliography}{37}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Aghajanyan(2023)]{armenaghatweets}
+Armen Aghajanyan.
+\newblock Tweet: \texttt{Susan \& I found MMLU performance jump 6-10 points in the 40s by formatting multiple choice as (A) not A in MMLU (for internal model). All evaluation of LLM's are broken. Evaluating a task requires marginalizing across all prompts that describe the task, not point estimate of one.}
+\newblock June 2023.
+\newblock URL \url{https://twitter.com/ArmenAgha/status/1669084129261162497}.
+
+\bibitem[Almazrouei et~al.(2023)Almazrouei, Alobeidli, Alshamsi, Cappelli, Cojocaru, Debbah, Goffinet, Heslow, Launay, Malartic, Noune, Pannier, and Penedo]{falcon40b}
+Ebtesam Almazrouei, Hamza Alobeidli, Abdulaziz Alshamsi, Alessandro Cappelli, Ruxandra Cojocaru, Merouane Debbah, Etienne Goffinet, Daniel Heslow, Julien Launay, Quentin Malartic, Badreddine Noune, Baptiste Pannier, and Guilherme Penedo.
+\newblock {Falcon-40B}: an open large language model with state-of-the-art performance.
+\newblock 2023.
+
+\bibitem[Chapelle \& Li(2011)Chapelle and Li]{chapelle2011empirical}
+Olivier Chapelle and Lihong Li.
+\newblock An empirical evaluation of thompson sampling.
+\newblock \emph{Advances in neural information processing systems}, 24, 2011.
+
+\bibitem[Chen \& Guestrin(2016)Chen and Guestrin]{xgboost}
+Tianqi Chen and Carlos Guestrin.
+\newblock {XGBoost}: A scalable tree boosting system.
+\newblock In \emph{Proceedings of the 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining}, KDD '16, pp.\  785--794, New York, NY, USA, 2016. ACM.
+\newblock ISBN 978-1-4503-4232-2.
+\newblock \doi{10.1145/2939672.2939785}.
+\newblock URL \url{http://doi.acm.org/10.1145/2939672.2939785}.
+
+\bibitem[Clark et~al.(2011)Clark, Dyer, Lavie, and Smith]{clark2011better}
+Jonathan~H Clark, Chris Dyer, Alon Lavie, and Noah~A Smith.
+\newblock Better hypothesis testing for statistical machine translation: Controlling for optimizer instability.
+\newblock In \emph{Proceedings of the 49th Annual Meeting of the Association for Computational Linguistics: Human Language Technologies}, pp.\  176--181, 2011.
+
+\bibitem[Deng et~al.(2022)Deng, Wang, Hsieh, Wang, Guo, Shu, Song, Xing, and Hu]{deng2022rlprompt}
+Mingkai Deng, Jianyu Wang, Cheng-Ping Hsieh, Yihan Wang, Han Guo, Tianmin Shu, Meng Song, Eric Xing, and Zhiting Hu.
+\newblock {RLP}rompt: Optimizing discrete text prompts with reinforcement learning.
+\newblock In \emph{Proceedings of the 2022 Conference on Empirical Methods in Natural Language Processing}, pp.\  3369--3391, Abu Dhabi, United Arab Emirates, December 2022. Association for Computational Linguistics.
+\newblock \doi{10.18653/v1/2022.emnlp-main.222}.
+\newblock URL \url{https://aclanthology.org/2022.emnlp-main.222}.
+
+\bibitem[Dettmers et~al.(2022)Dettmers, Lewis, Belkada, and Zettlemoyer]{dettmers2022gptint}
+Tim Dettmers, Mike Lewis, Younes Belkada, and Luke Zettlemoyer.
+\newblock {GPT}3.int8(): 8-bit matrix multiplication for transformers at scale.
+\newblock In Alice~H. Oh, Alekh Agarwal, Danielle Belgrave, and Kyunghyun Cho (eds.), \emph{Advances in Neural Information Processing Systems}, 2022.
+\newblock URL \url{https://openreview.net/forum?id=dXiGWqBoxaD}.
+
+\bibitem[Ding et~al.(2022)Ding, Hu, Zhao, Chen, Liu, Zheng, and Sun]{ding2022openprompt}
+Ning Ding, Shengding Hu, Weilin Zhao, Yulin Chen, Zhiyuan Liu, Haitao Zheng, and Maosong Sun.
+\newblock Openprompt: An open-source framework for prompt-learning.
+\newblock In \emph{Proceedings of the 60th Annual Meeting of the Association for Computational Linguistics: System Demonstrations}, pp.\  105--113, 2022.
+
+\bibitem[Elazar et~al.(2021)Elazar, Kassner, Ravfogel, Ravichander, Hovy, Sch{\"u}tze, and Goldberg]{elazar2021measuring}
+Yanai Elazar, Nora Kassner, Shauli Ravfogel, Abhilasha Ravichander, Eduard Hovy, Hinrich Sch{\"u}tze, and Yoav Goldberg.
+\newblock Measuring and improving consistency in pretrained language models.
+\newblock \emph{Transactions of the Association for Computational Linguistics}, 9:\penalty0 1012--1031, 2021.
+
+\bibitem[Gao et~al.(2021)Gao, Fisch, and Chen]{gao2020making}
+Tianyu Gao, Adam Fisch, and Danqi Chen.
+\newblock Making pre-trained language models better few-shot learners.
+\newblock pp.\  3816--3830, August 2021.
+\newblock \doi{10.18653/v1/2021.acl-long.295}.
+\newblock URL \url{https://aclanthology.org/2021.acl-long.295}.
+
+\bibitem[Gonen et~al.(2022)Gonen, Iyer, Blevins, Smith, and Zettlemoyer]{gonen2022demystifying}
+Hila Gonen, Srini Iyer, Terra Blevins, Noah~A Smith, and Luke Zettlemoyer.
+\newblock Demystifying prompts in language models via perplexity estimation.
+\newblock \emph{arXiv preprint arXiv:2212.04037}, 2022.
+
+\bibitem[Henderson et~al.(2018)Henderson, Islam, Bachman, Pineau, Precup, and Meger]{henderson2018deep}
+Peter Henderson, Riashat Islam, Philip Bachman, Joelle Pineau, Doina Precup, and David Meger.
+\newblock Deep reinforcement learning that matters.
+\newblock In \emph{Proceedings of the AAAI conference on artificial intelligence}, volume~32, 2018.
+
+\bibitem[Honovich et~al.(2023)Honovich, Shaham, Bowman, and Levy]{honovich2022instruction}
+Or~Honovich, Uri Shaham, Samuel~R. Bowman, and Omer Levy.
+\newblock Instruction induction: From few examples to natural language task descriptions.
+\newblock pp.\  1935--1952, July 2023.
+\newblock \doi{10.18653/v1/2023.acl-long.108}.
+\newblock URL \url{https://aclanthology.org/2023.acl-long.108}.
+
+\bibitem[Ilharco et~al.(2023)Ilharco, Ribeiro, Wortsman, Gururangan, Schmidt, Hajishirzi, and Farhadi]{ilharco23}
+Gabriel Ilharco, Marco~Tulio Ribeiro, Mitchell Wortsman, Suchin Gururangan, Ludwig Schmidt, Hannaneh Hajishirzi, and Ali Farhadi.
+\newblock Editing models with task arithmetic.
+\newblock In \emph{International Conference on Learning Representations}, 2023.
+
+\bibitem[Islam et~al.(2017)Islam, Henderson, Gomrokchi, and Precup]{islam2017reproducibility}
+Riashat Islam, Peter Henderson, Maziar Gomrokchi, and Doina Precup.
+\newblock Reproducibility of benchmarked deep reinforcement learning tasks for continuous control.
+\newblock \emph{arXiv preprint arXiv:1708.04133}, 2017.
+
+\bibitem[Jiang et~al.(2020)Jiang, Xu, Araki, and Neubig]{jiang2020can}
+Zhengbao Jiang, Frank~F Xu, Jun Araki, and Graham Neubig.
+\newblock How can we know what language models know?
+\newblock \emph{Transactions of the Association for Computational Linguistics}, 8:\penalty0 423--438, 2020.
+
+\bibitem[Khashabi et~al.(2022)Khashabi, Lyu, Min, Qin, Richardson, Welleck, Hajishirzi, Khot, Sabharwal, Singh, and Choi]{khashabi-etal-2022-prompt}
+Daniel Khashabi, Xinxi Lyu, Sewon Min, Lianhui Qin, Kyle Richardson, Sean Welleck, Hannaneh Hajishirzi, Tushar Khot, Ashish Sabharwal, Sameer Singh, and Yejin Choi.
+\newblock Prompt waywardness: The curious case of discretized interpretation of continuous prompts.
+\newblock In \emph{Proceedings of the 2022 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies}, pp.\  3631--3643, Seattle, United States, July 2022. Association for Computational Linguistics.
+\newblock \doi{10.18653/v1/2022.naacl-main.266}.
+\newblock URL \url{https://aclanthology.org/2022.naacl-main.266}.
+
+\bibitem[Lai et~al.(1985)Lai, Robbins, et~al.]{lai1985asymptotically}
+Tze~Leung Lai, Herbert Robbins, et~al.
+\newblock Asymptotically efficient adaptive allocation rules.
+\newblock \emph{Advances in applied mathematics}, 6\penalty0 (1):\penalty0 4--22, 1985.
+
+\bibitem[Lester et~al.(2021)Lester, Al-Rfou, and Constant]{lester2021power}
+Brian Lester, Rami Al-Rfou, and Noah Constant.
+\newblock The power of scale for parameter-efficient prompt tuning.
+\newblock In \emph{Proceedings of the 2021 Conference on Empirical Methods in Natural Language Processing}, pp.\  3045--3059, 2021.
+
+\bibitem[Lin(2004)]{lin2004rouge}
+Chin-Yew Lin.
+\newblock Rouge: A package for automatic evaluation of summaries.
+\newblock In \emph{Text summarization branches out}, pp.\  74--81, 2004.
+
+\bibitem[Lu et~al.(2022)Lu, Bartolo, Moore, Riedel, and Stenetorp]{lu2021fantastically}
+Yao Lu, Max Bartolo, Alastair Moore, Sebastian Riedel, and Pontus Stenetorp.
+\newblock Fantastically ordered prompts and where to find them: Overcoming few-shot prompt order sensitivity.
+\newblock pp.\  8086--8098, May 2022.
+\newblock \doi{10.18653/v1/2022.acl-long.556}.
+\newblock URL \url{https://aclanthology.org/2022.acl-long.556}.
+
+\bibitem[Madaan et~al.(2023)Madaan, Hermann, and Yazdanbakhsh]{madaan2023makes}
+Aman Madaan, Katherine Hermann, and Amir Yazdanbakhsh.
+\newblock What makes chain-of-thought prompting effective? a counterfactual study.
+\newblock In \emph{Findings of the Association for Computational Linguistics: EMNLP 2023}, pp.\  1448--1535, 2023.
+
+\bibitem[Nadeem et~al.(2021)Nadeem, Bethke, and Reddy]{nadeem2021stereoset}
+Moin Nadeem, Anna Bethke, and Siva Reddy.
+\newblock Stereoset: Measuring stereotypical bias in pretrained language models.
+\newblock In \emph{Proceedings of the 59th Annual Meeting of the Association for Computational Linguistics and the 11th International Joint Conference on Natural Language Processing (Volume 1: Long Papers)}, pp.\  5356--5371, 2021.
+
+\bibitem[Prasad et~al.(2023)Prasad, Hase, Zhou, and Bansal]{prasad2022grips}
+Archiki Prasad, Peter Hase, Xiang Zhou, and Mohit Bansal.
+\newblock {G}r{IPS}: Gradient-free, edit-based instruction search for prompting large language models.
+\newblock pp.\  3845--3864, May 2023.
+\newblock \doi{10.18653/v1/2023.eacl-main.277}.
+\newblock URL \url{https://aclanthology.org/2023.eacl-main.277}.
+
+\bibitem[Pryzant et~al.(2023)Pryzant, Iter, Li, Lee, Zhu, and Zeng]{pryzant2023automatic}
+Reid Pryzant, Dan Iter, Jerry Li, Yin~Tat Lee, Chenguang Zhu, and Michael Zeng.
+\newblock Automatic prompt optimization with" gradient descent" and beam search.
+\newblock \emph{arXiv preprint arXiv:2305.03495}, 2023.
+
+\bibitem[Qin \& Eisner(2021)Qin and Eisner]{qin2021learning}
+Guanghui Qin and Jason Eisner.
+\newblock Learning how to ask: Querying lms with mixtures of soft prompts.
+\newblock In \emph{Proceedings of the 2021 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies (NAACL-HLT)}, 2021.
+
+\bibitem[Schick et~al.(2021)Schick, Udupa, and Sch{\"u}tze]{schick2021self}
+Timo Schick, Sahana Udupa, and Hinrich Sch{\"u}tze.
+\newblock Self-diagnosis and self-debiasing: A proposal for reducing corpus-based bias in nlp.
+\newblock \emph{Transactions of the Association for Computational Linguistics}, 9:\penalty0 1408--1424, 2021.
+
+\bibitem[Schulman et~al.(2022)Schulman, Zoph, Kim, Hilton, Menick, Weng, Uribe, Fedus, Metz, Pokorny, et~al.]{schulman2022chatgpt}
+John Schulman, Barret Zoph, Christina Kim, Jacob Hilton, Jacob Menick, Jiayi Weng, Juan Felipe~Ceron Uribe, Liam Fedus, Luke Metz, Michael Pokorny, et~al.
+\newblock Chatgpt: Optimizing language models for dialogue.
+\newblock \emph{OpenAI blog}, 2022.
+
+\bibitem[Shi et~al.(2022)Shi, Han, Gonen, Holtzman, Tsvetkov, and Zettlemoyer]{shi2022toward}
+Weijia Shi, Xiaochuang Han, Hila Gonen, Ari Holtzman, Yulia Tsvetkov, and Luke Zettlemoyer.
+\newblock Toward human readable prompt tuning: Kubrick's the shining is a good movie, and a good prompt too?
+\newblock \emph{arXiv preprint arXiv:2212.10539}, 2022.
+
+\bibitem[Shin et~al.(2020)Shin, Razeghi, Logan~IV, Wallace, and Singh]{shin2020autoprompt}
+Taylor Shin, Yasaman Razeghi, Robert~L. Logan~IV, Eric Wallace, and Sameer Singh.
+\newblock {A}uto{P}rompt: {E}liciting {K}nowledge from {L}anguage {M}odels with {A}utomatically {G}enerated {P}rompts.
+\newblock pp.\  4222--4235, November 2020.
+\newblock \doi{10.18653/v1/2020.emnlp-main.346}.
+\newblock URL \url{https://aclanthology.org/2020.emnlp-main.346}.
+
+\bibitem[Touvron et~al.(2023)Touvron, Martin, Stone, Albert, Almahairi, Babaei, Bashlykov, Batra, Bhargava, Bhosale, et~al.]{touvron2023llama}
+Hugo Touvron, Louis Martin, Kevin Stone, Peter Albert, Amjad Almahairi, Yasmine Babaei, Nikolay Bashlykov, Soumya Batra, Prajjwal Bhargava, Shruti Bhosale, et~al.
+\newblock Llama 2: Open foundation and fine-tuned chat models.
+\newblock \emph{arXiv preprint arXiv:2307.09288}, 2023.
+
+\bibitem[Wang et~al.(2022)Wang, Mishra, Alipoormolabashi, Kordi, Mirzaei, Naik, Ashok, Dhanasekaran, Arunkumar, Stap, Pathak, Karamanolakis, Lai, Purohit, Mondal, Anderson, Kuznia, Doshi, Pal, Patel, Moradshahi, Parmar, Purohit, Varshney, Kaza, Verma, Puri, Karia, Doshi, Sampat, Mishra, Reddy~A, Patro, Dixit, and Shen]{wang2022super}
+Yizhong Wang, Swaroop Mishra, Pegah Alipoormolabashi, Yeganeh Kordi, Amirreza Mirzaei, Atharva Naik, Arjun Ashok, Arut~Selvan Dhanasekaran, Anjana Arunkumar, David Stap, Eshaan Pathak, Giannis Karamanolakis, Haizhi Lai, Ishan Purohit, Ishani Mondal, Jacob Anderson, Kirby Kuznia, Krima Doshi, Kuntal~Kumar Pal, Maitreya Patel, Mehrad Moradshahi, Mihir Parmar, Mirali Purohit, Neeraj Varshney, Phani~Rohitha Kaza, Pulkit Verma, Ravsehaj~Singh Puri, Rushang Karia, Savan Doshi, Shailaja~Keyur Sampat, Siddhartha Mishra, Sujan Reddy~A, Sumanta Patro, Tanay Dixit, and Xudong Shen.
+\newblock Super-{N}atural{I}nstructions: Generalization via declarative instructions on 1600+ {NLP} tasks.
+\newblock pp.\  5085--5109, December 2022.
+\newblock \doi{10.18653/v1/2022.emnlp-main.340}.
+\newblock URL \url{https://aclanthology.org/2022.emnlp-main.340}.
+
+\bibitem[Wei et~al.(2023)Wei, Haghtalab, and Steinhardt]{wei2023jailbroken}
+Alexander Wei, Nika Haghtalab, and Jacob Steinhardt.
+\newblock Jailbroken: How does llm safety training fail?
+\newblock \emph{arXiv preprint arXiv:2307.02483}, 2023.
+
+\bibitem[White et~al.(2023)White, Fu, Hays, Sandborn, Olea, Gilbert, Elnashar, Spencer-Smith, and Schmidt]{white2023prompt}
+Jules White, Quchen Fu, Sam Hays, Michael Sandborn, Carlos Olea, Henry Gilbert, Ashraf Elnashar, Jesse Spencer-Smith, and Douglas~C Schmidt.
+\newblock A prompt pattern catalog to enhance prompt engineering with chatgpt.
+\newblock \emph{arXiv preprint arXiv:2302.11382}, 2023.
+
+\bibitem[Zhang et~al.(2019)Zhang, Kishore, Wu, Weinberger, and Artzi]{zhang2019bertscore}
+Tianyi Zhang, Varsha Kishore, Felix Wu, Kilian~Q Weinberger, and Yoav Artzi.
+\newblock Bertscore: Evaluating text generation with bert.
+\newblock In \emph{International Conference on Learning Representations}, 2019.
+
+\bibitem[Zhou et~al.(2023)Zhou, Muresanu, Han, Paster, Pitis, Chan, and Ba]{zhou2022large}
+Yongchao Zhou, Andrei~Ioan Muresanu, Ziwen Han, Keiran Paster, Silviu Pitis, Harris Chan, and Jimmy Ba.
+\newblock Large language models are human-level prompt engineers.
+\newblock In \emph{The Eleventh International Conference on Learning Representations}, 2023.
+\newblock URL \url{https://openreview.net/forum?id=92gvk82DE-}.
+
+\bibitem[Zou et~al.(2023)Zou, Wang, Kolter, and Fredrikson]{zou2023universal}
+Andy Zou, Zifan Wang, J~Zico Kolter, and Matt Fredrikson.
+\newblock Universal and transferable adversarial attacks on aligned language models.
+\newblock \emph{arXiv preprint arXiv:2307.15043}, 2023.
+
+\end{thebibliography}

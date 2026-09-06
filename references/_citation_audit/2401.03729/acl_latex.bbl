@@ -1,0 +1,128 @@
+\begin{thebibliography}{26}
+\expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
+
+\bibitem[{Amini et~al.(2019)Amini, Gabriel, Lin, Koncel-Kedziorski, Choi, and Hajishirzi}]{amini2019mathqa}
+Aida Amini, Saadia Gabriel, Peter Lin, Rik Koncel-Kedziorski, Yejin Choi, and Hannaneh Hajishirzi. 2019.
+\newblock \href {http://arxiv.org/abs/1905.13319} {Mathqa: Towards interpretable math word problem solving with operation-based formalisms}.
+
+\bibitem[{Annamoradnejad and Zoghi(2022)}]{annamoradnejad2022colbert}
+Issa Annamoradnejad and Gohar Zoghi. 2022.
+\newblock \href {http://arxiv.org/abs/2004.12765} {Colbert: Using bert sentence embedding in parallel neural networks for computational humor}.
+
+\bibitem[{Bsharat et~al.(2023)Bsharat, Myrzakhan, and Shen}]{bsharat2023principled}
+Sondos~Mahmoud Bsharat, Aidar Myrzakhan, and Zhiqiang Shen. 2023.
+\newblock Principled instructions are all you need for questioning llama-1/2, gpt-3.5/4.
+\newblock \emph{arXiv preprint arXiv:2312.16171}.
+
+\bibitem[{cjadams et~al.(2019)cjadams, Borkan, Sorensen, Dixon, Vasserman, and nithum}]{jigsaw-unintended-bias-in-toxicity-classification}
+cjadams, Daniel Borkan, Jeffrey Sorensen, Lucas Dixon, Lucy Vasserman, and nithum. 2019.
+\newblock \href {https://kaggle.com/competitions/jigsaw-unintended-bias-in-toxicity-classification} {Jigsaw unintended bias in toxicity classification}.
+
+\bibitem[{Clark et~al.(2019)Clark, Lee, Chang, Kwiatkowski, Collins, and Toutanova}]{clark2019boolq}
+Christopher Clark, Kenton Lee, Ming-Wei Chang, Tom Kwiatkowski, Michael Collins, and Kristina Toutanova. 2019.
+\newblock Boolq: Exploring the surprising difficulty of natural yes/no questions.
+\newblock In \emph{NAACL}.
+
+\bibitem[{Hada et~al.(2023)Hada, Gumma, de~Wynter, Diddee, Ahmed, Choudhury, Bali, and Sitaram}]{hada2023large}
+Rishav Hada, Varun Gumma, Adrian de~Wynter, Harshita Diddee, Mohamed Ahmed, Monojit Choudhury, Kalika Bali, and Sunayana Sitaram. 2023.
+\newblock Are large language model-based evaluators the solution to scaling up multilingual evaluation?
+\newblock \emph{arXiv preprint arXiv:2309.07462}.
+
+\bibitem[{Hambardzumyan et~al.(2021)Hambardzumyan, Khachatrian, and May}]{hambardzumyan2021warp}
+Karen Hambardzumyan, Hrant Khachatrian, and Jonathan May. 2021.
+\newblock Warp: Word-level adversarial reprogramming.
+\newblock In \emph{Proceedings of the 59th Annual Meeting of the Association for Computational Linguistics and the 11th International Joint Conference on Natural Language Processing (Volume 1: Long Papers)}, pages 4921--4933.
+
+\bibitem[{Jiang et~al.(2020)Jiang, Xu, Araki, and Neubig}]{jiang2020can}
+Zhengbao Jiang, Frank~F Xu, Jun Araki, and Graham Neubig. 2020.
+\newblock How can we know what language models know?
+\newblock \emph{Transactions of the Association for Computational Linguistics}, 8:423--438.
+
+\bibitem[{Kocoń et~al.(2023)Kocoń, Cichecki, Kaszyca, Kochanek, Szydło, Baran, Bielaniewicz, Gruza, Janz, Kanclerz, Kocoń, Koptyra, Mieleszczenko-Kowszewicz, Miłkowski, Oleksy, Piasecki, Radliński, Wojtasik, Woźniak, and Kazienko}]{Koco__2023}
+Jan Kocoń, Igor Cichecki, Oliwier Kaszyca, Mateusz Kochanek, Dominika Szydło, Joanna Baran, Julita Bielaniewicz, Marcin Gruza, Arkadiusz Janz, Kamil Kanclerz, Anna Kocoń, Bartłomiej Koptyra, Wiktoria Mieleszczenko-Kowszewicz, Piotr Miłkowski, Marcin Oleksy, Maciej Piasecki, Łukasz Radliński, Konrad Wojtasik, Stanisław Woźniak, and Przemysław Kazienko. 2023.
+\newblock \href {https://doi.org/10.1016/j.inffus.2023.101861} {Chatgpt: Jack of all trades, master of none}.
+\newblock \emph{Information Fusion}, 99:101861.
+
+\bibitem[{Lai et~al.(2017)Lai, Xie, Liu, Yang, and Hovy}]{lai2017race}
+Guokun Lai, Qizhe Xie, Hanxiao Liu, Yiming Yang, and Eduard Hovy. 2017.
+\newblock \href {http://arxiv.org/abs/1704.04683} {Race: Large-scale reading comprehension dataset from examinations}.
+
+\bibitem[{Lee et~al.(2023)Lee, Pujara, Sewak, White, and Jauhar}]{lee2023making}
+Dong-Ho Lee, Jay Pujara, Mohit Sewak, Ryen White, and Sujay Jauhar. 2023.
+\newblock Making large language models better data creators.
+\newblock In \emph{Proceedings of the 2023 Conference on Empirical Methods in Natural Language Processing}, pages 15349--15360.
+
+\bibitem[{Li et~al.(2023)Li, Hao, Zhai, and Qian}]{li2023hitchhiker}
+Haonan Li, Yu~Hao, Yizhuo Zhai, and Zhiyun Qian. 2023.
+\newblock The hitchhiker's guide to program analysis: A journey with large language models.
+\newblock \emph{arXiv e-prints}, pages arXiv--2308.
+
+\bibitem[{Liu et~al.(2023)Liu, Yuan, Fu, Jiang, Hayashi, and Neubig}]{liu2023pre}
+Pengfei Liu, Weizhe Yuan, Jinlan Fu, Zhengbao Jiang, Hiroaki Hayashi, and Graham Neubig. 2023.
+\newblock Pre-train, prompt, and predict: A systematic survey of prompting methods in natural language processing.
+\newblock \emph{ACM Computing Surveys}, 55(9):1--35.
+
+\bibitem[{Maas et~al.(2011)Maas, Daly, Pham, Huang, Ng, and Potts}]{maas-etal-2011-learning}
+Andrew~L. Maas, Raymond~E. Daly, Peter~T. Pham, Dan Huang, Andrew~Y. Ng, and Christopher Potts. 2011.
+\newblock \href {https://aclanthology.org/P11-1015} {Learning word vectors for sentiment analysis}.
+\newblock In \emph{Proceedings of the 49th Annual Meeting of the Association for Computational Linguistics: Human Language Technologies}, pages 142--150, Portland, Oregon, USA. Association for Computational Linguistics.
+
+\bibitem[{Mohammad et~al.(2016)Mohammad, Kiritchenko, Sobhani, Zhu, and Cherry}]{mohammad-etal-2016-semeval}
+Saif Mohammad, Svetlana Kiritchenko, Parinaz Sobhani, Xiaodan Zhu, and Colin Cherry. 2016.
+\newblock \href {https://doi.org/10.18653/v1/S16-1003} {{S}em{E}val-2016 task 6: Detecting stance in tweets}.
+\newblock In \emph{Proceedings of the 10th International Workshop on Semantic Evaluation ({S}em{E}val-2016)}, pages 31--41, San Diego, California. Association for Computational Linguistics.
+
+\bibitem[{Oprea and Magdy(2020)}]{oprea-magdy-2020-isarcasm}
+Silviu Oprea and Walid Magdy. 2020.
+\newblock \href {https://doi.org/10.18653/v1/2020.acl-main.118} {i{S}arcasm: A dataset of intended sarcasm}.
+\newblock In \emph{Proceedings of the 58th Annual Meeting of the Association for Computational Linguistics}, pages 1279--1289, Online. Association for Computational Linguistics.
+
+\bibitem[{Qin and Eisner(2021)}]{qin2021learning}
+Guanghui Qin and Jason Eisner. 2021.
+\newblock Learning how to ask: Querying lms with mixtures of soft prompts.
+\newblock In \emph{Proceedings of the 2021 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies (NAACL-HLT)}.
+
+\bibitem[{Roemmele et~al.(2011)Roemmele, Bejan, and Gordon}]{roemmele2011choice}
+Melissa Roemmele, Cosmin~Adrian Bejan, and Andrew~S Gordon. 2011.
+\newblock Choice of plausible alternatives: An evaluation of commonsense causal reasoning.
+\newblock In \emph{2011 AAAI Spring Symposium Series}.
+
+\bibitem[{Schick and Sch{\"u}tze(2020)}]{schick2020few}
+Timo Schick and Hinrich Sch{\"u}tze. 2020.
+\newblock Few-shot text generation with pattern-exploiting training.
+\newblock \emph{arXiv e-prints}, pages arXiv--2012.
+
+\bibitem[{Sclar et~al.(2023)Sclar, Choi, Tsvetkov, and Suhr}]{sclar2023quantifying}
+Melanie Sclar, Yejin Choi, Yulia Tsvetkov, and Alane Suhr. 2023.
+\newblock Quantifying language models' sensitivity to spurious features in prompt design or: How i learned to start worrying about prompt formatting.
+\newblock \emph{arXiv preprint arXiv:2310.11324}.
+
+\bibitem[{Seshadri et~al.(2022)Seshadri, Pezeshkpour, and Singh}]{seshadri2022quantifying}
+Preethi Seshadri, Pouya Pezeshkpour, and Sameer Singh. 2022.
+\newblock Quantifying social biases using templates is unreliable.
+\newblock \emph{arXiv preprint arXiv:2210.04337}.
+
+\bibitem[{Wang et~al.(2020)Wang, Pruksachatkun, Nangia, Singh, Michael, Hill, Levy, and Bowman}]{wang2020superglue}
+Alex Wang, Yada Pruksachatkun, Nikita Nangia, Amanpreet Singh, Julian Michael, Felix Hill, Omer Levy, and Samuel~R. Bowman. 2020.
+\newblock \href {http://arxiv.org/abs/1905.00537} {Superglue: A stickier benchmark for general-purpose language understanding systems}.
+
+\bibitem[{Wang et~al.(2023)Wang, Wei, Schuurmans, Le, Chi, Narang, Chowdhery, and Zhou}]{wang2023selfconsistency}
+Xuezhi Wang, Jason Wei, Dale Schuurmans, Quoc Le, Ed~Chi, Sharan Narang, Aakanksha Chowdhery, and Denny Zhou. 2023.
+\newblock \href {http://arxiv.org/abs/2203.11171} {Self-consistency improves chain of thought reasoning in language models}.
+
+\bibitem[{Warstadt et~al.(2019)Warstadt, Singh, and Bowman}]{10.1162/tacl_a_00290}
+Alex Warstadt, Amanpreet Singh, and Samuel~R. Bowman. 2019.
+\newblock \href {https://doi.org/10.1162/tacl_a_00290} {{Neural Network Acceptability Judgments}}.
+\newblock \emph{Transactions of the Association for Computational Linguistics}, 7:625--641.
+
+\bibitem[{Zhu et~al.(2023)Zhu, Zhang, Haq, Hui, and Tyson}]{zhu2023can}
+Yiming Zhu, Peixian Zhang, Ehsan-Ul Haq, Pan Hui, and Gareth Tyson. 2023.
+\newblock Can chatgpt reproduce human-generated labels? a study of social computing tasks.
+\newblock \emph{arXiv preprint arXiv:2304.10145}.
+
+\bibitem[{Zuccon and Koopman(2023)}]{zuccon2023dr}
+Guido Zuccon and Bevan Koopman. 2023.
+\newblock Dr chatgpt, tell me what i want to hear: How prompt knowledge impacts health answer correctness.
+\newblock \emph{arXiv e-prints}, pages arXiv--2302.
+
+\end{thebibliography}

@@ -1,0 +1,909 @@
+
+\documentclass{article} % For LaTeX2e
+\usepackage{iclr2024_conference,times}
+
+% Optional math commands from https://github.com/goodfeli/dlbook_notation.
+\input{math_commands.tex}
+
+\usepackage{multirow}
+\usepackage{ dsfont }
+\usepackage{booktabs}
+\usepackage{comment}
+\usepackage{soul}
+\usepackage[export]{adjustbox}
+\usepackage{graphicx}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+\usepackage{subcaption}
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{listings}
+\usepackage{longtable}
+\usepackage{relsize}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\lstdefinestyle{mystyle}{
+  backgroundcolor=\color{backcolour}, commentstyle=\color{codegreen},
+  keywordstyle=\color{magenta},
+  numberstyle=\tiny\color{codegray},
+  stringstyle=\color{codepurple},
+  basicstyle=\ttfamily\footnotesize,
+  breakatwhitespace=false,         
+  breaklines=true,                 
+  captionpos=b,                    
+  keepspaces=true,                 
+  numbers=left,                    
+  numbersep=5pt,                  
+  showspaces=false,                
+  showstringspaces=false,
+  showtabs=false,                  
+  tabsize=2
+}
+\lstset{style=mystyle}
+\def\uromannumeral#1{\symbol{\numexpr"216F+#1\relax}}
+\def\uRomannumeral#1{\symbol{\numexpr"215F+#1\relax}}
+\def\uroman#1{\uromannumeral{\the\value{#1}}}
+\def\uRoman#1{\uRomannumeral{\the\value{#1}}}
+\DeclareUnicodeCharacter{2160}{I}
+\DeclareUnicodeCharacter{2161}{II}
+\DeclareUnicodeCharacter{2162}{III}
+\DeclareUnicodeCharacter{2163}{IV}
+\DeclareUnicodeCharacter{2164}{V}
+\DeclareUnicodeCharacter{2165}{VI}
+\DeclareUnicodeCharacter{2166}{VII}
+\DeclareUnicodeCharacter{2167}{VIII}
+\DeclareUnicodeCharacter{2168}{IX}
+\DeclareUnicodeCharacter{2169}{X}
+
+%\newcommand{\todo}[1]{}
+%\renewcommand{\todo}[1]{{\color{red} [TODO: {#1}]}}
+%\newcommand{\mel}[1]{}
+%\renewcommand{\mel}[1]{{\color{magenta} [Mel: {#1}]}}
+\newcommand{\editmel}[1]{}
+\renewcommand{\editmel}[1]{{\color{black}{#1}}}
+
+%\newcommand{\yejin}[1]{}
+%\renewcommand{\yejin}[1]{{\color{red} [Yejin: {#1}]}}
+
+%\newcommand{\yulia}[1]{}
+%\renewcommand{\yulia}[1]{{\color{blue} [Yulia: {#1}]}}
+
+
+%\newcommand{\tbd}[1]{}
+%\renewcommand{\tbd}[1]{{\color{red}{#1}}}  %%% used for number of tasks and stuff like that that I'll re-check closer to the deadline, since more tasks are being run
+\newcommand{\tbdone}[1]{}
+\renewcommand{\tbdone}[1]{{\color{black}{#1}}}  %%% used for number of tasks and stuff like that that I'll re-check closer to the deadline, since more tasks are being run
+
+%\newcommand{\as}[1]{}
+%\renewcommand{\as}[1]{{\color{blue} [Alane: {#1}]}}
+%\newcommand{\editas}[1]{}
+%\renewcommand{\editas}[1]{{\color{blue}{#1}}}
+
+%\renewcommand{\as}[1]{}
+%\renewcommand{\mel}[1]{}
+%\renewcommand{\todo}[1]{}
+
+
+%\newcommand{\removable}[1]{}
+%\renewcommand{\removable}[1]{{\color{red}{#1}}}
+
+\newcommand{\prompt}[1]{{\small{\texttt{#1}}}}
+\renewcommand{\paragraph}[1]{\textbf{#1}}
+
+
+% \title{Quantifying performance variance across plausible prompt formats \textit{or: How I learned to start worrying about prompt formatting}}
+\title{Quantifying Language Models' Sensitivity to Spurious Features in Prompt Design
+\textit{or:\\How I learned to start worrying about prompt formatting}
+}
+%\title{Characterizing the Sensitivity of Language Models to Meaning-Preserving Perturbations in Prompt Design \textit{or: How I learned to start worrying about prompt formatting}}
+%\title{Characterizing the Sensitivity of Language Models to Meaning-Preserving Perturbations in Prompt Design}
+
+% Authors must not appear in the submitted version. They should be hidden
+% as long as the \iclrfinalcopy macro remains commented out below.
+% Non-anonymous submissions will be rejected without review.
+\iclrfinalcopy
+
+\author{Melanie Sclar\textsuperscript{1} \ \ \ \ \ \ \textbf{Yejin Choi}\textsuperscript{1,2} \ \ \ \ \ \ \textbf{Yulia Tsvetkov}\textsuperscript{1} \ \ \ \ \ \  Alane Suhr\textsuperscript{3} \\
+\textsuperscript{1}Paul G. Allen School of Computer Science \& Engineering, University of Washington \\
+\textsuperscript{2}Allen Institute for Artificial Intelligence \ \ \ \ \ \ \ \textsuperscript{3}University of California, Berkeley\\
+\texttt{msclar@cs.washington.edu}
+}
+
+% The \author macro works with any number of authors. There are two commands
+% used to separate the names and addresses of multiple authors: \And and \AND.
+%
+% Using \And between authors leaves it to \LaTeX{} to determine where to break
+% the lines. Using \AND forces a linebreak at that point. So, if \LaTeX{}
+% puts 3 of 4 authors names on the first line, and the last on the second
+% line, try using \AND instead of \And before the third author name.
+
+\newcommand{\toolname}[1]{}
+\renewcommand{\toolname}[1]{{\color{black} \textsc{FormatSpread}}}
+
+
+\newcommand{\fix}{\marginpar{FIX}}
+\newcommand{\new}{\marginpar{NEW}}
+
+%\iclrfinalcopy % Uncomment for camera-ready version, but NOT for submission.
+\begin{document}
+
+\maketitle
+
+\vspace{-6mm}
+\begin{abstract}
+\input{abstract_v2}
+\end{abstract}
+\vspace{-4mm}
+
+\section{Introduction}
+\vspace{-1mm}
+
+\input{intro_v2}
+\begin{figure}[]
+\centering
+\includegraphics[width=0.95\linewidth,trim={25 50 25 40},clip]{figures/prompt_format_brittleness_figure_1_task280.pdf}
+\caption{Slight modifications in prompt format templating may lead to significantly different model performance for a given task. Each \texttt{<text>} represents a different variable-length placeholder to be replaced with actual data samples. Example shown corresponds to 1-shot LLaMA-2-7B performances for task280 from SuperNaturalInstructions \citep{wang2022super}. This StereoSet-inspired task \citep{nadeem2021stereoset}  requires the model to, given a short passage, classify it into one of four types of stereotype or anti-stereotype (gender, profession, race, and religion). 
+% Model selection is determined as the option with the highest probability of being generated when conditioned on the prompt.
+%\as{TODO: explain more what this task is and that topics it covers. Is there an instruction prefix to this that describes the task?}\mel{this was intended as a cute way of plotting the behavior, the format is common in many tasks but the numbers may not reflect reality! Do you think it should?} \as{yes, it should reflect an actual behavior we uncover in the analysis}
+}
+    \label{fig:overview}
+    \vspace{-3mm}
+\end{figure}
+
+\vspace{-1mm}
+\section{Overview}
+\vspace{-2mm}
+We evaluate LLM performance over the space of prompt formats that may plausibly be chosen by a non-adversarial user when designing a prompt for a target task, where the space of formats is defined by a grammar (\S\ref{sec:grammar}). Our grammar's definition naturally induces a definition of semantic equivalence among formats. 
+%We define the grammar so that all formats it defines result in semantically equivalent prompts, 
+We quantify model sensitivity in terms of performance range in a target task across the space of equivalent prompt formats to the original choice (\S\ref{sec:format-variance-exp}).
+% Given the high model sensitivity to prompt formatting, and lack of smoothness of the space defined by the prompt formats' performance, 
+We cast the problem of searching across this space as a bandit problem, and propose \toolname{} (\S\ref{sec:formatspread}), which
+ consists of a grammar (\S\ref{sec:grammar}) and a procedure to estimate the minimum and maximum performance across a set of semantically equivalent formats given a pre-defined metric (\S\ref{sec:proposed_solution}).
+\toolname{} uses Bayesian optimization 
+% \removable{to quickly explore the space of prompt formats, and} 
+to identify the expected performance range with low additional computational cost (\S\ref{sec:experiments_search}) all without requiring access to model weights, which enables use on API-gated LLMs. Furthermore, we perform in-depth analysis of this observed sensitivity, including by quantifying the contribution of individual feature choices to the final performance (\S\ref{sec:individual_features})
+% , characterizing the (lack of) smoothness of the space of prompt formats' performance (\S\ref{sec:edges}),
+and measuring the identifiability of a format based solely on a model's internal, continuous representation of any prompt via correlation with model performance (\S\ref{sec:pca}).
+
+\vspace{-2mm}
+\section{Measuring Sensitivity with \toolname{}}\label{sec:formatspread}
+\vspace{-1.5mm}
+\subsection{Grammar of Plausible Prompt Formats}\label{sec:grammar}
+We construct a grammar that defines both the space of plausible prompt formats and semantic equivalence between formats. 
+The grammar is manually constructed, as opposed to automatically induced from data, to guarantee a higher level of precision when defining the set of equivalent formats. 
+% \as{what exactly is ``accuracy'' referring to here? by manually crafting the grammar, we are trying to avoid rules that would violate semantic equivalence, right?}\mel{grammar induction could have many sources of error, maybe the grammar you induced doesn't even represent the tasks you require? I'm just saying it's way more safe to define the grammar than add a compounding error from a model--feel free to rewrite however it's clearer} 
+Our grammar is directly %inspired and %by identifying formatting choices attested in human-crafted prompt formats across 100 classification tasks, and 
+tested by verifying that it can generate the formatting associated with 100+ Super-NaturalInstructions tasks~\citep{wang2022super}. %} %% Mel: both phenomena mentioned were the same thing 
+
+Our grammar consists of fields that are composed to create a prompt format. 
+For example, the format \prompt{`Passage: <text> || Answer: <text>'}, has basic fields \prompt{`Passage: <text>'}, and \prompt{`Answer: <text>'}, denoted $a_1$, and $a_2$. 
+Each basic field consists of a \textit{descriptor} (e.g. \prompt{`{Passage}'}), a \textit{separator} (e.g. \prompt{`: '}), and a text placeholder to replace with each data point. 
+We define basic fields as $B_1(d, s, f) := f(d) s \text{\prompt{<text>}}$ using Backus-Naur notation, where $d$ is a descriptor string, $s\!\in\!\mathcal{S}_1$ a separator, and $f\!\in\!\mathcal{F}_{\text{casing}}$ a function that alters $d$ while preserving meaning% (throughout the paper, $f$ only alters casing)
+. Thus, in our example, $a_1\!=\!B_1(\text{\prompt{Passage}}, \text{\prompt{'\!:\ \ '}}, id)$ and  %$a_2\!=\!B_1(\text{\prompt{Question}}, \text{\prompt{'\!:\ \ '}}, id)$, 
+$a_2\!=\!B_1(\text{\prompt{Answer}}, \text{\prompt{'\!:\ \ '}}, id)$, with $id$ the identity function. We define joining several fields as $B_2^{(n)}(X_1\!,\ldots\!,X_n,\!c) := X_1 c X_2 c \ldots c X_n$, with $c\!\in\!\mathcal{C}$ being a \textit{space}. Our example's prompt format may be written as $B_2^{(2)}(a_1, a_2, \text{\prompt{'\ ||\ '}})$.
+
+The grammar also supports enumeration, which is defined as joining several basic fields, each representing a different list item. For example, the enumeration \prompt{`Option (A): <text>, Option (B): <text>, Option (C): <text>'} may be written as $B_2^{(3)}(a_1, a_2, a_3, \text{\prompt{'\ ||\ '}})$, where $a_i = B_1(e_i, \text{\prompt{'\!:\ \ '}}, id)$. In our example, $e_1$ represents \prompt{`Option (A)'}, and may in turn be written as the concatenation $e_i:=ds_2f_\text{item}(i)$ with $d=\text{\prompt{`Option'}}$, $s_2=\text{\prompt{'\ '}}$ (single space), and $f_\text{item}(1)=\text{\prompt{`(A)'}}$. Each $f_\text{item}$ transforms an item $i$ using a number format (e.g. letters or Roman numerals, denoted as $\mathcal{F}_{\text{item2}}$) and an item wrapper (e.g. \prompt{(A)} or \prompt{[A]}, denoted as $\mathcal{F}_{\text{item1}}$).
+
+In summary, we define valid prompt formats as those accepted by the following grammar:
+\begin{footnotesize}
+\begin{align*}
+    B_0() &:= \text{\prompt{<text>}}\\
+    B_0'(d, s) &:= f(d) s \text{ \ \ \ \ with $s\in\mathcal{S}_1, \ f\in \mathcal{F}_\text{casing}$}\\
+    B_1(d, s, f) &:= f(d) s \text{\prompt{<text>}} \text{ \ \ \ \ with $s\in\mathcal{S}_1, \ f\in \mathcal{F}_\text{casing}$}\\
+    B_2^{(n)}(X_1, \ldots, X_n, c) &:= X_1 c\ldots c X_n \text{ \ \ \ \ with $c\in\mathcal{C}$, $X_i\in\{B_0, B_0', B_1, B_2, B_3\}\ \forall i$}\\
+    B_3^{(n)}(d, j_1, \ldots, j_n, s_1, s_2, c, f_{1}, f_{2}) &:= B_2^{(n)}(B_1(e_1, s_1, f_{2})), \ldots, B_1(e_n, s_1, f_{2}), c)\\
+    &\text{ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ where $e_i := f_2(d) \ s_2 \ f_{1}(j_i)$, $j_i\in\mathbb{N}_0 \ \forall i$,}\\ 
+    &\text{ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ $s_1\in\mathcal{S}_1$, $s_2\in\mathcal{S}_2, f_{1}\in\mathcal{F}_\text{item},f_{2}\in\mathcal{F}_\text{casing}$}
+\end{align*}
+\end{footnotesize}
+\vspace{-6mm}
+
+Our grammar defines valid formats as finite compositions of $B_0, B_0', B_1, B_2, B_3$. 
+The sets $\mathcal{S}_1, \mathcal{S}_2$, $\mathcal{C}$, $\mathcal{F}_\text{casing}$, $\mathcal{F}_\text{item}$ (two sets of separators, spaces, casing functions, and itemizing functions respectively) are pre-defined by the user. 
+Throughout this work, we instantiate all sets with values typically observed in human-written prompt formats. 
+We intentionally only modify the casing of descriptors (via $\mathcal{F}_\text{casing}$) to guarantee semantic equivalence; one may also define a set of functions that paraphrases the descriptor, e.g., via synonym replacement. 
+Appendix~\ref{app:action_values_considered} contains the full list of values we use for the constant sets, 
+% $\mathcal{S}_1, \mathcal{S}_2$, $\mathcal{C}$, $\mathcal{F}_\text{casing}$, $\mathcal{F}_\text{item}$,
+as well as a visualization of a prompt template generated from the grammar.
+
+\paragraph{Prompt Format Equivalence.} 
+Two prompt formats $p_1$, $p_2$ are equivalent if they represent the same rule application $B_i$, the descriptors (if any) are the same, and the sub-elements (if any) are equivalent. 
+Appendix~\ref{app:equivalence_relation_def} contains the formal definition of equivalence. 
+The grammar's strict definition allows us to assume that sets of equivalent formats share equivalent meanings. 
+When measuring sensitivity (\S\ref{sec:proposed_solution}), we explore only the space of formats equivalent to a task's original format. 
+
+
+\paragraph{Contextual Restrictions.} We define restrictions to the combinations of spaces and separators to further ensure naturalness. For example, if $B_2(X_1,\!\ldots,\!X_n,\!c)$ where $c$ does not contain a newline, then each $X_i$'s separators and any subcomponents' separators should not contain a newline. 
+This avoids unnatural formats like \prompt{Input:\textbackslash n <text> Output:\textbackslash n <text>}. 
+We also allow for adding conditions that force constants (separators, spaces, etc.) in different applications of $B_i$ to be equal. When measuring sensitivity to format perturbations, if two separators or spaces are equal in an original format, they are forced to jointly change to be considered equivalent. 
+Appendix~\ref{app:holistic_restrictions} contains all contextual restrictions.
+
+\paragraph{Final Prompt Construction.} Given a valid format $p$ accepted by the grammar, the final prompt is constructed by concatenating with space $c$ an instruction string $inst$, $n$ few-shot data points $D_1,\ldots,D_n$ exemplifying the task, and a data point $D_{n+1}$ to be solved. 
+All few-shot examples $D_i$ are formatted using $p$. 
+Thus, the final prompt template is: $inst\ c \ p(D_1)\ c \ p(D_2)\ c \ \ldots \ c \ p(D_n)\ c \ p(D_{n+1})$.
+Since $D_{n+1}$'s output will be generated by the model, an empty string is added in place of the answer in the last field in the template.  %since we evaluate causal language models. 
+Prompt construction will modify $inst$ to match specific choices encoded in $p$: concretely, if $p$ enumerates valid multiple-choice options as characters $x_1\ldots x_n$, we ensure $inst$ refers to these choices as $x_1\ldots x_n$.
+
+\subsection{Measuring Sensitivity}\label{sec:proposed_solution}
+
+We measure how plausible choices in prompt formatting influence quantifiable metrics of generated outputs.
+Given a set of plausible formats $\{p_1,\ldots,p_n\}$, a dataset $\mathcal{D}$, and a scalar metric $m$, let the \textit{performance interval} be $[\min_i m(p_i, \mathcal{D}), \max_i m(p_i, \mathcal{D})]$. %, where $m$ is the target metric (throughout this work, $m=acc$). 
+We define the \textit{performance spread} or simply \textit{spread} as $\max_i m(p_i, \mathcal{D})-\min_i m(p_i, \mathcal{D})$.
+%Given a set of plausible prompt formats $\{p_1,\ldots,p_n\}$ and a scalar metric $m$, let the \textit{performance interval} be $[\min_i m(p_i), \max_i m(p_i)]$. We define the \textit{performance spread} or simply \textit{spread} as $\max_i m(p_i)-\min_i m(p_i)$. 
+Higher spread indicates more sensitivity to variance within the space of plausible, semantically-equivalent formats.
+%We measure how plausible prompt format choices influence quantifiable metrics of generated outputs. 
+While our method is agnostic to the scalar metric $m$ used, and one could consider a number of metrics including text length, formality, or toxicity, throughout this work we focus our analysis on estimated task accuracy $acc$. % because of its broader implications. 
+% One could consider other features as metrics, such as output style, length, or toxicity. 
+Due to ease in automatic evaluation, here we evaluate on classification tasks.
+
+Our goal is to compute spread for a given model and task. A comprehensive approach would be to fully evaluate each plausible format $p_i$ on the entire evaluation dataset $\mathcal{D}$. This increases the cost of reporting a model's performance linearly with $n$, which becomes computationally infeasible for large values of $n$.
+Following prior gradient-free prompt engineering work \citep{zhou2022large, pryzant2023automatic}, we model our problem as a multi-arm bandit. 
+Given a random sample of $n$ formats (arms) $p_1,\ldots, p_n$ for a task, an arm $p_i$'s hidden value is the actual performance $m(p_i, \mathcal{D})$ when evaluated on the full dataset $\mathcal{D}$, and the reward for pulling the arm is an estimate $m(p_i, \mathcal{\tilde{D}})$ where $\mathcal{\tilde{D}}\subset \mathcal{D}$, $|\mathcal{\tilde{D}}| = B$ (mini-batch size) and no element of $\mathcal{\tilde{D}}$ has yet been evaluated with $p_i$.
+
+We assume a budget of $E$ total data point evaluations. 
+We first search for the highest performing format with budget $E/2$, and then for the lowest performing format with budget $E/2$. Evaluations done for the first exploration are readily available for the second exploration, which yields a more informative prior for many formats.
+We consider two well-known regret minimization bandit algorithms: Thompson sampling (used in \toolname{}) and Upper Confidence Bound (UCB).
+
+% regret minimization vs. best arm identification
+
+\paragraph{Thompson Sampling.} This simple, high-performing Bayesian inference heuristic randomly draws each arm according to its probability of being optimal \citep{chapelle2011empirical}. Each $m(p_i,\mathcal{D})$ is modeled as a random variable, and since with our target metric each data point evaluation is a Bernoulli trial% (i.e. an answer was either correct or incorrect)
+, it is natural to model $m(p_i, \mathcal{D})$ as a Beta distribution. In each round, Thompson sampling draws from each $m(p_i, \mathcal{\tilde{D}})$ and chooses the best arm $\hat{i}$ (Algorithm~\ref{alg:thompson_sampling}). 
+It then updates $\hat{i}$ according to the number of observed successes $r$, and the corresponding $B-r$ failures, within $\mathcal{\tilde{D}}$. 
+% See Algorithm~\ref{alg:thompson_sampling}.
+
+\begin{algorithm}
+\caption{Thompson Sampling for Bernoulli Bandits}\label{alg:thompson_sampling}
+\begin{algorithmic}
+\begin{footnotesize}
+\State $S_i^{(1)} \gets 0, N_i^{(1)} \gets 0$ (success counters and total times armed was drawn counter)
+\For{$t \gets 1,\ldots E/B$}
+\For{$i \gets 1,\ldots,K$}
+\State Take $\theta_i^{(t)}$ from $\text{Beta}(\alpha_i + S_i^{(t)}, \beta_i + (N_i^{(t)} - S_i^{(t)}))$
+\EndFor
+\State Draw arm $\hat{i}=\argmax_i \theta_i^{(t)}$ (or $\argmin$ in minimization problems) and observe reward $r$
+\State $S_{\hat{i}}^{(t+1)} \gets S_{\hat{i}}^{(t)} + r$, \ \ \ \ $N_{\hat{i}}^{(t+1)} \gets N_{\hat{i}}^{(t)} + B$
+\EndFor
+\end{footnotesize}
+\end{algorithmic}
+\end{algorithm}
+
+Thompson sampling allows for setting informative priors $(\alpha_i, \beta_i)$ based on domain knowledge to accelerate runtime. 
+Appendix~\ref{app:informative_priors} details the exact priors we use. To our knowledge, we are the first to consider a Bayesian sampling method for prompt optimization. 
+
+\paragraph{Upper Confidence Bound (UCB) Sampling.} UCB \citep{lai1985asymptotically} computes an upper confidence bound to each arm's performance, derived from Chernoff's bound. The key difference with Thompson sampling is in how $\theta_i^{(t)}$ is defined. %Instead of sampling from a distribution, in
+In UCB's frequentist approach, $\theta_i^{(t)}$ is assigned the estimated accuracy plus the upper confidence bound: $\theta_i^{(t)}\!\gets\!S_i / N_i + c \sqrt{log(t) / N_i}$. 
+We use $c=2$ following \cite{pryzant2023automatic}, who find UCB with $c=2$ to be most effective for prompt optimization. %, and $c=2$.
+
+\paragraph{Naive Sampling.} Each prompt format is evaluated on $E/n$ points (with appropriate rounding).
+
+\vspace{-1mm}
+\section{Characterizing Prompt Format Variance with \toolname{}}
+\vspace{-1mm}
+\subsection{Experimental setup}
+\paragraph{Data.} We use a subset of \tbdone{53} tasks from Super-NaturalInstructions \citep{wang2022super} with diverse human-written formats and instructions,
+% \as{if we didn't use all of the tasks, we should probably say how many we didn't use and why}\mel{We kept like 50, it'd be impossible for me to evaluate +1600 tasks}\as{how did we choose which ones to keep?}
+comprising \tbdone{19} multiple-choice tasks and \tbdone{34} classification tasks with $\{2,3, 4\}$ basic fields.
+Appendix~\ref{app:selection} details the exact task selection procedure.
+To construct the final prompt template, we concatenate each task's instruction and $n$ formatted few-shot examples using \texttt{\textbackslash n\textbackslash n} as spacing. % between the instruction and each few-shot example.
+While selection and ordering of few-shot examples is a component of prompt design influencing features of model output \citep{lu2021fantastically}, our work focuses on prompt formatting.
+To remove this confounder% of few-shot example selection and ordering
+, we fix the exact choice and ordering of examples for each task and for a given number of shots $n$. Few-shot examples for each task are chosen randomly within each dataset %among those available in Super-NaturalInstructions
+and are not used for evaluation. 
+We evaluate task data samples on an arbitrary order fixed across settings. 
+Datasets are assumed to be of size 1,000 for fair evaluation across tasks.
+
+\paragraph{Models.} We evaluate LLaMA-2-\{7B,13B,70B\} \citep{touvron2023llama}, Falcon-7B and Falcon-7B-Instruct \citep{falcon40b}, GPT-3.5-Turbo \citep{schulman2022chatgpt}, all autoregressive LMs.% \as{todo: add GPT-3.5 and LLaMA-70B here if we put them in results}
+
+\paragraph{Task Evaluation Metrics.} 
+We use two popular measures for computing accuracy: exact prefix matching and probability ranking. 
+In exact prefix matching, we check if the output's prefix matches the expected answer after normalization (casing, spacing, newlines). 
+Ranking accuracy computes the rate that the expected answer is the highest-ranked valid option (in multiple choice and classification tasks) according to the model's output distribution.
+Results are reported using ranking accuracy unless specified otherwise. 
+Appendix~\ref{app:additional-format-variance-exp} shows additional analysis of exact prefix matching, with spreads even higher than those shown in Section~\ref{sec:format-variance-exp}, and including how formatting choice affects task degeneration (i.e., not answering any valid option).  % I made it long since we're adding a line anyways lol
+
+\vspace{-1mm}
+\subsection{Prompt formats have a large performance spread, not eliminated by increasing few-shot examples or model size, nor with instruction tuning}\label{sec:format-variance-exp} %%% Mel: I think this one is more informative of the punchline of this section!
+\vspace{-1mm}
+For each evaluation task we randomly sample 10 plausible prompt formats and use \toolname{} to compute performance spread for each modeling and $n$-shot choice (Figure~\ref{fig:perf_spread_boxplot}).
+We find significant performance spread across tasks, with a median spread of \tbdone{7.5} accuracy points across choices in the model and the number of few-shot examples.
+20\% of tasks consistently result in a spread of at least 15 accuracy points for all LLaMA-2 settings, and at least 9 points for all Falcon settings.
+%For all settings, at least 25\% of tasks consistently result in a spread of 19 accuracy points or more.
+We observe several tasks with performance spread over 70 accuracy points.
+Because this analysis uses only 10 randomly sampled formats, it represents a lower bound of the true spreads for each task.
+Furthermore, there exists significant performance spread regardless of increased model size (Figure~\ref{fig:perf_spread_llama7b_13b} and Figure~\ref{fig:perf_spread_llama7b_70b} for Llama-2-70B), instruction tuning (Figure~\ref{fig:perf_spread_falcon_7b_inst}), or number of few-shot examples (Figure~\ref{fig:perf_spread_nshots}; Figure~\ref{fig:perf_spread_llama7b_13b} and \ref{fig:perf_spread_falcon_7b_inst} plot 1- and 5-shot jointly).
+Appendix~\ref{app:additional-format-variance-exp} demonstrates similar results on a selection of non-classification tasks, \editmel{and expands the spread discussion to plotting the entire accuracy distribution, along with a dispersion metric.}
+
+\input{figure_spreads}
+
+\paragraph{Comparison trends between models are often reversed just by choosing different formats.} 
+Assuming model $M$ is better than $M'$ by at least $d$ accuracy using prompt $p$, we compute how often $M'$ achieves at least $d$ higher accuracy than $M$ under a different format $p'$.
+% (i.e., $acc(p'_M)-acc(p'_{M'}) <-d$ given that $acc(p_M)-acc(p_{M'}) > d$ where $acc(p_M)$ is the performance of prompt $p$ using model $M$). 
+Figure~\ref{fig:model_flip_perf} shows these trends are often reversed: LLaMA-2-13B and -70B reverse trend by at least $d=$ 0.02 with probability \tbdone{0.141}; LLaMA-2-7B and Falcon-7B reverse trend by at least $d=$ 0.02 with probability \tbdone{0.140}. 
+Strikingly, often both experiments (first using $p$, and then $p'$) were statistically significant (p-value~$<0.05$) on 1000 samples\footnote{We use one-sided McNemar tests, also known as paired $\chi^2$ tests, since we evaluate models on the same set of samples. We test the significance of $M$ being \textit{better} than $M'$ under $p$, and $M$ being \textit{worse} than $M'$ under $p'$.}: \tbdone{76}\% and \tbdone{47}\% respectively for the two model comparisons mentioned above.
+We find that formats yielding high performance for model $M$ may not yield high performance for $M'$, implying that \textbf{formats may not be inherently good or bad} (Appendix~\ref{app:relative_ordering}).
+
+\vspace{-1mm}
+\subsection{How do individual features contribute to performance?}\label{sec:individual_features}
+\vspace{-1mm}
+\input{table_performance_differences_by_constant}
+
+We analyze how choices in particular constants (i.e. $\mathcal{S}_1, \mathcal{S}_2$, $\mathcal{C}$, $\mathcal{F}_\text{casing}$, $\mathcal{F}_\text{item}$) independently influence task performance across different formats.
+Figure \ref{fig:example_boxplot_constant} shows the distribution of accuracy for 500 sampled prompts conditioned on the choice of $\mathcal{S}_1$ (the separator between a descriptor and the text placeholder) for one task in Super-NaturalInstructions.
+When comparing the individual influence of two feature choices, we measure both \textit{weak} and \textit{strong} notions of dissimilarity between distributions of accuracy across prompts conditioned on a chosen feature.
+We say two constant choices yield \textit{weakly} different accuracy distributions if the values between the first quartile ($Q_1$) and third quartile ($Q_3$) do not intersect. 
+This is equivalent to the boxes in a boxplot not overlapping. 
+We say two constant choices yield \textit{strongly} different accuracy distributions if the ranges $[2.5Q_1 - 1.5Q_3, 2.5Q_3 + 1.5Q_1]$ do not overlap (adjusted to end in a data point).
+This is equivalent to two boxplots with their whiskers not overlapping. 
+In Figure~\ref{fig:example_boxplot_constant}, \prompt{' \textbackslash n\textbackslash t'} and \prompt{': '} (fourth and sixth) are only weakly~different.
+
+We compute accuracy for 500 random formats with 250 samples each on \tbdone{31} tasks for 1-shot Llama-2-7B. 
+Table~\ref{tab:percentage_tasks_different} shows that choices in $\mathcal{S}_2$, $\mathcal{F}_\text{item1}$, $\mathcal{F}_\text{casing}$ do not independently predict performance differences (weakly or strongly): although these features can have a large performance variance and thus should be explored with \toolname{}, they cannot be used to independently predict accuracy changes. 
+Other constant sets have varying degrees of differences, 
+with $\mathcal{S}_{1}$ (separators) and $\mathcal{F}_\text{item2}$ (number format changes in enumerations) having the most individual impact.
+All tasks with strong dissimilarities are shown in Appendix~\ref{app:boxplot_by_feature}. 
+
+\input{table_example_edges}
+\paragraph{Small prompt variations often yield large performance differences.}\label{sec:edges}
+Table~\ref{table:atomic_changes} shows a selection of tasks where changing a single constant on a format (e.g., casing in task322) results in large accuracy differences. %We denote these single changes as \textit{atomic}. 
+% Each of these \textit{atomic} changes has an accuracy change associated, computed as the absolute difference between the prompt format before and after the change.
+Figure \ref{fig:edge_probability} shows that regardless of the scoring criterion used, a significant ratio of these atomic changes are associated with large accuracy changes. 
+For example, 24\% of atomic changes have an associated accuracy change of at least 5 points when using exact prefix matching as scoring criteria (11\% when using probability ranking).  % checked numbers Sept 26
+
+The space of prompt format accuracy is highly non-monotonic, which makes local search algorithms over the space less effective.
+Let $(p_1, p_2, p_3)$ be a prompt format triple such that $p_{i+1}$ is obtained by making an atomic change to $p_{i}$. 
+We argue that if the prompt format space is smooth, we should often see a triples' accuracy to be strictly monotonic over $i$. % (i.e., where $acc(p_1)>acc(p_2)>acc(p_3)$ or $acc(p_1)<acc(p_2)<acc(p_3)$).
+We choose \tbdone{24} tasks (\tbdone{13} multiple choice, \tbdone{11} non-multiple choice), sample 300 $(p_1, p_2, p_3)$ triples for each, and the compute accuracy (using exact prefix matching) of each $p_i$ on 250 samples. 
+32.4 and 33.6\% of triples were monotonic for multiple-choice and non-multiple-choice tasks respectively.
+Given that random shuffling within a triple will result in monotonicity  33.3\% of the time, this suggests that local search mechanisms like simulated annealing may not be effective as they require a locally smooth search space. %the space they search upon to be locally smooth.
+
+\input{figure_edges_and_pca_side_by_side}
+
+\subsection{%Prompt formatting as a probability distribution transformation
+Prompt formats are identifiable transformations of prompt embeddings
+}\label{sec:pca}
+
+Prompt format choices represent a deterministic transformation of the input, even if its impact on the resulting performance is hard to predict. 
+We represent prompt embeddings as the last hidden layer obtained when processing the whole input prompt (immediately before generating the first token).
+% We represent prompt embeddings as the logits obtained immediately before applying softmax to select a token to generate.
+We demonstrate that format choice yields a highly identifiable transformation over this embedding, which suggests that formats can be seen as transformations of the output probability distribution. % (i.e. fuzzy \textit{prompt format vectors}).
+
+For each task, and for both \{1, 5\}-shot settings, we collect prompt embeddings from LLaMA-2-7B corresponding to 10 randomly sampled valid formats for 1000 evaluation examples. %to 1000 samples from 10 randomly sampled valid formats. 
+We train an XGBoost \citep{xgboost} classifier that maps from the top $n$ principal components of a prompt embedding to the prompt format.\footnote{
+We train with 800 vectors from each of the 10 formats (8000 vectors) and evaluate on the remaining 200.}
+We find that although the original prompt embeddings are of size 4,096\footnote{Equivalent to the dimension of hidden representations for LLaMA-2-7B.}, using just the top 100 principal components can result in a classifier with $\geq$0.98 accuracy in format identification for all \tbdone{31} tasks analyzed.
+Figure~\ref{fig:pca} shows the accuracy of format classification given a fixed number of principal components.\footnote{Figure~\ref{fig:pca_plots} in the Appendix visualizes examples of the top two principal components for ten prompt formats.}
+We find that classifier accuracy given just the top two components correlates moderately with the spread of performance in the prompts they represent (\tbdone{$0.424$, $p=8.04 \cdot 10^{-6}$; $0.555$ for the 5-shot setting}; using exact prefix matching).
+% prompt format only through the top $n$ principal components of a vector for Llama-2-7B \{1, 5\}-shot\. 
+
+%\newpage
+\vspace{-1mm}
+\subsection{Fast exploration of the prompt formatting space: \toolname{}}\label{sec:experiments_search}
+\vspace{-2mm}
+
+% http://proceedings.mlr.press/v22/kaufmann12/kaufmann12.pdf
+% https://proceedings.neurips.cc/paper_files/paper/2011/file/e53a0a2978c28872a4505bdb51db06dc-Paper.pdf
+% https://www.researchgate.net/profile/Remi-Munos/publication/221497549_Best_Arm_Identification_in_Multi-Armed_Bandits/links/09e41510be93d28d6c000000/Best-Arm-Identification-in-Multi-Armed-Bandits.pdf
+% http://www2.stat.duke.edu/~rcs46/lecturesModernBayes/601-module3-morebayes/lecture5-more-bayes.pdf
+
+\begin{figure}
+    %\vspace{-1mm}
+    \begin{minipage}[t]{0.48\linewidth}
+    \includegraphics[width=\linewidth]{figures/spread_diff_when_increasing_sampling_rankscore_v2.pdf}
+    \caption{Probability of observing a spread increase of at least $d$ when increasing sample size from $k_1$ to $k_2$ formats. \tbdone{31}
+    tasks, 100 trials each.}\label{fig:proba_spread_increase} % perf_spread_llama7b_13b  
+    \end{minipage} \hfill
+    \begin{minipage}[t]{0.48\linewidth}
+    \includegraphics[width=\linewidth]{figures/pretty_jointobjective_comparison_formats_320_rankscore_batch_20_numtrials_5_exploreall_False_maxnumsteps_1280.pdf}
+    \caption{Difference between the true sample spread and each algorithm-found spread with respect to $E$ (evaluation budget). 320 formats, $B=$ 20, average of 5 trials over \tbdone{31} tasks shown.}\label{fig:performance} % perf_spread_llama7b_13b
+    \end{minipage}
+    \vspace{-2mm}
+\end{figure}
+
+In Section~\ref{sec:format-variance-exp}, we demonstrate that even when sampling just 10 formats from the space of plausible formats, we still observe significant performance spread on many tasks.
+However, this is only a lower bound of the spread a task may exhibit when increasing the number of formats: for example, about 17\% of tasks are expected to increase their spread by at least 5 accuracy points when increasing from 10 to 20 sampled formats. 
+Figure~\ref{fig:proba_spread_increase} quantifies the expected increase in spread when increasing the number of formats by evaluating 500 formats on 250 samples each and computing expected gains.
+%\as{todo: we need to say more concretely how we generated this graph}
+
+% This motivates that 
+% , and motivates the need for evaluating an order of magnitude more of formats, with diminishing returns above when sampling beyond 320 formats. 
+
+Figure~\ref{fig:performance} compares the efficiency of Thompson sampling, UCB, and naive sampling for estimating spread with respect to a budget $E$ (Section~\ref{sec:proposed_solution}). To ensure accurate reports, we compute and show the true spread of the highest- and lowest-performing formats chosen by each method using all data.
+% \as{todo: we need to say how we generated this graph}\mel{what are we still missing to say?}
+With a budget of 51,200 evaluations, Thompson sampling results in a spread within 1 accuracy point of the true spread, while naive sampling finds a spread within 4 points, and UCB within 11.
+% \mel{I just want to check that it's clear that we don't just fix on $E=51200$, but rather for many possible values of E. I removed the word `fixed' from `fixed budget' to emphasize this.}
+
+% shows that Thompson Sampling finds a spread within $\approx0.01$ of the true spread when using a budget of $E=51200$ estimations for exploration, whereas naive sampling finds a spread $\approx0.03$ higher, and UCB $\approx0.10$. 
+Finally, we use \toolname{} to measure sensitivity of several models where inference is expensive.
+With a budget of 40,000 evaluations and 320 prompt formats, we find that 1-shot LLaMA-2-70B--ran using 4-bit quantization~\citep{dettmers2022gptint}--yields a median spread of \tbdone{0.171} (mean=\tbdone{0.221}, std=\tbdone{0.200}, using probability ranking across \tbdone{53} tasks; 25\% of tasks had a spread of \tbdone{0.292} or higher, with a maximum spread of \tbdone{0.876}), and GPT-3.5 yields a median spread of \tbdone{0.064} (mean=\tbdone{0.110}, std=\tbdone{0.115}, across \tbdone{53} tasks using exact prefix matching given that we do not have access to the full logits; 25\% of tasks had a spread of \tbdone{0.148} or higher, with a maximum spread of \tbdone{0.562}), showing sensitivity to formatting is still present even on larger models. 5-shot LLaMA-2-70B still shows high spreads, with 25\% of tasks having a spread of \tbdone{0.310} and a maximum of \tbdone{0.841}. See spread visualization in Figure~\ref{fig:thompson_sampling_results}, and a list of best and worst formats found in Table~\ref{table:best_worst}.
+
+%mean std median 75percentile max
+%0.22073924429479982 0.20000876577919513 0.17050000000000004 0.29174999999999995 0.876
+%0.202351752822341 0.1821824545667217 0.131 0.30550000000000005 0.841
+%0.11018048408614446 0.11542444254155115 0.06400000000000006 0.148 0.562
+
+\section{Related Work}
+\vspace{-1mm}
+% \paragraph{Prompt Engineering.} 
+The task of automatically finding the best-performing prompt for a given task without changing model parameters has recently gained attention, given the constantly improving yet somewhat unpredictable performance of LLMs. 
+Prior work has often focused on discovering optimal prompts with gradient-based methods, which are effective, but often lead to disfluent or unnatural prompts~\citep{shin2020autoprompt}, which can be mitigated with a Langevin dynamics-based method~\citep{shi2022toward}. 
+Another approach is to learn, optimize, and insert continuous representations of prompts and tasks as input to models~\citep{qin2021learning,lester2021power,ding2022openprompt,ilharco23}.
+These methods also require access to the LLM's parameters, thus cannot be applied to models behind an API. 
+In contrast, \toolname{} does not assume access to any model internals.
+Prior gradient-free work has focused on edit-based enumeration over human-written prompts \citep{prasad2022grips}, reinforcement learning \citep{deng2022rlprompt}, and by using LLMs themselves \citep{zhou2022large,gao2020making}. 
+% soft prompts? https://dl.acm.org/doi/pdf/10.1145/3560815?trk=public_post_comment-text
+These works aim to achieve competitive task performance, even if the meaning of the prompt or instruction is modified. 
+To our knowledge, we are the first to focus specifically on prompt formatting variance, a quintessential example of semantic equivalence. 
+% \remove{This issue has remained underexplored, with e.g. \cite{zhou2022large} fixing a prompt format throughout their prompt filtering procedure.
+% \mel{ Add:
+% \citep{gao2020making} (trains t5 for finding better prompts)
+% }}
+
+% \paragraph{Jailbreaking.} 
+Jailbreaking refers to the behavior of intentionally manipulating prompts to elicit inappropriate or sensitive responses, or otherwise reveal parts of the prompt that were intentionally not revealed.
+While the objective differs from our work, jailbreaking works \citep{wei2023jailbroken,zou2023universal} share the underlying technical question of finding the lowest-performing prompt. Our methods differ, since \cite{wei2023jailbroken} evaluate human-generated attacks to guide adversarial prompt design, and \cite{zou2023universal} uses gradient-based search methods simultaneously across multiple models.
+
+Some existing work has explored the influence of certain prompt design choices on model performance, for example the prompt's language~\citep{gonen2022demystifying}, the ordering of few-shot examples~\citep{lu2021fantastically}, and their patterns \citep{madaan2023makes}. %, and the evaluation method~\citep{holtzman2021surface}.
+Other work has focused on providing textual interpretations of continuous prompt representations~\citep{khashabi-etal-2022-prompt}.
+Beyond autoregressive LLMs, existing work has focused on performance variance in masked language models~\citep{elazar2021measuring, jiang2020can}.
+Our work follows efforts in other domains that explore the influence of spurious features on research evaluations, e.g., in deep reinforcement learning~\citep{islam2017reproducibility,henderson2018deep} and statistical machine translation~\citep{clark2011better}. 
+
+\vspace{-1mm}
+\section{Discussion}
+\vspace{-1mm}
+We introduce \toolname{}, an algorithm that estimates the performance \textit{spread} across prompt formatting choices.\footnote{\editmel{We thoroughly describe the limitations of our method in Appendix~\ref{sec:limitations}.}}
+% Our work quantifies the performance \textit{spread} across formatting choices for classification tasks in few-shot learning settings. %, i.e. the difference between minimum and maximum performance across choices. 
+We use \toolname{} to evaluate the spread of several widely-used open-source LLMs for classification tasks in few-shot learning settings.
+We find that spread is large regardless of model choice, even when increasing model size, number of few-shots, or when using instruction tuning. 
+% We focused on quantifying the \textit{spread}, i.e. the difference between minimum and maximum performance.
+\toolname{} is designed to efficiently search the space of plausible prompt formats under a user-specified computational budget.
+For example, with a computational budget of exploring only 5\% of the entire search space for task with 2,500 test examples and 320 plausible formats, we are able to estimate spread within 2 accuracy points of the true spread.
+
+We also characterize the space of prompt formats, finding that it is largely non-monotonic and that few atomic features can be predictors of performance alone, although the separability of format embeddings is highly correlated with observed performance spread.
+These findings informed the design of our search procedure, where local search methods are not advantageous.
+
+Our findings suggest that performance spread caused by arbitrary prompt formatting choices may influence conclusions made about model performance, especially when comparing models on benchmark tasks.
+Thus, we recommend that work evaluating LLMs with prompting-based methods would benefit from reporting a range of performance across plausible formats.
+However, we want to emphasize that single-format evaluation may still be sufficient for many use cases.
+For example, for researchers or practitioners who build systems on top of LLMs, choosing a single prompt format that works sufficiently well for use in this larger system is a valid methodological choice.
+% e.g. when researchers aim solely to show the existence of a format that solves a task and use it within a larger system. 
+However, we encourage future research to compute \toolname{} when comparing their systems to out-of-the-box models, to ensure fair baseline representation. 
+Furthermore, \toolname{} can be used to identify lower-bound performance of a model or system. 
+For example, when using a model for socially impactful tasks, such as stereotype classification in Figure \ref{fig:overview}, it is important to report the range of accuracy a non-adversarial user might encounter. Likewise, it is crucial to consider robustness to spurious features when claiming that models possess general abilities, such as theory of mind; and beneficial to report when e.g. exploring model biases. We leave it to future research to develop regularization procedures either during training or with an already-trained model to make models robust to diverse formatting choices.
+
+%\begin{comment}
+\section{Acknowledgements}
+We thank Jillian Fisher, Sachin Kumar, Angela Zhou, and the Berkeley NLP group for valuable discussions. 
+This work was conducted while A.S. was a Young Investigator at AI2.
+This material is based upon work partly funded by the DARPA CMO under Contract No.~HR001120C0124, by DARPA MCS program through NIWC Pacific (N66001-19-2-4031), by NSF DMS-2134012, IIS-2125201, IIS-2203097, by NSF CAREER Grant No.~IIS2142739, and an Alfred P.~Sloan Foundation Fellowship. Any opinions, findings and conclusions or recommendations expressed in this material are those of the authors and do not necessarily state or reflect those of the United States Government or any agency thereof.
+%\end{comment}
+
+\bibliography{iclr2024_conference}
+\bibliographystyle{iclr2024_conference}
+
+
+\newpage
+\appendix
+
+\section{Grammar Definition and Instantiation Details}
+\subsection{Equivalence Relation Definition}\label{app:equivalence_relation_def}
+Precisely, $p_1\sim p_2$ if and only if at least one of the following hold: $p_1 = p_2 = B_0$; or $p_i=B_0'(d_i, s_i)$ with $d_1=d_2$; or $p_i=B_1(d_i, s_i, f_i)$ with $d_1=d_2$; or $p_i = B_2^{(n)}(X_{1,i},\ldots,X_{n,i}, c_i)$ with $X_{j, 1}\sim X_{j, 2} \ \forall 1\leq j \leq n$; or $p_i = B_3^{(n)}(d_i,j_{1,i},\ldots,j_{n,i},s_1,s_2,c,f)$ where $d_1=d_2$ and $j_{k,1}=j_{k, 2} \ \forall 1\leq k\leq n$. It is possible that generated formats equivalent in their string representation are not equivalent according to this equivalence relation.
+
+\subsubsection{Visualization of Prompt Format's Parsing and Full Format Generation}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\linewidth]{figures/Prompt_Formatting_Visualization_with_Answer.pdf}
+    \caption{Visualization of a complex prompt format showing its parsing and which constants or functions affect each part of the format.}
+    \label{fig:visualization}
+\end{figure}
+
+Figure \ref{fig:visualization} shows a visualization of how a complex format is parsed using our defined grammar. A full prompt consists of an instruction, n few-shots and a data point to solve. For example, if the instruction was \texttt{Given a sentence and two words that appear in it, answer which one of the two (A or B) appeared first in the sentence.}, a full prompt may look as follow. Note that we always use \texttt{\textbackslash n\textbackslash n} as space character between instruction and few-shots. The example below shows a 1-shot prompt. It is simply illustrative and does not correspond to any of the tasks considered.
+
+\begin{center}
+{
+\small
+\centering
+\noindent\fbox{%
+    \parbox{0.95\linewidth}{%
+\texttt{Given a sentence and two words that appear in it, answer which one of the two (A or B) appeared first in the sentence.}\\
+
+\texttt{The quick brown fox jumps\\
+OPTIONS:}\\
+\texttt{CHOICE (A): fox ; CHOICE (B): brown}\\
+\texttt{ANSWER: B}\\
+
+\texttt{Over the lazy dog\\
+OPTIONS:}\\
+\texttt{CHOICE (A): lazy ; CHOICE (B): dog\\
+ANSWER: }
+    }%
+}
+}
+\end{center}
+
+\toolname{} forces all instantiations of a multiple choice variable to change jointly to maintain coherence, and this includes text in the instruction. Therefore, when changing the option items from A and B to I and II, the prompt will be generated as follows.
+
+\begin{center}
+{
+\small
+\centering
+\noindent\fbox{%
+    \parbox{0.95\linewidth}{%
+\texttt{Given a sentence and two words that appear in it, answer which one of the two (I or II) appeared first in the sentence.}\\
+
+\texttt{The quick brown fox jumps\\
+OPTIONS:}\\
+\texttt{CHOICE (I): fox ; CHOICE (II): brown}\\
+\texttt{ANSWER: II}\\
+
+\texttt{Over the lazy dog\\
+OPTIONS:}\\
+\texttt{CHOICE (I): lazy ; CHOICE (II): dog\\
+ANSWER: }
+    }%
+}
+}
+\end{center}
+
+\subsection{Allowed values for each set $\mathcal{S}_1, \mathcal{S}_2$, $\mathcal{C}$, $\mathcal{F}_\text{casing}$, $\mathcal{F}_\text{item}$}\label{app:action_values_considered}
+
+\begin{footnotesize}
+\begin{align*}
+    \mathcal{S}_1&=\mathtt{\{ '', '\ ', '\backslash n', ' \backslash n', '\ --\ ', '\ \ ', ';\ \backslash n', '\ ||\ ', '\ <sep>\ ', '\ --\ ', ',\ ', '\ \backslash n\ ', '\ ,\ ', '\backslash n\ ', '.\ ', '\ ,\ \ ' \}}\\ % ['', ' ', '\n', ' \n', ' -- ', '  ', '; \n', ' || ', ' <sep> ', ' -- ', ', ', ' \n ', ' , ', '\n ', '. ', ' ,  ']
+    \mathcal{S}_2&=\mathtt{\{'', '\ ', '\ \ ', `\backslash t'\}} \text{\ (no space, single space, double space, tab)}\\ % ['', ' ', '  ', '\t']
+    \mathcal{C}&=\mathtt{\{ '', ':::\ ', '::\ ', ':\ ', '\ \backslash n \backslash t', '\backslash n\ \ \ ', '\ :\ ', '\ -\ ', '\ ', '\backslash n\ ', '\backslash n \backslash t', ':', '::', '-\ ', '\backslash t' \}}\\ % ['', '::: ', ':: ', ': ', ' \n\t', '\n    ', ' : ', ' - ', ' ', '\n ', '\n\t', ':', '::', '- ', '\t']
+    \mathcal{F}_\text{casing}&=\mathtt{\{f(x)=x, f(x)=x.title(), f(x)=x.upper(), f(x)=x.lower()\}}\\ % ['lambda x: x', 'lambda x: x.title()', 'lambda x: x.upper()', 'lambda x: x.lower()']
+    \mathcal{F}_\text{item}&=\{x\mapsto f(g(x)) \ | \ \text{ such that } f\in\mathcal{F}_\text{item1} \wedge g\in\mathcal{F}_\text{item2} \}\\
+    \mathcal{F}_\text{item1} &= \mathtt{\{x \mapsto(x), x \mapsto x., x \mapsto x), x \mapsto x\textvisiblespace), x \mapsto [x], x \mapsto <x> \}} \\ % wrapper = item1
+    \mathcal{F}_\text{item2}&=\mathtt{\{x \rightarrow x + 1, x \rightarrow 'A' + x, x \rightarrow 'a' + x,}\\ &\mathtt{ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ x \rightarrow 0x215F + x + 1, x \rightarrow ROMAN[x].lower(), x \rightarrow ROMAN[x].upper()\}}
+\end{align*}
+\end{footnotesize}
+
+Enumerations are indexed from (i.e., ``1, 2, 3'' rather than ``0, 1, 2''). $\mathtt{ROMAN[x]}$ represents the Roman numerals written in regular ASCII characters. 
+\texttt{`0x215F'+x} represent the series of Unicode characters for Roman numerals. \textvisiblespace \ denotes a spacing character for clarity.
+
+\subsection{Restrictions to Prompt Formats Spaces and Separators' Combinations}\label{app:holistic_restrictions}
+We define several restrictions to ensure format naturalness. Users can additionally customize \toolname{} by defining their own rules and restrictions between values. Our rules are as follows:
+
+\begin{itemize}
+    \item If $B_2(X_1,\!\ldots,\!X_n,\!c)$ where $c$ does not contain a newline, then each $X_i$'s separators and any subcomponents' separators should not contain a newline.
+    \item Similar to the rule above, if $B_3^{(n)}(d,j_1,\ldots,j_n, s_1, s_2, c, f_1, f_2)$ such that some separator contains a newline (i.e. $s_1$ contains a newline and/or $s_2$ contains a newline) then the space $c$ must also contain a newline. %  not (('\n' in spacing_values['chosen_separator'] or '\n' in spacing_values['chosen_separator_text_and_option']) and '\n' not in spacing_values['chosen_space']) = not ((A or B) and not C) = not (A or B) or C
+    \item For $B_1(d,s,f):=f(d)s\mathtt{<text>}$, $s$ must not be the empty string (i.e., there has to be some separation between descriptor and text).
+    \item Having $c$ be an empty string space in $B_2^{(n)}$ is only allowed if the first $n-1$ components are $B_1$ fields with an empty \texttt{<text>}. Similarly, the newline restrictions mentioned above only apply if the \texttt{<text>} is not empty. This rarely happens in prompt formats, but there are formats such as \texttt{Question: <text> Options: A. <text> B. <text>} where the \texttt{Options:} do not have a corresponding field.
+\end{itemize}
+
+\subsection{Thompson Sampling Priors}\label{app:informative_priors}
+For the first exploration (i.e., finding the best-performing prompt format), we set an informative prior $\text{Beta}(\alpha, \beta):=\text{Beta}\left(\max\left(\frac{\beta \cdot x}{1 - x}, 1.1\right), 5\right)$ for all arms $p_i$, where $x$ is the original format's accuracy. %This derivation is explained below. 
+Our goal is to set an informative prior where the expected value of the prior distribution is the original format accuracy $x$, since a priori it is the only information we have about performance. This restricts the parameters as follows:
+\begin{align*}
+    \mathds{E}[\text{Beta}(\alpha, \beta)] = \frac{\alpha}{\alpha+\beta} &= x\\
+    \alpha &= \alpha\cdot x + \beta\cdot x \\
+    \alpha &= \frac{\beta \cdot x}{1 - x}
+\end{align*}
+Since $\beta$ will modulate how confident is the prior, and we want to avoid the model being overconfident, we fix $\beta=5$. Because we want to have an informative prior $\text{Beta}(\alpha, \beta)$ with a Gaussian-like PDF, we force $\alpha > 1$ and $\beta > 1$. In extreme cases, forcing $\alpha > 1$ might alter the expected value.
+The first exploration's priors are thus exactly $\text{Beta}(\alpha, \beta)$ with $\alpha = \max\left(\frac{\beta \cdot x}{1 - x}, 1.1\right)$ and $\beta = 5$ for all arms $p_i$. 
+
+For the second exploration (i.e., finding the worst-performing prompt format), the model has access to the first explorations' counters $S_i^{(E/B)}$ and $N_i^{(E/B)}$. Therefore, we set the second exploration's priors to be \mbox{$\text{Beta}\left(\alpha + S_i^{(E/B)}, \beta + \left(N_i^{(E/B)} - S_i^{(E/B)}\right)\right)$}.
+
+
+\section{Additional Experiments' Information and Plots}
+\subsection{Task selection}\label{app:selection}
+We use a number of heuristics to filter Super-NaturalInstructions tasks to our set of \tbdone{53} evaluation tasks. Datasets should have at least 1000 samples to be considered. We also remove tasks whose instructions are too long (over 3,000 characters) and datasets with inputs longer than 2,000 characters, given that this makes performing inference at scale intractable. We also filter datasets whose valid outputs include more than 20 different strings, given that we focus on classification tasks.
+
+We also removed tasks where we found a priori performance on the task was 0\% accuracy using LLaMA-2-7B 1-shot. Some Super-NaturalInstructions tasks are derived from the same original dataset, but ask different questions. We did not include more than 4 tasks from the\,same\,original\,dataset.
+
+Finally, we also searched for having socially impactful tasks. Those tasks were the only Super-NaturalInstructions tasks where we included a format if one was not provided by the dataset.
+
+The selected tasks were the following \tbdone{53}: \texttt{task050, task065, task069, task070, task114, task133, task155, task158, task161, task162, task163, task190, task213, task214, task220, task279, task280, task286, task296, task297, task316, task317, task319, task320, task322, task323, task325, task326, task327, task328, task335, task337, task385, task580, task607, task608, task609, task904, task905, task1186, task1283, task1284, task1297, task1347, task1387, task1419, task1420, task1421, task1423, task1502, task1612, task1678, task1724}.
+
+% \newpage
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.4\linewidth]{figures/figures_rebuttal/scatter_spread_Llama-2-7b-hf_Llama-2-70b-hf_rankscore_.pdf}
+    \caption{Comparison between Llama-2-7B and Llama-2-70B spreads. Llama-2-70B was computed using 4bit quantization \citep{dettmers2022gptint}.}
+    \label{fig:perf_spread_llama7b_70b}
+\end{figure}
+
+\subsection{Additional Results for Section \ref{sec:format-variance-exp}}\label{app:additional-format-variance-exp}
+
+\begin{table}[h]
+\centering
+\caption{Ratio of prompt format pairs $(p_1, p_2)$ such that if $p_1$ is worse than $p_2$ using model $M_1$, then the same trend holds for $M_2$.}\label{table:relative_ordering_rankscore}
+\begin{tabular}{@{}ccc@{}}
+\toprule
+\begin{tabular}[c]{@{}c@{}}Model 1 \\($M_1$) \end{tabular}  & \begin{tabular}[c]{@{}c@{}}Model 2 \\($M_2$) \end{tabular}       & \begin{tabular}[c]{@{}c@{}}Performance Relative \\ Ordering Preservation\end{tabular} \\ \midrule
+Llama-2-7b  & Llama-2-13b      & 57.46\%                                                                                \\
+Llama-2-7b  & Falcon-2-7b      & 55.91\%                                                                                \\
+Falcon-7b & Falcon-7b-Inst & 61.11\%                                                                                \\ \bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[h]
+    \centering
+\begin{subfigure}[t]{0.48\linewidth}
+    \includegraphics[width=\linewidth,valign=t]{figures/figures_oct_12/probability_of_prompt_being_better_then_worse_rankscore.pdf}
+    \caption{Option ranking metric.}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.48\linewidth}
+    \includegraphics[width=\linewidth,valign=t]{figures/probability_of_prompt_being_better_then_worse_rankscore_nshot_1.pdf}
+    \caption{Exact prefix matching metric.}
+\end{subfigure}
+    \caption{Probability of a prompt $p$ being worse than $p'$ by at least $d$ points using model $M'$, given that prompt $p$ was \textit{better} than prompt $p'$ when using model $M$.}
+    \label{fig:no_prompt_is_better}
+\end{figure}
+
+\paragraph{Formats are not inherently good or bad.}\label{app:relative_ordering}
+Table~\ref{table:relative_ordering_rankscore} shows that if format $p_1$ has lower performance than format $p_2$ under model $M$, there is $<0.62$ probability that this trend would hold under another model $M'$ (random chance is $0.5$). This weak relative order preservation suggests that prompt format performance in a model may not be extrapolated to a different model, or in other words, that there are no inherently good or bad formats. \editmel{This finding is further supported by Figure~\ref{fig:no_prompt_is_better}, which shows that findings of a format being better or worse than another are often inconsistent across models.}
+
+\paragraph{Experiments with exact prefix matching accuracy.}
+Here we show results with using exact prefix matching to compute accuracy. 
+% We believe having multiple metrics is important to show how each one impacts the final spread. 
+Often, failures in prefix matching are associated with degeneration, i.e., cases where the model does not answer any of the valid options, motivating the use of ranking accuracy. 
+Degeneration makes models (specially smaller models) more unlikely to have high accuracy out of the box. As seen in Figure~\ref{fig:edge_probability}, prefix matching is linked to having higher changes when performing atomic changes. Moreover, exact prefix matching can lead to lower performance as generation is less constrained (see Figure~\ref{fig:comparing_accuracy}). \editmel{Table~\ref{table:atomic_changes_genscore} shows examples of atomic changes yielding large accuracy changes with exact prefix matching metric.}
+
+Figure~\ref{fig:perf_spread_nshots_genscore} shows spread remains regardless of model size increase, architecture change, or number of few-shot examples also when using exact prefix matching as accuracy metric. In line with the results shown for probability ranking in Section~\ref{sec:format-variance-exp}, Figure~\ref{fig:model_flip_perf_genscore} shows that the probability of reversing performance trends between two models just by changing prompt remains high when using exact prefix matching as metric. Strikingly, spread is significantly higher than in the probability ranking setting (see Figure~\ref{fig:perf_spread_boxplot_genscore}), with median spread ranging from 12 to 28 accuracy points depending on the model used. This further motivates the need for running \toolname{} when benchmarking models with this accuracy metric. This increased spread may be partly due to degeneration, as we will detail next.
+
+\begin{figure}[h]
+  \begin{subfigure}[t]{0.32\linewidth}
+    \includegraphics[width=\linewidth, valign=t]{figures/figures_rebuttal/scatter_spread_Llama-2-7b-hf_Llama-2-13b-hf_genscore_.pdf}%{figures/exact_matching_prefix/scatter_spread_Llama-2-7b-hf_Llama-2-13b-hf_genscore_.pdf}
+    \caption{Llama-2-7B vs. 13B}\label{fig:perf_spread_llama7b_13b_genscore} % perf_spread_llama7b_13b
+  \end{subfigure}\hfill
+  \begin{subfigure}[t]{0.32\linewidth}
+    \includegraphics[width=\linewidth, valign=t]{figures/figures_rebuttal/scatter_spread_falcon-7b_falcon-7b-instruct_genscore_.pdf}
+    \caption{Falcon-7B vs. 7B-Instruct}\label{fig:perf_spread_falcon_7b_inst_genscore} % perf_spread_falcon_7b_inst
+  \end{subfigure}\hfill
+  \begin{subfigure}[t]{0.32\linewidth}
+    \includegraphics[width=\linewidth, valign=t]{figures/figures_rebuttal/scatter_spread_nshot_1_5_genscore_.pdf}%{figures/exact_matching_prefix/scatter_spread_nshot_1_5_genscore_.pdf}
+    \caption{1-\,vs.\,5-shot\,(same\,task, model)}\label{fig:perf_spread_nshots_genscore}  % perf_spread_nshots
+  \end{subfigure}\hfill
+  \caption{Spread comparison between evaluating the same task under different models or n-shots using exact prefix matching as accuracy metric.}
+\end{figure}
+
+\begin{figure}[h]
+\begin{minipage}[b]{0.48\linewidth}
+    \includegraphics[width=\linewidth, valign=t]{figures/figures_oct_12/boxplot_perf_spread_genscore_.pdf}
+    \caption{Spread across models and $n$-shots. Exact prefix matching metric.
+    % \as{this is averaging over all of the tasks we evaluate on?}\mel{the boxplot has one data point per task, yes}
+    }\label{fig:perf_spread_boxplot_genscore}
+\end{minipage}\hfill
+\begin{minipage}[b]{0.49\linewidth}
+\centering
+\includegraphics[width=\linewidth, valign=t]{figures/figures_oct_12/probability_of_model_being_better_then_worse_genscore.pdf}
+\caption{Probability that model $M$ performs \textit{worse} than $M'$ by at least $d$ when using format $p'$, given that $M$ performed \textit{better} than $M'$ by at least $d$ using format $p$. \tbdone{53} tasks, 1- and 5-shot. Exact prefix matching metric.}\label{fig:model_flip_perf_genscore}
+    %\caption{\textit{Performance spread across prompt formats.} Metric used is ranking between valid options.}\label{fig:perf_spread}
+\end{minipage}
+\end{figure}
+
+\begin{figure}[h!]
+\begin{subfigure}[t]{0.48\linewidth}
+    \includegraphics[width=\linewidth]{figures/figures_oct_12/boxplot_accuracy_rankscore_instructioninduction_False.pdf}
+    \caption{Accuracy boxplot for the selected 53 Super Natural-Instructions tasks, option ranking metric.}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.48\linewidth}
+    \includegraphics[width=\linewidth]{figures/figures_oct_12/boxplot_accuracy_genscore_instructioninduction_False.pdf}
+    \caption{Accuracy boxplot selected 53 Super Natural-Instructions tasks, exact prefix matching metric.}
+\end{subfigure}
+\caption{Accuracy metric used can strongly impact final performance. 53 Super Natural-Instructions tasks shown. Ranking accuracy yields higher accuracies overall.%\todo{MSCLAR-GENSCORE Update when Falcon finishes.}
+}\label{fig:comparing_accuracy}
+\end{figure}
+
+\begin{table}[h]
+\centering
+\footnotesize
+\caption{Examples of atomic changes' impact on accuracy using prefix matching (probability ranking shown in Table~\ref{table:atomic_changes}). \texttt{\{\}} represents a text field; $p_2$ yields higher accuracy than $p_1$ for all tasks.}\label{table:atomic_changes_genscore}
+\begin{tabular}{@{}cp{4.2cm\ttfamily\tiny}p{4.2cm\ttfamily\tiny}ccc@{}}
+\toprule
+Task Id & \rmfamily \footnotesize Prompt Format 1 ($p_1$)                                                                                                                                                                     & \rmfamily \footnotesize Prompt Format 2 ($p_2$)                                                                                                                                                                        & Acc $p_1$ & Acc $p_2$ & Diff. \\ \toprule \midrule
+task213    & Title: \{\} Sentence\textless{}A\textgreater{}: \{\} || Sentence\textless{}B\textgreater{}: \{\} || Sentence\textless{}C\textgreater{}: \{\} || Sentence\textless{}D\textgreater{}: \{\} Choices: \textbackslash{}n \textless{}i\textgreater{}::: \{\} \textbackslash{}n \textless{}ii\textgreater{}::: \{\} Answer: \{\}'                                                                                           & Title::\{\} Sentence\textless{}A\textgreater{}::\{\} || Sentence\textless{}B\textgreater{}::\{\} || Sentence\textless{}C\textgreater{}::\{\} || Sentence\textless{}D\textgreater{}::\{\} Choices::\textbackslash{}n \textless{}i\textgreater{}::: \{\} \textbackslash{}n \textless{}ii\textgreater{}::: \{\} Answer::\{\}'                                                                                          & 0.113  & 0.475  & 0.362     \\
+task296    & Sentence I ) : \{\} \textbackslash{}nSentence II ) : \{\} \textbackslash{}nSentence III ) : \{\} \textbackslash{}nSentence IV ) : \{\} \textbackslash{}nSentence V ) : \{\} \textbackslash{}nSentence VI ) : \{\} \textbackslash{}nSentence VII ) : \{\} \textbackslash{}nSentence VIII ) : \{\} \textbackslash{}nSentence IX ) : \{\} \textbackslash{}nSentence X ) : \{\} , I. : \{\} , II. : \{\} , Answer: \{\}' & Sentence I ) : \{\} \textbackslash{}nSentence II ) : \{\} \textbackslash{}nSentence III ) : \{\} \textbackslash{}nSentence IV ) : \{\} \textbackslash{}nSentence V ) : \{\} \textbackslash{}nSentence VI ) : \{\} \textbackslash{}nSentence VII ) : \{\} \textbackslash{}nSentence VIII ) : \{\} \textbackslash{}nSentence IX ) : \{\} \textbackslash{}nSentence X ) : \{\} , 1. : \{\} , 2. : \{\} , Answer: \{\}' & 0.201  & 0.522  & 0.321     \\
+task905    & Tweet::: \{\}; \textbackslash{}nLabel::: \{\}; \textbackslash{}nAnswer::: \{\}'                                                                                                                                                                                                                                                                                                                                      & Tweet::\{\}; \textbackslash{}nLabel::\{\}; \textbackslash{}nAnswer::\{\}'                                                                                                                                                                                                                                                                                                                                           & 0.252  & 0.559  & 0.307     \\
+task317    & Passage:: \{\} \textbackslash{}nAnswer:: \{\}'                                                                                                                                                                                                                                                                                                                                                                       & Passage::\{\} \textbackslash{}nAnswer::\{\}'                                                                                                                                                                                                                                                                                                                                                                        & 0.245  & 0.546  & 0.301     \\
+task280    & passage \{\}\textbackslash{}n answer \{\}'                                                                                                                                                                                                                                                                                                                                                                           & passage:\{\}\textbackslash{}n answer:\{\}'                                                                                                                                                                                                                                                                                                                                                                          & 0.332  & 0.612  & 0.28      \\
+task050    & SENTENCE - \{\} \textbackslash{}nQUESTION - \{\} \textbackslash{}nANSWER - \{\}'                                                                                                                                                                                                                                                                                                                                     & SENTENCE\textbackslash{}n\textbackslash{}t\{\} \textbackslash{}nQUESTION\textbackslash{}n\textbackslash{}t\{\} \textbackslash{}nANSWER\textbackslash{}n\textbackslash{}t\{\}'                                                                                                                                                                                                                                       & 0.244  & 0.504  & 0.26      \\
+task070    & Beginning - \{\}\textbackslash{}nMiddle {[}I{]}\{\} , Middle {[}II{]}\{\}\textbackslash{}nEnding - \{\}\textbackslash{}nAnswer - \{\}'                                                                                                                                                                                                                                                                               & Beginning - \{\}\textbackslash{}nMiddle I)\{\} , Middle II)\{\}\textbackslash{}nEnding - \{\}\textbackslash{}nAnswer - \{\}'                                                                                                                                                                                                                                                                                        & 0.143  & 0.3    & 0.157    \\ \bottomrule
+\end{tabular}
+\end{table}
+
+
+\paragraph{Degeneration.}\label{sec:degeneration}
+Sometimes when a model does not generate the correct answer with exact prefix matching, it also does not generate a valid response, i.e. it degenerates. We will now quantify this phenomenon using 53 SuperNaturalInstructions classification and multiple choice tasks.
+
+Given a model, a task, and a format, let the \textit{centered mass} be the ratio of examples where the model's output matched with any valid option (regardless of correctness). Table~\ref{tab:degeneration} shows that the correlation between accuracy and centered mass is moderate or high depending on the model. This suggests that very often when a model does not return a valid answer, it does not return any valid answer at all. This is especially true for Falcon models, where we observe an almost perfect correlation between accuracy and centered mass. In conclusion, prompt format chosen often do not solely affect accuracy, but they also affect the frequency in which a model is actually able to perform a task. This will especially affect tasks for which there are no alternative metrics. Further research may focus specifically on targeting features that cause degeneration.
+
+\begin{table}[h]
+\caption{Correlation between accuracy using exact prefix matching and the centered mass (the opposite of degeneration). 53 tasks, 10 formats each, evaluated on 1000 samples.%MSCLAR-GENSCORE %\todo{Update when Falcon finishes running.}
+}
+    \centering
+\begin{tabular}{@{}cccc@{}}
+\toprule
+Model          & n-shot & \begin{tabular}[c]{@{}c@{}}correlation between accuracy \\ \& 
+ and centered mass\end{tabular} & p-value   \\ \midrule
+Llama-2-7b             & 1                          & 0.702                                                                                          & 5.1E-77                     \\
+Llama-2-7b             & 5                          & 0.762                                                                                          & 4.9E-98                     \\
+Llama-2-13b            & 1                          & 0.639                                                                                          & 5.8E-61                     \\
+Llama-2-13b            & 5                          & 0.662                                                                                          & 9.2E-67                     \\
+falcon-7b                 & 1                          & 0.936                                                                                          & 7.1E-233                    \\
+falcon-7b                 & 5                          & 0.933                                                                                          & 8.4E-228                    \\
+falcon-7b-instruct        & 1                          & 0.962                                                                                          & 3.6E-289                    \\
+falcon-7b-instruct        & 5                          & 0.958                                                                                          & 5.5E-277                    \\ \bottomrule
+\end{tabular}\label{tab:degeneration}
+\end{table}
+
+\paragraph{Experiments with Instruction Induction tasks.}
+All experiments thus far focused solely on classification tasks. We will now focus on tasks that require generating (short) text, and cannot be framed as classification tasks. We selected 10 tasks from Instruction Induction~\citep{honovich2022instruction} that require generating a unique, valid string to be considered a correct response. Examples include identifying the second letter of a word, adding numbers, or answering a synonym to a given word. Instruction Induction tasks also show a wide range of difficulty, resulting in varied settings to be analyzed (see Figure~\ref{fig:boxplot_accuracy_instind}). Given that the collection does not contain human-generated formats, we applied a simple `\texttt{Input:\hspace{3pt}\{\}\textbackslash n Output:\hspace{3pt}\{\}}' format. Results for 1-shot and 5-shot settings show spread is still high across models and n-shot choices (see Figure~\ref{fig:instind_results}). 
+
+Tasks are: \texttt{antonyms, diff, first\_word\_letter, larger\_animal, letters\_list, num\_to\_verbal, second\_word\_letter, singular\_to\_plural, sum, synonyms}.
+
+\begin{figure}[h]
+  \centering
+  \begin{subfigure}[t]{0.32\linewidth}
+    \includegraphics[width=\linewidth, valign=t]{figures/figures_rebuttal/scatter_spread_Llama-2-7b-hf_Llama-2-13b-hf_genscore__instructioninduction.pdf}
+    \caption{Llama-2-7B vs. 13B}\label{fig:perf_spread_llama7b_13b_genscore_instind} % perf_spread_llama7b_13b
+  \end{subfigure}\hfill
+  \begin{subfigure}[t]{0.32\linewidth}
+    \includegraphics[width=\linewidth, valign=t]{figures/figures_rebuttal/scatter_spread_falcon-7b_falcon-7b-instruct_genscore__instructioninduction.pdf}
+    \caption{Falcon-7B vs. 7B-Instruct}\label{fig:perf_spread_falcon_7b_inst_genscore_instind} % perf_spread_falcon_7b_inst
+  \end{subfigure}\hfill
+    \begin{subfigure}[t]{0.32\linewidth}
+    \includegraphics[width=\linewidth, valign=t]{figures/figures_rebuttal/scatter_spread_nshot_1_5_genscore__instructioninduction.pdf}
+    \caption{1-\,vs.\,5-shot\,(same\,task, model)}\label{fig:perf_spread_nshots_genscore_instind}  % perf_spread_nshots
+  \end{subfigure}\hfill
+  \caption{Spread comparison between evaluating the same task under different models or n-shots for Instruction Induction tasks. Exact prefix matching used as accuracy metric.}\label{fig:instind_results}
+\end{figure}
+\begin{figure}[h]
+    \centering
+    \begin{subfigure}[t]{0.48\linewidth}
+\includegraphics[width=\linewidth]{figures/instruction_induction/boxplot_perf_spread_genscore__instructioninduction.pdf}
+    \caption{Spreads across models and $n$-shots.}
+    \label{fig:boxplot_spread_instind}        
+    \end{subfigure}
+    \begin{subfigure}[t]{0.48\linewidth}
+\includegraphics[width=\linewidth]{figures/instruction_induction/boxplot_accuracy_genscore_instructioninduction_True.pdf}
+    \caption{Accuracy variance by model}
+    \label{fig:boxplot_accuracy_instind}        
+    \end{subfigure}
+\caption{Instruction Induction tasks' spreads and accuracy across models. Exact prefix matching is used as accuracy metric.}\vspace{-3mm}
+\end{figure}
+
+\editmel{\paragraph{Experiments with continuous metrics in open-ended text generation tasks.} Throughout the paper we focus on tasks with a single valid output, whether in classification tasks or in short-text generation tasks. This decision is intentional, since it guarantees that a variation in the metric truly represents a variation in model performance. We have shown that spread remains high when considering option ranking or exact prefix matching as accuracy metric.
+
+%mean std median 75percentile max
+%0.09088512393206027 0.03960886399761089 0.08919329821744745 0.10433142227410744 0.19639747653909584
+%0.12182697682271972 0.10009922151542322 0.08383977177886312 0.1272510023071538 0.37180752154851515
+%0.06565268929941316 0.03354887910012768 0.05307518455386162 0.09350269167125227 0.12513281124830256
+%0.07053144849972291 0.0381941450535564 0.06623821192979817 0.09633596509695053 0.13337247258424756
+
+Since LLMs are often used in more open-ended generation contexts, we will now explore the performance variance across prompt formats when considering sentence-length generation tasks (e.g. generate the next sentence of a story, given the four initial sentences of a story, generate a question whose answer is the sentence given). To analyze the automatic generations, we use two widely used metrics: ROUGE-L \citep{lin2004rouge}, and BERTScore \citep{zhang2019bertscore}. The first is an n-gram-based metric, and the latter is a model-based metric, and both are $[0, 1]$ metrics where higher is better. Figure~\ref{fig:boxplot_continous_metrics} shows that variance remains high for LLaMA-2-7B regardless of the metric and the number of n-shots considered, with LLaMA-2-7B 5-shot having 25\% of tasks with a ROUGE-L spread of 0.098 or higher, and a BERTScore spread of 0.09 or higher.
+
+We observe that the median spread is sometimes smaller than in the accuracy tasks. This may be because although ROUGE, BERTScore, and accuracy are all $[0, 1]$ metrics, typical metric values may be different, which may in turn affect the final spread (an absolute difference). We leave it to future work to quantify the differences in style or content that each format may be inducing.
+
+Finally, it is worth noting that text generation metrics are known to be noisier, and thus not all metric decreases necessarily correspond to a true performance loss, as is the case for accuracy in single-valid-output tasks.
+\vspace{-4mm}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.6\linewidth]{figures/figures_rebuttal/boxplot_perf_rouge_bert_score_10_formats.pdf}
+    \caption{Spread across n-shots for LLaMA-2-7B, considering ROUGE-L and BERTScore metrics. 17 sentence-level open-generation tasks are considered, all extracted from SuperNatural Instructions. 10 prompt formats are considered for each task.}\label{fig:boxplot_continous_metrics}
+\end{figure}
+We used 17 SuperNatural Instructions tasks: \texttt{task037, task038, task040, task067, task071, task072, task105, task216, task223, task240, task348, task389, task443, task845, task1326, task1401, task1613}. We selected the 17 open-ended text generation tasks among those with at least 1000 samples, with some formatting present in the original task (e.g. \texttt{`Passage:' <text>}). We only considered tasks whose instructions were under 1,000 characters and that contained inputs no longer than 5,000 characters. 
+
+We limit generations to 50 tokens. To parse model outputs more faithfully, and given that none of our expected generations include a newline, we only consider a model's generation up to the first newline (excluding leading spaces and newlines in a given generation).
+This consideration is important given that often models start to generate a new data sample from scratch, immediately after generating the requested answer.
+}
+
+\editmel{
+\paragraph{Characterizing a model's accuracy distribution beyond spread.} Spread gives a quantitative jump in information with respect to informing a single point in the performance distribution since it measures the distribution range (maximum minus minimum). However, distributions that may share the same range, may yield a widely different probability of obtaining each value in the distribution. Figure~\ref{fig:accuracy_stdev} plots the accuracy distribution of 30 tasks, sorted in decreasing order by standard deviation. Tasks with high standard deviation reflect a higher likelihood of obtaining dissimilar values when making a formatting selection; Figure~\ref{fig:accuracy_stdev} shows that the median standard distribution is $\sigma\approx0.04$, which can be considered high in our context.}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.95\linewidth]{figures/figures_rebuttal/spread_distribution_ordered_by_stdev_1_Llama-2-7b-hf.pdf}
+    \includegraphics[width=0.95\linewidth]{figures/figures_rebuttal/spread_distribution_ordered_by_stdev_2_Llama-2-7b-hf.pdf}
+    \includegraphics[width=0.95\linewidth]{figures/figures_rebuttal/spread_distribution_ordered_by_stdev_3_Llama-2-7b-hf.pdf}
+    \caption{Accuracy distribution across 500 formats for 30 tasks evaluated on 250 samples each, sorted by standard deviation in decreasing order. LLaMA-2-7B 1-shot, option ranking metric.}
+    \label{fig:accuracy_stdev}
+    \vspace{-2mm}
+\end{figure}
+
+\editmel{
+\paragraph{On factors influencing spread besides prompt formatting.} We believe many factors beyond formatting may be influencing performance variance, but were unable to find a feature that reliably predicts spread. We found that the average prompt length in a task has a negligible correlation with its performance spread: $r=0.228$ ($p=1.4\times 10^{-7}$) for exact prefix matching metric, and $r=-0.022$ ($p=0.615$) for option ranking metric, when jointly considering all models and n-shots. Similarly, the standard deviation of the prompt length had negligible correlation with spread: $r=0.125$ ($p=0.004$) for exact prefix matching, and $r=-0.099$ ($p=0.024$) for option ranking metric. When considering each model individually, only LLaMA-2-7B with exact prefix matching showed a correlation $|r|>0.5$, with the average prompt length having a correlation $r=0.559$ $p=6.86\times 10^{-10}$. All other settings had $|r|<0.36$.
+}
+
+\newpage
+
+\subsection{PCA Examples}
+
+Section~\ref{sec:pca} systematically analyzes whether we can predict the prompt format that generated a given pre-softmax activation layer (i.e., prompt embeddings) by using solely its top-$n$ principal components. Figure~\ref{fig:pca_plots} shows the top two principal components for two different tasks where all 10 formats considered are easily identifiable solely with a prompt embedding's top two principal compoenents.
+
+\begin{figure}[h!]
+\includegraphics[width=.48\linewidth, valign=t]{figures/pca_random_order_metadataholistic_textdisabled_genscore_task385_search_model_Llama-2-7b-hf_nshot_1_numnodes_9_numsamples_1000_plot_0.pdf}
+\includegraphics[width=.48\linewidth, valign=t]{figures/pca_random_order_metadataholistic_textdisabled_genscore_task214_search_model_Llama-2-7b-hf_nshot_1_numnodes_9_numsamples_1000_plot_0.pdf}     
+\caption{Plot of the top two principal components of the last decoder layer of the prompt, as a representation of the output probability distribution. Two different tasks shown, with each prompt format shown in a different color.}\label{fig:pca_plots}
+\end{figure}
+
+%\newpage
+\subsection{Notable Features}\label{app:boxplot_by_feature}
+
+As discussed in Section~\ref{sec:individual_features}, sometimes the choice of a constant may lead to significantly different accuracy ranges. Figures~\ref{fig:boxplot_by_figure_genscore},\ref{fig:boxplot_by_figure_rankscore_1}, and \ref{fig:boxplot_by_figure_rankscore_2} show all strongly dissimilar choices of constants found on any given task, across 53 Super Natural-Instructions tasks, and on both accuracy metrics considered throughout the work. As can be appreciated, choices of constants do not consistently predict performance in isolation.
+
+%figures/boxplot_by_feature/boxplot_by_feature_value_genscore_13_task1297_Llama-2-7b-hf.pdf
+%figures/boxplot_by_feature/boxplot_by_feature_value_genscore_13_task213_Llama-2-7b-hf.pdf
+%figures/boxplot_by_feature/boxplot_by_feature_value_genscore_2_task1387_Llama-2-7b-hf.pdf
+%figures/boxplot_by_feature/boxplot_by_feature_value_genscore_2_task325_Llama-2-7b-hf.pdf
+%figures/boxplot_by_feature/boxplot_by_feature_value_genscore_2_task327_Llama-2-7b-hf.pdf
+%figures/boxplot_by_feature/boxplot_by_feature_value_genscore_2_task328_Llama-2-7b-hf.pdf
+%figures/boxplot_by_feature/boxplot_by_feature_value_genscore_2_task337_Llama-2-7b-hf.pdf
+%figures/boxplot_by_feature/boxplot_by_feature_value_genscore_2_task904_Llama-2-7b-hf.pdf
+%figures/boxplot_by_feature/boxplot_by_feature_value_genscore_2_task905_Llama-2-7b-hf.pdf
+%figures/boxplot_by_feature/boxplot_by_feature_value_genscore_7_task190_Llama-2-7b-hf.pdf
+%figures/boxplot_by_feature/boxplot_by_feature_value_genscore_8_task220_Llama-2-7b-hf.pdf
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.45\linewidth]{figures/boxplot_by_feature/boxplot_by_feature_value_genscore_2_task1387_Llama-2-7b-hf.pdf}
+    \includegraphics[width=0.45\linewidth]{figures/boxplot_by_feature/boxplot_by_feature_value_genscore_2_task325_Llama-2-7b-hf.pdf}
+    \includegraphics[width=0.45\linewidth]{figures/boxplot_by_feature/boxplot_by_feature_value_genscore_2_task327_Llama-2-7b-hf.pdf}
+    \includegraphics[width=0.45\linewidth]{figures/boxplot_by_feature/boxplot_by_feature_value_genscore_2_task328_Llama-2-7b-hf.pdf}
+    \includegraphics[width=0.45\linewidth]{figures/boxplot_by_feature/boxplot_by_feature_value_genscore_2_task337_Llama-2-7b-hf.pdf}
+\includegraphics[width=0.45\linewidth]{figures/boxplot_by_feature/boxplot_by_feature_value_genscore_2_task904_Llama-2-7b-hf.pdf}
+\includegraphics[width=0.45\linewidth]{figures/boxplot_by_feature/boxplot_by_feature_value_genscore_2_task905_Llama-2-7b-hf.pdf}
+\includegraphics[width=0.45\linewidth]{figures/boxplot_by_feature/boxplot_by_feature_value_genscore_7_task190_Llama-2-7b-hf.pdf}
+\includegraphics[width=0.45\linewidth]{figures/boxplot_by_feature/boxplot_by_feature_value_genscore_13_task1297_Llama-2-7b-hf.pdf} 
+\includegraphics[width=0.45\linewidth]{figures/boxplot_by_feature/boxplot_by_feature_value_genscore_13_task213_Llama-2-7b-hf.pdf} 
+\includegraphics[width=0.45\linewidth]{figures/boxplot_by_feature/boxplot_by_feature_value_genscore_8_task220_Llama-2-7b-hf.pdf} 
+    \caption{Variance by feature value for Llama-7B 1-shot. Evaluated \tbdone{31} tasks with 500 formats each, and only plots with a significant difference between values are shown. Exact prefix matching accuracy metric.}
+    \label{fig:boxplot_by_figure_genscore}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+\includegraphics[width=0.45\linewidth]{figures/boxplot_by_feature/boxplot_by_feature_value_rankscore_2_task1283_Llama-2-7b-hf.pdf}
+\includegraphics[width=0.45\linewidth]{figures/boxplot_by_feature/boxplot_by_feature_value_rankscore_2_task1387_Llama-2-7b-hf.pdf}
+\includegraphics[width=0.45\linewidth]{figures/boxplot_by_feature/boxplot_by_feature_value_rankscore_2_task158_Llama-2-7b-hf.pdf
+}
+\includegraphics[width=0.45\linewidth]{figures/boxplot_by_feature/boxplot_by_feature_value_rankscore_2_task280_Llama-2-7b-hf.pdf
+}
+\includegraphics[width=0.45\linewidth]{figures/boxplot_by_feature/boxplot_by_feature_value_rankscore_2_task319_Llama-2-7b-hf.pdf
+}
+\includegraphics[width=0.45\linewidth]{figures/boxplot_by_feature/boxplot_by_feature_value_rankscore_2_task325_Llama-2-7b-hf.pdf
+}
+\includegraphics[width=0.45\linewidth]{figures/boxplot_by_feature/boxplot_by_feature_value_rankscore_2_task337_Llama-2-7b-hf.pdf
+}
+\includegraphics[width=0.45\linewidth]{figures/boxplot_by_feature/boxplot_by_feature_value_rankscore_2_task904_Llama-2-7b-hf.pdf
+}
+\includegraphics[width=0.45\linewidth]{figures/boxplot_by_feature/boxplot_by_feature_value_rankscore_7_task069_Llama-2-7b-hf.pdf}
+\includegraphics[width=0.45\linewidth]{figures/boxplot_by_feature/boxplot_by_feature_value_rankscore_7_task1612_Llama-2-7b-hf.pdf}
+\includegraphics[width=0.45\linewidth]{figures/boxplot_by_feature/boxplot_by_feature_value_rankscore_7_task190_Llama-2-7b-hf.pdf}
+    \caption{Variance by feature value for Llama-7B 1-shot.  Evaluated \tbdone{31} tasks with 500 formats each, and only plots with strongly significant differences are shown. Option ranking accuracy evaluation metric. Only $\mathcal{S}_1$ boxplots are shown here, see Figure \ref{fig:boxplot_by_figure_rankscore_2} for all others.}
+    \label{fig:boxplot_by_figure_rankscore_1}
+\end{figure}
+
+\clearpage
+\begin{figure}[h]
+    \centering
+\includegraphics[width=0.45\linewidth]{figures/boxplot_by_feature/boxplot_by_feature_value_rankscore_0_task328_Llama-2-7b-hf.pdf}
+\includegraphics[width=0.45\linewidth]{figures/boxplot_by_feature/boxplot_by_feature_value_rankscore_4_task1431_Llama-2-7b-hf.pdf}
+\includegraphics[width=0.45\linewidth]{figures/boxplot_by_feature/boxplot_by_feature_value_rankscore_9_task213_Llama-2-7b-hf.pdf}
+
+    \caption{Variance by feature value for Llama-7B 1-shot. Evaluated \tbdone{31} tasks with 500 formats each, and only plots with strongly significant differences are shown. Option ranking accuracy evaluation metric. See Figure \ref{fig:boxplot_by_figure_rankscore_1} for more plots.}
+    \label{fig:boxplot_by_figure_rankscore_2}
+\end{figure}
+
+\subsection{Thompson Sampling Results}
+\begin{figure}[h]
+    \centering
+\includegraphics[width=0.7\linewidth]{figures/figures_oct_12/ts_boxplot_perf.pdf}
+    \caption{Spreads found using Thompson Sampling for 320 formats, budget of 40000 evaluations. LLaMA-2-70b was evaluated with option ranking, and GPT3.5 with prefix matching given that we cannot access all logits.}
+    \label{fig:thompson_sampling_results}
+\end{figure}
+
+\input{worst_best_nodes_2}
+
+\newpage
+\section{Limitations}\label{sec:limitations}
+As defined by our grammar, all equivalent formats are semantically equivalent to human readers. However, some of them are more likely to be used by humans than others. Spaces and separators are inspired from naturally-occurring formats, but some values are more unusual, such as the spacing \prompt{<sep>} or the separator \prompt{::}. Contextual restrictions enable disallowing undesired combinations of e.g. spaces and separators. However, formats may have multiple valid parses, and some may be more prone than others to unnatural character combinations. For example, let a data sample be \prompt{`Passage: Lorem ipsum dolor sit amet. Answer: Yes'}. Depending on if we consider the full stop \prompt{.} to be part of the passage or the format, we may parse it as $B_2^{(2)}(B_1(\text{\prompt{Passage}}, \text{\prompt{'\!:\ \ '}}, id), B_1(\text{\prompt{Answer}}, \text{\prompt{'\!:\ \ '}}, id), \text{\prompt{' '}})$ or $B_2^{(2)}(B_1(\text{\prompt{Passage}}, \text{\prompt{'\!:\ \ '}}, id), B_1(\text{\prompt{Answer}}, \text{\prompt{'\!:\ \ '}}, id), \text{\prompt{'. '}})$. In this work, we choose the former parsing throughout tasks to ensure full sentences. This sometimes\footnote{Less than $20$\% of cases, based on a manual inspection of 10 formats across 20 tasks.} leads equivalent formats to have a less usual, yet trivially semantically equivalent resulting character combinations, e.g. $B_2^{(2)}(B_1(\text{\prompt{Passage}}, \text{\prompt{'\!:\ \ '}}, id), B_1(\text{\prompt{Answer}}, \text{\prompt{'\!:\ \ '}}, id), \text{\prompt{'; '}})$. This last format would have the following string form on the example above: \texttt{`Passage: Lorem ipsum dolor sit amet.; Answer: Yes'}. We observe high performance spread both in these cases and beyond them. Contextual relations may also restrict these cases if desired by the end user.
+
+Additionally, we focus our evaluation on tasks that have reasonably short input instructions and input field length (see task selection details in \ref{app:selection}). Future work may investigate on how input length affects final performance.
+
+
+\end{document}
