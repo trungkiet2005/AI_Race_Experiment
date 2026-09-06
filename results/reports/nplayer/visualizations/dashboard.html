@@ -175,7 +175,7 @@
     <h2>2. Đối chiếu lý thuyết N-Player vs thực nghiệm (baseline, β tối ưu)</h2>
     <p class="sub">
       "Lý thuyết" = tần suất chiến lược AU (luôn UNSAFE) tại phân phối dừng small-mutation-limit
-      (<code>N-Player/theory/stationary.py</code>, Z=100, cùng tham số cơ chế của run: n=3,
+      (<code>ai_race/theory_nplayer/stationary.py</code>, Z=100, cùng tham số cơ chế của run: n=3,
       s=1.5, b=4, c=1, B=100, W=9), với <b>β dò tìm bằng grid search</b> (log-scale, 200 điểm từ
       10⁻⁴ đến 10¹) để cực tiểu hóa tổng bình phương sai khác so với 3 điểm thực nghiệm — không
       chốt một β tùy ý. β tối ưu ở đây rất nhỏ (chọn lọc yếu, gần trôi dạt trung tính); ngay cả ở
@@ -256,7 +256,7 @@
     <code>nplayer-riskaware/</code>, model <code>qwen2.5-14b-instruct</code>, cả hai
     <code>run_phase = pilot</code>). Script sinh dữ liệu:
     <code>results/nplayer/analyze_nplayer_results.py</code>. Lý thuyết đối chiếu:
-    <code>N-Player/theory/</code>. Phân tích đầy đủ bằng văn xuôi:
+    <code>ai_race/theory_nplayer/</code>. Phân tích đầy đủ bằng văn xuôi:
     <code>results/nplayer/ANALYSIS_qwen2.5-14b-instruct.md</code>.
   </footer>
 </div>

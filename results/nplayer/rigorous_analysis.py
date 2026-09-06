@@ -41,7 +41,6 @@ import pandas as pd
 REPO_ROOT = Path(__file__).resolve().parents[2]
 RESULTS_DIR = Path(__file__).resolve().parent
 DERIVED_DIR = REPO_ROOT / "analysis" / "nplayer" / "derived"
-sys.path.insert(0, str(REPO_ROOT / "N-Player"))
 sys.path.insert(0, str(RESULTS_DIR))
 sys.path.insert(0, str(REPO_ROOT))
 
@@ -287,7 +286,7 @@ THEORY_MECHANISM_PARAMS = dict(n=3, s=1.5, b=4.0, c=1.0, B=100.0, W=9.0, z=100)
 
 
 def theory_beta_fit(empirical_by_risk: dict[float, float]) -> pd.DataFrame:
-    from theory.stationary import au_frequency
+    from ai_race.theory_nplayer.stationary import au_frequency
 
     betas = np.logspace(-4, 1, 200)
     rows = []
@@ -376,7 +375,7 @@ def main() -> None:
                 "mutation_regime": "small_mutation_limit",
                 "mutation_regime_caveat": (
                     "The finite-mutation rate mu is not applied anywhere in "
-                    "N-Player/theory (same documented scope limit as "
+                    "ai_race/theory_nplayer (same documented scope limit as "
                     "ai_race/theory/evolution.py) -- only the selection "
                     "intensity beta is searched here."
                 ),

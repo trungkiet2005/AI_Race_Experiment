@@ -9,7 +9,7 @@
     "z": 100
   },
   "mutation_regime": "small_mutation_limit",
-  "mutation_regime_caveat": "The finite-mutation rate mu is not applied anywhere in N-Player/theory (same documented scope limit as ai_race/theory/evolution.py) -- only the selection intensity beta is searched here.",
+  "mutation_regime_caveat": "The finite-mutation rate mu is not applied anywhere in ai_race/theory_nplayer (same documented scope limit as ai_race/theory/evolution.py) -- only the selection intensity beta is searched here.",
   "best_fit_beta": 0.0016070528182616384,
   "best_fit_sse": 0.06885106643711726,
   "empirical_unsafe_rate_by_risk": {

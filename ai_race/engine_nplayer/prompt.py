@@ -5,7 +5,7 @@ opponent to a list of co-players. ``str.format`` has no loop construct, so
 the "other companies" state, the per-round payoff reference table, and the
 round history are all pre-joined into multi-line blocks in Python and handed
 to the template as single placeholders -- the same strategy
-``FAIRGAME/src/prompt_creator.py`` uses for its own variable-length
+``vendor/FAIRGAME/src/prompt_creator.py`` uses for its own variable-length
 ``opponents`` list, just collapsed to one block per section instead of one
 placeholder per opponent (arbitrary N).
 

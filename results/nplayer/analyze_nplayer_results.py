@@ -2,13 +2,13 @@
 
 Not part of the N-player recording/analysis pipeline proper (see
 ``scripts/analyze_ai_race.py``'s docstring for why that analyzer is
-two-player-only, and ``N-Player/PAPER_ANALYSES_AND_PLAN.md`` item 17 for the
+two-player-only, and ``docs/nplayer-paper-analyses-and-plan.md`` item 17 for the
 still-open gap of a real N-player analyzer). This is a standalone script for
 one specific pass: descriptive stats over ``nplayer_nonpersona/`` (neutral
 baseline, N=3, risk treatments 0.1/0.6/0.9, 20 reps) and ``nplayer-riskaware/``
 (Eckel-Grossman risk-persona sweep R1-R6, symmetric across all 3 seats, same
 mechanism/seed, 2 reps), cross-checked qualitatively against
-``N-Player/theory``'s stationary-distribution predictions.
+``ai_race/theory_nplayer``'s stationary-distribution predictions.
 
 Both runs are ``run_phase="pilot"`` -- descriptive only, not confirmatory
 evidence (see the repo's ``CLAUDE.md``). Findings are written up in
@@ -30,7 +30,6 @@ import pandas as pd
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 RESULTS_DIR = Path(__file__).resolve().parent
-sys.path.insert(0, str(REPO_ROOT / "N-Player"))
 
 RISK_RE = re.compile(r"n3_risk_(\d+)__")
 
@@ -133,7 +132,7 @@ def main() -> None:
     print(baseline_turns.groupby(["risk", "position"])["unsafe"].agg(["mean", "count"]))
 
     print("\n" + "=" * 70, "\nTHEORY CROSS-CHECK: stationary AU frequency (n=3,s=1.5,b=4,c=1,B=100,W=9)\n", "=" * 70, sep="")
-    from theory.stationary import stationary_distribution
+    from ai_race.theory_nplayer.stationary import stationary_distribution
     for pr in (0.1, 0.6, 0.9):
         stationary = stationary_distribution(
             n=3, s=1.5, b=4.0, c=1.0, B=100.0, W=9.0, z=100, beta=0.1, pr=pr

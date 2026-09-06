@@ -10,7 +10,7 @@ Phân tích đầy đủ bằng văn xuôi (số liệu, diễn giải, giới h
 Script mô tả: [results/nplayer/analyze_nplayer_results.py](../../nplayer/analyze_nplayer_results.py).
 Script suy luận (hồi quy, phân loại chiến lược, theory-fit):
 [results/nplayer/rigorous_analysis.py](../../nplayer/rigorous_analysis.py) → [derived/](derived/).
-Đối chiếu lý thuyết: [N-Player/theory/](../../../N-Player/theory/) (điều kiện DSAI closed-form,
+Đối chiếu lý thuyết: [ai_race/theory_nplayer/](../../../ai_race/theory_nplayer/) (điều kiện DSAI closed-form,
 stationary distribution AS/AU/CS).
 
 > **Đây là PILOT, không phải confirmatory.** Run persona chỉ có 2 lần lặp/ô (~2 race độc lập/ô) —
@@ -22,7 +22,7 @@ stationary distribution AS/AU/CS).
 `analysis/frontier/` đối chiếu với 19 phân tích của một **nghiên cứu con người thật**
 (`arXiv-2607.26034v1`, xem `docs/paper-analyses-inventory.md`); N-player không có nghiên cứu
 con người tương ứng nào (bài báo đó chỉ chơi 2 người). Bảng dưới so mức độ nghiêm ngặt của phần
-**thực nghiệm LLM** (không tính phần lý thuyết N-Player thuần túy, đã đầy đủ ở `N-Player/theory/`):
+**thực nghiệm LLM** (không tính phần lý thuyết N-Player thuần túy, đã đầy đủ ở `ai_race/theory_nplayer/`):
 
 | Hạng mục | frontier (2-player) | nplayer (N=3) |
 |---|---|---|

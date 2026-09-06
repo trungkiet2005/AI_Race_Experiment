@@ -58,7 +58,7 @@ Phân bố outcome (thắng/thua/hòa) và full-tie rate gần như không đổ
 risk — risk chủ yếu ảnh hưởng đến *lựa chọn hành động*, không ảnh hưởng nhiều
 đến *cấu trúc kết quả cuộc đua*.
 
-### Đối chiếu với lý thuyết N-Player (`N-Player/theory`)
+### Đối chiếu với lý thuyết N-Player (`ai_race/theory_nplayer`)
 
 Thay vì chốt một β tùy ý, `rigorous_analysis.py::theory_beta_fit` **quét lưới
 β** (log-scale, 200 điểm từ 10⁻⁴ đến 10¹) và tìm β cực tiểu hóa tổng bình

@@ -1,9 +1,9 @@
 {
   "schema_version": "ai-race.results-catalog.v1",
-  "generated_utc": "2026-09-06T03:52:44.446330+00:00",
+  "generated_utc": "2026-09-06T04:49:48.866201+00:00",
   "canonical_root": "results/",
-  "file_count": 3820,
-  "total_bytes": 1321532471,
+  "file_count": 3829,
+  "total_bytes": 1321825247,
   "size_by_top_level": {
     "PAPER_FIGURE_CANDIDATES.md": {
       "files": 1,
@@ -15,7 +15,7 @@
     },
     "artifacts": {
       "files": 235,
-      "bytes": 29545494
+      "bytes": 29545783
     },
     "capacity_family": {
       "files": 18,
@@ -54,8 +54,8 @@
       "bytes": 844966
     },
     "nplayer": {
-      "files": 207,
-      "bytes": 138084886
+      "files": 216,
+      "bytes": 138377350
     },
     "open_source": {
       "files": 790,
@@ -67,11 +67,11 @@
     },
     "reports": {
       "files": 92,
-      "bytes": 7840879
+      "bytes": 7840921
     },
     "visualization_insight_full.md": {
       "files": 1,
-      "bytes": 27440
+      "bytes": 27421
     }
   },
   "manifest_count": 451,
@@ -2828,8 +2828,8 @@
     {
       "path": "artifacts/figure_gallery/redraw/README.md",
       "top_level": "artifacts",
-      "bytes": 16705,
-      "sha256": "7d9e9f1187f044613522fab7098c0b67412bde9850510df6a0dd78e858a2cb24"
+      "bytes": 16789,
+      "sha256": "6867c0c2ff61fc900694692bce519b9516398397a559016b00fe6393e2559a4f"
     },
     {
       "path": "artifacts/figure_gallery/redraw/tables/figA_human_reference.csv",
@@ -3008,8 +3008,8 @@
     {
       "path": "artifacts/figure_gallery/SELECTED_FOR_PAPER.md",
       "top_level": "artifacts",
-      "bytes": 19631,
-      "sha256": "be34a460b52f7564528aec0b64af1b320596ae2893166efabc14269460a720c1"
+      "bytes": 19836,
+      "sha256": "9abc17e3ead24d35dd3b3e800c576ebd884fbfee777efc40b35818bfa1ad5060"
     },
     {
       "path": "artifacts/figure_gallery/x10a_n3_rank_response.png",
@@ -18230,14 +18230,14 @@
     {
       "path": "nplayer/ANALYSIS_qwen2.5-14b-instruct.md",
       "top_level": "nplayer",
-      "bytes": 14153,
-      "sha256": "56e2281390ca390185a10402aa0988d5598046e5eeb44c57a3f14aff2f1ffefa"
+      "bytes": 14160,
+      "sha256": "1a0b10d3bd2cb78864deb0eb3363ba7abbaca2d021af6f435df7e3ebadd19b30"
     },
     {
       "path": "nplayer/analyze_nplayer_results.py",
       "top_level": "nplayer",
-      "bytes": 6491,
-      "sha256": "b399e59ee03027018f4662d030fb93f67a0c0128d66d6fb4f69000ebd52a34a7"
+      "bytes": 6470,
+      "sha256": "e1250b601c085ae48971e41de9ab5bc40425dec39122977bae8b0671aa8816d0"
     },
     {
       "path": "nplayer/nplayer-riskaware/ai_race_nplayer_all_models.csv",
@@ -19466,8 +19466,62 @@
     {
       "path": "nplayer/rigorous_analysis.py",
       "top_level": "nplayer",
-      "bytes": 17577,
-      "sha256": "17f6d1bf0257fd5ca586c54ab6464c3db2d216fd70dd332c356fe4dd2f1cf32c"
+      "bytes": 17552,
+      "sha256": "6472a3f4eba99d5ae27d6061576324b4d7395ebdfde427cd329f04fb2bcf2f09"
+    },
+    {
+      "path": "nplayer/theory_figures/early_dsai_n10.png",
+      "top_level": "nplayer",
+      "bytes": 29283,
+      "sha256": "9b21e814262b859edf0be36e022566f2fc8a53e687c155aecf004f8ecec040c6"
+    },
+    {
+      "path": "nplayer/theory_figures/early_dsai_n3.png",
+      "top_level": "nplayer",
+      "bytes": 29126,
+      "sha256": "181e57282eb9b506d266f956070ebd7b6d2df4fa8662433369c0ea2789ee1c26"
+    },
+    {
+      "path": "nplayer/theory_figures/early_dsai_n5.png",
+      "top_level": "nplayer",
+      "bytes": 29061,
+      "sha256": "9f593ba0a663ebf9bc6fc7bbdce7e7351cf26f8f8f2b4fafe23b870af6de40a6"
+    },
+    {
+      "path": "nplayer/theory_figures/late_dsai_n3.png",
+      "top_level": "nplayer",
+      "bytes": 33207,
+      "sha256": "52378316cc8b3f1c2aa9c4487e74f1d1a3deaacc07f45e8a1bdf9640eab02ca9"
+    },
+    {
+      "path": "nplayer/theory_figures/late_dsai_n4.png",
+      "top_level": "nplayer",
+      "bytes": 32978,
+      "sha256": "8eca970d87f8529bcfb4e1398d20ea7df2ce40362d507c3f1ec326efd2f162b6"
+    },
+    {
+      "path": "nplayer/theory_figures/late_dsai_n5.png",
+      "top_level": "nplayer",
+      "bytes": 32927,
+      "sha256": "ffb049f83739648dbd426f11736e7513722ac75fe68d1b4011e07a2ab947188d"
+    },
+    {
+      "path": "nplayer/theory_figures/late_dsai_n5_gamma0.0.png",
+      "top_level": "nplayer",
+      "bytes": 34071,
+      "sha256": "8adefc16e6a608884d5b2227fbfadf7d5543984213a9f0045770fa2e8f64b6c9"
+    },
+    {
+      "path": "nplayer/theory_figures/late_dsai_n5_gamma0.5.png",
+      "top_level": "nplayer",
+      "bytes": 34273,
+      "sha256": "e5e1844baa4dd7221806fcbfce752a8457020e8c010c303ba61c7f2889d22e19"
+    },
+    {
+      "path": "nplayer/theory_figures/late_dsai_n5_gamma1.0.png",
+      "top_level": "nplayer",
+      "bytes": 37577,
+      "sha256": "77d28520250697fe08d57f131648d61f7eaa09a6b29967545003cdce42193944"
     },
     {
       "path": "open_source/.gitkeep",
@@ -24512,8 +24566,8 @@
     {
       "path": "reports/nplayer/derived/theory_beta_fit_metadata.json",
       "top_level": "reports",
-      "bytes": 646,
-      "sha256": "144d61edc050c650797ba0ed1ce15b2ee5dbb9ead7deae2c4ab5b4ebc27cab62"
+      "bytes": 653,
+      "sha256": "2effdcbadfd72d543085e3fd163b0f01d18be29d63341bbc0460274978582ea4"
     },
     {
       "path": "reports/nplayer/derived/unsafe_rate_ci.csv",
@@ -24524,14 +24578,14 @@
     {
       "path": "reports/nplayer/report.md",
       "top_level": "reports",
-      "bytes": 4370,
-      "sha256": "1e4bbd2fed7b075d2c615033460068854e53a5ecac5b60b4afc8d436d66bc94c"
+      "bytes": 4391,
+      "sha256": "9fde53d57c3a232c575d946bf2530cc52c6bfe8659217f718fd06b78189b1b3a"
     },
     {
       "path": "reports/nplayer/visualizations/dashboard.html",
       "top_level": "reports",
-      "bytes": 28967,
-      "sha256": "312c987a8cfd0c97796d3d88404961830b93c56ac5aa36bdecb1c6838689926c"
+      "bytes": 28981,
+      "sha256": "dd664a81d58a5236f6e492c286dfafb23980c475a39bcc63f39e2d7a8eb33ee5"
     },
     {
       "path": "reports/nplayer/visualizations/data.json",
@@ -24794,8 +24848,8 @@
     {
       "path": "visualization_insight_full.md",
       "top_level": "visualization_insight_full.md",
-      "bytes": 27440,
-      "sha256": "909ddf59f221e567703ae516d8094648011da44e53b9be1c524c195115b8caff"
+      "bytes": 27421,
+      "sha256": "20c5d13e01628338eae1c947d1db5dd14534ee088d3ef28f08c14dbe2e05c3eb"
     }
   ]
 }

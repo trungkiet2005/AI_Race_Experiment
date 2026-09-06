@@ -4,8 +4,8 @@
 
 ## At a glance
 
-- Canonical files (excluding reproducible `_build/`): **3,820**
-- Total canonical size: **1260.31 MiB**
+- Canonical files (excluding reproducible `_build/`): **3,829**
+- Total canonical size: **1260.59 MiB**
 - Parsed manifest records: **451**
 - Invalid manifest JSON files: **0**
 - Exact duplicate hash groups: **251** (archives may intentionally retain immutable copies)
@@ -34,7 +34,7 @@ Evidence labels are conservative: a completed pilot stays `pilot`; a prepared or
 - [Payoff-scale mechanical contract](derived/payoff_scale_contract/README.md)
 - [Experiment impact roadmap](../docs/experiments/impact_experiment_program.md)
 
-## Complete visual artifact map (526)
+## Complete visual artifact map (535)
 
 Every rendered chart, publication PDF, and interactive HTML surface in the canonical results root is linked below. The narrative synthesis embeds the decision-relevant subset in `visualization_insight_full.md`.
 
@@ -449,6 +449,15 @@ Every rendered chart, publication PDF, and interactive HTML surface in the canon
 - [`impact_upgrade/visual_atlas/model_risk_heatmap.png`](<impact_upgrade/visual_atlas/model_risk_heatmap.png>)
 - [`impact_upgrade/visual_atlas/trajectory_divergence_heatmap.pdf`](<impact_upgrade/visual_atlas/trajectory_divergence_heatmap.pdf>)
 - [`impact_upgrade/visual_atlas/trajectory_divergence_heatmap.png`](<impact_upgrade/visual_atlas/trajectory_divergence_heatmap.png>)
+- [`nplayer/theory_figures/early_dsai_n10.png`](<nplayer/theory_figures/early_dsai_n10.png>)
+- [`nplayer/theory_figures/early_dsai_n3.png`](<nplayer/theory_figures/early_dsai_n3.png>)
+- [`nplayer/theory_figures/early_dsai_n5.png`](<nplayer/theory_figures/early_dsai_n5.png>)
+- [`nplayer/theory_figures/late_dsai_n3.png`](<nplayer/theory_figures/late_dsai_n3.png>)
+- [`nplayer/theory_figures/late_dsai_n4.png`](<nplayer/theory_figures/late_dsai_n4.png>)
+- [`nplayer/theory_figures/late_dsai_n5.png`](<nplayer/theory_figures/late_dsai_n5.png>)
+- [`nplayer/theory_figures/late_dsai_n5_gamma0.0.png`](<nplayer/theory_figures/late_dsai_n5_gamma0.0.png>)
+- [`nplayer/theory_figures/late_dsai_n5_gamma0.5.png`](<nplayer/theory_figures/late_dsai_n5_gamma0.5.png>)
+- [`nplayer/theory_figures/late_dsai_n5_gamma1.0.png`](<nplayer/theory_figures/late_dsai_n5_gamma1.0.png>)
 - [`open_source/activation_sae/causal_selfplay/fast-sae-pilot-L12-v1/analysis/figures/association_selected_features.pdf`](<open_source/activation_sae/causal_selfplay/fast-sae-pilot-L12-v1/analysis/figures/association_selected_features.pdf>)
 - [`open_source/activation_sae/causal_selfplay/fast-sae-pilot-L12-v1/analysis/figures/association_selected_features.png`](<open_source/activation_sae/causal_selfplay/fast-sae-pilot-L12-v1/analysis/figures/association_selected_features.png>)
 - [`open_source/activation_sae/causal_selfplay/fast-sae-pilot-L12-v1/analysis/figures/fixed_state_dose_response.pdf`](<open_source/activation_sae/causal_selfplay/fast-sae-pilot-L12-v1/analysis/figures/fixed_state_dose_response.pdf>)
