@@ -131,8 +131,8 @@ slides/*.xdv
 
 # pdflatex console dumps from paper build passes.
 paper/*.txt
-# Local LaTeX output tree.
-/output/
+# Local LaTeX output tree (results/visualize keeps run exports under output/).
+/output/pdf/
 
 # OS
 .DS_Store
