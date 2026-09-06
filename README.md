@@ -69,7 +69,6 @@ figures/                 Manuscript overview figures
 slides/                  AI Race presentation outline
 Presentation/            Shared bibliography for the deck
 web/                     Interactive browser simulator (see README section below)
-output/                  Run exports written by results/scripts/report_two_agent_race.py
 ```
 
 Legacy Collective Risk outputs and trained strategy artifacts are preserved locally

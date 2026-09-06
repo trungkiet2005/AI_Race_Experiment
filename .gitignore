@@ -46,6 +46,8 @@ kaggle.json
 !/results/open_source/surface_sensitivity_pilot/**
 !/results/open_source/surface_sensitivity_smoke/
 !/results/open_source/surface_sensitivity_smoke/**
+!/results/open_source/two_agent_report/
+!/results/open_source/two_agent_report/**
 !/results/nplayer/
 !/results/nplayer/**
 !/results/notebooks/
@@ -131,8 +133,8 @@ slides/*.xdv
 
 # pdflatex console dumps from paper build passes.
 paper/*.txt
-# Local LaTeX output tree (results/visualize keeps run exports under output/).
-/output/pdf/
+# Local LaTeX build tree. Run exports live under results/, never here.
+/output/
 
 # OS
 .DS_Store
