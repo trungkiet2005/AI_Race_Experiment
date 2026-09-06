@@ -82,9 +82,28 @@ def main() -> int:
 
     BUNDLE.mkdir(parents=True, exist_ok=True)
     shutil.copy2(paper, BUNDLE / "paper.pdf")
+    # A readable copy beside the archive: the zip is what the portal takes, but
+    # nobody wants to unzip a file to check what they are about to upload.
+    shutil.copy2(supp, BUNDLE / "supplementary.pdf")
     zip_path = BUNDLE / "supplementary.zip"
     with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as z:
         z.write(supp, "supplementary.pdf")
+
+    (BUNDLE / "README.txt").write_text(
+        "AAMAS 2026 submission files\n"
+        "===========================\n\n"
+        "Upload to the portal:\n"
+        "  paper.pdf          the manuscript, anonymous\n"
+        "  supplementary.zip  supplementary material, single zip as the portal requires\n\n"
+        "Not uploaded, here for reading only:\n"
+        "  supplementary.pdf  the same document the zip contains\n\n"
+        "Both PDFs build from paper/main.tex and paper/supplementary.tex through\n"
+        "scripts/build_publication.py. Rebuild them before rebuilding this bundle.\n\n"
+        "Before the camera-ready, switch main.tex back to the non-anonymous\n"
+        "\\documentclass[sigconf]{aamas} and restore the acknowledgements block\n"
+        "that sits commented out near the end of the same file.\n",
+        encoding="utf-8",
+    )
 
     size = zip_path.stat().st_size
     print(f"paper           : {(BUNDLE / 'paper.pdf').stat().st_size / 1048576:.2f} MB")
