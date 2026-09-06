@@ -16,10 +16,11 @@
 %%% https://cyprusconferences.org/aamas2026/submission-instructions/
 
 %%%% For anonymized submission, use this
-\documentclass[sigconf]{aamas} 
+\documentclass[sigconf,anonymous]{aamas}
 
-%%%% For camera-ready, use this
-%\documentclass[sigconf]{aamas} 
+%%%% For camera-ready, use this. Switching back also means restoring the
+%%%% acknowledgements near the end of this file.
+%\documentclass[sigconf]{aamas}
 
 
 %%% Load required packages here (note that many are included already).
@@ -308,7 +309,7 @@ settings.
 %%% Keywords should be separated by commas.
 
 % \keywords{Legends, Myths, Folktales}
-\keywords{Lsarge language model agents, AI development races, multi-agent systems, repeated games, strategic decision-making, AI safety, prompt sensitivity, task validity}
+\keywords{Large language model agents, AI development races, multi-agent systems, repeated games, strategic decision-making, AI safety, prompt sensitivity, task validity}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -1364,9 +1365,14 @@ AI-race studies should therefore report dynamic response rules and validity,
 not only aggregate Unsafe rates. These findings remain exploratory until
 matched confirmatory runs pass the same gates.
 
-\section*{Acknowledgements}
-T.A.H. acknowledges travel and accommodation support from the Ho Chi Minh City University of Technology (HCMUT), VNUHCM (Adjunct Professorship scheme HCMUT\text{-}VNUHCM). L.H.T acknowledges the Ho Chi Minh City University of Technology (HCMUT), VNUHCM for supporting this study.
- TAH is supported by EPSRC (grant EP/Y00857X/1).
+% Acknowledgements name individuals, their institutions and a grant number, so
+% they identify the authors. The class does not suppress this section in
+% anonymous mode, it prints whatever is here. Restore the block below for the
+% camera-ready, together with the non-anonymous \documentclass at the top.
+%
+% \section*{Acknowledgements}
+% T.A.H. acknowledges travel and accommodation support from the Ho Chi Minh City University of Technology (HCMUT), VNUHCM (Adjunct Professorship scheme HCMUT\text{-}VNUHCM). L.H.T acknowledges the Ho Chi Minh City University of Technology (HCMUT), VNUHCM for supporting this study.
+% TAH is supported by EPSRC (grant EP/Y00857X/1).
  
 %\clearpage
 \appendix

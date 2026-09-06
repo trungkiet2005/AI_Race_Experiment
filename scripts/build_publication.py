@@ -24,11 +24,17 @@ BUILD_DIR = ROOT / "results" / "_build" / "latex" / "current"
 PUBLICATION_DIR = ROOT / "results" / "artifacts" / "publication"
 
 
-def run(command: list[str], *, cwd: Path = ROOT) -> None:
+def run(command: list[str], *, cwd: Path = ROOT, bib_dir: Path | None = None) -> None:
     print("+", " ".join(command), flush=True)
     # A trailing separator keeps kpathsea's own defaults on the end of the list.
     env = dict(os.environ)
     env["TEXINPUTS"] = f"{ROOT}{os.pathsep}{env.get('TEXINPUTS', '')}{os.pathsep}"
+    if bib_dir is not None:
+        # bibtex resolves \bibdata against BIBINPUTS, not TEXINPUTS, and it does
+        # not fail when it cannot find the database: it reports "didn't find a
+        # database entry" once per citation and returns success, which reaches
+        # the PDF as [?] rather than as a build error.
+        env["BIBINPUTS"] = f"{bib_dir}{os.pathsep}{env.get('BIBINPUTS', '')}{os.pathsep}"
     subprocess.run(command, cwd=cwd, check=True, env=env)
 
 
@@ -49,7 +55,10 @@ def latex(source: str, *, jobname: str) -> None:
 
 def build_paper() -> Path:
     latex("paper/main.tex", jobname="ai_race_paper")
-    run(["bibtex", (BUILD_DIR / "ai_race_paper").as_posix()])
+    run(
+        ["bibtex", (BUILD_DIR / "ai_race_paper").as_posix()],
+        bib_dir=ROOT / "paper",
+    )
     latex("paper/main.tex", jobname="ai_race_paper")
     latex("paper/main.tex", jobname="ai_race_paper")
     return BUILD_DIR / "ai_race_paper.pdf"
