@@ -100,7 +100,7 @@ kaggle.json
 /models/
 /analysis/strategy/artifacts/
 /analysis/strategy/datasets/
-FAIRGAME/resources/results/
+vendor/FAIRGAME/resources/results/
 *.safetensors
 *.gguf
 *.zip

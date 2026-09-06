@@ -51,7 +51,19 @@ kaggle-benchmark = [
   "python-dotenv>=1.0",
 ]
 
+[tool.setuptools]
+# FAIRGAME is vendored third-party code (Apache-2.0, Luxembourg Institute of
+# Science and Technology) and lives under vendor/ so it is never mistaken for
+# this project's own source. Its internal imports are absolute
+# (``from FAIRGAME.src...``), so the package root has to keep the name FAIRGAME.
+package-dir = {"" = ".", "FAIRGAME" = "vendor/FAIRGAME"}
+
 [tool.setuptools.packages.find]
+# Two roots: this project's packages sit at the repository root, the vendored one
+# under vendor/. A single-root find silently discovers only ai_race* and ships a
+# wheel with no FAIRGAME, which breaks the offline backend at import time rather
+# than at build time.
+where = [".", "vendor"]
 include = ["ai_race*", "FAIRGAME*"]
 exclude = ["FAIRGAME.unit_tests*"]
 
@@ -67,6 +79,6 @@ FAIRGAME = [
 ]
 
 [tool.pytest.ini_options]
-pythonpath = ["."]
-testpaths = ["ai_race/tests", "N-Player/tests"]
+pythonpath = [".", "vendor"]
+testpaths = ["ai_race/tests"]
 addopts = "-q"

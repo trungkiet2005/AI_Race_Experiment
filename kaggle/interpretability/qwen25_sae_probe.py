@@ -64,7 +64,7 @@ iterated on without repeating the GPU-heavy race generation.
 
 CÁCH CHẠY: GPU ON, Internet ON (pip install sae-lens/transformer-lens and
 download Qwen2.5-7B-Instruct + the pretrained SAE weights from Hugging Face). + Add Input:
-this repo (contains ``ai_race/`` — no ``FAIRGAME/`` GPU connector needed for
+this repo (contains ``ai_race/`` — no ``vendor/FAIRGAME/`` GPU connector needed for
 this track). Run cells 1 → 8 in order the first time; on a resumed session,
 cells 5 (model/SAE load) and later can be skipped if their outputs are only
 needed for a stage whose cache already exists.

@@ -23,7 +23,8 @@ SOFTWARE.
 ---
 
 This project reuses the FAIRGAME framework (Apache License 2.0), included under
-FAIRGAME/ with modifications; see FAIRGAME/LICENSE and FAIRGAME/NOTICE.md.
+vendor/FAIRGAME/ with modifications; see vendor/FAIRGAME/LICENSE and
+vendor/FAIRGAME/NOTICE.md.
 
 The AI Race environment is an independent LLM adaptation of the research paradigm
 described by Fernández Domingos and Han (2026), arXiv:2607.26034. The focal source

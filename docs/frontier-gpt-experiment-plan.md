@@ -13,11 +13,11 @@ key OpenAI riêng**, nên cần một đường khác: gọi thẳng OpenAI API,
 
 - [ai_race/models/factory.py](../ai_race/models/factory.py) có `backend="api"` →
   gọi `FAIRGAME.src.llm_connectors.llm_factory_connector.ChatModelFactory`.
-- [FAIRGAME/src/llm_connectors/openai_connector.py](../FAIRGAME/src/llm_connectors/openai_connector.py)
+- [vendor/FAIRGAME/src/llm_connectors/openai_connector.py](../vendor/FAIRGAME/src/llm_connectors/openai_connector.py)
   đọc `API_KEY_OPENAI` từ env, nhận **bất kỳ chuỗi `provider_model` nào** — bản thân
   connector không hardcode model.
 - Nhưng `MODEL_PROVIDER_MAP` trong
-  [llm_factory_connector.py](../FAIRGAME/src/llm_connectors/llm_factory_connector.py)
+  [llm_factory_connector.py](../vendor/FAIRGAME/src/llm_connectors/llm_factory_connector.py)
   chỉ có một entry: `"OpenAIGPT4o" -> "gpt-4o"`. Không config nào trong
   `ai_race/configs/experiment/` dùng `"backend": "api"` — **grep xác nhận 0 kết quả**.
   Đây là đường chưa được thực chiến, không phải đường đã kiểm chứng.
@@ -97,7 +97,7 @@ thay vì phải đăng ký từng abstract name trong file vendor.
   `max_transport_retries`, `timeout`. Đường OpenAI SDK trực tiếp hiện không có gì
   tương đương — SDK OpenAI có retry mặc định riêng, nhưng nên xác nhận hành vi đó
   thay vì giả định.
-- **Không sửa gì trong `FAIRGAME/`** — đúng nguyên tắc "treat FAIRGAME as a
+- **Không sửa gì trong `vendor/FAIRGAME/`** — đúng nguyên tắc "treat FAIRGAME as a
   dependency" trong [CLAUDE.md](../CLAUDE.md).
 
 ### 2. Tạo 8 experiment config (baseline + 7 persona core)

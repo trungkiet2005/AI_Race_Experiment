@@ -110,7 +110,12 @@ def find_directory(root, predicate, max_depth=6):
 
 def is_repo_input(directory):
     directory = Path(directory)
-    return (directory / "ai_race").is_dir() and (directory / "FAIRGAME").is_dir()
+    # FAIRGAME moved under vendor/ on 2026-09-06. A dataset already uploaded to
+    # Kaggle still carries the old layout, and re-uploading is not something a
+    # notebook can do, so accept either.
+    if not (directory / "ai_race").is_dir():
+        return False
+    return (directory / "vendor" / "FAIRGAME").is_dir() or (directory / "FAIRGAME").is_dir()
 
 
 def find_repo_input(root="/kaggle/input"):
@@ -126,7 +131,7 @@ def find_repo_input(root="/kaggle/input"):
         listed = ", ".join(str(candidate) for candidate in candidates)
         raise FileNotFoundError(
             f"None of REPO_INPUT_DIRS ({listed}) contains both ai_race/ and "
-            "FAIRGAME/. Add the dataset "
+            "vendor/FAIRGAME/. Add the dataset "
             "'nguyenlamphuquy/ai-race-experiment' as a notebook input, or set "
             "REPO_INPUT_DIRS=None to auto-discover. "
             + (
@@ -186,7 +191,7 @@ import shutil
 repo_input = find_repo_input()
 if repo_input is None:
     raise FileNotFoundError(
-        "Khong tim thay repo chua dong thoi ai_race/ va FAIRGAME/ duoi /kaggle/input. "
+        "Khong tim thay repo chua dong thoi ai_race/ va vendor/FAIRGAME/ duoi /kaggle/input. "
         "Hay Add Input repo nay vao notebook."
     )
 
@@ -285,7 +290,13 @@ def sha256_file(path):
 
 def source_tree_sha256():
     digest = hashlib.sha256()
-    roots = [REPO_ROOT / "ai_race", REPO_ROOT / "FAIRGAME" / "src"]
+    # The vendored root moved to vendor/FAIRGAME on 2026-09-06. Paths are hashed
+    # relative to REPO_ROOT, so a digest recorded before that date is not
+    # comparable with one recorded after it even for identical code.
+    fairgame_src = REPO_ROOT / "vendor" / "FAIRGAME" / "src"
+    if not fairgame_src.is_dir():
+        fairgame_src = REPO_ROOT / "FAIRGAME" / "src"
+    roots = [REPO_ROOT / "ai_race", fairgame_src]
     files = sorted(
         path
         for root in roots

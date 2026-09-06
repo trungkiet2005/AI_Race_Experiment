@@ -44,10 +44,10 @@ from ai_race.models import factory
 ```
 
 Hàm `find_repo_input()` quét `/kaggle/input` tìm thư mục chứa **đồng thời** `ai_race/` và
-`FAIRGAME/`, rồi copy sang `/kaggle/working/ai_race_repo` (vì `/kaggle/input` là read-only,
+`vendor/FAIRGAME/`, rồi copy sang `/kaggle/working/ai_race_repo` (vì `/kaggle/input` là read-only,
 Python cần chỗ ghi `__pycache__`). Không có input đó thì notebook dừng ngay:
 
-> `Không tìm thấy repo chứa đồng thời ai_race/ và FAIRGAME/ dưới /kaggle/input.`
+> `Không tìm thấy repo chứa đồng thời ai_race/ và vendor/FAIRGAME/ dưới /kaggle/input.`
 
 ### A2. Dataset (đã tạo)
 
@@ -85,7 +85,7 @@ kaggle datasets version -p "$STAGE" -m "sync <git-sha>" --dir-mode zip
 cấu trúc thư mục giữ nguyên khi mount.
 
 `references/papers/sources/arXiv-2607.26034v1/` bị loại (không dùng khi chạy). **Bắt buộc giữ:**
-`ai_race/` (gồm `configs/` và `prompts/`) và `FAIRGAME/` — notebook assert cả ba.
+`ai_race/` (gồm `configs/` và `prompts/`) và `vendor/FAIRGAME/` — notebook assert cả ba.
 
 Kiểm tra dataset sau khi upload khớp với repo local:
 
@@ -96,7 +96,7 @@ kaggle datasets files nguyenlamphuquy/ai-race-experiment -v | head
 > Mỗi lần sửa prompt, config, hay engine là **phải** tạo dataset version mới. Dataset cũ =
 > code cũ, và `source_sha256` trong manifest sẽ ghi lại đúng phiên bản cũ đó — sai lệch
 > giữa cái bạn nghĩ mình chạy và cái thực sự chạy là loại lỗi khó phát hiện nhất.
-> `source_sha256` hash mọi file `.py/.json/.txt` dưới `ai_race/` và `FAIRGAME/src/`, nên
+> `source_sha256` hash mọi file `.py/.json/.txt` dưới `ai_race/` và `vendor/FAIRGAME/src/`, nên
 > sửa `docs/` hay `kaggle/` không đổi nó.
 
 ### A3. Inputs cần add vào notebook
@@ -194,7 +194,7 @@ Notebook ghi lỗi của từng model vào manifest rồi đi tiếp, nhưng
 `FAIL_ON_INCOMPLETE_RUN = True` sẽ báo hỏng ở cuối. Ba cách xử lý, theo thứ tự ưu
 tiên: dùng `engine="vllm"` cho riêng Gemma-3 (vLLM xử lý được kiến trúc này); hoặc
 đổi sang checkpoint text-only; hoặc sửa connector để lùi về
-`AutoModelForImageTextToText` — nhưng `FAIRGAME/` là vendored, sửa nó là tạo nhánh
+`AutoModelForImageTextToText` — nhưng `vendor/FAIRGAME/` là vendored, sửa nó là tạo nhánh
 riêng phải tự bảo trì.
 
 Gemma-3 cũng cần `transformers ≥ 4.50`; kiểm tra `packageVersions.transformers` trong

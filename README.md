@@ -48,8 +48,7 @@ Runs against hosted providers read credentials from a `.env` file. Copy
 
 ```text
 ai_race/                 Core engine, prompts, configs, runners, tests, and metrics
-N-Player/                N-player extension: theory, figures, and its own tests
-FAIRGAME/                Vendored model connectors reused for offline/API inference
+                         (theory/ is the two-player model, theory_nplayer/ the N-player one)
 analysis/
   fh_analytic/           Human-vs-LLM analytic pipeline and its derived outputs
   strategy/              AS/AU/CS/CAS trajectory classification (importable package)
@@ -69,6 +68,7 @@ docs/                    Experiment protocols and run guides
 paper/                   Manuscript, its figures/, and bounded pilot audit evidence
 slides/                  AI Race presentation outline, deck source, and design reference
 web/                     Browser front-ends: the simulator and the trajectory lab
+vendor/FAIRGAME/         Vendored upstream connectors (Apache-2.0, not our code)
 ```
 
 Legacy Collective Risk outputs and trained strategy artifacts are preserved locally

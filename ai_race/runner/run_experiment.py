@@ -200,15 +200,24 @@ def _agents_provenance(exp: dict[str, Any]) -> dict[str, Any]:
 
 
 def _source_tree_sha256() -> str:
-    """Hash every tracked-format source file under ai_race/ and FAIRGAME/src/.
+    """Hash every tracked-format source file under ai_race/ and the vendored src/.
 
     Mirrors kaggle/experiments/baseline.py's source_tree_sha256() so a run
     executed locally and one executed on Kaggle can be told apart (or matched)
     on the same basis: two runs sharing this hash used byte-identical engine,
     config, and prompt code, not merely "the same git commit at some point".
+
+    FAIRGAME moved to vendor/FAIRGAME on 2026-09-06. Files are hashed under their
+    path relative to REPO_ROOT, so a digest recorded before that date is not
+    comparable with one recorded after it even for byte-identical code. The old
+    location is still accepted because a Kaggle dataset uploaded earlier carries
+    it, and a missing root is skipped silently rather than raising.
     """
     digest = hashlib.sha256()
-    roots = [REPO_ROOT / "ai_race", REPO_ROOT / "FAIRGAME" / "src"]
+    fairgame_src = REPO_ROOT / "vendor" / "FAIRGAME" / "src"
+    if not fairgame_src.is_dir():
+        fairgame_src = REPO_ROOT / "FAIRGAME" / "src"
+    roots = [REPO_ROOT / "ai_race", fairgame_src]
     files = sorted(
         path
         for root in roots

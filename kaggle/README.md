@@ -80,7 +80,7 @@ matrix nên hai tập không bao giờ bị pool âm thầm.
    `setup/build_quant_wheels.py` với Internet ON, rồi lưu wheelhouse + manifest
    SHA-256 thành Dataset.
 2. Tạo notebook GPU với Internet OFF, add repo (phải chứa đồng thời `ai_race/` và
-   `FAIRGAME/`), checkpoint model, và Dataset wheels nếu cần.
+   `vendor/FAIRGAME/`), checkpoint model, và Dataset wheels nếu cần.
 3. Copy `experiments/baseline.py` vào notebook, sửa `MODELS`; nếu cần cài vLLM,
    điền explicit `VLLM_WHEELS_DIR`. Sau đó Run All.
 4. Tải `ai_race_results.zip` từ tab Output.

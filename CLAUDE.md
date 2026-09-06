@@ -19,7 +19,7 @@ Diagnostic pilots have been run, but confirmatory AI Race inference remains pend
 ## Commands
 
 ```bash
-pytest                                   # full suite (testpaths=ai_race/tests, pythonpath=.)
+pytest                                   # full suite (testpaths=ai_race/tests, pythonpath=. and vendor)
 pytest ai_race/tests/test_scoring.py     # one file
 pytest ai_race/tests/test_scoring.py::test_name -v
 pytest -k "seed"                         # one pattern
@@ -29,7 +29,7 @@ pip install -e ".[analysis]"             # scipy/statsmodels/matplotlib for the 
 pip install -e ".[api,kaggle-benchmark]" # hosted-model + Kaggle Benchmark paths
 ```
 
-`FAIRGAME/unit_tests/` is vendored upstream and excluded from `testpaths`; it is not part of this project's suite.
+`vendor/FAIRGAME/unit_tests/` is vendored upstream and excluded from `testpaths`; it is not part of this project's suite.
 
 Local dry run without any model backend (deterministic mock responses):
 
@@ -71,7 +71,7 @@ Data flows config → games → lockstep batch → journal → analyser.
 
 **Analysis.** [ai_race/analysis/metrics.py](ai_race/analysis/metrics.py) is a dependency-free descriptive layer used in tests/notebooks. [scripts/analyze_ai_race.py](scripts/analyze_ai_race.py) (~3.2k lines) is the real analyser: it validates joins, mechanism arithmetic, CRN blocks, and protocol signatures before emitting any table. [analysis/strategy/classify.py](analysis/strategy/classify.py) does nearest-strategy Hamming classification and keeps ties rather than forcing a unique label.
 
-**FAIRGAME/** is vendored upstream (Apache-2.0, LIST/SOM Research Lab) and reused only for its LLM connectors. Treat it as a dependency: don't refactor it to match project style.
+**vendor/FAIRGAME/** is vendored upstream (Apache-2.0, LIST/SOM Research Lab) and reused only for its LLM connectors. Treat it as a dependency: don't refactor it to match project style.
 
 ## Invariants worth preserving
 
@@ -90,7 +90,7 @@ means/proportions. That baseline includes, wherever the sample size allows it: a
 panel logistic regression (cluster on the CRN block — pair or `rep`, whichever repetitions share
 common-random-number draws), nearest-strategy classification by Hamming distance (AS/AU/CS[/CAS]),
 confidence intervals on every reported proportion (not point estimates alone), and an explicit
-theory-vs-experiment comparison against `ai_race/theory/` or `N-Player/theory/` — search over the
+theory-vs-experiment comparison against `ai_race/theory/` or `ai_race/theory_nplayer/` — search over the
 free parameter (e.g. beta) for the best qualitative fit rather than checking one arbitrarily-picked
 value. Persona/small-N cells that can't support inference (zero variance, <5 independent races)
 stay strictly descriptive — say so explicitly rather than fitting a model that will silently fail
