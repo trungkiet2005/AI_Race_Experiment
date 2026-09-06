@@ -144,18 +144,19 @@ Artifacts include:
 
 For this workspace, the canonical current synthesis is:
 
-- [results/impact_upgrade/impact_report.html](/AI_Race_Experiment/results/impact_upgrade/impact_report.html)
-- [results/impact_upgrade/impact_report.md](/AI_Race_Experiment/results/impact_upgrade/impact_report.md)
-- [docs/demos/trajectory_lab/index.html](/AI_Race_Experiment/docs/demos/trajectory_lab/index.html)
+- [results/impact_upgrade/impact_report.html](impact_upgrade/impact_report.html)
+- [results/impact_upgrade/impact_report.md](impact_upgrade/impact_report.md)
+- [docs/demos/trajectory_lab/index.html](../docs/demos/trajectory_lab/index.html)
 
 The earlier single-model synthesis remains here:
 
-- [results/visualization_insight_full.md](/AI_Race_Experiment/results/visualization_insight_full.md)
+- [results/visualization_insight_full.md](visualization_insight_full.md)
 
 The former copied visualization archive was removed because it duplicated
 publication, slide, paper, and analysis artifacts. The complete searchable
-inventory is now [results/RESULTS_INDEX.md](/AI_Race_Experiment/results/RESULTS_INDEX.md);
-source-study figure snapshots live under `references/source_study_assets/`.
+inventory is now [results/RESULTS_INDEX.md](RESULTS_INDEX.md);
+source-study figure snapshots live under
+[`references/papers/sources/arXiv-2607.26034v1/figures/`](../references/papers/sources/arXiv-2607.26034v1/figures/).
 
 Keep one self-contained directory per run. A run directory must contain
 `turns.jsonl`, `races.csv`, `players.csv`, and `run_manifest.json` so completion,

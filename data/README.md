@@ -70,3 +70,11 @@ results/frontier/openai/persona/risk_matrix
 results/frontier/openai/persona/S_*, R0_neutral, Rminus_risk_averse, Rplus_risk_seeking
 -> data/experiments/players_2/provider_openai/family_chatgpt/persona_risk_aware/mode_strategy_persona
 ```
+
+## Human participant data
+
+The de-identified human participant table is **not** copied here. It lives once, at
+[`public_dataset/`](../public_dataset/), which is the path every analysis script
+reads (`ROOT / "public_dataset" / "airace_deidentified_long.csv"`). A second copy
+under `data/` was removed because nothing read it and a divergent copy of a
+participant dataset is worse than no copy.
