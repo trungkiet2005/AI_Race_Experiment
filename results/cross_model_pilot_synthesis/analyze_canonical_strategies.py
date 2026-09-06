@@ -11,7 +11,7 @@ The reduced strategy set in Fernandez Domingos and Han (2026):
 Part F of INSIGHTS.md clusters behaviour bottom-up (KMeans on human feature
 vectors). This is the complementary top-down view: it asks how well each
 population is described by the strategy vocabulary the paper itself defines.
-Classification reuses `strategy_analysis.classify` rather than reimplementing
+Classification reuses `analysis.strategy.classify` rather than reimplementing
 Hamming matching, so the tie-retention rule there applies here too.
 
 Two corrections are essential, and without them the headline percentages are
@@ -49,7 +49,7 @@ import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
-from strategy_analysis.classify import (  # noqa: E402
+from analysis.strategy.classify import (  # noqa: E402
     CANONICAL_STRATEGIES,
     classify_trajectory,
     predict_strategy,
@@ -58,7 +58,7 @@ from strategy_analysis.classify import (  # noqa: E402
 OUT = ROOT / "results" / "cross_model_pilot_synthesis"
 FIGURES = OUT / "figures"
 DATA = OUT / "data"
-HUMAN_CSV = ROOT / "public_dataset" / "airace_deidentified_long.csv"
+HUMAN_CSV = ROOT / "references" / "source_study_dataset" / "airace_deidentified_long.csv"
 
 PALETTE = {
     "navy": "#0B132B", "slate": "#64748B", "grid": "#DCE3ED", "human": "#3a3a38",

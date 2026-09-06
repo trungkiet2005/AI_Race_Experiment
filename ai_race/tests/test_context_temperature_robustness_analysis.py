@@ -10,7 +10,6 @@ import pandas as pd
 
 SCRIPT = (
     Path(__file__).resolve().parents[2]
-    / "results"
     / "scripts"
     / "analyze_context_temperature_robustness.py"
 )

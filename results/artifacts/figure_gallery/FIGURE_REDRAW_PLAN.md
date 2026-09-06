@@ -118,7 +118,7 @@ Hai điều bảng **bắt buộc** nói mà hình cũ giấu:
 1. E5 và E6 là **trung bình của 6 giá trị Cohen's d theo persona mà dấu không thống nhất** (biên độ
    −0.465 → +0.433). Một cái bar đang che một khoảng như thế.
 2. 🚩 **Mẫu số của E8 là 350, không phải 420.** 70 player có nhãn nearest-strategy hoà bị loại
-   (`strategy_analysis/classify.py` giữ tie thay vì ép nhãn). Con số này không nằm trong metadata
+   (`analysis/strategy/classify.py` giữ tie thay vì ép nhãn). Con số này không nằm trong metadata
    nào — phải ghi ra.
 
 ### Caption

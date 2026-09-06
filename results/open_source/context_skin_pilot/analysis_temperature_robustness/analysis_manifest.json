@@ -1,5 +1,5 @@
 {
-  "analysis_script": "results/scripts/analyze_context_temperature_robustness.py",
+  "analysis_script": "scripts/analyze_context_temperature_robustness.py",
   "bootstrap_repetitions": 10000,
   "bootstrap_seed": 260802,
   "derived_artifacts": {

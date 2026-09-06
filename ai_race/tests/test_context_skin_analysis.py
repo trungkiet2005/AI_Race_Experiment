@@ -8,7 +8,7 @@ import pandas as pd
 import pytest
 
 
-_SCRIPT = Path(__file__).parents[2] / "results" / "scripts" / "analyze_context_skin.py"
+_SCRIPT = Path(__file__).parents[2] / "scripts" / "analyze_context_skin.py"
 _SPEC = importlib.util.spec_from_file_location("context_skin_analysis", _SCRIPT)
 assert _SPEC is not None and _SPEC.loader is not None
 analysis = importlib.util.module_from_spec(_SPEC)

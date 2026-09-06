@@ -7,7 +7,7 @@ import pandas as pd
 
 
 ROOT = Path(__file__).resolve().parents[2]
-SCRIPT_PATH = ROOT / "results" / "scripts" / "explain_action_sparse_autoencoder.py"
+SCRIPT_PATH = ROOT / "scripts" / "explain_action_sparse_autoencoder.py"
 
 
 def _load_module():

@@ -3,9 +3,9 @@ from __future__ import annotations
 
 import random
 
-from strategy_analysis.classify import CANONICAL_STRATEGIES, classify_trajectory
-from strategy_analysis.evaluate_baseline import evaluate
-from strategy_analysis.generate_dataset import generate_records, sample_horizon
+from analysis.strategy.classify import CANONICAL_STRATEGIES, classify_trajectory
+from analysis.strategy.evaluate_baseline import evaluate
+from analysis.strategy.generate_dataset import generate_records, sample_horizon
 
 
 def test_sample_horizon_respects_minimum_and_cap() -> None:

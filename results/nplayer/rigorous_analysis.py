@@ -5,9 +5,9 @@ that make ``results/reports/frontier/`` (2-player) more than a means-and-proport
 dashboard: nearest-strategy classification, a cluster-robust panel logistic
 regression, a theory-fit search over the selection intensity beta, and
 Wilson confidence intervals on every reported proportion. Mirrors, wherever
-the N-player schema allows it, ``results/scripts/analyze_ai_race.py``'s
+the N-player schema allows it, ``scripts/analyze_ai_race.py``'s
 ``_fit_clustered_logit``/``_build_theory_comparison`` and
-``strategy_analysis/classify.py``'s nearest-strategy classifier -- see each
+``analysis/strategy/classify.py``'s nearest-strategy classifier -- see each
 section below for exactly what differs and why.
 
 Writes CSV/JSON outputs to ``results/reports/nplayer/derived/`` (mirroring
@@ -46,12 +46,12 @@ sys.path.insert(0, str(RESULTS_DIR))
 sys.path.insert(0, str(REPO_ROOT))
 
 from analyze_nplayer_results import load_all, risk_from_game_id  # noqa: E402
-from strategy_analysis.classify_nplayer import classify_trajectory_nplayer  # noqa: E402
+from analysis.strategy.classify_nplayer import classify_trajectory_nplayer  # noqa: E402
 
 RISKS: tuple[float, ...] = (0.1, 0.6, 0.9)
 
 # ---------------------------------------------------------------------------
-# 1. Nearest-strategy classification (mirrors strategy_analysis/classify.py,
+# 1. Nearest-strategy classification (mirrors analysis/strategy/classify.py,
 #    applied to real turns instead of a synthetic dataset).
 # ---------------------------------------------------------------------------
 
@@ -119,7 +119,7 @@ def strategy_mix_table(classifications: pd.DataFrame, *, group_cols: list[str]) 
 
 # ---------------------------------------------------------------------------
 # 2. Cluster-robust panel logistic regression on the baseline (mirrors
-#    results/scripts/analyze_ai_race.py::_fit_clustered_logit).
+#    scripts/analyze_ai_race.py::_fit_clustered_logit).
 # ---------------------------------------------------------------------------
 
 # N-player analogue of the two-player's 6 nested specs: `opponent_prev_unsafe`

@@ -20,7 +20,7 @@ import pytest
 from ai_race.paths import CONFIGS_DIR, PROMPTS_DIR
 
 REPOSITORY_ROOT = Path(__file__).resolve().parents[2]
-ANALYSER_PATH = REPOSITORY_ROOT / "results" / "scripts" / "analyze_ai_race.py"
+ANALYSER_PATH = REPOSITORY_ROOT / "scripts" / "analyze_ai_race.py"
 
 
 def _load_analyser():

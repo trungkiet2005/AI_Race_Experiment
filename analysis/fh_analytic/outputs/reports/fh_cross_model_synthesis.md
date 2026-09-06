@@ -15,7 +15,7 @@ This does not run new statistical models. It cross-references derived tables fro
 
 ## Human-Reference Commonality Index
 
-Fraction of model x scope logit fits whose coefficient sign agrees with the human-reference direction (Fernandez Domingos & Han 2026, `results/scripts/human_reference.json`), pooling the baseline per-model fits and the risk-matrix per-model fits (the two scopes with comparable model-level grain).
+Fraction of model x scope logit fits whose coefficient sign agrees with the human-reference direction (Fernandez Domingos & Han 2026, `scripts/human_reference.json`), pooling the baseline per-model fits and the risk-matrix per-model fits (the two scopes with comparable model-level grain).
 
 | term | expected_sign | fits | models_covered | scopes_covered | sign_match_share |
 | --- | --- | --- | --- | --- | --- |

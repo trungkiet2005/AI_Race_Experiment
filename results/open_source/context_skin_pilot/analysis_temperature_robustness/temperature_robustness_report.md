@@ -77,7 +77,7 @@ Not supported:
 ## Reproduce
 
 ```bash
-python results/scripts/analyze_context_temperature_robustness.py
+python scripts/analyze_context_temperature_robustness.py
 ```
 
 Raw pilot artifacts are untouched. `tables/source_artifact_inventory.csv` records SHA-256 checksums, figures are exported as PNG and vector PDF, and `analysis_summary.json` stores exact machine-readable findings.

@@ -27,7 +27,7 @@ from kaggle.experiments.greennode_game_understanding import (
 
 
 REPOSITORY_ROOT = Path(__file__).resolve().parents[2]
-ANALYZER_PATH = REPOSITORY_ROOT / "results" / "scripts" / "analyze_game_understanding.py"
+ANALYZER_PATH = REPOSITORY_ROOT / "scripts" / "analyze_game_understanding.py"
 
 
 def _load_analyzer():

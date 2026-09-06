@@ -38,7 +38,7 @@ All are diagnostic smoke or pilot evidence. None is confirmatory evidence.
 From a clean clone, run:
 
 ```bash
-python results/scripts/audit_gpu_archives.py \
+python scripts/audit_gpu_archives.py \
   --archive-dir results/open_source/gpu_run_archive
 ```
 

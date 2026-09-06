@@ -39,10 +39,10 @@ show verified utility understanding or a causal neural mechanism.
 Regenerate the accepted analysis with:
 
 ```bash
-python results/scripts/analyze_context_skin.py \
+python scripts/analyze_context_skin.py \
   --live-root results/open_source/context_skin_pilot/live_pilot_t0 \
   --fixed-root results/open_source/context_skin_pilot/fixed_state_pilot_t0 \
   --output-dir results/open_source/context_skin_pilot/analysis_live_pilot_t0
 
-python results/scripts/analyze_context_temperature_robustness.py
+python scripts/analyze_context_temperature_robustness.py
 ```

@@ -17,7 +17,7 @@ from kaggle.experiments.greennode_context_skin import (
     build_fully_crossed_context_games,
     mechanism_sha256,
 )
-from results.scripts.analyze_context_mapping_cross import discover, holm, paired_rows
+from scripts.analyze_context_mapping_cross import discover, holm, paired_rows
 
 
 def _experiment(*, repetitions: int = 2) -> dict:

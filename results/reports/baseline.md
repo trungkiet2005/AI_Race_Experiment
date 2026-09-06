@@ -435,10 +435,10 @@ Lệnh tái tạo:
 
 ```bash
 unzip results/ai_race_results.zip -d <tmp>
-python3 results/scripts/check_symmetry.py --input <tmp>/ai_race_results
-python3 results/scripts/analyze_ai_race.py --input <tmp>/ai_race_results \
+python3 scripts/check_symmetry.py --input <tmp>/ai_race_results
+python3 scripts/analyze_ai_race.py --input <tmp>/ai_race_results \
   --output <out> --allow-nonconfirmatory-runs
-python3 results/scripts/build_theory_tables.py --output <out-theory>
+python3 scripts/build_theory_tables.py --output <out-theory>
 ```
 
 Logit đặc tả 1–2 cho riêng Qwen phải fit ngoài analyser, vì analyser chạy cả 6 đặc tả và

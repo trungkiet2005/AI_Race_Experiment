@@ -1,7 +1,7 @@
 """Descriptive analysis of the two N-player pilot runs under this directory.
 
 Not part of the N-player recording/analysis pipeline proper (see
-``results/scripts/analyze_ai_race.py``'s docstring for why that analyzer is
+``scripts/analyze_ai_race.py``'s docstring for why that analyzer is
 two-player-only, and ``N-Player/PAPER_ANALYSES_AND_PLAN.md`` item 17 for the
 still-open gap of a real N-player analyzer). This is a standalone script for
 one specific pass: descriptive stats over ``nplayer_nonpersona/`` (neutral

@@ -1,5 +1,5 @@
 {
-  "analysis_script": "results/scripts/analyze_causal_selfplay_fast_sae.py",
+  "analysis_script": "scripts/analyze_causal_selfplay_fast_sae.py",
   "bootstrap_repetitions": 10000,
   "bootstrap_seed": 260801,
   "derived_artifacts": {

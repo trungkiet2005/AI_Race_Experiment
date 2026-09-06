@@ -911,7 +911,7 @@ is each population described by the strategy vocabulary the source paper itself
 defines? The reduced strategy set is **AS** (always Safe), **AU** (always
 Unsafe), **CS** (Safe in round 1, thereafter copy the opponent's previous
 action) and **CAS** (Unsafe in round 1, then copy). Classification reuses
-`strategy_analysis/classify.py` (nearest strategy by Hamming distance, ties
+`analysis/strategy/classify.py` (nearest strategy by Hamming distance, ties
 deliberately retained) rather than reimplementing the matching.
 
 Run naively, this produces a clean-looking table — GPT-5 nano 94% AS, Gemini

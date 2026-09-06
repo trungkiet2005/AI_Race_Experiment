@@ -3,7 +3,7 @@ from __future__ import annotations
 import numpy as np
 import pytest
 
-from strategy_analysis.egt_reconstruction import (
+from analysis.strategy.egt_reconstruction import (
     ModelParameters,
     expected_game,
     fitnesses,
@@ -12,7 +12,7 @@ from strategy_analysis.egt_reconstruction import (
     simulate_pairwise_comparison_chain,
     strategy_pair_trajectories,
 )
-from results.scripts.reproduce_egt_model import (
+from scripts.reproduce_egt_model import (
     DEFAULT_LLM_ROOT,
     DEFAULT_LLM_SENSITIVITY_ROOT,
     build_comparison_rows,

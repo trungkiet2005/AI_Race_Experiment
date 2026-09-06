@@ -1,7 +1,7 @@
 """Mechanistic-XAI utilities for the AI Race experiments.
 
 The activation-level pipeline in this package is deliberately separate from the
-text/metadata surrogate models in ``results/scripts/explain_action_*.py``.
+text/metadata surrogate models in ``scripts/explain_action_*.py``.
 """
 
 from .activation_sae import (

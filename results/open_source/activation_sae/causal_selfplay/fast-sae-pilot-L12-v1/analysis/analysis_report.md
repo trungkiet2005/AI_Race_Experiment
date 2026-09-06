@@ -107,7 +107,7 @@ Not supported:
 Run from the repository root:
 
 ```bash
-python results/scripts/analyze_causal_selfplay_fast_sae.py \
+python scripts/analyze_causal_selfplay_fast_sae.py \
   results/open_source/activation_sae/causal_selfplay/fast-sae-pilot-L12-v1
 ```
 

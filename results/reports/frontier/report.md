@@ -6,7 +6,7 @@ persona, 5/6 hoàn chỉnh, trên `google/gemini-3-flash-preview`).
 tích của paper gốc; [docs/implementation-status.md](../../../docs/implementation-status.md) — tình
 trạng đã code trong `analyze_ai_race.py`.
 Dashboard: [visualizations/dashboard.html](visualizations/dashboard.html).
-Bảng dẫn xuất: [derived/](derived/) (35 file, sinh bởi `results/scripts/analyze_ai_race.py`).
+Bảng dẫn xuất: [derived/](derived/) (35 file, sinh bởi `scripts/analyze_ai_race.py`).
 
 > **Đây là PILOT, không phải confirmatory.** Mọi run có `run_phase = pilot` và manifest schema
 > `ai-race-results-v1` — theo [results/README.md](../../README.md), schema này "cố ý
@@ -22,7 +22,7 @@ Bảng dẫn xuất: [derived/](derived/) (35 file, sinh bởi `results/scripts/
 
 ## 0. Các phân tích đã được code (đối chiếu `docs/`)
 
-`results/scripts/analyze_ai_race.py` (~3.500 dòng) hiện phủ **15/19** phân tích định lượng của
+`scripts/analyze_ai_race.py` (~3.500 dòng) hiện phủ **15/19** phân tích định lượng của
 bài báo gốc (theo bảng tra cứu trong `paper-analyses-inventory.md`), cộng thêm các phân tích
 riêng cho hành vi LLM không có trong paper gốc (parse-quality, seat balance, CRN/persona
 confounding). Việc còn thiếu (TD.2 — EGTtools, mixed-effects logit) cần thêm dependency và nằm
@@ -222,7 +222,7 @@ vắng mặt** (0–3%) — khớp kết luận lý thuyết "AS không bao gi�
 
 ## 7. Đối chiếu 8 hiệu ứng người–LLM (E1–E8)
 
-Từ `human_comparison.csv`, chấm tự động theo `results/scripts/human_reference.json`.
+Từ `human_comparison.csv`, chấm tự động theo `scripts/human_reference.json`.
 
 > **"Replicated" chỉ xét dấu (chiều hiệu ứng) và một ngưỡng ý nghĩa thống kê / effect size tối
 > thiểu — không xét con số LLM có gần con số người hay không** (cột "Tiêu chí chấm" dưới đây là
@@ -273,7 +273,7 @@ có ý nghĩa — tức LLM "quá nhạy" với treatment và có quán tính h�
 ## Phụ lục — cách tái tạo
 
 ```bash
-.venv-kaggle/bin/python3 results/scripts/analyze_ai_race.py \
+.venv-kaggle/bin/python3 scripts/analyze_ai_race.py \
   --input results/frontier/baseline/google-gemini-3-flash-preview \
   --input results/frontier/baseline/google-gemini-3.1-flash-lite-preview \
   --input results/frontier/baseline/google-gemini-3.5-flash-lite \

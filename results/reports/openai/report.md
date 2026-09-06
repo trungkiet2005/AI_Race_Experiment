@@ -6,7 +6,7 @@ persona core; `persona/risk_matrix/` — ma trận rủi ro 6×6 đầy đủ, 3
 và [docs/running-openai-frontier-pilots.md](../../../docs/running-openai-frontier-pilots.md).
 Đối chiếu: [docs/paper-analyses-inventory.md](../../../docs/paper-analyses-inventory.md) — 19 phân
 tích của paper gốc. Đối chiếu chéo với pilot Gemini: [analysis/frontier/report.md](../frontier/report.md).
-Bảng dẫn xuất: [derived/](derived/) (35 file, sinh bởi `results/scripts/analyze_ai_race.py`).
+Bảng dẫn xuất: [derived/](derived/) (35 file, sinh bởi `scripts/analyze_ai_race.py`).
 
 > **Đây là PILOT, không phải confirmatory.** Mọi run có `run_phase = pilot` và manifest schema
 > `ai-race-results-v1` — theo [results/README.md](../../README.md), schema này "cố ý
@@ -30,7 +30,7 @@ Bảng dẫn xuất: [derived/](derived/) (35 file, sinh bởi `results/scripts/
 | Parse failure | 0 | 0 |
 | `check_symmetry.py` | không nêu trong báo cáo | **PASS** — 20,0% tied-throughout (ngưỡng 40%) |
 
-`results/scripts/analyze_ai_race.py` phủ cùng 15/19 phân tích định lượng của paper gốc như đã
+`scripts/analyze_ai_race.py` phủ cùng 15/19 phân tích định lượng của paper gốc như đã
 liệt kê ở [analysis/frontier/report.md §0](../frontier/report.md); không lặp lại bảng đó ở đây.
 
 ---
@@ -283,7 +283,7 @@ Gemini ở điểm CS vắng mặt hoàn toàn.
 
 ## 8. Đối chiếu 8 hiệu ứng người–LLM (E1–E8)
 
-Từ `human_comparison.csv`, chấm tự động theo `results/scripts/human_reference.json`, **gộp
+Từ `human_comparison.csv`, chấm tự động theo `scripts/human_reference.json`, **gộp
 toàn bộ 44 cell × 2 model** (không tách riêng theo model — đọc con số này như một trung bình
 rất thô trên cả tập dữ liệu không đồng nhất).
 
@@ -338,7 +338,7 @@ lại contrast theo *từng model, chỉ baseline* ở §2 để so sánh mức 
 ## Phụ lục — cách tái tạo
 
 ```bash
-.venv-kaggle/bin/python3 results/scripts/analyze_ai_race.py \
+.venv-kaggle/bin/python3 scripts/analyze_ai_race.py \
   --input results/frontier/openai \
   --output analysis/openai/derived \
   --fit-logit --fit-logit-robustness \
@@ -353,5 +353,5 @@ Không cần liệt kê từng thư mục con như pilot Gemini — cả 88 run 
 Soi gương (bắt buộc trước khi tin số liệu race-position):
 
 ```bash
-.venv-kaggle/bin/python results/scripts/check_symmetry.py --input results/frontier/openai
+.venv-kaggle/bin/python scripts/check_symmetry.py --input results/frontier/openai
 ```

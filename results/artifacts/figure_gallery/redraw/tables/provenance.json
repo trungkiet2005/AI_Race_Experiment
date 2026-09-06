@@ -15,7 +15,7 @@
       "results/open_source/prompt_sensitivity_pilot/treatment_contrasts_round2plus.csv",
       "results/open_source/prompt_sensitivity_pilot/strategy_summary_player.csv"
     ],
-    "notes": "E8 has no published human value (human_value is empty upstream). E8's LLM denominator is 67 players with a unique nearest-strategy label, not the full pilot roster -- ties are kept unlabelled by strategy_analysis/classify.py."
+    "notes": "E8 has no published human value (human_value is empty upstream). E8's LLM denominator is 67 players with a unique nearest-strategy label, not the full pilot roster -- ties are kept unlabelled by analysis/strategy/classify.py."
   },
   "figB_surface_variants": {
     "rows": 18,

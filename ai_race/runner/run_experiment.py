@@ -28,7 +28,7 @@ from ai_race.prompts.sensitivity import apply_prompt_variant, get_prompt_variant
 from ai_race.runner.batch import run_games_batched
 
 # Manifests written by this runner for a real backend (not --mock) use this schema
-# so results/scripts/analyze_ai_race.py can verify a protocol_signature across runs
+# so scripts/analyze_ai_race.py can verify a protocol_signature across runs
 # (needed to estimate a persona effect via --fit-logit instead of only describing
 # it). The previous schema, "ai-race-results-v1", omitted source/decoding/seed
 # provenance, so every local run fell back to an "unverified" signature keyed on

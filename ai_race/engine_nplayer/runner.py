@@ -31,7 +31,7 @@ from .recorder import NPlayerRunJournal, write_players_csv, write_races_csv
 from .state import NPlayerGameConfig
 
 # Templates live inside this package, not ai_race/prompts/: that directory's
-# contents are hash-pinned against results/scripts/analyze_ai_race.py's
+# contents are hash-pinned against scripts/analyze_ai_race.py's
 # CANONICAL_PROMPT_SHA256_BY_TEMPLATE registry for the two-player paper-faithful
 # contract (see ai_race/tests/test_prompt_contract.py), which this module is
 # deliberately outside of.

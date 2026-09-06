@@ -167,7 +167,7 @@ def figure_a() -> None:
         "E8 has no published human value (human_value is empty upstream). E8's LLM "
         f"denominator is {int(strat.shape[0])} players with a unique nearest-strategy "
         "label, not the full pilot roster -- ties are kept unlabelled by "
-        "strategy_analysis/classify.py.",
+        "analysis/strategy/classify.py.",
     )
 
 

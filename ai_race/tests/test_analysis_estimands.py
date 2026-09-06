@@ -21,7 +21,7 @@ pytest.importorskip("pandas", reason="the analyser needs the analysis extra")
 import pandas as pd  # noqa: E402
 
 REPOSITORY_ROOT = Path(__file__).resolve().parents[2]
-ANALYSER_PATH = REPOSITORY_ROOT / "results" / "scripts" / "analyze_ai_race.py"
+ANALYSER_PATH = REPOSITORY_ROOT / "scripts" / "analyze_ai_race.py"
 
 
 def _load_analyser():

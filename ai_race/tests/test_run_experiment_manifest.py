@@ -1,7 +1,7 @@
 """Manifest provenance written by run_experiment.py for real (non-mock) runs.
 
 Before this, every local run used the lean "ai-race-results-v1" schema, which
-omits source/decoding/seed provenance. results/scripts/analyze_ai_race.py then
+omits source/decoding/seed provenance. scripts/analyze_ai_race.py then
 could not verify two runs shared a protocol, so it fell back to an "unverified"
 signature keyed on the run's output path -- persona was perfectly confounded
 with the run batch even when every other setting was identical (see
@@ -35,7 +35,7 @@ from ai_race.runner.run_experiment import (
 pytest.importorskip("pandas", reason="the analyser needs the analysis extra")
 
 REPOSITORY_ROOT = Path(__file__).resolve().parents[2]
-ANALYSER_PATH = REPOSITORY_ROOT / "results" / "scripts" / "analyze_ai_race.py"
+ANALYSER_PATH = REPOSITORY_ROOT / "scripts" / "analyze_ai_race.py"
 
 
 def _load_analyser():

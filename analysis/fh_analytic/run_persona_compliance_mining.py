@@ -34,7 +34,7 @@ OUTPUT_DIR = REPO_ROOT / "analysis" / "fh_analytic" / "outputs"
 DERIVED_DIR = OUTPUT_DIR / "derived"
 FIGURES_DIR = OUTPUT_DIR / "figures" / "persona_compliance"
 REPORTS_DIR = OUTPUT_DIR / "reports"
-HUMAN_REFERENCE_PATH = REPO_ROOT / "results" / "scripts" / "human_reference.json"
+HUMAN_REFERENCE_PATH = REPO_ROOT / "scripts" / "human_reference.json"
 RANDOM_SEED = 260726
 
 BLUE = "#2F6B9A"

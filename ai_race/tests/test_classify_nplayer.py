@@ -1,4 +1,4 @@
-"""Tests for strategy_analysis.classify_nplayer.
+"""Tests for analysis.strategy.classify_nplayer.
 
 Cross-checks CS's predicted trajectory against
 ai_race.engine_nplayer.strategies.strategy_trajectory directly, since that is
@@ -9,7 +9,7 @@ from __future__ import annotations
 import pytest
 
 from ai_race.engine_nplayer.strategies import CanonicalStrategy, strategy_trajectory
-from strategy_analysis.classify_nplayer import (
+from analysis.strategy.classify_nplayer import (
     CANONICAL_STRATEGIES_NPLAYER,
     classify_trajectory_nplayer,
     predict_strategy_nplayer,

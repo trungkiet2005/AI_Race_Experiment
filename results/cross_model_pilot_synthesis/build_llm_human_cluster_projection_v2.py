@@ -22,7 +22,7 @@ ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / "results" / "cross_model_pilot_synthesis"
 FIGURES = OUT / "figures"
 DATA = OUT / "data"
-HUMAN_CSV = ROOT / "public_dataset" / "airace_deidentified_long.csv"
+HUMAN_CSV = ROOT / "references" / "source_study_dataset" / "airace_deidentified_long.csv"
 BEDROCK_MANTLE_ROOT = ROOT / "results" / "frontier" / "bedrock_mantle"
 
 PALETTE = {

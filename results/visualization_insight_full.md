@@ -285,7 +285,7 @@ No exact-duplicate candidate folder signatures found.
 
 - Artifact: `results/reports/pilot_reports/pilot_insight_report/artifact.json`
 - Single canonical insights file (this one): `results/visualization_insight_full.md`
-- Rebuild command: `python results/scripts/build_pilot_insight_report.py`
+- Rebuild command: `python scripts/build_pilot_insight_report.py`
 
 ## 6) Next cleanup action suggested
 - Keep generated report assets under `results/reports/pilot_reports/pilot_insight_report/` and move any new analysis markdown snapshots to a single tracker file under `results/` (this file).
@@ -293,7 +293,7 @@ No exact-duplicate candidate folder signatures found.
 
 ## 7) XAI auto-vector attribution audit (prompt-sensitivity turn logs)
 
-The new explainability pass added `results/scripts/explain_action_xai.py`, which builds
+The new explainability pass added `scripts/explain_action_xai.py`, which builds
 surrogate, auto-vectorized classifiers for SAFE/UNSAFE actions and writes decision-level
 interpretability artifacts for every requested run.
 

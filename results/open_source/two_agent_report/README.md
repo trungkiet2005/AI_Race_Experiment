@@ -19,6 +19,6 @@ canonical home — so they were moved here rather than left outside the tree the
 catalog indexes.
 
 Regenerate the report tables with
-[`results/scripts/report_two_agent_race.py`](../../scripts/report_two_agent_race.py);
+[`scripts/report_two_agent_race.py`](../../../scripts/report_two_agent_race.py);
 its `--output` is a required argument, so point it at a directory under
 `results/` rather than back at the repository root.

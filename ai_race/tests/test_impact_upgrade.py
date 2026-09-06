@@ -2,7 +2,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from results.scripts.analyze_impact_upgrade import (
+from scripts.analyze_impact_upgrade import (
     ROOT,
     context_from_prompt,
     divergence_curve,

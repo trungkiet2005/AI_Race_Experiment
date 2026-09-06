@@ -35,7 +35,7 @@ OUTPUT_DIR = REPO_ROOT / "analysis" / "fh_analytic" / "outputs"
 DERIVED_DIR = OUTPUT_DIR / "derived"
 FIGURES_DIR = OUTPUT_DIR / "figures" / "risk_matrix_asymmetry"
 REPORTS_DIR = OUTPUT_DIR / "reports"
-HUMAN_REFERENCE_PATH = REPO_ROOT / "results" / "scripts" / "human_reference.json"
+HUMAN_REFERENCE_PATH = REPO_ROOT / "scripts" / "human_reference.json"
 
 BLUE = "#2F6B9A"
 ORANGE = "#D9822B"

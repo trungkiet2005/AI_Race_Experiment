@@ -132,8 +132,8 @@ confirmatory với nhiều rep hơn và nhiều model hơn để xác nhận.
 
 ## 5. Phân loại chiến lược gần nhất (Hamming distance, AS/AU/CS)
 
-Áp `strategy_analysis/classify_nplayer.py` (bản N-player của
-`strategy_analysis/classify.py`, chỉ 3 chiến lược AS/AU/CS — N-player không
+Áp `analysis/strategy/classify_nplayer.py` (bản N-player của
+`analysis/strategy/classify.py`, chỉ 3 chiến lược AS/AU/CS — N-player không
 có CAS) lên toàn bộ 180 player-race của baseline:
 
 | risk | AS | AU | CS | Tie/Other |

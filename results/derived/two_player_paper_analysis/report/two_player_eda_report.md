@@ -71,5 +71,5 @@ The robust descriptive pattern is heterogeneity, not one universal LLM response:
 ## Reproduction
 
 ```bash
-python results/scripts/analyze_two_player_paper_figures.py
+python scripts/analyze_two_player_paper_figures.py
 ```

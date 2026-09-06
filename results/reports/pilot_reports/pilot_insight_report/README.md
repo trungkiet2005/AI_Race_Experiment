@@ -13,7 +13,7 @@ Core consolidated visualization insight log:
 ## Rebuild command
 
 ```bash
-python results/scripts/build_pilot_insight_report.py
+python scripts/build_pilot_insight_report.py
 ```
 
 ## Notes

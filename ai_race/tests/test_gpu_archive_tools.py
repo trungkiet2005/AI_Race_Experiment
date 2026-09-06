@@ -8,7 +8,7 @@ ROOT = Path(__file__).resolve().parents[2]
 
 
 def _load_script(name: str):
-    path = ROOT / "results" / "scripts" / name
+    path = ROOT / "scripts" / name
     spec = importlib.util.spec_from_file_location(path.stem, path)
     assert spec is not None and spec.loader is not None
     module = importlib.util.module_from_spec(spec)

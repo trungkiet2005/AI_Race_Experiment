@@ -474,7 +474,7 @@
       {
         "id": "synthesis",
         "label": "Pilot evidence ledger",
-        "path": "results/scripts/build_pilot_insight_report.py"
+        "path": "scripts/build_pilot_insight_report.py"
       }
     ],
     "blocks": [
@@ -1752,7 +1752,7 @@
         "sql": "SELECT * FROM build_pilot_insight_report_py",
         "description": "Reconciles manifests, denominators, rates, and report-ready derived comparisons.",
         "tables_used": [
-          "results/scripts/build_pilot_insight_report.py"
+          "scripts/build_pilot_insight_report.py"
         ],
         "filters": [
           "Completed pilot rows only; smoke runs excluded"

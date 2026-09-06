@@ -13,7 +13,7 @@ from kaggle.experiments.kaggle_crossmodel_scaffold_admission import (
 from kaggle.experiments.greennode_crossmodel_scaffold_admission import (
     evaluate_greennode_hardware_gate,
 )
-from results.scripts.build_capacity_family_contract import build_contract
+from scripts.build_capacity_family_contract import build_contract
 
 
 ROOT = Path(__file__).resolve().parents[2]

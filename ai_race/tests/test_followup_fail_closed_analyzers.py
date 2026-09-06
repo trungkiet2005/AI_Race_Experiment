@@ -6,12 +6,12 @@ from pathlib import Path
 import pandas as pd
 import pytest
 
-from results.scripts.analyze_payoff_scale_behavior import (
+from scripts.analyze_payoff_scale_behavior import (
     load_and_validate as load_payoff,
     paired_player_rows,
     summarize as summarize_payoff,
 )
-from results.scripts.analyze_state_scaffold_factorial import (
+from scripts.analyze_state_scaffold_factorial import (
     FACTORIAL_CONDITIONS,
     FROZEN_THRESHOLDS,
     PLACEBO_CONDITION,
@@ -21,7 +21,7 @@ from results.scripts.analyze_state_scaffold_factorial import (
     placebo_contrasts,
     summarize_contrasts,
 )
-from results.scripts.followup_analysis_common import clustered_values, sha256
+from scripts.followup_analysis_common import clustered_values, sha256
 
 
 DIGEST = "d" * 64

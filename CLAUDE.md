@@ -40,7 +40,7 @@ python -m ai_race.runner.run_experiment ai_race/configs/experiment/baseline.json
 Analysis over completed run directories (requires the `analysis` extra):
 
 ```bash
-python results/scripts/analyze_ai_race.py --input <run-root> --output <derived-dir> [--fit-logit]
+python scripts/analyze_ai_race.py --input <run-root> --output <derived-dir> [--fit-logit]
 ```
 
 ## Execution policy
@@ -69,7 +69,7 @@ Data flows config → games → lockstep batch → journal → analyser.
 
 **Recording** ([ai_race/dataio/recorder.py](ai_race/dataio/recorder.py)). `RunJournal` appends after every completed round, so an interrupted run leaves incomplete races visible in `turns.jsonl` with no matching terminal CSV row. Output per model: `turns.jsonl` (one row per player decision), `races.csv`, `players.csv`, `run_manifest.json`.
 
-**Analysis.** [ai_race/analysis/metrics.py](ai_race/analysis/metrics.py) is a dependency-free descriptive layer used in tests/notebooks. [results/scripts/analyze_ai_race.py](results/scripts/analyze_ai_race.py) (~3.2k lines) is the real analyser: it validates joins, mechanism arithmetic, CRN blocks, and protocol signatures before emitting any table. [strategy_analysis/classify.py](strategy_analysis/classify.py) does nearest-strategy Hamming classification and keeps ties rather than forcing a unique label.
+**Analysis.** [ai_race/analysis/metrics.py](ai_race/analysis/metrics.py) is a dependency-free descriptive layer used in tests/notebooks. [scripts/analyze_ai_race.py](scripts/analyze_ai_race.py) (~3.2k lines) is the real analyser: it validates joins, mechanism arithmetic, CRN blocks, and protocol signatures before emitting any table. [analysis/strategy/classify.py](analysis/strategy/classify.py) does nearest-strategy Hamming classification and keeps ties rather than forcing a unique label.
 
 **FAIRGAME/** is vendored upstream (Apache-2.0, LIST/SOM Research Lab) and reused only for its LLM connectors. Treat it as a dependency: don't refactor it to match project style.
 
@@ -85,7 +85,7 @@ Data flows config → games → lockstep batch → journal → analyser.
 ## Analyzing LLM behavioral results
 
 When asked to "analyze" or "visualize" a run under `results/` (2-player or N-player), match the
-rigor already established in `results/reports/frontier/` (`results/scripts/analyze_ai_race.py`), not just
+rigor already established in `results/reports/frontier/` (`scripts/analyze_ai_race.py`), not just
 means/proportions. That baseline includes, wherever the sample size allows it: a cluster-robust
 panel logistic regression (cluster on the CRN block — pair or `rep`, whichever repetitions share
 common-random-number draws), nearest-strategy classification by Hamming distance (AS/AU/CS[/CAS]),

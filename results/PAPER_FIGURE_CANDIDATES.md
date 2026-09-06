@@ -109,7 +109,7 @@ Use these only by swapping out a core figure; adding all of them will dilute the
 
 ![Surface variant forest](artifacts/figure_gallery/NEW_02_surface/surface_variant_unsafe_rate_forest.png)
 
-- **Source script:** [`results/scripts/analyze_surface_sensitivity.py`](scripts/analyze_surface_sensitivity.py)
+- **Source script:** [`scripts/analyze_surface_sensitivity.py`](../scripts/analyze_surface_sensitivity.py)
 - **Why:** 18 nominally equivalent surface variants span a very wide Unsafe-rate range; this is a direct prompt-validity result and strong demo figure.
 - **Use instead of:** a secondary context figure if prompt sensitivity is elevated to a primary contribution.
 - **Caveat:** gallery is currently the only generated canonical copy; label pilot, disclose bundled token/order/format changes, and avoid generalizing beyond the tested checkpoint/protocol.
@@ -118,7 +118,7 @@ Use these only by swapping out a core figure; adding all of them will dilute the
 
 ![Comprehension admission](open_source/context_skin_pilot/analysis_live_pilot_t0/figures/comprehension_admission.png)
 
-- **PDF/source:** [`comprehension_admission.pdf`](open_source/context_skin_pilot/analysis_live_pilot_t0/figures/comprehension_admission.pdf), [`analyze_context_skin.py`](scripts/analyze_context_skin.py)
+- **PDF/source:** [`comprehension_admission.pdf`](open_source/context_skin_pilot/analysis_live_pilot_t0/figures/comprehension_admission.pdf), [`analyze_context_skin.py`](../scripts/analyze_context_skin.py)
 - **Why:** makes the context experiment's validity boundary visible: recall can be perfect while state update and terminal scoring fail.
 - **Use instead of:** M1 only if the context experiment becomes the paper's primary protocol.
 - **Caveat:** several terminal probes have wording/draw-semantics ambiguities; the admission verdict remains valid because unambiguous state/terminal items also fail, but revise the probe contract before confirmation.
@@ -135,7 +135,7 @@ Use these only by swapping out a core figure; adding all of them will dilute the
 
 ![Trajectory divergence](impact_upgrade/figures/trajectory_divergence_curve.png)
 
-- **PDF/source:** [`trajectory_divergence_curve.pdf`](impact_upgrade/figures/trajectory_divergence_curve.pdf), [`analyze_impact_upgrade.py`](scripts/analyze_impact_upgrade.py)
+- **PDF/source:** [`trajectory_divergence_curve.pdf`](impact_upgrade/figures/trajectory_divergence_curve.pdf), [`analyze_impact_upgrade.py`](../scripts/analyze_impact_upgrade.py)
 - **Why:** all paired contexts agree at entry, while differences emerge after repeated exposure and endogenous feedback.
 - **Caveat:** divergence timing is descriptive; later gaps mix prompt response with changing state and opponent behavior.
 
@@ -144,7 +144,7 @@ Use these only by swapping out a core figure; adding all of them will dilute the
 ![Repeat-run stability](derived/two_player_paper_analysis/figures/fig13_repeat_run_stability.png)
 
 - **Canonical PDF:** [`results/derived/two_player_paper_analysis/figures/fig13_repeat_run_stability.pdf`](derived/two_player_paper_analysis/figures/fig13_repeat_run_stability.pdf)
-- **Source:** `results/scripts/analyze_two_player_paper_figures.py`
+- **Source:** `scripts/analyze_two_player_paper_figures.py`
 - **Why:** separates stable aggregate treatment patterns from decision-level non-determinism.
 - **Caveat:** repeatability under one decoding/backend contract is not cross-model robustness.
 
@@ -152,7 +152,7 @@ Use these only by swapping out a core figure; adding all of them will dilute the
 
 ![Behavioral fingerprint](cross_model_pilot_synthesis/figures/behavioral_fingerprint.png)
 
-- **PDF/data/source:** [`behavioral_fingerprint.pdf`](cross_model_pilot_synthesis/figures/behavioral_fingerprint.pdf), [`behavioral_fingerprint.csv`](cross_model_pilot_synthesis/data/behavioral_fingerprint.csv), [`build_behavioral_fingerprint.py`](scripts/build_behavioral_fingerprint.py)
+- **PDF/data/source:** [`behavioral_fingerprint.pdf`](cross_model_pilot_synthesis/figures/behavioral_fingerprint.pdf), [`behavioral_fingerprint.csv`](cross_model_pilot_synthesis/data/behavioral_fingerprint.csv), [`build_behavioral_fingerprint.py`](../scripts/build_behavioral_fingerprint.py)
 - **Why:** demonstrates that checkpoint behavior is not a one-dimensional Safe/Unsafe trait. Risk sensitivity, conditional reciprocity, persona swing, payoff coupling, and chance-corrected strategy fit separate sharply.
 - **New insight:** GPT-5.4 nano is nearly risk-flat but has a 98pp persona swing; Claude Opus 5 has a −100pp risk response but no identifiable reciprocity; Claude Sonnet 5 combines a −64pp risk response with approximately +70pp median within-risk reciprocity. No checkpoint has more than 6.7% of trajectories whose canonical-strategy fit beats its base-rate-matched chance null.
 - **Caveat:** five distinct descriptive estimands are deliberately not collapsed into a composite score. Blank cells mean the relevant persona lane or identifiable contrast is unavailable, not zero.

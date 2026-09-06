@@ -44,7 +44,7 @@ detailed XAI output, và lựa chọn này được ghi trong run manifest.
 
 `prompt_sensitivity_summary.csv` là diagnostic mô tả theo arm/risk: số decision,
 Unsafe rate và chênh lệch so với baseline trung tính. Không dùng bảng này thay cho
-clustered inference của `results/scripts/analyze_ai_race.py`.
+clustered inference của `scripts/analyze_ai_race.py`.
 
 ## Prompt-sensitivity profile
 

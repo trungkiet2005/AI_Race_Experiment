@@ -40,7 +40,7 @@ ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / "results" / "cross_model_pilot_synthesis"
 FIGURES = OUT / "figures"
 DATA = OUT / "data"
-HUMAN_CSV = ROOT / "public_dataset" / "airace_deidentified_long.csv"
+HUMAN_CSV = ROOT / "references" / "source_study_dataset" / "airace_deidentified_long.csv"
 
 PALETTE = {
     "navy": "#0B132B", "slate": "#64748B", "grid": "#DCE3ED", "human": "#3a3a38",

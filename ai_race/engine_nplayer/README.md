@@ -7,7 +7,7 @@ Extends the paper-faithful two-player mechanism in `ai_race/engine/` to any
 — see "Why separate" below — with configs, prompts, and tests of its own.
 Nothing under `ai_race/engine/`, `ai_race/dataio/recorder.py`,
 `ai_race/runner/`, `ai_race/dataio/config_loader.py`'s `validate_game`/
-`validate_agents`, or `results/scripts/analyze_ai_race.py` is touched or
+`validate_agents`, or `scripts/analyze_ai_race.py` is touched or
 depended on by this module.
 
 ## Mechanism

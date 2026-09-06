@@ -29,7 +29,7 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 OUTPUT_DIR = REPO_ROOT / "analysis" / "fh_analytic" / "outputs"
 DERIVED_DIR = OUTPUT_DIR / "derived"
 REPORTS_DIR = OUTPUT_DIR / "reports"
-HUMAN_REFERENCE_PATH = REPO_ROOT / "results" / "scripts" / "human_reference.json"
+HUMAN_REFERENCE_PATH = REPO_ROOT / "scripts" / "human_reference.json"
 
 MODEL_ORDER = [
     "gpt-5-nano",
@@ -310,7 +310,7 @@ def write_report(
     lines.append("")
     lines.append(
         "Fraction of model x scope logit fits whose coefficient sign agrees with the human-reference direction "
-        "(Fernandez Domingos & Han 2026, `results/scripts/human_reference.json`), pooling the baseline "
+        "(Fernandez Domingos & Han 2026, `scripts/human_reference.json`), pooling the baseline "
         "per-model fits and the risk-matrix per-model fits (the two scopes with comparable model-level grain)."
     )
     lines.append("")

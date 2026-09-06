@@ -50,9 +50,10 @@ Runs against hosted providers read credentials from a `.env` file. Copy
 ai_race/                 Core engine, prompts, configs, runners, tests, and metrics
 N-Player/                N-player extension: theory, figures, and its own tests
 FAIRGAME/                Vendored model connectors reused for offline/API inference
-analysis/fh_analytic/    Human-vs-LLM analytic pipeline and its derived outputs
+analysis/
+  fh_analytic/           Human-vs-LLM analytic pipeline and its derived outputs
+  strategy/              AS/AU/CS/CAS trajectory classification (importable package)
 data/                    Analysis-ready copied view of selected runs (see data/README.md)
-public_dataset/          De-identified human participant table, read by the analyses
 kaggle/
   experiments/           GPU notebook source for the offline baseline
   benchmarks/            Kaggle Benchmark task for frontier/API models
@@ -60,15 +61,14 @@ kaggle/
 references/
   papers/                Curated literature: markdown notes, PDFs, arXiv source bundles
   _citation_audit/       arXiv sources retained while auditing the manuscript citations
-scripts/                 Operational experiment runners
-strategy_analysis/       AS/AU/CS/CAS trajectory classification
+  source_study_dataset/  The source study's published de-identified participant table
+scripts/                 All operational and analysis scripts: stage runners,
+                         analysers, catalog and manifest builders
 results/                 Single canonical home for raw runs, analyses, reports, QA, and publication PDFs
-docs/                    Experiment protocols, run guides, and the trajectory-lab demo
-paper/                   Manuscript with bounded pilot audit evidence
-figures/                 Manuscript overview figures
-slides/                  AI Race presentation outline
-Presentation/            Shared bibliography for the deck
-web/                     Interactive browser simulator (see README section below)
+docs/                    Experiment protocols and run guides
+paper/                   Manuscript, its figures/, and bounded pilot audit evidence
+slides/                  AI Race presentation outline, deck source, and design reference
+web/                     Browser front-ends: the simulator and the trajectory lab
 ```
 
 Legacy Collective Risk outputs and trained strategy artifacts are preserved locally
@@ -187,12 +187,12 @@ The versioned multi-prompt robustness protocol, evidence survey, treatment
 taxonomy, and paired estimands are documented in
 [`docs/prompt-sensitivity-survey.md`](docs/prompt-sensitivity-survey.md). Surface
 variants are deliberately excluded from the canonical primary-mechanism pool and
-are analyzed with `results/scripts/analyze_surface_sensitivity.py`.
+are analyzed with `scripts/analyze_surface_sensitivity.py`.
 
 The complete public GPU handoff contains 11 hash-verified raw/analysis archives
 plus expanded derived tables. See
 [`results/open_source/gpu_run_archive/`](results/open_source/gpu_run_archive/) and
-verify a clean clone with `python results/scripts/audit_gpu_archives.py
+verify a clean clone with `python scripts/audit_gpu_archives.py
 --archive-dir results/open_source/gpu_run_archive`.
 
 ## Game-understanding audit

@@ -85,7 +85,7 @@ Because every context x mapping cell had to pass the frozen gate and none did, t
 The adjacent CSV files contain all plotted summaries; `analysis_summary.json` records source-manifest hashes, coverage, admission status, and figure inventory. Re-run with:
 
 ```bash
-python results/scripts/analyze_context_skin.py \
+python scripts/analyze_context_skin.py \
   --live-root <live-run-root> \
   --fixed-root <fixed-state-run-root> \
   --output-dir <new-output-dir>

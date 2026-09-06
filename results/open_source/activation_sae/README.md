@@ -82,9 +82,9 @@ KL/loss-recovery gates mandatory before causal language.
 Reproduce and audit with:
 
 ```bash
-python results/scripts/run_activation_sae.py --help
-python results/scripts/visualize_activation_sae.py --help
-python results/scripts/compare_activation_sae_positions.py --help
+python scripts/run_activation_sae.py --help
+python scripts/visualize_activation_sae.py --help
+python scripts/compare_activation_sae_positions.py --help
 ```
 
 The frozen protocol and causal extension gates are in

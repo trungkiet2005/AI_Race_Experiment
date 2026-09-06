@@ -3,7 +3,7 @@
 
 Mines three questions across every audited-clean frontier pilot run (results/frontier):
 (1) does the risk-response level/shape and the frozen human-comparison scorecard
-(E1-E8, results/scripts/human_reference.json) agree across model checkpoints;
+(E1-E8, scripts/human_reference.json) agree across model checkpoints;
 (2) does the numeric risk-persona framing sweep (R1-R6 seat roles) move the Unsafe
 rate more than the max_private_risk treatment itself; (3) which human dynamic
 effects (E1-E4) are even estimable per checkpoint, and why not when they aren't.
@@ -33,7 +33,7 @@ OUTPUT = ROOT / "results" / "cross_model_pilot_synthesis"
 FIGURES = OUTPUT / "figures"
 DATA = OUTPUT / "data"
 PYTHON = ROOT / ".venv-kaggle" / "bin" / "python"
-ANALYZER = ROOT / "results" / "scripts" / "analyze_ai_race.py"
+ANALYZER = ROOT / "scripts" / "analyze_ai_race.py"
 FRONTIER_ROOT = ROOT / "results" / "frontier"
 
 ALLOW_FLAGS = [
@@ -76,7 +76,7 @@ MODEL_LABELS = {
     "claude-opus-5": "Claude Opus 5",
     "claude-sonnet-5": "Claude Sonnet 5",
 }
-HUMAN_CSV = ROOT / "public_dataset" / "airace_deidentified_long.csv"
+HUMAN_CSV = ROOT / "references" / "source_study_dataset" / "airace_deidentified_long.csv"
 
 
 def setup_plot() -> None:

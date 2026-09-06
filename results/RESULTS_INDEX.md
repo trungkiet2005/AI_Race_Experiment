@@ -4,8 +4,8 @@
 
 ## At a glance
 
-- Canonical files (excluding reproducible `_build/`): **3,862**
-- Total canonical size: **1259.09 MiB**
+- Canonical files (excluding reproducible `_build/`): **3,820**
+- Total canonical size: **1260.31 MiB**
 - Parsed manifest records: **451**
 - Invalid manifest JSON files: **0**
 - Exact duplicate hash groups: **251** (archives may intentionally retain immutable copies)

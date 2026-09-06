@@ -7,7 +7,7 @@ import json
 import pandas as pd
 import pytest
 
-from results.scripts import analyze_nplayer_ecology as analysis
+from scripts import analyze_nplayer_ecology as analysis
 from kaggle.experiments import greennode_nplayer_ecology as protocol
 
 

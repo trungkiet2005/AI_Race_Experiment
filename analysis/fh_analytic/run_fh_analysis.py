@@ -29,7 +29,7 @@ import pandas as pd
 REPO_ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_INPUT = REPO_ROOT / "data" / "experiments" / "players_2"
 DEFAULT_OUTPUT = REPO_ROOT / "analysis" / "fh_analytic" / "outputs"
-HUMAN_REFERENCE_PATH = REPO_ROOT / "results" / "scripts" / "human_reference.json"
+HUMAN_REFERENCE_PATH = REPO_ROOT / "scripts" / "human_reference.json"
 
 HUMAN_CHECK_FORMULA = (
     "unsafe ~ C(max_private_risk) + first_round_unsafe + own_prev_unsafe * "

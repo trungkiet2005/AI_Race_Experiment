@@ -14,7 +14,7 @@ from pathlib import Path
 import pytest
 
 REPOSITORY_ROOT = Path(__file__).resolve().parents[2]
-SCRIPT_PATH = REPOSITORY_ROOT / "results" / "scripts" / "build_theory_tables.py"
+SCRIPT_PATH = REPOSITORY_ROOT / "scripts" / "build_theory_tables.py"
 
 
 def _load_script():

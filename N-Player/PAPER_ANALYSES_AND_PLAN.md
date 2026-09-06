@@ -32,7 +32,7 @@ thuyết (EGT) cho N-player** — đó là khoảng trống mà thư mục này 
 | 14 | Điều kiện risk-dominance tổng quát (giới hạn Z lớn) | Eq. 31 | `Σ_{k=1}^N Π_ij(k) ≥ Σ_{k=0}^{N-1} Π_ji(k)` | ✅ `theory/population.py::risk_dominant` |
 | 15 | Risk cá nhân vs tập thể (hệ số `γ`) áp dụng cho N-team | Appendix C (đoạn cuối) + Fig. S12 | Payoff AS/CS gặp AU nhân với `(1 − pr·γ)`; late DSAI: vùng innovation rộng ra khi γ tăng | ✅ Tham số `gamma` trong `theory/welfare.py::average_payoff_{as_vs_au,cs_vs_au}` |
 | 16 | Social welfare / average population payoff qua các vùng DSAI, tổng quát hóa cho N | Appendix E (Fig. S13-S15, thảo luận) | So sánh phúc lợi trung bình giữa 3 vùng — cùng công thức payoff nhưng lấy trung bình quần thể tại trạng thái dừng | ✅ `theory/welfare.py::homogeneous_payoff`, `social_welfare` |
-| 17 (phụ) | Phân tích dữ liệu hành vi thực nghiệm (LLM chơi N-player) — không phải lý thuyết trong paper nhưng là phần đối chiếu cần có | n/a (khoảng trống của repo, tương tự `results/scripts/analyze_ai_race.py`) | Thống kê mô tả trên output của `engine_nplayer` (turns.jsonl/races.csv/players.csv dạng long-format) | ❌ Chưa (không bắt buộc theo yêu cầu "phân tích trong paper", để phase phụ) |
+| 17 (phụ) | Phân tích dữ liệu hành vi thực nghiệm (LLM chơi N-player) — không phải lý thuyết trong paper nhưng là phần đối chiếu cần có | n/a (khoảng trống của repo, tương tự `scripts/analyze_ai_race.py`) | Thống kê mô tả trên output của `engine_nplayer` (turns.jsonl/races.csv/players.csv dạng long-format) | ❌ Chưa (không bắt buộc theo yêu cầu "phân tích trong paper", để phase phụ) |
 | — | Vẽ lại hình minh họa (Fig. S7/S8, S9, S12) để review trực quan | — | Script matplotlib, không phải test tự động | ✅ `figures/reproduce_paper_figures.py` — 9 hình PNG trong `figures/output/`, khớp hình dạng paper (biên early-DSAI cong tăng theo `s`; late-DSAI vùng innovation mở rộng rõ rệt khi γ: 0→1, đúng như Appendix C mô tả) |
 
 **Trạng thái tổng quan (2026-08-01):** Phase 1-4 đã code xong và có test — 62/62 test pass
@@ -84,7 +84,7 @@ N-Player/
 ```
 
 (Nếu về sau muốn thư mục này trở thành một phần chính thức của package
-`ai_race` — ví dụ để `results/scripts/analyze_ai_race.py` gọi tới — có thể di
+`ai_race` — ví dụ để `scripts/analyze_ai_race.py` gọi tới — có thể di
 chuyển `theory/` vào `ai_race/theory_nplayer/` sau; giữ tách biệt lúc đầu để
 không đụng tới vùng đã "đóng băng" theo `CLAUDE.md`.)
 
@@ -153,7 +153,7 @@ tự động, chỉ chạy thủ công khi cần review).
 ### Phase 5 (tùy chọn, phụ) — cầu nối với dữ liệu LLM thực nghiệm
 
 Nếu sau này cần so khớp dự đoán lý thuyết ở trên với hành vi LLM thật chơi
-N-player (giống cách `results/scripts/analyze_ai_race.py` so `_build_theory_comparison`
+N-player (giống cách `scripts/analyze_ai_race.py` so `_build_theory_comparison`
 với dữ liệu 2-player), cần thêm một bước đọc `races.csv`/`players.csv` dạng
 long-format của `engine_nplayer` — hiện chưa có analyzer nào đọc được. Đây là
 việc lớn hơn nhiều (mirror toàn bộ `analyze_ai_race.py`), nên tách thành yêu

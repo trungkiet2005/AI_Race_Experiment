@@ -51,9 +51,6 @@ kaggle.json
 !/results/nplayer/
 !/results/nplayer/**
 !/results/notebooks/
-!/results/scripts/
-!/results/scripts/*.py
-!/results/scripts/*.json
 !/results/impact_upgrade/
 !/results/impact_upgrade/**
 /results/impact_upgrade/candidate.html
@@ -99,8 +96,8 @@ kaggle.json
 
 /ai_race_results/
 /models/
-/strategy_analysis/artifacts/
-/strategy_analysis/datasets/
+/analysis/strategy/artifacts/
+/analysis/strategy/datasets/
 FAIRGAME/resources/results/
 *.safetensors
 *.gguf
@@ -115,16 +112,16 @@ paper/*.fls
 paper/*.log
 paper/*.out
 paper/main.pdf
-slides/*.aux
-slides/*.fdb_latexmk
-slides/*.fls
-slides/*.log
-slides/*.nav
-slides/*.out
-slides/*.snm
-slides/*.toc
-slides/*.vrb
-slides/*.xdv
+slides/**/*.aux
+slides/**/*.fdb_latexmk
+slides/**/*.fls
+slides/**/*.log
+slides/**/*.nav
+slides/**/*.out
+slides/**/*.snm
+slides/**/*.toc
+slides/**/*.vrb
+slides/**/*.xdv
 /tmp/
 /results/_build/
 
