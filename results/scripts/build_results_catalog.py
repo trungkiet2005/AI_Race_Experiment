@@ -80,6 +80,9 @@ def manifest_rows() -> tuple[list[dict[str, Any]], list[dict[str, str]]]:
     for path in sorted(RESULTS.rglob("*manifest*.json")):
         if (
             "_build" in path.parts
+            # Gitignored local CLI scratch. Indexing it would make the committed
+            # catalog differ per machine.
+            or "_local-debug" in path.parts
             or "__pycache__" in path.parts
             or path.name in GENERATED
             or path.name in NON_CATALOG_RECEIPTS
@@ -131,6 +134,9 @@ def inventory(hash_all: bool) -> tuple[list[dict[str, Any]], list[dict[str, Any]
         if (
             not path.is_file()
             or "_build" in path.parts
+            # Gitignored local CLI scratch. Indexing it would make the committed
+            # catalog differ per machine.
+            or "_local-debug" in path.parts
             or "__pycache__" in path.parts
             or path.suffix == ".pyc"
             or path.name in GENERATED
