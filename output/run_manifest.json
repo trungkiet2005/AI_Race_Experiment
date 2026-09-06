@@ -1,0 +1,46 @@
+{
+  "repo_input": "/kaggle/input/datasets/nguyenlamphuquy/ai-race-experiment",
+  "experiments": [
+    "baseline"
+  ],
+  "source_sha256": "ef1eb67ef51d010cd2018c0b9ac3d149bc9f61b4fce002119029e4adcda93cee",
+  "package_versions": {
+    "numpy": "2.0.2",
+    "pandas": "2.3.3",
+    "torch": "2.10.0+cu128",
+    "transformers": "5.0.0",
+    "vllm": null
+  },
+  "models": [
+    {
+      "short_name": "qwen2.5-14b-instruct",
+      "path": "/kaggle/input/models/qwen-lm/qwen2.5/transformers/14b-instruct/1",
+      "engine": "transformers"
+    },
+    {
+      "short_name": "gemma-3-12b-it",
+      "path": "/kaggle/input/models/google/gemma-3/transformers/gemma-3-12b-it/1",
+      "engine": "transformers"
+    }
+  ],
+  "runs": [
+    {
+      "model": "qwen2.5-14b-instruct",
+      "experiment": "baseline",
+      "status": "completed",
+      "n_races": 30,
+      "n_turns": 558,
+      "output_dir": "/kaggle/working/ai_race_results/qwen2.5-14b-instruct/baseline",
+      "run_manifest": "/kaggle/working/ai_race_results/qwen2.5-14b-instruct/baseline/run_manifest.json"
+    },
+    {
+      "model": "gemma-3-12b-it",
+      "experiment": "baseline",
+      "status": "completed",
+      "n_races": 30,
+      "n_turns": 558,
+      "output_dir": "/kaggle/working/ai_race_results/gemma-3-12b-it/baseline",
+      "run_manifest": "/kaggle/working/ai_race_results/gemma-3-12b-it/baseline/run_manifest.json"
+    }
+  ]
+}
