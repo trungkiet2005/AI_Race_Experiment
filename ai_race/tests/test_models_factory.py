@@ -303,6 +303,7 @@ def test_openai_backend_falls_back_to_none_when_model_rejects_minimal_value(
 
 
 def test_bedrock_backend_requires_credentials(monkeypatch: pytest.MonkeyPatch) -> None:
+    pytest.importorskip("boto3", reason="the Bedrock backend needs the api extra")
     for var in ("AWS_BEARER_TOKEN_BEDROCK", "AWS_PROFILE", "AWS_ACCESS_KEY_ID", "AWS_REGION"):
         monkeypatch.delenv(var, raising=False)
     import ai_race.models.bedrock_direct as bedrock_direct_module
@@ -332,6 +333,7 @@ class _FakeBedrockClient:
 def test_bedrock_backend_accepts_a_raw_model_id_and_caps_max_tokens(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
+    pytest.importorskip("boto3", reason="the Bedrock backend needs the api extra")
     monkeypatch.setenv("AWS_BEARER_TOKEN_BEDROCK", "not-a-real-token")
     monkeypatch.setenv("AWS_REGION", "us-east-1")
     calls: list[dict] = []
@@ -364,6 +366,7 @@ def test_bedrock_backend_accepts_a_raw_model_id_and_caps_max_tokens(
 
 
 def test_bedrock_backend_can_enable_thinking(monkeypatch: pytest.MonkeyPatch) -> None:
+    pytest.importorskip("boto3", reason="the Bedrock backend needs the api extra")
     """thinking defaults to disabled (observed: claude-opus-5 silently burns
     the whole maxTokens budget on a reasoningContent block and returns no
     text at all otherwise), but callers that want it can still opt in."""
@@ -389,6 +392,7 @@ def test_bedrock_backend_can_enable_thinking(monkeypatch: pytest.MonkeyPatch) ->
 def test_bedrock_backend_drops_temperature_when_model_rejects_it(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
+    pytest.importorskip("boto3", reason="the Bedrock backend needs the api extra")
     """Some Claude models on Bedrock (observed: claude-opus-5) reject any
     explicit temperature with ValidationException('`temperature` is
     deprecated for this model'). The backend must fall back to the model
@@ -434,6 +438,7 @@ def test_bedrock_backend_drops_temperature_when_model_rejects_it(
 def test_bedrock_backend_survives_concurrent_temperature_rejection(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
+    pytest.importorskip("boto3", reason="the Bedrock backend needs the api extra")
     """Regression test: with concurrency > 1, several worker threads can all
     send their first request with temperature set before any of them
     observes the fallback flag flip. A barrier forces exactly that pileup
