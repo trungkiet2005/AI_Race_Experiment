@@ -4,9 +4,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-**Venue: AAMAS-2026** (`paper/main.tex` is built on the AAMAS-2026 sigconf
-template; submission instructions at cyprusconferences.org/aamas2026). No
-submission date is recorded here, so check the call before planning against one.
+**Venue: AAMAS-2026**
+
+`paper/main.tex` is built on the AAMAS-2026 sigconf template, submission
+instructions at cyprusconferences.org/aamas2026. No submission date is recorded
+here, so check the call before planning against one.
 
 A research codebase that runs the two-player repeated "AI race" of Fernández Domingos and Han (2026) with LLM agents instead of human participants. Two model-controlled companies simultaneously choose SAFE or UNSAFE each round; UNSAFE advances faster and pays more now but accumulates a private setback risk that only bites if you win or tie.
 
