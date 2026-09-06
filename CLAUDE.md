@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-**Venue: AAMAS-2026**
+**Venue:** AAMAS-2026
 
 `paper/main.tex` is built on the AAMAS-2026 sigconf template, submission
 instructions at cyprusconferences.org/aamas2026. No submission date is recorded
