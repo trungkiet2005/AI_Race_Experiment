@@ -1,0 +1,5 @@
+effect_id,effect_name,human_reference,expected_sign,llm_coef,llm_odds_ratio,llm_ci95_low,llm_ci95_high,llm_p_value,sign_match,scope,spec,status
+E1,opponent_prev_unsafe,0.607,positive,1.083411012642962,2.954741040421924,0.6413678180694731,1.5254542072164508,1.5575368850151676e-06,True,baseline_completed,M3_interactions,estimated
+E2,progress_gap_before,-0.296,negative,-1.0665047906137226,0.34420950163135744,-1.5697726525834912,-0.563236928643954,3.2746259291880496e-05,True,baseline_completed,M3_interactions,estimated
+E3,first_round_unsafe,0.217,positive,1.6346959801418828,5.127898776963627,1.1514642359272884,2.1179277243564774,3.351283176719613e-11,True,baseline_completed,M3_interactions,estimated
+E4,own_prev_unsafe,-0.193,,-0.3624473238106378,0.6959709738118826,-0.8526024027101892,0.12770775508891352,0.14725271335312715,True,baseline_completed,M3_interactions,estimated

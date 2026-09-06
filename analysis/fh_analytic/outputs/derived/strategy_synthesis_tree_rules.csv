@@ -1,0 +1,56 @@
+scope,label,rule,support_turns,unsafe_rate,predicted_action,tree_depth,support_share,auc_in_sample
+family,family_chatgpt,first_round_unsafe <= 0.500 AND own_private_risk_before <= 0.019 AND round > 2.500,15024,0.05038604898828541,safe,3,0.30596285434995113,0.8433577262017178
+family,family_chatgpt,first_round_unsafe > 0.500 AND progress_gap_before > -0.250 AND round > 1.500,10633,0.7235023041474654,unsafe,3,0.21654040404040403,0.8433577262017178
+family,family_chatgpt,first_round_unsafe <= 0.500 AND own_private_risk_before <= 0.019 AND round <= 2.500,7454,0.1718540381003488,safe,3,0.15180026067122843,0.8433577262017178
+family,family_chatgpt,first_round_unsafe <= 0.500 AND own_private_risk_before > 0.019 AND progress_gap_before > 0.250,6286,0.5104995227489659,unsafe,3,0.1280140110785272,0.8433577262017178
+family,family_chatgpt,first_round_unsafe <= 0.500 AND own_private_risk_before > 0.019 AND progress_gap_before <= 0.250,5913,0.2998477929984779,safe,3,0.12041788856304986,0.8433577262017178
+family,family_chatgpt,first_round_unsafe > 0.500 AND progress_gap_before <= -0.250,2241,0.42079428826416776,safe,2,0.04563782991202346,0.8433577262017178
+family,family_chatgpt,first_round_unsafe > 0.500 AND progress_gap_before > -0.250 AND round <= 1.500,1553,1.0,unsafe,3,0.0316267513848159,0.8433577262017178
+family,family_gemini,opponent_prev_unsafe <= 0.500 AND first_round_unsafe <= 0.500 AND progress_gap_before > -0.250,4182,0.006934481109516977,safe,3,0.31710646041856233,0.9384370062737923
+family,family_gemini,opponent_prev_unsafe > 0.500 AND round > 2.500 AND max_private_risk <= 0.750,3802,0.9342451341399264,unsafe,3,0.2882923870185017,0.9384370062737923
+family,family_gemini,opponent_prev_unsafe <= 0.500 AND first_round_unsafe > 0.500 AND progress_gap_before > 0.250,1490,0.2483221476510067,safe,3,0.11298149833181681,0.9384370062737923
+family,family_gemini,opponent_prev_unsafe > 0.500 AND round > 2.500 AND max_private_risk > 0.750,1347,0.8285077951002228,unsafe,3,0.10213830755232028,0.9384370062737923
+family,family_gemini,opponent_prev_unsafe <= 0.500 AND first_round_unsafe > 0.500 AND progress_gap_before <= 0.250,1218,0.8727422003284072,unsafe,3,0.09235668789808917,0.9384370062737923
+family,family_gemini,opponent_prev_unsafe <= 0.500 AND first_round_unsafe <= 0.500 AND progress_gap_before <= -0.250,421,0.5130641330166271,unsafe,3,0.031922960266909314,0.9384370062737923
+family,family_gemini,opponent_prev_unsafe > 0.500 AND round <= 2.500 AND first_round_unsafe > 0.500,374,0.5935828877005348,unsafe,3,0.028359114346375492,0.9384370062737923
+family,family_gemini,opponent_prev_unsafe > 0.500 AND round <= 2.500 AND first_round_unsafe <= 0.500,354,0.4717514124293785,safe,3,0.02684258416742493,0.9384370062737923
+model,google-gemini-3-flash-preview,opponent_prev_unsafe <= 0.500 AND first_round_unsafe <= 0.500 AND progress_gap_before > -0.250,4182,0.006934481109516977,safe,3,0.34642147117296224,0.9440758767689199
+model,google-gemini-3-flash-preview,opponent_prev_unsafe > 0.500 AND round > 2.500 AND max_private_risk <= 0.750,3333,0.9375937593759376,unsafe,3,0.2760934393638171,0.9440758767689199
+model,google-gemini-3-flash-preview,opponent_prev_unsafe <= 0.500 AND first_round_unsafe > 0.500 AND progress_gap_before > 0.250,1403,0.2601568068424804,safe,3,0.11621935056328694,0.9440758767689199
+model,google-gemini-3-flash-preview,opponent_prev_unsafe > 0.500 AND round > 2.500 AND max_private_risk > 0.750,1169,0.8331907613344739,unsafe,3,0.09683565275016567,0.9440758767689199
+model,google-gemini-3-flash-preview,opponent_prev_unsafe <= 0.500 AND first_round_unsafe > 0.500 AND progress_gap_before <= 0.250,956,0.8838912133891214,unsafe,3,0.07919151756129887,0.9440758767689199
+model,google-gemini-3-flash-preview,opponent_prev_unsafe > 0.500 AND round <= 2.500,608,0.5230263157894737,unsafe,2,0.05036447978793903,0.9440758767689199
+model,google-gemini-3-flash-preview,opponent_prev_unsafe <= 0.500 AND first_round_unsafe <= 0.500 AND progress_gap_before <= -0.250,421,0.5130641330166271,unsafe,3,0.034874088800530154,0.9440758767689199
+model,google-gemini-3.1-flash-lite-preview,own_private_risk_before <= 0.668 AND own_private_risk_before <= 0.495 AND round <= 8.500,274,1.0,unsafe,3,0.4910394265232975,0.9367652547116999
+model,google-gemini-3.1-flash-lite-preview,own_private_risk_before <= 0.668 AND own_private_risk_before > 0.495 AND max_private_risk > 0.750,79,0.9240506329113924,unsafe,3,0.14157706093189965,0.9367652547116999
+model,google-gemini-3.1-flash-lite-preview,own_private_risk_before <= 0.668 AND own_private_risk_before > 0.495 AND max_private_risk <= 0.750,71,0.5211267605633803,unsafe,3,0.12724014336917563,0.9367652547116999
+model,google-gemini-3.1-flash-lite-preview,own_private_risk_before <= 0.668 AND own_private_risk_before <= 0.495 AND round > 8.500,67,0.9552238805970149,unsafe,3,0.12007168458781362,0.9367652547116999
+model,google-gemini-3.1-flash-lite-preview,own_private_risk_before > 0.668,67,0.26865671641791045,safe,1,0.12007168458781362,0.9367652547116999
+model,google-gemini-3.5-flash-lite,progress_gap_before <= 0.250 AND own_private_risk_before <= 0.507 AND own_private_risk_before > 0.077,257,0.8326848249027238,unsafe,3,0.460573476702509,0.8265015567063536
+model,google-gemini-3.5-flash-lite,progress_gap_before <= 0.250 AND own_private_risk_before <= 0.507 AND own_private_risk_before <= 0.077,104,0.9807692307692307,unsafe,3,0.1863799283154122,0.8265015567063536
+model,google-gemini-3.5-flash-lite,progress_gap_before <= 0.250 AND own_private_risk_before > 0.507 AND round <= 5.500,74,0.5135135135135135,unsafe,3,0.13261648745519714,0.8265015567063536
+model,google-gemini-3.5-flash-lite,progress_gap_before > 0.250,64,0.078125,safe,1,0.11469534050179211,0.8265015567063536
+model,google-gemini-3.5-flash-lite,progress_gap_before <= 0.250 AND own_private_risk_before > 0.507 AND round > 5.500,59,0.6440677966101694,unsafe,3,0.1057347670250896,0.8265015567063536
+model,gpt-5-nano,progress_gap_before <= 0.250 AND own_private_risk_before <= 0.019 AND round > 2.500,8296,0.061595949855351974,safe,3,0.3378950798305637,0.7738434882829087
+model,gpt-5-nano,progress_gap_before <= 0.250 AND own_private_risk_before <= 0.019 AND round <= 2.500,5169,0.2379570516540917,safe,3,0.2105327468230694,0.7738434882829087
+model,gpt-5-nano,progress_gap_before <= 0.250 AND own_private_risk_before > 0.019 AND own_prev_unsafe <= 0.500,3026,0.38301387970918704,safe,3,0.12324861518409906,0.7738434882829087
+model,gpt-5-nano,progress_gap_before > 0.250 AND round <= 6.500 AND own_prev_unsafe > 0.500,2306,0.5589765828274068,unsafe,3,0.09392310198761812,0.7738434882829087
+model,gpt-5-nano,progress_gap_before <= 0.250 AND own_private_risk_before > 0.019 AND own_prev_unsafe > 0.500,1763,0.14407260351673284,safe,3,0.07180677745193874,0.7738434882829087
+model,gpt-5-nano,progress_gap_before > 0.250 AND round > 6.500 AND own_prev_unsafe > 0.500,1681,0.3599048185603807,safe,3,0.06846692733789508,0.7738434882829087
+model,gpt-5-nano,progress_gap_before > 0.250 AND round > 6.500 AND own_prev_unsafe <= 0.500,1568,0.5446428571428571,unsafe,3,0.06386445096122516,0.7738434882829087
+model,gpt-5-nano,progress_gap_before > 0.250 AND round <= 6.500 AND own_prev_unsafe <= 0.500,743,0.7267833109017496,unsafe,3,0.030262300423590745,0.7738434882829087
+model,gpt-5.4-nano,first_round_unsafe > 0.500 AND progress_gap_before > -0.250 AND own_private_risk_before > 0.005,9719,0.7358781767671572,unsafe,3,0.3958536982730531,0.8712167132749792
+model,gpt-5.4-nano,first_round_unsafe <= 0.500 AND own_private_risk_before <= 0.023 AND round > 1.500,7966,0.051970876223951794,safe,3,0.32445421961550996,0.8712167132749792
+model,gpt-5.4-nano,first_round_unsafe > 0.500 AND progress_gap_before > -0.250 AND own_private_risk_before <= 0.005,1442,1.0,unsafe,3,0.05873248615184099,0.8712167132749792
+model,gpt-5.4-nano,first_round_unsafe > 0.500 AND progress_gap_before <= -0.250 AND progress_gap_before > -1.250,1370,0.47956204379562045,safe,3,0.05579993483219289,0.8712167132749792
+model,gpt-5.4-nano,first_round_unsafe <= 0.500 AND own_private_risk_before > 0.023 AND progress_gap_before > -0.750,1366,0.48462664714494874,safe,3,0.05563701531443467,0.8712167132749792
+model,gpt-5.4-nano,first_round_unsafe <= 0.500 AND own_private_risk_before <= 0.023 AND round <= 1.500,1198,0.0,safe,3,0.04879439556858912,0.8712167132749792
+model,gpt-5.4-nano,first_round_unsafe > 0.500 AND progress_gap_before <= -0.250 AND progress_gap_before <= -1.250,840,0.31547619047619047,safe,3,0.03421309872922776,0.8712167132749792
+model,gpt-5.4-nano,first_round_unsafe <= 0.500 AND own_private_risk_before > 0.023 AND progress_gap_before <= -0.750,651,0.26881720430107525,safe,3,0.026515151515151516,0.8712167132749792
+overall,all,first_round_unsafe <= 0.500 AND own_private_risk_before <= 0.019 AND round > 2.500,17917,0.052408327286934196,safe,3,0.2876292300776986,0.8400689834553983
+overall,all,first_round_unsafe > 0.500 AND own_private_risk_before > 0.004 AND progress_gap_before > -0.250,16354,0.7153601565366271,unsafe,3,0.2625377255506325,0.8400689834553983
+overall,all,first_round_unsafe <= 0.500 AND own_private_risk_before <= 0.019 AND round <= 2.500,8867,0.1638660200744333,safe,3,0.14234572657805175,0.8400689834553983
+overall,all,first_round_unsafe <= 0.500 AND own_private_risk_before > 0.019 AND progress_gap_before <= 0.250,8068,0.3926623698562221,safe,3,0.12951903936300008,0.8400689834553983
+overall,all,first_round_unsafe <= 0.500 AND own_private_risk_before > 0.019 AND progress_gap_before > 0.250,6312,0.5083967046894804,unsafe,3,0.10132922365632827,0.8400689834553983
+overall,all,first_round_unsafe > 0.500 AND own_private_risk_before > 0.004 AND progress_gap_before <= -0.250,2434,0.46672144617912903,safe,3,0.039074038399794515,0.8400689834553983
+overall,all,first_round_unsafe > 0.500 AND own_private_risk_before <= 0.004,2340,1.0,unsafe,2,0.03756501637449432,0.8400689834553983

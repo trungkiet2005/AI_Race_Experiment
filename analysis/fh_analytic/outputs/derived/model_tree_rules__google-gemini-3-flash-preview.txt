@@ -1,0 +1,19 @@
+|--- own_private_risk_before <= 0.443
+|   |--- opponent_prev_unsafe <= 0.500
+|   |   |--- class: 0
+|   |--- opponent_prev_unsafe >  0.500
+|   |   |--- opponent_private_risk_before <= 0.424
+|   |   |   |--- class: 1
+|   |   |--- opponent_private_risk_before >  0.424
+|   |   |   |--- class: 1
+|--- own_private_risk_before >  0.443
+|   |--- own_private_risk_before <= 0.482
+|   |   |--- opponent_prev_unsafe <= 0.500
+|   |   |   |--- class: 0
+|   |   |--- opponent_prev_unsafe >  0.500
+|   |   |   |--- class: 1
+|   |--- own_private_risk_before >  0.482
+|   |   |--- round <= 8.500
+|   |   |   |--- class: 0
+|   |   |--- round >  8.500
+|   |   |   |--- class: 0

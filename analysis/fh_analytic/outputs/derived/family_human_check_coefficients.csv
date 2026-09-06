@@ -1,0 +1,9 @@
+segment_type,segment,term,coef,odds_ratio,ci95_low,ci95_high,p_value,n,error,family
+baseline_provider,provider_google,own_prev_unsafe,-0.8283848525874566,0.4367541392655543,,,,1494.0,,family_gemini
+baseline_provider,provider_google,opponent_prev_unsafe,0.5701419167877687,1.7685180160212146,,,,1494.0,,family_gemini
+baseline_provider,provider_google,progress_gap_before,-19.007351880531186,5.561756393091379e-09,,,,1494.0,,family_gemini
+baseline_provider,provider_google,first_round_unsafe,1.8056696005784365,6.084043964246424,,,,1494.0,,family_gemini
+baseline_provider,provider_openai,own_prev_unsafe,0.9142849166546596,2.4949904877088214,0.3203158242207203,1.5082540090885987,0.0025534546014559,996.0,,family_chatgpt
+baseline_provider,provider_openai,opponent_prev_unsafe,0.6977060105617121,2.009138474552496,0.1015523584844463,1.2938596626389778,0.021799926133983,996.0,,family_chatgpt
+baseline_provider,provider_openai,progress_gap_before,-0.993430565083089,0.370304157003535,-1.5320067861561353,-0.4548543440100427,0.0003000569593993,996.0,,family_chatgpt
+baseline_provider,provider_openai,first_round_unsafe,0.7180964125431306,2.0505261372608934,0.304948052751183,1.1312447723350785,0.0006577050692217,996.0,,family_chatgpt

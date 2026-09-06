@@ -1,0 +1,7 @@
+family,persona_mode,experiment_mode,decisions,unsafe_rate,retry_rate,parse_fail_rate,mean_round
+family_chatgpt,persona_none,mode_baseline,1116,0.33512544802867383,0.0,0.0,5.720430107526882
+family_chatgpt,persona_risk_aware,mode_risk_matrix,40176,0.35526184786937476,0.0025388291517323774,0.0,5.720430107526882
+family_chatgpt,persona_risk_aware,mode_strategy_persona,7812,0.3279569892473118,0.002944188428059396,0.0,5.720430107526882
+family_gemini,persona_none,mode_baseline,1674,0.7700119474313023,0.014336917562724014,0.0,5.720430107526882
+family_gemini,persona_risk_aware,mode_risk_matrix,8904,0.47023809523809523,0.05188679245283019,0.0,5.629380053908355
+family_gemini,persona_risk_aware,mode_strategy_persona,2610,0.48237547892720306,0.05325670498084291,0.0,5.498850574712644

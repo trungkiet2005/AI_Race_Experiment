@@ -1,0 +1,19 @@
+|--- model_slug_gpt-5-nano <= 0.500
+|   |--- own_private_risk_before <= 0.511
+|   |   |--- family_family_gemini <= 0.500
+|   |   |   |--- class: 0
+|   |   |--- family_family_gemini >  0.500
+|   |   |   |--- class: 1
+|   |--- own_private_risk_before >  0.511
+|   |   |--- own_private_risk_before <= 0.696
+|   |   |   |--- class: 0
+|   |   |--- own_private_risk_before >  0.696
+|   |   |   |--- class: 0
+|--- model_slug_gpt-5-nano >  0.500
+|   |--- round <= 3.500
+|   |   |--- class: 0
+|   |--- round >  3.500
+|   |   |--- opponent_private_risk_before <= 0.022
+|   |   |   |--- class: 0
+|   |   |--- opponent_private_risk_before >  0.022
+|   |   |   |--- class: 0

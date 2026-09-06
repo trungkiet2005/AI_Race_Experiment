@@ -1,0 +1,5 @@
+term,expected_sign,segments,sign_match_count,sign_match_share,median_coef,min_coef,max_coef,large_abs_coef_count,stability_note
+first_round_unsafe,positive,4,3.0,0.75,675.9040767810266,-0.353303584805633,1409707669458956.5,2,large coefficients suggest separation; use sign stability only
+opponent_prev_unsafe,positive,4,4.0,1.0,12.12997124079177,0.08741835861485617,3698952677140329.5,2,large coefficients suggest separation; use sign stability only
+own_prev_unsafe,,4,,,-0.31717635156862156,-2.077106172518128,904259695880088.8,1,large coefficients suggest separation; use sign stability only
+progress_gap_before,negative,4,3.0,0.75,-9.459330849985982,-19.78050521565349,20342294317431.12,3,large coefficients suggest separation; use sign stability only

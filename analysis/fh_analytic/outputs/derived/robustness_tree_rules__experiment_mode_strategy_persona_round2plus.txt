@@ -1,0 +1,22 @@
+|--- own_private_risk_before <= 0.021
+|   |--- round <= 2.500
+|   |   |--- condition_condition_S_CC_coop_coop <= 0.500
+|   |   |   |--- class: 0
+|   |   |--- condition_condition_S_CC_coop_coop >  0.500
+|   |   |   |--- class: 0
+|   |--- round >  2.500
+|   |   |--- opponent_private_risk_before <= 0.011
+|   |   |   |--- class: 0
+|   |   |--- opponent_private_risk_before >  0.011
+|   |   |   |--- class: 0
+|--- own_private_risk_before >  0.021
+|   |--- condition_condition_Rminus_risk_averse <= 0.500
+|   |   |--- model_slug_gpt-5-nano <= 0.500
+|   |   |   |--- class: 1
+|   |   |--- model_slug_gpt-5-nano >  0.500
+|   |   |   |--- class: 1
+|   |--- condition_condition_Rminus_risk_averse >  0.500
+|   |   |--- own_private_risk_before <= 0.055
+|   |   |   |--- class: 0
+|   |   |--- own_private_risk_before >  0.055
+|   |   |   |--- class: 0

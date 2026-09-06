@@ -1,0 +1,12 @@
+family,experiment_mode,model_slug,decisions,unsafe_rate,retry_rate,mean_own_private_risk_before
+family_chatgpt,mode_baseline,gpt-5-nano,498,0.13855421686746988,0.0,0.07354942580846183
+family_chatgpt,mode_baseline,gpt-5.4-nano,498,0.5602409638554217,0.0,0.2619294176372488
+family_chatgpt,mode_risk_matrix,gpt-5-nano,17928,0.30728469433288713,0.0011155734047300313,0.13263918805920133
+family_chatgpt,mode_risk_matrix,gpt-5.4-nano,17928,0.41655510932619366,0.0,0.24730764714114772
+family_chatgpt,mode_strategy_persona,gpt-5-nano,3486,0.21600688468158347,0.0011474469305794606,0.10424898307213272
+family_chatgpt,mode_strategy_persona,gpt-5.4-nano,3486,0.45266781411359724,0.0,0.23466882156856328
+family_gemini,mode_baseline,google-gemini-3-flash-preview,498,0.7349397590361446,0.03815261044176707,0.3539052380016234
+family_gemini,mode_baseline,google-gemini-3.1-flash-lite-preview,498,0.8152610441767069,0.0,0.4089582138076112
+family_gemini,mode_baseline,google-gemini-3.5-flash-lite,498,0.6767068273092369,0.0,0.3807476654314002
+family_gemini,mode_risk_matrix,google-gemini-3-flash-preview,7884,0.4745053272450533,0.050101471334348044,0.19345008970960254
+family_gemini,mode_strategy_persona,google-gemini-3-flash-preview,2316,0.4740932642487047,0.05397236614853195,0.2311457702487495

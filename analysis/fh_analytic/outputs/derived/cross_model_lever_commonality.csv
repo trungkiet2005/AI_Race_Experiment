@@ -1,0 +1,6 @@
+lever,models_with_data,models_positive,models_negative,unanimous_sign,min_value,max_value
+retaliation_lift,5,3,2,False,-0.1152524472500887,0.6951701401153891
+opportunistic_lift,3,3,0,True,0.2687420945588276,0.4907012075590057
+catchup_lift,3,1,2,False,-0.4111503079512536,0.4032119514472455
+forgiveness_rate,5,5,0,True,0.2362453858323079,0.767337807606264
+mutual_unsafe_stickiness,5,5,0,True,0.1823992133726647,0.9027694160144492

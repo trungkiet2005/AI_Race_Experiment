@@ -1,0 +1,22 @@
+|--- own_private_risk_before <= 0.024
+|   |--- round <= 2.500
+|   |   |--- model_slug_gpt-5-nano <= 0.500
+|   |   |   |--- class: 0
+|   |   |--- model_slug_gpt-5-nano >  0.500
+|   |   |   |--- class: 1
+|   |--- round >  2.500
+|   |   |--- own_private_risk_before <= 0.011
+|   |   |   |--- class: 0
+|   |   |--- own_private_risk_before >  0.011
+|   |   |   |--- class: 0
+|--- own_private_risk_before >  0.024
+|   |--- progress_gap_before <= 0.250
+|   |   |--- model_slug_gpt-5.4-nano <= 0.500
+|   |   |   |--- class: 0
+|   |   |--- model_slug_gpt-5.4-nano >  0.500
+|   |   |   |--- class: 1
+|   |--- progress_gap_before >  0.250
+|   |   |--- model_slug_gpt-5-nano <= 0.500
+|   |   |   |--- class: 1
+|   |   |--- model_slug_gpt-5-nano >  0.500
+|   |   |   |--- class: 1

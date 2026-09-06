@@ -1,0 +1,17 @@
+{
+  "report": "analysis\\fh_analytic\\outputs\\reports\\fh_robustness_analysis.md",
+  "derived_outputs": [
+    "robustness_scope_summary.csv",
+    "robustness_model_summary.csv",
+    "robustness_lag_by_family_experiment.csv",
+    "robustness_gap_threshold_scan.csv",
+    "robustness_logit_coefficients.csv",
+    "robustness_logit_metadata.csv",
+    "robustness_tree_cv_metrics.csv",
+    "robustness_tree_roots.csv"
+  ],
+  "figures": [
+    "robustness_baseline_model_unsafe.png",
+    "robustness_baseline_lag_by_family.png"
+  ]
+}

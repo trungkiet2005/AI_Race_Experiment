@@ -1,0 +1,34 @@
+|--- model_slug_gpt-5-nano <= 0.500
+|   |--- own_private_risk_before <= 0.511
+|   |   |--- provider_provider_google <= 0.500
+|   |   |   |--- progress_gap_before <= 0.250
+|   |   |   |   |--- class: 0
+|   |   |   |--- progress_gap_before >  0.250
+|   |   |   |   |--- class: 1
+|   |   |--- provider_provider_google >  0.500
+|   |   |   |--- opponent_prev_unsafe <= 0.500
+|   |   |   |   |--- class: 0
+|   |   |   |--- opponent_prev_unsafe >  0.500
+|   |   |   |   |--- class: 1
+|   |--- own_private_risk_before >  0.511
+|   |   |--- own_private_risk_before <= 0.696
+|   |   |   |--- opponent_prev_unsafe <= 0.500
+|   |   |   |   |--- class: 0
+|   |   |   |--- opponent_prev_unsafe >  0.500
+|   |   |   |   |--- class: 1
+|   |   |--- own_private_risk_before >  0.696
+|   |   |   |--- class: 0
+|--- model_slug_gpt-5-nano >  0.500
+|   |--- round <= 3.500
+|   |   |--- class: 0
+|   |--- round >  3.500
+|   |   |--- opponent_private_risk_before <= 0.022
+|   |   |   |--- max_private_risk <= 0.350
+|   |   |   |   |--- class: 0
+|   |   |   |--- max_private_risk >  0.350
+|   |   |   |   |--- class: 0
+|   |   |--- opponent_private_risk_before >  0.022
+|   |   |   |--- own_private_risk_before <= 0.105
+|   |   |   |   |--- class: 0
+|   |   |   |--- own_private_risk_before >  0.105
+|   |   |   |   |--- class: 0

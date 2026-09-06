@@ -1,0 +1,49 @@
+{
+  "schema_version": "ai-race-results-v1",
+  "created_utc": "2026-07-31T07:16:55.039883+00:00",
+  "experiment": {
+    "name": "api_persona_baseline_coop_adv",
+    "runPhase": "pilot",
+    "description": "Persona condition S_CA over the Kaggle model proxy. Seat-counterbalanced mirror of api_persona_baseline_adv_coop.",
+    "games": [
+      "ai_race_risk_10",
+      "ai_race_risk_60",
+      "ai_race_risk_90"
+    ],
+    "agents": "persona_coop_adv",
+    "languages": [
+      "en"
+    ],
+    "models": [
+      "google/gemini-3-flash-preview"
+    ],
+    "useOffline": false,
+    "backend": "proxy",
+    "samplingSeedApplied": false,
+    "proxyOptions": {
+      "temperature": 0.7,
+      "max_tokens": 256,
+      "timeout": 120,
+      "max_transport_retries": 3,
+      "concurrency": 8,
+      "send_seed": false
+    },
+    "repetitions": 3,
+    "seed": 260726,
+    "maxParseRetries": 3,
+    "verbose": true
+  },
+  "model": "google/gemini-3-flash-preview",
+  "run_phase": "pilot",
+  "agents_name": "persona_coop_adv",
+  "agents_config_sha256": "0308301eb42ceab8cd18fe47b8f02778cfaa1f404339de4816eaac260a0515d9",
+  "persona_condition": "S_CA",
+  "persona_roles": [
+    "cooperative",
+    "adversarial"
+  ],
+  "persona_sha256": "d74e2a2958a0341ae217ec78fea32f4e83ecd26c3be2c41a946ad516028ed5a7",
+  "status": "completed",
+  "n_races": 9,
+  "n_turns": 126
+}

@@ -1,0 +1,31 @@
+strategy,strategy_family,description,near_one_mismatch_sequences,near_new_beyond_canonical
+ANTI_CS,pd_memory,"safe first, then do the opposite of opponent previous action",929,298
+ALT_SAFE_FIRST,sequence_motif,alternate safe/unsafe starting safe,455,286
+DELAYED_ATTACK_R2,sequence_motif,"safe once, then always unsafe",982,165
+ANTI_CAS,pd_memory,"unsafe first, then do the opposite of opponent previous action",735,156
+ALT_UNSAFE_FIRST,sequence_motif,alternate unsafe/safe starting unsafe,321,145
+WSLS_U,pd_memory,"Pavlov / win-stay lose-shift, unsafe first",500,113
+CATCHUP_ATTACK,positional_gap,"unsafe when behind, safe otherwise",1651,96
+DELAYED_ATTACK_R3,sequence_motif,"safe twice, then always unsafe",312,90
+PROBE_COOLDOWN_R2,sequence_motif,"unsafe once, then always safe",2345,86
+CATCHUP_OR_RETALIATE,hybrid_gap_memory,unsafe when behind or after opponent unsafe,1918,59
+BULLY_RETALIATOR,hybrid_gap_memory,"unsafe until far ahead, also retaliates",724,52
+WSLS_S,pd_memory,"Pavlov / win-stay lose-shift, safe first",1453,51
+BULLY_UNTIL_FAR_AHEAD,positional_gap,unsafe unless already ahead by more than 1,711,51
+GRIM_S,pd_memory,"safe until opponent ever plays unsafe, then always unsafe",1859,37
+PROBE_COOLDOWN_R3,sequence_motif,"unsafe twice, then always safe",234,36
+ONE_SHOT_PUNISHER,pd_memory,"retaliate one turn, then force cooldown",1610,34
+OPPORTUNIST,hybrid_gap_memory,unsafe when ahead and opponent was previously safe,2777,32
+DESPERATE_CATCHUP,positional_gap,unsafe only when behind by more than 0.5,1584,32
+UNEVEN_ATTACK,positional_gap,unsafe when the race is not close,1584,32
+TF2T_S,pd_memory,unsafe only after two consecutive opponent unsafe actions,1868,29
+LEADER_OR_RETALIATE,hybrid_gap_memory,unsafe when ahead or after opponent unsafe,2203,20
+LEADER_ATTACK,positional_gap,"unsafe when ahead, safe otherwise",2846,14
+PRESS_WHEN_NOT_BEHIND,positional_gap,unsafe when tied or ahead,1513,4
+DEFENSIVE_RETALIATOR,hybrid_gap_memory,retaliate only when not behind,2889,0
+AS,canonical,always safe,2631,0
+STRICT_LEADER_ATTACK,positional_gap,unsafe only when ahead by more than 0.5,2631,0
+CAS,canonical,"unsafe first, then copy opponent previous action",1949,0
+CS,canonical,"safe first, then copy opponent previous action",1899,0
+AU,canonical,always unsafe,1074,0
+GRIM_U,pd_memory,unsafe first and remains unsafe after any opponent unsafe,1074,0

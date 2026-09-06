@@ -1,0 +1,20 @@
+{
+  "report": "analysis\\fh_analytic\\outputs\\reports\\fh_model_diagnostics.md",
+  "derived_outputs": [
+    "model_first_turn_by_risk.csv",
+    "model_first_vs_later_summary.csv",
+    "model_round_dynamics.csv",
+    "model_lag_summary.csv",
+    "model_gap_bin_summary.csv",
+    "model_round2plus_by_risk.csv",
+    "model_logit_coefficients.csv",
+    "model_logit_metadata.csv",
+    "model_tree_cv_metrics.csv",
+    "model_tree_roots.csv"
+  ],
+  "figures": [
+    "model_first_vs_later_unsafe.png",
+    "model_round_dynamics.png",
+    "model_lag_heatmap.png"
+  ]
+}

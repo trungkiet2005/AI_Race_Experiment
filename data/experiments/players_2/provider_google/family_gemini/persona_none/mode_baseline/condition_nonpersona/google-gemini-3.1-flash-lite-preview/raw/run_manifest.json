@@ -1,0 +1,49 @@
+{
+  "schema_version": "ai-race-results-v1",
+  "created_utc": "2026-07-31T09:39:12.174399+00:00",
+  "experiment": {
+    "name": "api_baseline_crossmodel",
+    "runPhase": "pilot",
+    "description": "Cross-model pilot over the Kaggle model proxy: the neutral paper-faithful baseline run identically on every hosted route that was confirmed reachable on 2026-07-31. Answers PROJECT.md RQ6 (stability across model families and scale). Persona is 'none' throughout, so no persona contrast is claimed here. Routes deepseek-ai/deepseek-r1-0528 and openai/gpt-oss-120b were excluded because the proxy returned 429 on every probe that day.",
+    "games": [
+      "ai_race_risk_10",
+      "ai_race_risk_60",
+      "ai_race_risk_90"
+    ],
+    "agents": "companies_default",
+    "languages": [
+      "en"
+    ],
+    "models": [
+      "google/gemini-3.1-flash-lite-preview"
+    ],
+    "useOffline": false,
+    "backend": "proxy",
+    "samplingSeedApplied": false,
+    "proxyOptions": {
+      "temperature": 0.7,
+      "max_tokens": 256,
+      "timeout": 120,
+      "max_transport_retries": 6,
+      "concurrency": 2,
+      "send_seed": false
+    },
+    "repetitions": 10,
+    "seed": 260726,
+    "maxParseRetries": 3,
+    "verbose": true
+  },
+  "model": "google/gemini-3.1-flash-lite-preview",
+  "run_phase": "pilot",
+  "agents_name": "companies_default",
+  "agents_config_sha256": "ccf3a3ae7ec6e488ca58c9659ced7727ee34989af70e808081c7cd55a6320469",
+  "persona_condition": "none",
+  "persona_roles": [
+    "",
+    ""
+  ],
+  "persona_sha256": "d7c1f053e2581812f2db2c745131a2c8a1971ab5ad7725aeadd6d4f3c17fe6a1",
+  "status": "completed",
+  "n_races": 30,
+  "n_turns": 558
+}

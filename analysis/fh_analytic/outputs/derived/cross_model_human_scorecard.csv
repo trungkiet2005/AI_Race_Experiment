@@ -1,0 +1,25 @@
+scope,model_slug,term,coef,expected_sign,sign_match,fit_source
+baseline,google-gemini-3-flash-preview,own_prev_unsafe,904259695880088.8,,,human_check_segment (M3 interactions)
+baseline,google-gemini-3-flash-preview,opponent_prev_unsafe,3698952677140329.5,positive,True,human_check_segment (M3 interactions)
+baseline,google-gemini-3-flash-preview,progress_gap_before,20342294317431.12,negative,False,human_check_segment (M3 interactions)
+baseline,google-gemini-3.1-flash-lite-preview,own_prev_unsafe,-2.077106172518128,,,human_check_segment (M3 interactions)
+baseline,google-gemini-3.1-flash-lite-preview,opponent_prev_unsafe,23.568720301395828,positive,True,human_check_segment (M3 interactions)
+baseline,google-gemini-3.1-flash-lite-preview,progress_gap_before,-19.78050521565349,negative,True,human_check_segment (M3 interactions)
+baseline,google-gemini-3.5-flash-lite,own_prev_unsafe,-0.8411140891906054,,,human_check_segment (M3 interactions)
+baseline,google-gemini-3.5-flash-lite,opponent_prev_unsafe,0.6912221801877124,positive,True,human_check_segment (M3 interactions)
+baseline,google-gemini-3.5-flash-lite,progress_gap_before,-18.540012786672783,negative,True,human_check_segment (M3 interactions)
+baseline,gpt-5.4-nano,own_prev_unsafe,0.2067613860533622,,,human_check_segment (M3 interactions)
+baseline,gpt-5.4-nano,opponent_prev_unsafe,0.0874183586148561,positive,True,human_check_segment (M3 interactions)
+baseline,gpt-5.4-nano,progress_gap_before,-0.3786489132991759,negative,True,human_check_segment (M3 interactions)
+baseline,gpt-5-nano,own_prev_unsafe,0.2151652836987391,,,"model_logit_coefficients (main effects only, fallback)"
+baseline,gpt-5-nano,opponent_prev_unsafe,-1.7279006657829743,positive,False,"model_logit_coefficients (main effects only, fallback)"
+baseline,gpt-5-nano,progress_gap_before,-1.7454148733579906,negative,True,"model_logit_coefficients (main effects only, fallback)"
+risk_matrix,google-gemini-3-flash-preview,own_prev_unsafe,0.7475253583503426,,True,risk_matrix_human_check (main effects)
+risk_matrix,google-gemini-3-flash-preview,opponent_prev_unsafe,2.95573423668348,positive,True,risk_matrix_human_check (main effects)
+risk_matrix,google-gemini-3-flash-preview,progress_gap_before,-1.967892522322917,negative,True,risk_matrix_human_check (main effects)
+risk_matrix,gpt-5-nano,own_prev_unsafe,0.0900668237053869,,True,risk_matrix_human_check (main effects)
+risk_matrix,gpt-5-nano,opponent_prev_unsafe,-0.5169782979174258,positive,False,risk_matrix_human_check (main effects)
+risk_matrix,gpt-5-nano,progress_gap_before,0.4089727186147875,negative,False,risk_matrix_human_check (main effects)
+risk_matrix,gpt-5.4-nano,own_prev_unsafe,1.03964418993039,,True,risk_matrix_human_check (main effects)
+risk_matrix,gpt-5.4-nano,opponent_prev_unsafe,0.0398321652990963,positive,True,risk_matrix_human_check (main effects)
+risk_matrix,gpt-5.4-nano,progress_gap_before,0.3510718628948038,negative,False,risk_matrix_human_check (main effects)

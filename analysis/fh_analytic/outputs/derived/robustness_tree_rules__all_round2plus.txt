@@ -1,0 +1,22 @@
+|--- own_private_risk_before <= 0.024
+|   |--- round <= 2.500
+|   |   |--- model_slug_gpt-5-nano <= 0.500
+|   |   |   |--- class: 0
+|   |   |--- model_slug_gpt-5-nano >  0.500
+|   |   |   |--- class: 1
+|   |--- round >  2.500
+|   |   |--- opponent_private_risk_before <= 0.009
+|   |   |   |--- class: 0
+|   |   |--- opponent_private_risk_before >  0.009
+|   |   |   |--- class: 0
+|--- own_private_risk_before >  0.024
+|   |--- model_slug_gpt-5-nano <= 0.500
+|   |   |--- progress_gap_before <= -1.250
+|   |   |   |--- class: 0
+|   |   |--- progress_gap_before >  -1.250
+|   |   |   |--- class: 1
+|   |--- model_slug_gpt-5-nano >  0.500
+|   |   |--- opponent_prev_unsafe <= 0.500
+|   |   |   |--- class: 1
+|   |   |--- opponent_prev_unsafe >  0.500
+|   |   |   |--- class: 0

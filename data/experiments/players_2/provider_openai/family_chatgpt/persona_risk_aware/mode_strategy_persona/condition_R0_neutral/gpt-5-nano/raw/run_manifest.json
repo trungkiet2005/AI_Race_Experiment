@@ -1,0 +1,49 @@
+{
+  "schema_version": "ai-race-results-v1",
+  "created_utc": "2026-08-01T03:37:29.363301+00:00",
+  "experiment": {
+    "name": "openai_persona_baseline_neutral",
+    "runPhase": "pilot",
+    "description": "Persona condition R0 (neutral placebo, same text length as the real personas but no directional content) via direct OpenAI API (backend='openai').",
+    "games": [
+      "ai_race_risk_10",
+      "ai_race_risk_60",
+      "ai_race_risk_90"
+    ],
+    "agents": "persona_neutral",
+    "languages": [
+      "en"
+    ],
+    "models": [
+      "gpt-5.4-nano",
+      "gpt-5-nano"
+    ],
+    "useOffline": false,
+    "backend": "openai",
+    "samplingSeedApplied": false,
+    "proxyOptions": {
+      "temperature": 0.7,
+      "max_tokens": 256,
+      "timeout": 120,
+      "max_transport_retries": 3,
+      "concurrency": 4
+    },
+    "repetitions": 10,
+    "seed": 260726,
+    "maxParseRetries": 3,
+    "verbose": true
+  },
+  "model": "gpt-5-nano",
+  "run_phase": "pilot",
+  "agents_name": "persona_neutral",
+  "agents_config_sha256": "a6dc0bb534f4245f18a83ac9f487c34a365455ff21e80afb426b9bc1fa55dc84",
+  "persona_condition": "R0",
+  "persona_roles": [
+    "neutral",
+    "neutral"
+  ],
+  "persona_sha256": "e01feb866f5e6ccf4dc60c64df1c7098892e1a5135b2fe61eb78b68590fea6e1",
+  "status": "completed",
+  "n_races": 30,
+  "n_turns": 558
+}

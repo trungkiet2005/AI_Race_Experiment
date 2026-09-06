@@ -1,0 +1,10 @@
+gap_zone,opponent_prev_unsafe,n,first_unsafe_hazard,scope,model_slug
+behind,0.0,1791,0.0826353992183138,state,
+behind,1.0,4586,0.04797208896641954,state,
+tied,0.0,20371,0.1924304157871484,state,
+tied,1.0,1897,0.19609910384818133,state,
+,,4974,0.20546843586650584,model,google-gemini-3-flash-preview
+,,60,1.0,model,google-gemini-3.1-flash-lite-preview
+,,60,1.0,model,google-gemini-3.5-flash-lite
+,,13135,0.12942519984773507,model,gpt-5-nano
+,,10416,0.17453917050691245,model,gpt-5.4-nano

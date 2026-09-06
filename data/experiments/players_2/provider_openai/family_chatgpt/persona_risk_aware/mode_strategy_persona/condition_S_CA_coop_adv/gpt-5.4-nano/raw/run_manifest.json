@@ -1,0 +1,49 @@
+{
+  "schema_version": "ai-race-results-v1",
+  "created_utc": "2026-08-01T04:13:30.114908+00:00",
+  "experiment": {
+    "name": "openai_persona_baseline_coop_adv",
+    "runPhase": "pilot",
+    "description": "Persona condition S_CA (seat 1 cooperative, seat 2 adversarial) via direct OpenAI API (backend='openai'). Seat-counterbalanced mirror of openai_persona_baseline_adv_coop.",
+    "games": [
+      "ai_race_risk_10",
+      "ai_race_risk_60",
+      "ai_race_risk_90"
+    ],
+    "agents": "persona_coop_adv",
+    "languages": [
+      "en"
+    ],
+    "models": [
+      "gpt-5.4-nano",
+      "gpt-5-nano"
+    ],
+    "useOffline": false,
+    "backend": "openai",
+    "samplingSeedApplied": false,
+    "proxyOptions": {
+      "temperature": 0.7,
+      "max_tokens": 256,
+      "timeout": 120,
+      "max_transport_retries": 6,
+      "concurrency": 4
+    },
+    "repetitions": 10,
+    "seed": 260726,
+    "maxParseRetries": 3,
+    "verbose": true
+  },
+  "model": "gpt-5.4-nano",
+  "run_phase": "pilot",
+  "agents_name": "persona_coop_adv",
+  "agents_config_sha256": "0308301eb42ceab8cd18fe47b8f02778cfaa1f404339de4816eaac260a0515d9",
+  "persona_condition": "S_CA",
+  "persona_roles": [
+    "cooperative",
+    "adversarial"
+  ],
+  "persona_sha256": "d74e2a2958a0341ae217ec78fea32f4e83ecd26c3be2c41a946ad516028ed5a7",
+  "status": "completed",
+  "n_races": 30,
+  "n_turns": 558
+}
