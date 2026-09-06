@@ -248,7 +248,7 @@ model đầu tiên — vì một config `openai_*.json` giờ có thể chứa n
 ```bash
 for d in results/frontier/openai/baseline results/frontier/openai/persona/*/; do
   echo "=== $d ==="
-  .venv-kaggle/bin/python results/scripts/check_symmetry.py --input "$d"
+  .venv-kaggle/bin/python scripts/check_symmetry.py --input "$d"
 done
 ```
 
@@ -260,7 +260,7 @@ của config (đang là `0.7`, xem cảnh báo ở mục "Bẫy").
 ## 6. Phân tích (audit, chưa phải kết quả cuối)
 
 ```bash
-.venv-kaggle/bin/python results/scripts/analyze_ai_race.py \
+.venv-kaggle/bin/python scripts/analyze_ai_race.py \
   --input results/frontier/openai --output results/derived/openai_pilot_audit --fit-logit \
   --allow-mixed-protocols --allow-nonfinal-runs --allow-nonconfirmatory-runs \
   --allow-missing-persona-condition
@@ -281,7 +281,7 @@ Sau khi pilot sạch (symmetry ổn, parse failure = 0):
    `results/frontier/openai_confirmatory/...`) để không lẫn với dữ liệu pilot.
 4. Phân tích chính thức, **bỏ 4 flag `--allow-*`**:
    ```bash
-   .venv-kaggle/bin/python results/scripts/analyze_ai_race.py \
+   .venv-kaggle/bin/python scripts/analyze_ai_race.py \
      --input results/open_source --input results/frontier \
      --output results/derived/ai_race_analysis --fit-logit
    ```

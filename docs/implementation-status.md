@@ -10,18 +10,18 @@ Test: `python3 -m pytest` → **188 passed** (đợt 1 để lại 89).
 
 | Task | Nội dung | File |
 |---|---|---|
-| T0.1 | Prompt canonical đổi sang `ai-race-fairgame-v3`; hằng số scalar thay bằng bảng `{template: sha}` cho cả `en` và `vi`; thêm `_is_canonical_prompt()` | `results/scripts/analyze_ai_race.py`, `CLAUDE.md`, `results/README.md`, `ai_race/engine/state.py`, `kaggle/experiments/baseline.py` |
+| T0.1 | Prompt canonical đổi sang `ai-race-fairgame-v3`; hằng số scalar thay bằng bảng `{template: sha}` cho cả `en` và `vi`; thêm `_is_canonical_prompt()` | `scripts/analyze_ai_race.py`, `CLAUDE.md`, `results/README.md`, `ai_race/engine/state.py`, `kaggle/experiments/baseline.py` |
 | T0.2 | Bỏ key chết `persona_block` (template mới dùng `{intro}`/`{personality}`) | `ai_race/engine/prompt.py` |
 | T1.1 | `repetitions` 3 → 50 (≈2.700 player-round, xấp xỉ N của paper) | `configs/experiment/baseline.json` |
 | T1.2 | Cấu hình đảo ghế để đo seat artefact | `configs/agents/companies_swapped.json`, `configs/experiment/baseline_swapped.json` |
-| T1.3 | Script phát hiện symmetry collapse, exit 1 khi vượt ngưỡng | `results/scripts/check_symmetry.py` |
+| T1.3 | Script phát hiện symmetry collapse, exit 1 khi vượt ngưỡng | `scripts/check_symmetry.py` |
 | T2.1 | 7 agents config + 7 experiment config cho các cell persona | `configs/agents/persona_*.json`, `configs/experiment/persona_baseline_*.json` |
 | T2.2 | Test khoá luật viết persona | `ai_race/tests/test_personas.py` |
 | T2.3 | `persona_condition` + `persona_role` chạy suốt engine → recorder → manifest → analyser; gate từ chối run không nhãn | 7 file, xem bên dưới |
 | T3.1 | Cột dẫn xuất `own/opponent_unsafe_count_before`, `unsafe_count_diff_before`, `gap_bin`, `seat_index` | `analyze_ai_race.py:_add_dynamic_columns` |
 | T3.2 | 10 bảng mô tả mới | `analyze_ai_race.py:_build_tables` |
 | T3.3 | 6 đặc tả logit lồng nhau + vá CRN block pool qua persona | `analyze_ai_race.py:_fit_clustered_logit` |
-| T3.4 | Tiêu chí người đóng băng trong JSON + bảng chấm điểm tự động | `results/scripts/human_reference.json`, `analyze_ai_race.py:_build_human_comparison` |
+| T3.4 | Tiêu chí người đóng băng trong JSON + bảng chấm điểm tự động | `scripts/human_reference.json`, `analyze_ai_race.py:_build_human_comparison` |
 
 ## Output analyser mới (28 file, trước là 18)
 
@@ -222,7 +222,7 @@ Analyser (`analyze_ai_race.py`), 35 file thay vì 31:
 `logit_robustness_metadata.json` · `theory_vs_experiment.csv` ·
 `theory_vs_experiment_metadata.json`
 
-Script lý thuyết mới `results/scripts/build_theory_tables.py` → 5 file trong
+Script lý thuyết mới `scripts/build_theory_tables.py` → 5 file trong
 `results/derived/ai_race_theory/`:
 
 `theory_payoff_matrix.csv` · `theory_equilibria.csv` ·
@@ -239,10 +239,10 @@ sát được**. Hai câu hỏi khác nhau. Ghi rõ trong `results/README.md` v�
 ```bash
 python3 -m ai_race.runner.run_experiment ai_race/configs/experiment/baseline.json \
   --mock random --output /tmp/smoke
-python3 results/scripts/analyze_ai_race.py --input /tmp/smoke --output /tmp/derived \
+python3 scripts/analyze_ai_race.py --input /tmp/smoke --output /tmp/derived \
   --fit-logit --fit-logit-robustness \
   --allow-mixed-protocols --allow-nonfinal-runs --allow-nonconfirmatory-runs
-python3 results/scripts/build_theory_tables.py --output /tmp/theory
+python3 scripts/build_theory_tables.py --output /tmp/theory
 ```
 
 - **Hai cửa sổ phân tích thực sự khác nhau.** Trên 150 race mock:

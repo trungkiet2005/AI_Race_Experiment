@@ -50,7 +50,7 @@ python -m pip install -e '.[activation-xai]'
 Validate the dataset and race-level split without loading weights:
 
 ```bash
-python results/scripts/run_activation_sae.py \
+python scripts/run_activation_sae.py \
   --input-root /path/to/exact-qwen-turns \
   --output-dir /home/jovyan/ai-race/activation-sae/dry-run \
   --dry-run
@@ -62,14 +62,14 @@ own directory and merge CSV rows only after both manifests report `complete`.
 
 ```bash
 # Pod A
-python results/scripts/run_activation_sae.py \
+python scripts/run_activation_sae.py \
   --input-root /path/to/exact-qwen-turns \
   --output-dir /home/jovyan/ai-race/activation-sae/lane-a \
   --layers 4 12 18 \
   --decision-model-digest a09a35458c702b33eeacc393d103063234e8bc28
 
 # Pod B
-python results/scripts/run_activation_sae.py \
+python scripts/run_activation_sae.py \
   --input-root /path/to/exact-qwen-turns \
   --output-dir /home/jovyan/ai-race/activation-sae/lane-b \
   --layers 20 25 \

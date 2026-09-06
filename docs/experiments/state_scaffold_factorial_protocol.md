@@ -56,7 +56,7 @@ not treated as a fifth factorial cell.
 
 ### Frozen comprehension gate
 
-`results/scripts/analyze_state_scaffold_factorial.py` requires a completed
+`scripts/analyze_state_scaffold_factorial.py` requires a completed
 `ai-race-state-scaffold-admission-v1` JSON bound to the behavioral source hash,
 experiment-config hash, exact model digest, and decoding object. It recomputes
 accuracy from raw integer counts for every condition-by-mapping cell. The
@@ -89,7 +89,7 @@ direct pre-feedback effect. Full-trajectory Unsafe rate and final payoff are
 labelled symmetric live total effects. Placebo-minus-none is a separate audit.
 
 ```bash
-python -m results.scripts.analyze_state_scaffold_factorial \
+python -m scripts.analyze_state_scaffold_factorial \
   --input-root <downloaded-state-scaffold-root> \
   --admission-json <completed-admission.json> \
   --output-dir results/derived/state_scaffold_factorial \

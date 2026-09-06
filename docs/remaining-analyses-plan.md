@@ -45,7 +45,7 @@ Paper báo cáo **hai** bộ kiểm định treatment: Fig 2A trên toàn bộ v
 hiệu ứng thô), và paper nói rõ vì sao. Hiện ta chỉ có bộ thứ nhất.
 
 `later_unsafe_rate` **đã có sẵn** trong `player_metrics.csv`
-([analyze_ai_race.py](../results/scripts/analyze_ai_race.py), `_build_player_metrics`).
+([analyze_ai_race.py](../scripts/analyze_ai_race.py), `_build_player_metrics`).
 Chỉ thiếu một lời gọi.
 
 - **Sửa:** `_build_tables` — thêm
@@ -177,7 +177,7 @@ def unconditional_nash_regions(config) -> dict:
 Hai test cuối là kiểm tra cấu trúc, không phải kiểm tra số — chúng bắt được lỗi mà so sánh
 số đơn thuần bỏ lọt.
 
-**Output:** `results/scripts/` sinh `theory_equilibria.csv`
+**Output:** `scripts/` sinh `theory_equilibria.csv`
 (`max_private_risk, stage_game_class, social_dilemma_threshold, nash_equilibria, as_is_nash`).
 
 ---

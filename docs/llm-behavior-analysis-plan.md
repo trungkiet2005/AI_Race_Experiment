@@ -21,7 +21,7 @@ Trạng thái code tham chiếu: sau merge `55f34a6` (FAIRGAME prompt template +
 
 ### T0.1 Analyser đang từ chối mọi run mới
 
-`results/scripts/analyze_ai_race.py` dòng 35–38 vẫn giữ:
+`scripts/analyze_ai_race.py` dòng 35–38 vẫn giữ:
 
 ```python
 CANONICAL_PROMPT_VERSION = "ai-race-paper-v2"
@@ -80,7 +80,7 @@ mọi vòng. Khi đó:
 `_fit_clustered_logit` raise `"clustered logit requires both Safe and Unsafe outcomes"`
 (dòng 2851).
 
-- **Thêm:** `results/scripts/check_symmetry.py` — đọc `turns.jsonl`, in ra: tỉ lệ race có
+- **Thêm:** `scripts/check_symmetry.py` — đọc `turns.jsonl`, in ra: tỉ lệ race có
   `progress_gap_before ≡ 0` xuyên suốt, tỉ lệ vòng hai seat chọn giống nhau, phân bố
   `|ΔS|` cuối race.
 - **Gate:** pilot 10 rep trước; nếu tỉ lệ race degenerate > 40% → không scale lên 50 rep,
@@ -167,7 +167,7 @@ signature đều **không có** trường persona. Chạy persona rồi phân t�
 | `ai_race/dataio/recorder.py` | `race_row`: `+ persona_condition`, `+ player_1_persona_role`, `+ player_2_persona_role`. `player_rows`: `+ persona_condition`, `+ persona_role` |
 | `ai_race/runner/run_experiment.py` | `_agents_for_language` đọc `personaRoles`; `_write_manifest` thêm `agents_name`, `agents_config_sha256`, `persona_condition`, `persona_sha256` |
 | `kaggle/experiments/baseline.py` (dòng ~361) | thêm 4 trường trên vào `run_manifest` |
-| `results/scripts/analyze_ai_race.py` | `CONTEXT` (dòng 105) `+ "persona_condition"`; thêm gate từ chối khi thiếu, kèm flag `--allow-missing-persona-condition` |
+| `scripts/analyze_ai_race.py` | `CONTEXT` (dòng 105) `+ "persona_condition"`; thêm gate từ chối khi thiếu, kèm flag `--allow-missing-persona-condition` |
 | `results/README.md` | cập nhật mục "Expected schema" — `CLAUDE.md` bắt buộc, nếu không run đã hoàn thành sẽ fail audit |
 
 ### T2.4 Manipulation check
@@ -175,7 +175,7 @@ signature đều **không có** trường persona. Chạy persona rồi phân t�
 Không có bước này thì null của trục persona vô nghĩa — không phân biệt được "persona
 không ảnh hưởng hành vi" với "model không đọc persona".
 
-**Thêm:** `results/scripts/persona_probe.py` — render prompt như thường nhưng thay khối
+**Thêm:** `scripts/persona_probe.py` — render prompt như thường nhưng thay khối
 quyết định bằng *"Describe your development philosophy in one sentence."*, gọi model, lưu
 `persona_probe.jsonl`. Phân loại lại (thủ công hoặc LLM judge với rubric cố định trong
 script). Ngưỡng chấp nhận: ≥ 80% đúng persona.
@@ -184,7 +184,7 @@ script). Ngưỡng chấp nhận: ≥ 80% đúng persona.
 
 ## WS3 — Trục 3: code phân tích
 
-Toàn bộ nằm trong `results/scripts/analyze_ai_race.py` trừ khi ghi khác.
+Toàn bộ nằm trong `scripts/analyze_ai_race.py` trừ khi ghi khác.
 
 ### T3.1 Thêm cột dẫn xuất — `_add_dynamic_columns` (dòng 1700)
 
@@ -253,7 +253,7 @@ thì block thành `model::rep`; nếu không, giữ nguyên và in cảnh báo r
 
 ### T3.4 Bảng so sánh với người — mới
 
-**Thêm:** `results/scripts/human_reference.json` — chuẩn từ paper, dạng dữ liệu chứ không
+**Thêm:** `scripts/human_reference.json` — chuẩn từ paper, dạng dữ liệu chứ không
 hardcode trong prose:
 
 ```json

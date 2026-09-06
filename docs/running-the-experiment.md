@@ -293,7 +293,7 @@ Token hết hạn nhanh, chạy lại `kaggle benchmarks auth` trước mỗi ph
 ### Bước 1 — kiểm tra symmetry collapse TRƯỚC khi scale
 
 ```bash
-python3 results/scripts/check_symmetry.py --input results/open_source/<run>
+python3 scripts/check_symmetry.py --input results/open_source/<run>
 ```
 
 Hai seat cùng model đọc prompt gần đối xứng. Nếu chúng chọn giống nhau mọi vòng thì
@@ -306,7 +306,7 @@ persona bất đối xứng (`S_AC`), chứ đừng scale lên 50 rep.
 Primary (chỉ dùng khi đã có manifest Kaggle đầy đủ, `run_phase = confirmatory`):
 
 ```bash
-python3 results/scripts/analyze_ai_race.py \
+python3 scripts/analyze_ai_race.py \
   --input results/open_source --input results/frontier \
   --output results/derived/ai_race_analysis \
   --fit-logit
@@ -315,7 +315,7 @@ python3 results/scripts/analyze_ai_race.py \
 Audit trên pilot hoặc trên output mock local:
 
 ```bash
-python3 results/scripts/analyze_ai_race.py \
+python3 scripts/analyze_ai_race.py \
   --input /tmp/smoke --output /tmp/derived --fit-logit \
   --allow-mixed-protocols --allow-nonfinal-runs --allow-nonconfirmatory-runs
 ```

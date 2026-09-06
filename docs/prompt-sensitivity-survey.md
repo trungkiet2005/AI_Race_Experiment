@@ -94,7 +94,7 @@ python3 -m kaggle.experiments.greennode_surface_sensitivity \
 Then validate and summarize both lanes:
 
 ```bash
-python3 results/scripts/analyze_surface_sensitivity.py \
+python3 scripts/analyze_surface_sensitivity.py \
   --lane-root /persistent/lane-a --lane-root /persistent/lane-b \
   --output-dir /persistent/analysis
 ```

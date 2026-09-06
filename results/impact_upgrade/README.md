@@ -19,7 +19,7 @@ method reconstructions in explicit evidence classes rather than pooling them.
 - `data/experiment_priority.csv` — machine-readable experiment queue
 
 Interactive demo:
-[`docs/demos/trajectory_lab/index.html`](../../docs/demos/trajectory_lab/index.html).
+[`web/trajectory_lab/index.html`](../../web/trajectory_lab/index.html).
 
 The fully crossed mapping follow-up is frozen in
 [`docs/experiments/context_mapping_fully_crossed_protocol.md`](../../docs/experiments/context_mapping_fully_crossed_protocol.md)
@@ -29,16 +29,16 @@ with its launch runner at
 ## Rebuild
 
 ```bash
-python results/scripts/analyze_impact_upgrade.py
-python results/scripts/build_impact_report.py
-python results/scripts/build_trajectory_demo.py
+python scripts/analyze_impact_upgrade.py
+python scripts/build_impact_report.py
+python scripts/build_trajectory_demo.py
 node <data-analytics-plugin>/skills/build-report/scripts/build_portable_artifact.mjs \
   --input results/impact_upgrade/artifact.json \
   --output results/impact_upgrade/impact_report.html
-python results/scripts/fix_portable_report_overflow.py \
+python scripts/fix_portable_report_overflow.py \
   results/impact_upgrade/impact_report.html
-python results/scripts/build_release_manifest.py
-python results/scripts/build_release_manifest.py --check
+python scripts/build_release_manifest.py
+python scripts/build_release_manifest.py --check
 ```
 
 The final HTML is verified at 1440 px and 390 px with the portable artifact

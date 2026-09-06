@@ -41,7 +41,7 @@ trials.
 
 ## Behavioral analysis admission
 
-`results/scripts/analyze_payoff_scale_behavior.py` fails closed unless it finds
+`scripts/analyze_payoff_scale_behavior.py` fails closed unless it finds
 all 384 races and all four scales in every risk-by-repetition block. It also
 requires completed manifests, one exact non-empty model digest, identical
 temperature-zero decoding, matching source/config hashes, identical horizons,
@@ -55,7 +55,7 @@ Disagreement rates are reported directly: a non-significant contrast is never
 used to claim equivalence. Run it with at least 1,000 frozen resamples:
 
 ```bash
-python -m results.scripts.analyze_payoff_scale_behavior \
+python -m scripts.analyze_payoff_scale_behavior \
   --input-root <downloaded-payoff-scale-root> \
   --output-dir results/derived/payoff_scale_behavior \
   --bootstrap-repetitions 5000
@@ -63,7 +63,7 @@ python -m results.scripts.analyze_payoff_scale_behavior \
 
 ## Mechanical admission test
 
-`results/scripts/analyze_payoff_scale_contract.py` exhaustively checks every
+`scripts/analyze_payoff_scale_contract.py` exhaustively checks every
 two-player joint-action sequence through seven rounds, all three risk levels,
 four setback-draw pairs, and all four scales. Non-payoff terminal fields must
 match exactly and every scaled payoff must equal `factor × reference` within

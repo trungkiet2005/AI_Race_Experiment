@@ -194,13 +194,13 @@ pytest                        # đảm bảo chưa gãy gì trước khi đụng
    ```
    Script tự bỏ qua config đã `completed` — chạy lại an toàn nếu bị đứt giữa chừng
    (hết quota, mất mạng), không tốn tiền chạy lại phần đã xong.
-4. `python3 results/scripts/check_symmetry.py --input results/frontier/openai/baseline`
+4. `python3 scripts/check_symmetry.py --input results/frontier/openai/baseline`
    (và các thư mục persona) — dừng và chỉnh nếu >40% race bị symmetry collapse
    (đúng bẫy nhiệt độ ở mục 1).
 5. Audit bằng analyser với các flag `--allow-*` (pilot, không phải kết quả cuối) —
    xem đúng bộ flag ở [running-proxy-pilots.md](running-proxy-pilots.md#sau-khi-chạy-phân-tích):
    ```bash
-   python3 results/scripts/analyze_ai_race.py \
+   python3 scripts/analyze_ai_race.py \
      --input results/frontier/openai --output /tmp/derived_openai --fit-logit \
      --allow-mixed-protocols --allow-nonfinal-runs --allow-nonconfirmatory-runs \
      --allow-missing-persona-condition
@@ -213,7 +213,7 @@ pytest                        # đảm bảo chưa gãy gì trước khi đụng
    output.
 8. Chạy analyser **một lần**, không đổi định nghĩa outcome sau khi đã thấy kết quả:
    ```bash
-   python3 results/scripts/analyze_ai_race.py \
+   python3 scripts/analyze_ai_race.py \
      --input results/open_source --input results/frontier \
      --output results/derived/ai_race_analysis --fit-logit
    ```

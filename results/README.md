@@ -22,7 +22,7 @@ The current cross-study visual and narrative entry point is
 [`impact_upgrade/impact_report.html`](impact_upgrade/impact_report.html), with a
 plain-text companion at [`impact_upgrade/impact_report.md`](impact_upgrade/impact_report.md)
 and an interactive paired-trajectory demo at
-[`docs/demos/trajectory_lab/index.html`](../docs/demos/trajectory_lab/index.html).
+[`web/trajectory_lab/index.html`](../web/trajectory_lab/index.html).
 The earlier single-Qwen pilot snapshot remains at
 [`visualization_insight_full.md`](visualization_insight_full.md). The current
 evidence-bearing modules are:
@@ -65,7 +65,7 @@ The complete public GreenNode handoff is indexed in
 `open_source/gpu_run_archive/archive_ledger.json`. It includes immutable raw and
 analysis bundles for persona sensitivity, surface sensitivity, and game
 understanding, with expanded review-friendly pilot tables under neighboring
-directories. Run `python results/scripts/audit_gpu_archives.py --archive-dir
+directories. Run `python scripts/audit_gpu_archives.py --archive-dir
 results/open_source/gpu_run_archive` to verify all archive hashes and metadata
 from a clean clone.
 
@@ -87,7 +87,7 @@ Prompt-turn explainability runs are tracked under:
 Run:
 
 ```bash
-python results/scripts/explain_action_xai.py \
+python scripts/explain_action_xai.py \
   --input-root tmp/pilot_rebuild/pilot_identified_t1_0 \
   --input-root results/frontier \
   --output-dir results/open_source/prompt_sensitivity_pilot/xai_auto_vector_encoder_no_response \
@@ -99,10 +99,10 @@ The no-response variant is the preferred production-safe audit (it excludes
 `--include-response-text` enables an exploratory leakage-rich benchmark.
 
 Leakage-resistant sparse dictionary analysis is also available in
-`results/scripts/explain_action_sparse_autoencoder.py`:
+`scripts/explain_action_sparse_autoencoder.py`:
 
 ```bash
-python results/scripts/explain_action_sparse_autoencoder.py \
+python scripts/explain_action_sparse_autoencoder.py \
   --input-root results/frontier \
   --input-root tmp/pilot_rebuild/pilot_identified_t1_0 \
   --output-dir results/open_source/prompt_sensitivity_pilot/sparse_autoencoder \
@@ -146,7 +146,7 @@ For this workspace, the canonical current synthesis is:
 
 - [results/impact_upgrade/impact_report.html](impact_upgrade/impact_report.html)
 - [results/impact_upgrade/impact_report.md](impact_upgrade/impact_report.md)
-- [docs/demos/trajectory_lab/index.html](../docs/demos/trajectory_lab/index.html)
+- [web/trajectory_lab/index.html](../web/trajectory_lab/index.html)
 
 The earlier single-model synthesis remains here:
 
@@ -262,7 +262,7 @@ Prompt surface-sensitivity runs use a separate paired analysis so modified promp
 hashes can never enter the canonical primary pool accidentally:
 
 ```bash
-python results/scripts/analyze_surface_sensitivity.py \
+python scripts/analyze_surface_sensitivity.py \
   --lane-root /path/to/lane-a --lane-root /path/to/lane-b \
   --output-dir results/derived/surface-sensitivity
 ```
@@ -277,14 +277,14 @@ not dependent decision rows.
 Run this on Kaggle after downloading or mounting completed experiment outputs:
 
 ```bash
-python results/scripts/analyze_ai_race.py
+python scripts/analyze_ai_race.py
 ```
 
 The default discovery roots are `results/open_source/` and `results/frontier/`.
 Additional roots can be combined explicitly:
 
 ```bash
-python results/scripts/analyze_ai_race.py \
+python scripts/analyze_ai_race.py \
   --input /kaggle/input/open-weight-runs \
   --input /kaggle/input/frontier-runs \
   --output /kaggle/working/ai-race-analysis
@@ -374,7 +374,7 @@ For an explicitly labelled sensitivity analysis, allow multiple or unknown
 protocols with:
 
 ```bash
-python results/scripts/analyze_ai_race.py --allow-mixed-protocols
+python scripts/analyze_ai_race.py --allow-mixed-protocols
 ```
 
 Descriptive outputs remain stratified by both `prompt_version` and
@@ -395,7 +395,7 @@ rejected by default.
 Two explicit audit-only overrides exist:
 
 ```bash
-python results/scripts/analyze_ai_race.py \
+python scripts/analyze_ai_race.py \
   --allow-nonconfirmatory-runs \
   --allow-nonfinal-runs
 ```
@@ -413,7 +413,7 @@ control.
 The paper-style association model is opt-in:
 
 ```bash
-python results/scripts/analyze_ai_race.py --fit-logit
+python scripts/analyze_ai_race.py --fit-logit
 ```
 
 It uses `statsmodels` and rounds 2 onward:
@@ -453,7 +453,7 @@ paper's canonical strategies and must remain labelled exploratory.
 ## Optional robustness refits
 
 ```bash
-python results/scripts/analyze_ai_race.py --fit-logit-robustness
+python scripts/analyze_ai_race.py --fit-logit-robustness
 ```
 
 Off by default because it is one fit per common-random-number block. It refits the
@@ -485,7 +485,7 @@ spread is a sensitivity diagnostic, not a standard error, and has no p-value.
 ## Theory outputs
 
 ```bash
-python results/scripts/build_theory_tables.py
+python scripts/build_theory_tables.py
 ```
 
 Writes to `results/derived/ai_race_theory/`. This script reads **no run output**.

@@ -138,7 +138,7 @@ Nếu hay gặp lỗi `429` (quá tải) khi chạy nhiều model song song, h�
 ## Sau khi chạy: phân tích
 
 ```bash
-.venv-kaggle/bin/python results/scripts/analyze_ai_race.py \
+.venv-kaggle/bin/python scripts/analyze_ai_race.py \
   --input results/frontier/<thư-mục-vừa-chạy> \
   --output results/derived/<tên-tuỳ-chọn> \
   --allow-mixed-protocols --allow-nonfinal-runs --allow-nonconfirmatory-runs \
@@ -153,5 +153,5 @@ chính thức**, chỉ dùng cho pilot/audit.
 Kiểm tra soi gương trước khi tin bất kỳ số liệu nào về "dẫn trước/bị bỏ lại":
 
 ```bash
-.venv-kaggle/bin/python results/scripts/check_symmetry.py --input results/frontier/<thư-mục-vừa-chạy>
+.venv-kaggle/bin/python scripts/check_symmetry.py --input results/frontier/<thư-mục-vừa-chạy>
 ```

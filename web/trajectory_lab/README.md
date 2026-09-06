@@ -12,5 +12,5 @@ mediation.
 Rebuild the embedded payload with:
 
 ```bash
-python results/scripts/build_trajectory_demo.py
+python scripts/build_trajectory_demo.py
 ```

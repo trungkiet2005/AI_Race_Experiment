@@ -123,7 +123,7 @@ python kaggle/experiments/greennode_game_understanding.py \
   --lane behavior --profile smoke --repo-root . --output-root <persistent-run-root> \
   --temperature 0.7 --required-gpu H100
 
-python results/scripts/analyze_game_understanding.py \
+python scripts/analyze_game_understanding.py \
   --probe-root <probe-run-root> --behavior-root <behavior-run-root> \
   --output-dir <analysis-root>
 ```
