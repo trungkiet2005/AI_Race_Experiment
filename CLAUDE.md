@@ -4,6 +4,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
+**Venue: AAMAS-2026** (`paper/main.tex` is built on the AAMAS-2026 sigconf
+template; submission instructions at cyprusconferences.org/aamas2026). No
+submission date is recorded here, so check the call before planning against one.
+
 A research codebase that runs the two-player repeated "AI race" of Fernández Domingos and Han (2026) with LLM agents instead of human participants. Two model-controlled companies simultaneously choose SAFE or UNSAFE each round; UNSAFE advances faster and pays more now but accumulates a private setback risk that only bites if you win or tie.
 
 [README.md](README.md) states the canonical mechanism; [PROJECT.md](PROJECT.md) is the research protocol (estimands, validation gates, planned sequence). Both are binding on code changes — the engine is meant to be *paper-faithful*, so changing payoffs, horizons, or risk accounting is a protocol change, not a refactor.
