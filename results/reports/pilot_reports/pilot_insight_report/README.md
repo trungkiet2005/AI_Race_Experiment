@@ -8,7 +8,7 @@ This folder stores the generated outputs for the pilot-analytics visualization p
 - `visualization_audit.md`: pointer to the canonical consolidated audit file
 
 Core consolidated visualization insight log:
-- [results/visualization_insight_full.md](/AI_Race_Experiment/results/visualization_insight_full.md)
+- [results/visualization_insight_full.md](../../../visualization_insight_full.md)
 
 ## Rebuild command
 

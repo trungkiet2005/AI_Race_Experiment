@@ -2,7 +2,7 @@
 
 This report is now consolidated into one file:
 
-- [results/visualization_insight_full.md](/AI_Race_Experiment/results/visualization_insight_full.md)
+- [results/visualization_insight_full.md](../../../visualization_insight_full.md)
 
 This kept-all-in-one file contains:
 - merged visualization catalog

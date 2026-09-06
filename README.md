@@ -10,6 +10,18 @@ Drives Unsafe Development in an Idealised AI Race Experiment_ (arXiv:2607.26034)
 The source study used human participants; this project is an LLM adaptation and does
 not present its future model outputs as a replication of human cognition.
 
+## Setup
+
+```bash
+python -m venv .venv && . .venv/Scripts/activate   # POSIX: . .venv/bin/activate
+pip install -e ".[analysis,dev]"                    # add ",api" for hosted models
+pytest                                              # 51 test modules; API tests skip without their extras
+```
+
+Runs against hosted providers read credentials from a `.env` file. Copy
+[`.env.example`](.env.example) to `.env` and fill in only the providers you use;
+`.env` is gitignored. The offline engine needs no credentials at all.
+
 ## Canonical game
 
 - Two players choose simultaneously in every round.
@@ -36,20 +48,28 @@ not present its future model outputs as a replication of human cognition.
 
 ```text
 ai_race/                 Core engine, prompts, configs, runners, tests, and metrics
+N-Player/                N-player extension: theory, figures, and its own tests
 FAIRGAME/                Vendored model connectors reused for offline/API inference
+analysis/fh_analytic/    Human-vs-LLM analytic pipeline and its derived outputs
+data/                    Analysis-ready copied view of selected runs (see data/README.md)
+public_dataset/          De-identified human participant table, read by the analyses
 kaggle/
   experiments/           GPU notebook source for the offline baseline
   benchmarks/            Kaggle Benchmark task for frontier/API models
   setup/                 Offline-wheel preparation notes and script
-references/papers/
-  markdown/              AI-readable research notes
-  pdf/                   Retained reference-paper PDFs
-  sources/               Publisher/arXiv source bundles
+references/
+  papers/                Curated literature: markdown notes, PDFs, arXiv source bundles
+  _citation_audit/       arXiv sources retained while auditing the manuscript citations
 scripts/                 Operational experiment runners
 strategy_analysis/       AS/AU/CS/CAS trajectory classification
 results/                 Single canonical home for raw runs, analyses, reports, QA, and publication PDFs
+docs/                    Experiment protocols, run guides, and the trajectory-lab demo
 paper/                   Manuscript with bounded pilot audit evidence
+figures/                 Manuscript overview figures
 slides/                  AI Race presentation outline
+Presentation/            Shared bibliography for the deck
+web/                     Interactive browser simulator (see README section below)
+output/                  Run exports written by results/scripts/report_two_agent_race.py
 ```
 
 Legacy Collective Risk outputs and trained strategy artifacts are preserved locally
