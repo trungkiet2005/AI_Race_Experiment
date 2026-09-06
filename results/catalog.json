@@ -1,9 +1,9 @@
 {
   "schema_version": "ai-race.results-catalog.v1",
-  "generated_utc": "2026-09-06T02:41:14.795569+00:00",
+  "generated_utc": "2026-09-06T03:13:18.255821+00:00",
   "canonical_root": "results/",
-  "file_count": 3860,
-  "total_bytes": 1318117388,
+  "file_count": 3862,
+  "total_bytes": 1320247038,
   "size_by_top_level": {
     "PAPER_FIGURE_CANDIDATES.md": {
       "files": 1,
@@ -46,8 +46,8 @@
       "bytes": 4470148
     },
     "kaggle-benchmarks": {
-      "files": 35,
-      "bytes": 4440484
+      "files": 28,
+      "bytes": 4420173
     },
     "notebooks": {
       "files": 1,
@@ -58,8 +58,8 @@
       "bytes": 138084910
     },
     "open_source": {
-      "files": 781,
-      "bytes": 339306336
+      "files": 790,
+      "bytes": 341455963
     },
     "public_dataset": {
       "files": 3,
@@ -71,14 +71,14 @@
     },
     "scripts": {
       "files": 42,
-      "bytes": 1048354
+      "bytes": 1048688
     },
     "visualization_insight_full.md": {
       "files": 1,
       "bytes": 27456
     }
   },
-  "manifest_count": 449,
+  "manifest_count": 451,
   "manifest_errors": [],
   "duplicate_groups": [
     {
@@ -964,13 +964,6 @@
       "paths": [
         "frontier/bedrock_mantle/terra/persona/Rplus_risk_seeking/all_results.csv",
         "frontier/bedrock_mantle/terra/persona/Rplus_risk_seeking/openai.gpt-5.6-terra/all_results.csv"
-      ]
-    },
-    {
-      "sha256": "72dc4a26b5deadd6c0ed5d9d9547a501c3324dc927c50c7f3ff1d34af2fe2058",
-      "paths": [
-        "kaggle-benchmarks/_local-debug/2026-08-01/ai-race-baseline.task.json",
-        "kaggle-benchmarks/ai-race-baseline/4/claude-haiku-4-5-20251001/357889/ai-race-baseline.task.json"
       ]
     },
     {
@@ -18107,48 +18100,6 @@
       "sha256": "3b9f554df0d937d39dbcc62160ad8251654a526fa28537dd877b4279189741ff"
     },
     {
-      "path": "kaggle-benchmarks/_local-debug/2026-08-01/ai-race-baseline-run_id_Run_1_llm.run.json",
-      "top_level": "kaggle-benchmarks",
-      "bytes": 8456,
-      "sha256": "76a372739263141c619a58f6d720037598979ba7e006502ae6cdc55a7cc51377"
-    },
-    {
-      "path": "kaggle-benchmarks/_local-debug/2026-08-01/ai-race-baseline.task.json",
-      "top_level": "kaggle-benchmarks",
-      "bytes": 7129,
-      "sha256": "72dc4a26b5deadd6c0ed5d9d9547a501c3324dc927c50c7f3ff1d34af2fe2058"
-    },
-    {
-      "path": "kaggle-benchmarks/_local-debug/2026-08-01/connectivity-ping-run_id_Run_1_google_gemini-3-flash-preview.run.json",
-      "top_level": "kaggle-benchmarks",
-      "bytes": 2439,
-      "sha256": "138be05221affd531b4e6e15e19c03d9bd3165c73d176021d525f5197abf761e"
-    },
-    {
-      "path": "kaggle-benchmarks/_local-debug/2026-08-01/connectivity-ping-run_id_Run_1_llm.run.json",
-      "top_level": "kaggle-benchmarks",
-      "bytes": 2634,
-      "sha256": "07350b0abee90c70f2c731e537e3ebd9676c0c4881631d5754e9f8b84a1afdcb"
-    },
-    {
-      "path": "kaggle-benchmarks/_local-debug/2026-08-01/connectivity-ping.task.json",
-      "top_level": "kaggle-benchmarks",
-      "bytes": 372,
-      "sha256": "af119a09ed6220539a373c48c09728a25bac600c72e237f2d5dc85ad8c1a2609"
-    },
-    {
-      "path": "kaggle-benchmarks/_local-debug/2026-08-01/debug-llm-type-run_id_Run_1_google_gemini-3-flash-preview.run.json",
-      "top_level": "kaggle-benchmarks",
-      "bytes": 612,
-      "sha256": "e010af21126135c1c9f1a292cee2c674ce375ab50875ad892215bcb5de7d35cf"
-    },
-    {
-      "path": "kaggle-benchmarks/_local-debug/2026-08-01/debug-llm-type.task.json",
-      "top_level": "kaggle-benchmarks",
-      "bytes": 52,
-      "sha256": "6ade278a714862314e24152e1fe967a47866ad87870fa2d9916707b21d735e75"
-    },
-    {
       "path": "kaggle-benchmarks/_n3-smoke/claude-haiku-4-5-20251001/run_manifest.json",
       "top_level": "kaggle-benchmarks",
       "bytes": 3286,
@@ -18271,8 +18222,8 @@
     {
       "path": "kaggle-benchmarks/local-debug-summary.md",
       "top_level": "kaggle-benchmarks",
-      "bytes": 1057,
-      "sha256": "49a5cab083fbd32e19c93fdf85568f76c4e54780660ae96173b9e8a78d5b803d"
+      "bytes": 2440,
+      "sha256": "4ba42cb0c26e0a57a64ee7493fd3da8ebed83c02d4ae0115b4ae92acfa1c31ca"
     },
     {
       "path": "notebooks/ai_race_pilot_analysis.ipynb",
@@ -24209,6 +24160,60 @@
       "sha256": "b5e00cab5880c36c48ee9d5ebf70f874ae963f28979ad9c9415271ffd4880417"
     },
     {
+      "path": "open_source/two_agent_report/ai_race_all_models.csv",
+      "top_level": "open_source",
+      "bytes": 24135,
+      "sha256": "9d9b36b8d3ccf2dc8ed8d795d97c4954da88baefee2c5405e12a7ef73b4456d6"
+    },
+    {
+      "path": "open_source/two_agent_report/ai_race_players_all_models.csv",
+      "top_level": "open_source",
+      "bytes": 32172,
+      "sha256": "f3ebf66aac3bbaca480018b4587a14867da41ed5905a0afc37af0a92dd3dfab9"
+    },
+    {
+      "path": "open_source/two_agent_report/qwen2.5-14b-instruct/baseline/all_results.csv",
+      "top_level": "open_source",
+      "bytes": 17045,
+      "sha256": "6ed609cf4a3cea0c8ec2e59348413f5b95ea95d4da25717d00760460c1114ffc"
+    },
+    {
+      "path": "open_source/two_agent_report/qwen2.5-14b-instruct/baseline/players.csv",
+      "top_level": "open_source",
+      "bytes": 14355,
+      "sha256": "e296e548d014adc50dfa3fe87fbbe0f87f44b9de150e5674662e4ddb34f60e1f"
+    },
+    {
+      "path": "open_source/two_agent_report/qwen2.5-14b-instruct/baseline/races.csv",
+      "top_level": "open_source",
+      "bytes": 11688,
+      "sha256": "f6fe7eaebe8dad5c194c761cc0557d8a3f1bc436d5f7e6cd23d7a768660c29fa"
+    },
+    {
+      "path": "open_source/two_agent_report/qwen2.5-14b-instruct/baseline/run_manifest.json",
+      "top_level": "open_source",
+      "bytes": 2521,
+      "sha256": "b0a6efc4e0816333528ad5da96a4593b391d40ecfe107a4875959d43e707d7b3"
+    },
+    {
+      "path": "open_source/two_agent_report/qwen2.5-14b-instruct/baseline/turns.jsonl",
+      "top_level": "open_source",
+      "bytes": 2044992,
+      "sha256": "3aa1f80fa7405b14e5255ba5430d44048db35c59043e6794cae8c50b196af782"
+    },
+    {
+      "path": "open_source/two_agent_report/README.md",
+      "top_level": "open_source",
+      "bytes": 1324,
+      "sha256": "d65bf7eb3f79277e9b9a10a77fbb4f55eaea3c73d0ef0e491092875c03ea1f81"
+    },
+    {
+      "path": "open_source/two_agent_report/run_manifest.json",
+      "top_level": "open_source",
+      "bytes": 1395,
+      "sha256": "9ec8eb11e1dee865bf515eaafff59dc9e723f28c6c3c6a04f20b471cf1fd4d14"
+    },
+    {
       "path": "PAPER_FIGURE_CANDIDATES.md",
       "top_level": "PAPER_FIGURE_CANDIDATES.md",
       "bytes": 23962,
@@ -24931,8 +24936,8 @@
     {
       "path": "scripts/build_results_catalog.py",
       "top_level": "scripts",
-      "bytes": 13465,
-      "sha256": "bdaa4c3532bed0d2ebae18410a92ad2afa64885fb2b7b1e9cb9f1060610cdb87"
+      "bytes": 13799,
+      "sha256": "afd351a1c0985aa65990143828fc46e86443715eae10690b9876a35fe3c19edc"
     },
     {
       "path": "scripts/build_theory_tables.py",

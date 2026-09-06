@@ -4,11 +4,11 @@
 
 ## At a glance
 
-- Canonical files (excluding reproducible `_build/`): **3,860**
-- Total canonical size: **1257.05 MiB**
-- Parsed manifest records: **449**
+- Canonical files (excluding reproducible `_build/`): **3,862**
+- Total canonical size: **1259.09 MiB**
+- Parsed manifest records: **451**
 - Invalid manifest JSON files: **0**
-- Exact duplicate hash groups: **252** (archives may intentionally retain immutable copies)
+- Exact duplicate hash groups: **251** (archives may intentionally retain immutable copies)
 
 Evidence labels are conservative: a completed pilot stays `pilot`; a prepared or diagnostic artifact is never promoted by directory name alone.
 
@@ -571,8 +571,8 @@ Every rendered chart, publication PDF, and interactive HTML surface in the canon
 |---|---:|
 | `diagnostic` | 22 |
 | `failed-or-incomplete` | 9 |
-| `pilot` | 401 |
-| `unclassified` | 17 |
+| `pilot` | 402 |
+| `unclassified` | 18 |
 
 ## Run and analysis manifests
 
@@ -1025,6 +1025,8 @@ Every rendered chart, publication PDF, and interactive HTML surface in the canon
 | `results/open_source/surface_sensitivity_pilot/lane-a-manifest.json` | completed | pilot | qwen2.5:7b-instruct-fp16 |  |  |
 | `results/open_source/surface_sensitivity_pilot/lane-b-manifest.json` | completed | pilot | qwen2.5:7b-instruct-fp16 |  |  |
 | `results/open_source/surface_sensitivity_pilot_manifest.json` | completed | pilot |  |  |  |
+| `results/open_source/two_agent_report/qwen2.5-14b-instruct/baseline/run_manifest.json` | completed | pilot | qwen2.5-14b-instruct | 30 | 558 |
+| `results/open_source/two_agent_report/run_manifest.json` | recorded | unclassified |  |  |  |
 | `results/reports/frontier/derived/analysis_manifest.json` | recorded | unclassified |  |  |  |
 | `results/reports/openai/derived/analysis_manifest.json` | recorded | unclassified |  |  |  |
 
