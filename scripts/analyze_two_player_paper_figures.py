@@ -34,6 +34,9 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.colors as mcolors
 import matplotlib.pyplot as plt
+# Type 3 fonts are rejected by publishers and are matplotlib's default.
+matplotlib.rcParams.update({"pdf.fonttype": 42, "ps.fonttype": 42})
+
 from matplotlib.lines import Line2D
 from matplotlib.patches import Patch
 import numpy as np

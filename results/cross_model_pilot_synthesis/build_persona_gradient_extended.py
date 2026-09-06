@@ -27,7 +27,11 @@ from __future__ import annotations
 import csv
 from pathlib import Path
 
+import matplotlib
 import matplotlib.pyplot as plt
+# Type 3 fonts are rejected by publishers and are matplotlib's default.
+matplotlib.rcParams.update({"pdf.fonttype": 42, "ps.fonttype": 42})
+
 import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[2]

@@ -26,7 +26,11 @@ import subprocess
 from collections import defaultdict
 from pathlib import Path
 
+import matplotlib
 import matplotlib.pyplot as plt
+
+# Type 3 fonts are rejected by publishers and are matplotlib's default.
+matplotlib.rcParams.update({"pdf.fonttype": 42, "ps.fonttype": 42})
 
 ROOT = Path(__file__).resolve().parents[2]
 OUTPUT = ROOT / "results" / "cross_model_pilot_synthesis"

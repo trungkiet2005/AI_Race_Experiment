@@ -15,7 +15,11 @@ from pathlib import Path
 import sys
 from typing import Any, Iterable
 
+import matplotlib
 import matplotlib.pyplot as plt
+# Type 3 fonts are rejected by publishers and are matplotlib's default.
+matplotlib.rcParams.update({"pdf.fonttype": 42, "ps.fonttype": 42})
+
 import numpy as np
 import pandas as pd
 

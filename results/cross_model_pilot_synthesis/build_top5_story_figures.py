@@ -3,7 +3,11 @@ from pathlib import Path
 import json
 import numpy as np
 import pandas as pd
+import matplotlib
 import matplotlib.pyplot as plt
+# Type 3 fonts are rejected by publishers and are matplotlib's default.
+matplotlib.rcParams.update({"pdf.fonttype": 42, "ps.fonttype": 42})
+
 from matplotlib.colors import LinearSegmentedColormap, TwoSlopeNorm
 from matplotlib.ticker import PercentFormatter
 

@@ -4,11 +4,11 @@
 
 ## At a glance
 
-- Canonical files (excluding reproducible `_build/`): **3,829**
-- Total canonical size: **1260.59 MiB**
+- Canonical files (excluding reproducible `_build/`): **3,832**
+- Total canonical size: **1264.01 MiB**
 - Parsed manifest records: **451**
 - Invalid manifest JSON files: **0**
-- Exact duplicate hash groups: **251** (archives may intentionally retain immutable copies)
+- Exact duplicate hash groups: **252** (archives may intentionally retain immutable copies)
 
 Evidence labels are conservative: a completed pilot stays `pilot`; a prepared or diagnostic artifact is never promoted by directory name alone.
 
@@ -34,7 +34,7 @@ Evidence labels are conservative: a completed pilot stays `pilot`; a prepared or
 - [Payoff-scale mechanical contract](derived/payoff_scale_contract/README.md)
 - [Experiment impact roadmap](../docs/experiments/impact_experiment_program.md)
 
-## Complete visual artifact map (535)
+## Complete visual artifact map (537)
 
 Every rendered chart, publication PDF, and interactive HTML surface in the canonical results root is linked below. The narrative synthesis embeds the decision-relevant subset in `visualization_insight_full.md`.
 
@@ -216,6 +216,7 @@ Every rendered chart, publication PDF, and interactive HTML surface in the canon
 - [`artifacts/figure_gallery/x9_theory_beta_fit.png`](<artifacts/figure_gallery/x9_theory_beta_fit.png>)
 - [`artifacts/publication/ai_race_paper.pdf`](<artifacts/publication/ai_race_paper.pdf>)
 - [`artifacts/publication/ai_race_research_deck.pdf`](<artifacts/publication/ai_race_research_deck.pdf>)
+- [`artifacts/publication/ai_race_supplementary.pdf`](<artifacts/publication/ai_race_supplementary.pdf>)
 - [`artifacts/qa/latex/deck_final_p1.png`](<artifacts/qa/latex/deck_final_p1.png>)
 - [`artifacts/qa/latex/deck_final_p10.png`](<artifacts/qa/latex/deck_final_p10.png>)
 - [`artifacts/qa/latex/deck_final_p11.png`](<artifacts/qa/latex/deck_final_p11.png>)
@@ -248,6 +249,7 @@ Every rendered chart, publication PDF, and interactive HTML surface in the canon
 - [`artifacts/qa/latex/paper_p16-16.png`](<artifacts/qa/latex/paper_p16-16.png>)
 - [`artifacts/qa/latex/paper_p8-08.png`](<artifacts/qa/latex/paper_p8-08.png>)
 - [`artifacts/qa/latex/paper_p9-09.png`](<artifacts/qa/latex/paper_p9-09.png>)
+- [`artifacts/submission/paper.pdf`](<artifacts/submission/paper.pdf>)
 - [`capacity_family/greennode_smoke_ab0527e/analysis/scaffold_admission_heatmap.pdf`](<capacity_family/greennode_smoke_ab0527e/analysis/scaffold_admission_heatmap.pdf>)
 - [`capacity_family/greennode_smoke_ab0527e/analysis/scaffold_admission_heatmap.png`](<capacity_family/greennode_smoke_ab0527e/analysis/scaffold_admission_heatmap.png>)
 - [`cross_model_pilot_synthesis/deep_insight_gallery_20260802/01_risk_fingerprint_matrix.pdf`](<cross_model_pilot_synthesis/deep_insight_gallery_20260802/01_risk_fingerprint_matrix.pdf>)

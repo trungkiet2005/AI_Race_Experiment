@@ -631,13 +631,11 @@ hashes, completed-race count, and exclusion rules were all fixed and recorded.
 
 The primary audit uses protocol ai-race-game-understanding-v2: 41 atomic probes spanning rule recall, one-stage payoffs, state reconstruction, state transition, terminal scoring, and expected payoff. Numeric probes vary direct wording, paraphrase, and calculator disclosure; categorical probes also reverse answer order. Strict output-format compliance and semantic correctness are scored separately. A paired behavioural diagnostic compares the canonical prompt with a deterministic four-row decision card that discloses the focal agent's immediate payoff, progress, and private-risk consequences for each action profile. The card does not reveal the opponent's move or the stopping horizon.
 
-We also vary the persona-related framing assigned to each company's
-executive. The canonical baseline contains no persona sentence, while a
-separate neutral placebo uses a length-matched neutral description. The
-risk-aware family contains six levels adapted from the Eckel and Grossman gamble
-scale, and the cooperative/adversarial family frames the executive as favouring
-either mutual restraint or zero-sum competition. These are prompt conditions,
-not measured psychological traits (Figure~\ref{fig:persona}).
+We also vary the persona framing assigned to each company's executive across
+three families, shown in Figure~\ref{fig:persona}: no persona at all, a
+risk-aware family with six levels, and a family that frames rivals as
+cooperative or adversarial. A neutral placebo of matched length separates the
+persona itself from the effect of adding a sentence.
 
 
 The context extension keeps the game rules fixed but presents the game through
@@ -1016,39 +1014,7 @@ partition should be read as a noisy exploratory organisation of the human
 data rather than a definitive taxonomy. Projecting each model's
 trajectories into this human-only reference space, using human means and
 standard deviations throughout, gives
-Table~\ref{tab:archetype-coverage}.
-
-\begin{table}[t]
-  \caption{Behavioural-archetype coverage: share of each population's
-  neutral-lane player-races assigned to each human-fit archetype.
-  Human row is the reference clustering ($n{=}341$); each LLM row
-  projects that checkpoint's own no-persona player-races
-  ($n{=}60$ to $120$, see Table~\ref{tab:evidence-strata}) into the same
-  space. This table draws on the full nine-checkpoint cross-model pilot
-  and therefore includes GPT-5.6 Luna and Terra, which are not part of
-  the seven-model HDBSCAN/t-SNE/decision-tree comparison earlier in
-  this subsection.}
-  \label{tab:archetype-coverage}
-  \centering
-  \footnotesize
-  \setlength{\tabcolsep}{3pt}
-  \begin{tabular}{@{}lrrrr@{}}
-    \toprule
-    Population & Cautious & Aggr./recip. & Catch-up & Persister \\
-    \midrule
-    Human (reference)      & 39.0\% & 49.9\% & 5.6\%  & 5.6\% \\
-    GPT-5-nano              & 99.2\% & 0\%    & 0\%    & 0.8\% \\
-    GPT-5.4-nano            & 51.7\% & 33.3\% & 3.3\%  & 11.7\% \\
-    Gemini-3-Flash          & 1.7\%  & 78.3\% & 20.0\% & 0\% \\
-    Gemini-3.1-Flash-Lite   & 0\%    & 83.3\% & 16.7\% & 0\% \\
-    Gemini-3.5-Flash-Lite   & 0\%    & 76.7\% & 23.3\% & 0\% \\
-    GPT-5.6 Luna            & 3.3\%  & 72.5\% & 24.2\% & 0\% \\
-    GPT-5.6 Terra           & 14.2\% & 59.2\% & 26.7\% & 0\% \\
-    Claude Opus 5           & 66.7\% & 33.3\% & 0\%    & 0\% \\
-    Claude Sonnet 5         & 77.5\% & 20.8\% & 1.7\%  & 0\% \\
-    \bottomrule
-  \end{tabular}
-\end{table}
+the supplementary material.
 
 GPT-5-nano is effectively a point mass in the cautious-starter archetype
 (99.2\%): its low aggregate rate reflects a highly compressed behavioural

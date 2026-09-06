@@ -43,7 +43,11 @@ from __future__ import annotations
 import csv
 from pathlib import Path
 
+import matplotlib
 import matplotlib.pyplot as plt
+# Type 3 fonts are rejected by publishers and are matplotlib's default.
+matplotlib.rcParams.update({"pdf.fonttype": 42, "ps.fonttype": 42})
+
 import numpy as np
 from scipy.stats import gaussian_kde
 

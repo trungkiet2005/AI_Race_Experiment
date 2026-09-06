@@ -27,6 +27,9 @@ import matplotlib
 # backend before importing pyplot so PNG generation remains portable.
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+# Type 3 fonts are rejected by publishers and are matplotlib's default.
+matplotlib.rcParams.update({"pdf.fonttype": 42, "ps.fonttype": 42})
+
 import numpy as np
 import pandas as pd
 from scipy import stats

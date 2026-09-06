@@ -1,7 +1,7 @@
 {
   "schema_version": "ai-race.impact-release.v2",
   "identity": "content-addressed; independent of commit and worktree state",
-  "file_count": 98,
+  "file_count": 97,
   "files": {
     "ai_race/audit/payoff_scale.py": {
       "bytes": 2321,
@@ -80,20 +80,16 @@
       "sha256": "d860afc3685388f9f9f47593b62209cc43eacea4378a85d50c46fcc89274825b"
     },
     "paper/main.tex": {
-      "bytes": 106512,
-      "sha256": "073bfe4968632125ba5cfaed6d5562ce9573506d8a906dd72a61880172cc9f0a"
-    },
-    "paper/refs.bib": {
-      "bytes": 9854,
-      "sha256": "8bbb0b01b2d456af44ed2df20c8f09811032b7083a49be4ef011d12b29044b3f"
+      "bytes": 69142,
+      "sha256": "36b045dd7d3b04944bf67624eb3870f73baf58add59eac84ea5b502eaf3f4e3b"
     },
     "results/artifacts/publication/ai_race_paper.pdf": {
-      "bytes": 2809005,
-      "sha256": "ee92aab39b97f6c9857adc03a36033db21ba2cddf2113b49fa44ec37c3b4897c"
+      "bytes": 1891289,
+      "sha256": "c5b71c55ec22b556f625a5eb4984807f4412d48e706c906d807ad0e99fedc5e4"
     },
     "results/artifacts/publication/ai_race_research_deck.pdf": {
       "bytes": 619364,
-      "sha256": "8ab7a6ef8844a6b0a33d8eaebf53ace845d1fc75b748205d847204605f0c93e7"
+      "sha256": "c1dd7a50b5e1ea44c8b1f6c296fe7772a632871d3544e303ae4fba9a63a6bcb4"
     },
     "results/derived/payoff_scale_contract/README.md": {
       "bytes": 428,
@@ -328,20 +324,20 @@
       "sha256": "46f486135ad31a073a0df3707542811cfc1c4f4f5486d5bc28e600b42218db7e"
     },
     "results/migration_manifest.json": {
-      "bytes": 10094,
-      "sha256": "1a977b0d1571559275ebee412a0fa3e0215c19e9aa6fc361ea974f19a0477af9"
+      "bytes": 10273,
+      "sha256": "92bbbca40e0d803378515748d2a5c24e25028ff9ac0126e5da4a4f55ac8582a7"
     },
     "results/visualization_insight_full.md": {
       "bytes": 27421,
       "sha256": "20c5d13e01628338eae1c947d1db5dd14534ee088d3ef28f08c14dbe2e05c3eb"
     },
     "scripts/analyze_context_mapping_cross.py": {
-      "bytes": 13808,
-      "sha256": "d5267ae3bd3d840dab838b5b920d30675f2412380963bad9bfd37232dbc3e643"
+      "bytes": 13967,
+      "sha256": "2647113698866aceed4920c9947128742fbde318fda347dcfc0ea8a38e805d0a"
     },
     "scripts/analyze_context_skin.py": {
-      "bytes": 65466,
-      "sha256": "8c3109bde65433bf087abf837aaee1dad2c8eae2b918e8e050327ac40b40fb6d"
+      "bytes": 65625,
+      "sha256": "de649a74c00a34311b6478f8ee2ef2d1fd174c32c25a673227e81be5c3122319"
     },
     "scripts/analyze_context_temperature_robustness.py": {
       "bytes": 49233,
@@ -360,20 +356,20 @@
       "sha256": "7f3c95b099e760a935011907d710c35be1b1e68f0fc5a5c966dbe320623edbd9"
     },
     "scripts/build_publication.py": {
-      "bytes": 3170,
-      "sha256": "dd9800adc6a84631ebc1d2d35a6b2705c428277da9d116d32e4e2c1cd58acb18"
+      "bytes": 4114,
+      "sha256": "8372174bd169da2a88062c3687749f95c2912c354e079a5f31e190c83992f80e"
     },
     "scripts/build_visual_analytics_atlas.py": {
-      "bytes": 22520,
-      "sha256": "7a5009fa338387cbcb876874950090031ab18ce3075cb04f5287a335d3020396"
+      "bytes": 22661,
+      "sha256": "528acf3db4170e663bf81beac14b0e48dc5776c9250fab9d696aa1d213326474"
     },
     "scripts/followup_analysis_common.py": {
       "bytes": 7725,
       "sha256": "0e49ed3eec96950b42f6fdbef7da66b32058d63a29ff4c63f71d34842a5be447"
     },
     "scripts/simulate_context_mapping_power.py": {
-      "bytes": 7371,
-      "sha256": "07a0533751efd2c4c468832b26269b4812444781dbc425792d2e9ec9cc51180d"
+      "bytes": 7530,
+      "sha256": "c0ce586efcc306658078f33d434aa6b04f0844fd999bef9f078f8dc63b047ce9"
     },
     "slides/ai_race_research_deck.tex": {
       "bytes": 29319,

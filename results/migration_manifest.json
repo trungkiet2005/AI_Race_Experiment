@@ -12,7 +12,7 @@
     "artifacts/publication",
     "artifacts/qa/latex"
   ],
-  "file_count": 53,
+  "file_count": 54,
   "files": {
     "results/frontier/api_5games_allrisk/all_results.csv": {
       "bytes": 8123,
@@ -91,12 +91,16 @@
       "sha256": "4d5104ec6aea7e2d3cc0e8d65a62eacf301a88fd4f67b7d1897238465c40abe1"
     },
     "results/artifacts/publication/ai_race_paper.pdf": {
-      "bytes": 2809005,
-      "sha256": "ee92aab39b97f6c9857adc03a36033db21ba2cddf2113b49fa44ec37c3b4897c"
+      "bytes": 1891289,
+      "sha256": "c5b71c55ec22b556f625a5eb4984807f4412d48e706c906d807ad0e99fedc5e4"
     },
     "results/artifacts/publication/ai_race_research_deck.pdf": {
       "bytes": 619364,
-      "sha256": "8ab7a6ef8844a6b0a33d8eaebf53ace845d1fc75b748205d847204605f0c93e7"
+      "sha256": "c1dd7a50b5e1ea44c8b1f6c296fe7772a632871d3544e303ae4fba9a63a6bcb4"
+    },
+    "results/artifacts/publication/ai_race_supplementary.pdf": {
+      "bytes": 1390151,
+      "sha256": "e4a7b36a44bd1db1dcc9bcd297faedf0e9332a0ac48787835b1a60045726cbf6"
     },
     "results/artifacts/qa/latex/deck_final_p1.png": {
       "bytes": 40067,

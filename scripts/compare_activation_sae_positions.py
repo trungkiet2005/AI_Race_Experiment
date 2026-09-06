@@ -7,7 +7,11 @@ import json
 from pathlib import Path
 from typing import Sequence
 
+import matplotlib
 import matplotlib.pyplot as plt
+# Type 3 fonts are rejected by publishers and are matplotlib's default.
+matplotlib.rcParams.update({"pdf.fonttype": 42, "ps.fonttype": 42})
+
 import pandas as pd
 
 

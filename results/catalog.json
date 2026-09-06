@@ -1,9 +1,9 @@
 {
   "schema_version": "ai-race.results-catalog.v1",
-  "generated_utc": "2026-09-06T04:49:48.866201+00:00",
+  "generated_utc": "2026-09-06T07:00:03.898670+00:00",
   "canonical_root": "results/",
-  "file_count": 3829,
-  "total_bytes": 1321825247,
+  "file_count": 3832,
+  "total_bytes": 1325409284,
   "size_by_top_level": {
     "PAPER_FIGURE_CANDIDATES.md": {
       "files": 1,
@@ -14,8 +14,8 @@
       "bytes": 28796
     },
     "artifacts": {
-      "files": 235,
-      "bytes": 29545783
+      "files": 238,
+      "bytes": 33208631
     },
     "capacity_family": {
       "files": 18,
@@ -23,11 +23,11 @@
     },
     "cross_model_pilot_synthesis": {
       "files": 172,
-      "bytes": 14378255
+      "bytes": 14299144
     },
     "cross_provider": {
       "files": 35,
-      "bytes": 14445611
+      "bytes": 14445752
     },
     "derived": {
       "files": 174,
@@ -59,7 +59,7 @@
     },
     "open_source": {
       "files": 790,
-      "bytes": 341455814
+      "bytes": 341455973
     },
     "public_dataset": {
       "files": 3,
@@ -1521,6 +1521,13 @@
       ]
     },
     {
+      "sha256": "c5b71c55ec22b556f625a5eb4984807f4412d48e706c906d807ad0e99fedc5e4",
+      "paths": [
+        "artifacts/publication/ai_race_paper.pdf",
+        "artifacts/submission/paper.pdf"
+      ]
+    },
+    {
       "sha256": "c6ad83099e504f5900a9047eb2ef89127842ef52c2de0482d5ba2948732ac640",
       "paths": [
         "frontier/persona/R4_R3_risk_matrix/all_results.csv",
@@ -2714,8 +2721,8 @@
     {
       "path": "artifacts/figure_gallery/redraw/draw_figures.py",
       "top_level": "artifacts",
-      "bytes": 30580,
-      "sha256": "467cbf1eefa7640ea412018f107a97825ab45be6086ccb3963d197d0adfe4e7c"
+      "bytes": 30739,
+      "sha256": "60c8286b2e65bb228211d4ae1f5b640cbb9deaab701ab6d3bc932e4c6b55dc77"
     },
     {
       "path": "artifacts/figure_gallery/redraw/figstyle.py",
@@ -3086,14 +3093,20 @@
     {
       "path": "artifacts/publication/ai_race_paper.pdf",
       "top_level": "artifacts",
-      "bytes": 2809005,
-      "sha256": "ee92aab39b97f6c9857adc03a36033db21ba2cddf2113b49fa44ec37c3b4897c"
+      "bytes": 1891289,
+      "sha256": "c5b71c55ec22b556f625a5eb4984807f4412d48e706c906d807ad0e99fedc5e4"
     },
     {
       "path": "artifacts/publication/ai_race_research_deck.pdf",
       "top_level": "artifacts",
       "bytes": 619364,
-      "sha256": "8ab7a6ef8844a6b0a33d8eaebf53ace845d1fc75b748205d847204605f0c93e7"
+      "sha256": "c1dd7a50b5e1ea44c8b1f6c296fe7772a632871d3544e303ae4fba9a63a6bcb4"
+    },
+    {
+      "path": "artifacts/publication/ai_race_supplementary.pdf",
+      "top_level": "artifacts",
+      "bytes": 1390151,
+      "sha256": "e4a7b36a44bd1db1dcc9bcd297faedf0e9332a0ac48787835b1a60045726cbf6"
     },
     {
       "path": "artifacts/qa/latex/deck_final_p1.png",
@@ -3288,6 +3301,18 @@
       "sha256": "2e7e6393126a643f2011fdaf641cb6f32cd7c42547644cd50f5dac1e4ea9a54d"
     },
     {
+      "path": "artifacts/submission/paper.pdf",
+      "top_level": "artifacts",
+      "bytes": 1891289,
+      "sha256": "c5b71c55ec22b556f625a5eb4984807f4412d48e706c906d807ad0e99fedc5e4"
+    },
+    {
+      "path": "artifacts/submission/supplementary.zip",
+      "top_level": "artifacts",
+      "bytes": 1298965,
+      "sha256": "a76df32f3b10a197200ba02221fd3daa27afba9395c08e50b15f562cb9950e2e"
+    },
+    {
       "path": "capacity_family/greennode_smoke_ab0527e/ai_race_capacity_ab0527e_smoke_3models.tar.gz",
       "top_level": "capacity_family",
       "bytes": 74775,
@@ -3404,20 +3429,20 @@
     {
       "path": "cross_model_pilot_synthesis/analyze_behavioral_clustering.py",
       "top_level": "cross_model_pilot_synthesis",
-      "bytes": 8651,
-      "sha256": "ada8e347e0242e0fc46cdea706f7f576debbf2b4e9ebb2095173cb1a5e66dd03"
+      "bytes": 8810,
+      "sha256": "fc84274ec866c7eb55330854cd9a66e4060bef92428ad982c784ce7e82c8e181"
     },
     {
       "path": "cross_model_pilot_synthesis/analyze_canonical_strategies.py",
       "top_level": "cross_model_pilot_synthesis",
-      "bytes": 14836,
-      "sha256": "7413cfa3e6f1a2923357d4f90ae74cd4dfb85371fd37115ea303f1709889563c"
+      "bytes": 14995,
+      "sha256": "51b4d6a8678069112ce698bc1a830cf6a2b62278f7a1eaf3ce402401fa911b00"
     },
     {
       "path": "cross_model_pilot_synthesis/analyze_feature_importance.py",
       "top_level": "cross_model_pilot_synthesis",
-      "bytes": 13397,
-      "sha256": "85131d0e5a39e956c8830e2bcbfeccbf69a16cb4c017f8655a600a4eecbedea8"
+      "bytes": 13556,
+      "sha256": "699da7260958d8c8c52411b84f0d88ac25b1152751916dd50ff4495766c50da7"
     },
     {
       "path": "cross_model_pilot_synthesis/analyze_heterogeneity_test.py",
@@ -3428,98 +3453,98 @@
     {
       "path": "cross_model_pilot_synthesis/analyze_human_vs_llm.py",
       "top_level": "cross_model_pilot_synthesis",
-      "bytes": 15408,
-      "sha256": "b043c12b371e23b2fc2dccaee84eb44c51b4609c175e8e8b431fac3b0d21af2f"
+      "bytes": 15567,
+      "sha256": "1fffa159370e7b5be721232518160f2143590ec18f674fb9968f8f768da00897"
     },
     {
       "path": "cross_model_pilot_synthesis/analyze_payoff_welfare.py",
       "top_level": "cross_model_pilot_synthesis",
-      "bytes": 10458,
-      "sha256": "8deae6e81ce8bfc176d2d7ef71c1afac73029d182ffa7aaaebd181e72f7cf091"
+      "bytes": 10617,
+      "sha256": "4c4c2eba6aff03648c3aeae42428f5be5b01d4cef5b6d2cfd838d37e5c892da7"
     },
     {
       "path": "cross_model_pilot_synthesis/analyze_social_persona_axis.py",
       "top_level": "cross_model_pilot_synthesis",
-      "bytes": 16094,
-      "sha256": "c5dee85703095c449e7a319e9da98994d776e3bcc77465b43e73b32d7fd7acc2"
+      "bytes": 16253,
+      "sha256": "56d24508a82533965046b1b9a4036174b6d738e44c403c7416d5a9a30d24147d"
     },
     {
       "path": "cross_model_pilot_synthesis/analyze_within_risk_reciprocity.py",
       "top_level": "cross_model_pilot_synthesis",
-      "bytes": 9892,
-      "sha256": "6f41752e2dafe3df58d63e6254f6c99d37d020a7ee2e3b61dd5a1c53a11a0386"
+      "bytes": 10051,
+      "sha256": "72c9c86197d5e975862cc0093a65fc760fdc496815c76e4d0420c15e0ecd7e14"
     },
     {
       "path": "cross_model_pilot_synthesis/build_2p_position_persona.py",
       "top_level": "cross_model_pilot_synthesis",
-      "bytes": 6870,
-      "sha256": "a3a9eb4fc8be2aea8faefe0f1196253b646c0ef1f95b30aa268d59e7c1eafce7"
+      "bytes": 7029,
+      "sha256": "6e387104a05a6ef959cfa33fb1cbc7665bec7d30e7403c65b7543554c1881ac2"
     },
     {
       "path": "cross_model_pilot_synthesis/build_cross_model_pilot_synthesis.py",
       "top_level": "cross_model_pilot_synthesis",
-      "bytes": 21838,
-      "sha256": "c451fbd5ce2d31851d175771ea1026852845c58696316397e8b5375326e96af2"
+      "bytes": 21997,
+      "sha256": "d0d8e06b89fef4e3a39f26967595d4dc18c3ec70681689babb2f65c8979f2645"
     },
     {
       "path": "cross_model_pilot_synthesis/build_deep_insight_gallery.py",
       "top_level": "cross_model_pilot_synthesis",
-      "bytes": 14631,
-      "sha256": "8e26f1ed8d9866d395506cc6584dcf6df4a30c96df668362d2711a9240fbc51f"
+      "bytes": 14790,
+      "sha256": "843c38230f4457a89f431ba18f666d6ae0c3bb8097488afc27818aa3681c3993"
     },
     {
       "path": "cross_model_pilot_synthesis/build_figure_candidates.py",
       "top_level": "cross_model_pilot_synthesis",
-      "bytes": 15900,
-      "sha256": "c4b90fbe88be721ebd33e68233eb6dccae888d0418f5d860bcf6ac205ebb602d"
+      "bytes": 16059,
+      "sha256": "2c51db3cc52f5c041a01abb4711adc2c11dcbc65f7ae3fd79bf65929c2c41cf5"
     },
     {
       "path": "cross_model_pilot_synthesis/build_human_vs_llm_distribution_v3.py",
       "top_level": "cross_model_pilot_synthesis",
-      "bytes": 12164,
-      "sha256": "9d2711667e9f1106a69685d3d9ae5b36be68c70e8d57925d6b1db64171c8f9d6"
+      "bytes": 12323,
+      "sha256": "b8307fbf3ef8ee120b36a1ea884ad7f5a57f8a62bed501f9a1c3b66879be4d14"
     },
     {
       "path": "cross_model_pilot_synthesis/build_llm_human_cluster_projection_v2.py",
       "top_level": "cross_model_pilot_synthesis",
-      "bytes": 10258,
-      "sha256": "762502e6c1b2c3c2530f9f7d631030f84a5cec0c1c0cfea34129797b6820c775"
+      "bytes": 10417,
+      "sha256": "dab1e5e5851bd77db31768e24a4bc399477035c97505f406bfec72026a91ad9b"
     },
     {
       "path": "cross_model_pilot_synthesis/build_nplayer_position_persona.py",
       "top_level": "cross_model_pilot_synthesis",
-      "bytes": 5525,
-      "sha256": "57c0554d683ff7a4743521ce284cc8f7d5a34c82dd35095651614f10e1b50541"
+      "bytes": 5684,
+      "sha256": "e3964962648f5adb0a07aae5a3899a950a3a8996fd8297b333ab9648dd56daf6"
     },
     {
       "path": "cross_model_pilot_synthesis/build_nplayer_synthesis.py",
       "top_level": "cross_model_pilot_synthesis",
-      "bytes": 4290,
-      "sha256": "cd8e3a9cf63601eabe8aab7b57f12b2f57b953372c93190c4f1be9357ffb8b0c"
+      "bytes": 4449,
+      "sha256": "e29659ed3c535e4616428f2e68c3e8221e132a5736bc6e5479d95e220d7f48a6"
     },
     {
       "path": "cross_model_pilot_synthesis/build_persona_gradient_extended.py",
       "top_level": "cross_model_pilot_synthesis",
-      "bytes": 13727,
-      "sha256": "b6c80d4420b76e700469b3c95e74faa1a963b1b4eb9185492617ec58fcbf0e1b"
+      "bytes": 13886,
+      "sha256": "9de8edc80d8d6bfd3c6a41f043f5068e8de72ff2ef39af913c660b8cda6defe0"
     },
     {
       "path": "cross_model_pilot_synthesis/build_round_trajectory.py",
       "top_level": "cross_model_pilot_synthesis",
-      "bytes": 8719,
-      "sha256": "4a934543fbb5fc4f3d0cb72c4ec3591b920627389c4e16562535219d3c903d38"
+      "bytes": 8878,
+      "sha256": "b798dcb0931de587df376309342d1287aabf677083589ee50eabbf6478b97015"
     },
     {
       "path": "cross_model_pilot_synthesis/build_synthesis_hero.py",
       "top_level": "cross_model_pilot_synthesis",
-      "bytes": 7920,
-      "sha256": "f7e524566dacb77c14bb737f171cb55bf2f8c394588f9f3bd94583091c85614f"
+      "bytes": 8079,
+      "sha256": "6766b6b1b368bb3935ec9aee0b4a16223f501b3a2c27fdf5ec380377651dc620"
     },
     {
       "path": "cross_model_pilot_synthesis/build_top5_story_figures.py",
       "top_level": "cross_model_pilot_synthesis",
-      "bytes": 11334,
-      "sha256": "3db29e94f76a658dbbaafd8a9144c30bd5d1833b38df454da081c546912972aa"
+      "bytes": 11493,
+      "sha256": "33355af3f459b00a642ca4323cc08b38038e6bc0b38eb35916c7a46e24bab5fc"
     },
     {
       "path": "cross_model_pilot_synthesis/data/2p_position_effect_by_persona.csv",
@@ -4184,14 +4209,14 @@
     {
       "path": "cross_model_pilot_synthesis/figures/human_vs_llm_distribution.pdf",
       "top_level": "cross_model_pilot_synthesis",
-      "bytes": 95659,
-      "sha256": "cf9712fc405928b723be9361a840da07aef1d58c59641ca3569157b837fc4770"
+      "bytes": 85308,
+      "sha256": "7940e6cc87bd1a5bc452b54e76027826aa441b150be384615a73541dd3631c1f"
     },
     {
       "path": "cross_model_pilot_synthesis/figures/human_vs_llm_distribution.png",
       "top_level": "cross_model_pilot_synthesis",
-      "bytes": 624829,
-      "sha256": "4f3bcd4806764203948c96b3d8d83259f9e062d2a8dc5b320d22f7f9fa08ff96"
+      "bytes": 553048,
+      "sha256": "9c08b1f09a0518ae3545a374f93d2b2802418eaa2035dbf4cbb425a553d7bc74"
     },
     {
       "path": "cross_model_pilot_synthesis/figures/human_vs_llm_dynamic_coefficients.pdf",
@@ -4634,8 +4659,8 @@
     {
       "path": "cross_provider/plot_analysis.py",
       "top_level": "cross_provider",
-      "bytes": 9173,
-      "sha256": "d929c1011167a0ca693e84d557737c2c1abc9a74e0da7e526b8a208553a614f9"
+      "bytes": 9314,
+      "sha256": "4bdf864106b0d7bf64c00e1b3d808b0c5e67a5bc40983117db2a2fade3fc29ec"
     },
     {
       "path": "derived/agent_check_frontier_baseline/analysis_manifest.json",
@@ -21470,8 +21495,8 @@
     {
       "path": "open_source/context_skin_pilot/context_recognition_t0_pilot/analyze_recognition_pilot.py",
       "top_level": "open_source",
-      "bytes": 33707,
-      "sha256": "405cbd48c74225e1335c53ce11a8328c52c5d6a5eaac5a5c70d2451e430fa1c3"
+      "bytes": 33866,
+      "sha256": "8265dce67a6a597fc8182118eb132ebdf9b8dfc1d91ac3788572adfc3829dccb"
     },
     {
       "path": "open_source/context_skin_pilot/context_recognition_t0_pilot/figures/context_recognition_audit.pdf",

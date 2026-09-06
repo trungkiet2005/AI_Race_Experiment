@@ -5,6 +5,9 @@ from pathlib import Path
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+# Type 3 fonts are rejected by publishers and are matplotlib's default.
+matplotlib.rcParams.update({"pdf.fonttype": 42, "ps.fonttype": 42})
+
 import numpy as np
 
 ROOT=Path(__file__).resolve().parent; OUT=ROOT/'figures'; OUT.mkdir(exist_ok=True)

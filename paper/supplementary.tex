@@ -1034,6 +1034,48 @@ interval can be checked directly.
 
 
 
+
+\subsection{Behavioural-archetype coverage by population}
+\label{app:archetype-coverage}
+
+The main paper reports that human trajectories spread across more archetypes
+than any single checkpoint's do. This table is the per-population breakdown
+behind that statement, so a single share can be checked against its
+population and archetype.
+
+\begin{table}[t]
+  \caption{Behavioural-archetype coverage: share of each population's
+  neutral-lane player-races assigned to each human-fit archetype.
+  Human row is the reference clustering ($n{=}341$); each LLM row
+  projects that checkpoint's own no-persona player-races
+  ($n{=}60$ to $120$, see Table~\ref{tab:evidence-strata}) into the same
+  space. This table draws on the full nine-checkpoint cross-model pilot
+  and therefore includes GPT-5.6 Luna and Terra, which are not part of
+  the seven-model HDBSCAN/t-SNE/decision-tree comparison earlier in
+  this subsection.}
+  \label{tab:archetype-coverage}
+  \centering
+  \footnotesize
+  \setlength{\tabcolsep}{3pt}
+  \begin{tabular}{@{}lrrrr@{}}
+    \toprule
+    Population & Cautious & Aggr./recip. & Catch-up & Persister \\
+    \midrule
+    Human (reference)      & 39.0\% & 49.9\% & 5.6\%  & 5.6\% \\
+    GPT-5-nano              & 99.2\% & 0\%    & 0\%    & 0.8\% \\
+    GPT-5.4-nano            & 51.7\% & 33.3\% & 3.3\%  & 11.7\% \\
+    Gemini-3-Flash          & 1.7\%  & 78.3\% & 20.0\% & 0\% \\
+    Gemini-3.1-Flash-Lite   & 0\%    & 83.3\% & 16.7\% & 0\% \\
+    Gemini-3.5-Flash-Lite   & 0\%    & 76.7\% & 23.3\% & 0\% \\
+    GPT-5.6 Luna            & 3.3\%  & 72.5\% & 24.2\% & 0\% \\
+    GPT-5.6 Terra           & 14.2\% & 59.2\% & 26.7\% & 0\% \\
+    Claude Opus 5           & 66.7\% & 33.3\% & 0\%    & 0\% \\
+    Claude Sonnet 5         & 77.5\% & 20.8\% & 1.7\%  & 0\% \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+
 \bibliographystyle{ACM-Reference-Format}
 % \bibliography{sample}
 \bibliography{references}
