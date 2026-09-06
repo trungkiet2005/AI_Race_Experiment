@@ -83,6 +83,14 @@ def manifest_rows() -> tuple[list[dict[str, Any]], list[dict[str, str]]]:
             or "__pycache__" in path.parts
             or path.name in GENERATED
             or path.name in NON_CATALOG_RECEIPTS
+            # Never name a re-identification key in a catalog that is committed to a
+            # public repository. The key itself is gitignored; indexing its path would
+            # publish where it lives and that it exists.
+            or "_id_mapping_DO_NOT_DEPOSIT" in path.name
+            # macOS archive turds carry a "._" shadow of every file they sit beside,
+            # including the key above.
+            or "__MACOSX" in path.parts
+            or path.name.startswith("._")
         ):
             continue
         payload, error = safe_json(path)
@@ -127,6 +135,14 @@ def inventory(hash_all: bool) -> tuple[list[dict[str, Any]], list[dict[str, Any]
             or path.suffix == ".pyc"
             or path.name in GENERATED
             or path.name in NON_CATALOG_RECEIPTS
+            # Never name a re-identification key in a catalog that is committed to a
+            # public repository. The key itself is gitignored; indexing its path would
+            # publish that it exists and where it lives.
+            or "_id_mapping_DO_NOT_DEPOSIT" in path.name
+            # macOS archive turds carry a "._" shadow of every file beside them,
+            # including the key above.
+            or "__MACOSX" in path.parts
+            or path.name.startswith("._")
         ):
             continue
         relative = path.relative_to(RESULTS).as_posix()
