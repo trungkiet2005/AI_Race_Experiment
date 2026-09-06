@@ -68,5 +68,5 @@ FAIRGAME = [
 
 [tool.pytest.ini_options]
 pythonpath = ["."]
-testpaths = ["ai_race/tests"]
+testpaths = ["ai_race/tests", "N-Player/tests"]
 addopts = "-q"
