@@ -69,11 +69,21 @@ def delivery_paths() -> list[Path]:
         ROOT / "results" / "visualization_insight_full.md",
         ROOT / "scripts" / "build_publication.py",
         ROOT / "paper" / "main.tex",
-        ROOT / "paper" / "refs.bib",
+        ROOT / "paper" / "supplementary.tex",
+        ROOT / "paper" / "references.bib",
         ROOT / "slides" / "ai_race_research_deck.tex",
         ROOT / "results" / "artifacts" / "publication" / "ai_race_paper.pdf",
+        ROOT / "results" / "artifacts" / "publication" / "ai_race_supplementary.pdf",
         ROOT / "results" / "artifacts" / "publication" / "ai_race_research_deck.pdf",
     ]
+    # A path that stops existing is dropped by the is_file() filter below without
+    # any error, so the count is the only signal that the list has gone stale.
+    missing = [p for p in paths if not p.exists()]
+    if missing:
+        raise SystemExit(
+            "delivery list names files that do not exist: "
+            + ", ".join(str(p.relative_to(ROOT)) for p in missing)
+        )
     paths.extend(sorted((impact / "data").glob("*")))
     paths.extend(sorted((impact / "figures").glob("*")))
     paths.extend(sorted((impact / "power").glob("*")))

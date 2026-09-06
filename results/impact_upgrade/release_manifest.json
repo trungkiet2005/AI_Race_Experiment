@@ -1,7 +1,7 @@
 {
   "schema_version": "ai-race.impact-release.v2",
   "identity": "content-addressed; independent of commit and worktree state",
-  "file_count": 97,
+  "file_count": 100,
   "files": {
     "ai_race/audit/payoff_scale.py": {
       "bytes": 2321,
@@ -83,6 +83,14 @@
       "bytes": 69142,
       "sha256": "36b045dd7d3b04944bf67624eb3870f73baf58add59eac84ea5b502eaf3f4e3b"
     },
+    "paper/references.bib": {
+      "bytes": 24422,
+      "sha256": "a4c46f082d0a85c0007037eaa1e92beac95cec05c66a5ec7f98a3f0d157eed38"
+    },
+    "paper/supplementary.tex": {
+      "bytes": 50285,
+      "sha256": "a7ee1f8787e23b54c457443f4c867f7e04c7b87a2b92339269bd98ad61b68c10"
+    },
     "results/artifacts/publication/ai_race_paper.pdf": {
       "bytes": 1891289,
       "sha256": "c5b71c55ec22b556f625a5eb4984807f4412d48e706c906d807ad0e99fedc5e4"
@@ -90,6 +98,10 @@
     "results/artifacts/publication/ai_race_research_deck.pdf": {
       "bytes": 619364,
       "sha256": "c1dd7a50b5e1ea44c8b1f6c296fe7772a632871d3544e303ae4fba9a63a6bcb4"
+    },
+    "results/artifacts/publication/ai_race_supplementary.pdf": {
+      "bytes": 1390151,
+      "sha256": "e4a7b36a44bd1db1dcc9bcd297faedf0e9332a0ac48787835b1a60045726cbf6"
     },
     "results/derived/payoff_scale_contract/README.md": {
       "bytes": 428,
