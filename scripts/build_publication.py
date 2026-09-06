@@ -64,6 +64,17 @@ def build_paper() -> Path:
     return BUILD_DIR / "ai_race_paper.pdf"
 
 
+def build_supplement() -> Path:
+    latex("paper/supplementary.tex", jobname="ai_race_supplementary")
+    run(
+        ["bibtex", (BUILD_DIR / "ai_race_supplementary").as_posix()],
+        bib_dir=ROOT / "paper",
+    )
+    latex("paper/supplementary.tex", jobname="ai_race_supplementary")
+    latex("paper/supplementary.tex", jobname="ai_race_supplementary")
+    return BUILD_DIR / "ai_race_supplementary.pdf"
+
+
 def build_deck() -> Path:
     latex("slides/ai_race_research_deck.tex", jobname="ai_race_research_deck")
     latex("slides/ai_race_research_deck.tex", jobname="ai_race_research_deck")
@@ -86,6 +97,7 @@ def main() -> int:
     products: list[Path] = []
     if not args.deck_only:
         products.append(build_paper())
+        products.append(build_supplement())
     if not args.paper_only:
         products.append(build_deck())
     for product in products:

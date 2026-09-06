@@ -1,0 +1,1044 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% LaTeX Template for AAMAS-2026 (based on sample-sigconf.tex)
+%%% Prepared by the AAMAS-2026 Publication Chairs based on the version from AAMAS-2025. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% Start your document with the \documentclass command.
+
+
+%%% == IMPORTANT ==
+%%% Use the first variant below for the final paper (including author information).
+%%% Use the second variant below to anonymize your submission (no author information shown).
+%%% For further information on anonymity and double-blind reviewing, 
+%%% please consult the call for paper information
+%%% https://cyprusconferences.org/aamas2026/submission-instructions/
+
+%%%% For anonymized submission, use this
+\documentclass[sigconf,anonymous]{aamas}
+
+%%%% For camera-ready, use this. Switching back also means restoring the
+%%%% acknowledgements near the end of this file.
+%\documentclass[sigconf]{aamas}
+
+
+%%% Load required packages here (note that many are included already).
+
+\usepackage{balance} % for balancing columns on the final page
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% AAMAS-2026 copyright block (do not change!)
+
+\setcopyright{ifaamas}
+\acmConference[AAMAS '26]{Proc.\@ of the 25th International Conference
+on Autonomous Agents and Multiagent Systems (AAMAS 2026)}{May 25 -- 29, 2026}
+{Paphos, Cyprus}{C.~Amato, L.~Dennis, V.~Mascardi, J.~Thangarajah (eds.)}
+\copyrightyear{2026}
+\acmYear{2026}
+% \acmDOI{}
+% \acmPrice{}
+% \acmISBN{}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% Include any author-defined commands here.
+         
+\newcommand{\BibTeX}{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em\TeX}
+\newcommand{\Safe}{\textsc{safe}}
+\newcommand{\Unsafe}{\textsc{unsafe}}
+\newcommand{\pending}{\textbf{pending}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% == IMPORTANT ==
+%%% Use this command to specify your submission number.
+%%% In anonymous mode, it will be printed on the first page.
+
+% TODO: replace TBD with the assigned submission identifier before submission.
+\acmSubmissionID{TBD}
+
+%%% Use this command to specify the title of your paper.
+
+%\title[]{LLM Agents Underrepresent Human Strategic Diversity in AI Development Races}
+
+\title[]{Supplementary Material: Humans Are More Diverse: Frontier LLMs Show Extreme Policies in Idealised AI Development Races}
+
+%%% Provide names, affiliations, and email addresses for all authors.
+% \author{Nimue}
+% \affiliation{
+%   \institution{The Lady's Lake}
+%   \city{Avalon}
+%   \country{United Kingdom}}
+% \email{lady.of.the.lake@avalon.uk}
+
+% \author{Phu-Hoa Pham}
+% \affiliation{
+%   \institution{Vietnam National University of Ho Chi Minh City}
+%   \institution{Ho Chi Minh City University of Science}
+%   \city{Ho Chi Minh City}
+%   \country{Vietnam}}
+% \email{23122030@student.hcmus.edu.vn}
+% \author{Phu-Quy Nguyen-Lam}
+% \affiliation{
+%   \institution{Vietnam National University of Ho Chi Minh City}
+%   \institution{Ho Chi Minh City University of Science}
+%   \city{Ho Chi Minh City}
+%   \country{Vietnam}}
+% \email{23122048@student.hcmus.edu.vn}
+% \author{Dao Sy Duy Minh}
+% \affiliation{
+%   \institution{Vietnam National University of Ho Chi Minh City}
+%   \institution{Ho Chi Minh City University of Science}
+%   \city{Ho Chi Minh City}
+%   \country{Vietnam}}
+% \email{23122041@student.hcmus.edu.vn}
+% \author{Trung-Kiet Huynh}
+% \affiliation{
+%   \institution{Vietnam National University of Ho Chi Minh City}
+%   \institution{Ho Chi Minh City University of Science}
+%   \city{Ho Chi Minh City}
+%   \country{Vietnam}}
+% \email{23122039@student.hcmus.edu.vn}
+% \author{Chi-Nguyen Tran}
+% \affiliation{
+%   \institution{Vietnam National University of Ho Chi Minh City}
+%   \institution{Ho Chi Minh City University of Science}
+%   \city{Ho Chi Minh City}
+%   \country{Vietnam}}
+% \email{23122044@student.hcmus.edu.vn}
+
+% \author{Minh-Trung Le}
+% \affiliation{
+%   \institution{Ho Chi Minh City University of Technology (HCMUT)}
+%   \institution{Vietnam National University Ho Chi Minh City (VNUHCM)}
+%   \city{Ho Chi Minh City}
+%   \country{Vietnam}}
+% \email{trung.leminh@hcmut.edu.vn}
+% \author{Phong-Hao Le}
+% \affiliation{
+%   \institution{Ho Chi Minh City University of Technology (HCMUT)}
+%   \institution{Vietnam National University Ho Chi Minh City (VNUHCM)}
+%   \city{Ho Chi Minh City}
+%   \country{Vietnam}}
+% \email{hao.lephong@hcmut.edu.vn}
+
+% \author{Dinh-Nam Nguyen}
+% \affiliation{
+%   \institution{Ho Chi Minh City University of Technology (HCMUT)}
+%   \institution{Vietnam National University Ho Chi Minh City (VNUHCM)}
+%   \city{Ho Chi Minh City}
+%   \country{Vietnam}}
+% \email{nam.nguyenkhmt@hcmut.edu.vn}
+% \author{Thien-Ky Nguyen-Dong}
+% \affiliation{
+%   \institution{Ho Chi Minh City University of Technology (HCMUT)}
+%   \institution{Vietnam National University Ho Chi Minh City (VNUHCM)}
+%   \city{Ho Chi Minh City}
+%   \country{Vietnam}}
+% \email{ky.nguyendongthien@hcmut.edu.vn}
+
+% \author{Elias Fern\'andez Domingos}
+% \affiliation{
+%   \institution{Vrije Universiteit Brussel}
+%   \institution{Universit\'e Libre de Bruxelles}
+%   \city{Brussels}
+%   \country{Belgium}}
+% \email{elias.fernandez.domingos@vub.be}
+
+% \author{Le Hong Trang}
+% \affiliation{
+%   \institution{Ho Chi Minh City University of Technology (HCMUT)}
+%   \institution{Vietnam National University Ho Chi Minh City (VNUHCM)}
+%   \city{Ho Chi Minh City}
+%   \country{Vietnam}}
+% \email{lhtrang@hcmut.edu.vn}
+
+% \author{The Anh Han}
+% \affiliation{
+%   \institution{School of Computing, Engineering and Digital Technologies}
+%   \institution{Center for Digital Innovation,  Teesside University}
+%   \city{Middlesbrough}
+%   \country{United Kingdom}}
+% \email{T.Han@tees.ac.uk}
+
+
+% =========================================================
+% Reusable affiliations
+% =========================================================
+
+\newcommand{\HCMUSaffiliation}{%
+  \affiliation{%
+    \institution{Ho Chi Minh City University of Science}
+    \institution{Vietnam National University Ho Chi Minh City (VNU-HCM)}
+    \city{Ho Chi Minh City}
+    \country{Vietnam}
+  }%
+}
+
+\newcommand{\HCMUTaffiliation}{%
+  \affiliation{%
+    \institution{Ho Chi Minh City University of Technology (HCMUT)}
+    \institution{Vietnam National University Ho Chi Minh City (VNU-HCM)}
+    \city{Ho Chi Minh City}
+    \country{Vietnam}
+  }%
+}
+
+\newcommand{\BrusselsAffiliation}{%
+  \affiliation{%
+    \institution{Vrije Universiteit Brussel}
+    \institution{Universit\'e Libre de Bruxelles}
+    \city{Brussels}
+    \country{Belgium}
+  }%
+}
+
+\newcommand{\TeessideAffiliation}{%
+  \affiliation{%
+    \institution{School of Computing, Engineering and Digital Technologies}
+    \institution{Center for Digital Innovation, Teesside University}
+    \city{Middlesbrough}
+    \country{United Kingdom}
+  }%
+}
+
+% =========================================================
+% Equal-contribution authors, listed alphabetically
+% =========================================================
+\author{Phu-Hoa Pham}
+\authornotemark[1]
+\HCMUSaffiliation
+\email{23122030@student.hcmus.edu.vn}
+
+\author{Duy-Minh Dao-Sy}
+\authornote{These authors contributed equally to this work.}
+\HCMUSaffiliation
+\email{23122041@student.hcmus.edu.vn}
+
+\author{Trung-Kiet Huynh}
+\authornotemark[1]
+\HCMUSaffiliation
+\email{23122039@student.hcmus.edu.vn}
+
+\author{Phu-Quy Nguyen-Lam}
+\authornotemark[1]
+\HCMUSaffiliation
+\email{23122048@student.hcmus.edu.vn}
+
+
+
+\author{Chi-Nguyen Tran}
+\authornotemark[1]
+\HCMUSaffiliation
+\email{23122044@student.hcmus.edu.vn}
+\author{Minh-Trung Le}
+\authornotemark[1]
+\HCMUTaffiliation
+\email{trung.leminh@hcmut.edu.vn}
+
+\author{Phong-Hao Le}
+\authornotemark[1]
+\HCMUTaffiliation
+\email{hao.lephong@hcmut.edu.vn}
+
+\author{Dinh-Nam Nguyen}
+\authornotemark[1]
+\HCMUTaffiliation
+\email{nam.nguyenkhmt@hcmut.edu.vn}
+
+\author{Thien-Ky Nguyen-Dong}
+\authornotemark[1]
+\HCMUTaffiliation
+\email{ky.nguyendongthien@hcmut.edu.vn}
+
+
+
+% =========================================================
+% Corresponding authors, in the requested order
+% =========================================================
+
+\author{Elias Fern\'andez Domingos}
+%\authornote{Corresponding authors.}
+\BrusselsAffiliation
+\email{elias.fernandez.domingos@vub.be}
+
+\author{Le Hong Trang}
+\authornote{Corresponding authors.}
+%\authornotemark[2]
+\HCMUTaffiliation
+\email{lhtrang@hcmut.edu.vn}
+
+\author{The Anh Han}
+\authornotemark[2]
+\TeessideAffiliation
+\email{T.Han@tees.ac.uk}
+
+%%% Use this environment to specify a short abstract for your paper.
+\begin{abstract}
+This document holds the material the main paper points to but has no room to
+carry: the full breakdown of every task-validity probe, the replication check
+against the human benchmark, a claim-by-claim audit of the citations, the
+persona and measured-risk comparison, the predictive analysis behind the
+reported drivers, and the complete descriptive baselines for two-player and
+$N$-player races. Nothing here is needed to follow the main argument.
+Everything here comes from the same runs, under the same admission rules, and
+is reported at the same evidence level.
+\end{abstract}
+
+%%% Use this command to specify a few keywords describing your work.
+%%% Keywords should be separated by commas.
+
+% \keywords{Legends, Myths, Folktales}
+\keywords{Large language model agents, AI development races, multi-agent systems, repeated games, strategic decision-making, AI safety, prompt sensitivity, task validity}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% Include any author-defined commands here.
+         
+% \newcommand{\BibTeX}{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em\TeX}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\settopmatter{printacmref=false}
+\renewcommand\footnotetextcopyrightpermission[1]{}
+%\linespread{0.9}
+\begin{document}
+\maketitle
+
+\section*{How to read this document}
+
+Each section stands on its own and is named for what it measures. Section
+letters restart at A because this is supplementary matter.
+
+\begin{itemize}
+  \item \textbf{Task-validity probe battery.} Every probe, its wording family,
+    and the per-model pass rate behind the summary in the main paper.
+  \item \textbf{Human-benchmark replication check.} Whether the reference
+    human study's reported pattern reproduces on the released participant data
+    under our own analysis code.
+  \item \textbf{Claim-scoped citation audit.} For each cited work, the claim it
+    is used to support and the claim it does not support.
+  \item \textbf{Risk preference and assigned personas.} The persona families,
+    and how a prompted persona compares with measured human risk preference.
+  \item \textbf{Predictive structure of unsafe choices.} The feature analysis
+    behind the drivers reported in the main paper.
+  \item \textbf{Two-player descriptive baseline, full scope.} Every checkpoint
+    and condition, including those the main paper does not plot.
+  \item \textbf{$N$-player self-play scope.} Group sizes three to five.
+  \item \textbf{Trajectory embedding recoloured by outcome.} The same
+    embedding as the main paper, coloured by unsafe rate instead of population.
+  \item \textbf{Unsafe rate by persona band and relative position.} The
+    cell-level numbers behind the grouped-bar figure in the main paper.
+\end{itemize}
+
+\appendix
+\section{Extended results and robustness checks}
+\label{app:extended-results}
+% NOTE: remove the \appendix command above if the surrounding paper already
+% declares \appendix elsewhere (e.g. before the bibliography) -- it must
+% appear exactly once in the document.
+
+% Fallback definitions so this file compiles standalone or under a master
+% file that has not defined these yet; \providecommand is a no-op if the
+% surrounding document already defines them.
+\providecommand{\Safe}{\textsc{Safe}}
+\providecommand{\Unsafe}{\textsc{Unsafe}}
+\providecommand{\todo}[1]{\textbf{[TODO: #1]}}
+
+This appendix collects the material referenced from
+the results section in the main paper as supporting rather than extending the main
+claims: the full task-validity probe breakdown
+(\S\ref{app:task-validity-full}), the human-benchmark replication check
+(\S\ref{app:human-benchmark-replication}), the persona comparison
+(\S\ref{app:persona-detail}), the predictive analysis
+(\S\ref{app:predictive-structure}), and the full two-player and $N$-player
+descriptive results (\S\ref{app:twoplayer-baseline},
+\S\ref{app:nplayer-scope}).
+
+\subsection{Task-validity probe battery: full breakdown}
+\label{app:task-validity-full}
+
+Table~\ref{tab:task-validity-full} reports the full breakdown behind the
+single semantic-accuracy figure (59.1\%) quoted in
+the validity gate in the main paper. The admitted task audit used
+Qwen2.5-7B-Instruct under protocol \texttt{ai-race-game-understanding-v2}:
+41 atomic probes spanning rule recall, one-stage payoffs, state
+reconstruction, state transition, terminal scoring, and expected payoff,
+with 685 planned fixed-seed probe outputs, all retained. Numeric probes
+varied direct wording, paraphrase, and calculator disclosure; categorical
+probes additionally reversed answer order.
+
+\begin{table}[h]
+    \caption{Task-validity probe accuracy by category, Qwen2.5-7B-Instruct,
+    protocol \texttt{ai-race-game-understanding-v2} ($n=685$ retained
+    probe outputs).}
+    \label{tab:task-validity-full}
+    \centering
+    \small
+    \begin{tabular}{@{}lr@{}}
+        \toprule
+        Probe category & Accuracy \\
+        \midrule
+        Rule recall                        & 97.4\% \\
+        One-stage payoff lookup             & 100.0\% \\
+        State reconstruction                & 37.0\% \\
+        State transition                    & 22.2\% \\
+        Terminal scoring                    & 53.3\% \\
+        Expected-payoff calculation         & 16.7\% \\
+        \midrule
+        \emph{Overall semantic accuracy}    & \emph{59.1\%} \\
+        \emph{Strict output-format compliance} & \emph{32.1\%} \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+Two further contrasts qualify these category-level numbers. First, semantic
+accuracy without a disclosed calculator result was 52.1\%, versus 75.6\%
+when the verified result was shown -- the same clean-diagnostic comparison
+discussed behaviourally in the strategic robustness check in the main paper, here measured
+at the level of task comprehension rather than sampled action. Second,
+answer-order reversal did not change correctness on the tested categorical
+probes, whereas paraphrasing the same question changed correctness on some
+state-reconstruction and terminal-scoring items; this separates
+\emph{repeatability under a fixed decoding contract} from
+\emph{robustness of the underlying measurement}, and is part of why we
+treat state-level probes as less reliable than rule-recall probes even
+before looking at any behavioural result.
+
+At the level of individual paired probe items, none of the 7 order-reversal
+pairs (spanning rule recall and terminal scoring) flipped either the raw
+parsed answer or scored correctness (0/7). Of the 41 paraphrase pairs, 12
+flipped the raw parsed answer, but only 3 changed scored correctness:
+\texttt{state\_own\_risk} (state reconstruction), and
+\texttt{terminal\_opp\_final} and \texttt{terminal\_winner\_setback} (both
+terminal scoring). The remaining 9 answer-only flips left correctness
+unchanged because both paraphrase variants were already scored the same
+way (both correct or both incorrect). This is the exact pairwise count
+behind the qualitative claim above: paraphrase-induced correctness changes
+concentrate in state- and terminal-level items, not rule-recall items.
+
+\subsection{Human-benchmark replication check}
+\label{app:human-benchmark-replication}
+
+Before comparing model-generated behaviour with the human benchmark of
+\citet{falling_behind_unsafe} in the two-player strategic diversity results in the main paper, we first
+validated our reconstruction of that benchmark by refitting its published
+dynamic specification on the same public de-identified data. The
+reconstructed estimation sample contains 2{,}888 round-level observations,
+172 race-pair clusters, and 338 participants. Table~\ref{tab:human-replication} compares the refit coefficients against the values reported in the
+original study.
+
+\begin{table}[h]
+    \caption{Replication of \citet{falling_behind_unsafe}'s dynamic
+    specification on the public de-identified human data. ``Reconstructed''
+    is our refit; ``Original'' is the coefficient reported in the source
+    study.}
+    \label{tab:human-replication}
+    \centering
+    \small
+    \begin{tabular}{@{}lrr@{}}
+        \toprule
+        Term & Reconstructed & Original \\
+        \midrule
+        Opponent's previous action & 0.606  & 0.607  \\
+        Player's progress gap      & $-0.295$ & $-0.296$ \\
+        First-round action         & 0.217  & 0.217  \\
+        Player's own previous action & $-0.195$ & $-0.193$ \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsection{Claim-scoped citation audit}
+\label{app:citation-audit}
+
+Table~\ref{tab:citation-audit} records both the supported use of each cited
+study and the nearest excluded overclaim. These evidence boundaries do not
+turn the diagnostic pilots in this paper into confirmatory results.
+
+\begin{table*}[t]
+\caption{Source-level audit for citations added to the prompt-sensitivity
+and behavioural-validity argument.}
+\label{tab:citation-audit}
+\small
+\begin{tabular}{@{}p{0.16\textwidth}p{0.38\textwidth}p{0.38\textwidth}@{}}
+\toprule
+Source & Supported use & Excluded overclaim \\
+\midrule
+Sclar et al.~\citep{sclarPromptFormatting2024} &
+Meaning-preserving few-shot formatting changes can yield large,
+model-dependent performance spreads. &
+Not evidence for semantic paraphrase effects or a universal effect size. \\
+Pezeshkpour and Hruschka~\citep{pezeshkpourOptionOrder2024} &
+Reordering multiple-choice answer options can change predictions. &
+The proposed uncertainty-plus-placement mechanism is not causally
+identified. \\
+Wei et al.~\citep{weiSelectionBias2024} &
+Order and response-token identity are distinct selection-bias targets. &
+Not proof that every task or model exhibits the same bias. \\
+Salinas and Morstatter~\citep{salinasButterfly2024} &
+Controlled output-format and atomic whitespace variants can alter answers. &
+Not a claim that every added space changes behaviour. \\
+Zheng et al.~\citep{zhengPersona2024} &
+Across their factual-question setup, average persona benefit was absent or
+slightly negative and reliable persona selection remained difficult. &
+Not a universal null effect for persona-driven agent tasks. \\
+Aher et al.~\citep{using_llm_to_simulate} &
+Three of four behavioural findings were qualitatively reproduced, while the
+fourth showed a hyper-accuracy distortion. &
+Not evidence that LLM samples are interchangeable with human populations. \\
+Akata et al.~\citep{playing_repeated_games_with_llms} &
+Prediction before action improved coordination and scores in repeated games. &
+Not a general claim that an observed action reveals a correct opponent
+belief. \\
+Herr et al.~\citep{herrStrategicBias2024} &
+Action-label order and payoff reassignment changed choices in two canonical
+two-player games. &
+Not evidence that every strategically equivalent transformation has the same
+effect. \\
+Robinson and Burden~\citep{robinsonBurdenFraming2025} &
+Procedurally varied vignettes produced substantial contextual variability
+under one underlying Prisoner's Dilemma structure. &
+Not a repeated-game result and not an estimate for the present race. \\
+Wu et al.~\citep{wuCounterfactual2024} &
+Performance declined consistently across 11 tasks when default mappings were
+replaced by specified counterfactual alternatives. &
+Not proof that the tested models lacked all abstract reasoning ability. \\
+del Rio-Chanona et al.~\citep{delRioChanonaMarkets2025} &
+LLM markets recovered broad feedback-condition dynamics but displayed less
+strategy heterogeneity than human participants. &
+Not evidence that LLM agents and human participants are exchangeable. \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+The reconstruction reproduces the original coefficients almost exactly
+(largest discrepancy 0.002), which is the basis for treating the human-side
+comparisons in the two-player strategic diversity results in the main paper and
+the persona and measured risk results in the main paper as resting on a correctly processed benchmark
+rather than on a reimplementation error.
+
+\subsection{Risk preference and assigned personas}
+\label{app:persona-detail}
+
+
+We finally distinguish three constructs that should not be conflated: the
+human participants' pre-game elicited risk preference, the mechanism's
+assigned private-risk treatment, and the narrative risk persona supplied to
+an LLM in its prompt. Human participants completed an incentivised
+Eckel--Grossman gamble elicitation (0 = most risk-averse, 5 = least
+risk-averse) before playing the two-player race. This elicited measure has
+essentially no direct association with subsequent \Unsafe{} rate,
+\[
+    \text{slope}=-0.004,\qquad r=-0.015,\qquad p=0.79,\qquad n=341,
+\]
+with the difference in mean \Unsafe{} play between the most and least
+risk-accepting human groups (approximately five percentage points) lying
+within the corresponding uncertainty interval. This null result
+independently reproduces \citeauthor{falling_behind_unsafe}'s own
+preregistered finding that elicited risk preference did not significantly
+predict \Unsafe{} choice \citep{falling_behind_unsafe}, and stands in
+contrast to the tournament literature's general finding that human
+risk-taking responds to competitive standing rather than remaining a fixed
+trait \citep{risk-taking_touraments,risk_taking_in_competition,%
+competition_and_risk-taking}: in this task, the round-by-round interaction
+captured in the two-player strategic diversity results in the main paper and the multi-agent position results in the main paper
+is a stronger organising signal than static pre-game disposition. A
+weaker, second-order association does survive at the level of behavioural
+phenotype rather than mean rate: the same elicited measure differs across
+the raw-sequence archetypes of the two-player strategic diversity results in the main paper (Kruskal--
+Wallis $H=21.95$, $p=0.001$, $n=286$ clustered human players), so the
+elicitation may help stratify \emph{which} dynamic pattern a participant
+falls into even though it does not predict \emph{how much} \Unsafe{} they
+play overall.
+
+\begin{figure*}[t]
+    \centering
+    \includegraphics[width=\textwidth]{figures/llm_human_clustering/09_human_vs_llm_own_risk_dependence.pdf}
+    \caption{A measured human disposition against an assigned model label.
+    Left: mean \Unsafe{} rate by elicited Eckel--Grossman gamble choice,
+    with 95\% confidence intervals and participants per bin; the dotted
+    line is the trend across the six group means. Right: mean \Unsafe{}
+    rate by assigned risk-persona level, for every model with a six-level
+    sweep; GPT-5.6 Luna and Terra (dashed) sit outside the seven-model
+    roster. The shared six-step axis is visual alignment only --- the left
+    is a disposition measured once before play, the right an instruction
+    re-assigned every race.}
+    \label{fig:own-risk-dependence}
+    \Description{Two panels sharing a vertical Unsafe-rate axis and a
+    six-step horizontal axis. The left panel plots human mean Unsafe rate
+    against the elicited Eckel-Grossman gamble choice from 0 to 5, with 95
+    percent confidence intervals and the number of participants beneath
+    each point; the six points stay between 0.49 and 0.62 and a dotted
+    trend line through them is almost flat. The right panel plots mean
+    Unsafe rate against the assigned risk-persona level R1 to R6 for seven
+    models, each with its own colour and marker shape. Every model line
+    climbs steeply from left to right, from near the floor or lower middle
+    at R1 to between 0.52 and 1.0 at R6; the two GPT-5.6 lines are dashed
+    because they sit outside the seven-model roster.}
+\end{figure*}
+
+Figure~\ref{fig:own-risk-dependence} (left) shows how little that null
+leaves. Human mean \Unsafe{} play stays inside a 49--62\% band across the
+entire elicitation range, never approaching the low-\Unsafe{} models of
+the two-player strategic diversity results in the main paper (GPT-5-nano 17\%, Claude Sonnet 5 22\%,
+Claude Opus 5 33\%) or the high-\Unsafe{} Gemini models (73--83\%).
+Elicited risk preference does not move a participant far enough to resemble
+a different model's policy.
+
+The right panel is the opposite (Table~\ref{tab:persona-effect}): every
+model with a six-level sweep climbs 50.5 to 98.3 points from R1 to R6, all
+but the two nano models monotonically, and those two dip by well under a
+point at R2 before rising. The label does not, however, move models by a
+common factor --- GPT-5.6 Terra runs lowest at R1 and finishes within 1.3
+points of the top, while GPT-5-nano starts fifth of seven and ends last
+--- so curve order is not preserved, and the same instruction is worth
+very different amounts to different models. Of the seven tested models, five have such a sweep;
+neither Gemini Flash-Lite checkpoint does. In logistic models that
+additionally control for the mechanism's actual private-risk treatment, the
+coefficients on the agent's own assigned risk label remain large for the
+three models where that controlled fit has been run, so the persona effect
+is not simply standing in for the mechanical risk treatment.
+
+\begin{table}[t]
+    \caption{LLM risk-persona effect: change in \Unsafe{} rate from the
+    lowest (R1) to the highest (R6) assigned risk label, and the per-level
+    OLS slope, for every model with a six-level risk-label sweep ($n=360$
+    players per level, $n=330$ for Gemini-3-Flash). The persona coefficient
+    (logistic model additionally controlling for the mechanism's actual
+    private-risk treatment) has been fit only for the first three; ``--''
+    marks models for which only the descriptive delta and slope are
+    available. Starred rows sit outside the seven-model roster.}
+    \label{tab:persona-effect}
+    \centering
+    \small
+    \begin{tabular}{@{}lrrr@{}}
+        \toprule
+        Model & $\Delta$ \Unsafe{} (pp) & Per-level slope & Coefficient \\
+        \midrule
+        GPT-5-nano       & 50.5 & 0.123 & 0.93 \\
+        GPT-5.4-nano     & 98.2 & 0.212 & 1.47 \\
+        Gemini-3-Flash   & 62.8 & 0.139 & 2.03 \\
+        Claude Opus 5    & 81.6 & 0.152 & -- \\
+        Claude Sonnet 5  & 61.3 & 0.129 & -- \\
+        GPT-5.6 Luna$^*$  & 71.5 & 0.156 & -- \\
+        GPT-5.6 Terra$^*$ & 98.3 & 0.203 & -- \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+This contrast does not show that LLM agents possess a latent risk
+preference comparable to the human elicitation: the human variable is a
+measured pre-game disposition that turns out to be nearly unrelated to
+in-game behaviour, whereas the LLM variable is an explicit instruction
+embedded in the prompt. The more defensible reading is that an assigned
+risk persona functions as a high-salience behavioural instruction for
+these models, not as an analogue of a stable human risk
+disposition. Because the LLM estimates come from a separate risk-matrix
+experiment, available for five of the seven tested models and with the
+private-risk-controlled logistic fit run for only three of those five,
+this comparison remains exploratory and cross-experimental rather than a
+like-for-like measurement.
+
+\subsection{Predictive structure of \Unsafe{} choices}
+\label{app:predictive-structure}
+
+The preceding section shows that populations produce different action
+patterns. We now ask which recorded parts of the game best predict their next
+Unsafe choice. This is a study of association, not cause or internal
+reasoning. For each population, we fit a random forest, a model that combines
+many decision trees. It predicts decisions after round one from five values
+known before the choice: the player's previous action, the opponent's previous
+action, the progress gap, the assigned maximum private risk, and the round
+number. TreeSHAP then measures how much each value contributes to the fitted
+model's predictions. A larger SHAP share means that the predictor relied more
+on that feature. It does not mean that the feature caused the decision.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.48\textwidth]{figures/llm_human_clustering/feature_importance_shap_heatmap.pdf}
+    \caption{Population-specific predictive structure for round-$t\geq2$
+    \Unsafe{} choices. Each row reports the share of mean absolute SHAP
+    value assigned to the same five pre-decision features by a random
+    forest fitted separately to that population. SHAP magnitudes describe
+    how the fitted classifier uses observed features; they are neither
+    causal effects nor evidence of the agents' internal reasoning.}
+    \label{fig:feature-importance}
+    \Description{Heatmap of the share of mean absolute SHAP value that a
+    random forest assigns to each of five pre-decision features, with one
+    row per population and one column per feature: own previous action,
+    opponent's previous action, progress gap, assigned risk treatment, and
+    round number. The human row is dominated by the opponent's previous
+    action at 48 percent. GPT-5-nano is dominated instead by progress gap
+    at 44 percent, the two Gemini Flash checkpoints by the risk treatment
+    at 35 and 40 percent, and Claude Sonnet 5 by the opponent's previous
+    action at 51 percent.}
+\end{figure}
+
+\begin{table*}[t]
+    \caption{Population-specific random-forest prediction of \Unsafe{}
+    play. Feature columns report shares of total mean absolute SHAP
+    magnitude (rows sum to 100\%, up to rounding); AUC and balanced
+    accuracy are evaluated on the population-specific test split.}
+    \label{tab:feature-importance}
+    \centering
+    \footnotesize
+    \setlength{\tabcolsep}{4.5pt}
+    \begin{tabular}{@{}lrrrrrrr@{}}
+        \toprule
+        Population
+        & Own previous
+        & Opponent previous
+        & Progress gap
+        & Risk
+        & Round
+        & Test AUC
+        & Balanced accuracy \\
+        \midrule
+        Human                   & 6\%  & \textbf{48\%} & 14\% & 12\%          & 20\% & 0.62 & 0.54 \\
+        GPT-5-nano              & 2\%  & 4\%           & \textbf{44\%} & 16\% & 33\% & 0.82 & 0.50 \\
+        GPT-5.4-nano            & 18\% & 7\%           & \textbf{33\%} & 22\% & 20\% & 0.56 & 0.53 \\
+        Gemini-3-Flash          & 5\%  & 15\%          & 23\% & \textbf{35\%} & 23\% & 0.95 & 0.81 \\
+        Gemini-3.1-Flash-Lite   & 16\% & 7\%           & 13\% & \textbf{40\%} & 24\% & 0.94 & 0.81 \\
+        Gemini-3.5-Flash-Lite   & 14\% & \textbf{34\%} & 27\% & 17\%          & 9\%  & 0.80 & 0.70 \\
+        Claude Opus 5           & 26\% & 43\%$^\dagger$ & 0\% & 30\%         & 0\%  & 1.00 & 1.00 \\
+        Claude Sonnet 5         & 22\% & \textbf{51\%} & 4\%  & 14\%          & 10\% & 0.96 & 0.92 \\
+        \bottomrule
+    \end{tabular}
+
+    \vspace{2pt}
+    {\footnotesize $^\dagger$Collinear with the risk treatment, not a
+    reciprocity estimate; see the discussion below.\par}
+\end{table*}
+
+For human participants, the opponent's previous action accounts for 48\%
+of total SHAP magnitude, far more than any other feature, while the
+player's own previous action contributes only 6\%: a reciprocity-dominated
+profile that independently recovers the pattern found in the human
+logistic analysis. GPT-5-nano is close to the opposite profile: relative
+race position (progress gap) accounts for 44\% of its predictive
+importance and opponent history for only 4\%, and its apparently strong
+test AUC of 0.82 is misleading on its own, since balanced accuracy is
+exactly 0.50: the model plays so close to the \Safe{} floor that the
+classifier effectively fails to recover the rare \Unsafe{} class. Gemini-3-
+Flash and Gemini-3.1-Flash-Lite are primarily risk-treatment-driven (35\%
+and 40\% of SHAP magnitude), consistent with their strong, monotone
+descriptive risk-response curves. Claude Sonnet 5 is the only model whose
+profile matches the human ordering outright, with the opponent's previous
+action largest at 51\%, slightly above the human 48\%;
+Gemini-3.5-Flash-Lite is the next closest (34\%), though its progress gap
+remains more influential than in the human model. GPT-5.4-nano has no
+comparably dominant predictor: importance is
+spread across progress gap, risk, round, and its own previous action,
+with opponent history at only 7\% and the lowest above-chance predictive
+fit in the table (AUC 0.56, balanced accuracy 0.53), so its behaviour is
+comparatively difficult to reconstruct from these five mechanical state
+variables rather than clearly governed by any one signal.
+
+Claude Opus 5 shows why these shares must be read against the design that
+produced them. Its 43\% opponent share reads as strong reciprocity and is
+not: on the neutral lane it plays \Unsafe{} on essentially every low-risk
+decision and essentially none at high risk, so the risk treatment alone
+separates its choices, and since both seats behave that way the opponent's
+previous action is a proxy for the risk level rather than an independent
+signal. The forest then splits importance between two variables encoding
+the same event, and the perfect AUC describes a step function, not a better
+fit. A feature-importance share is interpretable only where the feature
+keeps variation independent of the others, which is what a
+near-deterministic policy removes.
+
+Predictive performance varies substantially across populations (AUC 0.56
+to 1.00), so SHAP shares should not be read as directly comparable measures
+of decision quality; floor and ceiling behaviour mechanically limits
+minority-class prediction for several models. The defensible
+conclusion is narrower than ``LLMs use different features'': the same
+observable state variables organise predictive information differently
+across populations, and matching a human aggregate action rate does not
+imply matching the human reciprocity-dominated association profile.
+
+
+% \subsection{HDBSCAN hyperparameter sensitivity and archetype composition}
+% \label{app:hdbscan-sweep}
+
+% The raw-action clustering summarised in the two-player strategic diversity results in the main paper
+% (minimum cluster size 15, minimum samples 6, Euclidean distance,
+% excess-of-mass selection) identifies eleven dense archetypes and leaves 98
+% of 760 trajectories unclustered (12.9\%). The two largest archetypes anchor
+% opposite ends of the space: a mutual-first-round-\Safe{} archetype
+% ($n=138$) and a mutual-round-2-\Unsafe{} archetype ($n=124$); the remaining
+% nine archetypes capture smaller switching and response patterns between
+% these two poles.
+
+% Because the number of clusters HDBSCAN recovers is data-dependent rather
+% than fixed in advance, a hyperparameter sensitivity sweep (varying minimum
+% cluster size and minimum samples around the values above) is the
+% appropriate check on how much the eleven-archetype description depends on
+% that specific configuration. \todo{No such sweep has been run and retained
+% under this project's run-provenance policy: the clustering script
+% currently hard-codes a single configuration
+% (\texttt{min\_cluster\_size=15}, \texttt{min\_samples=6}) with no
+% parameter loop or sweep manifest. An earlier draft of this paragraph
+% reported a five-configuration sweep result (4--14 clusters, 35.5\%--61.4\%
+% unclustered) that does not correspond to any artifact in the retained
+% analysis outputs and has been removed rather than repeated here. Before
+% this subsection can report a sensitivity range, implement and run a small
+% grid (e.g.\ minimum cluster size and minimum samples each varied around
+% 15/6) with its own manifest, and report the recovered cluster count and
+% unclustered fraction per configuration from that manifest.}
+
+\subsection{Two-player checkpoint descriptive baseline (full scope)}
+\label{app:twoplayer-baseline}
+
+The five-checkpoint two-player descriptive baseline referenced throughout
+the two-player strategic diversity results in the main paper and the observable drivers of unsafe play in the main paper completed 150
+races and 2{,}790 decisions, crossing five checkpoints (GPT-5-nano,
+GPT-5.4-nano, Gemini-3-Flash-preview, Gemini-3.1-Flash-Lite,
+Gemini-3.5-Flash-Lite) with the mechanism's three assigned private-risk
+levels ($0.10,0.60,0.90$; Eq.~(2)). At the level of
+descriptive curves rather than the pooled aggregate rates already reported
+in the main text, GPT-5-nano's \Unsafe{} rate was low and nearly flat
+across the three risk levels; GPT-5.4-nano's response to risk level was
+non-monotone; and the three Gemini checkpoints' \Unsafe{} rate declined as
+the assigned maximum risk increased -- the opposite direction from the two
+OpenAI checkpoints. Because provider routes, protocol signatures, and pilot
+sample sizes differ across checkpoints, these five curves demonstrate
+qualitative heterogeneity in how each checkpoint responds to the risk
+manipulation; we do not pool them into a single model-family estimate, and
+the formal test of that heterogeneity is the checkpoint-by-risk interaction
+reported in the two-player strategic diversity results in the main paper ($\chi^2(10)=354.7$).
+Table~\ref{tab:twoplayer-baseline-full} gives the per-checkpoint,
+per-risk-level rates underlying the qualitative curve descriptions above.
+
+\begin{table}[h]
+    \caption{Player-level \Unsafe{} rate by checkpoint and assigned
+    maximum-private-risk level, five-checkpoint two-player descriptive
+    baseline ($n=20$ players per checkpoint--risk cell, ten races each).}
+    \label{tab:twoplayer-baseline-full}
+    \centering
+    \small
+    \begin{tabular}{@{}lrrr@{}}
+        \toprule
+        Checkpoint & Risk 0.10 & Risk 0.60 & Risk 0.90 \\
+        \midrule
+        GPT-5 nano             & 12.3\%  & 15.1\%  & 14.5\% \\
+        GPT-5.4 nano            & 57.7\%  & 49.6\%  & 56.7\% \\
+        Gemini 3 Flash          & 100.0\% & 72.3\%  & 53.9\% \\
+        Gemini 3.1 Flash Lite   & 100.0\% & 80.1\%  & 69.9\% \\
+        Gemini 3.5 Flash Lite   & 83.8\%  & 70.8\%  & 62.6\% \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsection{$N$-player self-play scope ($N=3,4,5$)}
+\label{app:nplayer-scope}
+
+the multi-agent position results in the main paper reports position effects for GPT-5-nano and
+GPT-5.4-nano at fixed $N$; this subsection gives the broader group-size
+scope referenced there. Matched OpenAI self-play baselines cover
+$N\in\{3,4,5\}$ for both checkpoints: 180 pilot races, 720 player
+trajectories, and 6{,}120 decisions in total, pooled across the mechanism's
+three risk levels. Table~\ref{tab:nplayer-scope} reports the aggregate
+\Unsafe{} rate by checkpoint and group size.
+
+\begin{table}[h]
+    \caption{Aggregate \Unsafe{} rate by group size, OpenAI self-play,
+    pooled across the three assigned private-risk levels. Ten independent
+    races per model--risk--$N$ cell.}
+    \label{tab:nplayer-scope}
+    \centering
+    \small
+    \begin{tabular}{@{}lrrr@{}}
+        \toprule
+        Checkpoint & $N=3$ & $N=4$ & $N=5$ \\
+        \midrule
+        GPT-5-nano    & 16.2\% & 26.8\% & 21.9\% \\
+        GPT-5.4-nano  & 83.7\% & 87.0\%  & 84.0\% \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+Neither checkpoint's response to group size is monotone in $N$, and the
+association is checkpoint-specific: GPT-5-nano's rate roughly doubles from
+$N=3$ to $N=4$ before partially receding at $N=5$, while GPT-5.4-nano stays
+within a narrow 83--87\% band throughout. We do not read either pattern as
+an isolated group-size effect, for two reasons. First, changing $N$ also
+changes the stage-payoff rule itself (Eq.~(3)--(4) use the joint count
+$k^t$ of Safe-choosing companies rather than a single opponent's move),
+the number of opponents, and prompt length, so $N$ is confounded with the
+representation of the game as well as with its size. Second, the pilots
+use only ten independent races per model--risk--$N$ cell, which is a small
+base for the per-cell rates entering Table~\ref{tab:nplayer-scope} and
+leaves individual cells vulnerable to the same kind of small-$n$ noise
+flagged for specific rank $\times$ risk-band cells in
+the multi-agent position results in the main paper. Table~\ref{tab:nplayer-scope-full} disaggregates
+Table~\ref{tab:nplayer-scope} by assigned risk level and reports a 95\%
+Wilson interval for every cell.
+
+\begin{table}[h]
+    \caption{\Unsafe{} rate by checkpoint, group size, and assigned
+    maximum-private-risk level, OpenAI $N$-player self-play (95\% Wilson
+    intervals; $n$ is the decision count per cell).}
+    \label{tab:nplayer-scope-full}
+    \centering
+    \small
+    \begin{tabular}{@{}llrrr@{}}
+        \toprule
+        $N$ & Checkpoint & Risk & $n$ & \Unsafe{} rate (95\% CI) \\
+        \midrule
+        3 & GPT-5 nano    & 0.10 & 255 & 17.3\% (13.1--22.4\%) \\
+        3 & GPT-5 nano    & 0.60 & 255 & 18.0\% (13.8--23.2\%) \\
+        3 & GPT-5 nano    & 0.90 & 255 & 13.3\% (9.7--18.1\%) \\
+        3 & GPT-5.4 nano  & 0.10 & 255 & 84.3\% (79.3--88.3\%) \\
+        3 & GPT-5.4 nano  & 0.60 & 255 & 84.3\% (79.3--88.3\%) \\
+        3 & GPT-5.4 nano  & 0.90 & 255 & 82.4\% (77.2--86.5\%) \\
+        4 & GPT-5 nano    & 0.10 & 340 & 21.2\% (17.2--25.8\%) \\
+        4 & GPT-5 nano    & 0.60 & 340 & 30.3\% (25.7--35.4\%) \\
+        4 & GPT-5 nano    & 0.90 & 340 & 28.8\% (24.3--33.9\%) \\
+        4 & GPT-5.4 nano  & 0.10 & 340 & 87.6\% (83.7--90.7\%) \\
+        4 & GPT-5.4 nano  & 0.60 & 340 & 88.8\% (85.0--91.7\%) \\
+        4 & GPT-5.4 nano  & 0.90 & 340 & 84.4\% (80.2--87.9\%) \\
+        5 & GPT-5 nano    & 0.10 & 425 & 20.2\% (16.7--24.3\%) \\
+        5 & GPT-5 nano    & 0.60 & 425 & 21.2\% (17.6--25.3\%) \\
+        5 & GPT-5 nano    & 0.90 & 425 & 24.2\% (20.4--28.5\%) \\
+        5 & GPT-5.4 nano  & 0.10 & 425 & 80.2\% (76.2--83.7\%) \\
+        5 & GPT-5.4 nano  & 0.60 & 425 & 87.1\% (83.5--89.9\%) \\
+        5 & GPT-5.4 nano  & 0.90 & 425 & 84.7\% (81.0--87.8\%) \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsection{Trajectory embedding recoloured by outcome}
+\label{app:tsne-outcome}
+
+The main paper reports that the embedding of raw five-round trajectories
+separates almost entirely by how much \Unsafe{} play a trajectory carries.
+This is that check: the same coordinates, with only the colouring changed,
+so any structure visible here is structure the embedding already had.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.48\textwidth]{figures/llm_human_clustering/06_tsne_safe_unsafe.png}
+    \caption{The same t-SNE coordinates as the population-identity embedding in the main paper,
+    recoloured by each player's own mean \Unsafe{} rate over rounds 1--5
+    (green = \Safe{}, red = \Unsafe{}) instead of population identity.
+    Left: all 760 trajectories pooled. Right: the same colouring broken out
+    per population.}
+    \label{fig:human-tsne-outcome}
+    \Description{The same t-SNE coordinates as the previous figure,
+    recoloured by each player's own mean Unsafe rate over rounds 1 to 5
+    rather than by which population produced it, on a green-to-red scale
+    where green is Safe and red is Unsafe. The left panel pools all 760
+    trajectories and the right panel breaks the same colouring out per
+    population. The embedding separates almost entirely by Unsafe rate: a
+    solid green region, a solid red region, and a mixed band between them,
+    with very few red points inside the green region or the reverse.}
+\end{figure}
+
+
+
+\subsection{Mean round-by-round profile per population}
+\label{app:human-radar}
+
+The embedding in the main paper shows that human trajectories spread more
+widely than any single model's. This is the same comparison read one
+feature at a time: each population's mean profile against the pooled mean
+over the fourteen features every trajectory shares.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.48\textwidth]{figures/llm_human_clustering/03_radar_small_multiples_by_group_no_gap_r1.png}
+    \caption{Mean round-by-round profile for each population, on the 14
+    features shared across every trajectory (own and opponent action at
+    rounds 1--5, plus progress gap entering rounds 2--5; the round-1 gap is
+    omitted because every race starts at gap 0 by construction and is
+    therefore uninformative). Solid lines show the population mean; the
+    dotted line is the pooled mean across all eight populations.}
+    \label{fig:human-radar}
+    \Description{Small-multiple radar charts, one per population, over the
+    fourteen features shared by every trajectory: own and opponent action
+    at rounds 1 to 5, plus the progress gap entering rounds 2 to 5. Each
+    panel draws that population's mean profile as a solid line against the
+    pooled mean of all eight populations as a dotted reference line. The
+    human profile sits close to the pooled mean on nearly every axis.
+    GPT-5-nano and Claude Sonnet 5 are displaced toward Safe, the two
+    Gemini Flash Lite checkpoints toward Unsafe, and GPT-5.4-nano, Claude
+    Opus 5 and Gemini 3 Flash fall between those extremes.}
+\end{figure}
+
+
+
+\subsection{Unsafe rate by persona band and relative position}
+\label{app:position-cells}
+
+The main paper plots these rates as grouped bars for both checkpoints and
+reports the pattern they show. The tables below give the cell-level numbers
+behind that figure, so a single rate, its sample size and its confidence
+interval can be checked directly.
+
+\begin{table}[t]
+    \caption{\Unsafe{} rate by persona band and relative position,
+    GPT-5-nano. $n$ is the number of decisions in the cell; CI is the
+    95\% confidence interval on the unsafe rate.}
+    \label{tab:position-gpt5nano}
+    \centering
+    \small
+    \begin{tabular}{@{}llrrl@{}}
+        \toprule
+        Persona band & Position & $n$ & \Unsafe{} rate & 95\% CI \\
+        \midrule
+        Baseline      & Leader  & 1460 & 19.7\% & 17.7--21.8\% \\
+        Baseline      & Middle  & 1065 & 30.4\% & 27.7--33.3\% \\
+        Baseline      & Trailer & 175  & 33.1\% & 26.6--40.4\% \\
+        Low (R1--R2)  & Leader  & 1094 & 5.9\%  & 4.6--7.4\%   \\
+        Low (R1--R2)  & Middle  & 198  & 14.6\% & 10.4--20.2\% \\
+        Low (R1--R2)  & Trailer & 58   & 12.1\% & 6.0--22.9\%  \\
+        Mid (R3--R4)  & Leader  & 649  & 40.7\% & 37.0--44.5\% \\
+        Mid (R3--R4)  & Middle  & 451  & 38.1\% & 33.8--42.7\% \\
+        Mid (R3--R4)  & Trailer & 250  & 32.8\% & 27.3--38.8\% \\
+        High (R5--R6) & Leader  & 702  & 63.2\% & 59.6--66.7\% \\
+        High (R5--R6) & Middle  & 339  & 54.3\% & 49.0--59.5\% \\
+        High (R5--R6) & Trailer & 309  & 50.2\% & 44.6--55.7\% \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+
+\begin{table}[t]
+    \caption{\Unsafe{} rate by persona band and relative position,
+    GPT-5.4-nano. Cells marked $^\dagger$ have $n<20$.}
+    \label{tab:position-gpt54nano}
+    \centering
+    \small
+    \begin{tabular}{@{}llrrl@{}}
+        \toprule
+        Persona band & Position & $n$ & \Unsafe{} rate & 95\% CI \\
+        \midrule
+        Baseline      & Leader  & 1649 & 83.6\%  & 81.8--85.3\%  \\
+        Baseline      & Middle  & 703  & 84.8\%  & 81.9--87.2\%  \\
+        Baseline      & Trailer & 348  & 86.5\%  & 82.5--89.7\%  \\
+        Low (R1--R2)  & Leader  & 1073 & 3.3\%   & 2.4--4.5\%    \\
+        Low (R1--R2)  & Middle  & 268  & 1.5\%   & 0.6--3.8\%    \\
+        Low (R1--R2)  & Trailer & 9$^\dagger$    & 0.0\%   & 0.0--29.9\%   \\
+        Mid (R3--R4)  & Leader  & 1164 & 95.7\%  & 94.4--96.7\%  \\
+        Mid (R3--R4)  & Middle  & 70   & 88.6\%  & 79.0--94.1\%  \\
+        Mid (R3--R4)  & Trailer & 116  & 91.4\%  & 84.9--95.3\%  \\
+        High (R5--R6) & Leader  & 1328 & 99.3\%  & 98.7--99.6\%  \\
+        High (R5--R6) & Middle  & 4$^\dagger$    & 100.0\% & 51.0--100.0\% \\
+        High (R5--R6) & Trailer & 18$^\dagger$   & 100.0\% & 82.4--100.0\% \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+
+
+\bibliographystyle{ACM-Reference-Format}
+% \bibliography{sample}
+\bibliography{references}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}
