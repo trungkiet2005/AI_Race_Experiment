@@ -14,8 +14,9 @@ paper "dễ được accept" hơn — theo đúng khung đánh giá mà một re
 của claim, có preempt được câu hỏi hiển nhiên của reviewer không, và có vi phạm nguyên tắc bằng
 chứng của chính dự án không (`CLAUDE.md`, `paper/README.md`).
 
-**Đã đọc trước khi chọn:** toàn bộ `INDEX.md`, `results/cross_provider/ANALYSIS_REPORT.md`, và
-`paper/main.tex` (structure, 6 hình đang dùng, và đặc biệt 3 mục kết quả đang `\pending`). Phần
+**Đã đọc trước khi chọn:** toàn bộ `INDEX.md`, `results/cross_provider/ANALYSIS_REPORT.md` (bản này KHÔNG có trong repo — nó bị
+`/results/**` nuốt vì `results/cross_provider/` chưa từng có rule allowlist; xem `plot_analysis.py`
+và `figures/` để có phần còn lại), và `paper/main.tex` (structure, 6 hình đang dùng, và đặc biệt 3 mục kết quả đang `\pending`). Phần
 lớn giá trị của file này nằm ở việc đối chiếu hình ứng viên với **đúng những gì `main.tex` đã cam
 kết** — không phải chỉ "hình nào đẹp".
 

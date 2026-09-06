@@ -235,7 +235,7 @@ paper đã giữ 5 lần.
 2. **Khôi phục `ai_race/results/_api_5games_allrisk/`.** Blob còn trong git nên hình F vẽ được, nhưng
    `analyze_two_player_paper_figures.py` vẫn crash và `dataset_inventory.csv:94` vẫn liệt kê nó như
    artifact sống.
-3. **Sửa `results/cross_provider/ANALYSIS_REPORT.md` §7** — câu "Claude Haiku 4.5 luôn là model ít
+3. **Sửa `results/cross_provider/ANALYSIS_REPORT.md` §7** (file này chưa được commit — xem ghi chú trong `../SELECTED_FOR_PAPER.md`) — câu "Claude Haiku 4.5 luôn là model ít
    hung hăng nhất trong mọi bối cảnh" bị chính CSV của nó bác: trong *Gemini vs Haiku*, Haiku hung
    hăng hơn ở cả 3 mức risk (0.554/0.540/0.411 vs 0.494/0.456/0.401).
 4. **Sửa `SELECTED_FOR_PAPER.md:111-113`** — canonical **không** "nằm gần giữa phân phối", nó đứng

@@ -9,8 +9,8 @@
 - Player rows: 6786
 - Turn rows: 62868
 
-Coverage table: `derived/coverage_audit.csv`.
-Data-quality findings: `derived/data_quality_findings.csv`; retry rates by model: `derived/data_quality_retry_by_model.csv`.
+Coverage table: `../derived/coverage_audit.csv`.
+Data-quality findings: `../derived/data_quality_findings.csv`; retry rates by model: `../derived/data_quality_retry_by_model.csv`.
 Canonical tables retain duplicate-grain rows for audit, but descriptive/model stages exclude rows flagged with `duplicate_grain_key == True`.
 
 Quality gate summary:
@@ -27,19 +27,19 @@ Quality gate summary:
 
 ## Stage 2: Descriptive Visuals
 
-- Baseline unsafe by risk/model: `figures/baseline_unsafe_by_risk_model.png`
-- Baseline unsafe by progress gap: `figures/baseline_unsafe_by_gap_bin.png`
-- Baseline gap-threshold scan: `figures/baseline_gap_threshold_scan.png`
-- Baseline lag-action heatmap: `figures/baseline_lag_action_heatmap.png`
+- Baseline unsafe by risk/model: `../figures/baseline_unsafe_by_risk_model.png`
+- Baseline unsafe by progress gap: `../figures/baseline_unsafe_by_gap_bin.png`
+- Baseline gap-threshold scan: `../figures/baseline_gap_threshold_scan.png`
+- Baseline lag-action heatmap: `../figures/baseline_lag_action_heatmap.png`
 
-Core descriptive tables are in `derived/unsafe_by_*`. Use these before fitting models.
+Core descriptive tables are in `../derived/unsafe_by_*`. Use these before fitting models.
 
 ## Stage 3: Human-Reference Checks
 
-Human-check logit outputs: `derived/human_check_logit_coefficients.csv` and `derived/human_reference_ledger.csv`.
-Baseline logit bootstrap CI: `derived/human_check_baseline_bootstrap_summary.csv`.
-Baseline predicted gap curves: `figures/baseline_predicted_unsafe_by_gap.png`.
-Segment stability outputs: `derived/human_check_segment_coefficients.csv` and `derived/human_check_sign_stability.csv`.
+Human-check logit outputs: `../derived/human_check_logit_coefficients.csv` and `../derived/human_reference_ledger.csv`.
+Baseline logit bootstrap CI: `../derived/human_check_baseline_bootstrap_summary.csv`.
+Baseline predicted gap curves: `../figures/baseline_predicted_unsafe_by_gap.png`.
+Segment stability outputs: `../derived/human_check_segment_coefficients.csv` and `../derived/human_check_sign_stability.csv`.
 Segment models can show separation in small/saturated slices; use sign stability as a screening diagnostic and rely on pooled baseline coefficients for headline estimates.
 
 Baseline M3 core terms:
@@ -64,13 +64,13 @@ Baseline cluster bootstrap summary:
 
 Tree outputs are split by scope so the analysis stays sequential:
 
-- Baseline tree CV metrics: `derived/decision_tree_baseline_completed_cv_metrics.csv`
-- Baseline tree rules: `derived/decision_tree_baseline_completed_rules.txt`
-- Baseline tree leaf support/confidence: `derived/decision_tree_baseline_completed_leaf_summary.csv`
-- Full completed tree CV metrics: `derived/decision_tree_all_completed_cv_metrics.csv`
-- Full completed tree rules: `derived/decision_tree_all_completed_rules.txt`
-- Full completed root stability: `derived/decision_tree_all_completed_root_stability.csv`
-- Scope summary: `derived/decision_tree_scope_summary.csv`
+- Baseline tree CV metrics: `../derived/decision_tree_baseline_completed_cv_metrics.csv`
+- Baseline tree rules: `../derived/decision_tree_baseline_completed_rules.txt`
+- Baseline tree leaf support/confidence: `../derived/decision_tree_baseline_completed_leaf_summary.csv`
+- Full completed tree CV metrics: `../derived/decision_tree_all_completed_cv_metrics.csv`
+- Full completed tree rules: `../derived/decision_tree_all_completed_rules.txt`
+- Full completed root stability: `../derived/decision_tree_all_completed_root_stability.csv`
+- Scope summary: `../derived/decision_tree_scope_summary.csv`
 
 Interpret tree/rule outputs as exploratory compression of behaviour, not causal effects.
 

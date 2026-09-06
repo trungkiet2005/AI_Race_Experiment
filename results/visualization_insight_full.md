@@ -211,7 +211,7 @@ does not yield feature-specific causal steering. The next confirmatory grid
 must cross admitted model families, context, mapping, decoding, histories, and
 live replay-to-fork position interventions before strategic claims.
 
-Generated from artifact: `AI_Race_Experiment/results/reports/pilot_reports/pilot_insight_report/artifact.json`
+Generated from artifact: `results/reports/pilot_reports/pilot_insight_report/artifact.json`
 
 The generated bundle below is a legacy pilot snapshot. Use the current evidence
 dashboard above when numbers or evidence labels differ.

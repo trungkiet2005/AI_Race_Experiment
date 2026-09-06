@@ -1808,7 +1808,15 @@ def write_requested_output_contract(output_dir: Path) -> None:
 
     report_path = output_dir / "report.md"
     if report_path.exists():
-        copy_if_exists(report_path, reports_dir / "fh_analysis_report.md")
+        # report.md writes its links relative to output_dir; the alias copy sits one
+        # level deeper, so every derived/ and figures/ link has to gain a ".." or the
+        # copy ships fifteen dead references.
+        text = report_path.read_text(encoding="utf-8")
+        for folder in ("derived", "figures"):
+            text = text.replace(f"]({folder}/", f"](../{folder}/")
+            text = text.replace(f"`{folder}/", f"`../{folder}/")
+        reports_dir.mkdir(parents=True, exist_ok=True)
+        (reports_dir / "fh_analysis_report.md").write_text(text, encoding="utf-8")
 
 
 def write_report(
