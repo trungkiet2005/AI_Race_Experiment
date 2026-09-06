@@ -3,8 +3,8 @@
 **8 hình đã chọn nằm sẵn trong [`SELECTED_FOR_PAPER/`](SELECTED_FOR_PAPER/)** (đánh số 01–08 khớp
 bảng ở mục 4), đã đổi tên rõ ràng và copy ra khỏi các subfolder gốc — không cần lục lại
 `NEW_01_persona/`, `NEW_02_surface/`... nữa. Hình 06 và 07 có kèm bản `.pdf`/`.svg` để nhúng thẳng
-vào `main.tex` (bản `.tiff` 600dpi gốc không copy sang vì quá nặng — cần thì lấy lại từ
-`NEW_05_two_player_paper_analysis/`). Ảnh nhúng ngay dưới mỗi mục bên dưới lấy từ chính
+vào `main.tex` (bản `.tiff` 600dpi không còn giữ trong repo vì trùng hoàn toàn với bản PDF/SVG vector —
+cần thì sinh lại bằng `results/scripts/analyze_two_player_paper_figures.py`). Ảnh nhúng ngay dưới mỗi mục bên dưới lấy từ chính
 `SELECTED_FOR_PAPER/`, nên đường link và ảnh xem trước luôn khớp nhau.
 
 **Mục đích của file này:** từ 120 hình trong `results/artifacts/figure_gallery/` (99 hình đã có caption trong

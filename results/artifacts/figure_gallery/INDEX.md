@@ -534,7 +534,7 @@ Same surrogate XAI model with response-derived features removed.
 
 ## 9. Two-player paper figure bank  [NEW / EXPLORATORY]
 
-Fourteen publication-formatted figure families from the consolidated N=2 analysis. Each figure is available in PDF, SVG, 600-dpi PNG, and 600-dpi TIFF under `NEW_05_two_player_paper_analysis/`. There are no confirmatory gameplay runs in this evidence snapshot, so all behavioral comparisons remain exploratory. Separate API, KBench, and local-model protocols are shown as robustness lanes rather than pooled estimates.
+Fourteen publication-formatted figure families from the consolidated N=2 analysis. Each figure is available in PDF, SVG, and 600-dpi PNG under `NEW_05_two_player_paper_analysis/`. The 600-dpi TIFF exports are not kept in the repository because every one of them duplicated its own vector PDF/SVG at roughly 40 MB apiece; re-run `results/scripts/analyze_two_player_paper_figures.py`, whose `FORMATS` list still includes `tiff`, if a venue asks for them. There are no confirmatory gameplay runs in this evidence snapshot, so all behavioral comparisons remain exploratory. Separate API, KBench, and local-model protocols are shown as robustness lanes rather than pooled estimates.
 
 ### Baseline risk response
 
