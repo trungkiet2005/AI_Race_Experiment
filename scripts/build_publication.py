@@ -2,10 +2,18 @@
 
 LaTeX auxiliary files are isolated under ``results/_build/latex/current`` so a
 repository build never recreates the retired top-level ``output/`` tree.
+
+The two documents disagree about what their asset paths are relative to:
+``paper/main.tex`` loads ``aamas.cls`` and ``figures/...`` relative to ``paper/``,
+while ``slides/ai_race_research_deck.tex`` reaches for ``paper/figures/...`` and
+``results/...`` relative to the repository root. Each is therefore compiled from
+its own directory with TEXINPUTS extended to the repository root, so both
+conventions resolve without editing either document.
 """
 from __future__ import annotations
 
 import argparse
+import os
 import shutil
 import subprocess
 from pathlib import Path
@@ -16,12 +24,16 @@ BUILD_DIR = ROOT / "results" / "_build" / "latex" / "current"
 PUBLICATION_DIR = ROOT / "results" / "artifacts" / "publication"
 
 
-def run(command: list[str]) -> None:
+def run(command: list[str], *, cwd: Path = ROOT) -> None:
     print("+", " ".join(command), flush=True)
-    subprocess.run(command, cwd=ROOT, check=True)
+    # A trailing separator keeps kpathsea's own defaults on the end of the list.
+    env = dict(os.environ)
+    env["TEXINPUTS"] = f"{ROOT}{os.pathsep}{env.get('TEXINPUTS', '')}{os.pathsep}"
+    subprocess.run(command, cwd=cwd, check=True, env=env)
 
 
 def latex(source: str, *, jobname: str) -> None:
+    document = ROOT / source
     run(
         [
             "pdflatex",
@@ -29,8 +41,9 @@ def latex(source: str, *, jobname: str) -> None:
             "-halt-on-error",
             f"-output-directory={BUILD_DIR.as_posix()}",
             f"-jobname={jobname}",
-            source,
-        ]
+            document.name,
+        ],
+        cwd=document.parent,
     )
 
 
