@@ -120,3 +120,13 @@ of holding an N-player pilot to this same bar, and what stayed descriptive-only 
 - Adding a treatment = a new `ai_race/configs/game/*.json`, not a code change. Adding an experiment = a new `configs/experiment/*.json`.
 - New `TurnRecord`/`GameResult` fields must be reflected in [results/README.md](results/README.md)'s schema section and in the analyser's validation, or completed runs will fail their audit.
 - Some docs under `kaggle/` are written in Vietnamese; match the language of the file you are editing.
+
+## Reviewer revision frontier campaign
+
+The per-endpoint admission task is
+[`kaggle/benchmarks/ai_race_frontier_admission.py`](kaggle/benchmarks/ai_race_frontier_admission.py).
+It must complete the frozen rule, state, terminal, and expected-payoff audit
+before a hosted route enters behavioural claims. The candidate route registry is
+[`docs/frontier-model-registry.json`](docs/frontier-model-registry.json), and the
+review-to-evidence matrix is
+[`docs/reviewer-revision-frontier-protocol.md`](docs/reviewer-revision-frontier-protocol.md).

@@ -1,8 +1,13 @@
 # AI Race Kaggle Benchmark
 
+The reviewer-revision admission task is `ai_race_frontier_admission.py`. It
+audits every hosted endpoint on the same frozen rule, state, terminal, and
+expected-payoff probes before that endpoint can contribute behavioural claims.
+
 ## Layout
 
 - `ai_race_baseline.py` — canonical AI Race benchmark task.
+- `ai_race_frontier_admission.py` — per-endpoint task-validity admission audit.
 - `connectivity_ping.py` — minimal hosted-model connectivity probe.
 - `examples/what_is_kaggle.py` — small API syntax example.
 - [`REFERENCE.md`](REFERENCE.md) — local Kaggle Benchmarks syntax reference.

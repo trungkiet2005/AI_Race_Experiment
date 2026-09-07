@@ -1,0 +1,59 @@
+{
+  "schema_version": "ai-race-frontier-admission-summary-v1",
+  "protocol_id": "ai-race-frontier-admission-v1",
+  "model_route": "google/gemini-3.1-flash-lite-preview",
+  "n_rows": 20,
+  "overall_accuracy": 0.75,
+  "by_domain": {
+    "rule_recall": {
+      "rows": 4,
+      "valid": 4,
+      "correct": 4,
+      "valid_rate": 1.0,
+      "accuracy": 1.0
+    },
+    "stage_payoff": {
+      "rows": 2,
+      "valid": 2,
+      "correct": 2,
+      "valid_rate": 1.0,
+      "accuracy": 1.0
+    },
+    "state_reconstruction": {
+      "rows": 5,
+      "valid": 5,
+      "correct": 3,
+      "valid_rate": 1.0,
+      "accuracy": 0.6
+    },
+    "state_transition": {
+      "rows": 2,
+      "valid": 2,
+      "correct": 2,
+      "valid_rate": 1.0,
+      "accuracy": 1.0
+    },
+    "terminal_scoring": {
+      "rows": 5,
+      "valid": 5,
+      "correct": 4,
+      "valid_rate": 1.0,
+      "accuracy": 0.8
+    },
+    "expected_payoff": {
+      "rows": 2,
+      "valid": 2,
+      "correct": 0,
+      "valid_rate": 1.0,
+      "accuracy": 0.0
+    }
+  },
+  "admission_thresholds": {
+    "overall_accuracy_min": 0.8,
+    "state_reconstruction_accuracy_min": 0.75,
+    "terminal_scoring_accuracy_min": 0.75,
+    "expected_payoff_accuracy_min": 0.75
+  },
+  "admitted_for_gameplay": false,
+  "evidence_class": "diagnostic"
+}

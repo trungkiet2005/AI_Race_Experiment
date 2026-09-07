@@ -1,0 +1,32 @@
+{
+  "schema_version": "ai-race-frontier-admission-v1",
+  "status": "failed",
+  "protocol_id": "ai-race-frontier-admission-v1",
+  "started_utc": "2026-09-07T12:21:19.112496+00:00",
+  "model_route": "deepseek-ai/deepseek-r1-0528",
+  "model_tag": "deepseek-ai-deepseek-r1-0528",
+  "repetitions": 1,
+  "expected_rows": 20,
+  "rules_context_sha256": "b80981a5e888d04649300f79b7388ca7a755b958f239f0172efd9ca35aab2ae0",
+  "probe_bank_sha256": "2953fb472dcba47511de108a47d4126b0f661e79bf60c96a3ab46f581abca8bc",
+  "decoding": {
+    "model_route": "deepseek-ai/deepseek-r1-0528",
+    "backend_mro": [
+      "kaggle_benchmarks.actors.llms.OpenAI",
+      "kaggle_benchmarks.actors.llms.LLMChat",
+      "kaggle_benchmarks.actors.base.Actor",
+      "builtins.object"
+    ],
+    "output_token_limit_parameter": "max_tokens",
+    "output_token_limit": 128,
+    "temperature_requested": 0.0,
+    "prompt_version": "ai-race-fairgame-v3"
+  },
+  "package_versions": {
+    "kaggle-benchmarks": "0.6.1",
+    "kaggle": "2.2.4",
+    "pydantic": "2.13.5"
+  },
+  "status_reason": "RuntimeError: bounded transport retries exhausted",
+  "completed_utc": "2026-09-07T12:21:28.288218+00:00"
+}
