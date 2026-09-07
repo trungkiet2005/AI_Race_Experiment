@@ -41,13 +41,18 @@ All figures must distinguish source-study values from this project’s estimates
 
 ## Build policy
 
-The stable manuscript preview is written to
-`results/artifacts/publication/ai_race_paper.pdf`. From the repository root, build
-both the paper and deck with:
+The final manuscript PDFs are written directly to `paper/`:
+`paper/ai_race_paper.pdf` and `paper/ai_race_supplementary.pdf`. From the
+repository root, build both the paper and deck with:
 
 ```bash
 python scripts/build_publication.py
+python scripts/check_publication.py --allow-placeholder-id
 ```
 
-Generated auxiliary files stay under the ignored `results/_build/latex/` tree;
-only the two named PDFs under `results/artifacts/publication/` are tracked.
+Generated auxiliary files stay under the ignored `results/_build/latex/` tree.
+The build also synchronizes the two paper PDFs to
+`results/artifacts/publication/` for submission and release scripts.
+The QA command permits the local `TBD` submission ID during drafting; remove
+that option for the final anonymous submission check. Set the ID once in
+`submission_id.tex` when AAMAS assigns it.

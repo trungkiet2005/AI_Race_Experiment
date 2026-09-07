@@ -212,7 +212,7 @@ def write_markdown(catalog: dict[str, Any], manifests: list[dict[str, Any]]) -> 
     lines = [
         "# AI Race complete results index",
         "",
-        "`results/` is the only canonical generated-artifact root. Raw model runs, derived analyses, publication PDFs, QA evidence, and report surfaces live here; source code remains in its normal package directories.",
+        "`results/` is the canonical generated-artifact root for runs, analyses, QA evidence, reports, and publication PDF mirrors. The final manuscript PDFs live in `paper/`; source code remains in its normal package directories.",
         "",
         "## At a glance",
         "",

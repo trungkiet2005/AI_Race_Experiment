@@ -4,13 +4,13 @@
     "n_test": 872,
     "test_accuracy": 0.5860091743119266,
     "majority_baseline_accuracy": 0.588302752293578,
-    "roc_auc": 0.6206649399729592,
+    "roc_auc": 0.6206377907008314,
     "balanced_accuracy": 0.5440415492460647,
     "base_rate": 0.5884986225895317,
     "impurity_importance": {
-      "own_prev_unsafe": 0.054575042283519816,
-      "opponent_prev_unsafe": 0.31941512077799744,
-      "progress_gap": 0.23851614671303498,
+      "own_prev_unsafe": 0.05457504228351982,
+      "opponent_prev_unsafe": 0.31941512077799755,
+      "progress_gap": 0.23851614671303492,
       "max_private_risk": 0.0953120097976583,
       "round_number": 0.2921816804277894
     },
@@ -23,10 +23,10 @@
     },
     "mean_abs_shap": {
       "own_prev_unsafe": 0.01030986829005995,
-      "opponent_prev_unsafe": 0.08234947743304415,
-      "progress_gap": 0.02462116755860872,
-      "max_private_risk": 0.02114696261280105,
-      "round_number": 0.03423109151913967
+      "opponent_prev_unsafe": 0.08235104375221117,
+      "progress_gap": 0.024620943970441744,
+      "max_private_risk": 0.02114816795480099,
+      "round_number": 0.034230872721074966
     }
   },
   "gpt-5-nano": {
@@ -38,11 +38,11 @@
     "balanced_accuracy": 0.5,
     "base_rate": 0.07730923694779117,
     "impurity_importance": {
-      "own_prev_unsafe": 0.016201657783656204,
+      "own_prev_unsafe": 0.016201657783656218,
       "opponent_prev_unsafe": 0.050882477935617836,
-      "progress_gap": 0.43957960218316716,
-      "max_private_risk": 0.13223383724262563,
-      "round_number": 0.3611024248549331
+      "progress_gap": 0.4395796021831671,
+      "max_private_risk": 0.13223383724262566,
+      "round_number": 0.36110242485493316
     },
     "permutation_importance": {
       "own_prev_unsafe": 0.0,
@@ -52,10 +52,10 @@
       "round_number": 0.0
     },
     "mean_abs_shap": {
-      "own_prev_unsafe": 0.002149902409840902,
+      "own_prev_unsafe": 0.0021499024098409016,
       "opponent_prev_unsafe": 0.004077961347443216,
-      "progress_gap": 0.04032577222451569,
-      "max_private_risk": 0.014769990920589381,
+      "progress_gap": 0.040325772224515694,
+      "max_private_risk": 0.01476999092058939,
       "round_number": 0.029615681167078647
     }
   },
@@ -68,11 +68,11 @@
     "balanced_accuracy": 0.5341483219054493,
     "base_rate": 0.5441767068273092,
     "impurity_importance": {
-      "own_prev_unsafe": 0.08982063248983972,
+      "own_prev_unsafe": 0.08982063248983982,
       "opponent_prev_unsafe": 0.07762980486216432,
-      "progress_gap": 0.3037747064693474,
-      "max_private_risk": 0.14816042155562695,
-      "round_number": 0.38061443462302164
+      "progress_gap": 0.3037747064693472,
+      "max_private_risk": 0.14816042155562703,
+      "round_number": 0.3806144346230217
     },
     "permutation_importance": {
       "own_prev_unsafe": -0.010702341137123766,
@@ -82,11 +82,11 @@
       "round_number": -0.007190635451505029
     },
     "mean_abs_shap": {
-      "own_prev_unsafe": 0.020543253109841866,
-      "opponent_prev_unsafe": 0.008735859041097346,
-      "progress_gap": 0.038758240364522564,
-      "max_private_risk": 0.025861641801484165,
-      "round_number": 0.02348198628873088
+      "own_prev_unsafe": 0.02054325310984186,
+      "opponent_prev_unsafe": 0.008735859041097348,
+      "progress_gap": 0.03875824036452257,
+      "max_private_risk": 0.02586164180148416,
+      "round_number": 0.023481986288730872
     }
   },
   "google/gemini-3-flash-preview": {
@@ -98,10 +98,10 @@
     "balanced_accuracy": 0.8092105263157895,
     "base_rate": 0.7469879518072289,
     "impurity_importance": {
-      "own_prev_unsafe": 0.029631025928523663,
-      "opponent_prev_unsafe": 0.09684643341867209,
-      "progress_gap": 0.32161160443132114,
-      "max_private_risk": 0.2770401979103313,
+      "own_prev_unsafe": 0.029631025928523645,
+      "opponent_prev_unsafe": 0.0968464334186721,
+      "progress_gap": 0.3216116044313211,
+      "max_private_risk": 0.27704019791033135,
       "round_number": 0.2748707383111517
     },
     "permutation_importance": {
@@ -112,10 +112,10 @@
       "round_number": 0.09264214046822736
     },
     "mean_abs_shap": {
-      "own_prev_unsafe": 0.015039408538112368,
-      "opponent_prev_unsafe": 0.04942908006007621,
+      "own_prev_unsafe": 0.015039408538112366,
+      "opponent_prev_unsafe": 0.0494290800600762,
       "progress_gap": 0.0764194033396336,
-      "max_private_risk": 0.11523048142278068,
+      "max_private_risk": 0.1152304814227807,
       "round_number": 0.07462821225331741
     }
   },
@@ -131,7 +131,7 @@
       "own_prev_unsafe": 0.10670542096937757,
       "opponent_prev_unsafe": 0.05168422423516887,
       "progress_gap": 0.1686473058145462,
-      "max_private_risk": 0.3519082014117404,
+      "max_private_risk": 0.35190820141174034,
       "round_number": 0.321054847569167
     },
     "permutation_importance": {
@@ -145,7 +145,7 @@
       "own_prev_unsafe": 0.039047340293149733,
       "opponent_prev_unsafe": 0.016432964981753184,
       "progress_gap": 0.03199593930868019,
-      "max_private_risk": 0.09700754888403978,
+      "max_private_risk": 0.09700754888403977,
       "round_number": 0.05946215691825785
     }
   },
@@ -158,11 +158,11 @@
     "balanced_accuracy": 0.696078431372549,
     "base_rate": 0.6767068273092369,
     "impurity_importance": {
-      "own_prev_unsafe": 0.07766439476825086,
-      "opponent_prev_unsafe": 0.2968527495607597,
-      "progress_gap": 0.38652262077293525,
-      "max_private_risk": 0.12360152963165154,
-      "round_number": 0.11535870526640267
+      "own_prev_unsafe": 0.07766547957732933,
+      "opponent_prev_unsafe": 0.2968553309485147,
+      "progress_gap": 0.3865322921149062,
+      "max_private_risk": 0.12358623348398111,
+      "round_number": 0.1153606638752687
     },
     "permutation_importance": {
       "own_prev_unsafe": -0.005333333333333285,
@@ -172,11 +172,11 @@
       "round_number": 0.00033333333333336325
     },
     "mean_abs_shap": {
-      "own_prev_unsafe": 0.044204957859797736,
-      "opponent_prev_unsafe": 0.11045585711944961,
-      "progress_gap": 0.08685175128289115,
-      "max_private_risk": 0.05528120088065515,
-      "round_number": 0.02989379616016094
+      "own_prev_unsafe": 0.04420283601129546,
+      "opponent_prev_unsafe": 0.11045520606802849,
+      "progress_gap": 0.08685314127963535,
+      "max_private_risk": 0.0552950392551877,
+      "round_number": 0.029878270275298446
     }
   },
   "gpt-5.6-luna": {
@@ -188,11 +188,11 @@
     "balanced_accuracy": 0.7840182648401826,
     "base_rate": 0.7339357429718876,
     "impurity_importance": {
-      "own_prev_unsafe": 0.058812648843178175,
-      "opponent_prev_unsafe": 0.03737108873634729,
-      "progress_gap": 0.36993958508543673,
-      "max_private_risk": 0.047404925653780176,
-      "round_number": 0.4864717516812578
+      "own_prev_unsafe": 0.058812649098137326,
+      "opponent_prev_unsafe": 0.037371088762026036,
+      "progress_gap": 0.36993961548070786,
+      "max_private_risk": 0.04740502470688681,
+      "round_number": 0.4864716219522419
     },
     "permutation_importance": {
       "own_prev_unsafe": 0.02324414715719062,
@@ -202,11 +202,11 @@
       "round_number": 0.11454849498327757
     },
     "mean_abs_shap": {
-      "own_prev_unsafe": 0.0396769380575617,
+      "own_prev_unsafe": 0.03967693805756169,
       "opponent_prev_unsafe": 0.01240576238173948,
-      "progress_gap": 0.0788291669597998,
-      "max_private_risk": 0.03135218848878372,
-      "round_number": 0.11315425888562536
+      "progress_gap": 0.07882937001779886,
+      "max_private_risk": 0.031350983665095304,
+      "round_number": 0.11315477150718292
     }
   },
   "gpt-5.6-terra": {
@@ -218,11 +218,11 @@
     "balanced_accuracy": 0.8521609195402299,
     "base_rate": 0.5813253012048193,
     "impurity_importance": {
-      "own_prev_unsafe": 0.2183595488504311,
-      "opponent_prev_unsafe": 0.03789323829341318,
-      "progress_gap": 0.28130002625688844,
+      "own_prev_unsafe": 0.21835954885043105,
+      "opponent_prev_unsafe": 0.03789323829341317,
+      "progress_gap": 0.2813000262568884,
       "max_private_risk": 0.2625486820113682,
-      "round_number": 0.19989850458789915
+      "round_number": 0.19989850458789912
     },
     "permutation_importance": {
       "own_prev_unsafe": 0.12775919732441474,
@@ -232,11 +232,11 @@
       "round_number": 0.020568561872909685
     },
     "mean_abs_shap": {
-      "own_prev_unsafe": 0.1353517122144605,
+      "own_prev_unsafe": 0.13535171221446052,
       "opponent_prev_unsafe": 0.020367513565658576,
       "progress_gap": 0.08216840377070263,
       "max_private_risk": 0.1532633398787435,
-      "round_number": 0.05397980833000696
+      "round_number": 0.05397980833000698
     }
   },
   "claude-opus-5": {
@@ -252,7 +252,7 @@
       "opponent_prev_unsafe": 0.4346053176721177,
       "progress_gap": 0.0,
       "max_private_risk": 0.3029180292419895,
-      "round_number": 0.0010359408793207182
+      "round_number": 0.0010359408793207188
     },
     "permutation_importance": {
       "own_prev_unsafe": 0.0010033444816053504,
@@ -266,7 +266,7 @@
       "opponent_prev_unsafe": 0.19290259734930268,
       "progress_gap": 0.0,
       "max_private_risk": 0.1345972588556976,
-      "round_number": 0.0018277253977387385
+      "round_number": 0.0018277253977387403
     }
   },
   "claude-sonnet-5": {
@@ -278,11 +278,11 @@
     "balanced_accuracy": 0.9227855477855478,
     "base_rate": 0.4799196787148594,
     "impurity_importance": {
-      "own_prev_unsafe": 0.19801356030382056,
+      "own_prev_unsafe": 0.19801356030382058,
       "opponent_prev_unsafe": 0.5333800448442494,
-      "progress_gap": 0.0647312877119497,
+      "progress_gap": 0.06473128771194972,
       "max_private_risk": 0.13395706553872322,
-      "round_number": 0.06991804160125721
+      "round_number": 0.06991804160125722
     },
     "permutation_importance": {
       "own_prev_unsafe": 0.0892976588628763,
@@ -295,53 +295,53 @@
       "own_prev_unsafe": 0.10847064260480901,
       "opponent_prev_unsafe": 0.2560736803397621,
       "progress_gap": 0.01996039965618567,
-      "max_private_risk": 0.07090177874396883,
-      "round_number": 0.048616832326517964
+      "max_private_risk": 0.0709017787439688,
+      "round_number": 0.04861683232651797
     }
   },
   "human_with_demographics": {
     "n_train": 2021,
     "n_test": 867,
-    "test_accuracy": 0.6320645905420992,
+    "test_accuracy": 0.635524798154556,
     "majority_baseline_accuracy": 0.5882352941176471,
-    "roc_auc": 0.6578294062723129,
-    "balanced_accuracy": 0.5868347338935574,
+    "roc_auc": 0.657906299774812,
+    "balanced_accuracy": 0.5906162464985995,
     "base_rate": 0.5886426592797784,
     "impurity_importance": {
-      "own_prev_unsafe": 0.035001855337959444,
-      "opponent_prev_unsafe": 0.25805738663728783,
-      "progress_gap": 0.1603037621550324,
-      "max_private_risk": 0.06644185272846184,
-      "round_number": 0.14724163520070327,
-      "sex_male": 0.05351197019510778,
-      "age": 0.11174108388596868,
-      "nationality_south_africa": 0.056998886720411604,
-      "nationality_poland": 0.020477288971833683,
-      "risk_gamble_choice": 0.09022427816723343
+      "own_prev_unsafe": 0.034964016656924855,
+      "opponent_prev_unsafe": 0.2582370669158809,
+      "progress_gap": 0.16051687890616723,
+      "max_private_risk": 0.06650086743994578,
+      "round_number": 0.14682371496938584,
+      "sex_male": 0.05351931827515673,
+      "age": 0.11197959949298206,
+      "nationality_south_africa": 0.05697238569964921,
+      "nationality_poland": 0.020434264450758917,
+      "risk_gamble_choice": 0.09005188719314858
     },
     "permutation_importance": {
-      "own_prev_unsafe": 0.00576701268742788,
-      "opponent_prev_unsafe": 0.05743944636678198,
-      "progress_gap": 0.011649365628604353,
-      "max_private_risk": 0.0065743944636677985,
-      "round_number": -0.008592848904267609,
-      "sex_male": 0.008419838523644734,
-      "age": 0.0008650519031141501,
-      "nationality_south_africa": 0.007324106113033424,
-      "nationality_poland": -0.003460207612456767,
-      "risk_gamble_choice": 0.006689734717416346
+      "own_prev_unsafe": 0.007670126874279137,
+      "opponent_prev_unsafe": 0.058996539792387594,
+      "progress_gap": 0.01355247981545562,
+      "max_private_risk": 0.009457900807381797,
+      "round_number": -0.0057093425605536045,
+      "sex_male": 0.010092272202998864,
+      "age": 0.0036908881199539,
+      "nationality_south_africa": 0.008535178777393326,
+      "nationality_poland": -0.0023644752018454175,
+      "risk_gamble_choice": 0.008765859284890449
     },
     "mean_abs_shap": {
-      "own_prev_unsafe": 0.004585203273238051,
-      "opponent_prev_unsafe": 0.07236752716580815,
-      "progress_gap": 0.016407344432426803,
-      "max_private_risk": 0.014065110796206358,
-      "round_number": 0.015670734425587307,
-      "sex_male": 0.008877422381657982,
-      "age": 0.01126813497597533,
-      "nationality_south_africa": 0.014659810949062166,
-      "nationality_poland": 0.0016504699446603206,
-      "risk_gamble_choice": 0.0057684398346473575
+      "own_prev_unsafe": 0.00458084220613741,
+      "opponent_prev_unsafe": 0.07244617603208447,
+      "progress_gap": 0.016405150542401152,
+      "max_private_risk": 0.014064330774358076,
+      "round_number": 0.01567968321122458,
+      "sex_male": 0.00886619651954851,
+      "age": 0.011300198910259912,
+      "nationality_south_africa": 0.014662952819646193,
+      "nationality_poland": 0.0016684301844582254,
+      "risk_gamble_choice": 0.005762151299869933
     }
   }
 }

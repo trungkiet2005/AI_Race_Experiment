@@ -1,7 +1,7 @@
 {
   "schema_version": "ai-race.impact-release.v2",
   "identity": "content-addressed; independent of commit and worktree state",
-  "file_count": 100,
+  "file_count": 103,
   "files": {
     "ai_race/audit/payoff_scale.py": {
       "bytes": 2321,
@@ -79,29 +79,41 @@
       "bytes": 595,
       "sha256": "d860afc3685388f9f9f47593b62209cc43eacea4378a85d50c46fcc89274825b"
     },
+    "paper/ai_race_paper.pdf": {
+      "bytes": 1890863,
+      "sha256": "32900b30f3a22e320ef6666060640a7d4bbec1ada6cabc5554ce98b95d7f080f"
+    },
+    "paper/ai_race_supplementary.pdf": {
+      "bytes": 1819808,
+      "sha256": "aec0664bd0ae6d26873fa35590b7e538e17e7467ef658e4c790908fd06847baf"
+    },
     "paper/main.tex": {
-      "bytes": 69142,
-      "sha256": "36b045dd7d3b04944bf67624eb3870f73baf58add59eac84ea5b502eaf3f4e3b"
+      "bytes": 68903,
+      "sha256": "03b7d90cd7bee00a108af730b73c7e275d65d051d95fd646b58a45d933a98a01"
     },
     "paper/references.bib": {
       "bytes": 24422,
       "sha256": "a4c46f082d0a85c0007037eaa1e92beac95cec05c66a5ec7f98a3f0d157eed38"
     },
+    "paper/submission_id.tex": {
+      "bytes": 111,
+      "sha256": "7c81c11409e2fef96f90e3d1a244e58b9f98a31753e9fbc978ba12664dc7ec66"
+    },
     "paper/supplementary.tex": {
-      "bytes": 50285,
-      "sha256": "a7ee1f8787e23b54c457443f4c867f7e04c7b87a2b92339269bd98ad61b68c10"
+      "bytes": 50234,
+      "sha256": "93802621a66c0db013d3cf7a6b0aebf0e4401c3b6427be2d1722a423a573b837"
     },
     "results/artifacts/publication/ai_race_paper.pdf": {
-      "bytes": 1891289,
-      "sha256": "c5b71c55ec22b556f625a5eb4984807f4412d48e706c906d807ad0e99fedc5e4"
+      "bytes": 1890863,
+      "sha256": "32900b30f3a22e320ef6666060640a7d4bbec1ada6cabc5554ce98b95d7f080f"
     },
     "results/artifacts/publication/ai_race_research_deck.pdf": {
       "bytes": 619364,
       "sha256": "c1dd7a50b5e1ea44c8b1f6c296fe7772a632871d3544e303ae4fba9a63a6bcb4"
     },
     "results/artifacts/publication/ai_race_supplementary.pdf": {
-      "bytes": 1390151,
-      "sha256": "e4a7b36a44bd1db1dcc9bcd297faedf0e9332a0ac48787835b1a60045726cbf6"
+      "bytes": 1819808,
+      "sha256": "aec0664bd0ae6d26873fa35590b7e538e17e7467ef658e4c790908fd06847baf"
     },
     "results/derived/payoff_scale_contract/README.md": {
       "bytes": 428,
@@ -337,7 +349,7 @@
     },
     "results/migration_manifest.json": {
       "bytes": 10273,
-      "sha256": "92bbbca40e0d803378515748d2a5c24e25028ff9ac0126e5da4a4f55ac8582a7"
+      "sha256": "3cea0f897dbfdc1693c00c8cfa3344906ace3d1cd795c04b4aff9e691f5e966e"
     },
     "results/visualization_insight_full.md": {
       "bytes": 27421,
@@ -368,8 +380,8 @@
       "sha256": "7f3c95b099e760a935011907d710c35be1b1e68f0fc5a5c966dbe320623edbd9"
     },
     "scripts/build_publication.py": {
-      "bytes": 4114,
-      "sha256": "8372174bd169da2a88062c3687749f95c2912c354e079a5f31e190c83992f80e"
+      "bytes": 4936,
+      "sha256": "3e2cdb55bfc2951ac18956c3dcc3eb8d7719c298873e5a73f8a1f54b6fccd750"
     },
     "scripts/build_visual_analytics_atlas.py": {
       "bytes": 22661,

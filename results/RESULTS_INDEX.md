@@ -1,14 +1,14 @@
 # AI Race complete results index
 
-`results/` is the only canonical generated-artifact root. Raw model runs, derived analyses, publication PDFs, QA evidence, and report surfaces live here; source code remains in its normal package directories.
+`results/` is the canonical generated-artifact root for runs, analyses, QA evidence, reports, and publication PDF mirrors. The final manuscript PDFs live in `paper/`; source code remains in its normal package directories.
 
 ## At a glance
 
-- Canonical files (excluding reproducible `_build/`): **3,832**
-- Total canonical size: **1264.01 MiB**
+- Canonical files (excluding reproducible `_build/`): **3,834**
+- Total canonical size: **1266.50 MiB**
 - Parsed manifest records: **451**
 - Invalid manifest JSON files: **0**
-- Exact duplicate hash groups: **252** (archives may intentionally retain immutable copies)
+- Exact duplicate hash groups: **253** (archives may intentionally retain immutable copies)
 
 Evidence labels are conservative: a completed pilot stays `pilot`; a prepared or diagnostic artifact is never promoted by directory name alone.
 
@@ -34,7 +34,7 @@ Evidence labels are conservative: a completed pilot stays `pilot`; a prepared or
 - [Payoff-scale mechanical contract](derived/payoff_scale_contract/README.md)
 - [Experiment impact roadmap](../docs/experiments/impact_experiment_program.md)
 
-## Complete visual artifact map (537)
+## Complete visual artifact map (538)
 
 Every rendered chart, publication PDF, and interactive HTML surface in the canonical results root is linked below. The narrative synthesis embeds the decision-relevant subset in `visualization_insight_full.md`.
 
@@ -250,6 +250,7 @@ Every rendered chart, publication PDF, and interactive HTML surface in the canon
 - [`artifacts/qa/latex/paper_p8-08.png`](<artifacts/qa/latex/paper_p8-08.png>)
 - [`artifacts/qa/latex/paper_p9-09.png`](<artifacts/qa/latex/paper_p9-09.png>)
 - [`artifacts/submission/paper.pdf`](<artifacts/submission/paper.pdf>)
+- [`artifacts/submission/supplementary.pdf`](<artifacts/submission/supplementary.pdf>)
 - [`capacity_family/greennode_smoke_ab0527e/analysis/scaffold_admission_heatmap.pdf`](<capacity_family/greennode_smoke_ab0527e/analysis/scaffold_admission_heatmap.pdf>)
 - [`capacity_family/greennode_smoke_ab0527e/analysis/scaffold_admission_heatmap.png`](<capacity_family/greennode_smoke_ab0527e/analysis/scaffold_admission_heatmap.png>)
 - [`cross_model_pilot_synthesis/deep_insight_gallery_20260802/01_risk_fingerprint_matrix.pdf`](<cross_model_pilot_synthesis/deep_insight_gallery_20260802/01_risk_fingerprint_matrix.pdf>)

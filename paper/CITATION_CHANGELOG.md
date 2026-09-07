@@ -75,7 +75,7 @@ The arXiv source archives were extracted under the system temporary directory, n
 ## Build and preservation notes
 
 - Built with `pdflatex`, `bibtex`, and two final `pdflatex` passes.
-- Final PDF: `output/pdf/ai_race_paper.pdf`.
-- No undefined citations, undefined references, LaTeX errors, or overfull boxes remain in the final log.
+- Final PDFs: `paper/ai_race_paper.pdf` and `paper/ai_race_supplementary.pdf`.
+- The current build completes without fatal LaTeX errors, but the log still contains layout warnings and an undefined supplementary reference. Do not treat the PDFs as submission-ready until those warnings are resolved.
 - Rendered all 19 pages to PNG and visually checked the edited prose and reference pages.
 - Existing user edits in `paper/AAMAS_2026_sample.tex` and `paper/references.bib` were not modified.

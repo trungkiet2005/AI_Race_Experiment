@@ -63,9 +63,9 @@ references/
   source_study_dataset/  The source study's published de-identified participant table
 scripts/                 All operational and analysis scripts: stage runners,
                          analysers, catalog and manifest builders
-results/                 Single canonical home for raw runs, analyses, reports, QA, and publication PDFs
+results/                 Canonical home for raw runs, analyses, reports, QA, and publication PDF mirrors
 docs/                    Experiment protocols and run guides
-paper/                   Manuscript, its figures/, and bounded pilot audit evidence
+paper/                   Manuscript source, final PDFs, figures/, and bounded pilot audit evidence
 slides/                  AI Race presentation outline, deck source, and design reference
 web/                     Browser front-ends: the simulator and the trajectory lab
 vendor/FAIRGAME/         Vendored upstream connectors (Apache-2.0, not our code)

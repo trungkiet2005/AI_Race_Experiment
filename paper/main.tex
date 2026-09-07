@@ -59,8 +59,8 @@ on Autonomous Agents and Multiagent Systems (AAMAS 2026)}{May 25 -- 29, 2026}
 %%% Use this command to specify your submission number.
 %%% In anonymous mode, it will be printed on the first page.
 
-% TODO: replace TBD with the assigned submission identifier before submission.
-\acmSubmissionID{TBD}
+\input{submission_id.tex}
+\acmSubmissionID{\SubmissionID}
 
 %%% Use this command to specify the title of your paper.
 
@@ -309,7 +309,7 @@ settings.
 %%% Keywords should be separated by commas.
 
 % \keywords{Legends, Myths, Folktales}
-\keywords{Large language model agents, AI development races, multi-agent systems, repeated games, strategic decision-making, AI safety, prompt sensitivity, task validity}
+\keywords{Large language models, AI development races, multi-agent systems, repeated games, AI safety, task validity}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -730,7 +730,7 @@ the supplementary material.
 We next ask whether sampled behaviour is stable under manipulations that
 leave the underlying game mechanics unchanged.
 
-\paragraph{Disclosed arithmetic (clean diagnostic).} The canonical and
+\paragraph{Disclosed arithmetic.} The canonical and
 decision-card conditions each completed 30 races and 558 decisions with
 zero parse failures; matched risk-by-repetition cells had identical
 realised horizons.
@@ -757,8 +757,8 @@ confirmatory causal effect.
     \end{tabular}
 \end{table}
 
-\paragraph{Opaque symbolic mapping (confounded, comprehension gate failed).}
-A stronger and more concerning form of sensitivity appears when the game is
+\paragraph{Opaque symbolic mapping.} This diagnostic is confounded because the
+comprehension gate failed. A stronger and more concerning form of sensitivity appears when the game is
 described through an opaque code rather than the words \Safe{}/\Unsafe{}.
 The temperature-zero context pilot completed 768 live races (13,680
 decisions) and a separate fixed-state replay of 1,536 context and mapping
@@ -777,11 +777,9 @@ and terminal-scoring accuracy at 17.2\%. We therefore report this as
 representation-sensitive \emph{observed behaviour under fixed mechanics},
 not as evidence that the model understood or optimised the race.
 
-Taken together, these two diagnostics show that plausible-looking action
-sequences can shift substantially under manipulations that a correct
-world model would treat as irrelevant, which is precisely why the
-comprehension check of \S\ref{sec:results-validity} is a prerequisite
-for interpreting any of the behavioural results that follow.
+Together, these diagnostics show that action sequences can shift under changes
+that a correct game model should ignore. This is why the comprehension check in
+\S\ref{sec:results-validity} comes before behavioural interpretation.
 
 \subsection{Game theory versus prompted race behaviour}
 \label{sec:results-theory}
@@ -859,7 +857,7 @@ archetypes that both open with a mutual-\Safe{} first round.
 
 \begin{figure}[t]
     \centering
-    \includegraphics[width=0.48\textwidth]{figures/llm_human_clustering/02_tsne_by_cluster.png}
+    \includegraphics[width=0.95\linewidth]{figures/llm_human_clustering/02_tsne_by_cluster.png}
     \caption{Composition of the eleven HDBSCAN-derived raw-action-and-
     position archetypes. The two largest are a mutual-first-round-\Safe{}
     archetype ($n=138$) and a mutual-round-2-\Unsafe{} archetype ($n=124$);
@@ -877,7 +875,7 @@ archetypes that both open with a mutual-\Safe{} first round.
 
 \begin{figure}[t]
     \centering
-    \includegraphics[width=0.48\textwidth]{figures/llm_human_clustering/01_tsne_hero_human_left.png}
+    \includegraphics[width=0.95\linewidth]{figures/llm_human_clustering/01_tsne_hero_human_left.png}
     \caption{t-SNE visualisation of the pooled 15-dimensional raw
     action-and-position space. Each panel highlights one population while
     rendering the other populations in grey; the human sample is shown in
@@ -924,8 +922,8 @@ This is the lowest value among the populations. Human actions overlap with
 several model patterns because the human sample is internally diverse, not
 because it follows one middle policy.
 
-The round-by-round profile in the per-feature profile in the supplementary material gives a
-complementary view to the aggregate rate: the human profile lies close to
+The supplementary round-by-round profile gives a complementary view of the
+aggregate rate: the human profile lies close to
 the pooled eight-population mean on nearly every own-, opponent-, and
 gap-action axis, whereas GPT-5-nano and Claude Sonnet 5 are displaced
 toward \Safe{}, the two Gemini Flash-Lite checkpoints are displaced toward
@@ -1076,7 +1074,7 @@ describe observed states; the experiment did not randomly assign rank.
 
 \begin{figure}[t]
     \centering
-    \includegraphics[width=0.48\textwidth]{figures/11_relative_position_grouped_bars.png}
+    \includegraphics[width=0.95\linewidth]{figures/11_relative_position_grouped_bars.png}
     \caption{\Unsafe{} rate by relative position (Leader / Middle /
     Trailer) within each assigned persona band, for GPT-5-nano (left)
     and GPT-5.4-nano (right). Bars marked $^\dagger$ in

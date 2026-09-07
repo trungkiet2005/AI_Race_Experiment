@@ -59,8 +59,8 @@ on Autonomous Agents and Multiagent Systems (AAMAS 2026)}{May 25 -- 29, 2026}
 %%% Use this command to specify your submission number.
 %%% In anonymous mode, it will be printed on the first page.
 
-% TODO: replace TBD with the assigned submission identifier before submission.
-\acmSubmissionID{TBD}
+\input{submission_id.tex}
+\acmSubmissionID{\SubmissionID}
 
 %%% Use this command to specify the title of your paper.
 
@@ -294,7 +294,7 @@ is reported at the same evidence level.
 %%% Keywords should be separated by commas.
 
 % \keywords{Legends, Myths, Folktales}
-\keywords{Large language model agents, AI development races, multi-agent systems, repeated games, strategic decision-making, AI safety, prompt sensitivity, task validity}
+\keywords{Large language models, AI development races, multi-agent systems, repeated games, AI safety, task validity}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -557,7 +557,7 @@ play overall.
 
 \begin{figure*}[t]
     \centering
-    \includegraphics[width=\textwidth]{figures/llm_human_clustering/09_human_vs_llm_own_risk_dependence.pdf}
+    \includegraphics[width=\textwidth]{figures/llm_human_clustering/09_human_vs_llm_own_risk_dependence.png}
     \caption{A measured human disposition against an assigned model label.
     Left: mean \Unsafe{} rate by elicited Eckel--Grossman gamble choice,
     with 95\% confidence intervals and participants per bin; the dotted
@@ -659,7 +659,7 @@ on that feature. It does not mean that the feature caused the decision.
 
 \begin{figure}[t]
     \centering
-    \includegraphics[width=0.48\textwidth]{figures/llm_human_clustering/feature_importance_shap_heatmap.pdf}
+    \includegraphics[width=0.95\linewidth]{figures/llm_human_clustering/feature_importance_shap_heatmap.pdf}
     \caption{Population-specific predictive structure for round-$t\geq2$
     \Unsafe{} choices. Each row reports the share of mean absolute SHAP
     value assigned to the same five pre-decision features by a random
@@ -920,7 +920,7 @@ so any structure visible here is structure the embedding already had.
 
 \begin{figure}[t]
     \centering
-    \includegraphics[width=0.48\textwidth]{figures/llm_human_clustering/06_tsne_safe_unsafe.png}
+    \includegraphics[width=0.95\linewidth]{figures/llm_human_clustering/06_tsne_safe_unsafe.png}
     \caption{The same t-SNE coordinates as the population-identity embedding in the main paper,
     recoloured by each player's own mean \Unsafe{} rate over rounds 1--5
     (green = \Safe{}, red = \Unsafe{}) instead of population identity.
@@ -949,7 +949,7 @@ over the fourteen features every trajectory shares.
 
 \begin{figure}[t]
     \centering
-    \includegraphics[width=0.48\textwidth]{figures/llm_human_clustering/03_radar_small_multiples_by_group_no_gap_r1.png}
+    \includegraphics[width=0.95\linewidth]{figures/llm_human_clustering/03_radar_small_multiples_by_group_no_gap_r1.png}
     \caption{Mean round-by-round profile for each population, on the 14
     features shared across every trajectory (own and opponent action at
     rounds 1--5, plus progress gap entering rounds 2--5; the round-1 gap is
@@ -1048,8 +1048,9 @@ population and archetype.
   neutral-lane player-races assigned to each human-fit archetype.
   Human row is the reference clustering ($n{=}341$); each LLM row
   projects that checkpoint's own no-persona player-races
-  ($n{=}60$ to $120$, see Table~\ref{tab:evidence-strata}) into the same
-  space. This table draws on the full nine-checkpoint cross-model pilot
+  ($n{=}60$ to $120$) into the same
+  space. The sample sizes are summarized in the evidence-strata table in the
+  main paper. This table draws on the full nine-checkpoint cross-model pilot
   and therefore includes GPT-5.6 Luna and Terra, which are not part of
   the seven-model HDBSCAN/t-SNE/decision-tree comparison earlier in
   this subsection.}

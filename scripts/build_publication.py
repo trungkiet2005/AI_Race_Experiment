@@ -1,7 +1,9 @@
-"""Compile the paper and deck into the canonical ``results/`` artifact tree.
+"""Compile the paper and deck into the project publication artifact folders.
 
 LaTeX auxiliary files are isolated under ``results/_build/latex/current`` so a
-repository build never recreates the retired top-level ``output/`` tree.
+repository build never recreates the retired top-level ``output/`` tree. The
+final paper and supplementary PDFs are written to ``paper/`` for easy access;
+the publication artifact tree keeps a synchronized copy for release tooling.
 
 The two documents disagree about what their asset paths are relative to:
 ``paper/main.tex`` loads ``aamas.cls`` and ``figures/...`` relative to ``paper/``,
@@ -21,6 +23,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 BUILD_DIR = ROOT / "results" / "_build" / "latex" / "current"
+PAPER_DIR = ROOT / "paper"
 PUBLICATION_DIR = ROOT / "results" / "artifacts" / "publication"
 
 
@@ -91,6 +94,10 @@ def main() -> int:
     for program in ("pdflatex", "bibtex"):
         if shutil.which(program) is None:
             raise SystemExit(f"required program not found: {program}")
+    if BUILD_DIR.exists():
+        if BUILD_DIR.is_symlink() or not BUILD_DIR.is_dir():
+            raise SystemExit(f"refusing to remove non-directory build path: {BUILD_DIR}")
+        shutil.rmtree(BUILD_DIR)
     BUILD_DIR.mkdir(parents=True, exist_ok=True)
     PUBLICATION_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -101,9 +108,17 @@ def main() -> int:
     if not args.paper_only:
         products.append(build_deck())
     for product in products:
-        target = PUBLICATION_DIR / product.name
-        shutil.copy2(product, target)
-        print(f"published {target.relative_to(ROOT)}", flush=True)
+        if product.name in {"ai_race_paper.pdf", "ai_race_supplementary.pdf"}:
+            target = PAPER_DIR / product.name
+            shutil.copy2(product, target)
+            print(f"published {target.relative_to(ROOT)}", flush=True)
+            mirror = PUBLICATION_DIR / product.name
+            shutil.copy2(target, mirror)
+            print(f"synced {mirror.relative_to(ROOT)}", flush=True)
+        else:
+            target = PUBLICATION_DIR / product.name
+            shutil.copy2(product, target)
+            print(f"published {target.relative_to(ROOT)}", flush=True)
     return 0
 
 

@@ -20,7 +20,7 @@ import zipfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-PUBLICATION = ROOT / "results" / "artifacts" / "publication"
+PAPER_DIR = ROOT / "paper"
 BUNDLE = ROOT / "results" / "artifacts" / "submission"
 LIMIT_BYTES = 25 * 1024 * 1024
 
@@ -39,9 +39,17 @@ IDENTIFYING = [
 def pdf_text(path: Path) -> str:
     if shutil.which("pdftotext") is None:
         return ""
-    out = subprocess.run(
-        ["pdftotext", "-layout", str(path), "-"], capture_output=True, text=True
-    )
+    try:
+        out = subprocess.run(
+            ["pdftotext", "-layout", str(path), "-"],
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+            check=True,
+        )
+    except (OSError, subprocess.CalledProcessError):
+        return ""
     return out.stdout
 
 
@@ -66,8 +74,8 @@ def main() -> int:
     )
     args = parser.parse_args()
 
-    paper = PUBLICATION / "ai_race_paper.pdf"
-    supp = PUBLICATION / "ai_race_supplementary.pdf"
+    paper = PAPER_DIR / "ai_race_paper.pdf"
+    supp = PAPER_DIR / "ai_race_supplementary.pdf"
     for f in (paper, supp):
         if not f.is_file():
             raise SystemExit(f"missing {f}; run scripts/build_publication.py first")

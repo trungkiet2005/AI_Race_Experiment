@@ -29,6 +29,23 @@ pip install -e ".[analysis]"             # scipy/statsmodels/matplotlib for the 
 pip install -e ".[api,kaggle-benchmark]" # hosted-model + Kaggle Benchmark paths
 ```
 
+Paper build outputs:
+
+```bash
+python scripts/build_publication.py --paper-only
+python scripts/check_publication.py --allow-placeholder-id
+```
+
+The manuscript sources are `paper/main.tex` and `paper/supplementary.tex`.
+The shared anonymous submission ID is configured once in
+`paper/submission_id.tex`.
+Their final PDFs must always be written to `paper/ai_race_paper.pdf` and
+`paper/ai_race_supplementary.pdf`. LaTeX auxiliary files belong under the
+ignored `results/_build/latex/current/` directory. The build script also keeps
+copies under `results/artifacts/publication/` because submission and release
+tools read that mirror. The QA command should be run after every build; omit
+`--allow-placeholder-id` once AAMAS assigns the anonymous submission ID.
+
 `vendor/FAIRGAME/unit_tests/` is vendored upstream and excluded from `testpaths`; it is not part of this project's suite.
 
 Local dry run without any model backend (deterministic mock responses):

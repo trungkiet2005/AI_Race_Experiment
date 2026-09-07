@@ -1,8 +1,9 @@
 # AI Race results
 
-This is the repository's **single canonical generated-artifact root**. It holds
-raw model runs, derived analyses, result reports, visual QA, and publication
-PDFs. The retired `ai_race/results/`, repository-root `output/`, and
+This is the repository's **canonical generated-artifact root for results**. It
+holds raw model runs, derived analyses, result reports, visual QA, and
+publication PDF mirrors. The final manuscript PDFs live in `paper/` and are
+also synchronized here for release tooling. The retired `ai_race/results/`, repository-root `output/`, and
 `references/output/` trees have been consolidated here. Reproducible LaTeX
 scratch is isolated under the ignored `results/_build/` directory.
 

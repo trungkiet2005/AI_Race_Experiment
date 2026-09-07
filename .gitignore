@@ -132,6 +132,8 @@ slides/**/*.xdv
 
 # pdflatex console dumps from paper build passes.
 paper/*.txt
+# Historical drafting notes and obsolete sample build outputs.
+/paper/legacy/
 # Local LaTeX build tree. Run exports live under results/, never here.
 /output/
 
