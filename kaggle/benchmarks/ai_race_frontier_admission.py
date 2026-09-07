@@ -26,11 +26,11 @@ from pydantic import BaseModel, Field
 
 # Frozen admission contract. A change requires a new task name and protocol id.
 TASK_NAME = "ai-race-frontier-admission"
-PROTOCOL_ID = "ai-race-frontier-admission-v2"
+PROTOCOL_ID = "ai-race-frontier-admission-v3"
 PROMPT_VERSION = "ai-race-fairgame-v3"
 BASE_SEED = 260726
 REPETITIONS = int(os.environ.get("AI_RACE_ADMISSION_REPS", "3"))
-MAX_OUTPUT_TOKENS = 128
+MAX_OUTPUT_TOKENS = 512
 TEMPERATURE = 0.0
 MAX_TRANSPORT_RETRIES = 3
 OUTPUT_ROOT = Path(
@@ -210,7 +210,7 @@ def ai_race_frontier_admission(llm) -> dict:
     raw_path = output_dir / "raw_responses.jsonl"
     raw_path.unlink(missing_ok=True)
     manifest = {
-        "schema_version": "ai-race-frontier-admission-v2",
+        "schema_version": "ai-race-frontier-admission-v3",
         "status": "running",
         "protocol_id": PROTOCOL_ID,
         "started_utc": utc_now(),
