@@ -69,8 +69,9 @@ RETRY_SEED_STRIDE = 10_000_019
 HORIZON_STREAM = 17
 SETBACK_STREAM = 29
 BASE_SEED = int(os.environ.get("AI_RACE_SEED", "260726"))
-REPETITIONS = int(os.environ.get("AI_RACE_REPS", "3"))
-RUN_PHASE = os.environ.get("AI_RACE_RUN_PHASE", "pilot").strip().lower()
+PROTOCOL_ID = "ai-race-frontier-baseline-v2"
+REPETITIONS = int(os.environ.get("AI_RACE_REPS", "10"))
+RUN_PHASE = os.environ.get("AI_RACE_RUN_PHASE", "confirmatory").strip().lower()
 MODEL_ROUTE = os.environ.get("LLM_DEFAULT", "kbench-model").strip() or "kbench-model"
 MODEL_TAG = re.sub(
     r"[^A-Za-z0-9._-]+", "-",
@@ -991,6 +992,7 @@ def ai_race_baseline(llm) -> dict:
         "started_utc": datetime.now(timezone.utc).isoformat(),
         "completed_utc": None,
         "task_name": "ai-race-baseline",
+        "protocol_id": PROTOCOL_ID,
         "model": MODEL_TAG,
         "model_route": llm_contract["model_route"],
         "llm_backend_mro": llm_contract["backend_mro"],

@@ -51,6 +51,11 @@ freeze task source rồi đổi fallback `AI_RACE_RUN_PHASE` thành `confirmator
 đặt `AI_RACE_REPS`/`REPETITIONS` đúng cỡ mẫu đã preregister. Không download rồi
 pool pilot với confirmatory; mọi row và manifest đều ghi phase.
 
+The current frontier baseline task defaults to 10 races per risk and
+`RUN_PHASE="confirmatory"`, recorded as protocol
+`ai-race-frontier-baseline-v2`. Smoke runs may override both settings in a
+separate output root. Never pool pilot and confirmatory rows.
+
 ## Workflow theo checkpoint
 
 Chạy **một lệnh mỗi lần**, kiểm tra output rồi mới sang checkpoint kế tiếp. Không
