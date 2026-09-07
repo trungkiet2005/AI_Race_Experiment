@@ -26,11 +26,11 @@ from pydantic import BaseModel, Field
 
 # Frozen admission contract. A change requires a new task name and protocol id.
 TASK_NAME = "ai-race-frontier-admission"
-PROTOCOL_ID = "ai-race-frontier-admission-v3"
+PROTOCOL_ID = "ai-race-frontier-admission-v4"
 PROMPT_VERSION = "ai-race-fairgame-v3"
 BASE_SEED = 260726
 REPETITIONS = int(os.environ.get("AI_RACE_ADMISSION_REPS", "3"))
-MAX_OUTPUT_TOKENS = 512
+MAX_OUTPUT_TOKENS = 256
 TEMPERATURE = 0.0
 MAX_TRANSPORT_RETRIES = 3
 OUTPUT_ROOT = Path(
@@ -144,6 +144,7 @@ def prompt_for(probe_id: str, question: str, allowed: tuple[str, ...]) -> str:
 
 def llm_contract(llm) -> dict[str, object]:
     route = str(getattr(llm, "model", None) or os.environ.get("LLM_DEFAULT") or "kbench-model").strip()
+    route_lower = route.lower()
     names = {cls.__name__ for cls in type(llm).__mro__}
     if "GoogleGenAI" in names:
         token_parameter = "max_output_tokens"
@@ -151,12 +152,18 @@ def llm_contract(llm) -> dict[str, object]:
         token_parameter = "max_tokens"
     else:
         raise RuntimeError(f"Unknown Kaggle Benchmark backend: {sorted(names)}")
+    if any(token in route_lower for token in ("gemini", "gpt-5", "deepseek")):
+        reasoning_requested = "low"
+    else:
+        # Some routes reject both a literal `none` and any thinking budget.
+        reasoning_requested = None
     return {
         "model_route": route,
         "backend_mro": [f"{cls.__module__}.{cls.__qualname__}" for cls in type(llm).__mro__],
         "output_token_limit_parameter": token_parameter,
         "output_token_limit": MAX_OUTPUT_TOKENS,
         "temperature_requested": TEMPERATURE,
+        "reasoning_requested": reasoning_requested,
         "prompt_version": PROMPT_VERSION,
     }
 
@@ -176,11 +183,7 @@ def call_one(
                 response = llm.prompt(
                     prompt,
                     schema=AuditAnswer,
-                    # Do not send a literal "none": some provider routes
-                    # reject it as an unsupported reasoning budget. Omitting
-                    # the field requests the provider default without asking
-                    # for a hidden reasoning trace.
-                    reasoning=None,
+                    reasoning=contract["reasoning_requested"],
                     temperature=TEMPERATURE,
                     seed=int(seed),
                     extra_api_params=extra,
