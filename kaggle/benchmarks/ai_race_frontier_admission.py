@@ -26,7 +26,7 @@ from pydantic import BaseModel, Field
 
 # Frozen admission contract. A change requires a new task name and protocol id.
 TASK_NAME = "ai-race-frontier-admission"
-PROTOCOL_ID = "ai-race-frontier-admission-v1"
+PROTOCOL_ID = "ai-race-frontier-admission-v2"
 PROMPT_VERSION = "ai-race-fairgame-v3"
 BASE_SEED = 260726
 REPETITIONS = int(os.environ.get("AI_RACE_ADMISSION_REPS", "3"))
@@ -176,7 +176,11 @@ def call_one(
                 response = llm.prompt(
                     prompt,
                     schema=AuditAnswer,
-                    reasoning="none",
+                    # Do not send a literal "none": some provider routes
+                    # reject it as an unsupported reasoning budget. Omitting
+                    # the field requests the provider default without asking
+                    # for a hidden reasoning trace.
+                    reasoning=None,
                     temperature=TEMPERATURE,
                     seed=int(seed),
                     extra_api_params=extra,
@@ -206,7 +210,7 @@ def ai_race_frontier_admission(llm) -> dict:
     raw_path = output_dir / "raw_responses.jsonl"
     raw_path.unlink(missing_ok=True)
     manifest = {
-        "schema_version": "ai-race-frontier-admission-v1",
+        "schema_version": "ai-race-frontier-admission-v2",
         "status": "running",
         "protocol_id": PROTOCOL_ID,
         "started_utc": utc_now(),
