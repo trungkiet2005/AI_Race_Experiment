@@ -1,0 +1,4 @@
+context,max_private_risk,player_trajectories,decisions,unsafe_rate_decision_weighted,mean_minimum_mismatch_rate,unique_classification_rate,fractional_nearest_AS,fractional_nearest_AU,fractional_nearest_CS,fractional_nearest_CAS
+gemini-3-flash-preview,0.1,20,186,1.0,0.0,0.0,0.0,0.5,0.0,0.5
+gemini-3-flash-preview,0.6,20,186,0.6989247311827957,0.24756521256521252,0.8,0.0,0.5,0.0,0.5
+gemini-3-flash-preview,0.9,20,186,0.6075268817204301,0.2820895770895771,0.75,0.05,0.275,0.0,0.675

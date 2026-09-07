@@ -1,0 +1,21 @@
+{
+  "model_independence_warning": "predicted_phi_U depends only on max_private_risk. It is identical for every LLM and every persona condition in this table. 'difference' is the distance between an LLM and the game theory, not a fit; agreement is a property of the game and is not evidence about the model.",
+  "mutation_regime": "small_mutation_limit",
+  "mutation_regime_caveat": "mu is 0 because these are limit values; nominal_mu records the source paper's parameter point each row approximates and is not applied. In the limit AU and CAS are exactly payoff-equivalent against each other, so the predicted transition between them near p_r^max = 0.2 is absent and predicted_phi_U is close to 1 at both 0.1 and 0.6. Reproducing Figure 3B's small gap between 0.6 and 0.9 requires the finite-mutation chain, which is not implemented.",
+  "parameter_points": [
+    {
+      "beta": 2.0,
+      "label": "reference",
+      "nominal_mu": 0.02
+    },
+    {
+      "beta": 0.01,
+      "label": "best_fit",
+      "nominal_mu": 0.05
+    }
+  ],
+  "population_size": 100,
+  "prediction_source": "ai_race.theory, small-mutation evolutionary limit over the four reduced strategies, derived from ai_race/configs/game/*.json",
+  "statistic": "Median player-level Unsafe frequency, matching Figure 3B of the source paper. The mean is carried alongside for reference only.",
+  "unmatched_risk_treatments": []
+}

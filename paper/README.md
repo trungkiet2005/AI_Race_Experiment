@@ -4,7 +4,7 @@ This directory contains the manuscript for the project’s **LLM-agent AI Race e
 
 ## Current status
 
-The manuscript reports bounded diagnostic evidence: a game-understanding and calculator-aided behavioral audit, a five-checkpoint descriptive baseline, payoff-preserving context and mapping stress tests, FAST-SAE controls, and an EGTTools-validated reconstruction. Confirmatory risk-treatment and dynamic-state analyses remain pending. Pilot evidence is explicitly excluded from later confirmatory pooling.
+The manuscript reports a bounded frontier-model baseline: a per-endpoint task-validity audit, a three-repetition confirmatory admission for Gemini 3 Flash, a 30-race behavioural run, published-human reference values, and a faithful EGT reconstruction. The frontier baseline is descriptive and endpoint-specific. Fully crossed mapping, persona, language, and N-player frontier reruns remain pending; legacy local-model pilots are excluded from headline evidence.
 
 The focal prior work—Fernández Domingos and Han (2026), arXiv:2607.26034—is a study of **human participants** plus an evolutionary model. It motivates the environment and planned analyses but is not evidence about LLM behaviour. See the project’s [AI-readable source note](../references/papers/markdown/falling-behind-ai-race.md).
 
@@ -35,7 +35,8 @@ The pilot includes rule/arithmetic accuracy and calculator-ablation figures. Lat
 3. a treatment/model overview with the number of independent races;
 4. an Unsafe-choice dynamics figure with uncertainty intervals;
 5. a race-position and opponent-response effect plot; and
-6. a reproducibility/data-flow diagram.
+6. a reproducibility/data-flow diagram; and
+7. an EGT-versus-frontier Unsafe-rate comparison with independent-chain diagnostics.
 
 All figures must distinguish source-study values from this project’s estimates and include accessible colours, direct labels, sample units, and uncertainty.
 

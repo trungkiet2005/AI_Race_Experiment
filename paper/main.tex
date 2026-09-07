@@ -660,7 +660,7 @@ not informed optimisation of the game.
     \toprule
     Module & Races & Decisions & Use \\
     \midrule
-    Qwen task audit & 685 & n/a & validity audit \\
+    Frontier endpoint admission (Gemini 3 Flash) & n/a & 60 probes & confirmatory gate \\
     Calculator diagnostic & 60 & 1,116 & paired diagnostic \\
     Context pilot ($T=0$) & 768 & 13,680 & robustness diagnostic \\
     Fixed-state replay & 1,536 & n/a & direct prompt diagnostic \\
@@ -685,19 +685,19 @@ contains full model tables, predictive diagnostics, and robustness checks.
 \label{sec:results-validity}
 
 We first ask whether the audited model can carry out the rules it receives.
-The admitted audit contains 685 fixed-seed outputs from
-Qwen2.5-7B-Instruct, and all planned outputs were retained. As
-Table~\ref{tab:task-audit} shows, the model recalls rules and looks up a
-one-round payoff almost perfectly. It performs much worse when it must track
-the changing state. It follows the requested one-line format in only 32.1\%
-of outputs, although the frozen semantic parser can recover a value from
-every response. Showing a verified calculator result also raises accuracy
-from 52.1\% to 75.6\%. Thus, knowing a rule is not the same as using it over
-time.
+The confirmatory endpoint admission contains 60 fixed-seed outputs from the
+Gemini 3 Flash frontier route; all planned outputs
+were retained and no transport or parse failure occurred. As
+Table~\ref{tab:task-audit} shows, this endpoint reconstructed every tested
+state and terminal consequence. It made errors on one of the two
+closed-form expected-payoff probes in each repetition, so those probes remain
+a diagnostic rather than a gameplay exclusion criterion. This separation
+prevents a failure on optional arithmetic from being mistaken for a failure
+to follow the action protocol.
 
 \begin{table}[t]
-    \caption{Semantic accuracy on the 685-probe task audit
-    (Qwen2.5-7B-Instruct), by probe subtask.}
+    \caption{Semantic accuracy on the 60-probe frontier endpoint admission
+    (Gemini 3 Flash frontier route), by probe subtask.}
     \label{tab:task-audit}
     \centering
     \small
@@ -705,24 +705,23 @@ time.
         \toprule
         Subtask & Accuracy \\
         \midrule
-        Rule recall                  & 97.4\%  \\
+        Rule recall                  & 100.0\% \\
         One-stage payoff lookup      & 100.0\% \\
-        Terminal scoring             & 53.3\%  \\
-        State reconstruction         & 37.0\%  \\
-        State transition             & 22.2\%  \\
-        Expected-payoff calculation  & 16.7\%  \\
+        Terminal scoring             & 100.0\% \\
+        State reconstruction         & 100.0\% \\
+        State transition             & 100.0\% \\
+        Expected-payoff calculation  & 50.0\%  \\
         \midrule
-        Overall (all subtasks pooled) & 59.1\% \\
+        Overall (all subtasks pooled) & 95.0\% \\
         \bottomrule
     \end{tabular}
 \end{table}
 
-This gap between local rule recall and reliable execution of the evolving
-game state is the lens through which every subsequent behavioural result in
-this section should be read: an agent can answer questions about the rules
-correctly while still failing to track the state those rules act on. Full
-probe-by-probe breakdowns are given in
-the supplementary material.
+The remaining gap is concentrated in closed-form expected-payoff arithmetic,
+not in state or terminal execution. We therefore retain the stricter
+per-endpoint audit and report the arithmetic diagnostic instead of treating
+all frontier routes as interchangeable. Full probe-by-probe outputs,
+including failed endpoint admissions, are given in the supplementary material.
 
 \subsection{Strategic robustness under equivalent presentations}
 \label{sec:results-sensitivity}
@@ -757,25 +756,12 @@ confirmatory causal effect.
     \end{tabular}
 \end{table}
 
-\paragraph{Opaque symbolic mapping.} This diagnostic is confounded because the
-comprehension gate failed. A stronger and more concerning form of sensitivity appears when the game is
-described through an opaque code rather than the words \Safe{}/\Unsafe{}.
-The temperature-zero context pilot completed 768 live races (13,680
-decisions) and a separate fixed-state replay of 1,536 context and mapping
-cells, with no final parse failures. All paired non-control trajectories
-agreed at round one; divergence appeared only after feedback, with the
-largest live full-trajectory contrast against the abstract control at 34.0
-percentage points and the largest fixed-state contrast at 16.7 points. When
-the symbol $P$ denoted \Safe{}, six context contrasts diverged from the
-abstract control; when $Q$ denoted \Safe{} instead, every corresponding
-contrast was zero, even though the two mappings describe the identical
-game. We flag this result rather than treat it as confirmatory evidence for
-two reasons: the mapping was balanced by repetition parity rather than
-fully crossed within seed blocks, and, more importantly, the associated
-comprehension gate failed outright, with state-update accuracy at 12.5\%
-and terminal-scoring accuracy at 17.2\%. We therefore report this as
-representation-sensitive \emph{observed behaviour under fixed mechanics},
-not as evidence that the model understood or optimised the race.
+\paragraph{Opaque symbolic mapping.} The earlier local context-skin pilot is
+not part of the frontier evidence set and is excluded from the headline
+tables. Its mapping-by-repetition confound and failed comprehension gate are
+retained in the audit trail as a reason to require a fully crossed,
+per-endpoint frontier rerun. Until that rerun is complete, we make no causal
+claim about symbol mapping or narrative skins.
 
 Together, these diagnostics show that action sequences can shift under changes
 that a correct game model should ignore. This is why the comprehension check in
@@ -787,11 +773,13 @@ that a correct game model should ignore. This is why the comprehension check in
 The evolutionary benchmark predicts a sharp change with private risk. At its
 main reference setting, predicted Unsafe play is 99.2\%, 98.0\%, and 1.9\% in
 the low-, medium-, and high-risk conditions. This pattern follows the shift
-from AU to CAS and then CS described in \S\ref{sec:theory-benchmark}. The
-temperature-zero Qwen context pilot does not reproduce this phase change. In
-the technology framing it produces 0\% Unsafe play at all three risk levels,
-while other narrative skins under the same mechanics range from 0\% to about
-33\%.
+from AU to CAS and then CS described in \S\ref{sec:theory-benchmark}.
+The frontier Gemini confirmatory baseline instead produces 100.0\%, 69.9\%,
+and 60.8\% Unsafe decisions at maximum risks 0.1, 0.6, and 0.9,
+respectively, across 30 completed races and 558 decisions. This is a
+descriptive endpoint result, not an equilibrium estimate; the sampling seed
+was requested but the hosted SDK stripped it for this route, as recorded in
+the run manifest.
 
 This is a boundary rather than a failed equilibrium test. The evolutionary
 model describes strategy frequencies under selection and mutation; the LLM
@@ -800,6 +788,19 @@ The comparison nevertheless gives a useful game-theoretic insight: holding the
 payoff mechanism fixed does not guarantee the behavioural pattern predicted by
 the reduced strategy model. For the audited checkpoint, task representation
 can be more visible in observed play than the theoretical risk transition.
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\columnwidth]{../results/frontier/egt_frontier_comparison/egt_theory_vs_llm_unsafe.pdf}
+  \caption{Frontier Gemini Unsafe decisions against the reconstructed
+  evolutionary benchmark. The theory curves are stationary strategy mixtures;
+  the frontier points are descriptive self-play rates from 30 completed races.
+  Independent-chain ranges are shown for the theory reconstruction.}
+  \Description{Line and point plot of Unsafe rates by maximum private risk.
+  Evolutionary-game reconstructions are shown for three parameter regimes and
+  frontier Gemini self-play is shown as descriptive points.}
+  \label{fig:egt-frontier-comparison}
+\end{figure}
 
 \subsection{Two-player strategic diversity: humans and LLMs}
 \label{sec:results-diversity}
@@ -1178,12 +1179,11 @@ the supplementary material.
 \label{sec:discussion}
 
 The main lesson is not that an audited model ``understands the game.'' The
-evidence supports a narrower claim. The model can recall rules and find local
-payoffs, yet still make regular errors when it updates the state or calculates
-expected payoff. Its action sequences also change when verified arithmetic or
-an equivalent response representation is provided. Reports of LLM behaviour
-in repeated games should therefore show comprehension accuracy and parser
-health together with action rates.
+evidence supports a narrower claim. The admitted frontier endpoint can recall
+rules, reconstruct tested states, and apply terminal eligibility, yet still
+make errors on closed-form expected payoff. Reports of LLM behaviour in
+repeated games should therefore show per-endpoint comprehension accuracy and
+parser health together with action rates.
 
 The human experiment gives us an external behavioural reference. It is not a
 target that an LLM should reproduce. When an LLM matches a human association,
@@ -1193,24 +1193,42 @@ does not make the human result invalid. Model, persona, and multiplayer
 comparisons have the same boundary: each applies only to the tested endpoint,
 prompt, decoding setting, provider route, and run period.
 
-Four limitations shape what we can claim. First, the context-to-symbol mapping
+Several limitations shape what we can claim. First, the earlier context-to-symbol mapping
 changes with repetition parity, so mapping and repetition are not fully
-separated. Second, the related comprehension gate failed. We can describe the
-result as prompt-sensitive output, but not as informed game optimisation.
-Third, fixed-state replay measures one decision per saved state, while live
-play measures dependent decisions along a changing trajectory; their effect
-sizes are not directly interchangeable. Fourth, the multiplayer pilots are
-small, come from mixed sources, and do not include a matched two-player
-condition. Changing the number of players also changes the payoff table,
-opponent count, and prompt length. We therefore cannot identify a pure group-
-size effect. More broadly, this game models only a private speed and safety trade-
-off. It does not model the full structure of frontier AI labs, collective
-harm, regulation, communication, or uncertainty about real capabilities.
+separated. Its comprehension gate also failed. We therefore exclude this pilot
+from headline evidence and require a fully crossed, per-endpoint frontier
+rerun before making a mapping claim.
+The new Gemini endpoint admission passes state and terminal gates but still
+misses half of the closed-form expected-payoff probes; this is reported as a
+diagnostic limitation, not hidden by a fallback parser. Fixed-state replay
+measures one decision per saved state, whereas live play measures dependent
+decisions along a changing trajectory, so their effect sizes are not
+interchangeable. Multiplayer pilots are small and do not include a matched
+two-player condition. Changing player count also changes the payoff table,
+opponent count, and prompt length, so we cannot identify a pure group-size
+effect. Frontier endpoint availability and seed forwarding are
+provider-specific: the current confirmatory route requested seeds but the
+hosted SDK stripped them, and only one authorised Kaggle identity was
+configured. The EGT comparison is a repo-native reconstruction with an
+EGTtools source audit, not bitwise reproduction of undisclosed author code.
+More broadly, this game models only a private speed and safety trade-off; it
+does not model the full structure of frontier AI labs, collective harm,
+regulation, communication, or uncertainty about real capabilities.
 
-% \section{Reproducibility and responsible reporting}
-% \label{sec:reproducibility}
+\section{Reproducibility and responsible reporting}
+\label{sec:reproducibility}
 
-% Each admitted run is represented by append-only event logs and a manifest recording the available configuration, prompt, model, seed, and execution metadata. Derived analyses are rebuilt from event logs rather than console output, and failed sessions or exclusions remain in the accounting trail. Pilot and confirmatory evidence are not pooled. We avoid anthropomorphic interpretations of actions and will release code, prompts, manifests, and de-identified logs subject to provider, licence, and privacy constraints.
+Each admitted run is represented by append-only event logs and a manifest
+recording the model route, prompt and source hashes, decoding contract, seed
+requests, parser status, and execution metadata. Derived analyses are rebuilt
+from event logs rather than console output, and failed sessions or exclusions
+remain in the accounting trail. Pilot and confirmatory evidence are not
+pooled. We avoid anthropomorphic interpretations of actions and release code,
+prompts, manifests, and de-identified logs subject to provider, licence, and
+privacy constraints. The canonical frontier outputs are kept in the
+repository's \texttt{paper/} and \texttt{results/frontier/} trees; the
+submission PDFs are built into \texttt{paper/} by the repository build
+workflow.
 
 \section{Conclusion}
 

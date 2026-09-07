@@ -363,19 +363,19 @@ descriptive results (\S\ref{app:twoplayer-baseline},
 \label{app:task-validity-full}
 
 Table~\ref{tab:task-validity-full} reports the full breakdown behind the
-single semantic-accuracy figure (59.1\%) quoted in
-the validity gate in the main paper. The admitted task audit used
-Qwen2.5-7B-Instruct under protocol \texttt{ai-race-game-understanding-v2}:
-41 atomic probes spanning rule recall, one-stage payoffs, state
-reconstruction, state transition, terminal scoring, and expected payoff,
-with 685 planned fixed-seed probe outputs, all retained. Numeric probes
-varied direct wording, paraphrase, and calculator disclosure; categorical
-probes additionally reversed answer order.
+frontier endpoint admission in the main paper. The confirmatory audit used
+the exact route \texttt{google/gemini-3-flash-preview} under frozen protocol
+\texttt{ai-race-frontier-admission-v1}: 20 atomic probes spanning rule recall,
+one-stage payoffs, state reconstruction, state transition, terminal scoring,
+and expected payoff, repeated three times for 60 retained outputs. Every
+response was schema-valid and no transport retry was needed. Numeric probes
+used a fixed structured-output contract; categorical probes explicitly listed
+the allowed answer set.
 
 \begin{table}[h]
-    \caption{Task-validity probe accuracy by category, Qwen2.5-7B-Instruct,
-    protocol \texttt{ai-race-game-understanding-v2} ($n=685$ retained
-    probe outputs).}
+    \caption{Task-validity probe accuracy by category for the admitted
+    Gemini 3 Flash frontier route, protocol
+    \texttt{ai-race-frontier-admission-v1} ($n=60$ retained probe outputs).}
     \label{tab:task-validity-full}
     \centering
     \small
@@ -383,43 +383,65 @@ probes additionally reversed answer order.
         \toprule
         Probe category & Accuracy \\
         \midrule
-        Rule recall                        & 97.4\% \\
+        Rule recall                        & 100.0\% \\
         One-stage payoff lookup             & 100.0\% \\
-        State reconstruction                & 37.0\% \\
-        State transition                    & 22.2\% \\
-        Terminal scoring                    & 53.3\% \\
-        Expected-payoff calculation         & 16.7\% \\
+        State reconstruction                & 100.0\% \\
+        State transition                    & 100.0\% \\
+        Terminal scoring                    & 100.0\% \\
+        Expected-payoff calculation         & 50.0\% \\
         \midrule
-        \emph{Overall semantic accuracy}    & \emph{59.1\%} \\
-        \emph{Strict output-format compliance} & \emph{32.1\%} \\
+        \emph{Overall semantic accuracy}    & \emph{95.0\%} \\
+        \emph{Schema-valid responses}      & \emph{100.0\%} \\
         \bottomrule
     \end{tabular}
 \end{table}
 
-Two further contrasts qualify these category-level numbers. First, semantic
-accuracy without a disclosed calculator result was 52.1\%, versus 75.6\%
-when the verified result was shown -- the same clean-diagnostic comparison
-discussed behaviourally in the strategic robustness check in the main paper, here measured
-at the level of task comprehension rather than sampled action. Second,
-answer-order reversal did not change correctness on the tested categorical
-probes, whereas paraphrasing the same question changed correctness on some
-state-reconstruction and terminal-scoring items; this separates
-\emph{repeatability under a fixed decoding contract} from
-\emph{robustness of the underlying measurement}, and is part of why we
-treat state-level probes as less reliable than rule-recall probes even
-before looking at any behavioural result.
+The only systematic error was in the optional payoff check: three of six
+responses were correct. We retain this domain as a
+diagnostic. Live gameplay asks for an action, whereas the state and terminal
+domains determine whether the action prompt is mechanically interpretable.
+The admission task therefore records both the required gate and the arithmetic
+limitation instead of silently dropping the endpoint.
 
-At the level of individual paired probe items, none of the 7 order-reversal
-pairs (spanning rule recall and terminal scoring) flipped either the raw
-parsed answer or scored correctness (0/7). Of the 41 paraphrase pairs, 12
-flipped the raw parsed answer, but only 3 changed scored correctness:
-\texttt{state\_own\_risk} (state reconstruction), and
-\texttt{terminal\_opp\_final} and \texttt{terminal\_winner\_setback} (both
-terminal scoring). The remaining 9 answer-only flips left correctness
-unchanged because both paraphrase variants were already scored the same
-way (both correct or both incorrect). This is the exact pairwise count
-behind the qualitative claim above: paraphrase-induced correctness changes
-concentrate in state- and terminal-level items, not rule-recall items.
+\subsection{Frontier endpoint registry and admission outcomes}
+\label{app:frontier-admission}
+
+Endpoint availability was checked against the active Kaggle Benchmark identity
+and recorded using the exact route string. One repetition of the 20-probe
+bank was used as a diagnostic smoke for every advertised route; only the
+Gemini route then received the three-repetition confirmatory admission. A
+route that was unavailable or failed transport was retained as failed
+infrastructure evidence, never replaced by another endpoint.
+
+\begin{table}[h]
+    \caption{Per-endpoint frontier admission audit. Smoke results are
+    diagnostic; the Gemini confirmatory result is the only route admitted to
+    the new gameplay run.}
+    \label{tab:frontier-admission-registry}
+    \centering
+    \scriptsize
+    \begin{tabular}{@{}p{0.49\linewidth}ccc p{0.13\linewidth}@{}}
+        \toprule
+        Exact route & Overall & State & Terminal & Status \\
+        \midrule
+        \texttt{google/gemini-3-flash-preview} & 95\% & 100\% & 100\% & admitted \\
+        \texttt{anthropic/claude-sonnet-5@default} & 75\% & 80\% & 60\% & diagnostic \\
+        \texttt{google/gemini-3.1-flash-lite-preview} & 75\% & 60\% & 80\% & diagnostic \\
+        \texttt{openai/gpt-5.4-nano-2026-03-17} & 50\% & 20\% & 60\% & diagnostic \\
+        \texttt{deepseek-ai/deepseek-r1-0528} & -- & -- & -- & transport failed \\
+        \texttt{ibm/granite-4.0-h-small} & -- & -- & -- & transport failed \\
+        \texttt{openai/gpt-oss-120b} & -- & -- & -- & transport failed \\
+        \texttt{qwen/qwen3-next-80b-a3b-instruct} & -- & -- & -- & transport failed \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+The required gameplay gate was overall accuracy at least 80\%, state
+reconstruction accuracy at least 75\%, and terminal-scoring accuracy at least
+75\%. Expected-payoff accuracy was reported separately because it is a
+closed-form arithmetic diagnostic rather than an action-task requirement.
+The active identity exposed no second authorised account, so no multi-account
+pooling is claimed.
 
 \subsection{Human-benchmark replication check}
 \label{app:human-benchmark-replication}

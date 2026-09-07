@@ -85,6 +85,13 @@ RISKS = (0.1, 0.6, 0.9)
 
 
 def _configure_matplotlib() -> None:
+    """Use the repository's game-theory figure sheet.
+
+    This follows the archived prisoner-dilemma manuscript: fixed canvas sizes,
+    serif/STIX text, visible light grid rules, and embedded TrueType fonts for
+    searchable publisher PDFs. The strategy colours remain distinct from model
+    identity colours so a reader can decode the theory panel consistently.
+    """
     mpl.rcParams.update(
         {
             "figure.facecolor": "white",
@@ -94,15 +101,22 @@ def _configure_matplotlib() -> None:
             "axes.titlecolor": INK,
             "axes.titlesize": 12,
             "axes.titleweight": "semibold",
-            "font.family": "DejaVu Sans",
-            "font.size": 9.5,
-            "xtick.color": MUTED,
-            "ytick.color": MUTED,
+            "font.family": "serif",
+            "font.serif": ["DejaVu Serif", "Times New Roman", "STIXGeneral"],
+            "mathtext.fontset": "stix",
+            "font.size": 9.0,
+            "xtick.color": INK,
+            "ytick.color": INK,
             "grid.color": GRID,
-            "grid.linewidth": 0.7,
+            "grid.linewidth": 0.5,
+            "grid.alpha": 0.8,
+            "axes.axisbelow": True,
             "legend.frameon": False,
-            "savefig.bbox": "tight",
-            "savefig.dpi": 220,
+            "savefig.bbox": None,
+            "savefig.dpi": 600,
+            "pdf.fonttype": 42,
+            "ps.fonttype": 42,
+            "svg.fonttype": "none",
         }
     )
 
@@ -136,26 +150,67 @@ def _read_jsonl(path: Path) -> Iterable[dict[str, Any]]:
                 raise ValueError(f"{path}:{line_number}: invalid JSON") from exc
 
 
-def load_llm_trajectories(root: Path) -> tuple[list[dict[str, Any]], dict[str, Any]]:
-    """Classify complete player trajectories from the admitted context pilot."""
+def _read_numeric_csv(path: Path) -> list[dict[str, Any]]:
+    """Load a numeric CSV for report-only reruns without losing plot types."""
+    with path.open(newline="", encoding="utf-8") as handle:
+        rows = list(csv.DictReader(handle))
+    integer_fields = {"chain", "chains", "samples_per_chain", "moves", "samples"}
+    output: list[dict[str, Any]] = []
+    for row in rows:
+        converted: dict[str, Any] = {}
+        for key, value in row.items():
+            if value is None:
+                converted[key] = value
+            elif key in integer_fields:
+                converted[key] = int(float(value))
+            else:
+                try:
+                    converted[key] = float(value)
+                except (TypeError, ValueError):
+                    converted[key] = value
+        output.append(converted)
+    return output
 
-    turn_files = sorted(root.glob("lane_*/*/turns.jsonl"))
+
+def _read_chain_summary(path: Path) -> list[dict[str, Any]]:
+    """Load a completed chain summary for report-only reruns."""
+    return _read_numeric_csv(path)
+
+
+def load_llm_trajectories(root: Path) -> tuple[list[dict[str, Any]], dict[str, Any]]:
+    """Classify complete trajectories from any admitted frontier run layout.
+
+    The original loader only accepted ``lane_*/*/turns.jsonl`` and keyed games
+    by ``game_id`` alone. Hosted benchmark outputs use a flatter layout, and
+    different model directories can legitimately reuse the same game id. The
+    source directory is therefore part of the key and is retained in every
+    derived row so theory comparisons cannot accidentally merge endpoints.
+    """
+
+    root = root.resolve()
+    turn_files = sorted(root.glob("**/turns.jsonl"))
     if not turn_files:
         return [], {"available": False, "root": str(root)}
-    by_game: dict[str, dict[int, list[dict[str, Any]]]] = defaultdict(lambda: defaultdict(list))
+    by_game: dict[tuple[str, str], dict[int, list[dict[str, Any]]]] = defaultdict(
+        lambda: defaultdict(list)
+    )
     source_rows = 0
     parse_failures = 0
     for path in turn_files:
+        source_run = str(path.parent.relative_to(root)) or "."
         context = path.parent.name
         for row in _read_jsonl(path):
             row["context"] = context
-            by_game[str(row["game_id"])][int(row["player_index"])].append(row)
+            row["source_run"] = source_run
+            by_game[(source_run, str(row["game_id"]))][
+                int(row["player_index"])
+            ].append(row)
             source_rows += 1
             parse_failures += int(bool(row.get("parse_failed")))
 
     output: list[dict[str, Any]] = []
     incomplete_games = 0
-    for game_id, players in sorted(by_game.items()):
+    for (source_run, game_id), players in sorted(by_game.items()):
         if set(players) != {0, 1}:
             incomplete_games += 1
             continue
@@ -174,6 +229,7 @@ def load_llm_trajectories(root: Path) -> tuple[list[dict[str, Any]], dict[str, A
             weight = 1.0 / len(classified.best_strategies)
             record: dict[str, Any] = {
                 "game_id": game_id,
+                "source_run": source_run,
                 "player_index": player_index,
                 "context": own[0]["context"],
                 "max_private_risk": float(own[0]["max_private_risk"]),
@@ -203,6 +259,15 @@ def load_llm_trajectories(root: Path) -> tuple[list[dict[str, Any]], dict[str, A
         "games": len(by_game),
         "classified_player_trajectories": len(output),
         "incomplete_games": incomplete_games,
+        "model_routes": sorted({str(row.get("model", "")) for row in output}),
+        "temperature_requested": sorted(
+            {
+                float(row["temperature_requested"])
+                for path in turn_files
+                for row in _read_jsonl(path)
+                if row.get("temperature_requested") is not None
+            }
+        ),
     }
     return output, metadata
 
@@ -494,9 +559,9 @@ def plot_theory_llm_comparison(
                 edgecolor=INK,
                 linewidth=0.7,
                 zorder=5,
-                label="Qwen primary T=0: technology framing" if risk == RISKS[0] else None,
+                label="Frontier primary run" if risk == RISKS[0] else None,
             )
-        axis.plot([], [], color=GOLD, linewidth=5, alpha=0.33, label="Qwen primary T=0: range across 8 skins")
+        axis.plot([], [], color=GOLD, linewidth=5, alpha=0.33, label="Frontier run range")
     if llm_sensitivity_summary:
         for risk in RISKS:
             cells = [
@@ -508,9 +573,12 @@ def plot_theory_llm_comparison(
                 continue
             values = [row["unsafe_rate_decision_weighted"] for row in cells]
             technology = next(
-                row["unsafe_rate_decision_weighted"]
-                for row in cells
-                if row["context"] == "technology_race"
+                (
+                    row["unsafe_rate_decision_weighted"]
+                    for row in cells
+                    if row["context"] == "technology_race"
+                ),
+                float(np.mean(values)),
             )
             axis.vlines(
                 risk + 0.012,
@@ -529,7 +597,7 @@ def plot_theory_llm_comparison(
                 edgecolor=MUTED,
                 linewidth=1.1,
                 zorder=4,
-                label="Qwen sensitivity T=0.7: technology framing"
+                label="Frontier sensitivity run"
                 if risk == RISKS[0]
                 else None,
             )
@@ -539,7 +607,7 @@ def plot_theory_llm_comparison(
             color=MUTED,
             linewidth=2.3,
             alpha=0.45,
-            label="Qwen sensitivity T=0.7: range across 8 skins",
+            label="Frontier sensitivity range",
         )
     axis.set_xticks(RISKS)
     axis.set_xlim(0.03, 0.97)
@@ -579,8 +647,8 @@ def plot_llm_strategy_lens(
     if not llm_summary:
         return
     technology = sorted(
-        (row for row in llm_summary if row["context"] == "technology_race"),
-        key=lambda row: row["max_private_risk"],
+        llm_summary,
+        key=lambda row: (row["max_private_risk"], row["context"]),
     )
     theory = sorted(
         (row for row in chain_summary if row["regime"] == "main_reference"),
@@ -631,7 +699,7 @@ def plot_llm_strategy_lens(
     fig.text(
         0.01,
         1.045,
-        "Left: population evolution. Right: Hamming-nearest labels for Qwen technology-framed self-play; ties split evenly.",
+        "Left: population evolution. Right: Hamming-nearest labels for the frontier self-play run; ties split evenly.",
         color=MUTED,
     )
     _save_figure(fig, output, "egt_strategy_lens_vs_llm")
@@ -662,7 +730,10 @@ def build_comparison_rows(
             if not llm_cells:
                 continue
             values = [row["unsafe_rate_decision_weighted"] for row in llm_cells]
-            technology = next(row for row in llm_cells if row["context"] == "technology_race")
+            technology = next(
+                (row for row in llm_cells if row["context"] == "technology_race"),
+                sorted(llm_cells, key=lambda row: row["context"])[0],
+            )
             record.update(
                 {
                     f"{prefix}_unsafe_technology_race": technology[
@@ -719,16 +790,43 @@ def write_report(
     def protocol_lines(source: list[dict[str, Any]], label: str) -> str:
         if not source:
             return f"- {label}: no complete artifact available."
-        return "\n".join(
-            f"- {label}, risk {risk:.1f}: technology framing {next(row['unsafe_rate_decision_weighted'] for row in source if row['context'] == 'technology_race' and row['max_private_risk'] == risk):.1%}; across-skin range {min(row['unsafe_rate_decision_weighted'] for row in source if row['max_private_risk'] == risk):.1%} to {max(row['unsafe_rate_decision_weighted'] for row in source if row['max_private_risk'] == risk):.1%}."
-            for risk in RISKS
+        lines = []
+        for risk in RISKS:
+            cells = [row for row in source if row["max_private_risk"] == risk]
+            if not cells:
+                lines.append(f"- {label}, risk {risk:.1f}: no complete cell.")
+                continue
+            focal = next(
+                (row for row in cells if row["context"] == "technology_race"),
+                sorted(cells, key=lambda row: row["context"])[0],
+            )
+            values = [row["unsafe_rate_decision_weighted"] for row in cells]
+            lines.append(
+                f"- {label}, risk {risk:.1f}: focal context {focal['context']} "
+                f"{focal['unsafe_rate_decision_weighted']:.1%}; observed range "
+                f"{min(values):.1%} to {max(values):.1%}."
+            )
+        return "\n".join(lines)
+    llm_lines = protocol_lines(llm_summary, "Frontier primary run")
+    if llm_sensitivity_summary:
+        llm_lines += "\n" + protocol_lines(
+            llm_sensitivity_summary, "Frontier sensitivity run"
         )
-    llm_lines = "\n".join(
-        (
-            protocol_lines(llm_summary, "Primary T=0"),
-            protocol_lines(llm_sensitivity_summary, "Sensitivity T=0.7"),
-        )
+    sensitivity_sentence = (
+        "No independent sensitivity artifact was supplied; the comparison is "
+        "therefore a single frontier-run description."
+        if not llm_sensitivity_summary
+        else "The separate sensitivity input uses "
+        f"{llm_sensitivity_meta.get('classified_player_trajectories', 0)} "
+        f"trajectories and {llm_sensitivity_meta.get('source_turn_rows', 0)} "
+        "decisions. They are never pooled."
     )
+    sensitivity_artifact_lines = ""
+    if llm_sensitivity_summary:
+        sensitivity_artifact_lines = (
+            "- `llm_strategy_matches_sensitivity_t07.csv` and "
+            "`llm_strategy_summary_sensitivity_t07.csv`: separate sensitivity audit.\n"
+        )
     report = f"""# Reduced evolutionary-game reconstruction
 
 ## Admission status
@@ -764,7 +862,7 @@ The deterministic payoff matrices reveal the mechanism. At risk 0.1, AU receives
 
 ## LLM-agent comparison
 
-The primary comparison uses `{llm_meta.get('classified_player_trajectories', 0)}` Qwen player trajectories and `{llm_meta.get('source_turn_rows', 0)}` decisions at temperature 0. The separate sensitivity comparison uses `{llm_sensitivity_meta.get('classified_player_trajectories', 0)}` trajectories and `{llm_sensitivity_meta.get('source_turn_rows', 0)}` decisions at temperature 0.7. They are never pooled. Both comparisons are **descriptive only**. The LLM races are repeated self-play prompts; they are not draws from the evolutionary population process, and nearest-strategy labels do not establish a latent strategy.
+The frontier comparison uses `{llm_meta.get('classified_player_trajectories', 0)}` player trajectories and `{llm_meta.get('source_turn_rows', 0)}` decisions from routes `{llm_meta.get('model_routes', [])}`, with requested temperature values `{llm_meta.get('temperature_requested', [])}`. {sensitivity_sentence} This comparison is **descriptive only**. The LLM races are repeated self-play prompts; they are not draws from the evolutionary population process, and nearest-strategy labels do not establish a latent strategy.
 
 {llm_lines}
 
@@ -788,8 +886,8 @@ The key cross-study insight is a boundary, not an equivalence: the reduced EGT m
 - `egt_pair_unsafe_fractions.csv`: expected focal Unsafe fraction in each matchup.
 - `egt_stationary_chains.csv`: every independent Markov-chain estimate.
 - `egt_stationary_summary.csv`: chain means and between-chain ranges.
-- `llm_strategy_matches_primary_t0.csv` and `llm_strategy_summary_primary_t0.csv`: primary temperature-0 audit.
-- `llm_strategy_matches_sensitivity_t07.csv` and `llm_strategy_summary_sensitivity_t07.csv`: separate temperature-0.7 audit.
+- `llm_strategy_matches_primary_t0.csv` and `llm_strategy_summary_primary_t0.csv`: primary frontier audit (the legacy filename is retained for downstream compatibility).
+{sensitivity_artifact_lines}- `theory_llm_comparison.csv`: commensurable theory and LLM Unsafe-rate descriptors.
 - `theory_llm_comparison.csv`: commensurable theory and LLM Unsafe-rate descriptors.
 - `egttools_pinned_source_validation.json`: official-source transition and stationary parity audit.
 - `reconstruction_manifest.json`: source revisions, parameters, hashes, coverage, and evidence boundary.
@@ -801,7 +899,7 @@ The key cross-study insight is a boundary, not an equivalence: the reduced EGT m
 
 ## Scope boundary
 
-This artifact reproduces the disclosed qualitative evolutionary pattern. It does not reproduce the human experiment, recover the authors' private model code, infer human-like strategies in the LLM, or establish that context effects would generalise beyond the exact Qwen checkpoint and pilot protocols represented in the local artifacts.
+This artifact reproduces the disclosed qualitative evolutionary pattern. It does not reproduce the human experiment, recover the authors' private model code, infer human-like strategies in the LLM, or establish that context effects would generalise beyond the exact frontier endpoint and prompt protocol represented in the local artifacts.
 """
     (output / "README.md").write_text(report, encoding="utf-8")
 
@@ -819,6 +917,11 @@ def main() -> int:
     parser.add_argument("--burn-in", type=int, default=100_000)
     parser.add_argument("--steps", type=int, default=400_000)
     parser.add_argument("--thin", type=int, default=100)
+    parser.add_argument(
+        "--reuse-existing-chains",
+        action="store_true",
+        help="reuse an existing completed egt_stationary_summary.csv and rebuild only downstream artifacts",
+    )
     args = parser.parse_args()
     if args.chains < 2:
         raise ValueError("at least two independent chains are required")
@@ -858,14 +961,24 @@ def main() -> int:
         ["max_private_risk", "focal_strategy", "opponent_strategy", "expected_unsafe_fraction"],
     )
 
-    chains = chain_rows(
-        games,
-        chains=args.chains,
-        burn_in=args.burn_in,
-        steps=args.steps,
-        thin=args.thin,
-    )
-    chain_summary = summarise_chains(chains)
+    chain_summary_path = args.output / "egt_stationary_summary.csv"
+    if args.reuse_existing_chains and chain_summary_path.is_file():
+        chain_summary = _read_chain_summary(chain_summary_path)
+        chain_rows_path = args.output / "egt_stationary_chains.csv"
+        if not chain_rows_path.is_file():
+            raise FileNotFoundError(
+                "--reuse-existing-chains requires egt_stationary_chains.csv"
+            )
+        chains = _read_numeric_csv(chain_rows_path)
+    else:
+        chains = chain_rows(
+            games,
+            chains=args.chains,
+            burn_in=args.burn_in,
+            steps=args.steps,
+            thin=args.thin,
+        )
+        chain_summary = summarise_chains(chains)
     chain_fields = [
         "regime", "regime_label", "beta", "mutation", "max_private_risk", "chain",
         "seed", "samples", "unsafe_frequency", "moves",
@@ -885,9 +998,21 @@ def main() -> int:
 
     llm_rows, llm_meta = load_llm_trajectories(args.llm_root)
     llm_summary = summarise_llm(llm_rows)
-    llm_sensitivity_rows, llm_sensitivity_meta = load_llm_trajectories(
-        args.llm_sensitivity_root
-    )
+    same_llm_source = args.llm_sensitivity_root.resolve() == args.llm_root.resolve()
+    if same_llm_source:
+        # Passing one artifact twice is a common command-line mistake. Treat
+        # it as one descriptive frontier run rather than manufacturing a
+        # temperature or sensitivity comparison from duplicated rows.
+        llm_sensitivity_rows = []
+        llm_sensitivity_meta = {
+            "available": False,
+            "root": str(args.llm_sensitivity_root.resolve()),
+            "excluded_reason": "sensitivity root is identical to primary root",
+        }
+    else:
+        llm_sensitivity_rows, llm_sensitivity_meta = load_llm_trajectories(
+            args.llm_sensitivity_root
+        )
     llm_sensitivity_summary = summarise_llm(llm_sensitivity_rows)
     if llm_rows:
         _write_csv(
@@ -997,8 +1122,8 @@ def main() -> int:
             "figure_s5": "beta=2, mu=1/Z=0.01",
         },
         "llm_comparison": {
-            "primary_temperature_0": llm_meta,
-            "sensitivity_temperature_0_7": llm_sensitivity_meta,
+            "frontier_primary": llm_meta,
+            "frontier_sensitivity": llm_sensitivity_meta,
             "pooled": False,
         },
         "output_files": sorted(path.name for path in args.output.iterdir() if path.is_file()),

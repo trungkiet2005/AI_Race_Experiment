@@ -1,0 +1,9 @@
+model,max_private_risk,persona_condition,prompt_version,protocol_signature,run_phase,run_status,nearest_strategy_set,n_players,mean_min_mismatch_rate
+google-gemini-3-flash-preview,0.1,none,ai-race-fairgame-v3,1fe3e64df79373ccf36c2901259b88ae322b0e94e8bfb8621ba3d263a81ac794,confirmatory,completed,AU|CAS,20,0.0
+google-gemini-3-flash-preview,0.6,none,ai-race-fairgame-v3,1fe3e64df79373ccf36c2901259b88ae322b0e94e8bfb8621ba3d263a81ac794,confirmatory,completed,AU,8,0.2588045634920635
+google-gemini-3-flash-preview,0.6,none,ai-race-fairgame-v3,1fe3e64df79373ccf36c2901259b88ae322b0e94e8bfb8621ba3d263a81ac794,confirmatory,completed,AU|CAS,4,0.31085164835164836
+google-gemini-3-flash-preview,0.6,none,ai-race-fairgame-v3,1fe3e64df79373ccf36c2901259b88ae322b0e94e8bfb8621ba3d263a81ac794,confirmatory,completed,CAS,8,0.20468264374514375
+google-gemini-3-flash-preview,0.9,none,ai-race-fairgame-v3,1fe3e64df79373ccf36c2901259b88ae322b0e94e8bfb8621ba3d263a81ac794,confirmatory,completed,AS,1,0.4
+google-gemini-3-flash-preview,0.9,none,ai-race-fairgame-v3,1fe3e64df79373ccf36c2901259b88ae322b0e94e8bfb8621ba3d263a81ac794,confirmatory,completed,AU,3,0.36570512820512824
+google-gemini-3-flash-preview,0.9,none,ai-race-fairgame-v3,1fe3e64df79373ccf36c2901259b88ae322b0e94e8bfb8621ba3d263a81ac794,confirmatory,completed,AU|CAS,5,0.3755844155844156
+google-gemini-3-flash-preview,0.9,none,ai-race-fairgame-v3,1fe3e64df79373ccf36c2901259b88ae322b0e94e8bfb8621ba3d263a81ac794,confirmatory,completed,CAS,11,0.20606855265946178

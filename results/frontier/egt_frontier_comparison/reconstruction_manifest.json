@@ -1,0 +1,126 @@
+{
+  "disclosed_model": {
+    "min_rounds": 5,
+    "population_size": 100,
+    "race_prize": 100.0,
+    "regimes": [
+      {
+        "beta": 2.0,
+        "mutation": 0.02,
+        "name": "main_reference",
+        "source_label": "Main text: beta=2, mu=beta/Z=0.02"
+      },
+      {
+        "beta": 2.0,
+        "mutation": 0.01,
+        "name": "supplement_reference",
+        "source_label": "Figure S5: beta=2, mu=1/Z=0.01"
+      },
+      {
+        "beta": 0.01,
+        "mutation": 0.05,
+        "name": "reported_best_fit",
+        "source_label": "Main text best fit: beta=0.01, mu=0.05"
+      }
+    ],
+    "risks": [
+      0.1,
+      0.6,
+      0.9
+    ],
+    "safe_progress": 1.0,
+    "stage_payoffs": [
+      [
+        1.0,
+        0.6
+      ],
+      [
+        2.4,
+        2.0
+      ]
+    ],
+    "stop_probability": 0.2,
+    "strategies": [
+      "AS",
+      "AU",
+      "CS",
+      "CAS"
+    ],
+    "unsafe_progress": 1.5
+  },
+  "egttools": {
+    "execution_backend": "repo_native_reconstruction_of_documented_transition_rule",
+    "inspected_commit": "df7f5fb7787658b3fd3ab21343ff50a3e2a5d439",
+    "paper_pinned_version_or_commit": null,
+    "pinned_source_validation": null,
+    "repository": "https://github.com/Socrats/EGTTools",
+    "requested_branch": "docs"
+  },
+  "evidence_class": "faithful_reconstruction_not_bitwise_reproduction",
+  "llm_comparison": {
+    "frontier_primary": {
+      "available": true,
+      "classified_player_trajectories": 60,
+      "games": 30,
+      "incomplete_games": 0,
+      "model_routes": [
+        "google-gemini-3-flash-preview"
+      ],
+      "parse_failures": 0,
+      "root": "results\\frontier\\kbench\\confirmatory\\gemini-3-flash-preview",
+      "source_turn_rows": 558,
+      "temperature_requested": [
+        0.7
+      ],
+      "turn_files": 1
+    },
+    "frontier_sensitivity": {
+      "available": false,
+      "excluded_reason": "sensitivity root is identical to primary root",
+      "root": "D:\\PhD_LetGoo\\PhD_Farming\\active\\AI_Race_Experiment\\results\\frontier\\kbench\\confirmatory\\gemini-3-flash-preview"
+    },
+    "pooled": false
+  },
+  "numerics": {
+    "burn_in": 20000,
+    "chains": 4,
+    "maximum_discarded_horizon_mass": 8.26319960987817e-14,
+    "payoff_horizon_method": "deterministic_geometric_sum",
+    "steps": 100000,
+    "thin": 100,
+    "uncertainty": "between_independent_chain_range_diagnostic_not_confidence_interval"
+  },
+  "output_files": [
+    "README.md",
+    "egt_chain_diagnostics.pdf",
+    "egt_chain_diagnostics.png",
+    "egt_expected_payoff_matrices.csv",
+    "egt_expected_payoff_matrices.pdf",
+    "egt_expected_payoff_matrices.png",
+    "egt_pair_unsafe_fractions.csv",
+    "egt_stationary_chains.csv",
+    "egt_stationary_strategy_composition.pdf",
+    "egt_stationary_strategy_composition.png",
+    "egt_stationary_summary.csv",
+    "egt_strategy_lens_vs_llm.pdf",
+    "egt_strategy_lens_vs_llm.png",
+    "egt_theory_vs_llm_unsafe.pdf",
+    "egt_theory_vs_llm_unsafe.png",
+    "llm_strategy_matches_primary_t0.csv",
+    "llm_strategy_summary_primary_t0.csv",
+    "reconstruction_manifest.json",
+    "theory_llm_comparison.csv"
+  ],
+  "paper": {
+    "arxiv": "2607.26034v1",
+    "author_code_public_in_arxiv_v1": false,
+    "local_source": "arXiv-2607.26034v1\\paper.tex",
+    "local_source_sha256": null,
+    "url": "https://arxiv.org/abs/2607.26034"
+  },
+  "paper_parameter_inconsistency_preserved": {
+    "figure_s5": "beta=2, mu=1/Z=0.01",
+    "main_text": "beta=2, mu=beta/Z=0.02"
+  },
+  "schema_version": "egt-reconstruction-v1"
+}

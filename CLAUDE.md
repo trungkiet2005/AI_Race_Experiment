@@ -14,7 +14,7 @@ A research codebase that runs the two-player repeated "AI race" of Fernández Do
 
 [README.md](README.md) states the canonical mechanism; [PROJECT.md](PROJECT.md) is the research protocol (estimands, validation gates, planned sequence). Both are binding on code changes — the engine is meant to be *paper-faithful*, so changing payoffs, horizons, or risk accounting is a protocol change, not a refactor.
 
-Diagnostic pilots have been run, but confirmatory AI Race inference remains pending. Admitted pilot artifacts must trace to a completed manifest, immutable raw logs, and a fail-closed analyzer. Never pool pilot and confirmatory evidence or generalize checkpoint-scoped audits into claims about subjective understanding, stable preferences, or all LLMs.
+Diagnostic pilots have been run. The current frontier checkpoint admits one Gemini 3 Flash route for a bounded confirmatory baseline; cross-endpoint mapping, persona, and N-player reruns remain pending. Every admitted artifact must trace to a completed manifest, immutable raw logs, and a fail-closed analyzer. Never pool pilot and confirmatory evidence or generalize checkpoint-scoped audits into claims about subjective understanding, stable preferences, or all LLMs.
 
 ## Commands
 
@@ -130,3 +130,11 @@ before a hosted route enters behavioural claims. The candidate route registry is
 [`docs/frontier-model-registry.json`](docs/frontier-model-registry.json), and the
 review-to-evidence matrix is
 [`docs/reviewer-revision-frontier-protocol.md`](docs/reviewer-revision-frontier-protocol.md).
+
+## Current execution note
+
+The workstation now has a configured hosted Kaggle Benchmark path for bounded
+frontier smoke and confirmatory runs. Heavy model workloads should use Kaggle
+or the managed H100 pods. A successful request is not evidence by itself:
+retain the raw responses, completed manifest, parser-failure accounting, and
+integrity audit before promoting a run into the manuscript.

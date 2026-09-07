@@ -1,0 +1,8 @@
+{
+  "human_sample": "N=2,888 participant-round observations (round t>=2, covariate-complete analysed sample), 338 participants, 172 pair clusters. Per-treatment participant counts: p_max=0.1 n=97, p_max=0.6 n=105, p_max=0.9 n=136.",
+  "notes": "Effects are frozen before any LLM output is inspected, per docs/llm-behavior-analysis-plan.md WS3 T3.4. E4 and E5 are human null results and must be scored by TOST equivalence to zero, never by a failure to reject. E6 is deliberately taken from Table S3 (Cohen's d=0.341, Unsafe HIGHER at the low-risk treatment), not from the Figure 2A caption text, which states the opposite direction for the 0.1-vs-0.6 comparison.",
+  "pooling_warning": "Verdicts pool every persona condition, model, and treatment present in the input. Score one condition at a time when the comparison is meant to be about a specific cell.",
+  "reference_schema": "ai-race-human-reference-v1",
+  "reference_source": "Fernandez Domingos & Han (2026), 'Falling Behind Drives Unsafe Development in an Idealised AI Race Experiment' (arXiv:2607.26034v1) -- Table 1 (cluster-robust logistic regression, model 6), Table S3 (pairwise treatment contrasts and summary statistics), and main-text Results.",
+  "scoring": "Criteria are frozen in human_reference.json and applied mechanically. 'inconclusive' means the LLM estimate was unavailable, not that the effect was absent."
+}
