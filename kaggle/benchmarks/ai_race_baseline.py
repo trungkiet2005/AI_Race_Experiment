@@ -58,7 +58,7 @@ STAGE_PAYOFF = {
 }
 
 TEMPERATURE = 0.7
-REASONING = None
+REASONING = "none"
 MAX_OUTPUT_TOKENS = 256
 MAX_PARSE_RETRIES = 3
 MAX_TRANSPORT_RETRIES = 3
@@ -69,7 +69,7 @@ RETRY_SEED_STRIDE = 10_000_019
 HORIZON_STREAM = 17
 SETBACK_STREAM = 29
 BASE_SEED = int(os.environ.get("AI_RACE_SEED", "260726"))
-PROTOCOL_ID = "ai-race-frontier-baseline-v2"
+PROTOCOL_ID = "ai-race-frontier-baseline-v3"
 REPETITIONS = int(os.environ.get("AI_RACE_REPS", "10"))
 RUN_PHASE = os.environ.get("AI_RACE_RUN_PHASE", "confirmatory").strip().lower()
 MODEL_ROUTE = os.environ.get("LLM_DEFAULT", "kbench-model").strip() or "kbench-model"

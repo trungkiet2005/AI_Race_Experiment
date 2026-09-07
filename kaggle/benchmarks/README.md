@@ -53,7 +53,7 @@ pool pilot với confirmatory; mọi row và manifest đều ghi phase.
 
 The current frontier baseline task defaults to 10 races per risk and
 `RUN_PHASE="confirmatory"`, recorded as protocol
-`ai-race-frontier-baseline-v2`. Smoke runs may override both settings in a
+`ai-race-frontier-baseline-v3`. Smoke runs may override both settings in a
 separate output root. Never pool pilot and confirmatory rows.
 
 ## Workflow theo checkpoint
