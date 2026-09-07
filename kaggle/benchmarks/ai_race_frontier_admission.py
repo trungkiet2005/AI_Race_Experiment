@@ -26,7 +26,7 @@ from pydantic import BaseModel, Field
 
 # Frozen admission contract. A change requires a new task name and protocol id.
 TASK_NAME = "ai-race-frontier-admission"
-PROTOCOL_ID = "ai-race-frontier-admission-v4"
+PROTOCOL_ID = "ai-race-frontier-admission-v5"
 PROMPT_VERSION = "ai-race-fairgame-v3"
 BASE_SEED = 260726
 REPETITIONS = int(os.environ.get("AI_RACE_ADMISSION_REPS", "3"))
@@ -152,11 +152,17 @@ def llm_contract(llm) -> dict[str, object]:
         token_parameter = "max_tokens"
     else:
         raise RuntimeError(f"Unknown Kaggle Benchmark backend: {sorted(names)}")
-    if any(token in route_lower for token in ("gemini", "gpt-5", "deepseek")):
+    if "gemma" in route_lower:
+        # This route rejects the reasoning budget parameter entirely.
+        reasoning_requested = None
+    elif "deepseek" in route_lower:
+        # DeepSeek rejects the literal `none` but accepts an explicit low budget.
         reasoning_requested = "low"
     else:
-        # Some routes reject both a literal `none` and any thinking budget.
-        reasoning_requested = None
+        # Keep the no-trace setting used by the original protocol for routes
+        # that accept it. This prevents Gemini from spending the output cap on
+        # hidden reasoning while retaining the same observable probe contract.
+        reasoning_requested = "none"
     return {
         "model_route": route,
         "backend_mro": [f"{cls.__module__}.{cls.__qualname__}" for cls in type(llm).__mro__],
@@ -213,7 +219,7 @@ def ai_race_frontier_admission(llm) -> dict:
     raw_path = output_dir / "raw_responses.jsonl"
     raw_path.unlink(missing_ok=True)
     manifest = {
-        "schema_version": "ai-race-frontier-admission-v3",
+        "schema_version": "ai-race-frontier-admission-v5",
         "status": "running",
         "protocol_id": PROTOCOL_ID,
         "started_utc": utc_now(),
