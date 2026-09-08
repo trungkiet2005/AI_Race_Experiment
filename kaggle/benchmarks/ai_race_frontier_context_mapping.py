@@ -9,8 +9,6 @@ fails closed on malformed model output: no fallback action is ever inserted.
 """
 
 # %%
-from __future__ import annotations
-
 import csv
 import hashlib
 import importlib.metadata
@@ -29,7 +27,7 @@ from pydantic import BaseModel, Field
 
 
 TASK_NAME = "ai-race-frontier-context-mapping"
-PROTOCOL_ID = "ai-race-frontier-context-mapping-v2"
+PROTOCOL_ID = "ai-race-frontier-context-mapping-v3"
 PROMPT_VERSION = "ai-race-context-mapping-v1"
 BASE_SEED = int(os.environ.get("AI_RACE_SEED", "260726"))
 REPETITIONS = int(os.environ.get("AI_RACE_CONTEXT_REPS", "10"))
@@ -417,7 +415,7 @@ def summarize(races: list[dict[str, object]], turns: list[dict[str, object]], co
     name=TASK_NAME,
     description="Fully crossed frontier context and opaque action-mapping robustness task for AI Race.",
 )
-def ai_race_frontier_context_mapping(llm) -> dict[str, object]:
+def ai_race_frontier_context_mapping(llm) -> dict:
     if RUN_PHASE not in {"pilot", "confirmatory"}:
         raise ValueError("AI_RACE_RUN_PHASE must be pilot or confirmatory")
     if REPETITIONS < 1:
