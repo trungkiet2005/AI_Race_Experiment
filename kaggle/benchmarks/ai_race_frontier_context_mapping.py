@@ -29,7 +29,7 @@ from pydantic import BaseModel, Field
 
 
 TASK_NAME = "ai-race-frontier-context-mapping"
-PROTOCOL_ID = "ai-race-frontier-context-mapping-v1"
+PROTOCOL_ID = "ai-race-frontier-context-mapping-v2"
 PROMPT_VERSION = "ai-race-context-mapping-v1"
 BASE_SEED = int(os.environ.get("AI_RACE_SEED", "260726"))
 REPETITIONS = int(os.environ.get("AI_RACE_CONTEXT_REPS", "10"))
@@ -438,7 +438,12 @@ def ai_race_frontier_context_mapping(llm) -> dict[str, object]:
         "completed_utc": None,
         "model_route": contract["model_route"],
         "model_tag": model_tag(str(contract["model_route"])),
-        "source_sha256": sha256_text(Path(__file__).read_text(encoding="utf-8")) if Path(__file__).is_file() else None,
+        "source_sha256": (
+            sha256_text(Path(source_path).read_text(encoding="utf-8"))
+            if (source_path := globals().get("__file__"))
+            and Path(source_path).is_file()
+            else None
+        ),
         "prompt_version": PROMPT_VERSION,
         "prompt_sha256": sha256_text(PROMPT_TEMPLATE),
         "contexts_sha256": sha256_text(json.dumps(CONTEXTS, sort_keys=True)),
