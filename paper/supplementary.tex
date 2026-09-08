@@ -444,6 +444,38 @@ closed-form arithmetic diagnostic rather than an action-task requirement.
 The active identity exposed no second authorised account, so no multi-account
 pooling is claimed.
 
+\subsection{Frontier neutral baseline}
+\label{app:frontier-baseline}
+
+The new neutral gameplay baseline used protocol
+\texttt{ai-race-frontier-baseline-v3}, the same mechanism and prompt for both
+admitted routes, ten repetitions per risk level, and 30 races per route. Each
+route produced 558 structured decisions with zero parse failures. The entries
+in Table~\ref{tab:frontier-baseline} are decision-weighted Unsafe rates; they
+are not pooled across routes and do not estimate an evolutionary equilibrium.
+
+\begin{table}[h]
+    \caption{Neutral two-player frontier baseline under the admitted routes.
+    Each route has 30 races, 558 decisions, and zero parse failures.}
+    \label{tab:frontier-baseline}
+    \centering
+    \scriptsize
+    \begin{tabular}{@{}p{0.43\linewidth}rrrp{0.12\linewidth}@{}}
+        \toprule
+        Exact route & $r=.1$ & $r=.6$ & $r=.9$ & Races \\
+        \midrule
+        \path{google/gemini-3-flash-preview} & 98.9\% & 74.2\% & 59.1\% & 30 \\
+        \path{anthropic/claude-sonnet-5@default} & 89.2\% & 46.2\% & 37.6\% & 30 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+The Gemini manifest records that the hosted SDK stripped the requested
+sampling seed. The Claude manifest records that the seed was forwarded but
+provider-side application was not confirmed. Temperature was requested as
+0.7 for both routes but was not forwarded by this SDK path. These facts bound
+the result to the exact hosted route and software contract.
+
 \subsection{Human-benchmark replication check}
 \label{app:human-benchmark-replication}
 
