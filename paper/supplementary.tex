@@ -363,43 +363,43 @@ descriptive results (\S\ref{app:twoplayer-baseline},
 \label{app:task-validity-full}
 
 Table~\ref{tab:task-validity-full} reports the full breakdown behind the
-frontier endpoint admission in the main paper. The confirmatory audit used
-the exact route \texttt{google/gemini-3-flash-preview} under frozen protocol
-\texttt{ai-race-frontier-admission-v5}: 20 atomic probes spanning rule recall,
+frontier endpoint admission in the main paper. The confirmatory audit used the
+the two exact routes listed in Table~\ref{tab:frontier-admission-registry} under
+the frozen protocol v5: 20 atomic probes spanning rule recall,
 one-stage payoffs, state reconstruction, state transition, terminal scoring,
-and expected payoff, repeated three times for 60 retained outputs. Every
-response was schema-valid and no transport retry was needed. Numeric probes
-used a fixed structured-output contract; categorical probes explicitly listed
-the allowed answer set.
+and expected payoff, repeated three times per route for 120 retained outputs.
+Every response was schema-valid and no transport retry was needed. Numeric
+probes used a fixed structured-output contract; categorical probes explicitly
+listed the allowed answer set.
 
 \begin{table}[h]
-    \caption{Task-validity probe accuracy by category for the admitted
-    Gemini 3 Flash frontier route, protocol
-    \texttt{ai-race-frontier-admission-v5} ($n=60$ retained probe outputs).}
+    \caption{Task-validity probe accuracy by category for the two admitted
+    frontier routes, protocol v5 ($n=60$
+    retained probe outputs per route).}
     \label{tab:task-validity-full}
     \centering
     \small
-    \begin{tabular}{@{}lr@{}}
+        \begin{tabular}{@{}lrr@{}}
         \toprule
-        Probe category & Accuracy \\
+        Probe category & Gemini 3 Flash & Claude Sonnet 5 \\
         \midrule
-        Rule recall                        & 100.0\% \\
-        One-stage payoff lookup             & 100.0\% \\
-        State reconstruction                & 100.0\% \\
-        State transition                    & 100.0\% \\
-        Terminal scoring                    & 100.0\% \\
-        Expected-payoff calculation         & 50.0\% \\
+        Rule recall                        & 100.0\% & 100.0\% \\
+        One-stage payoff lookup             & 100.0\% & 100.0\% \\
+        State reconstruction                & 93.3\% & 86.7\% \\
+        State transition                    & 100.0\% & 100.0\% \\
+        Terminal scoring                    & 100.0\% & 80.0\% \\
+        Expected-payoff calculation         & 50.0\% & 0.0\% \\
         \midrule
-        \emph{Overall semantic accuracy}    & \emph{95.0\%} \\
-        \emph{Schema-valid responses}      & \emph{100.0\%} \\
+        \emph{Overall semantic accuracy}    & \emph{93.3\%} & \emph{81.7\%} \\
+        \emph{Schema-valid responses}      & \emph{100.0\%} & \emph{100.0\%} \\
         \bottomrule
     \end{tabular}
 \end{table}
 
-The only systematic error was in the optional payoff check: three of six
-responses were correct. We retain this domain as a
-diagnostic. Live gameplay asks for an action, whereas the state and terminal
-domains determine whether the action prompt is mechanically interpretable.
+The largest errors were in the optional payoff check: three of six Gemini
+responses and none of the Claude responses were correct. We retain this domain
+as a diagnostic. Live gameplay asks for an action, whereas the state and
+terminal domains determine whether the action prompt is mechanically interpretable.
 The admission task therefore records both the required gate and the arithmetic
 limitation instead of silently dropping the endpoint.
 
@@ -421,18 +421,18 @@ endpoint.
     \label{tab:frontier-admission-registry}
     \centering
     \scriptsize
-    \begin{tabular}{@{}p{0.49\linewidth}ccc p{0.13\linewidth}@{}}
+    \begin{tabular}{@{}p{0.44\linewidth}rrrp{0.12\linewidth}@{}}
         \toprule
         Exact route & Overall & State & Terminal & Status \\
         \midrule
-        \texttt{google/gemini-3-flash-preview} & 93.3\% & 93.3\% & 100\% & admitted \\
-        \texttt{anthropic/claude-sonnet-5@default} & 81.7\% & 86.7\% & 80\% & admitted \\
-        \texttt{google/gemini-3.1-flash-lite-preview} & 75\% & 60\% & 80\% & diagnostic \\
-        \texttt{openai/gpt-5.4-nano-2026-03-17} & 50\% & 20\% & 60\% & diagnostic \\
-        \texttt{deepseek-ai/deepseek-r1-0528} & -- & -- & -- & transport failed \\
-        \texttt{ibm/granite-4.0-h-small} & -- & -- & -- & transport failed \\
-        \texttt{openai/gpt-oss-120b} & -- & -- & -- & transport failed \\
-        \texttt{qwen/qwen3-next-80b-a3b-instruct} & -- & -- & -- & transport failed \\
+        \path{google/gemini-3-flash-preview} & 93.3\% & 93.3\% & 100\% & admitted \\
+        \path{anthropic/claude-sonnet-5@default} & 81.7\% & 86.7\% & 80\% & admitted \\
+        \path{google/gemini-3.1-flash-lite-preview} & 75\% & 60\% & 80\% & diagnostic \\
+        \path{openai/gpt-5.4-nano-2026-03-17} & 50\% & 20\% & 60\% & diagnostic \\
+        \path{deepseek-ai/deepseek-r1-0528} & -- & -- & -- & transport failed \\
+        \path{ibm/granite-4.0-h-small} & -- & -- & -- & transport failed \\
+        \path{openai/gpt-oss-120b} & -- & -- & -- & transport failed \\
+        \path{qwen/qwen3-next-80b-a3b-instruct} & -- & -- & -- & transport failed \\
         \bottomrule
     \end{tabular}
 \end{table}
