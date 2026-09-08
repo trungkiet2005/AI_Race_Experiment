@@ -476,6 +476,30 @@ provider-side application was not confirmed. Temperature was requested as
 0.7 for both routes but was not forwarded by this SDK path. These facts bound
 the result to the exact hosted route and software contract.
 
+To make the comparison boundary explicit, Figure~\ref{fig:egt-frontier-insights}
+separates the risk response, the route-specific departure from the strong-
+selection reconstruction, the nearest-rule diagnostic, and its mismatch
+rate. This is an analysis artifact rather than an equilibrium test: the
+frontier routes generate prompted self-play trajectories, whereas EGT samples
+stationary population composition.
+
+\begin{figure*}[t]
+    \centering
+    \includegraphics[width=\textwidth]{../results/frontier/egt_frontier_comparison_v2/egt_frontier_insights.pdf}
+    \caption{Boundary analysis for the reconstructed evolutionary model and
+    the two admitted frontier routes. Panel A shows route-specific Unsafe
+    responses alongside the two EGT parameter regimes. Panel B shows the
+    deviation from the strong-selection EGT reference. Panel C gives the
+    nearest-rule composition, and Panel D shows why those labels are only a
+    diagnostic lens: uniqueness and minimum mismatch vary across routes and
+    risk levels.}
+    \Description{Four-panel figure comparing evolutionary-game theory with
+    Gemini and Claude frontier self-play. The panels show risk responses,
+    deviations from theory, nearest-rule compositions, and classification
+    mismatch against uniqueness.}
+    \label{fig:egt-frontier-insights}
+\end{figure*}
+
 \subsection{Human-benchmark replication check}
 \label{app:human-benchmark-replication}
 
