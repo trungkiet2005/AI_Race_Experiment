@@ -23,7 +23,7 @@ The EGT frame reports a faithful reconstruction, not bitwise reproduction: the s
 
 ## Figure policy
 
-The Beamer source embeds publication PDFs directly from `paper/figures/` and `results/open_source/`. Do not replace them with screenshots. Every result frame states its evidence class, denominator, and the boundary needed to interpret it.
+The Beamer source embeds publication PDFs from the canonical `figures/paper/` hub. Do not replace them with screenshots. Every result frame states its evidence class, denominator, and the boundary needed to interpret it.
 
 Design uses deep navy, cyan, amber, lime, and neutral ink; it avoids red-green semantics. Figures must remain readable at 16:9 projector scale and must not be cropped to remove uncertainty intervals, sample units, or captions.
 

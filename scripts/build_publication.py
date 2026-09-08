@@ -7,10 +7,10 @@ the publication artifact tree keeps a synchronized copy for release tooling.
 
 The two documents disagree about what their asset paths are relative to:
 ``paper/main.tex`` loads ``aamas.cls`` and ``figures/...`` relative to ``paper/``,
-while ``slides/ai_race_research_deck.tex`` reaches for ``paper/figures/...`` and
-``results/...`` relative to the repository root. Each is therefore compiled from
-its own directory with TEXINPUTS extended to the repository root, so both
-conventions resolve without editing either document.
+while ``slides/ai_race_research_deck.tex`` reaches for ``figures/paper/...``
+relative to the repository root. Each is compiled from its own directory with
+TEXINPUTS extended to the repository root, so the paper and deck share one
+canonical figure hub.
 """
 from __future__ import annotations
 

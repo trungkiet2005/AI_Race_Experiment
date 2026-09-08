@@ -34,6 +34,7 @@ Paper build outputs:
 ```bash
 python scripts/build_publication.py --paper-only
 python scripts/check_publication.py --allow-placeholder-id
+python scripts/build_figure_gallery.py
 ```
 
 The manuscript sources are `paper/main.tex` and `paper/supplementary.tex`.
@@ -45,6 +46,14 @@ ignored `results/_build/latex/current/` directory. The build script also keeps
 copies under `results/artifacts/publication/` because submission and release
 tools read that mirror. The QA command should be run after every build; omit
 `--allow-placeholder-id` once AAMAS assigns the anonymous submission ID.
+
+All project figures have one browsing entry point at `figures/`. Use
+`figures/paper/` for assets referenced by the manuscript and deck,
+`figures/gallery/` for the full candidate and redraw collection, and
+`figures/diagnostics/` for hash-tracked copies of additional analysis exports.
+Run `scripts/build_figure_gallery.py` after generating figures. The original
+files under `results/` and `analysis/` remain the provenance source, and a
+gallery copy never upgrades an exploratory or diagnostic evidence class.
 
 `vendor/FAIRGAME/unit_tests/` is vendored upstream and excluded from `testpaths`; it is not part of this project's suite.
 

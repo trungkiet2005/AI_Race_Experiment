@@ -65,7 +65,8 @@ scripts/                 All operational and analysis scripts: stage runners,
                          analysers, catalog and manifest builders
 results/                 Canonical home for raw runs, analyses, reports, QA, and publication PDF mirrors
 docs/                    Experiment protocols and run guides
-paper/                   Manuscript source, final PDFs, figures/, and bounded pilot audit evidence
+paper/                   Manuscript source, final PDFs, and bounded pilot audit evidence
+figures/                 Canonical publication assets and the complete figure-selection gallery
 slides/                  AI Race presentation outline, deck source, and design reference
 web/                     Browser front-ends: the simulator and the trajectory lab
 vendor/FAIRGAME/         Vendored upstream connectors (Apache-2.0, not our code)
@@ -206,4 +207,4 @@ internal world model and not confirmatory evidence about treatment effects.
 - protocol and admission gates: [`docs/game-understanding-audit.md`](docs/game-understanding-audit.md)
 - bounded results and provenance: [`docs/game-understanding-audit-results.md`](docs/game-understanding-audit-results.md)
 - admitted tables and hashes: [`results/open_source/game_understanding_pilot/`](results/open_source/game_understanding_pilot/)
-- publication figures: [`paper/figures/`](paper/figures/)
+- publication figures and selection gallery: [`figures/`](figures/)

@@ -526,7 +526,7 @@ We first specify the two-player game reproduced from \citet{falling_behind_unsaf
 
 \begin{figure*}[t]
   \centering
-  \includegraphics[width=\textwidth]{figures/AIRaceOverview.pdf}
+  \includegraphics[width=\textwidth]{../figures/paper/AIRaceOverview.pdf}
   \caption{The AI-race mechanism, shared by the two-player and $N$-player games. (a) Each round every company advances along the track by choosing Safe (green, slower, pays a cost) or Unsafe (red, faster, adding private setback risk); the race ends after a hidden number of rounds, and terminal prize $B$ goes to the progress leader or is divided among tied leaders. (b) The two-player stage-payoff matrix, Equation~\ref{eq:2p-matrix}. (c) The $N$-player stage-payoff rule, Equations~\ref{eq:np-safe} and~\ref{eq:np-unsafe}, in which the per-round benefit $b$ is distinct from terminal prize $B$.}
   \label{fig:mechanism}
   \Description{Three-panel diagram of the AI-race mechanism. Panel a shows company icons moving around a circular track, with green Safe icons advancing one step and red Unsafe icons advancing one and a half steps while increasing a private risk bar; the track leads to terminal prize B after an unmarked number of rounds. Panel b shows the two-player payoff matrix as a two-by-two grid labelled Safe and Unsafe on each axis, with values 1.0, 0.6, 2.4, and 2.0. Panel c shows the $N$-player stage-payoff rule: if $k$ of $N$ companies choose Safe, $D=k+s(N-k)$; Safe receives $b/D-c$ and Unsafe receives $s b/D$. Lowercase $b$ denotes per-round benefit, not terminal prize $B$.}
@@ -599,7 +599,7 @@ prompted self-play trajectories are not samples from an evolutionary population.
 % to the top of the next page.
 \begin{figure*}[t]
   \centering
-  \includegraphics[width=0.7\textwidth]{figures/ExpOverview.pdf}
+  \includegraphics[width=0.7\textwidth]{../figures/paper/ExpOverview.pdf}
   \caption{The three persona framings used to describe each company's executive. The canonical baseline has no persona sentence, and a neutral placebo of matched length separates the persona from its wording. The risk-aware family has six levels adapted from the Eckel and Grossman gamble scale. The cooperative and adversarial family frames rivals as doing better through mutual restraint, or only at each other's expense. These are prompt conditions, not measured psychological traits.}
   \label{fig:persona}
   \Description{Three-panel illustration using simple robot mascots to
@@ -794,7 +794,7 @@ can be more visible in observed play than the theoretical risk transition.
 
 \begin{figure}[t]
   \centering
-  \includegraphics[width=\columnwidth]{../results/frontier/egt_frontier_comparison_v2/egt_theory_vs_llm_unsafe.pdf}
+  \includegraphics[width=\columnwidth]{../figures/paper/egt_theory_vs_llm_unsafe.png}
   \caption{Frontier Unsafe decisions against the reconstructed evolutionary
   benchmark. The theory curves are stationary strategy mixtures; the frontier
   ranges and route-specific points summarise two admitted routes, each with 30
@@ -837,7 +837,7 @@ own, uninformative about anything beyond that one number.
 
 \begin{figure}[t]
     \centering
-    \includegraphics[width=0.44\textwidth]{figures/llm_human_clustering/05b_unsafe_rate_by_group.png}
+    \includegraphics[width=0.44\textwidth]{../figures/paper/llm_human_clustering/05b_unsafe_rate_by_group.png}
     \caption{Player-level mean \Unsafe{} rate over rounds 1 to 5 per
     population, the numbers reported in the paragraph above.}
     \label{fig:unsafe-rate-by-group}
@@ -865,7 +865,7 @@ archetypes that both open with a mutual-\Safe{} first round.
 
 \begin{figure}[t]
     \centering
-    \includegraphics[width=0.95\linewidth]{figures/llm_human_clustering/02_tsne_by_cluster.png}
+    \includegraphics[width=0.95\linewidth]{../figures/paper/llm_human_clustering/02_tsne_by_cluster.png}
     \caption{Composition of the eleven HDBSCAN-derived raw-action-and-
     position archetypes. The two largest are a mutual-first-round-\Safe{}
     archetype ($n=138$) and a mutual-round-2-\Unsafe{} archetype ($n=124$);
@@ -883,7 +883,7 @@ archetypes that both open with a mutual-\Safe{} first round.
 
 \begin{figure}[t]
     \centering
-    \includegraphics[width=0.95\linewidth]{figures/llm_human_clustering/01_tsne_hero_human_left.png}
+    \includegraphics[width=0.95\linewidth]{../figures/paper/llm_human_clustering/01_tsne_hero_human_left.png}
     \caption{t-SNE visualisation of the pooled 15-dimensional raw
     action-and-position space. Each panel highlights one population while
     rendering the other populations in grey; the human sample is shown in
@@ -959,7 +959,7 @@ level.
 
 \begin{figure}[t]
     \centering
-    \includegraphics[width=\columnwidth]{figures/human_vs_llm_distribution.pdf}
+    \includegraphics[width=\columnwidth]{../figures/paper/human_vs_llm_distribution.pdf}
     \caption{Smoothed distribution of player-level \Unsafe{} rates by risk
     cap (columns) and model family (rows), with the human benchmark
     repeated in every panel as the shaded reference. Density is log-scaled:
@@ -1082,7 +1082,7 @@ describe observed states; the experiment did not randomly assign rank.
 
 \begin{figure}[t]
     \centering
-    \includegraphics[width=0.95\linewidth]{figures/11_relative_position_grouped_bars.png}
+    \includegraphics[width=0.95\linewidth]{../figures/paper/11_relative_position_grouped_bars.png}
     \caption{\Unsafe{} rate by relative position (Leader / Middle /
     Trailer) within each assigned persona band, for GPT-5-nano (left)
     and GPT-5.4-nano (right). Bars marked $^\dagger$ in
