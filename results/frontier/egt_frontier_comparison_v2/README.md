@@ -53,6 +53,8 @@ The key cross-study insight is a boundary, not an equivalence: the reduced EGT m
 
 ![Strategy lens comparison](egt_strategy_lens_vs_llm.png)
 
+![Risk-conditioned invasion topology](egt_frontier_invasion.png)
+
 ## Artifact map
 
 - `egt_expected_payoff_matrices.csv`: exact reconstructed ordered payoffs.
@@ -63,6 +65,7 @@ The key cross-study insight is a boundary, not an equivalence: the reduced EGT m
 - `theory_llm_comparison.csv`: commensurable theory and LLM Unsafe-rate descriptors.
 - `theory_llm_comparison.csv`: commensurable theory and LLM Unsafe-rate descriptors.
 - `egttools_pinned_source_validation.json`: official-source transition and stationary parity audit.
+- `egt_frontier_invasion.json` and `egt_frontier_invasion.csv`: EGTtools fixation edges with finite-mutation node-share provenance.
 - `reconstruction_manifest.json`: source revisions, parameters, hashes, coverage, and evidence boundary.
 
 ## Sources

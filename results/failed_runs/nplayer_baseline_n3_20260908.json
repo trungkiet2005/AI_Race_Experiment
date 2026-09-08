@@ -1,0 +1,23 @@
+{
+  "schema_version": "failed-run-audit-v1",
+  "campaign": "ai-race-nplayer-baseline-n3",
+  "task_version": 1,
+  "recorded_at": "2026-09-08",
+  "evidence_status": "not_admitted",
+  "routes": {
+    "google-gemini-3-flash-preview": {
+      "status": "Errored",
+      "error": "Non-retryable model request failure; no fallback game action was applied."
+    },
+    "anthropic-claude-sonnet-5-default": {
+      "status": "Errored",
+      "error": "Non-retryable model request failure; no fallback game action was applied."
+    }
+  },
+  "interpretation": "The task completed at the benchmark-task level, but neither route produced an admissible raw output artifact.",
+  "do_not_use": [
+    "Do not promote benchmark logs or partial cells into N-player results.",
+    "Do not merge this campaign with the completed two-player frontier baseline."
+  ],
+  "next_safe_action": "Run a fresh N-player task after the provider request failure is resolved, with explicit output packaging and validation before admission."
+}

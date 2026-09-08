@@ -497,7 +497,33 @@ stationary population composition.
     Gemini and Claude frontier self-play. The panels show risk responses,
     deviations from theory, nearest-rule compositions, and classification
     mismatch against uniqueness.}
-    \label{fig:egt-frontier-insights}
+\label{fig:egt-frontier-insights}
+\end{figure*}
+
+The invasion view in Figure~\ref{fig:egt-frontier-invasion} exposes the
+selection topology behind the three theoretical endpoints. Its directed edges
+are computed by the archive-compatible EGTtools implementation. The node areas
+use the finite-mutation main-reference chain because the small-mutation limit
+can contain multiple absorbing classes at extreme payoff scales. This is a
+diagnostic decomposition, not a claim that the frontier routes sample the same
+population process.
+
+\begin{figure*}[t]
+    \centering
+    \includegraphics[width=\textwidth]{../results/frontier/egt_frontier_comparison_v2/egt_frontier_invasion.pdf}
+    \caption{Risk-conditioned invasion topology for the reduced evolutionary
+    game. Node area shows the finite-mutation main-reference chain share
+    ($\beta=2$, $\mu=0.02$); directed edges show EGTtools
+    \texttt{PairwiseComparison} fixation probabilities above neutral drift.
+    The figure is a hybrid diagnostic: the edge topology is evaluated in the
+    EGTtools small-mutation limit, while node areas come from the independently
+    simulated finite-mutation chains. It should not be read as a latent-strategy
+    diagram for the language models.}
+    \Description{Three network diagrams showing risk-conditioned invasion among
+    Always Safe, Always Unsafe, Conditional Safe, and Conditional Unsafe.
+    Node areas show finite-mutation stationary shares, and arrows show
+    EGTtools fixation probabilities above neutral drift.}
+    \label{fig:egt-frontier-invasion}
 \end{figure*}
 
 \subsection{Human-benchmark replication check}
@@ -643,7 +669,7 @@ play overall.
     line is the trend across the six group means. Right: mean \Unsafe{}
     rate by assigned risk-persona level, for every model with a six-level
     sweep; GPT-5.6 Luna and Terra (dashed) sit outside the seven-model
-    roster. The shared six-step axis is visual alignment only --- the left
+    roster. The shared six-step axis is visual alignment only; the left
     is a disposition measured once before play, the right an instruction
     re-assigned every race.}
     \label{fig:own-risk-dependence}
@@ -672,9 +698,9 @@ The right panel is the opposite (Table~\ref{tab:persona-effect}): every
 model with a six-level sweep climbs 50.5 to 98.3 points from R1 to R6, all
 but the two nano models monotonically, and those two dip by well under a
 point at R2 before rising. The label does not, however, move models by a
-common factor --- GPT-5.6 Terra runs lowest at R1 and finishes within 1.3
+common factor; GPT-5.6 Terra runs lowest at R1 and finishes within 1.3
 points of the top, while GPT-5-nano starts fifth of seven and ends last
---- so curve order is not preserved, and the same instruction is worth
+last, so curve order is not preserved, and the same instruction is worth
 very different amounts to different models. Of the seven tested models, five have such a sweep;
 neither Gemini Flash-Lite checkpoint does. In logistic models that
 additionally control for the mechanism's actual private-risk treatment, the
