@@ -33,7 +33,7 @@ from pydantic import BaseModel, Field, ValidationError
 
 # %%
 TASK_NAME = "ai-race-nplayer-baseline-n3"
-PROTOCOL_ID = "ai-race-nplayer-n3-hosted-confirmatory-v2"
+PROTOCOL_ID = "ai-race-nplayer-n3-hosted-confirmatory-v3"
 N_PLAYERS = 3
 RISK_LEVELS = (0.1, 0.6, 0.9)
 CONFIRMATORY_REPETITIONS = 60
@@ -43,9 +43,8 @@ REPETITIONS_OVERRIDE = os.environ.get("AI_RACE_REPS")
 RUN_PHASE_OVERRIDE = os.environ.get("AI_RACE_RUN_PHASE")
 
 CONFIRMATORY_MODEL_ROUTES = (
-    "openai/gpt-5.4-nano-2026-03-17",
-    "google/gemini-3.5-flash-lite",
-    "anthropic/claude-haiku-4-5@20251001",
+    "google/gemini-3-flash-preview",
+    "anthropic/claude-sonnet-5@default",
 )
 
 TEMPERATURE = 0.7
