@@ -646,10 +646,36 @@ def plot_llm_strategy_lens(
 ) -> None:
     if not llm_summary:
         return
-    technology = sorted(
-        llm_summary,
-        key=lambda row: (row["max_private_risk"], row["context"]),
-    )
+    # The frontier input can contain several admitted routes.  The original
+    # plot assumed one three-cell series and silently became invalid as soon
+    # as a second route was added.  Pool only for this descriptive strategy
+    # lens, weighting each cell by its classified player trajectories; route
+    # identity remains visible in the raw and summary CSVs and in the EGT
+    # comparison range.
+    technology = []
+    for risk in RISKS:
+        cells = [row for row in llm_summary if row["max_private_risk"] == risk]
+        if not cells:
+            continue
+        total = sum(int(row["player_trajectories"]) for row in cells)
+        pooled = {
+            "max_private_risk": risk,
+            "player_trajectories": total,
+            "unique_classification_rate": float(
+                np.average(
+                    [row["unique_classification_rate"] for row in cells],
+                    weights=[int(row["player_trajectories"]) for row in cells],
+                )
+            ),
+        }
+        for strategy in STRATEGIES:
+            pooled[f"fractional_nearest_{strategy}"] = float(
+                np.average(
+                    [row[f"fractional_nearest_{strategy}"] for row in cells],
+                    weights=[int(row["player_trajectories"]) for row in cells],
+                )
+            )
+        technology.append(pooled)
     theory = sorted(
         (row for row in chain_summary if row["regime"] == "main_reference"),
         key=lambda row: row["max_private_risk"],
@@ -659,8 +685,8 @@ def plot_llm_strategy_lens(
         (axes[0], theory, "Evolutionary stationary share"),
         (axes[1], technology, "LLM fractional nearest-strategy share"),
     ):
-        bottoms = np.zeros(3)
-        x = np.arange(3)
+        bottoms = np.zeros(len(cells))
+        x = np.arange(len(cells))
         for strategy in STRATEGIES:
             if source.startswith("Evolutionary"):
                 values = np.array([row[f"frequency_{strategy}_mean"] for row in cells])
