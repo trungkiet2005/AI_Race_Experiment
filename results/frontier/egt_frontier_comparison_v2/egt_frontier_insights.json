@@ -1,0 +1,19 @@
+{
+  "schema_version": "egt-frontier-insights-v1",
+  "evidence_class": "descriptive_frontier_vs_faithful_egt_boundary",
+  "source_artifacts": [
+    "results\\frontier\\egt_frontier_comparison_v2\\theory_llm_comparison.csv",
+    "results\\frontier\\egt_frontier_comparison_v2\\llm_strategy_summary_primary_t0.csv",
+    "results\\frontier\\egt_frontier_comparison_v2\\egttools_pinned_source_validation.json"
+  ],
+  "routes": [
+    "claude",
+    "gemini"
+  ],
+  "rows": 6,
+  "interpretation": [
+    "The frontier routes do not reproduce the sharp strong-selection EGT phase change.",
+    "Route differences are large relative to the three risk checkpoints, so pooled endpoint claims are not justified.",
+    "Nearest-rule classification is least unique where mismatch is largest; it is a diagnostic lens, not a latent-policy estimator."
+  ]
+}

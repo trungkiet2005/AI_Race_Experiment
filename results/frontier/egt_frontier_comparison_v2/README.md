@@ -21,7 +21,7 @@ The paper contains two distinct reference mutation settings. Its main text defin
 
 The requested EGTtools `docs` branch was inspected at commit `df7f5fb7787658b3fd3ab21343ff50a3e2a5d439`. That commit documents the same finite-population transition rule, but it predates the 2026 paper and is not identified by the paper as its execution revision. Current EGTtools was therefore not treated as a missing author lockfile.
 
-The pinned official-source execution artifact was not available for this run.
+The unmodified pure-Python `StochDynamics` class from the pinned EGTtools source was executed for an AS/AU, `Z=10`, `beta=2`, `mu=0.02` validation case. Its full transition matrix agrees with the independent repo-native construction to maximum absolute difference `1.11e-16`; stationary distributions agree to `7.63e-15`. The compiled C++ `PairwiseComparison` class was not executed because EGTtools 0.1.14.2 publishes no Windows CPython 3.13 wheel and the docs-commit package imports its compiled numerical module at initialisation. This limitation is recorded rather than hidden.
 
 ## Main findings
 
