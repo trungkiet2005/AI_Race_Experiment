@@ -1,0 +1,15 @@
+{
+  "schema_version": "frontier-artifact-failure-v1",
+  "task": "ai-race-frontier-context-mapping",
+  "task_version": 3,
+  "model": "gemini-3-flash-preview",
+  "run_id": "1373757",
+  "run_status": "completed",
+  "evidence_status": "not_admitted",
+  "failure_stage": "kaggle_output_download",
+  "attempts": 2,
+  "error": "[Errno 2] No such file or directory: <output>/1373757.download/ai-race-frontier-context-mapping-run_id_Run_1_google_gemini-3-flash-preview.run.json",
+  "observed_log_coverage": "120-cell task reached completion status; raw output files were not downloaded",
+  "decision": "Do not use log-only values in manuscript tables or figures; retain the run as a failed artifact-transfer attempt.",
+  "next_safe_action": "Use a fresh explicit rerun or a Kaggle-side packaging fix before admitting context/mapping evidence."
+}
