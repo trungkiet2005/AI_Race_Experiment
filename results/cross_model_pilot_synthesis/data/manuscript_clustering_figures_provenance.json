@@ -1,0 +1,60 @@
+{
+  "figure_4_rates": {
+    "claude-opus-5": 0.3333333333333333,
+    "claude-sonnet-5": 0.21666666666666667,
+    "google/gemini-3-flash-preview": 0.73,
+    "google/gemini-3.1-flash-lite-preview": 0.8266666666666665,
+    "google/gemini-3.5-flash-lite": 0.7433333333333334,
+    "gpt-5-nano": 0.16999999999999998,
+    "gpt-5.4-nano": 0.5366666666666667,
+    "human": 0.56
+  },
+  "figure_5_legacy_normalization": {
+    "normalized_pixels": 2803515,
+    "operation": "canvas-only RGB normalization; legacy plotted content retained",
+    "output_shape": [
+      1413,
+      2123
+    ],
+    "source_asset": "figures\\paper\\llm_human_clustering\\02_tsne_by_cluster.png",
+    "source_corner_rgb": [
+      255,
+      255,
+      255
+    ],
+    "source_sha256_before_normalization": "63cebdc66bcc49e6f98c7fc2be35cede667ea0d3cec98f88cd6fd594baa2c890"
+  },
+  "figure_8_legacy_normalization": {
+    "normalized_pixels": 1125859,
+    "operation": "canvas-only RGB normalization; legacy plotted content retained",
+    "output_shape": [
+      811,
+      1867
+    ],
+    "source_asset": "figures\\paper\\11_relative_position_grouped_bars.png",
+    "source_corner_rgb": [
+      255,
+      255,
+      255
+    ],
+    "source_sha256_before_normalization": "fe1807c42f1858cea7f181bf6bc3ca55ff8e5898ae8a289a3b45e8b810d0c53d"
+  },
+  "figure_numbering": {
+    "4": "figures/paper/llm_human_clustering/05b_unsafe_rate_by_group",
+    "5": "figures/paper/llm_human_clustering/02_tsne_by_cluster",
+    "8": "figures/paper/11_relative_position_grouped_bars"
+  },
+  "generated_utc": "2026-09-08T09:21:24.357546+00:00",
+  "generator": "scripts/build_manuscript_clustering_figures.py",
+  "generator_version": 2,
+  "source_sha256": {
+    "references\\source_study_dataset\\airace_deidentified_long.csv": "ba6009ed5a6702e9f3ec9782289226099edc2b78c63057e57967927a539f8eee",
+    "results\\frontier\\baseline\\google-gemini-3-flash-preview\\turns.jsonl": "5bdc7bec766532c59baef206a558a2e8199bb37bdde9ab74c5aa27fef3119237",
+    "results\\frontier\\baseline\\google-gemini-3.1-flash-lite-preview\\turns.jsonl": "a3b34464b10619d1d64e63b79c9c72a6ce08a3d3ff72fba96babb49726ed22db",
+    "results\\frontier\\baseline\\google-gemini-3.5-flash-lite\\turns.jsonl": "8db97643168c744f9495a3300f406799671b77520f01ccf9746134f673bfba80",
+    "results\\frontier\\bedrock\\baseline\\us.anthropic.claude-opus-5\\turns.jsonl": "c3683ddc5937bec955aef855eb69e51fae1368673088c18d7109bc30e18d118d",
+    "results\\frontier\\bedrock\\baseline\\us.anthropic.claude-sonnet-5\\turns.jsonl": "d2bfd78cf6d05dda127cb682396424d483cd61017320fdcdb09de48de7ec2956",
+    "results\\frontier\\openai\\baseline\\gpt-5-nano\\turns.jsonl": "5ba5bf6dc0e384ead89eee63cb5fc6b2f49fe56de3531c94256b4308e22d8313",
+    "results\\frontier\\openai\\baseline\\gpt-5.4-nano\\turns.jsonl": "1bd41cf76f616f56db278c591d7ef8fce28d89a1cdba8fc2073501990463518b"
+  }
+}

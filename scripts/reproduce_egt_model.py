@@ -368,8 +368,15 @@ def summarise_chains(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
 
 
 def _save_figure(fig: plt.Figure, output: Path, stem: str) -> None:
-    fig.savefig(output / f"{stem}.png", facecolor="white")
-    fig.savefig(output / f"{stem}.pdf", facecolor="white")
+    # Keep the page colour explicit at the final write boundary.  Matplotlib's
+    # default is usually white, but relying on that leaves the raster and PDF
+    # outputs vulnerable to a caller's transparent rcParams.
+    fig.set_facecolor("white")
+    for axis in fig.axes:
+        axis.set_facecolor("white")
+    save_kwargs = {"facecolor": "white", "edgecolor": "white", "transparent": False}
+    fig.savefig(output / f"{stem}.png", **save_kwargs)
+    fig.savefig(output / f"{stem}.pdf", **save_kwargs)
     plt.close(fig)
 
 

@@ -592,6 +592,13 @@ def _style() -> None:
             "ytick.labelsize": 7,
             "legend.fontsize": 6.8,
             "figure.titlesize": 10,
+            # Publication canvases are always opaque white.  Set all three
+            # layers explicitly because a caller may have enabled transparent
+            # figures before this module is imported.
+            "figure.facecolor": "#FFFFFF",
+            "axes.facecolor": "#FFFFFF",
+            "savefig.facecolor": "#FFFFFF",
+            "savefig.edgecolor": "#FFFFFF",
             "axes.spines.top": False,
             "axes.spines.right": False,
             "axes.linewidth": 0.7,
@@ -626,7 +633,22 @@ def _finish_axis(ax: plt.Axes, *, percent_y: bool = False) -> None:
 
 
 def _save_figure(fig: plt.Figure, base: Path, *, dpi: int) -> list[Path]:
+    def strip_svg_trailing_whitespace(paths: list[Path]) -> list[Path]:
+        # Matplotlib emits continuation lines with trailing spaces. Strip them
+        # so generated vector assets pass the repository's whitespace gate.
+        for path in paths:
+            if path.suffix.lower() == ".svg" and path.is_file():
+                content = path.read_text(encoding="utf-8")
+                path.write_text(
+                    "\n".join(line.rstrip() for line in content.splitlines()) + "\n",
+                    encoding="utf-8",
+                )
+        return paths
+
     base.parent.mkdir(parents=True, exist_ok=True)
+    fig.set_facecolor("#FFFFFF")
+    for axis in fig.axes:
+        axis.set_facecolor("#FFFFFF")
     if save_publication_figure is not None:
         paths = save_publication_figure(
             fig,
@@ -636,13 +658,21 @@ def _save_figure(fig: plt.Figure, base: Path, *, dpi: int) -> list[Path]:
             bbox_inches="tight",
             pad_inches=0.04,
         )
-        return [Path(x) for x in paths]
+        return strip_svg_trailing_whitespace([Path(x) for x in paths])
     paths = []
     for fmt in FORMATS:
         path = base.with_suffix("." + fmt)
-        fig.savefig(path, dpi=dpi, bbox_inches="tight", pad_inches=0.04)
+        fig.savefig(
+            path,
+            dpi=dpi,
+            bbox_inches="tight",
+            pad_inches=0.04,
+            facecolor="#FFFFFF",
+            edgecolor="#FFFFFF",
+            transparent=False,
+        )
         paths.append(path)
-    return paths
+    return strip_svg_trailing_whitespace(paths)
 
 
 def _figure_baseline_risk_response(

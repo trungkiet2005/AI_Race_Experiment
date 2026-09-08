@@ -1090,6 +1090,96 @@
     ]
   },
   {
+    "canonical_path": "figures/diagnostics/derived/two_player_paper_analysis/figures/fig04_strategy_composition.pdf",
+    "kind": "diagnostic",
+    "sha256": "8ebf1909c9e4472cdd9a97c773fda6a39092c5d44388f118d13e3505effa4bb0",
+    "source": "results/derived/two_player_paper_analysis/figures/fig04_strategy_composition.pdf",
+    "status": "diagnostic",
+    "sources": [
+      "results/derived/two_player_paper_analysis/figures/fig04_strategy_composition.pdf"
+    ]
+  },
+  {
+    "canonical_path": "figures/diagnostics/derived/two_player_paper_analysis/figures/fig04_strategy_composition.png",
+    "kind": "diagnostic",
+    "sha256": "77e21691971fe1fa44b62a04818737b629f28bd2c10c6d67d79b4026a6c56ee4",
+    "source": "results/derived/two_player_paper_analysis/figures/fig04_strategy_composition.png",
+    "status": "diagnostic",
+    "sources": [
+      "results/derived/two_player_paper_analysis/figures/fig04_strategy_composition.png"
+    ]
+  },
+  {
+    "canonical_path": "figures/diagnostics/derived/two_player_paper_analysis/figures/fig04_strategy_composition.svg",
+    "kind": "diagnostic",
+    "sha256": "33734580fb2a21d8e77e02fab70c3c97268d47f184d07ee848a6bbedb45da1c3",
+    "source": "results/derived/two_player_paper_analysis/figures/fig04_strategy_composition.svg",
+    "status": "diagnostic",
+    "sources": [
+      "results/derived/two_player_paper_analysis/figures/fig04_strategy_composition.svg"
+    ]
+  },
+  {
+    "canonical_path": "figures/diagnostics/derived/two_player_paper_analysis/figures/fig05_safety_payoff_frontier.pdf",
+    "kind": "diagnostic",
+    "sha256": "4886f0b02abdd69b3eacb89d4d989a810ee573d7a9a9ad46cd574947d2a51d17",
+    "source": "results/derived/two_player_paper_analysis/figures/fig05_safety_payoff_frontier.pdf",
+    "status": "diagnostic",
+    "sources": [
+      "results/derived/two_player_paper_analysis/figures/fig05_safety_payoff_frontier.pdf"
+    ]
+  },
+  {
+    "canonical_path": "figures/diagnostics/derived/two_player_paper_analysis/figures/fig05_safety_payoff_frontier.png",
+    "kind": "diagnostic",
+    "sha256": "437a4d06ece5f62823e75e07e4df066a995c42631ec51cfd6b5489103cebd082",
+    "source": "results/derived/two_player_paper_analysis/figures/fig05_safety_payoff_frontier.png",
+    "status": "diagnostic",
+    "sources": [
+      "results/derived/two_player_paper_analysis/figures/fig05_safety_payoff_frontier.png"
+    ]
+  },
+  {
+    "canonical_path": "figures/diagnostics/derived/two_player_paper_analysis/figures/fig05_safety_payoff_frontier.svg",
+    "kind": "diagnostic",
+    "sha256": "95dd0498d7cff317738df6e1e1659492516ad306ce9601261f586a6b00d30c0a",
+    "source": "results/derived/two_player_paper_analysis/figures/fig05_safety_payoff_frontier.svg",
+    "status": "diagnostic",
+    "sources": [
+      "results/derived/two_player_paper_analysis/figures/fig05_safety_payoff_frontier.svg"
+    ]
+  },
+  {
+    "canonical_path": "figures/diagnostics/derived/two_player_paper_analysis/figures/fig08_gpt_risk_persona_surfaces.pdf",
+    "kind": "diagnostic",
+    "sha256": "48d90fceea00242e120dd8c9b5719363fd63dd612ea30a66e2b90aa301de8d26",
+    "source": "results/derived/two_player_paper_analysis/figures/fig08_gpt_risk_persona_surfaces.pdf",
+    "status": "diagnostic",
+    "sources": [
+      "results/derived/two_player_paper_analysis/figures/fig08_gpt_risk_persona_surfaces.pdf"
+    ]
+  },
+  {
+    "canonical_path": "figures/diagnostics/derived/two_player_paper_analysis/figures/fig08_gpt_risk_persona_surfaces.png",
+    "kind": "diagnostic",
+    "sha256": "bb227f3709cd59262ff9febd67d31f4cbb3957465dc5cba8e72955914147effe",
+    "source": "results/derived/two_player_paper_analysis/figures/fig08_gpt_risk_persona_surfaces.png",
+    "status": "diagnostic",
+    "sources": [
+      "results/derived/two_player_paper_analysis/figures/fig08_gpt_risk_persona_surfaces.png"
+    ]
+  },
+  {
+    "canonical_path": "figures/diagnostics/derived/two_player_paper_analysis/figures/fig08_gpt_risk_persona_surfaces.svg",
+    "kind": "diagnostic",
+    "sha256": "64fcc38e572ccbde78427406e29253d48c5f1af12e0ef68243f4c0e7a8e00ccc",
+    "source": "results/derived/two_player_paper_analysis/figures/fig08_gpt_risk_persona_surfaces.svg",
+    "status": "diagnostic",
+    "sources": [
+      "results/derived/two_player_paper_analysis/figures/fig08_gpt_risk_persona_surfaces.svg"
+    ]
+  },
+  {
     "canonical_path": "figures/diagnostics/fh_analytic/baseline_gap_threshold_scan.png",
     "kind": "diagnostic",
     "sha256": "82cbe6e3474c2163f8173d789778b26fc0d3be39437fb887789c931aedcb2dfa",
@@ -3438,6 +3528,17 @@
     ]
   },
   {
+    "canonical_path": "figures/gallery/ADMITTED_egt_reproduction/egt_theory_vs_llm_unsafe.png",
+    "kind": "gallery",
+    "sha256": "508d6848f84ef4225ab06509dc36c32f009134d25e0fa7b64b83e5958761638a",
+    "source": "figures/gallery/ADMITTED_egt_reproduction/egt_theory_vs_llm_unsafe.png",
+    "status": "admitted",
+    "sources": [
+      "figures/gallery/ADMITTED_egt_reproduction/egt_theory_vs_llm_unsafe.png",
+      "results/open_source/egt_reproduction/egt_theory_vs_llm_unsafe.png"
+    ]
+  },
+  {
     "canonical_path": "figures/gallery/ADMITTED_prompt_sensitivity_pilot/xai_auto_vector_encoder__xai_top_global_coefficients.png",
     "kind": "gallery",
     "sha256": "12c8ccb030284499ec6bb6bbd32da48f5f3bdafe3b5090b9df95647589ac4d56",
@@ -3955,8 +4056,7 @@
     "source": "figures/gallery/NEW_05_two_player_paper_analysis/fig04_strategy_composition.pdf",
     "status": "exploratory",
     "sources": [
-      "figures/gallery/NEW_05_two_player_paper_analysis/fig04_strategy_composition.pdf",
-      "results/derived/two_player_paper_analysis/figures/fig04_strategy_composition.pdf"
+      "figures/gallery/NEW_05_two_player_paper_analysis/fig04_strategy_composition.pdf"
     ]
   },
   {
@@ -3966,8 +4066,7 @@
     "source": "figures/gallery/NEW_05_two_player_paper_analysis/fig04_strategy_composition.png",
     "status": "exploratory",
     "sources": [
-      "figures/gallery/NEW_05_two_player_paper_analysis/fig04_strategy_composition.png",
-      "results/derived/two_player_paper_analysis/figures/fig04_strategy_composition.png"
+      "figures/gallery/NEW_05_two_player_paper_analysis/fig04_strategy_composition.png"
     ]
   },
   {
@@ -3977,8 +4076,7 @@
     "source": "figures/gallery/NEW_05_two_player_paper_analysis/fig04_strategy_composition.svg",
     "status": "exploratory",
     "sources": [
-      "figures/gallery/NEW_05_two_player_paper_analysis/fig04_strategy_composition.svg",
-      "results/derived/two_player_paper_analysis/figures/fig04_strategy_composition.svg"
+      "figures/gallery/NEW_05_two_player_paper_analysis/fig04_strategy_composition.svg"
     ]
   },
   {
@@ -3988,8 +4086,7 @@
     "source": "figures/gallery/NEW_05_two_player_paper_analysis/fig05_safety_payoff_frontier.pdf",
     "status": "exploratory",
     "sources": [
-      "figures/gallery/NEW_05_two_player_paper_analysis/fig05_safety_payoff_frontier.pdf",
-      "results/derived/two_player_paper_analysis/figures/fig05_safety_payoff_frontier.pdf"
+      "figures/gallery/NEW_05_two_player_paper_analysis/fig05_safety_payoff_frontier.pdf"
     ]
   },
   {
@@ -3999,8 +4096,7 @@
     "source": "figures/gallery/NEW_05_two_player_paper_analysis/fig05_safety_payoff_frontier.png",
     "status": "exploratory",
     "sources": [
-      "figures/gallery/NEW_05_two_player_paper_analysis/fig05_safety_payoff_frontier.png",
-      "results/derived/two_player_paper_analysis/figures/fig05_safety_payoff_frontier.png"
+      "figures/gallery/NEW_05_two_player_paper_analysis/fig05_safety_payoff_frontier.png"
     ]
   },
   {
@@ -4010,8 +4106,7 @@
     "source": "figures/gallery/NEW_05_two_player_paper_analysis/fig05_safety_payoff_frontier.svg",
     "status": "exploratory",
     "sources": [
-      "figures/gallery/NEW_05_two_player_paper_analysis/fig05_safety_payoff_frontier.svg",
-      "results/derived/two_player_paper_analysis/figures/fig05_safety_payoff_frontier.svg"
+      "figures/gallery/NEW_05_two_player_paper_analysis/fig05_safety_payoff_frontier.svg"
     ]
   },
   {
@@ -4087,8 +4182,7 @@
     "source": "figures/gallery/NEW_05_two_player_paper_analysis/fig08_gpt_risk_persona_surfaces.pdf",
     "status": "exploratory",
     "sources": [
-      "figures/gallery/NEW_05_two_player_paper_analysis/fig08_gpt_risk_persona_surfaces.pdf",
-      "results/derived/two_player_paper_analysis/figures/fig08_gpt_risk_persona_surfaces.pdf"
+      "figures/gallery/NEW_05_two_player_paper_analysis/fig08_gpt_risk_persona_surfaces.pdf"
     ]
   },
   {
@@ -4098,8 +4192,7 @@
     "source": "figures/gallery/NEW_05_two_player_paper_analysis/fig08_gpt_risk_persona_surfaces.png",
     "status": "exploratory",
     "sources": [
-      "figures/gallery/NEW_05_two_player_paper_analysis/fig08_gpt_risk_persona_surfaces.png",
-      "results/derived/two_player_paper_analysis/figures/fig08_gpt_risk_persona_surfaces.png"
+      "figures/gallery/NEW_05_two_player_paper_analysis/fig08_gpt_risk_persona_surfaces.png"
     ]
   },
   {
@@ -4109,8 +4202,7 @@
     "source": "figures/gallery/NEW_05_two_player_paper_analysis/fig08_gpt_risk_persona_surfaces.svg",
     "status": "exploratory",
     "sources": [
-      "figures/gallery/NEW_05_two_player_paper_analysis/fig08_gpt_risk_persona_surfaces.svg",
-      "results/derived/two_player_paper_analysis/figures/fig08_gpt_risk_persona_surfaces.svg"
+      "figures/gallery/NEW_05_two_player_paper_analysis/fig08_gpt_risk_persona_surfaces.svg"
     ]
   },
   {
@@ -4663,13 +4755,33 @@
     ]
   },
   {
+    "canonical_path": "figures/paper/11_relative_position_grouped_bars.pdf",
+    "kind": "paper",
+    "sha256": "16969b0d879815aa91f1834e3114d4b82dc8771a042c36361e419198b8fe4a63",
+    "source": "figures/paper/11_relative_position_grouped_bars.pdf",
+    "status": "paper-ready",
+    "sources": [
+      "figures/paper/11_relative_position_grouped_bars.pdf"
+    ]
+  },
+  {
     "canonical_path": "figures/paper/11_relative_position_grouped_bars.png",
     "kind": "paper",
-    "sha256": "00f26a9330db7a0cc8a5eaeb08b6351418e3c4e04dfe76c51e8362f123bdc2c7",
+    "sha256": "fe1807c42f1858cea7f181bf6bc3ca55ff8e5898ae8a289a3b45e8b810d0c53d",
     "source": "figures/paper/11_relative_position_grouped_bars.png",
     "status": "paper-ready",
     "sources": [
       "figures/paper/11_relative_position_grouped_bars.png"
+    ]
+  },
+  {
+    "canonical_path": "figures/paper/11_relative_position_grouped_bars.svg",
+    "kind": "paper",
+    "sha256": "6b7f880ad651bceb6778b665248b44c6e770b413bd17fe27a0cbb3f6dd5aa82c",
+    "source": "figures/paper/11_relative_position_grouped_bars.svg",
+    "status": "paper-ready",
+    "sources": [
+      "figures/paper/11_relative_position_grouped_bars.svg"
     ]
   },
   {
@@ -4832,15 +4944,23 @@
     ]
   },
   {
+    "canonical_path": "figures/paper/egt_theory_vs_llm_unsafe.pdf",
+    "kind": "paper",
+    "sha256": "14412fc7c4ed406c2b7d7fd302bdf0b24dc49fbbcdb63f222e71800884a3ea9e",
+    "source": "figures/paper/egt_theory_vs_llm_unsafe.pdf",
+    "status": "paper-ready",
+    "sources": [
+      "figures/paper/egt_theory_vs_llm_unsafe.pdf"
+    ]
+  },
+  {
     "canonical_path": "figures/paper/egt_theory_vs_llm_unsafe.png",
     "kind": "paper",
-    "sha256": "508d6848f84ef4225ab06509dc36c32f009134d25e0fa7b64b83e5958761638a",
+    "sha256": "e76aed9b7cdae70e56dd2af572c6ba70a00aaab92daf6de77855867d8fe44ea1",
     "source": "figures/paper/egt_theory_vs_llm_unsafe.png",
     "status": "paper-ready",
     "sources": [
-      "figures/paper/egt_theory_vs_llm_unsafe.png",
-      "figures/gallery/ADMITTED_egt_reproduction/egt_theory_vs_llm_unsafe.png",
-      "results/open_source/egt_reproduction/egt_theory_vs_llm_unsafe.png"
+      "figures/paper/egt_theory_vs_llm_unsafe.png"
     ]
   },
   {
@@ -4940,13 +5060,33 @@
     ]
   },
   {
+    "canonical_path": "figures/paper/llm_human_clustering/01_tsne_hero_human_left.pdf",
+    "kind": "paper",
+    "sha256": "519b40f4ac16034164e9d1a2a4b64a83d7a8e11252440e4353b6b26026027b1d",
+    "source": "figures/paper/llm_human_clustering/01_tsne_hero_human_left.pdf",
+    "status": "paper-ready",
+    "sources": [
+      "figures/paper/llm_human_clustering/01_tsne_hero_human_left.pdf"
+    ]
+  },
+  {
     "canonical_path": "figures/paper/llm_human_clustering/01_tsne_hero_human_left.png",
     "kind": "paper",
-    "sha256": "d67ff8ba9dc8f7980f4193a870486e1405a47c484265bc260a4f21d4e554a601",
+    "sha256": "5e34147f0429f4cc9e82679484f92f99f91888f9b2c907647af6d1529bec5ca7",
     "source": "figures/paper/llm_human_clustering/01_tsne_hero_human_left.png",
     "status": "paper-ready",
     "sources": [
       "figures/paper/llm_human_clustering/01_tsne_hero_human_left.png"
+    ]
+  },
+  {
+    "canonical_path": "figures/paper/llm_human_clustering/01_tsne_hero_human_left.svg",
+    "kind": "paper",
+    "sha256": "a896882553773561cd97c9d415db4cd61a6c6e78b7f65c54aec337588b03f598",
+    "source": "figures/paper/llm_human_clustering/01_tsne_hero_human_left.svg",
+    "status": "paper-ready",
+    "sources": [
+      "figures/paper/llm_human_clustering/01_tsne_hero_human_left.svg"
     ]
   },
   {
@@ -4960,13 +5100,33 @@
     ]
   },
   {
+    "canonical_path": "figures/paper/llm_human_clustering/02_tsne_by_cluster.pdf",
+    "kind": "paper",
+    "sha256": "fa60af953ae71036143c96767d2f5e0bf48a25aa30f76567141d9416d672d2f8",
+    "source": "figures/paper/llm_human_clustering/02_tsne_by_cluster.pdf",
+    "status": "paper-ready",
+    "sources": [
+      "figures/paper/llm_human_clustering/02_tsne_by_cluster.pdf"
+    ]
+  },
+  {
     "canonical_path": "figures/paper/llm_human_clustering/02_tsne_by_cluster.png",
     "kind": "paper",
-    "sha256": "97bd54df12a7f0d6ecf8fe324f88b9d0d9b457af9e18aaa5e14e728f9b4bfcb5",
+    "sha256": "63cebdc66bcc49e6f98c7fc2be35cede667ea0d3cec98f88cd6fd594baa2c890",
     "source": "figures/paper/llm_human_clustering/02_tsne_by_cluster.png",
     "status": "paper-ready",
     "sources": [
       "figures/paper/llm_human_clustering/02_tsne_by_cluster.png"
+    ]
+  },
+  {
+    "canonical_path": "figures/paper/llm_human_clustering/02_tsne_by_cluster.svg",
+    "kind": "paper",
+    "sha256": "924255bf972ff39636d6df85915a2c9c781695a5e7616635b42d6d684cb17d06",
+    "source": "figures/paper/llm_human_clustering/02_tsne_by_cluster.svg",
+    "status": "paper-ready",
+    "sources": [
+      "figures/paper/llm_human_clustering/02_tsne_by_cluster.svg"
     ]
   },
   {
@@ -5050,13 +5210,33 @@
     ]
   },
   {
+    "canonical_path": "figures/paper/llm_human_clustering/05b_unsafe_rate_by_group.pdf",
+    "kind": "paper",
+    "sha256": "8a0f12c8dcd411c783a1e024005d39bdf7f1eadd405f4e70e0183ab293b01a9b",
+    "source": "figures/paper/llm_human_clustering/05b_unsafe_rate_by_group.pdf",
+    "status": "paper-ready",
+    "sources": [
+      "figures/paper/llm_human_clustering/05b_unsafe_rate_by_group.pdf"
+    ]
+  },
+  {
     "canonical_path": "figures/paper/llm_human_clustering/05b_unsafe_rate_by_group.png",
     "kind": "paper",
-    "sha256": "5e915f8a4b9e9498c43fedae8d6beb9ba6a108ad35ab8589b06ab12b82f7f210",
+    "sha256": "4a2a00a1fabc9ad761ad67c6a75cd6b13a296e3b777b62f5658b31d4ae64415b",
     "source": "figures/paper/llm_human_clustering/05b_unsafe_rate_by_group.png",
     "status": "paper-ready",
     "sources": [
       "figures/paper/llm_human_clustering/05b_unsafe_rate_by_group.png"
+    ]
+  },
+  {
+    "canonical_path": "figures/paper/llm_human_clustering/05b_unsafe_rate_by_group.svg",
+    "kind": "paper",
+    "sha256": "392132d2a1002a24ef60530aeb848ef1fcc5c527424bdde257ae36c0147cff72",
+    "source": "figures/paper/llm_human_clustering/05b_unsafe_rate_by_group.svg",
+    "status": "paper-ready",
+    "sources": [
+      "figures/paper/llm_human_clustering/05b_unsafe_rate_by_group.svg"
     ]
   },
   {
