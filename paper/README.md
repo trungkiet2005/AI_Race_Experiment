@@ -4,15 +4,18 @@ This directory contains the manuscript for the project’s **LLM-agent AI Race e
 
 ## Current status
 
-The manuscript reports a bounded frontier-model baseline: a per-endpoint task-validity audit, a three-repetition confirmatory admission for Gemini 3 Flash, a 30-race behavioural run, published-human reference values, and a faithful EGT reconstruction. The frontier baseline is descriptive and endpoint-specific. Fully crossed mapping, persona, language, and N-player frontier reruns remain pending; legacy local-model pilots are excluded from headline evidence.
+The manuscript reports a bounded frontier-model baseline: a per-endpoint task-validity audit, confirmatory admissions for Gemini 3 Flash and Claude Sonnet 5, 30-race behavioural runs for both admitted routes, published-human reference values, and a faithful EGT reconstruction. Gemini 3 Flash also has a completed and independently validated 120-race context and mapping run. The frontier evidence remains descriptive and endpoint-specific. The matched Claude context run, fully crossed persona and language reruns, and frontier N-player reruns are not admitted; legacy local-model pilots are excluded from headline evidence.
 
 The focal prior work—Fernández Domingos and Han (2026), arXiv:2607.26034—is a study of **human participants** plus an evolutionary model. It motivates the environment and planned analyses but is not evidence about LLM behaviour. See the project’s [AI-readable source note](../references/papers/markdown/falling-behind-ai-race.md).
 
 ## Files
 
-- [`main.tex`](main.tex): article with the canonical game, validation protocol, admitted pilot audit, analysis plan, and limitations.
-- [`refs.bib`](refs.bib): focal human-study citation and the supplied validity-survey manuscript citation.
-- [`figures/`](figures/): reproducibly generated pilot figures.
+- [`ai_race_paper.pdf`](ai_race_paper.pdf): the current compiled manuscript.
+- [`ai_race_supplementary.pdf`](ai_race_supplementary.pdf): the current compiled supplementary material.
+- [`main.tex`](main.tex): article source with the canonical game, validation protocol, admitted audit, analysis plan, and limitations.
+- [`supplementary.tex`](supplementary.tex): supplementary source.
+- [`references.bib`](references.bib): bibliography for both documents.
+- [`../figures/paper/`](../figures/paper/): reproducibly generated paper and presentation figures.
 
 ## Evidence rules
 
