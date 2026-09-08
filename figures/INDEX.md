@@ -15,7 +15,7 @@ Total unique visual files: **505**
 
 ## Paper and presentation assets
 
-51 unique files are in the active paper asset set.
+50 unique files are in the active paper asset set.
 
 | File | Status | SHA256 |
 |---|---|---|
@@ -35,7 +35,6 @@ Total unique visual files: **505**
 | [paper/cross_model_risk_response_neutral.pdf](paper/cross_model_risk_response_neutral.pdf) | paper-ready | `20b213b4b7e7` |
 | [paper/egt_frontier_insights.pdf](paper/egt_frontier_insights.pdf) | paper-ready | `43f584c50f88` |
 | [paper/egt_frontier_invasion.pdf](paper/egt_frontier_invasion.pdf) | paper-ready | `2660c5acbd97` |
-| [paper/egt_theory_vs_llm_unsafe.pdf](paper/egt_theory_vs_llm_unsafe.pdf) | paper-ready | `0503305c1322` |
 | [paper/egt_theory_vs_llm_unsafe.png](paper/egt_theory_vs_llm_unsafe.png) | paper-ready | `508d6848f84e` |
 | [paper/evidence_ladder.pdf](paper/evidence_ladder.pdf) | paper-ready | `f04f18cf9aa0` |
 | [paper/fixed_state_target_minus_controls.pdf](paper/fixed_state_target_minus_controls.pdf) | paper-ready | `1749d5daf190` |
@@ -73,7 +72,7 @@ Total unique visual files: **505**
 
 ## Candidate gallery
 
-The moved legacy gallery contains 161 unique visual files plus its redraw code, tables, and notes.
+The moved legacy gallery contains 162 unique visual files plus its redraw code, tables, and notes.
 
 - [Open the complete gallery index](gallery/INDEX.md)
 - [Open the paper selection note](gallery/SELECTED_FOR_PAPER.md)

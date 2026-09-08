@@ -3482,6 +3482,17 @@
     ]
   },
   {
+    "canonical_path": "figures/gallery/LEGACY/egt_theory_vs_llm_unsafe.pdf",
+    "kind": "gallery",
+    "sha256": "0503305c13228b867edbde68bf5743d9223417d570d3b9612dfb0634a488400c",
+    "source": "figures/gallery/LEGACY/egt_theory_vs_llm_unsafe.pdf",
+    "status": "gallery",
+    "sources": [
+      "figures/gallery/LEGACY/egt_theory_vs_llm_unsafe.pdf",
+      "results/open_source/egt_reproduction/egt_theory_vs_llm_unsafe.pdf"
+    ]
+  },
+  {
     "canonical_path": "figures/gallery/NEW_00_overview/cross_pilot_canonical_unsafe_rate.png",
     "kind": "gallery",
     "sha256": "416d998d4d1c3dc69bd49b011e5e5e3211ebe6374b4dc6810c0d4d1da72a0247",
@@ -4818,17 +4829,6 @@
     "sources": [
       "figures/paper/egt_frontier_invasion.pdf",
       "results/frontier/egt_frontier_comparison_v2/egt_frontier_invasion.pdf"
-    ]
-  },
-  {
-    "canonical_path": "figures/paper/egt_theory_vs_llm_unsafe.pdf",
-    "kind": "paper",
-    "sha256": "0503305c13228b867edbde68bf5743d9223417d570d3b9612dfb0634a488400c",
-    "source": "figures/paper/egt_theory_vs_llm_unsafe.pdf",
-    "status": "paper-ready",
-    "sources": [
-      "figures/paper/egt_theory_vs_llm_unsafe.pdf",
-      "results/open_source/egt_reproduction/egt_theory_vs_llm_unsafe.pdf"
     ]
   },
   {
