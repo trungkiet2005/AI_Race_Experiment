@@ -14,7 +14,7 @@ A research codebase that runs the two-player repeated "AI race" of Fernández Do
 
 [README.md](README.md) states the canonical mechanism; [PROJECT.md](PROJECT.md) is the research protocol (estimands, validation gates, planned sequence). Both are binding on code changes — the engine is meant to be *paper-faithful*, so changing payoffs, horizons, or risk accounting is a protocol change, not a refactor.
 
-Diagnostic pilots have been run. The current frontier campaign admits Gemini 3 Flash and Claude Sonnet 5 for a bounded confirmatory baseline; cross-endpoint mapping, persona, language, and N-player reruns remain pending. Every admitted artifact must trace to a completed manifest, immutable raw logs, and a fail-closed analyzer. Never pool pilot and confirmatory evidence or generalize checkpoint-scoped audits into claims about subjective understanding, stable preferences, or all LLMs.
+Diagnostic pilots have been run. The current frontier campaign admits Gemini 3 Flash and Claude Sonnet 5 for a bounded confirmatory baseline; cross-endpoint mapping, persona, language, and N-player reruns remain pending. The seven-checkpoint human-diversity comparison is historical descriptive evidence, not a cross-model task-validity audit, because five of those checkpoints do not have the current admission artifact. Every admitted artifact must trace to a completed manifest, immutable raw logs, and a fail-closed analyzer. Never pool pilot and confirmatory evidence or generalize checkpoint-scoped audits into claims about subjective understanding, stable preferences, or all LLMs.
 
 ## Commands
 

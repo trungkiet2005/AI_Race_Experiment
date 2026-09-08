@@ -684,7 +684,7 @@ contains full model tables, predictive diagnostics, and robustness checks.
 \subsection{Validity gate: can agents follow the race?}
 \label{sec:results-validity}
 
-We first ask whether the audited models can carry out the rules they receive.
+We first ask whether the admitted frontier endpoints can carry out the rules they receive.
 The confirmatory endpoint admission contains 60 requested-seed outputs for
 each of two admitted frontier routes; all 120 planned outputs were retained
 and no transport or parse failure occurred. The hosted SDK did not apply the
@@ -817,7 +817,10 @@ tested models' two-player baseline (60 per model: GPT-5-nano, GPT-5.4-nano,
 Gemini-3-Flash, Gemini-3.1-Flash-Lite, Gemini-3.5-Flash-Lite, Claude Opus 5,
 and Claude Sonnet 5) and 340 complete human trajectories from the public
 de-identified dataset (one incomplete human record excluded); pooled
-$N=760$. Each player is represented by 15 raw features,
+$N=760$. This seven-checkpoint comparison is a descriptive historical pilot:
+the current endpoint-admission artifacts cover Gemini 3 Flash and Claude Sonnet
+5, so we do not use the other five checkpoints as evidence of cross-model task
+validity. Each player is represented by 15 raw features,
 \[
 (\mathrm{own}_{1..5},\ \mathrm{opp}_{1..5},\ \mathrm{gap}_{1..5}),
 \]
@@ -1183,7 +1186,7 @@ the supplementary material.
 \label{sec:discussion}
 
 The main lesson is not that an audited model ``understands the game.'' The
-evidence supports a narrower claim. The admitted frontier endpoint can recall
+evidence supports a narrower claim. The admitted frontier endpoints can recall
 rules, reconstruct tested states, and apply terminal eligibility, yet still
 make errors on closed-form expected payoff. Reports of LLM behaviour in
 repeated games should therefore show per-endpoint comprehension accuracy and
@@ -1202,9 +1205,11 @@ changes with repetition parity, so mapping and repetition are not fully
 separated. Its comprehension gate also failed. We therefore exclude this pilot
 from headline evidence and require a fully crossed, per-endpoint frontier
 rerun before making a mapping claim.
-The new Gemini endpoint admission passes state and terminal gates but still
-misses half of the closed-form expected-payoff probes; this is reported as a
-diagnostic limitation, not hidden by a fallback parser. Fixed-state replay
+The two current frontier endpoint admissions pass the state and terminal gates
+but miss some closed-form expected-payoff probes; this is reported as a
+diagnostic limitation, not hidden by a fallback parser. The seven-checkpoint
+diversity analysis remains descriptive because the other five checkpoints lack
+the same endpoint-admission artifact. Fixed-state replay
 measures one decision per saved state, whereas live play measures dependent
 decisions along a changing trajectory, so their effect sizes are not
 interchangeable. Multiplayer pilots are small and do not include a matched
