@@ -18,6 +18,7 @@ import argparse
 import os
 import shutil
 import subprocess
+import sys
 from pathlib import Path
 
 
@@ -54,6 +55,12 @@ def latex(source: str, *, jobname: str) -> None:
         ],
         cwd=document.parent,
     )
+
+
+def build_figures() -> None:
+    """Regenerate the canonical manuscript figures before LaTeX compilation."""
+
+    run([sys.executable, str(ROOT / "scripts" / "build_publication_figures.py")], cwd=ROOT)
 
 
 def build_paper() -> Path:
@@ -103,6 +110,7 @@ def main() -> int:
 
     products: list[Path] = []
     if not args.deck_only:
+        build_figures()
         products.append(build_paper())
         products.append(build_supplement())
     if not args.paper_only:

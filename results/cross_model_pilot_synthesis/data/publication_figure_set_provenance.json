@@ -1,0 +1,91 @@
+{
+  "counts": {
+    "archetype_human_participants": 341,
+    "first_five_trajectories": 760,
+    "nplayer_position_rows": 14
+  },
+  "figure_5_change": "replaced unrecoverable HDBSCAN artwork with the maintained four-archetype human-reference projection",
+  "figure_8_change": "replaced unrecoverable grouped-bar artwork with the maintained N-player position-coefficient source table",
+  "figure_outputs": {
+    "figure_1_mechanism": [
+      "figures\\paper\\AIRaceOverview.pdf",
+      "figures\\paper\\AIRaceOverview.png",
+      "figures\\paper\\AIRaceOverview.svg"
+    ],
+    "figure_2_persona": [
+      "figures\\paper\\ExpOverview.pdf",
+      "figures\\paper\\ExpOverview.png",
+      "figures\\paper\\ExpOverview.svg"
+    ],
+    "figure_3_egt": [
+      "figures\\paper\\egt_theory_vs_llm_unsafe.pdf",
+      "figures\\paper\\egt_theory_vs_llm_unsafe.png",
+      "figures\\paper\\egt_theory_vs_llm_unsafe.svg"
+    ],
+    "figure_4_rate": [
+      "figures\\paper\\llm_human_clustering\\05b_unsafe_rate_by_group.pdf",
+      "figures\\paper\\llm_human_clustering\\05b_unsafe_rate_by_group.png",
+      "figures\\paper\\llm_human_clustering\\05b_unsafe_rate_by_group.svg"
+    ],
+    "figure_5_archetypes": [
+      "figures\\paper\\llm_human_clustering\\02_archetype_signatures_and_coverage.pdf",
+      "figures\\paper\\llm_human_clustering\\02_archetype_signatures_and_coverage.png",
+      "figures\\paper\\llm_human_clustering\\02_archetype_signatures_and_coverage.svg"
+    ],
+    "figure_6_tsne": [
+      "figures\\paper\\llm_human_clustering\\01_tsne_hero_human_left.pdf",
+      "figures\\paper\\llm_human_clustering\\01_tsne_hero_human_left.png",
+      "figures\\paper\\llm_human_clustering\\01_tsne_hero_human_left.svg"
+    ],
+    "figure_7_distribution": [
+      "figures\\paper\\human_vs_llm_distribution.pdf",
+      "figures\\paper\\human_vs_llm_distribution.png",
+      "figures\\paper\\human_vs_llm_distribution.svg"
+    ],
+    "figure_8_position": [
+      "figures\\paper\\11_relative_position_grouped_bars.pdf",
+      "figures\\paper\\11_relative_position_grouped_bars.png",
+      "figures\\paper\\11_relative_position_grouped_bars.svg"
+    ],
+    "supplement_figure_1_egt_insights": [
+      "figures\\paper\\egt_frontier_insights.pdf",
+      "figures\\paper\\egt_frontier_insights.png",
+      "figures\\paper\\egt_frontier_insights.svg"
+    ],
+    "supplement_figure_2_egt_invasion": [
+      "figures\\paper\\egt_frontier_invasion.pdf",
+      "figures\\paper\\egt_frontier_invasion.png",
+      "figures\\paper\\egt_frontier_invasion.svg"
+    ],
+    "supplement_figure_3_own_risk": [
+      "figures\\paper\\llm_human_clustering\\09_human_vs_llm_own_risk_dependence.pdf",
+      "figures\\paper\\llm_human_clustering\\09_human_vs_llm_own_risk_dependence.png",
+      "figures\\paper\\llm_human_clustering\\09_human_vs_llm_own_risk_dependence.svg"
+    ],
+    "supplement_figure_4_shap": [
+      "figures\\paper\\llm_human_clustering\\feature_importance_shap_heatmap.pdf",
+      "figures\\paper\\llm_human_clustering\\feature_importance_shap_heatmap.png",
+      "figures\\paper\\llm_human_clustering\\feature_importance_shap_heatmap.svg"
+    ],
+    "supplement_figure_5_tsne_outcome": [
+      "figures\\paper\\llm_human_clustering\\06_tsne_safe_unsafe.pdf",
+      "figures\\paper\\llm_human_clustering\\06_tsne_safe_unsafe.png",
+      "figures\\paper\\llm_human_clustering\\06_tsne_safe_unsafe.svg"
+    ],
+    "supplement_figure_6_round_profiles": [
+      "figures\\paper\\llm_human_clustering\\03_radar_small_multiples_by_group_no_gap_r1.pdf",
+      "figures\\paper\\llm_human_clustering\\03_radar_small_multiples_by_group_no_gap_r1.png",
+      "figures\\paper\\llm_human_clustering\\03_radar_small_multiples_by_group_no_gap_r1.svg"
+    ]
+  },
+  "generated_utc": "2026-09-08T10:45:37.285087+00:00",
+  "generator": "scripts/build_publication_figures.py",
+  "source_sha256": {
+    "references\\source_study_dataset\\airace_deidentified_long.csv": "ba6009ed5a6702e9f3ec9782289226099edc2b78c63057e57967927a539f8eee",
+    "results\\cross_model_pilot_synthesis\\data\\human_cluster_summary.csv": "2056314d4a1858f6ef068d033e8e8c623b69b5c8ead16c1971f33fcad8203484",
+    "results\\cross_model_pilot_synthesis\\data\\llm_human_cluster_projection_unified.csv": "0a98ca17a3124c8030af5ca38ffb5a66ab2555bd350ed529f76f08f268953993",
+    "results\\cross_model_pilot_synthesis\\data\\nplayer_position_effect_by_persona.csv": "1754179c7217d792ecbf40e227e5289952cc3a19e0dd7a7d195acfea6efe4281",
+    "results\\frontier\\egt_frontier_comparison_v2\\theory_llm_comparison.csv": "57cf703229df95e28cb51a8db95e902de895fb0801e3efb2d0ec7785bb416d78"
+  },
+  "style_module": "scripts/publication_style.py"
+}

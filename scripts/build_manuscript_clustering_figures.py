@@ -1,23 +1,9 @@
 #!/usr/bin/env python3
-"""Regenerate the manuscript's numbered Figures 4, 5, and 8.
+"""Load clustering data and preserve the historical generator entry point.
 
-The numbering is the manuscript numbering in ``paper/main.tex``:
-
-* Figure 4: first-five-round player-level Unsafe rates, regenerated from the
-  admitted baseline turns and the de-identified human table.
-* Figure 5: the legacy HDBSCAN composition artwork. Its original clustering
-  table and generator are not present in this repository, so this pass keeps
-  the plotted content byte-for-byte apart from replacing the off-white canvas
-  with opaque white. The provenance file records that boundary explicitly.
-* Figure 8: the legacy relative-position grouped bars. The original source
-  table is not present in this repository, so this pass likewise changes only
-  the canvas colour and records the limitation.
-
-The last two operations are deliberately conservative: they do not invent
-values or silently substitute a different estimand for the manuscript. The
-next scientific redraw of Figures 5 or 8 should be admitted only after their
-original clustering/position tables are recovered and checked against the
-captions.
+The publication figure set now lives in ``build_publication_figures.py``. This
+module remains the maintained source loader for that builder, while its direct
+CLI is delegated so an older command cannot recreate retired legacy artwork.
 """
 
 from __future__ import annotations
@@ -478,10 +464,10 @@ def normalize_legacy_figure(source: Path, stem: Path) -> dict[str, object]:
 
 
 def redraw_figure_5() -> dict[str, object]:
-    source = CLUSTER_FIGURES / "02_tsne_by_cluster.png"
-    if not source.is_file():
-        raise FileNotFoundError(f"Missing legacy Figure 5 source asset: {source}")
-    return normalize_legacy_figure(source, CLUSTER_FIGURES / "02_tsne_by_cluster")
+    raise RuntimeError(
+        "Legacy Figure 5 normalization is retired; run "
+        "scripts/build_publication_figures.py for the source-backed archetype figure."
+    )
 
 
 def redraw_figure_8() -> dict[str, object]:
@@ -492,34 +478,9 @@ def redraw_figure_8() -> dict[str, object]:
 
 
 def main() -> None:
-    configure_plot()
-    frame = load_trajectories()
-    rates = redraw_figure_4(frame)
-    figure_5 = redraw_figure_5()
-    figure_8 = redraw_figure_8()
+    from scripts.build_publication_figures import main as publication_main
 
-    source_files = [HUMAN_CSV] + [ROOT / relative / "turns.jsonl" for relative in BASELINE_INPUTS.values()]
-    provenance = {
-        "generator": "scripts/build_manuscript_clustering_figures.py",
-        "generator_version": 2,
-        "generated_utc": datetime.now(timezone.utc).isoformat(),
-        "figure_numbering": {
-            "4": "figures/paper/llm_human_clustering/05b_unsafe_rate_by_group",
-            "5": "figures/paper/llm_human_clustering/02_tsne_by_cluster",
-            "8": "figures/paper/11_relative_position_grouped_bars",
-        },
-        "figure_4_rates": rates,
-        "figure_5_legacy_normalization": figure_5,
-        "figure_8_legacy_normalization": figure_8,
-        "source_sha256": {
-            str(path.relative_to(ROOT)): sha256(path) for path in source_files
-        },
-    }
-    DATA_OUT.mkdir(parents=True, exist_ok=True)
-    (DATA_OUT / "manuscript_clustering_figures_provenance.json").write_text(
-        json.dumps(provenance, indent=2, sort_keys=True) + "\n", encoding="utf-8"
-    )
-    print(json.dumps({"figures": [4, 5, 8], "trajectories": len(frame), "provenance": str(DATA_OUT / "manuscript_clustering_figures_provenance.json")}, indent=2))
+    publication_main()
 
 
 if __name__ == "__main__":

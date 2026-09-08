@@ -526,9 +526,9 @@ We first specify the two-player game reproduced from \citet{falling_behind_unsaf
 \begin{figure*}[t]
   \centering
   \includegraphics[width=\textwidth]{../figures/paper/AIRaceOverview.pdf}
-  \caption{The AI-race mechanism, shared by the two-player and $N$-player games. (a) Each round every company advances along the track by choosing Safe (green, slower, pays a cost) or Unsafe (red, faster, adding private setback risk); the race ends after a hidden number of rounds, and terminal prize $B$ goes to the progress leader or is divided among tied leaders. (b) The two-player stage-payoff matrix, Equation~\ref{eq:2p-matrix}. (c) The $N$-player stage-payoff rule, Equations~\ref{eq:np-safe} and~\ref{eq:np-unsafe}, in which the per-round benefit $b$ is distinct from terminal prize $B$.}
+  \caption{The AI-race mechanism, shared by the two-player and $N$-player games. (a) Each round every company advances by choosing Safe (green, slower, pays a cost) or Unsafe (red, faster, adding private setback risk); actions are simultaneous, the stopping time is hidden, and terminal prize $B$ goes to the progress leader or is divided among tied leaders. (b) The two-player stage-payoff matrix, Equation~\ref{eq:2p-matrix}. (c) The $N$-player stage-payoff rule, Equations~\ref{eq:np-safe} and~\ref{eq:np-unsafe}, in which the per-round benefit $b$ is distinct from terminal prize $B$.}
   \label{fig:mechanism}
-  \Description{Three-panel diagram of the AI-race mechanism. Panel a shows company icons moving around a circular track, with green Safe icons advancing one step and red Unsafe icons advancing one and a half steps while increasing a private risk bar; the track leads to terminal prize B after an unmarked number of rounds. Panel b shows the two-player payoff matrix as a two-by-two grid labelled Safe and Unsafe on each axis, with values 1.0, 0.6, 2.4, and 2.0. Panel c shows the $N$-player stage-payoff rule: if $k$ of $N$ companies choose Safe, $D=k+s(N-k)$; Safe receives $b/D-c$ and Unsafe receives $s b/D$. Lowercase $b$ denotes per-round benefit, not terminal prize $B$.}
+  \Description{Three-panel diagram of the AI-race mechanism. Panel a shows green Safe and red Unsafe action paths, with Safe advancing one step and Unsafe advancing one and a half steps while adding private risk; the bottom annotation marks simultaneous actions, a hidden stopping time, and terminal prize B. Panel b shows the two-player payoff matrix as a two-by-two grid labelled Safe and Unsafe on each axis, with values 1.0, 0.6, 2.4, and 2.0. Panel c shows the $N$-player stage-payoff rule: if $k$ of $N$ companies choose Safe, $D=k+s(N-k)$; Safe receives $b/D-c$ and Unsafe receives $s b/D$. Lowercase $b$ denotes the per-round benefit, not terminal prize $B$.}
 \end{figure*}
 
 
@@ -601,10 +601,9 @@ prompted self-play trajectories are not samples from an evolutionary population.
   \includegraphics[width=0.7\textwidth]{../figures/paper/ExpOverview.pdf}
   \caption{The three persona framings used to describe each company's executive. The canonical baseline has no persona sentence, and a neutral placebo of matched length separates the persona from its wording. The risk-aware family has six levels adapted from the Eckel and Grossman gamble scale. The cooperative and adversarial family frames rivals as doing better through mutual restraint, or only at each other's expense. These are prompt conditions, not measured psychological traits.}
   \label{fig:persona}
-  \Description{Three-panel illustration using simple robot mascots to
-  represent company executives. Panel 1 shows the non-persona condition.
-  Panel 2 shows six risk-aware levels. Panel 3 contrasts cooperative and
-  adversarial framing.}
+  \Description{Three-panel diagram using simple editable company glyphs.
+  Panel A shows the no-persona baseline. Panel B shows six risk-aware levels.
+  Panel C contrasts cooperative and adversarial framing.}
 \end{figure*}
 \subsection{Agent protocol and units of analysis}
 
@@ -838,46 +837,49 @@ own, uninformative about anything beyond that one number.
     \centering
     \includegraphics[width=0.44\textwidth]{../figures/paper/llm_human_clustering/05b_unsafe_rate_by_group.png}
     \caption{Player-level mean \Unsafe{} rate over rounds 1 to 5 per
-    population, the numbers reported in the paragraph above.}
+    population. Points are trajectory means and whiskers are bootstrap
+    intervals over player-race trajectories.}
     \label{fig:unsafe-rate-by-group}
-    \Description{Bar chart of mean Unsafe rate over rounds 1 to 5 for each
+    \Description{Point and interval plot of mean Unsafe rate over rounds 1 to 5
+    for each
     population. GPT-5-nano is lowest at 17 percent, then Claude Sonnet 5
     at 22 percent, Claude Opus 5 at 33 percent, GPT-5.4-nano at 54 percent
     and humans at 56 percent. The three Gemini models are highest, ranging
     from 73 to 83 percent.}
 \end{figure}
 
-We next group similar trajectories without giving the algorithm predefined
-strategy labels. HDBSCAN is a density-based clustering method: it finds dense
-groups and leaves unusual cases unassigned. We call each resulting group a
-behavioural \emph{archetype}, meaning a common action-and-position pattern,
-not a mental type. With the fixed settings (minimum cluster size 15, minimum
-samples 6, excess-of-mass selection), HDBSCAN identifies eleven archetypes
-and leaves 98 of 760
-trajectories unclustered (12.9\%). All eleven archetypes occur among the
-human participants, whereas GPT-5-nano concentrates 95\% of its
-trajectories into three predominantly-\Safe{} archetypes and 52\% of
-GPT-5.4-nano's trajectories are not assigned to any dense archetype at all,
-the highest unclustered share of any population. Claude Opus 5 and Claude
-Sonnet 5 fall almost entirely (100\% and 93\%, respectively) into two
-archetypes that both open with a mutual-\Safe{} first round.
+We next ask whether the tested checkpoints cover the diversity observed in
+humans. We fit $k$-means with $k=4$ to five trajectory descriptors from the
+341-person human sample only: overall \Unsafe{} rate, opponent reciprocity,
+position sensitivity, own-action persistence, and first-round \Unsafe{} play.
+The resulting groups are exploratory behavioural archetypes, not latent
+psychological types. Figure~\ref{fig:archetype-coverage} shows their
+standardized signatures and the nearest-archetype projection of each model.
+The human groups are Persister ($n=19$), Aggressive starter / reciprocator
+($n=170$), Cautious starter ($n=133$), and Reciprocal catch-up ($n=19$).
+GPT-5-nano maps almost entirely to Cautious starter, while GPT-5.4-nano is
+represented in all four groups. The Gemini checkpoints concentrate in the
+Aggressive starter / reciprocator and Reciprocal catch-up groups. These
+proportions describe coverage of a human reference space; they do not show
+that a model has recovered a human strategy or mechanism.
 
 \begin{figure}[t]
     \centering
-    \includegraphics[width=0.95\linewidth]{../figures/paper/llm_human_clustering/02_tsne_by_cluster.png}
-    \caption{Composition of the eleven HDBSCAN-derived raw-action-and-
-    position archetypes. The two largest are a mutual-first-round-\Safe{}
-    archetype ($n=138$) and a mutual-round-2-\Unsafe{} archetype ($n=124$);
-    98 of 760 trajectories (12.9\%) are unclustered.}
-    \label{fig:hdbscan-composition}
-    \Description{Composition of the eleven behavioural archetypes that
-    HDBSCAN recovers from the raw five-round action-and-position
-    sequences, showing how many trajectories of each population fall into
-    each archetype. The two largest archetypes both begin with a mutual
-    first move: one opens with mutual Safe play and contains 138
-    trajectories, the other turns to mutual Unsafe play at round 2 and
-    contains 124. Ninety-eight of the 760 trajectories are left unassigned
-    to any dense archetype.}
+    \includegraphics[width=0.95\linewidth]{../figures/paper/llm_human_clustering/02_archetype_signatures_and_coverage.png}
+    \caption{Human-reference behavioural archetypes and model coverage.
+    Panel A shows the five descriptor means for the four human-only
+    $k$-means groups, standardized across groups. Panel B assigns each
+    model trajectory to its nearest human archetype after human-based
+    standardization. The dashed line separates the human reference from
+    the model projections.}
+    \label{fig:archetype-coverage}
+    \Description{Two-panel figure. Panel A is a heat map of five standardized
+    trajectory descriptors for four exploratory human behavioural archetypes:
+    Persister, Aggressive starter or reciprocator, Cautious starter, and
+    Reciprocal catch-up. Panel B is a stacked bar chart showing the share of
+    trajectories nearest to each human archetype for humans and seven language
+    model checkpoints. GPT-5-nano is concentrated in Cautious starter, while
+    GPT-5.4-nano has representation in all four archetypes.}
 \end{figure}
 
 \begin{figure}[t]
@@ -909,13 +911,11 @@ model-specific regions.
 
 Recolouring the identical coordinates by outcome instead of identity, shown
 in the supplementary material, separates the embedding almost entirely by
-\Unsafe{} rate: a solid-green region, a solid-red region, and a
-mixed band in between, with almost no red points inside the green region or
-vice versa. The dense archetypes in Figure~\ref{fig:hdbscan-composition}
-sit inside the solid-coloured ends of this gradient, while the more
-diffuse, harder-to-cluster trajectories sit in the mixed middle band: the
-raw-sequence archetypes HDBSCAN finds are not arbitrary with respect to
-game outcome.
+\Unsafe{} rate: a solid-green region, a solid-red region, and a mixed band in
+between. The archetype plot and this outcome-coloured embedding answer
+different questions. The former summarizes five interpretable descriptors;
+the latter shows geometry in the raw sequence space. Neither should be read
+as a definitive clustering of latent strategies.
 
 We next test whether five rounds contain enough information to identify the
 population that produced a trajectory. A small decision tree reaches
@@ -1003,44 +1003,6 @@ and precision across models confirm that agreement in an aggregate
 action rate does not imply agreement in the underlying behavioural
 dynamics.
 
-Finally, we ask whether models reproduce the \emph{diversity} of human
-strategies, not just an aggregate rate. This uses the full human sample of
-341 participants rather than the 340-trajectory subset used in the
-HDBSCAN comparison above, since none of the five
-descriptors below requires a complete five-round export. Using five
-trajectory-level descriptors computed from these 341 human participants
-(overall \Unsafe{} rate, opponent reciprocity, position sensitivity,
-own-action autocorrelation, first-round action), $k$-means at $k=4$ yields
-four
-reference archetypes (\emph{cautious-starter}, \emph{aggressive-starter/%
-reciprocator}, \emph{reciprocal catch-up}, and \emph{persister}) with a
-modest silhouette score (0.24 to 0.32 across $k\in\{3,4,5\}$), so this
-partition should be read as a noisy exploratory organisation of the human
-data rather than a definitive taxonomy. Projecting each model's
-trajectories into this human-only reference space, using human means and
-standard deviations throughout, gives
-the supplementary material.
-
-GPT-5-nano is effectively a point mass in the cautious-starter archetype
-(99.2\%): its low aggregate rate reflects a highly compressed behavioural
-distribution, not broad coverage of cautious human behaviour. The three
-Gemini models are similarly compressed into the aggressive-starter and
-catch-up archetypes and contribute essentially no cautious or persister
-trajectories, and GPT-5.6 Luna and Terra show the same pattern. Claude
-Opus 5 and Claude Sonnet 5 also
-concentrate in the cautious-starter archetype (66.7\% and 77.5\%,
-respectively), but, unlike GPT-5-nano, split the remainder with the
-aggressive-starter/reciprocator archetype (33.3\% and 20.8\%) rather than
-collapsing to a near-total point mass. GPT-5.4-nano is the only model
-represented in all four
-archetypes, consistent with its diffuse behavioural profile elsewhere in
-this section, but its cluster proportions still differ from the human
-distribution: proximity to a centroid is a resemblance measure, not
-evidence of psychological or mechanistic equivalence. Human-like behaviour
-is therefore multidimensional: a model can resemble one human
-archetype while failing to reproduce the diversity observed across human
-participants.
-
 \subsection{Observable drivers of \Unsafe{} play}
 \label{sec:results-shap}
 
@@ -1082,80 +1044,47 @@ describe observed states; the experiment did not randomly assign rank.
 \begin{figure}[t]
     \centering
     \includegraphics[width=0.95\linewidth]{../figures/paper/11_relative_position_grouped_bars.png}
-    \caption{\Unsafe{} rate by relative position (Leader / Middle /
-    Trailer) within each assigned persona band, for GPT-5-nano (left)
-    and GPT-5.4-nano (right). Bars marked $^\dagger$ in
-    The per-cell rates behind this figure, reported in the supplementary
-    material, have
-    $n<20$ and should be read as noisy pilot estimates rather than stable
-    rates.}
+    \caption{Position association in the $N$-player pilot. Each panel shows
+    the model-based coefficient for the player's relative position within an
+    assigned risk-aware persona, with the other players' position held in the
+    contrast. Whiskers are 95\% intervals. Crosses mark cells that were not
+    estimable because the observed actions reached a floor or ceiling.}
     \label{fig:position-by-risk}
-    \Description{Grouped bar chart of Unsafe rate by a company's relative
-    position, Leader, Middle or Trailer, within each assigned persona
-    band, for GPT-5-nano on the left and GPT-5.4-nano on the right. For
-    GPT-5-nano the Trailer bar is taller than the Leader bar in the
-    Baseline and Low bands and shorter in the Mid and High bands, so the
-    ordering reverses. For GPT-5.4-nano the three position bars are close
-    to equal within every band, and the bands themselves move from near
-    the floor at Low to near the ceiling at Mid and High.}
+    \Description{Two-panel point and interval plot of model-based position
+    coefficients for Unsafe choice across the baseline and six assigned
+    risk-aware personas. GPT-5-nano has negative coefficients through R2 and
+    positive coefficients from R3 to R6. GPT-5.4-nano is close to zero through
+    R2, positive at R3 and R4, and not estimable at R5 and R6.}
 \end{figure}
 
-For GPT-5-nano, position matters, but its effect flips sign across persona
-bands. At Baseline and Low, \Unsafe{}
-rate rises as rank falls, the qualitative direction predicted by the human
-``falling behind'' account of \citet{falling_behind_unsafe}: the company
-that is behind takes on more risk. At Mid and High, the ordering reverses,
-with Leaders now \emph{more} \Unsafe{} than Trailers. We do not read this
-reversal as evidence that being in the lead causes more risk-taking under
-more risk-seeking framing. Because rank is measured immediately before the
-action rather than assigned independently of it, a company's own tendency
-to play \Unsafe{} and its current rank are entangled: a company that has
-already played \Unsafe{} more often is, mechanically, more likely to have
-accumulated the extra progress that makes it the Leader
-($\sigma(\Unsafe{})=1.5$ vs.\ $\sigma(\Safe{})=1.0$). Under Mid/High
-framing, where the model plays \Unsafe{} often enough for this composition
-effect to dominate, the Leader group is disproportionately populated by
-already-\Unsafe{}-leaning trajectories, which would produce exactly this
-reversal without any causal effect of \emph{being ahead} on the next
-choice. Distinguishing this selection story from a genuine effect of rank
-would require conditioning on, or randomising, prior own-action history
-within rank; we flag this as a concrete next step rather than resolve it
-here.
+For GPT-5-nano, the position coefficient is negative at Baseline, R1, and
+R2, then positive from R3 through R6. This sign change is consistent with the
+qualitative ``falling behind'' account of \citet{falling_behind_unsafe}, but
+the coefficient is an observational association, not a causal effect of
+rank. Position is measured immediately before the action, so a player's
+previous actions help determine both its current rank and its next choice.
+The sign reversal can therefore arise from selection into ranks rather than
+from a change in the response to being ahead.
 
-GPT-5.4-nano shows a starkly different pattern: the assigned persona band
-dominates and rank contributes little on top of it
-for the second checkpoint. \Unsafe{} play is uniformly low at
-Low and uniformly near-ceiling at Mid and High, with Leader, Middle, and
-Trailer tracking each other closely within each band, including at
-Baseline itself, where all three ranks already sit in a similar range
-before any persona is applied. This is consistent with the
-model's SHAP profile (the supplementary material), where
-progress gap contributes only 33\% of predictive importance against a more
-evenly spread set of features, so relative standing is not the dominant
-driver of its \Unsafe{} choices. The three
-cells flagged in the supplementary material have
-confidence intervals too wide for their point estimates to be treated as
-stable; they arise because so few races reach a Trailer or Middle rank at
-all once GPT-5.4-nano is pushed toward near-uniform \Unsafe{} play under
-Mid/High framing, which itself thins out the population of races with any
-surviving rank diversity to measure.
+GPT-5.4-nano has coefficients close to zero through R2 and positive
+coefficients at R3 and R4. R5 and R6 are not estimable because the observed
+actions are at a floor or ceiling in those cells. The contrast with GPT-5-nano
+shows why the result should not be compressed into a single position effect:
+the association depends on the checkpoint and on the prompt-assigned persona.
+Separating persona from rank would require a design that crosses the two
+factors while controlling or randomizing prior action history.
 
-Read together, the two models show that ``does position matter'' has
-no single answer even within one model family: GPT-5-nano displays a
-falling-behind-consistent pattern at Baseline/Low framing that reverses
-under Mid/High framing in a way better explained by selection than by a
-causal effect of rank, while GPT-5.4-nano's behaviour is essentially
-saturated by the assigned persona band regardless of rank. In both cases,
-the assigned persona, not relative standing, is the primary
-explanatory variable; position is, at most, a secondary modulator whose
-apparent effect depends on which framing a company was given. The bands
-here are the prompt-embedded risk \emph{persona} examined next in
+Read together, the two models show that ``does position matter'' has no single
+answer even within one model family. The assigned persona is the more stable
+source of variation in this pilot, while position is a secondary association
+whose sign and estimability depend on the checkpoint. The bands here are the
+prompt-embedded risk \emph{persona} examined next in
 \S\ref{sec:results-persona}, not the mechanism's private-risk parameter
 $p_r^{\max}$ (Eq.~\ref{eq:risk}), and each band pools over $p_r^{\max}$
 rather than fixing it. The distinction matters: the persona is an
 instruction re-assigned per race, $p_r^{\max}$ a property of the game. This
-section therefore shows rank effects modulated by persona; separating that
-from the mechanical risk treatment needs a design crossing the two, which
+section therefore shows rank associations modulated by persona; separating
+that from the mechanical risk treatment needs a design crossing the two, which
 this pilot lacks. The broader
 $N\in\{3,4,5\}$ self-play scope (180 pilot races, 6,120 decisions;
 aggregate \Unsafe{} rates of 16.2\%, 26.8\%, 21.9\% for GPT-5-nano and

@@ -329,7 +329,7 @@ letters restart at A because this is supplementary matter.
     and condition, including those the main paper does not plot.
   \item \textbf{$N$-player self-play scope.} Group sizes three to five.
   \item \textbf{Trajectory embedding recoloured by outcome.} The same
-    embedding as the main paper, coloured by unsafe rate instead of population.
+  embedding as the main paper, coloured by unsafe rate instead of population.
   \item \textbf{Unsafe rate by persona band and relative position.} The
     cell-level numbers behind the grouped-bar figure in the main paper.
 \end{itemize}
@@ -661,16 +661,16 @@ play overall.
 
 \begin{figure*}[t]
     \centering
-    \includegraphics[width=\textwidth]{../figures/paper/llm_human_clustering/09_human_vs_llm_own_risk_dependence.png}
+    \includegraphics[width=\textwidth]{../figures/paper/llm_human_clustering/09_human_vs_llm_own_risk_dependence.pdf}
     \caption{A measured human disposition against an assigned model label.
     Left: mean \Unsafe{} rate by elicited Eckel--Grossman gamble choice,
     with 95\% confidence intervals and participants per bin; the dotted
     line is the trend across the six group means. Right: mean \Unsafe{}
     rate by assigned risk-persona level, for every model with a six-level
-    sweep; GPT-5.6 Luna and Terra (dashed) sit outside the seven-model
-    roster. The shared six-step axis is visual alignment only; the left
-    is a disposition measured once before play, the right an instruction
-    re-assigned every race.}
+    sweep; GPT-5.6 Luna and Terra (dashed) are the two routes outside the
+    main baseline roster. The shared six-step axis is visual alignment only;
+    the left is a disposition measured once before play, the right an
+    instruction re-assigned every race.}
     \label{fig:own-risk-dependence}
     \Description{Two panels sharing a vertical Unsafe-rate axis and a
     six-step horizontal axis. The left panel plots human mean Unsafe rate
@@ -682,7 +682,7 @@ play overall.
     models, each with its own colour and marker shape. Every model line
     climbs steeply from left to right, from near the floor or lower middle
     at R1 to between 0.52 and 1.0 at R6; the two GPT-5.6 lines are dashed
-    because they sit outside the seven-model roster.}
+    because they are outside the main baseline roster.}
 \end{figure*}
 
 Figure~\ref{fig:own-risk-dependence} (left) shows how little that null
@@ -1022,9 +1022,9 @@ separates almost entirely by how much \Unsafe{} play a trajectory carries.
 This is that check: the same coordinates, with only the colouring changed,
 so any structure visible here is structure the embedding already had.
 
-\begin{figure}[t]
+\begin{figure*}[t]
     \centering
-    \includegraphics[width=0.95\linewidth]{../figures/paper/llm_human_clustering/06_tsne_safe_unsafe.png}
+    \includegraphics[width=\textwidth]{../figures/paper/llm_human_clustering/06_tsne_safe_unsafe.pdf}
     \caption{The same t-SNE coordinates as the population-identity embedding in the main paper,
     recoloured by each player's own mean \Unsafe{} rate over rounds 1--5
     (green = \Safe{}, red = \Unsafe{}) instead of population identity.
@@ -1039,7 +1039,7 @@ so any structure visible here is structure the embedding already had.
     population. The embedding separates almost entirely by Unsafe rate: a
     solid green region, a solid red region, and a mixed band between them,
     with very few red points inside the green region or the reverse.}
-\end{figure}
+\end{figure*}
 
 
 
@@ -1048,29 +1048,28 @@ so any structure visible here is structure the embedding already had.
 
 The embedding in the main paper shows that human trajectories spread more
 widely than any single model's. This is the same comparison read one
-feature at a time: each population's mean profile against the pooled mean
-over the fourteen features every trajectory shares.
+feature at a time: population means over the fourteen features every
+trajectory shares, with action probabilities and absolute progress gaps separated so
+that neither scale obscures the other.
 
-\begin{figure}[t]
+\begin{figure*}[t]
     \centering
-    \includegraphics[width=0.95\linewidth]{../figures/paper/llm_human_clustering/03_radar_small_multiples_by_group_no_gap_r1.png}
-    \caption{Mean round-by-round profile for each population, on the 14
-    features shared across every trajectory (own and opponent action at
-    rounds 1--5, plus progress gap entering rounds 2--5; the round-1 gap is
-    omitted because every race starts at gap 0 by construction and is
-    therefore uninformative). Solid lines show the population mean; the
-    dotted line is the pooled mean across all eight populations.}
+    \includegraphics[width=\textwidth]{../figures/paper/llm_human_clustering/03_radar_small_multiples_by_group_no_gap_r1.pdf}
+    \caption{Round-by-round profile for each population, shown as two
+    source-backed heatmaps. Panel A reports the probability of an Unsafe
+    action for each player's own and opponent action at rounds 1--5. Panel B
+    reports the mean absolute progress gap entering rounds 2--5, so it
+    measures how far apart the two players are after pooling focal-player
+    roles. The eight rows are the human reference and the seven baseline
+    model populations.}
     \label{fig:human-radar}
-    \Description{Small-multiple radar charts, one per population, over the
-    fourteen features shared by every trajectory: own and opponent action
-    at rounds 1 to 5, plus the progress gap entering rounds 2 to 5. Each
-    panel draws that population's mean profile as a solid line against the
-    pooled mean of all eight populations as a dotted reference line. The
-    human profile sits close to the pooled mean on nearly every axis.
-    GPT-5-nano and Claude Sonnet 5 are displaced toward Safe, the two
-    Gemini Flash Lite checkpoints toward Unsafe, and GPT-5.4-nano, Claude
-    Opus 5 and Gemini 3 Flash fall between those extremes.}
-\end{figure}
+    \Description{Two heatmaps summarising fourteen shared trajectory
+    features. The first heatmap gives Unsafe-action probabilities for own and
+    opponent actions at five rounds. The second gives mean absolute progress
+    gaps entering rounds two through five. Rows represent Human and seven
+    model populations; red indicates more Unsafe action in the first panel,
+    while darker blue indicates a larger separation in the second.}
+\end{figure*}
 
 
 

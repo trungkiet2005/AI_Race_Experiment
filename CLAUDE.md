@@ -32,6 +32,8 @@ pip install -e ".[api,kaggle-benchmark]" # hosted-model + Kaggle Benchmark paths
 Paper build outputs:
 
 ```bash
+python scripts/build_publication_figures.py
+python scripts/build_supplementary_figures.py  # optional: supplement only
 python scripts/build_publication.py --paper-only
 python scripts/check_publication.py --allow-placeholder-id
 python scripts/build_figure_gallery.py
@@ -46,6 +48,14 @@ ignored `results/_build/latex/current/` directory. The build script also keeps
 copies under `results/artifacts/publication/` because submission and release
 tools read that mirror. The QA command should be run after every build; omit
 `--allow-placeholder-id` once AAMAS assigns the anonymous submission ID.
+
+`scripts/build_publication.py --paper-only` regenerates the canonical fourteen-
+figure set (eight main-paper and six supplementary) before compiling the paper
+and supplementary PDF. The final PDFs therefore
+stay in `paper/` for easy discovery, while the mirrored copies remain under
+`results/artifacts/publication/` for release tooling. Do not edit exported
+figure files by hand; change the generator or its checked-in source table and
+regenerate the set.
 
 All project figures have one browsing entry point at `figures/`. Use
 `figures/paper/` for assets referenced by the manuscript and deck,
