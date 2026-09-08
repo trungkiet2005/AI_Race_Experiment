@@ -51,7 +51,6 @@ on Autonomous Agents and Multiagent Systems (AAMAS 2026)}{May 25 -- 29, 2026}
 \newcommand{\BibTeX}{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em\TeX}
 \newcommand{\Safe}{\textsc{safe}}
 \newcommand{\Unsafe}{\textsc{unsafe}}
-\newcommand{\pending}{\textbf{pending}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -655,17 +654,17 @@ not informed optimisation of the game.
   \label{tab:evidence-strata}
   \centering
   \footnotesize
-  \setlength{\tabcolsep}{3pt}
-  \begin{tabular}{@{}p{0.29\columnwidth}rrp{0.23\columnwidth}@{}}
+  \setlength{\tabcolsep}{2pt}
+  \begin{tabular}{@{}p{0.29\columnwidth}p{0.18\columnwidth}p{0.23\columnwidth}p{0.23\columnwidth}@{}}
     \toprule
-    Module & Races & Decisions & Use \\
+    Module & Primary units & Observed outputs & Use \\
     \midrule
-    Frontier endpoint admission (Gemini 3 Flash, Claude Sonnet 5) & n/a & 120 probes & confirmatory gate \\
-    Calculator diagnostic & 60 & 1,116 & paired diagnostic \\
-    Context pilot ($T=0$) & 768 & 13,680 & robustness diagnostic \\
-    Fixed-state replay & 1,536 & n/a & direct prompt diagnostic \\
-    Five-checkpoint baseline & 150 & 2,790 & descriptive only \\
-    OpenAI $N=3$ to $5$ baseline & 180 & 6,120 & exploratory only \\
+    Frontier endpoint admission (Gemini 3 Flash, Claude Sonnet 5) & 120 probes & 120 answers & confirmatory gate \\
+    Calculator diagnostic & 60 races & 1,116 decisions & paired diagnostic \\
+    Context pilot ($T=0$) & 768 races & 13,680 decisions & robustness diagnostic \\
+    Fixed-state replay & 1,536 state cells & 1,536 responses & direct prompt diagnostic \\
+    Five-checkpoint baseline & 150 races & 2,790 decisions & descriptive only \\
+    OpenAI $N=3$ to $5$ baseline & 180 races & 6,120 decisions & exploratory only \\
     \bottomrule
   \end{tabular}
 \end{table}

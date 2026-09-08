@@ -1,6 +1,6 @@
 # Paper figure decision book
 
-> **Purpose:** one canonical, reviewer-audited menu of figures for the AI Race paper. Tick the boxes in the [selection sheet](#selection-sheet), then update `paper/main.tex` as one coherent manuscript revision. This file supersedes the older `results/artifacts/figure_gallery/SELECTED_FOR_PAPER.md`.
+> **Purpose:** one canonical, reviewer-audited menu of figures for the AI Race paper. Tick the boxes in the [selection sheet](#selection-sheet), then update `paper/main.tex` as one coherent manuscript revision. This file supersedes the older gallery selection sheet.
 
 ## Executive recommendation
 
@@ -20,18 +20,18 @@ For a page-limited main paper, use **M1–M5**. Add **M6** only if activation-le
 - Whole-repository inventory: **430 visual files**.
 - Priority evidence trees checked: **227 PNGs**, including **50 exact-duplicate hash groups**.
 - Two independent passes: canonical-file/provenance inventory and strict reviewer selection.
-- Canonical precedence: `results/open_source/`, `results/cross_model_pilot_synthesis/`, `results/impact_upgrade/`, then `paper/figures/`.
-- `results/artifacts/figure_gallery/` is primarily a browsing/legacy layer. Its `NEW_*` surface figures are retained below only where no better canonical generated copy exists.
+- Canonical precedence: `results/open_source/`, `results/cross_model_pilot_synthesis/`, `results/impact_upgrade/`, then `figures/paper/`.
+- `figures/gallery/` is primarily a browsing and legacy layer. Its retained surface figures are listed below only where no better canonical generated copy exists.
 - All empirical results remain **exploratory/diagnostic**, not confirmatory estimates.
 
 ## Recommended main-paper set
 
 ### M1 — Game-understanding admission audit — KEEP
 
-![Game-understanding accuracy](../paper/figures/game_understanding_accuracy.png)
+![Game-understanding accuracy](../figures/paper/game_understanding_accuracy.png)
 
-- **Canonical PDF:** [`paper/figures/game_understanding_accuracy.pdf`](../paper/figures/game_understanding_accuracy.pdf)
-- **Status:** already in `paper/main.tex`; keep as the construct-validity anchor.
+- **Canonical PDF:** [`figures/paper/game_understanding_accuracy.pdf`](../figures/paper/game_understanding_accuracy.pdf)
+- **Status:** canonical candidate in `figures/paper/`; include only if the construct-validity audit is promoted into the manuscript.
 - **Insight:** public-rule recall and one-stage payoff lookup are strong, while accumulated-state update, terminal scoring, and expected-payoff reasoning fail frequently.
 - **Permitted claim:** the tested checkpoint did not reliably satisfy the frozen comprehension contract.
 - **Required caveat:** calculator rows measure uptake of disclosed verified arithmetic, not unaided comprehension; fixed-seed repetitions are repeatability checks, not independent Bernoulli samples.
@@ -39,10 +39,10 @@ For a page-limited main paper, use **M1–M5**. Add **M6** only if activation-le
 
 ### M2 — Calculator-to-behavior ablation — KEEP
 
-![Calculator behavioral ablation](../paper/figures/calculator_behavior_ablation.png)
+![Calculator behavioral ablation](../figures/paper/calculator_behavior_ablation.png)
 
-- **Canonical PDF:** [`paper/figures/calculator_behavior_ablation.pdf`](../paper/figures/calculator_behavior_ablation.pdf)
-- **Status:** already in `paper/main.tex`.
+- **Canonical PDF:** [`figures/paper/calculator_behavior_ablation.pdf`](../figures/paper/calculator_behavior_ablation.pdf)
+- **Status:** canonical candidate in `figures/paper/`; include only if the paired calculator diagnostic is promoted into the manuscript.
 - **Insight:** supplying verified current-round arithmetic changes enacted behavior, but does not monotonically reduce Unsafe play or improve realized payoff.
 - **Permitted claim:** tool access and behavior are empirically separable in this paired pilot.
 - **Required caveat:** exploratory paired summary; uncertainty must resample independent race/repetition blocks.
@@ -209,7 +209,7 @@ These are useful for a talk or interactive walkthrough but too dense, didactic, 
 
 ## Reject / do not cite as evidence
 
-- Exact copies under `results/artifacts/figure_gallery/ADMITTED_*` and `SELECTED_FOR_PAPER*`; cite the canonical source above.
+- Exact copies under `figures/gallery/ADMITTED_*` and `SELECTED_FOR_PAPER*`; cite the canonical source above.
 - Anything under `results/_build/failed_run_scratch/`, smoke-only plots, QA screenshots, compiled paper/deck pages, and format-conversion TIFFs unless a publisher explicitly requests them.
 - `xai_auto_vector_encoder` coefficient/importance plots as neuron-level XAI: these are surface-vector surrogates, not mechanistic neuron evidence.
 - Standalone SAE action probes without target-minus-random/unrelated/reconstruction controls.

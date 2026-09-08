@@ -51,7 +51,6 @@ on Autonomous Agents and Multiagent Systems (AAMAS 2026)}{May 25 -- 29, 2026}
 \newcommand{\BibTeX}{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em\TeX}
 \newcommand{\Safe}{\textsc{safe}}
 \newcommand{\Unsafe}{\textsc{unsafe}}
-\newcommand{\pending}{\textbf{pending}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -429,10 +428,10 @@ endpoint.
         \path{anthropic/claude-sonnet-5@default} & 81.7\% & 86.7\% & 80\% & admitted \\
         \path{google/gemini-3.1-flash-lite-preview} & 75\% & 60\% & 80\% & diagnostic \\
         \path{openai/gpt-5.4-nano-2026-03-17} & 50\% & 20\% & 60\% & diagnostic \\
-        \path{deepseek-ai/deepseek-r1-0528} & -- & -- & -- & transport failed \\
-        \path{ibm/granite-4.0-h-small} & -- & -- & -- & transport failed \\
-        \path{openai/gpt-oss-120b} & -- & -- & -- & transport failed \\
-        \path{qwen/qwen3-next-80b-a3b-instruct} & -- & -- & -- & transport failed \\
+        \path{deepseek-ai/deepseek-r1-0528} & \multicolumn{3}{c}{not admitted} & transport failed \\
+        \path{ibm/granite-4.0-h-small} & \multicolumn{3}{c}{not admitted} & transport failed \\
+        \path{openai/gpt-oss-120b} & \multicolumn{3}{c}{not admitted} & transport failed \\
+        \path{qwen/qwen3-next-80b-a3b-instruct} & \multicolumn{3}{c}{not admitted} & transport failed \\
         \bottomrule
     \end{tabular}
 \end{table}
@@ -714,8 +713,8 @@ is not simply standing in for the mechanical risk treatment.
     OLS slope, for every model with a six-level risk-label sweep ($n=360$
     players per level, $n=330$ for Gemini-3-Flash). The persona coefficient
     (logistic model additionally controlling for the mechanism's actual
-    private-risk treatment) has been fit only for the first three; ``--''
-    marks models for which only the descriptive delta and slope are
+    private-risk treatment) has been fit only for the first three; ``not
+    estimated'' marks models for which only the descriptive delta and slope are
     available. Starred rows sit outside the seven-model roster.}
     \label{tab:persona-effect}
     \centering
@@ -727,10 +726,10 @@ is not simply standing in for the mechanical risk treatment.
         GPT-5-nano       & 50.5 & 0.123 & 0.93 \\
         GPT-5.4-nano     & 98.2 & 0.212 & 1.47 \\
         Gemini-3-Flash   & 62.8 & 0.139 & 2.03 \\
-        Claude Opus 5    & 81.6 & 0.152 & -- \\
-        Claude Sonnet 5  & 61.3 & 0.129 & -- \\
-        GPT-5.6 Luna$^*$  & 71.5 & 0.156 & -- \\
-        GPT-5.6 Terra$^*$ & 98.3 & 0.203 & -- \\
+        Claude Opus 5    & 81.6 & 0.152 & not estimated \\
+        Claude Sonnet 5  & 61.3 & 0.129 & not estimated \\
+        GPT-5.6 Luna$^*$  & 71.5 & 0.156 & not estimated \\
+        GPT-5.6 Terra$^*$ & 98.3 & 0.203 & not estimated \\
         \bottomrule
     \end{tabular}
 \end{table}

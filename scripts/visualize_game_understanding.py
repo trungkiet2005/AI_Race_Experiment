@@ -19,7 +19,7 @@ import numpy as np
 INK = "#07111F"
 MUTED = "#697586"
 GRID = "#D9DEE5"
-PAPER = "#F8F7F2"
+WHITE = "#FFFFFF"
 CYAN = "#007E89"
 CYAN_LIGHT = "#7CCFD1"
 AMBER = "#E39A2D"
@@ -64,9 +64,9 @@ def configure() -> None:
             "xtick.color": MUTED,
             "ytick.color": INK,
             "text.color": INK,
-            "figure.facecolor": PAPER,
-            "axes.facecolor": PAPER,
-            "savefig.facecolor": PAPER,
+            "figure.facecolor": WHITE,
+            "axes.facecolor": WHITE,
+            "savefig.facecolor": WHITE,
         }
     )
 
@@ -96,12 +96,18 @@ def accuracy_figure(rows: list[dict[str, Any]], output_dir: Path) -> None:
     ax.set_axisbelow(True)
     ax.spines[["top", "right", "left"]].set_visible(False)
     ax.set_title("Rule recall is not full-game comprehension", loc="left", pad=20)
-    ax.text(0, 1.035, "Semantic accuracy by audit domain · Qwen2.5 7B F16 · 5 fixed-seed repetitions", transform=ax.transAxes, color=MUTED, fontsize=10)
+    ax.text(0, 1.035, "Semantic accuracy by audit domain; Qwen2.5 7B F16; 5 fixed-seed repetitions", transform=ax.transAxes, color=MUTED, fontsize=10)
     ax.legend(frameon=False, ncol=2, loc="lower center", bbox_to_anchor=(0.47, -0.17))
     fig.text(0.01, 0.01, "Pilot diagnostic; repeated deterministic outputs measure reliability, not independent sample size. Calculator results are disclosed-answer tool uptake.", color=MUTED, fontsize=8.5)
     fig.tight_layout(rect=(0, 0.06, 1, 1))
     for suffix in ("png", "pdf"):
-        fig.savefig(output_dir / f"game_understanding_accuracy.{suffix}", dpi=220, bbox_inches="tight")
+        fig.savefig(
+            output_dir / f"game_understanding_accuracy.{suffix}",
+            dpi=220,
+            bbox_inches="tight",
+            facecolor=WHITE,
+            edgecolor=WHITE,
+        )
     plt.close(fig)
 
 
@@ -126,7 +132,7 @@ def behavior_figure(rows: list[dict[str, str]], output_dir: Path) -> None:
         alignment = "right" if condition == "canonical" else "left"
         label_shift = -0.004 if condition == "canonical" else 0.004
         for xx, value in zip(x, payoffs):
-            ax_payoff.text(xx + label_shift, value + 2.2, f"{value:.1f}", ha=alignment, fontsize=8.5, fontweight="bold", color=color)
+            ax_payoff.text(xx + label_shift, value + 2.2, f"{value:.1f}", ha=alignment, fontsize=8.5, fontweight="bold", color=INK)
 
     for ax in (ax_rate, ax_payoff):
         ax.set_xticks(risks, ["10%", "60%", "90%"])
@@ -144,11 +150,17 @@ def behavior_figure(rows: list[dict[str, str]], output_dir: Path) -> None:
     handles, labels = ax_rate.get_legend_handles_labels()
     fig.legend(handles, labels, frameon=False, ncol=2, loc="lower center", bbox_to_anchor=(0.5, 0.045))
     fig.suptitle("A correct calculator changes context, not necessarily safety", x=0.06, ha="left", fontsize=16, fontweight="bold")
-    fig.text(0.06, 0.91, "Paired pilot: 10 races per risk × condition; identical hidden horizons; cluster-bootstrap intervals by repetition", color=MUTED, fontsize=10)
+    fig.text(0.06, 0.91, "Paired pilot: 10 races per risk x condition; identical hidden horizons; cluster-bootstrap intervals by repetition", color=MUTED, fontsize=10)
     fig.text(0.01, 0.012, "Behavioral pilot only. The decision card enumerates current-round arithmetic but does not predict the opponent or terminal round.", color=MUTED, fontsize=8.5)
     fig.tight_layout(rect=(0, 0.15, 1, 0.88))
     for suffix in ("png", "pdf"):
-        fig.savefig(output_dir / f"calculator_behavior_ablation.{suffix}", dpi=220, bbox_inches="tight")
+        fig.savefig(
+            output_dir / f"calculator_behavior_ablation.{suffix}",
+            dpi=220,
+            bbox_inches="tight",
+            facecolor=WHITE,
+            edgecolor=WHITE,
+        )
     plt.close(fig)
 
 

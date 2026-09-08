@@ -33,7 +33,7 @@ from pydantic import BaseModel, Field, ValidationError
 
 # %%
 TASK_NAME = "ai-race-nplayer-baseline-n3"
-PROTOCOL_ID = "ai-race-nplayer-n3-hosted-confirmatory-v3"
+PROTOCOL_ID = "ai-race-nplayer-n3-hosted-confirmatory-v5"
 N_PLAYERS = 3
 RISK_LEVELS = (0.1, 0.6, 0.9)
 CONFIRMATORY_REPETITIONS = 60
@@ -49,7 +49,11 @@ CONFIRMATORY_MODEL_ROUTES = (
 
 TEMPERATURE = 0.7
 REASONING = "none"
-MAX_OUTPUT_TOKENS = 64
+# The native schema contains one short enum.  A 64-token reservation exhausted
+# the active Model Proxy quota before the first race, while 16 tokens caused a
+# provider length-finish before structured parsing.  The intermediate 32-token
+# reservation is frozen in protocol v5.
+MAX_OUTPUT_TOKENS = 32
 MAX_PARSE_RETRIES = 3
 MAX_TRANSPORT_RETRIES = 8
 REQUEST_TIMEOUT_SECONDS = 120
@@ -671,7 +675,7 @@ def ai_race_nplayer_baseline_n3(llm) -> dict:
         run_phase=run_phase,
     )
     manifest = {
-        "schema_version": "ai-race-nplayer-kbench-run-v2",
+        "schema_version": "ai-race-nplayer-kbench-run-v3",
         "status": "running",
         "protocol_id": PROTOCOL_ID,
         "execution_profile": settings["execution_profile"],

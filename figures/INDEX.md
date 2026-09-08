@@ -24,8 +24,8 @@ Total unique visual files: **505**
 | [paper/ExpOverview.jpg](paper/ExpOverview.jpg) | paper-ready | `2897f7d7624a` |
 | [paper/ExpOverview.pdf](paper/ExpOverview.pdf) | paper-ready | `b0d34a750c1f` |
 | [paper/association_selected_features.pdf](paper/association_selected_features.pdf) | paper-ready | `489ac183cf64` |
-| [paper/calculator_behavior_ablation.pdf](paper/calculator_behavior_ablation.pdf) | paper-ready | `5be653a96378` |
-| [paper/calculator_behavior_ablation.png](paper/calculator_behavior_ablation.png) | paper-ready | `be736f02ec87` |
+| [paper/calculator_behavior_ablation.pdf](paper/calculator_behavior_ablation.pdf) | paper-ready | `154eaa2ea9ac` |
+| [paper/calculator_behavior_ablation.png](paper/calculator_behavior_ablation.png) | paper-ready | `b126809647d9` |
 | [paper/causal_steering_controls.pdf](paper/causal_steering_controls.pdf) | paper-ready | `d911fe1cc5a3` |
 | [paper/comprehension_admission.pdf](paper/comprehension_admission.pdf) | paper-ready | `bed74407a082` |
 | [paper/context_direct_vs_live.pdf](paper/context_direct_vs_live.pdf) | paper-ready | `c0e00631275d` |
@@ -38,8 +38,8 @@ Total unique visual files: **505**
 | [paper/egt_theory_vs_llm_unsafe.png](paper/egt_theory_vs_llm_unsafe.png) | paper-ready | `508d6848f84e` |
 | [paper/evidence_ladder.pdf](paper/evidence_ladder.pdf) | paper-ready | `f04f18cf9aa0` |
 | [paper/fixed_state_target_minus_controls.pdf](paper/fixed_state_target_minus_controls.pdf) | paper-ready | `1749d5daf190` |
-| [paper/game_understanding_accuracy.pdf](paper/game_understanding_accuracy.pdf) | paper-ready | `348648cd27fd` |
-| [paper/game_understanding_accuracy.png](paper/game_understanding_accuracy.png) | paper-ready | `cab45f168045` |
+| [paper/game_understanding_accuracy.pdf](paper/game_understanding_accuracy.pdf) | paper-ready | `03ed8849553e` |
+| [paper/game_understanding_accuracy.png](paper/game_understanding_accuracy.png) | paper-ready | `7cbfd357b60f` |
 | [paper/human_vs_llm_distribution.pdf](paper/human_vs_llm_distribution.pdf) | paper-ready | `7940e6cc87bd` |
 | [paper/human_vs_llm_dynamic_coefficients.pdf](paper/human_vs_llm_dynamic_coefficients.pdf) | paper-ready | `89aa213f39da` |
 | [paper/human_vs_llm_dynamic_coefficients_paper.pdf](paper/human_vs_llm_dynamic_coefficients_paper.pdf) | paper-ready | `12450731b8f6` |
