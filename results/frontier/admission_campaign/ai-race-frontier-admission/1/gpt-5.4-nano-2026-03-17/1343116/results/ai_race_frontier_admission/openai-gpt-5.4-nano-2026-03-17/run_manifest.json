@@ -1,0 +1,92 @@
+{
+  "schema_version": "ai-race-frontier-admission-v1",
+  "status": "completed",
+  "protocol_id": "ai-race-frontier-admission-v1",
+  "started_utc": "2026-09-07T13:31:18.992439+00:00",
+  "model_route": "openai/gpt-5.4-nano-2026-03-17",
+  "model_tag": "openai-gpt-5.4-nano-2026-03-17",
+  "repetitions": 3,
+  "expected_rows": 60,
+  "rules_context_sha256": "b80981a5e888d04649300f79b7388ca7a755b958f239f0172efd9ca35aab2ae0",
+  "probe_bank_sha256": "2953fb472dcba47511de108a47d4126b0f661e79bf60c96a3ab46f581abca8bc",
+  "decoding": {
+    "model_route": "openai/gpt-5.4-nano-2026-03-17",
+    "backend_mro": [
+      "kaggle_benchmarks.actors.llms.OpenAI",
+      "kaggle_benchmarks.actors.llms.LLMChat",
+      "kaggle_benchmarks.actors.base.Actor",
+      "builtins.object"
+    ],
+    "output_token_limit_parameter": "max_tokens",
+    "output_token_limit": 128,
+    "temperature_requested": 0.0,
+    "prompt_version": "ai-race-fairgame-v3"
+  },
+  "package_versions": {
+    "kaggle-benchmarks": "0.6.1",
+    "kaggle": null,
+    "pydantic": "2.12.5"
+  },
+  "status_reason": null,
+  "completed_utc": "2026-09-07T13:32:06.017623+00:00",
+  "summary": {
+    "schema_version": "ai-race-frontier-admission-summary-v1",
+    "protocol_id": "ai-race-frontier-admission-v1",
+    "model_route": "openai/gpt-5.4-nano-2026-03-17",
+    "n_rows": 60,
+    "overall_accuracy": 0.5333333333333333,
+    "by_domain": {
+      "rule_recall": {
+        "rows": 12,
+        "valid": 12,
+        "correct": 9,
+        "valid_rate": 1.0,
+        "accuracy": 0.75
+      },
+      "stage_payoff": {
+        "rows": 6,
+        "valid": 6,
+        "correct": 6,
+        "valid_rate": 1.0,
+        "accuracy": 1.0
+      },
+      "state_reconstruction": {
+        "rows": 15,
+        "valid": 15,
+        "correct": 3,
+        "valid_rate": 1.0,
+        "accuracy": 0.2
+      },
+      "state_transition": {
+        "rows": 6,
+        "valid": 6,
+        "correct": 3,
+        "valid_rate": 1.0,
+        "accuracy": 0.5
+      },
+      "terminal_scoring": {
+        "rows": 15,
+        "valid": 15,
+        "correct": 11,
+        "valid_rate": 1.0,
+        "accuracy": 0.7333333333333333
+      },
+      "expected_payoff": {
+        "rows": 6,
+        "valid": 6,
+        "correct": 0,
+        "valid_rate": 1.0,
+        "accuracy": 0.0
+      }
+    },
+    "admission_thresholds": {
+      "overall_accuracy_min": 0.8,
+      "state_reconstruction_accuracy_min": 0.75,
+      "terminal_scoring_accuracy_min": 0.75,
+      "expected_payoff_accuracy_min": 0.75
+    },
+    "admitted_for_gameplay": false,
+    "expected_payoff_is_diagnostic_only": true,
+    "evidence_class": "diagnostic"
+  }
+}

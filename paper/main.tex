@@ -660,7 +660,7 @@ not informed optimisation of the game.
     \toprule
     Module & Races & Decisions & Use \\
     \midrule
-    Frontier endpoint admission (Gemini 3 Flash) & n/a & 60 probes & confirmatory gate \\
+    Frontier endpoint admission (Gemini 3 Flash, Claude Sonnet 5) & n/a & 120 probes & confirmatory gate \\
     Calculator diagnostic & 60 & 1,116 & paired diagnostic \\
     Context pilot ($T=0$) & 768 & 13,680 & robustness diagnostic \\
     Fixed-state replay & 1,536 & n/a & direct prompt diagnostic \\
@@ -684,43 +684,44 @@ contains full model tables, predictive diagnostics, and robustness checks.
 \subsection{Validity gate: can agents follow the race?}
 \label{sec:results-validity}
 
-We first ask whether the audited model can carry out the rules it receives.
-The confirmatory endpoint admission contains 60 fixed-seed outputs from the
-Gemini 3 Flash frontier route; all planned outputs
-were retained and no transport or parse failure occurred. As
-Table~\ref{tab:task-audit} shows, this endpoint reconstructed every tested
-state and terminal consequence. It made errors on one of the two
-closed-form expected-payoff probes in each repetition, so those probes remain
-a diagnostic rather than a gameplay exclusion criterion. This separation
-prevents a failure on optional arithmetic from being mistaken for a failure
-to follow the action protocol.
+We first ask whether the audited models can carry out the rules they receive.
+The confirmatory endpoint admission contains 60 requested-seed outputs for
+each of two admitted frontier routes; all 120 planned outputs were retained
+and no transport or parse failure occurred. The hosted SDK did not apply the
+requested seed for Gemini and did not confirm provider application for Claude,
+as recorded in the manifests. As Table~\ref{tab:task-audit} shows, both routes
+reconstructed the tested state and terminal consequences above the gameplay
+threshold. They made errors on the closed-form expected-payoff probes, so
+those probes remain a diagnostic rather than a gameplay exclusion criterion.
+This separation prevents a failure on optional arithmetic from being mistaken
+for a failure to follow the action protocol.
 
 \begin{table}[t]
-    \caption{Semantic accuracy on the 60-probe frontier endpoint admission
-    (Gemini 3 Flash frontier route), by probe subtask.}
+    \caption{Semantic accuracy on the 60-probe frontier endpoint admission for
+    the two admitted routes, by probe subtask.}
     \label{tab:task-audit}
     \centering
     \small
-    \begin{tabular}{@{}lr@{}}
+    \begin{tabular}{@{}lrr@{}}
         \toprule
-        Subtask & Accuracy \\
+        Subtask & Gemini 3 Flash & Claude Sonnet 5 \\
         \midrule
-        Rule recall                  & 100.0\% \\
-        One-stage payoff lookup      & 100.0\% \\
-        Terminal scoring             & 100.0\% \\
-        State reconstruction         & 100.0\% \\
-        State transition             & 100.0\% \\
-        Expected-payoff calculation  & 50.0\%  \\
+        Rule recall                  & 100.0\% & 100.0\% \\
+        One-stage payoff lookup      & 100.0\% & 100.0\% \\
+        Terminal scoring             & 100.0\% & 80.0\% \\
+        State reconstruction         & 93.3\%  & 86.7\% \\
+        State transition             & 100.0\% & 100.0\% \\
+        Expected-payoff calculation  & 50.0\%  & 0.0\% \\
         \midrule
-        Overall (all subtasks pooled) & 95.0\% \\
+        Overall (all subtasks pooled) & 93.3\% & 81.7\% \\
         \bottomrule
     \end{tabular}
 \end{table}
 
 The remaining gap is concentrated in closed-form expected-payoff arithmetic,
-not in state or terminal execution. We therefore retain the stricter
-per-endpoint audit and report the arithmetic diagnostic instead of treating
-all frontier routes as interchangeable. Full probe-by-probe outputs,
+with an additional Claude error on terminal scoring. We therefore retain the
+stricter per-endpoint audit and report the arithmetic diagnostic instead of
+treating frontier routes as interchangeable. Full probe-by-probe outputs,
 including failed endpoint admissions, are given in the supplementary material.
 
 \subsection{Strategic robustness under equivalent presentations}
@@ -774,12 +775,14 @@ The evolutionary benchmark predicts a sharp change with private risk. At its
 main reference setting, predicted Unsafe play is 99.2\%, 98.0\%, and 1.9\% in
 the low-, medium-, and high-risk conditions. This pattern follows the shift
 from AU to CAS and then CS described in \S\ref{sec:theory-benchmark}.
-The frontier Gemini confirmatory baseline instead produces 100.0\%, 69.9\%,
-and 60.8\% Unsafe decisions at maximum risks 0.1, 0.6, and 0.9,
-respectively, across 30 completed races and 558 decisions. This is a
-descriptive endpoint result, not an equilibrium estimate; the sampling seed
-was requested but the hosted SDK stripped it for this route, as recorded in
-the run manifest.
+The frontier confirmatory baselines instead produce the following Unsafe rates
+at maximum risks 0.1, 0.6, and 0.9, respectively: Gemini 3 Flash, 98.9\%,
+74.2\%, and 59.1\%; Claude Sonnet 5, 89.2\%, 46.2\%, and 37.6\%.
+Each route contributed 30 completed races and 558 decisions. These are
+descriptive endpoint results, not equilibrium estimates. The Gemini SDK route
+stripped the requested seed, while the Claude route forwarded it without
+provider-side application confirmation; both facts are retained in the run
+manifests.
 
 This is a boundary rather than a failed equilibrium test. The evolutionary
 model describes strategy frequencies under selection and mutation; the LLM
@@ -792,13 +795,13 @@ can be more visible in observed play than the theoretical risk transition.
 \begin{figure}[t]
   \centering
   \includegraphics[width=\columnwidth]{../results/frontier/egt_frontier_comparison/egt_theory_vs_llm_unsafe.pdf}
-  \caption{Frontier Gemini Unsafe decisions against the reconstructed
-  evolutionary benchmark. The theory curves are stationary strategy mixtures;
-  the frontier points are descriptive self-play rates from 30 completed races.
+  \caption{Frontier Unsafe decisions against the reconstructed evolutionary
+  benchmark. The theory curves are stationary strategy mixtures; the frontier
+  points are descriptive self-play rates from 30 completed races per route.
   Independent-chain ranges are shown for the theory reconstruction.}
   \Description{Line and point plot of Unsafe rates by maximum private risk.
   Evolutionary-game reconstructions are shown for three parameter regimes and
-  frontier Gemini self-play is shown as descriptive points.}
+  Gemini and Claude self-play are shown as descriptive points.}
   \label{fig:egt-frontier-comparison}
 \end{figure}
 

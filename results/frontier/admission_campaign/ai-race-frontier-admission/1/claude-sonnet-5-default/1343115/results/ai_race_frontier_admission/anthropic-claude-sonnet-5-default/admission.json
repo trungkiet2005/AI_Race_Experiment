@@ -1,0 +1,60 @@
+{
+  "schema_version": "ai-race-frontier-admission-summary-v1",
+  "protocol_id": "ai-race-frontier-admission-v1",
+  "model_route": "anthropic/claude-sonnet-5@default",
+  "n_rows": 60,
+  "overall_accuracy": 0.7666666666666667,
+  "by_domain": {
+    "rule_recall": {
+      "rows": 12,
+      "valid": 12,
+      "correct": 12,
+      "valid_rate": 1.0,
+      "accuracy": 1.0
+    },
+    "stage_payoff": {
+      "rows": 6,
+      "valid": 6,
+      "correct": 6,
+      "valid_rate": 1.0,
+      "accuracy": 1.0
+    },
+    "state_reconstruction": {
+      "rows": 15,
+      "valid": 14,
+      "correct": 13,
+      "valid_rate": 0.9333333333333333,
+      "accuracy": 0.8666666666666667
+    },
+    "state_transition": {
+      "rows": 6,
+      "valid": 6,
+      "correct": 6,
+      "valid_rate": 1.0,
+      "accuracy": 1.0
+    },
+    "terminal_scoring": {
+      "rows": 15,
+      "valid": 15,
+      "correct": 9,
+      "valid_rate": 1.0,
+      "accuracy": 0.6
+    },
+    "expected_payoff": {
+      "rows": 6,
+      "valid": 5,
+      "correct": 0,
+      "valid_rate": 0.8333333333333334,
+      "accuracy": 0.0
+    }
+  },
+  "admission_thresholds": {
+    "overall_accuracy_min": 0.8,
+    "state_reconstruction_accuracy_min": 0.75,
+    "terminal_scoring_accuracy_min": 0.75,
+    "expected_payoff_accuracy_min": 0.75
+  },
+  "admitted_for_gameplay": false,
+  "expected_payoff_is_diagnostic_only": true,
+  "evidence_class": "diagnostic"
+}

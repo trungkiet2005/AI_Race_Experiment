@@ -408,15 +408,16 @@ limitation instead of silently dropping the endpoint.
 
 Endpoint availability was checked against the active Kaggle Benchmark identity
 and recorded using the exact route string. One repetition of the 20-probe
-bank was used as a diagnostic smoke for every advertised route; only the
-Gemini route then received the three-repetition confirmatory admission. A
-route that was unavailable or failed transport was retained as failed
-infrastructure evidence, never replaced by another endpoint.
+bank was used as a diagnostic smoke for every advertised route; the two routes
+that passed the v5 gameplay thresholds then received the three-repetition
+confirmatory admission. A route that was unavailable or failed transport was
+retained as failed infrastructure evidence, never replaced by another
+endpoint.
 
 \begin{table}[h]
     \caption{Per-endpoint frontier admission audit. Smoke results are
-    diagnostic; the Gemini confirmatory result is the only route admitted to
-    the new gameplay run.}
+    diagnostic; only routes with a completed v5 artifact and passing gameplay
+    thresholds enter the new gameplay run.}
     \label{tab:frontier-admission-registry}
     \centering
     \scriptsize
@@ -424,8 +425,8 @@ infrastructure evidence, never replaced by another endpoint.
         \toprule
         Exact route & Overall & State & Terminal & Status \\
         \midrule
-        \texttt{google/gemini-3-flash-preview} & 95\% & 100\% & 100\% & admitted \\
-        \texttt{anthropic/claude-sonnet-5@default} & 75\% & 80\% & 60\% & diagnostic \\
+        \texttt{google/gemini-3-flash-preview} & 93.3\% & 93.3\% & 100\% & admitted \\
+        \texttt{anthropic/claude-sonnet-5@default} & 81.7\% & 86.7\% & 80\% & admitted \\
         \texttt{google/gemini-3.1-flash-lite-preview} & 75\% & 60\% & 80\% & diagnostic \\
         \texttt{openai/gpt-5.4-nano-2026-03-17} & 50\% & 20\% & 60\% & diagnostic \\
         \texttt{deepseek-ai/deepseek-r1-0528} & -- & -- & -- & transport failed \\
