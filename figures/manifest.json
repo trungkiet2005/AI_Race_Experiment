@@ -4974,7 +4974,7 @@
   {
     "canonical_path": "figures/paper/egt_frontier_insights.pdf",
     "kind": "paper",
-    "sha256": "c3276b9b4cca759fae1c6e1a103351a2fdf651d5f0f7a29f90f9f24031b836cc",
+    "sha256": "b3d3824ceacd9d20067b44c949e3b0ecfea676fb329e489f7a8500578c2d336c",
     "source": "figures/paper/egt_frontier_insights.pdf",
     "status": "paper-ready",
     "sources": [
@@ -4994,7 +4994,7 @@
   {
     "canonical_path": "figures/paper/egt_frontier_insights.svg",
     "kind": "paper",
-    "sha256": "939de73bd5122a75eacfbcbd06669345a50c0c3b5f0b432370431636b118a415",
+    "sha256": "6333f32296b2a803f29d407420ce7eaff2eddf1fb1c2a540d8cc219c84191529",
     "source": "figures/paper/egt_frontier_insights.svg",
     "status": "paper-ready",
     "sources": [
@@ -5004,7 +5004,7 @@
   {
     "canonical_path": "figures/paper/egt_frontier_invasion.pdf",
     "kind": "paper",
-    "sha256": "32f0208dafb46bc1fa3e8e4ce9068367f9abf8fded494ef4bb83ee6ffa63b41c",
+    "sha256": "901c6d56e8674336eaf8c190c1ac4d74a25c54c19172b481911a1b72df009318",
     "source": "figures/paper/egt_frontier_invasion.pdf",
     "status": "paper-ready",
     "sources": [
@@ -5024,7 +5024,7 @@
   {
     "canonical_path": "figures/paper/egt_frontier_invasion.svg",
     "kind": "paper",
-    "sha256": "2b9212890802bab3bb42afd5eae183f7ef0ce0eb95a5cb1c67f8935703ca91fd",
+    "sha256": "02117e1af3ea1c7b293c8dfbda629ea3751ff0e72eaaa0e0c94b330d78590e06",
     "source": "figures/paper/egt_frontier_invasion.svg",
     "status": "paper-ready",
     "sources": [
@@ -5034,7 +5034,7 @@
   {
     "canonical_path": "figures/paper/egt_theory_vs_llm_unsafe.pdf",
     "kind": "paper",
-    "sha256": "807743889cdc881708dd9426021101c14ea4f10fcd2faf81f1588e454a9c2bc8",
+    "sha256": "1ca7cf4e7704457668a74acdd4b66c6b64d737d8729c66f650c447e8d1a00f56",
     "source": "figures/paper/egt_theory_vs_llm_unsafe.pdf",
     "status": "paper-ready",
     "sources": [
@@ -5054,7 +5054,7 @@
   {
     "canonical_path": "figures/paper/egt_theory_vs_llm_unsafe.svg",
     "kind": "paper",
-    "sha256": "786d9bc1e8baef1af8204b91dbffe71371289b3815e272733571cdd50705a44c",
+    "sha256": "4a27803b4696823fe36dbc03d169af6f8a5564ac427526032438ed246c001676",
     "source": "figures/paper/egt_theory_vs_llm_unsafe.svg",
     "status": "paper-ready",
     "sources": [
@@ -5084,6 +5084,36 @@
     ]
   },
   {
+    "canonical_path": "figures/paper/frontier_many_model_risk_profiles.pdf",
+    "kind": "paper",
+    "sha256": "0342b86cada6f1e808c3bb50bb2e4e2e2ce693a56ef1794aa29077f455a2bb26",
+    "source": "figures/paper/frontier_many_model_risk_profiles.pdf",
+    "status": "paper-ready",
+    "sources": [
+      "figures/paper/frontier_many_model_risk_profiles.pdf"
+    ]
+  },
+  {
+    "canonical_path": "figures/paper/frontier_many_model_risk_profiles.png",
+    "kind": "paper",
+    "sha256": "b5588079a88723c6efbdf952bbd0f6e6062328d5698b9e0014e85384475f6300",
+    "source": "figures/paper/frontier_many_model_risk_profiles.png",
+    "status": "paper-ready",
+    "sources": [
+      "figures/paper/frontier_many_model_risk_profiles.png"
+    ]
+  },
+  {
+    "canonical_path": "figures/paper/frontier_many_model_risk_profiles.svg",
+    "kind": "paper",
+    "sha256": "2d09f75b62e68026df9e92d05941a43b866003d9dbfc765200dc844bb497fde1",
+    "source": "figures/paper/frontier_many_model_risk_profiles.svg",
+    "status": "paper-ready",
+    "sources": [
+      "figures/paper/frontier_many_model_risk_profiles.svg"
+    ]
+  },
+  {
     "canonical_path": "figures/paper/game_understanding_accuracy.pdf",
     "kind": "paper",
     "sha256": "03ed8849553e231734283b92fc09ee54a7e86ec186c82d0a1d5a93241ffe941e",
@@ -5106,7 +5136,7 @@
   {
     "canonical_path": "figures/paper/human_vs_llm_distribution.pdf",
     "kind": "paper",
-    "sha256": "ecb24fae8f63adde4c421938639da64e56dcc7d5aa079ba972633d8ee6ddad71",
+    "sha256": "f98d11484a77edf6ef0b3e519a2ed2fd2e51762ed63fb20074b9ffabde9b836a",
     "source": "figures/paper/human_vs_llm_distribution.pdf",
     "status": "paper-ready",
     "sources": [
@@ -5126,7 +5156,7 @@
   {
     "canonical_path": "figures/paper/human_vs_llm_distribution.svg",
     "kind": "paper",
-    "sha256": "5ce9bfe1de2fef9dcedf23c52ca89bb519914a471eb79e1bace5b8f2e5c00059",
+    "sha256": "93ed12793127910018f349007af1ff1de9fbf478b9acd9cc0774c95ddaffd2fb",
     "source": "figures/paper/human_vs_llm_distribution.svg",
     "status": "paper-ready",
     "sources": [
@@ -5179,7 +5209,7 @@
   {
     "canonical_path": "figures/paper/llm_human_clustering/01_tsne_hero_human_left.pdf",
     "kind": "paper",
-    "sha256": "7edc24e0f767d4f1c30a5b014fe7b519f62b336d19b6769690a5a5615e9d7059",
+    "sha256": "c0dbc7a68ed0bb5b23c1c9f727de6671834148a80d4c76a9f7f4f87d3a2b9e83",
     "source": "figures/paper/llm_human_clustering/01_tsne_hero_human_left.pdf",
     "status": "paper-ready",
     "sources": [
@@ -5199,7 +5229,7 @@
   {
     "canonical_path": "figures/paper/llm_human_clustering/01_tsne_hero_human_left.svg",
     "kind": "paper",
-    "sha256": "5980d3a67ec2d475352740ec623c7d9ec8bf3c2ab8b28d2d3a9e2a3d3cc3db60",
+    "sha256": "04b289cb48e89573f803cd3c02d28eb8fe3dc5835260f1da40b7f378b7403621",
     "source": "figures/paper/llm_human_clustering/01_tsne_hero_human_left.svg",
     "status": "paper-ready",
     "sources": [
@@ -5219,7 +5249,7 @@
   {
     "canonical_path": "figures/paper/llm_human_clustering/02_archetype_signatures_and_coverage.pdf",
     "kind": "paper",
-    "sha256": "9c37bcbbd95b9d4f6c7e3ac9135f7bdbdf11cc604e3ed05568071587a91cf7f8",
+    "sha256": "9ec243d9bf17e29c751176492beee793d54154da03efb6f8567f4b98db2df5f9",
     "source": "figures/paper/llm_human_clustering/02_archetype_signatures_and_coverage.pdf",
     "status": "paper-ready",
     "sources": [
@@ -5239,7 +5269,7 @@
   {
     "canonical_path": "figures/paper/llm_human_clustering/02_archetype_signatures_and_coverage.svg",
     "kind": "paper",
-    "sha256": "0f2e4f8928e1f37c403a146cf895e0fe7abea37133b155b640d74a765aa64892",
+    "sha256": "74edf9116bef1ff5dab413c0b4ff657a35938cfd8a6be876ea5f8c71bf7c1182",
     "source": "figures/paper/llm_human_clustering/02_archetype_signatures_and_coverage.svg",
     "status": "paper-ready",
     "sources": [
@@ -5269,7 +5299,7 @@
   {
     "canonical_path": "figures/paper/llm_human_clustering/03_radar_small_multiples_by_group_no_gap_r1.pdf",
     "kind": "paper",
-    "sha256": "ba694e1daea81d276b7e13dbbbe8f81b21b8d6aca1c194dd7225a3a5597a422e",
+    "sha256": "37eef9bc6a37abec8aaad6dc56e4a7d0953dec0f0fec0c786ba24f8b6c48be11",
     "source": "figures/paper/llm_human_clustering/03_radar_small_multiples_by_group_no_gap_r1.pdf",
     "status": "paper-ready",
     "sources": [
@@ -5289,7 +5319,7 @@
   {
     "canonical_path": "figures/paper/llm_human_clustering/03_radar_small_multiples_by_group_no_gap_r1.svg",
     "kind": "paper",
-    "sha256": "6e56e244118ecea850767f88c51655054b430116005e0e045f0fe70f36c4fb9b",
+    "sha256": "91a8856cea57485a2190602c60018ebae3cde86685d1638e9ab00e5989ef1464",
     "source": "figures/paper/llm_human_clustering/03_radar_small_multiples_by_group_no_gap_r1.svg",
     "status": "paper-ready",
     "sources": [
@@ -5359,7 +5389,7 @@
   {
     "canonical_path": "figures/paper/llm_human_clustering/06_tsne_safe_unsafe.pdf",
     "kind": "paper",
-    "sha256": "5307b9d223dd407d16be4838fe091363d80432112cfc924b193349d4ee097c4e",
+    "sha256": "d42f94236a0c69aab909ab68a908cc27ac14f8416c5c364389008d86921dda6d",
     "source": "figures/paper/llm_human_clustering/06_tsne_safe_unsafe.pdf",
     "status": "paper-ready",
     "sources": [
@@ -5379,7 +5409,7 @@
   {
     "canonical_path": "figures/paper/llm_human_clustering/06_tsne_safe_unsafe.svg",
     "kind": "paper",
-    "sha256": "2eb41f73f1c43e81fa3ce034cf626581607787de66be80086823d300a6104928",
+    "sha256": "df1692b08dd5249ac00835d480ffa770c55573e4b2b704009e7f126a6b3dd4c9",
     "source": "figures/paper/llm_human_clustering/06_tsne_safe_unsafe.svg",
     "status": "paper-ready",
     "sources": [
@@ -5409,7 +5439,7 @@
   {
     "canonical_path": "figures/paper/llm_human_clustering/09_human_vs_llm_own_risk_dependence.pdf",
     "kind": "paper",
-    "sha256": "c8c24a3838971ff7106cd948bba559bb6eb045d91ebddcd5659ea86aaefbfdd0",
+    "sha256": "1971dbd000fbd5100453ebd25983ffe80ea598f6a191191a16453ede6545ae8e",
     "source": "figures/paper/llm_human_clustering/09_human_vs_llm_own_risk_dependence.pdf",
     "status": "paper-ready",
     "sources": [
@@ -5429,7 +5459,7 @@
   {
     "canonical_path": "figures/paper/llm_human_clustering/09_human_vs_llm_own_risk_dependence.svg",
     "kind": "paper",
-    "sha256": "4f6f3ee4d51e4883c229cda7bea800c9e0269ca4e7d8d75a905c8571b0c953eb",
+    "sha256": "619e9bfe518fc38a653a7c4504acccfffc3634ebd86b357d3a3332abd8ef9bac",
     "source": "figures/paper/llm_human_clustering/09_human_vs_llm_own_risk_dependence.svg",
     "status": "paper-ready",
     "sources": [
@@ -5439,7 +5469,7 @@
   {
     "canonical_path": "figures/paper/llm_human_clustering/feature_importance_shap_heatmap.pdf",
     "kind": "paper",
-    "sha256": "c22ddbb51697a7e140ded5e7a20c11d9b4f8204759b71722e6ab8d2d3c042ac7",
+    "sha256": "39b03555a9457bfe0b00bafd9594ec54ca80d38dda38e40015a6e9bcbb494c9b",
     "source": "figures/paper/llm_human_clustering/feature_importance_shap_heatmap.pdf",
     "status": "paper-ready",
     "sources": [
@@ -5459,7 +5489,7 @@
   {
     "canonical_path": "figures/paper/llm_human_clustering/feature_importance_shap_heatmap.svg",
     "kind": "paper",
-    "sha256": "d4373338e69aeb8d02c759c51f6fde8862a1533cd92b977db2df2240f5494c03",
+    "sha256": "0769d2f4b0996cff5644fe744ddede32c54f8b3060b1b08d0475c5645fb913cf",
     "source": "figures/paper/llm_human_clustering/feature_importance_shap_heatmap.svg",
     "status": "paper-ready",
     "sources": [

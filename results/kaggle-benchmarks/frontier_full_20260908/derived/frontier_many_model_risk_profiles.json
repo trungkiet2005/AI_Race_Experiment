@@ -1,0 +1,26 @@
+{
+  "figure": "frontier_many_model_risk_profiles",
+  "evidence_class": "diagnostic",
+  "status_note": "Fresh confirmatory baseline artifacts are valid; admission output retrieval is incomplete for this campaign.",
+  "source": "results/kaggle-benchmarks/frontier_full_20260908/derived/ai_race_analysis/player_metrics.csv",
+  "source_sha256": "64a36871052e4d8101a26a6819a5fb526ef69e4f9f0ed68754668d63a6fe7525",
+  "models": [
+    "google-gemini-3-flash-preview",
+    "openai-gpt-5.4-nano-2026-03-17",
+    "openai-gpt-5.4-mini-2026-03-17",
+    "openai-gpt-5.4-2026-03-05",
+    "openai-gpt-5.5-2026-04-23"
+  ],
+  "model_count": 5,
+  "risk_levels": [
+    0.1,
+    0.6,
+    0.9
+  ],
+  "players_per_cell": 20,
+  "outputs": [
+    "figures/paper/frontier_many_model_risk_profiles.pdf",
+    "figures/paper/frontier_many_model_risk_profiles.png",
+    "figures/paper/frontier_many_model_risk_profiles.svg"
+  ]
+}

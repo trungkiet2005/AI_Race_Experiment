@@ -4,7 +4,7 @@ This is the single browsing entry point for every project-generated figure.
 The original result directories remain the provenance source; files here are
 canonical paper assets or a hash-tracked selection copy.
 
-Total unique visual files: **541**
+Total unique visual files: **544**
 
 ## How to use this folder
 
@@ -15,7 +15,7 @@ Total unique visual files: **541**
 
 ## Paper and presentation assets
 
-68 unique files are in the active paper asset set.
+71 unique files are in the active paper asset set.
 
 | File | Status | SHA256 |
 |---|---|---|
@@ -32,55 +32,58 @@ Total unique visual files: **541**
 | [paper/context_mapping_gate.pdf](paper/context_mapping_gate.pdf) | paper-ready | `0f795cc7ef4f` |
 | [paper/cross_model_risk_response.pdf](paper/cross_model_risk_response.pdf) | paper-ready | `7fd6a9c2f056` |
 | [paper/cross_model_risk_response_neutral.pdf](paper/cross_model_risk_response_neutral.pdf) | paper-ready | `20b213b4b7e7` |
-| [paper/egt_frontier_insights.pdf](paper/egt_frontier_insights.pdf) | paper-ready | `c3276b9b4cca` |
+| [paper/egt_frontier_insights.pdf](paper/egt_frontier_insights.pdf) | paper-ready | `b3d3824ceacd` |
 | [paper/egt_frontier_insights.png](paper/egt_frontier_insights.png) | paper-ready | `ddac93e3b144` |
-| [paper/egt_frontier_insights.svg](paper/egt_frontier_insights.svg) | paper-ready | `939de73bd512` |
-| [paper/egt_frontier_invasion.pdf](paper/egt_frontier_invasion.pdf) | paper-ready | `32f0208dafb4` |
+| [paper/egt_frontier_insights.svg](paper/egt_frontier_insights.svg) | paper-ready | `6333f32296b2` |
+| [paper/egt_frontier_invasion.pdf](paper/egt_frontier_invasion.pdf) | paper-ready | `901c6d56e867` |
 | [paper/egt_frontier_invasion.png](paper/egt_frontier_invasion.png) | paper-ready | `d5363a7bc36e` |
-| [paper/egt_frontier_invasion.svg](paper/egt_frontier_invasion.svg) | paper-ready | `2b9212890802` |
-| [paper/egt_theory_vs_llm_unsafe.pdf](paper/egt_theory_vs_llm_unsafe.pdf) | paper-ready | `807743889cdc` |
+| [paper/egt_frontier_invasion.svg](paper/egt_frontier_invasion.svg) | paper-ready | `02117e1af3ea` |
+| [paper/egt_theory_vs_llm_unsafe.pdf](paper/egt_theory_vs_llm_unsafe.pdf) | paper-ready | `1ca7cf4e7704` |
 | [paper/egt_theory_vs_llm_unsafe.png](paper/egt_theory_vs_llm_unsafe.png) | paper-ready | `ce524e26cd66` |
-| [paper/egt_theory_vs_llm_unsafe.svg](paper/egt_theory_vs_llm_unsafe.svg) | paper-ready | `786d9bc1e8ba` |
+| [paper/egt_theory_vs_llm_unsafe.svg](paper/egt_theory_vs_llm_unsafe.svg) | paper-ready | `4a27803b4696` |
 | [paper/evidence_ladder.pdf](paper/evidence_ladder.pdf) | paper-ready | `f04f18cf9aa0` |
 | [paper/fixed_state_target_minus_controls.pdf](paper/fixed_state_target_minus_controls.pdf) | paper-ready | `1749d5daf190` |
+| [paper/frontier_many_model_risk_profiles.pdf](paper/frontier_many_model_risk_profiles.pdf) | paper-ready | `0342b86cada6` |
+| [paper/frontier_many_model_risk_profiles.png](paper/frontier_many_model_risk_profiles.png) | paper-ready | `b5588079a887` |
+| [paper/frontier_many_model_risk_profiles.svg](paper/frontier_many_model_risk_profiles.svg) | paper-ready | `2d09f75b62e6` |
 | [paper/game_understanding_accuracy.pdf](paper/game_understanding_accuracy.pdf) | paper-ready | `03ed8849553e` |
 | [paper/game_understanding_accuracy.png](paper/game_understanding_accuracy.png) | paper-ready | `7cbfd357b60f` |
-| [paper/human_vs_llm_distribution.pdf](paper/human_vs_llm_distribution.pdf) | paper-ready | `ecb24fae8f63` |
+| [paper/human_vs_llm_distribution.pdf](paper/human_vs_llm_distribution.pdf) | paper-ready | `f98d11484a77` |
 | [paper/human_vs_llm_distribution.png](paper/human_vs_llm_distribution.png) | paper-ready | `40baf128403f` |
-| [paper/human_vs_llm_distribution.svg](paper/human_vs_llm_distribution.svg) | paper-ready | `5ce9bfe1de2f` |
+| [paper/human_vs_llm_distribution.svg](paper/human_vs_llm_distribution.svg) | paper-ready | `93ed12793127` |
 | [paper/human_vs_llm_dynamic_coefficients.pdf](paper/human_vs_llm_dynamic_coefficients.pdf) | paper-ready | `89aa213f39da` |
 | [paper/human_vs_llm_dynamic_coefficients_paper.pdf](paper/human_vs_llm_dynamic_coefficients_paper.pdf) | paper-ready | `12450731b8f6` |
 | [paper/live_endogenous_payoff_effects.pdf](paper/live_endogenous_payoff_effects.pdf) | paper-ready | `c9d0431fb93c` |
 | [paper/llm_human_cluster_projection.png](paper/llm_human_cluster_projection.png) | paper-ready | `bf5efc8c2b05` |
-| [paper/llm_human_clustering/01_tsne_hero_human_left.pdf](paper/llm_human_clustering/01_tsne_hero_human_left.pdf) | paper-ready | `7edc24e0f767` |
+| [paper/llm_human_clustering/01_tsne_hero_human_left.pdf](paper/llm_human_clustering/01_tsne_hero_human_left.pdf) | paper-ready | `c0dbc7a68ed0` |
 | [paper/llm_human_clustering/01_tsne_hero_human_left.png](paper/llm_human_clustering/01_tsne_hero_human_left.png) | paper-ready | `ce1acfdd77aa` |
-| [paper/llm_human_clustering/01_tsne_hero_human_left.svg](paper/llm_human_clustering/01_tsne_hero_human_left.svg) | paper-ready | `5980d3a67ec2` |
+| [paper/llm_human_clustering/01_tsne_hero_human_left.svg](paper/llm_human_clustering/01_tsne_hero_human_left.svg) | paper-ready | `04b289cb48e8` |
 | [paper/llm_human_clustering/01_tsne_small_multiples_by_group.png](paper/llm_human_clustering/01_tsne_small_multiples_by_group.png) | paper-ready | `4da819506a8e` |
-| [paper/llm_human_clustering/02_archetype_signatures_and_coverage.pdf](paper/llm_human_clustering/02_archetype_signatures_and_coverage.pdf) | paper-ready | `9c37bcbbd95b` |
+| [paper/llm_human_clustering/02_archetype_signatures_and_coverage.pdf](paper/llm_human_clustering/02_archetype_signatures_and_coverage.pdf) | paper-ready | `9ec243d9bf17` |
 | [paper/llm_human_clustering/02_archetype_signatures_and_coverage.png](paper/llm_human_clustering/02_archetype_signatures_and_coverage.png) | paper-ready | `cb45cb971a35` |
-| [paper/llm_human_clustering/02_archetype_signatures_and_coverage.svg](paper/llm_human_clustering/02_archetype_signatures_and_coverage.svg) | paper-ready | `0f2e4f8928e1` |
+| [paper/llm_human_clustering/02_archetype_signatures_and_coverage.svg](paper/llm_human_clustering/02_archetype_signatures_and_coverage.svg) | paper-ready | `74edf9116bef` |
 | [paper/llm_human_clustering/03_radar_combined_all_groups.png](paper/llm_human_clustering/03_radar_combined_all_groups.png) | paper-ready | `f8febce937b8` |
 | [paper/llm_human_clustering/03_radar_small_multiples_by_group.png](paper/llm_human_clustering/03_radar_small_multiples_by_group.png) | paper-ready | `73628a01041d` |
-| [paper/llm_human_clustering/03_radar_small_multiples_by_group_no_gap_r1.pdf](paper/llm_human_clustering/03_radar_small_multiples_by_group_no_gap_r1.pdf) | paper-ready | `ba694e1daea8` |
+| [paper/llm_human_clustering/03_radar_small_multiples_by_group_no_gap_r1.pdf](paper/llm_human_clustering/03_radar_small_multiples_by_group_no_gap_r1.pdf) | paper-ready | `37eef9bc6a37` |
 | [paper/llm_human_clustering/03_radar_small_multiples_by_group_no_gap_r1.png](paper/llm_human_clustering/03_radar_small_multiples_by_group_no_gap_r1.png) | paper-ready | `c588807d95e0` |
-| [paper/llm_human_clustering/03_radar_small_multiples_by_group_no_gap_r1.svg](paper/llm_human_clustering/03_radar_small_multiples_by_group_no_gap_r1.svg) | paper-ready | `6e56e244118e` |
+| [paper/llm_human_clustering/03_radar_small_multiples_by_group_no_gap_r1.svg](paper/llm_human_clustering/03_radar_small_multiples_by_group_no_gap_r1.svg) | paper-ready | `91a8856cea57` |
 | [paper/llm_human_clustering/03b_radar_combined_all_groups.png](paper/llm_human_clustering/03b_radar_combined_all_groups.png) | paper-ready | `f6498cb7f631` |
 | [paper/llm_human_clustering/03b_radar_combined_all_groups_no_gap_r1.png](paper/llm_human_clustering/03b_radar_combined_all_groups_no_gap_r1.png) | paper-ready | `dd9202b95b33` |
 | [paper/llm_human_clustering/04_feature_heatmap_by_group.png](paper/llm_human_clustering/04_feature_heatmap_by_group.png) | paper-ready | `77e4df749cf6` |
 | [paper/llm_human_clustering/05_cluster_mix_and_unsafe_by_group.png](paper/llm_human_clustering/05_cluster_mix_and_unsafe_by_group.png) | paper-ready | `a3b2421c39dd` |
 | [paper/llm_human_clustering/05_cluster_mix_and_unsafe_by_group_right_panel.png](paper/llm_human_clustering/05_cluster_mix_and_unsafe_by_group_right_panel.png) | paper-ready | `033f277fbde9` |
 | [paper/llm_human_clustering/05b_unsafe_rate_by_group.png](paper/llm_human_clustering/05b_unsafe_rate_by_group.png) | paper-ready | `5e915f8a4b9e` |
-| [paper/llm_human_clustering/06_tsne_safe_unsafe.pdf](paper/llm_human_clustering/06_tsne_safe_unsafe.pdf) | paper-ready | `5307b9d223dd` |
+| [paper/llm_human_clustering/06_tsne_safe_unsafe.pdf](paper/llm_human_clustering/06_tsne_safe_unsafe.pdf) | paper-ready | `d42f94236a0c` |
 | [paper/llm_human_clustering/06_tsne_safe_unsafe.png](paper/llm_human_clustering/06_tsne_safe_unsafe.png) | paper-ready | `5651c0e4b438` |
-| [paper/llm_human_clustering/06_tsne_safe_unsafe.svg](paper/llm_human_clustering/06_tsne_safe_unsafe.svg) | paper-ready | `2eb41f73f1c4` |
+| [paper/llm_human_clustering/06_tsne_safe_unsafe.svg](paper/llm_human_clustering/06_tsne_safe_unsafe.svg) | paper-ready | `df1692b08dd5` |
 | [paper/llm_human_clustering/07_human_risk_preference_vs_unsafe.png](paper/llm_human_clustering/07_human_risk_preference_vs_unsafe.png) | paper-ready | `af30a6272ad8` |
 | [paper/llm_human_clustering/08_human_risk_preference_by_cluster.png](paper/llm_human_clustering/08_human_risk_preference_by_cluster.png) | paper-ready | `0f51f67b4ec9` |
-| [paper/llm_human_clustering/09_human_vs_llm_own_risk_dependence.pdf](paper/llm_human_clustering/09_human_vs_llm_own_risk_dependence.pdf) | paper-ready | `c8c24a383897` |
+| [paper/llm_human_clustering/09_human_vs_llm_own_risk_dependence.pdf](paper/llm_human_clustering/09_human_vs_llm_own_risk_dependence.pdf) | paper-ready | `1971dbd000fb` |
 | [paper/llm_human_clustering/09_human_vs_llm_own_risk_dependence.png](paper/llm_human_clustering/09_human_vs_llm_own_risk_dependence.png) | paper-ready | `a5555e1912eb` |
-| [paper/llm_human_clustering/09_human_vs_llm_own_risk_dependence.svg](paper/llm_human_clustering/09_human_vs_llm_own_risk_dependence.svg) | paper-ready | `4f6f3ee4d51e` |
-| [paper/llm_human_clustering/feature_importance_shap_heatmap.pdf](paper/llm_human_clustering/feature_importance_shap_heatmap.pdf) | paper-ready | `c22ddbb51697` |
+| [paper/llm_human_clustering/09_human_vs_llm_own_risk_dependence.svg](paper/llm_human_clustering/09_human_vs_llm_own_risk_dependence.svg) | paper-ready | `619e9bfe518f` |
+| [paper/llm_human_clustering/feature_importance_shap_heatmap.pdf](paper/llm_human_clustering/feature_importance_shap_heatmap.pdf) | paper-ready | `39b03555a945` |
 | [paper/llm_human_clustering/feature_importance_shap_heatmap.png](paper/llm_human_clustering/feature_importance_shap_heatmap.png) | paper-ready | `65c1b0560ffc` |
-| [paper/llm_human_clustering/feature_importance_shap_heatmap.svg](paper/llm_human_clustering/feature_importance_shap_heatmap.svg) | paper-ready | `d4373338e69a` |
+| [paper/llm_human_clustering/feature_importance_shap_heatmap.svg](paper/llm_human_clustering/feature_importance_shap_heatmap.svg) | paper-ready | `0769d2f4b099` |
 | [paper/llm_human_clustering/llm_human_cluster_projection.pdf](paper/llm_human_clustering/llm_human_cluster_projection.pdf) | paper-ready | `5a9462ec283a` |
 | [paper/nplayer_position_effect_sign_flip.pdf](paper/nplayer_position_effect_sign_flip.pdf) | paper-ready | `917434902600` |
 | [paper/nplayer_position_effect_sign_flip_paper.pdf](paper/nplayer_position_effect_sign_flip_paper.pdf) | paper-ready | `7a42ee633719` |

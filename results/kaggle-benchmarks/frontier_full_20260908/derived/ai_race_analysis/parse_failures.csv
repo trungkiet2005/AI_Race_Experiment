@@ -1,0 +1,16 @@
+model,max_private_risk,persona_condition,prompt_version,protocol_signature,run_phase,run_status,n_decisions,parse_failures,parse_failure_rate,total_retries,mean_retries,n_races,contaminated_races,parse_clean_races,canonical_mechanism_races,forced_stop_races,behavioral_races,noncanonical_mechanism_races
+google-gemini-3-flash-preview,0.1,none,ai-race-fairgame-v3,9198edae6f6b2b51c8b23f4263bf82bc8d92f01028170e56a1a889dda60d081a,confirmatory,completed,186,0,0.0,0.0,0.0,10,0,10,10,0,10,0
+google-gemini-3-flash-preview,0.6,none,ai-race-fairgame-v3,9198edae6f6b2b51c8b23f4263bf82bc8d92f01028170e56a1a889dda60d081a,confirmatory,completed,186,0,0.0,0.0,0.0,10,0,10,10,0,10,0
+google-gemini-3-flash-preview,0.9,none,ai-race-fairgame-v3,9198edae6f6b2b51c8b23f4263bf82bc8d92f01028170e56a1a889dda60d081a,confirmatory,completed,186,0,0.0,0.0,0.0,10,0,10,10,0,10,0
+openai-gpt-5.4-2026-03-05,0.1,none,ai-race-fairgame-v3,7a4d4a5f9cfa5cb47d15b83d72a07e989626eca49213e1a8abed2edc0837b087,confirmatory,completed,186,0,0.0,0.0,0.0,10,0,10,10,0,10,0
+openai-gpt-5.4-2026-03-05,0.6,none,ai-race-fairgame-v3,7a4d4a5f9cfa5cb47d15b83d72a07e989626eca49213e1a8abed2edc0837b087,confirmatory,completed,186,0,0.0,0.0,0.0,10,0,10,10,0,10,0
+openai-gpt-5.4-2026-03-05,0.9,none,ai-race-fairgame-v3,7a4d4a5f9cfa5cb47d15b83d72a07e989626eca49213e1a8abed2edc0837b087,confirmatory,completed,186,0,0.0,0.0,0.0,10,0,10,10,0,10,0
+openai-gpt-5.4-mini-2026-03-17,0.1,none,ai-race-fairgame-v3,99bc4825cf4726f9860c96f139c7ee7ac38ef6c00a202245f8866bdf79e296c2,confirmatory,completed,186,0,0.0,0.0,0.0,10,0,10,10,0,10,0
+openai-gpt-5.4-mini-2026-03-17,0.6,none,ai-race-fairgame-v3,99bc4825cf4726f9860c96f139c7ee7ac38ef6c00a202245f8866bdf79e296c2,confirmatory,completed,186,0,0.0,0.0,0.0,10,0,10,10,0,10,0
+openai-gpt-5.4-mini-2026-03-17,0.9,none,ai-race-fairgame-v3,99bc4825cf4726f9860c96f139c7ee7ac38ef6c00a202245f8866bdf79e296c2,confirmatory,completed,186,0,0.0,0.0,0.0,10,0,10,10,0,10,0
+openai-gpt-5.4-nano-2026-03-17,0.1,none,ai-race-fairgame-v3,004ec0b93aa2eee43c60a88f4dddff6c97c85185634c04168fe1fa64c045eb64,confirmatory,completed,186,0,0.0,0.0,0.0,10,0,10,10,0,10,0
+openai-gpt-5.4-nano-2026-03-17,0.6,none,ai-race-fairgame-v3,004ec0b93aa2eee43c60a88f4dddff6c97c85185634c04168fe1fa64c045eb64,confirmatory,completed,186,0,0.0,0.0,0.0,10,0,10,10,0,10,0
+openai-gpt-5.4-nano-2026-03-17,0.9,none,ai-race-fairgame-v3,004ec0b93aa2eee43c60a88f4dddff6c97c85185634c04168fe1fa64c045eb64,confirmatory,completed,186,0,0.0,0.0,0.0,10,0,10,10,0,10,0
+openai-gpt-5.5-2026-04-23,0.1,none,ai-race-fairgame-v3,164c237a02bd2723f0873fde2b566aed15952bd1ea530f4730cb74b8660b434b,confirmatory,completed,186,0,0.0,0.0,0.0,10,0,10,10,0,10,0
+openai-gpt-5.5-2026-04-23,0.6,none,ai-race-fairgame-v3,164c237a02bd2723f0873fde2b566aed15952bd1ea530f4730cb74b8660b434b,confirmatory,completed,186,0,0.0,0.0,0.0,10,0,10,10,0,10,0
+openai-gpt-5.5-2026-04-23,0.9,none,ai-race-fairgame-v3,164c237a02bd2723f0873fde2b566aed15952bd1ea530f4730cb74b8660b434b,confirmatory,completed,186,0,0.0,0.0,0.0,10,0,10,10,0,10,0

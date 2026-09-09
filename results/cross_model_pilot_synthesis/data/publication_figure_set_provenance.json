@@ -38,6 +38,11 @@
     "figure_8_position": [
       "figures\\paper\\11_relative_position_grouped_bars.png"
     ],
+    "fresh_frontier_risk_profiles": [
+      "figures\\paper\\frontier_many_model_risk_profiles.pdf",
+      "figures\\paper\\frontier_many_model_risk_profiles.png",
+      "figures\\paper\\frontier_many_model_risk_profiles.svg"
+    ],
     "supplement_figure_1_egt_insights": [
       "figures\\paper\\egt_frontier_insights.pdf",
       "figures\\paper\\egt_frontier_insights.png",
@@ -78,6 +83,7 @@
     "figure_6_tsne": "generated",
     "figure_7_distribution": "generated",
     "figure_8_position": "manual",
+    "fresh_frontier_risk_profiles": "generated",
     "supplement_figure_1_egt_insights": "generated",
     "supplement_figure_2_egt_invasion": "generated",
     "supplement_figure_3_own_risk": "generated",
@@ -85,7 +91,7 @@
     "supplement_figure_5_tsne_outcome": "generated",
     "supplement_figure_6_round_profiles": "generated"
   },
-  "generated_utc": "2026-09-08T15:02:22.982195+00:00",
+  "generated_utc": "2026-09-09T01:27:39.562731+00:00",
   "generator": "scripts/build_publication_figures.py",
   "manual_figure_origin": {
     "commit": "f0dde0d",

@@ -30,6 +30,12 @@ geometry, distributions, and the N-player pilot.
 | S5 | `paper/llm_human_clustering/06_tsne_safe_unsafe.pdf` | The main t-SNE geometry also carries outcome structure when recoloured by each trajectory's Unsafe rate. | Same frozen coordinates as Main Figure 6; t-SNE remains exploratory. |
 | S6 | `paper/llm_human_clustering/03_radar_small_multiples_by_group_no_gap_r1.pdf` | Action probabilities and absolute progress separation reveal population-level trajectory profiles. | Means over complete first-five trajectories; heatmaps are descriptive summaries. |
 
+## Fresh multi-model diagnostic
+
+| Asset | What it shows | Evidence boundary |
+|---|---|---|
+| `paper/frontier_many_model_risk_profiles.pdf` | Risk-response profiles for five newly collected frontier routes under the same two-player protocol. | Five complete baseline artifacts are locally validated; the matching admission outputs are not yet fully retrievable, so this remains diagnostic and is not a headline claim. |
+
 ## Promotion rule
 
 Candidate plots in `gallery/` and diagnostic plots in `diagnostics/` remain

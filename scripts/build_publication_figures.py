@@ -70,6 +70,7 @@ EGT_TABLE = ROOT / "results" / "frontier" / "egt_frontier_comparison_v2" / "theo
 POSITION_TABLE = DATA / "nplayer_position_effect_by_persona.csv"
 ARCHETYPE_TABLE = DATA / "human_cluster_summary.csv"
 PROJECTION_TABLE = DATA / "llm_human_cluster_projection_unified.csv"
+FRESH_FRONTIER_INPUT = ROOT / "results/kaggle-benchmarks/frontier_full_20260908/derived/ai_race_analysis/player_metrics.csv"
 
 MANUAL_FIGURE_FILES = {
     "figure_1_mechanism": [PAPER / "AIRaceOverview.pdf"],
@@ -502,6 +503,14 @@ def _manual_figure_outputs() -> dict[str, list[Path]]:
     return MANUAL_FIGURE_FILES.copy()
 
 
+def _fresh_frontier_outputs() -> dict[str, list[Path]]:
+    if not FRESH_FRONTIER_INPUT.is_file():
+        return {}
+    from scripts.build_fresh_frontier_risk_profiles import build_frontier_risk_profiles
+
+    return {"fresh_frontier_risk_profiles": build_frontier_risk_profiles()}
+
+
 def main() -> None:
     configure_publication_style()
     PAPER.mkdir(parents=True, exist_ok=True)
@@ -509,6 +518,7 @@ def main() -> None:
     frame = load_trajectories()
     outputs = {
         **_manual_figure_outputs(),
+        **_fresh_frontier_outputs(),
         "figure_3_egt": build_egt(),
         "figure_5_archetypes": build_archetype_figure(),
         "figure_6_tsne": build_tsne(frame),
