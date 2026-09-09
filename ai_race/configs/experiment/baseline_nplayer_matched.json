@@ -1,0 +1,20 @@
+{
+  "name": "baseline_nplayer_matched",
+  "runPhase": "pilot",
+  "description": "Matched group-size design: group sizes 2/3/4/5 crossed with the same risk treatments 0.1/0.6/0.9, all through ai_race/engine_nplayer with one prompt template. The three names in 'games' are the derivation SOURCE for the mechanism (the N=3 files); the task overrides only 'name', 'nPlayers', and 'agents' per group size in 'groupSizes', and fails closed unless the derived config is byte-equal to the checked-in ai_race_nplayer_n{N}_risk_* file wherever one exists (N=3,4,5). N=2 has no checked-in game file and is derived the same way, which is exactly what supplies the missing two-player baseline. Changing the group size necessarily changes the payoff rule, the opponent count, and the prompt length together; that dependence IS the game and this design does not identify a 'pure' group-size effect.",
+  "games": [
+    "ai_race_nplayer_n3_risk_10",
+    "ai_race_nplayer_n3_risk_60",
+    "ai_race_nplayer_n3_risk_90"
+  ],
+  "groupSizes": [2, 3, 4, 5],
+  "agents": "companies_nplayer_default_n3",
+  "languages": ["en"],
+  "models": ["LocalQwen"],
+  "useOffline": true,
+  "offlineSettings": "offline_settings",
+  "repetitions": 10,
+  "seed": 260802,
+  "maxParseRetries": 3,
+  "verbose": true
+}

@@ -763,25 +763,30 @@ An earlier local pilot varied the story the game is told through and the
 symbols used for the two actions, but varied them together with repetition
 parity, so the two could not be separated, and it failed its comprehension
 gate. The main paper therefore excludes it and requires a fully crossed rerun
-before any claim about representation. This subsection reports the one cell of
-that rerun that completed.
+before any claim about representation. That rerun has now completed on both
+admitted routes, and this subsection reports it.
 
 The rerun crosses two \emph{narrative skins}, that is two stories that leave
 the rules untouched, against two \emph{symbol mappings}, that is which of the
 two opaque response codes $P$ and $Q$ stands for \Safe{} and which for
 \Unsafe{}, inside repetition blocks, at each of the mechanism's three
-maximum-private-risk levels. That is twelve cells. It completed on the route
-\path{google/gemini-3-flash-preview} under protocol
-\texttt{ai-race-frontier-context-mapping-v3}: ten repetitions, 120 races,
-2{,}232 recorded decisions, and zero parse failures, with the horizon and
-setback random-number streams held common across conditions so that two cells
+maximum-private-risk levels. That is twelve cells per route. It completed on both admitted routes under
+protocol \texttt{ai-race-frontier-context-mapping-v3}, each with ten
+repetitions, 120 races, 2{,}232 recorded decisions and zero parse failures:
+Gemini 3 Flash as run 1373757 and Claude Sonnet 5 as run 1504455, whose full
+route strings are given in
+Table~\ref{tab:frontier-admission-registry}. The horizon and
+setback random-number streams are held common across conditions, so two cells
 differ in their prompt and not in the environment they met.
-Table~\ref{tab:context-mapping} gives all twelve cells.
+Table~\ref{tab:context-mapping} gives all twelve cells for the first route;
+the second route's cells are in the derived table named at the end of this
+subsection, and both routes' paired contrasts are in
+Table~\ref{tab:context-mapping-paired}.
 
 \begin{table}[t]
     \caption{Fully crossed narrative-skin by symbol-mapping rerun on the
     single route that completed it,
-    	exttt{google/gemini-3-flash-preview}.
+    \texttt{google/gemini-3-flash-preview}.
     ``Mapping'' names which response code stands for \Safe{}: under
     \texttt{P\_SAFE\_Q\_UNSAFE} the code $P$ means \Safe{}, and under
     \texttt{Q\_SAFE\_P\_UNSAFE} it means \Unsafe{}. $n_{\rm race}$ is the
@@ -812,6 +817,61 @@ Table~\ref{tab:context-mapping} gives all twelve cells.
         \bottomrule
     \end{tabular}
 \end{table}
+
+Pooling cells is not the sharpest way to read this design. The repetition index
+is a common-random-number block, so the same index reuses the same sampled
+horizon across every skin and mapping cell, and the recorded
+\texttt{horizon\_draws\_sha256} lets that be checked rather than assumed. It
+holds for all 60 paired blocks on both routes. Differencing inside a
+repetition therefore removes the horizon draw from the comparison and leaves
+the presentation as the only thing that varies.
+Table~\ref{tab:context-mapping-paired} reports those paired contrasts, with
+intervals from a percentile bootstrap over repetition blocks.
+
+Two things stand out. The symbol mapping moves play by a similar amount on both
+routes, about eight to ten percentage points, even though the two routes differ
+by provider and sit six points apart on the admission audit. The narrative skin
+also moves play on both, but by very different amounts, so skin sensitivity is
+route-specific in a way that code sensitivity is not. All four intervals
+exclude zero. Nothing in the mechanism differs across any of these cells: the
+payoff matrix, the progress increments, the hidden horizon law and the risk
+formula are identical, and both routes had already passed the comprehension
+gate. Two routes is enough to show the effect replicates and not enough to
+characterise endpoints in general.
+
+\begin{table}[h]
+    \caption{Repetition-paired presentation contrasts on the two crossed
+    routes. Each contrast is the mean difference in \Unsafe{} rate within a
+    repetition block, which holds the sampled horizon fixed; positive means the
+    second level raises \Unsafe{} play. Intervals are 95\% percentile
+    bootstrap intervals over the 60 paired blocks. Horizon pairing was verified
+    for 60 of 60 blocks in every row.}
+    \label{tab:context-mapping-paired}
+    \centering
+    \small
+    \begin{tabular}{@{}llrl@{}}
+        \toprule
+        Route & Contrast & Effect & 95\% CI \\
+        \midrule
+        Gemini 3 Flash   & code $Q$ means \Safe{} & $+9.5$ pp & $+5.6$ to $+13.8$ \\
+        Claude Sonnet 5  & code $Q$ means \Safe{} & $+8.3$ pp & $+5.4$ to $+12.2$ \\
+        \midrule
+        Gemini 3 Flash   & abstract contest        & $+10.8$ pp & $+6.0$ to $+15.6$ \\
+        Claude Sonnet 5  & abstract contest        & $+3.4$ pp & $+0.9$ to $+7.4$ \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+Both routes' marginal cells and both paired contrasts are regenerated by
+\texttt{analyze\_}\discretionary{}{}{}\texttt{frontier\_}\discretionary{}{}{}\texttt{context\_}\discretionary{}{}{}\texttt{mapping\_}\discretionary{}{}{}\texttt{cross.py}
+under \texttt{scripts/}, which refuses a route whose race count, ten-per-cell
+balance or parse-failure count does not check out. Its outputs are
+\texttt{context\_}\discretionary{}{}{}\texttt{mapping\_}\discretionary{}{}{}\texttt{cross\_}\discretionary{}{}{}\texttt{marginals.csv}
+and a provenance \texttt{.json} beside it. An earlier attempt on the Claude route stopped at 106 of 120
+races on a provider quota refusal; it is retained as a superseded failure
+record with a pointer to the completed run, and none of its cells is reported,
+because a counterbalanced design read at 106 of 120 races is unbalanced rather
+than merely smaller.
 
 Two things are visible in Table~\ref{tab:context-mapping} and neither is a
 general finding. First, the risk response survives both manipulations: in

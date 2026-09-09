@@ -801,14 +801,12 @@ leave the underlying game mechanics unchanged.
 decision-card conditions each completed 30 races and 558 decisions with
 zero parse failures; matched risk-by-repetition cells had identical
 realised horizons. Table~\ref{tab:disclosed-arithmetic} compares them, with
-intervals resampled over races rather than over decisions, because two
-decisions in one race share a state history and are not separate draws. Only
-3.3\% of paired first-round decisions changed, so most of the divergence
-appeared later in the histories, after feedback had accumulated. Supplying the
-current round's arithmetic shifts the sampled \Unsafe{} rate upward by about
-nine percentage points, but the two race-clustered intervals still touch at
-their edges, so we read this as a suggestive shift rather than an established
-effect, and certainly not as evidence of an internal world model.
+intervals resampled over races rather than decisions, because two decisions in
+one race share a state history. Only 3.3\% of paired first-round decisions
+changed, so the divergence appeared later, after feedback accumulated.
+Disclosing the current round's arithmetic shifts \Unsafe{} play upward by about
+nine points, but the two race-clustered intervals still touch, so we read it as
+suggestive rather than established.
 
 \begin{table}[t]
     \caption{Disclosed-arithmetic diagnostic: canonical vs.\ decision-card
@@ -829,18 +827,24 @@ effect, and certainly not as evidence of an internal world model.
 
 \paragraph{Opaque symbolic mapping.} The earlier local context-skin pilot
 confounded mapping with repetition parity and failed its comprehension gate, so
-it is excluded from the headline tables and retained only in the audit trail. A
-fully crossed per-endpoint rerun, counterbalancing narrative skin against the
-opaque $P$/$Q$ response codes within repetition blocks, completed on Gemini 3
-Flash: 120 races and 2{,}232 decisions. The matched Claude Sonnet 5 run stopped
-at 106 of 120 races on a provider quota refusal and is retained as a failure
-record rather than reported as a partial result. Because the design is crossed
-for one route only, we still make no general claim about symbol mapping or
-narrative skins; the completed cell is reported in the supplementary material.
+it is excluded here and kept only in the audit trail. A fully crossed rerun,
+counterbalancing two narrative skins against the two assignments of the opaque
+response codes $P$ and $Q$ within repetition blocks, completed on both admitted
+routes: 120 races and 2{,}232 decisions each, zero parse failures. Because the
+repetition index is a common-random-number block, each contrast is taken within
+a repetition, and the recorded draw hashes confirm that paired cells share one
+sampled horizon, which is thereby differenced out.
 
-Together, these diagnostics show that action sequences can shift under changes
-that a correct game model should ignore. This is why the comprehension check in
-\S\ref{sec:results-validity} comes before behavioural interpretation.
+Both presentations move play, and the code assignment moves it by a similar
+amount on the two routes: swapping which code denotes \Safe{} raises \Unsafe{}
+play by 9.5 percentage points on Gemini 3 Flash (95\% interval 5.6 to 13.8) and
+by 8.3 on Claude Sonnet 5 (5.4 to 12.2), over 60 paired blocks each. The
+narrative skin matters too, but route-specifically: retelling the same game as
+an abstract contest rather than a technology race raises \Unsafe{} play by 10.8
+points on Gemini 3 Flash (6.0 to 15.6) and by 3.4 on Claude Sonnet 5
+(0.9 to 7.4). No element of the mechanism differs across any of these cells.
+The scope is two audited routes, not endpoints in general.
+
 
 \subsection{Game theory versus prompted race behaviour}
 \label{sec:results-theory}
@@ -1121,8 +1125,8 @@ Three limitations bound the claims directly. The comprehension-to-behaviour
 association covers nine endpoints that differ in far more than their probe
 scores, so it is descriptive and cannot separate comprehension from
 provider, scale or training. The representation-robustness design is fully
-crossed for one route only, since the matched second route stopped on a
-provider quota refusal, so no general claim about symbol mapping follows.
+crossed for two routes, which is enough to show the effect replicates but not
+to characterise endpoints in general.
 And the evolutionary comparison is a repo-native reconstruction audited
 against pinned EGTtools source rather than a bitwise reproduction of
 undisclosed author code, so its role is to bound the regime in which the

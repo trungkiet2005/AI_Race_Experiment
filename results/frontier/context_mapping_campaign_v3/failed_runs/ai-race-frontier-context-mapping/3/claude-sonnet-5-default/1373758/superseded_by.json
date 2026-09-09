@@ -1,0 +1,18 @@
+{
+  "schema_version": "superseded-run-pointer-v1",
+  "recorded_at": "2026-09-09",
+  "model_route": "anthropic/claude-sonnet-5@default",
+  "this_run_id": 1373758,
+  "this_run_status": "failed",
+  "this_run_n_races": 106,
+  "this_run_reason": "HTTP 403 Model Proxy quota refusal mid-run; 106 of 120 races written before the next request was refused",
+  "superseded_by_run_id": 1504455,
+  "superseded_by_status": "completed",
+  "superseded_by_n_races": 120,
+  "why_retained": "An interrupted run stays in the accounting chain. The 106 races are an unbalanced fragment of a counterbalanced design and are never a mapping result; they are kept so the record shows what was attempted, not as evidence.",
+  "do_not_use": [
+    "Do not pool these 106 races with run 1504455.",
+    "Do not report any cell from this run: the counterbalancing is incomplete, so its cells are not matched.",
+    "Do not read the quota refusal as a property of the model."
+  ]
+}

@@ -241,9 +241,57 @@ c = cm.get("anthropic/claude-sonnet-5@default", {})
 check("Gemini crossed rerun completed with 120 races and 2,232 decisions",
       g.get("status") == "completed" and g.get("n_races") == 120 and g.get("n_turns") == 2232,
       f"{g.get('status')}, {g.get('n_races')} races, {g.get('n_turns')} decisions")
-check("Claude crossed rerun stopped at 106 of 120 and is a failure record",
+check("the superseded Claude crossed attempt is retained at 106 of 120",
       c.get("status") == "failed" and c.get("n_races") == 106,
       f"{c.get('status')}, {c.get('n_races')} races")
+
+# --- crossed representation design -------------------------------------------
+cm_json = json.load(open("results/derived/frontier_context_mapping_campaign_v3/context_mapping_cross_marginals.json", encoding="utf-8"))
+complete = cm_json["routes_complete"]
+check("the crossed context-by-mapping design is complete for two routes",
+      len(complete) == 2, ", ".join(complete))
+check("each crossed route has 120 races and 2,232 decisions",
+      all(
+          json.load(open(m, encoding="utf-8"))["n_races"] == 120
+          and json.load(open(m, encoding="utf-8"))["n_turns"] == 2232
+          for m in glob.glob("results/frontier/context_mapping_campaign_v3/ai-race-frontier-context-mapping/**/run_manifest.json", recursive=True)
+      ),
+      "both manifests 120/2232")
+
+pc = cm_json["paired_contrasts"]
+gem = pc["google/gemini-3-flash-preview"]
+cla = pc["anthropic/claude-sonnet-5@default"]
+for name, res in (("Gemini 3 Flash", gem), ("Claude Sonnet 5", cla)):
+    check(f"horizon pairing verified for {name}",
+          res["mapping"]["pairing_verified"] and res["context"]["pairing_verified"],
+          f"mapping {res['mapping']['horizon_draw_matched_blocks']}/{res['mapping']['horizon_draw_blocks_checked']} blocks")
+
+check("mapping effect 9.5 pp [5.6, 13.8] on Gemini 3 Flash",
+      round(100 * gem["mapping"]["mean_difference"], 1) == 9.5
+      and round(100 * gem["mapping"]["ci95_low"], 1) == 5.6
+      and round(100 * gem["mapping"]["ci95_high"], 1) == 13.8,
+      f"{100*gem['mapping']['mean_difference']:.1f} [{100*gem['mapping']['ci95_low']:.1f}, {100*gem['mapping']['ci95_high']:.1f}]")
+check("mapping effect 8.3 pp [5.4, 12.2] on Claude Sonnet 5",
+      round(100 * cla["mapping"]["mean_difference"], 1) == 8.3
+      and round(100 * cla["mapping"]["ci95_low"], 1) == 5.4
+      and round(100 * cla["mapping"]["ci95_high"], 1) == 12.2,
+      f"{100*cla['mapping']['mean_difference']:.1f} [{100*cla['mapping']['ci95_low']:.1f}, {100*cla['mapping']['ci95_high']:.1f}]")
+check("context effect 10.8 pp [6.0, 15.6] on Gemini 3 Flash",
+      round(100 * gem["context"]["mean_difference"], 1) == 10.8
+      and round(100 * gem["context"]["ci95_low"], 1) == 6.0
+      and round(100 * gem["context"]["ci95_high"], 1) == 15.6,
+      f"{100*gem['context']['mean_difference']:.1f} [{100*gem['context']['ci95_low']:.1f}, {100*gem['context']['ci95_high']:.1f}]")
+check("context effect 3.4 pp [0.9, 7.4] on Claude Sonnet 5",
+      round(100 * cla["context"]["mean_difference"], 1) == 3.4
+      and round(100 * cla["context"]["ci95_low"], 1) == 0.9
+      and round(100 * cla["context"]["ci95_high"], 1) == 7.4,
+      f"{100*cla['context']['mean_difference']:.1f} [{100*cla['context']['ci95_low']:.1f}, {100*cla['context']['ci95_high']:.1f}]")
+check("every crossed interval excludes zero",
+      all(r[f]["ci95_low"] > 0 for r in (gem, cla) for f in ("mapping", "context")),
+      "all four lower bounds positive")
+check("60 paired repetition blocks per contrast",
+      all(r[f]["n_blocks"] == 60 for r in (gem, cla) for f in ("mapping", "context")),
+      "all four contrasts use 60 blocks")
 
 # --- report ------------------------------------------------------------------
 width = max(len(n) for n, _, _ in results)

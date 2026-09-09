@@ -67,6 +67,35 @@ and separate output directories.
 Amendments are recorded here rather than applied silently, so a reader can see
 what changed, when, and which artefacts each version covers.
 
+### 2026-09-09 - collaborator identities authorised, with per-identity separation
+
+The account policy above was written when only `daosyduyminh` was configured and
+it therefore said no collaborator credential root existed. Five collaborator
+credentials are in fact available, and their use for this project is now
+explicitly authorised by the author.
+
+The prohibition that matters is unchanged and is not about which account runs a
+job. It is that a quota refusal must never be laundered into evidence: a run
+that a quota stopped is a failure record, and a second identity may not be used
+to make an incomplete sample look complete. Concretely:
+
+- A run records its executing identity in the manifest, and any table that
+  pools runs from more than one identity must say so.
+- A second identity receives its own task version and its own output directory.
+  Artefacts from different identities are never written into the same campaign
+  directory as though they were one sample.
+- A route whose run failed on quota under one identity and completed under
+  another keeps BOTH records. The failure is not deleted because a later
+  attempt succeeded.
+- Rotating until a run happens to pass is not permitted. The repetition count,
+  the risk grid and the exclusion rules are fixed before the run, and a rerun
+  uses the same frozen numbers.
+
+The reason to allow a second identity at all is that a per-account token
+reservation limit is a property of the billing account, not of the model or the
+protocol, so refusing to switch would let an accounting limit decide which
+scientific questions get answered.
+
 ### 2026-09-09 - route-resolved reasoning budget
 
 Both frontier tasks previously passed `reasoning="none"` to every route. Two
