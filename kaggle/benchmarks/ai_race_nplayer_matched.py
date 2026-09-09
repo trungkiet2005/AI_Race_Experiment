@@ -747,10 +747,9 @@ def _summarize(
 @kbench.task(
     name=TASK_NAME,
     description=(
-        "Matched group-size sweep of the repeated AI race: neutral symmetric "
-        "self-play at 2, 3, 4 and 5 companies across private setback risks "
-        "0.1, 0.6 and 0.9, ten matched-seed races per cell, one protocol and "
-        "one engine throughout so that only the number of seats changes."
+        "Matched group-size sweep: neutral self-play at 2, 3, 4 and 5 "
+        "companies across private risks 0.1, 0.6 and 0.9, ten matched-seed "
+        "races per cell, one engine and one protocol throughout."
     ),
 )
 def ai_race_nplayer_matched(llm) -> dict:
