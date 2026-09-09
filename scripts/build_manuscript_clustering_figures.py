@@ -30,6 +30,15 @@ if str(ROOT) not in sys.path:
 PAPER_FIGURES = ROOT / "figures" / "paper"
 CLUSTER_FIGURES = PAPER_FIGURES / "llm_human_clustering"
 DATA_OUT = ROOT / "results" / "cross_model_pilot_synthesis" / "data"
+
+PROTECTED_MANUAL_FIGURE_STEMS = frozenset(
+    {
+        "figures/paper/AIRaceOverview",
+        "figures/paper/ExpOverview",
+        "figures/paper/llm_human_clustering/05b_unsafe_rate_by_group",
+        "figures/paper/11_relative_position_grouped_bars",
+    }
+)
 HUMAN_CSV = ROOT / "references" / "source_study_dataset" / "airace_deidentified_long.csv"
 # The manuscript Figure 4 includes both the primary and T=.7 sensitivity
 # frontier summaries; the complete source table set is the open-source EGT
@@ -146,6 +155,12 @@ def sha256(path: Path) -> str:
 
 
 def save_figure(fig: plt.Figure, stem: Path) -> None:
+    relative = stem.resolve().relative_to(ROOT).as_posix()
+    if relative in PROTECTED_MANUAL_FIGURE_STEMS:
+        raise RuntimeError(
+            f"Refusing to overwrite author-supplied artwork: {relative}. "
+            "Use a new generated stem for an analysis variant."
+        )
     stem.parent.mkdir(parents=True, exist_ok=True)
     fig.set_facecolor(WHITE)
     for axis in fig.axes:
@@ -418,6 +433,12 @@ def normalize_legacy_figure(source: Path, stem: Path) -> dict[str, object]:
     marks, labels, and gridlines. PDF/SVG exports remain honest raster wrappers
     because the only recoverable source in this repository is the PNG itself.
     """
+    relative = stem.resolve().relative_to(ROOT).as_posix()
+    if relative in PROTECTED_MANUAL_FIGURE_STEMS:
+        raise RuntimeError(
+            f"Refusing to overwrite author-supplied artwork: {relative}. "
+            "Use a new generated stem for an analysis variant."
+        )
     source_hash = sha256(source)
     image = Image.open(source).convert("RGBA")
     array = np.asarray(image).copy()

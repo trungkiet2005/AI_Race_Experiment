@@ -49,13 +49,16 @@ copies under `results/artifacts/publication/` because submission and release
 tools read that mirror. The QA command should be run after every build; omit
 `--allow-placeholder-id` once AAMAS assigns the anonymous submission ID.
 
-`scripts/build_publication.py --paper-only` regenerates the canonical fourteen-
-figure set (eight main-paper and six supplementary) before compiling the paper
-and supplementary PDF. The final PDFs therefore
+`scripts/build_publication.py --paper-only` validates the four protected
+author-supplied artworks and regenerates the remaining slots in the canonical
+fourteen-figure set (eight main-paper and six supplementary) before compiling
+the paper and supplementary PDF. The final PDFs therefore
 stay in `paper/` for easy discovery, while the mirrored copies remain under
 `results/artifacts/publication/` for release tooling. Do not edit exported
 figure files by hand; change the generator or its checked-in source table and
-regenerate the set.
+regenerate the generated set. The protected artworks are restored from their
+recorded source revision when needed and are never targets of automated
+writers.
 
 All project figures have one browsing entry point at `figures/`. Use
 `figures/paper/` for assets referenced by the manuscript and deck,

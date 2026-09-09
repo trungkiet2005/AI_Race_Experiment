@@ -57,6 +57,26 @@ FULL_WIDTH_IN = 7.10
 MIN_TEXT_POINTS = 8.0
 PNG_DPI = 600
 
+# Figures 1, 2, 4, and 8 are author-supplied artwork.  Keep them under their
+# canonical paper paths, but make every publication writer fail closed before
+# it can replace them with a generated variant.
+PROTECTED_MANUAL_FIGURE_STEMS = frozenset(
+    {
+        "figures/paper/AIRaceOverview",
+        "figures/paper/ExpOverview",
+        "figures/paper/llm_human_clustering/05b_unsafe_rate_by_group",
+        "figures/paper/11_relative_position_grouped_bars",
+    }
+)
+
+
+def _protected_manual_stem(stem: Path) -> str | None:
+    try:
+        relative = stem.resolve().relative_to(Path(__file__).resolve().parents[1]).as_posix()
+    except ValueError:
+        return None
+    return relative if relative in PROTECTED_MANUAL_FIGURE_STEMS else None
+
 
 def configure_publication_style() -> None:
     """Set the single rcParams policy used by every paper figure."""
@@ -143,6 +163,12 @@ def save_publication_figure(
 ) -> list[Path]:
     """Export the same figure as vector PDF, PNG preview, and editable SVG."""
 
+    protected = _protected_manual_stem(stem)
+    if protected is not None:
+        raise RuntimeError(
+            f"Refusing to overwrite author-supplied artwork: {protected}. "
+            "Use a new generated stem for an analysis variant."
+        )
     stem.parent.mkdir(parents=True, exist_ok=True)
     configure_publication_style()
     fig.set_facecolor(WHITE)

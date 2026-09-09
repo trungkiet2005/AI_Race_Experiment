@@ -5,17 +5,12 @@
     "nplayer_position_rows": 14
   },
   "figure_5_change": "replaced unrecoverable HDBSCAN artwork with the maintained four-archetype human-reference projection",
-  "figure_8_change": "replaced unrecoverable grouped-bar artwork with the maintained N-player position-coefficient source table",
   "figure_outputs": {
     "figure_1_mechanism": [
-      "figures\\paper\\AIRaceOverview.pdf",
-      "figures\\paper\\AIRaceOverview.png",
-      "figures\\paper\\AIRaceOverview.svg"
+      "figures\\paper\\AIRaceOverview.pdf"
     ],
     "figure_2_persona": [
-      "figures\\paper\\ExpOverview.pdf",
-      "figures\\paper\\ExpOverview.png",
-      "figures\\paper\\ExpOverview.svg"
+      "figures\\paper\\ExpOverview.pdf"
     ],
     "figure_3_egt": [
       "figures\\paper\\egt_theory_vs_llm_unsafe.pdf",
@@ -23,9 +18,7 @@
       "figures\\paper\\egt_theory_vs_llm_unsafe.svg"
     ],
     "figure_4_rate": [
-      "figures\\paper\\llm_human_clustering\\05b_unsafe_rate_by_group.pdf",
-      "figures\\paper\\llm_human_clustering\\05b_unsafe_rate_by_group.png",
-      "figures\\paper\\llm_human_clustering\\05b_unsafe_rate_by_group.svg"
+      "figures\\paper\\llm_human_clustering\\05b_unsafe_rate_by_group.png"
     ],
     "figure_5_archetypes": [
       "figures\\paper\\llm_human_clustering\\02_archetype_signatures_and_coverage.pdf",
@@ -43,9 +36,7 @@
       "figures\\paper\\human_vs_llm_distribution.svg"
     ],
     "figure_8_position": [
-      "figures\\paper\\11_relative_position_grouped_bars.pdf",
-      "figures\\paper\\11_relative_position_grouped_bars.png",
-      "figures\\paper\\11_relative_position_grouped_bars.svg"
+      "figures\\paper\\11_relative_position_grouped_bars.png"
     ],
     "supplement_figure_1_egt_insights": [
       "figures\\paper\\egt_frontier_insights.pdf",
@@ -78,13 +69,46 @@
       "figures\\paper\\llm_human_clustering\\03_radar_small_multiples_by_group_no_gap_r1.svg"
     ]
   },
-  "generated_utc": "2026-09-08T10:45:37.285087+00:00",
+  "figure_status": {
+    "figure_1_mechanism": "manual",
+    "figure_2_persona": "manual",
+    "figure_3_egt": "generated",
+    "figure_4_rate": "manual",
+    "figure_5_archetypes": "generated",
+    "figure_6_tsne": "generated",
+    "figure_7_distribution": "generated",
+    "figure_8_position": "manual",
+    "supplement_figure_1_egt_insights": "generated",
+    "supplement_figure_2_egt_invasion": "generated",
+    "supplement_figure_3_own_risk": "generated",
+    "supplement_figure_4_shap": "generated",
+    "supplement_figure_5_tsne_outcome": "generated",
+    "supplement_figure_6_round_profiles": "generated"
+  },
+  "generated_utc": "2026-09-08T15:02:22.982195+00:00",
   "generator": "scripts/build_publication_figures.py",
+  "manual_figure_origin": {
+    "commit": "f0dde0d",
+    "note": "Restored author-supplied artwork; protected from automated writers."
+  },
+  "manual_figure_sha256": {
+    "figure_1_mechanism": {
+      "figures\\paper\\AIRaceOverview.pdf": "920fa113b51bf5ea50b83f23e49bf726c59216a7395129751801629b78f5364d"
+    },
+    "figure_2_persona": {
+      "figures\\paper\\ExpOverview.pdf": "b0d34a750c1f21fedaca0df2689213729b426be054e3b042ce30f5a0c4e01b40"
+    },
+    "figure_4_rate": {
+      "figures\\paper\\llm_human_clustering\\05b_unsafe_rate_by_group.png": "5e915f8a4b9e9498c43fedae8d6beb9ba6a108ad35ab8589b06ab12b82f7f210"
+    },
+    "figure_8_position": {
+      "figures\\paper\\11_relative_position_grouped_bars.png": "00f26a9330db7a0cc8a5eaeb08b6351418e3c4e04dfe76c51e8362f123bdc2c7"
+    }
+  },
   "source_sha256": {
     "references\\source_study_dataset\\airace_deidentified_long.csv": "ba6009ed5a6702e9f3ec9782289226099edc2b78c63057e57967927a539f8eee",
     "results\\cross_model_pilot_synthesis\\data\\human_cluster_summary.csv": "2056314d4a1858f6ef068d033e8e8c623b69b5c8ead16c1971f33fcad8203484",
     "results\\cross_model_pilot_synthesis\\data\\llm_human_cluster_projection_unified.csv": "0a98ca17a3124c8030af5ca38ffb5a66ab2555bd350ed529f76f08f268953993",
-    "results\\cross_model_pilot_synthesis\\data\\nplayer_position_effect_by_persona.csv": "1754179c7217d792ecbf40e227e5289952cc3a19e0dd7a7d195acfea6efe4281",
     "results\\frontier\\egt_frontier_comparison_v2\\theory_llm_comparison.csv": "57cf703229df95e28cb51a8db95e902de895fb0801e3efb2d0ec7785bb416d78"
   },
   "style_module": "scripts/publication_style.py"

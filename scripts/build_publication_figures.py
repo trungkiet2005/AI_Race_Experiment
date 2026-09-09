@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Build the manuscript figure set with one compact publication style.
+"""Build the generated portion of the manuscript figure set.
 
-The figure order follows ``paper/main.tex``. Every empirical panel reads a
-checked-in result table or an admitted raw run. The two figures that used to
-depend on unrecoverable legacy artwork are rebuilt from the maintained human
-archetype table and the maintained N-player position table instead.
+Figures 1, 2, 4, and 8 are author-supplied artwork and are deliberately not
+regenerated. All other exported figures read a checked-in result table or an
+admitted raw run. New analyses that expand model coverage must use a new
+output stem rather than changing a protected manuscript figure.
 """
 
 from __future__ import annotations
@@ -70,6 +70,13 @@ EGT_TABLE = ROOT / "results" / "frontier" / "egt_frontier_comparison_v2" / "theo
 POSITION_TABLE = DATA / "nplayer_position_effect_by_persona.csv"
 ARCHETYPE_TABLE = DATA / "human_cluster_summary.csv"
 PROJECTION_TABLE = DATA / "llm_human_cluster_projection_unified.csv"
+
+MANUAL_FIGURE_FILES = {
+    "figure_1_mechanism": [PAPER / "AIRaceOverview.pdf"],
+    "figure_2_persona": [PAPER / "ExpOverview.pdf"],
+    "figure_4_rate": [CLUSTER / "05b_unsafe_rate_by_group.png"],
+    "figure_8_position": [PAPER / "11_relative_position_grouped_bars.png"],
+}
 
 BASELINE_ORDER = list(BASELINE_INPUTS) + ["human"]
 CLUSTER_NAMES = {
@@ -481,25 +488,36 @@ def _sha256(path: Path) -> str:
     return digest.hexdigest()
 
 
+def _manual_figure_outputs() -> dict[str, list[Path]]:
+    missing = [
+        str(path.relative_to(ROOT))
+        for paths in MANUAL_FIGURE_FILES.values()
+        for path in paths
+        if not path.is_file()
+    ]
+    if missing:
+        raise FileNotFoundError(
+            "Protected manual figure assets are missing: " + ", ".join(missing)
+        )
+    return MANUAL_FIGURE_FILES.copy()
+
+
 def main() -> None:
     configure_publication_style()
     PAPER.mkdir(parents=True, exist_ok=True)
     CLUSTER.mkdir(parents=True, exist_ok=True)
     frame = load_trajectories()
     outputs = {
-        "figure_1_mechanism": build_mechanism(),
-        "figure_2_persona": build_persona(),
+        **_manual_figure_outputs(),
         "figure_3_egt": build_egt(),
-        "figure_4_rate": build_rate_figure(frame),
         "figure_5_archetypes": build_archetype_figure(),
         "figure_6_tsne": build_tsne(frame),
         "figure_7_distribution": build_distribution(),
-        "figure_8_position": build_position(),
     }
     from scripts.build_supplementary_figures import build_supplementary_figures
 
     outputs.update(build_supplementary_figures(frame))
-    source_paths = [EGT_TABLE, POSITION_TABLE, ARCHETYPE_TABLE, PROJECTION_TABLE]
+    source_paths = [EGT_TABLE, ARCHETYPE_TABLE, PROJECTION_TABLE]
     source_paths += [ROOT / "references" / "source_study_dataset" / "airace_deidentified_long.csv"]
     provenance = {
         "generator": "scripts/build_publication_figures.py",
@@ -509,13 +527,24 @@ def main() -> None:
             key: [str(path.relative_to(ROOT)) for path in paths] for key, paths in outputs.items()
         },
         "source_sha256": {str(path.relative_to(ROOT)): _sha256(path) for path in source_paths},
+        "manual_figure_sha256": {
+            key: {str(path.relative_to(ROOT)): _sha256(path) for path in paths}
+            for key, paths in MANUAL_FIGURE_FILES.items()
+        },
+        "figure_status": {
+            key: ("manual" if key in MANUAL_FIGURE_FILES else "generated")
+            for key in outputs
+        },
+        "manual_figure_origin": {
+            "commit": "f0dde0d",
+            "note": "Restored author-supplied artwork; protected from automated writers.",
+        },
         "counts": {
             "first_five_trajectories": int(len(frame)),
             "archetype_human_participants": int(pd.read_csv(ARCHETYPE_TABLE)["n"].sum()),
             "nplayer_position_rows": int(len(pd.read_csv(POSITION_TABLE))),
         },
         "figure_5_change": "replaced unrecoverable HDBSCAN artwork with the maintained four-archetype human-reference projection",
-        "figure_8_change": "replaced unrecoverable grouped-bar artwork with the maintained N-player position-coefficient source table",
     }
     out = DATA / "publication_figure_set_provenance.json"
     out.parent.mkdir(parents=True, exist_ok=True)

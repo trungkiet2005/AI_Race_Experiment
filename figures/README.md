@@ -15,16 +15,19 @@ The original files under `results/` and `analysis/` remain the provenance source
 ## Workflow
 
 1. Generate or regenerate the result in its source analysis directory.
-2. Run `python scripts/build_publication_figures.py` to rebuild the fourteen
+2. Run `python scripts/build_publication_figures.py` to rebuild the generated
    canonical main-paper and supplementary figures from checked-in sources.
+   Figures 1, 2, 4, and 8 are author-supplied artwork; the builder validates
+   their presence and refuses to overwrite them.
 3. Run `python scripts/build_figure_gallery.py` from the repository root.
 4. Inspect `INDEX.md` and the linked source artifact.
 5. Update the manuscript reference only after the figure passes the paper's evidence and visual QA gates.
 
 `scripts/build_publication.py --paper-only` runs the canonical figure builder
 automatically before compiling both PDFs. The builder is the source of truth
-for the publication visual language; exported PDF, PNG, and SVG files are
-paper-ready derivatives, not independent analyses.
+for generated figures; the four protected artwork files are checked for
+presence and provenance but are not regenerated. Exported PDF, PNG, and SVG
+files are paper-ready derivatives, not independent analyses.
 
 The supplementary subset is built by
 [`scripts/build_supplementary_figures.py`](../scripts/build_supplementary_figures.py)
