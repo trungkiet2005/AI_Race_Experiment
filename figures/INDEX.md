@@ -19,7 +19,7 @@ Total unique visual files: **546**
 
 | File | Status | SHA256 |
 |---|---|---|
-| [paper/11_relative_position_grouped_bars.png](paper/11_relative_position_grouped_bars.png) | paper-ready | `00f26a9330db` |
+| [paper/11_relative_position_grouped_bars.png](paper/11_relative_position_grouped_bars.png) | archived diagnostic (not referenced) | `00f26a9330db` |
 | [paper/AIRaceOverview.pdf](paper/AIRaceOverview.pdf) | paper-ready | `920fa113b51b` |
 | [paper/ExpOverview.pdf](paper/ExpOverview.pdf) | paper-ready | `b0d34a750c1f` |
 | [paper/association_selected_features.pdf](paper/association_selected_features.pdf) | paper-ready | `489ac183cf64` |

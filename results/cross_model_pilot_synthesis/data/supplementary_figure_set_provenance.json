@@ -39,11 +39,11 @@
       "figures\\paper\\llm_human_clustering\\03_radar_small_multiples_by_group_no_gap_r1.svg"
     ]
   },
-  "generated_utc": "2026-09-09T01:27:39.461918+00:00",
+  "generated_utc": "2026-09-09T11:30:14.311321+00:00",
   "generator": "scripts/build_supplementary_figures.py",
   "source_sha256": {
     "references\\source_study_dataset\\airace_deidentified_long.csv": "ba6009ed5a6702e9f3ec9782289226099edc2b78c63057e57967927a539f8eee",
-    "results\\cross_model_pilot_synthesis\\data\\feature_importance_results.json": "3be6df911c6cf161cae0e3144080aea9104a01bec74aba0b4dbc2c3228b85dcb",
+    "results\\cross_model_pilot_synthesis\\data\\feature_importance_results.json": "099e1f76916a4e6f6516c7937367d8093559a5493bac00d7d94445b086ac78aa",
     "results\\cross_model_pilot_synthesis\\data\\persona_role_gradient_extended.csv": "361e8f4c559d5461cd4786c7ac5742d401f188e3352e5ac8b20b8045a5de1182",
     "results\\cross_model_pilot_synthesis\\data\\tsne_coordinates.csv": "c71d3471ce282493427b92eae5f4e2fcc2cbbb2e191dcca21dc747165358da40",
     "results\\frontier\\egt_frontier_comparison_v2\\egt_expected_payoff_matrices.csv": "e917876281589ebc7369b10fdb73e8fc7fe8dfbe8f3a4685faca981efec86a4a",

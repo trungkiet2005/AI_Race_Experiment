@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%%% LaTeX Template for AAMAS-2026 (based on sample-sigconf.tex)
-%%% Prepared by the AAMAS-2026 Publication Chairs based on the version from AAMAS-2025. 
+%%% LaTeX Template for AAMAS-2027 (based on sample-sigconf.tex)
+%%% Prepared from the official AAMAS-2027 submission instructions.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -29,14 +29,14 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%%% AAMAS-2026 copyright block (do not change!)
+%%% AAMAS-2027 copyright block
 
 \setcopyright{ifaamas}
-\acmConference[AAMAS '26]{Proc.\@ of the 25th International Conference
-on Autonomous Agents and Multiagent Systems (AAMAS 2026)}{May 25 -- 29, 2026}
-{Paphos, Cyprus}{C.~Amato, L.~Dennis, V.~Mascardi, J.~Thangarajah (eds.)}
-\copyrightyear{2026}
-\acmYear{2026}
+\acmConference[AAMAS '27]{Proc.\@ of the 26th International Conference
+on Autonomous Agents and Multiagent Systems (AAMAS 2027)}{May 3 -- 7, 2027}
+{Hanoi, Vietnam}{AAMAS 2027 editors}
+\copyrightyear{2027}
+\acmYear{2027}
 % \acmDOI{}
 % \acmPrice{}
 % \acmISBN{}
@@ -289,7 +289,9 @@ We first verify the game engine, then test rule recall, state tracking, payoff
 calculation, and stability under different but equivalent task descriptions.
 We then compare LLM action sequences with an evolutionary game-theory
 benchmark and published human data, and explore differences across models,
-risk conditions, personas, and two- to five-player races. The audit shows
+risk conditions, personas, and two- to five-player races. The multiplayer
+comparison is an exploratory supplementary pilot because the position analysis
+covers only two checkpoints. The audit shows
 that strong rule recall can
 coexist with weak state tracking and expected-payoff calculation. Providing
 verified arithmetic and changing the response representation can also change
@@ -297,7 +299,7 @@ later actions, even when the game rules stay fixed. Across seven tested model
 endpoints, aggregate rates hide large differences in action sequences,
 responses to opponents, and responses to race position. Patterns across the
 tested three- to five-player races are also model-specific rather than a single
-effect of adding competitors. These results show why multi-agent AI-race
+effect of adding competitors. These exploratory results show why multi-agent AI-race
 simulations need validity checks and trajectory-level analysis before their
 outputs are described as strategic, human-like, or safety-aware. Our findings
 are exploratory and apply only to the tested models, prompts, and decoding
@@ -481,35 +483,28 @@ multi-round agents may cooperate instead of converging to the predicted Nash
 equilibrium \citep{yaoCompetition2026}; and real multi-turn action sequences
 remain difficult to reproduce from prompts alone \citep{luMultiTurn2026}.
 
-We organise the paper around three questions about strategic behaviour in an
-AI race:
+We organise the paper around two primary questions about strategic behaviour
+in an AI race:
 \begin{itemize}
     \item \textbf{RQ1 - Strategic behaviour in two-player races:}
     How do agents respond to risk, opponent history, relative progress, and
     early choices, compared with game-theory and human benchmarks?
 
-    \item \textbf{RQ2 - Multi-agent race dynamics:}
-    Across races with three to five agents, how is Unsafe play associated with
-    rank, model, persona, and tested group size?
-
-    \item \textbf{RQ3 - Validity and strategic robustness:}
+    \item \textbf{RQ2 - Validity and strategic robustness:}
     Can agents track the game well enough for strategic interpretation, and
     are choices stable across equivalent task presentations?
 \end{itemize}
 
 The main insight is that the tested LLMs do not express one common strategic
 policy. In two-player races, models with similar aggregate Unsafe rates can
-respond differently to risk, opponent history, and relative progress. In
-three- to five-player races, the association between rank and Unsafe play can
-change with both model and persona, while aggregate behaviour does not move
-monotonically with group size. These are exploratory multi-agent patterns, not
-an identified causal effect of adding one more player. The validity audit also
-sets an important boundary: rule recall can coexist with incorrect state
-tracking, and an equivalent representation of the same game can change later
-actions. We reach that insight by connecting four views of one race: an
-auditable mechanism for two- and multi-player play, a comparison against
-game-theory and human benchmarks, an extension to three to five agents, and a
-validity gate applied before any strategic reading.
+respond differently to risk, opponent history, and relative progress. The
+validity audit also sets an important boundary: rule recall can coexist with
+incorrect state tracking, and an equivalent representation of the same game
+can change later actions. We connect an auditable race mechanism, a comparison
+against game-theory and human benchmarks, and a validity gate applied before
+any strategic reading. Exploratory multiplayer results remain in the
+supplementary material because the available position analysis covers only two
+checkpoints and does not identify a general group-size effect.
 
 Each reported behavioural conclusion is scoped to its tested checkpoint,
 prompt version, decoding contract, experimental configuration, and run
@@ -627,7 +622,18 @@ fixed before its results are inspected. A result enters that stronger evidence
 level only when the protocol, model identifier, prompt and configuration
 hashes, completed-race count, and exclusion rules were all fixed and recorded.
 
-The primary audit uses protocol ai-race-game-understanding-v2: 41 atomic probes spanning rule recall, one-stage payoffs, state reconstruction, state transition, terminal scoring, and expected payoff. Numeric probes vary direct wording, paraphrase, and calculator disclosure; categorical probes also reverse answer order. Strict output-format compliance and semantic correctness are scored separately. A paired behavioural diagnostic compares the canonical prompt with a deterministic four-row decision card that discloses the focal agent's immediate payoff, progress, and private-risk consequences for each action profile. The card does not reveal the opponent's move or the stopping horizon.
+The open-source comprehension audit uses a 41-probe bank spanning rule recall,
+one-stage payoffs, state reconstruction, state transition, terminal scoring,
+and expected payoff. Numeric probes vary direct wording, paraphrase, and
+calculator disclosure; categorical probes also reverse answer order. Strict
+output-format compliance and semantic correctness are scored separately. A
+paired behavioural diagnostic compares the canonical prompt with a
+deterministic four-row decision card that discloses the focal agent's
+immediate payoff, progress, and private-risk consequences for each action
+profile. The card does not reveal the opponent's move or the stopping horizon.
+This is distinct from the confirmatory frontier endpoint admission: that
+separate battery uses 20 probes and three requested repetitions per endpoint,
+for 60 retained answers per admitted route.
 
 We also vary the persona framing assigned to each company's executive across
 three families, shown in Figure~\ref{fig:persona}: no persona at all, a
@@ -658,7 +664,7 @@ not informed optimisation of the game.
     \toprule
     Module & Primary units & Observed outputs & Use \\
     \midrule
-    Frontier endpoint admission (Gemini 3 Flash, Claude Sonnet 5) & 120 probes & 120 answers & confirmatory gate \\
+    Frontier endpoint admission (two admitted routes) & 120 probe responses & 120 answers & confirmatory gate \\
     Calculator diagnostic & 60 races & 1,116 decisions & paired diagnostic \\
     Context pilot ($T=0$) & 768 races & 13,680 decisions & robustness diagnostic \\
     Fixed-state replay & 1,536 state cells & 1,536 responses & direct prompt diagnostic \\
@@ -674,9 +680,12 @@ not informed optimisation of the game.
 We report the validity gate first because every strategic claim depends on it.
 We then answer RQ1 by comparing two-player LLM trajectories with the
 evolutionary and human benchmarks, including responses to risk, opponent
-history, and relative progress. We answer RQ2 with the three- to five-player
-pilots, focusing on rank and persona. Representation diagnostics answer RQ3
-and define where the behavioural interpretation must stop. The Appendix
+history, and relative progress. The three- to five-player pilots are kept as
+an exploratory multiplayer extension and are reported in the supplementary
+material, where the limited checkpoint coverage is explicit. Representation
+diagnostics answer RQ2 and define where the behavioural interpretation must
+stop. The
+supplementary material
 contains full model tables, predictive diagnostics, and robustness checks.
 
 \subsection{Validity gate: can agents follow the race?}
@@ -793,14 +802,15 @@ can be more visible in observed play than the theoretical risk transition.
 \begin{figure}[t]
   \centering
   \includegraphics[width=\columnwidth]{../figures/paper/egt_theory_vs_llm_unsafe.png}
-  \caption{Frontier Unsafe decisions against the reconstructed evolutionary
-  benchmark. The theory curves are stationary strategy mixtures; the frontier
-  ranges and route-specific points summarise two admitted routes, each with 30
-  completed races. Independent-chain ranges are shown for the theory
-  reconstruction.}
-  \Description{Line and point plot of Unsafe rates by maximum private risk.
-  Evolutionary-game reconstructions are shown for three parameter regimes and
-  pooled Gemini and Claude self-play are shown as descriptive points.}
+  \caption{The prompted frontier does not reproduce the reconstructed
+  evolutionary risk transition. Panel A shows the stationary evolutionary
+  reference, the reported fit, and the prompted route with its context range.
+  Panel B makes the changing gap explicit: the prompted route is below the
+  reference at medium risk but above it at high risk.}
+  \Description{Two-panel plot of Unsafe rates by maximum private risk. Panel A
+  compares the evolutionary reference and reported fit with the prompted route
+  and its context range. Panel B shows the prompted-route minus evolutionary
+  reference gap, which changes sign across risk conditions.}
   \label{fig:egt-frontier-comparison}
 \end{figure}
 
@@ -825,6 +835,11 @@ validity. Each player is represented by 15 raw features,
 own action, opponent action, and own-minus-opponent progress gap entering
 each of rounds 1 to 5, the recorded state and actions themselves, rather
 than derived quantities such as unsafe rate or retaliation.
+
+The raw-sequence comparison therefore has 340 complete human trajectories.
+The separate human-archetype projection uses 341 participants because its
+five descriptor summaries can be computed for one participant whose complete
+first-five sequence is unavailable.
 
 Mean \Unsafe{} play over rounds 1 to 5 is lowest for GPT-5-nano (17\%),
 followed by Claude Sonnet 5 (22\%), Claude Opus 5 (33\%), GPT-5.4-nano
@@ -918,16 +933,18 @@ the latter shows geometry in the raw sequence space. Neither should be read
 as a definitive clustering of latent strategies.
 
 We next test whether five rounds contain enough information to identify the
-population that produced a trajectory. A small decision tree reaches
-$38.9\%\pm3.3$ accuracy under five-fold cross-validation. Random guessing
-among eight balanced classes would give 12.5\%. Population identity is
-therefore visible, but the groups still overlap. The tree correctly identifies
-96.7\% of Gemini-3.1-Flash-Lite trajectories. For GPT-5-nano, this value is
-63.3\%, and 31.7\% are instead labelled Claude Opus 5 because both often start
-with mutual Safe play. Only 33.2\% of human trajectories are labelled human.
-This is the lowest value among the populations. Human actions overlap with
-several model patterns because the human sample is internally diverse, not
-because it follows one middle policy.
+population that produced a trajectory. Because the pooled classes are
+imbalanced and both seats share one race history, we use a shallow tree with
+race-grouped five-fold cross-validation and report balanced accuracy and
+macro-F1. The balanced accuracy is $42.3\%\pm4.3$, compared with a
+class-balanced chance level of $12.5\%$; a grouped permutation null has mean
+$12.4\%$ and a 95\% interval of $7.0$--$18.2\%$ ($p<0.001$). Population
+identity is therefore detectable in this diagnostic, but the groups still
+overlap. Raw accuracy is not used as the headline measure because the pooled
+sample contains 340 human trajectories and 60 trajectories per checkpoint.
+The diagnostic and its source hashes are reported in the supplementary
+material; it is evidence of observable trajectory differences, not of a
+latent model identity or a recoverable strategy.
 
 The supplementary round-by-round profile gives a complementary view of the
 aggregate rate: the human profile lies close to
@@ -946,11 +963,12 @@ LLM-identity-only, and LLM-identity-by-risk interaction) shows that
 allowing the risk-response profile to vary by LLM improves fit
 substantially beyond LLM-specific intercepts alone,
 \[
-    \chi^2(10)=354.7,\qquad p\approx4\times10^{-70},
+    \chi^2(10)=354.7,\qquad p<10^{-3},
 \]
-with several risk-by-LLM cells approaching complete separation (a
-convergence warning in the interaction model means the exact statistic
-should be read as approximate). The fit covers the five-model neutral
+with several risk-by-LLM cells approaching complete separation. A convergence
+warning in the interaction model means that the displayed likelihood-ratio
+statistic is approximate, so we report the conservative threshold rather than
+false precision. The fit covers the five-model neutral
 baseline only; the two Claude models are not in it. Neither caveat changes
 the conclusion: no single risk-response curve represents all five, so
 cross-model differences are differences in \emph{shape}, not only in
@@ -1022,76 +1040,6 @@ single strong predictor. These results support a game-theoretic point: two
 populations can have similar Unsafe rates while following different response
 rules. the supplementary material reports model fit, confounding,
 and floor/ceiling limits.
-
-\subsection{Multi-agent dynamics: position in \texorpdfstring{$N$}{N}-player races}
-\label{sec:results-position}
-
-The two-player analysis uses the opponent's previous action and the exact
-progress gap. In races with more players, we use a simpler question: does an
-agent act differently when it is a Leader, in the Middle, or a Trailer? We
-compare these positions within four persona bands. Baseline adds no persona
-sentence; Low combines R1 to R2; Mid combines R3 to R4; and High combines R5 to R6.
-% \footnote{Derived from
-% \texttt{position\_response\_by\_rank\_risk\_band.csv}
-% (\texttt{analysis/nplayer\_openai/derived/}); metric is
-% \texttt{unsafe\_rate}, the share of decisions choosing \Unsafe{} within
-% each Model~$\times$~Series~$\times$~Position cell, with $n$ the number of
-% decisions in that cell.} 
-A Leader has the highest progress or is tied for it before the current round.
-A Trailer is strictly last. Middle covers every other position. These labels
-describe observed states; the experiment did not randomly assign rank.
-
-\begin{figure}[t]
-    \centering
-    \includegraphics[width=0.95\linewidth]{../figures/paper/11_relative_position_grouped_bars.png}
-    \caption{Position association in the $N$-player pilot. Each panel shows
-    the model-based coefficient for the player's relative position within an
-    assigned risk-aware persona, with the other players' position held in the
-    contrast. Whiskers are 95\% intervals. Crosses mark cells that were not
-    estimable because the observed actions reached a floor or ceiling.}
-    \label{fig:position-by-risk}
-    \Description{Two-panel point and interval plot of model-based position
-    coefficients for Unsafe choice across the baseline and six assigned
-    risk-aware personas. GPT-5-nano has negative coefficients through R2 and
-    positive coefficients from R3 to R6. GPT-5.4-nano is close to zero through
-    R2, positive at R3 and R4, and not estimable at R5 and R6.}
-\end{figure}
-
-For GPT-5-nano, the position coefficient is negative at Baseline, R1, and
-R2, then positive from R3 through R6. This sign change is consistent with the
-qualitative ``falling behind'' account of \citet{falling_behind_unsafe}, but
-the coefficient is an observational association, not a causal effect of
-rank. Position is measured immediately before the action, so a player's
-previous actions help determine both its current rank and its next choice.
-The sign reversal can therefore arise from selection into ranks rather than
-from a change in the response to being ahead.
-
-GPT-5.4-nano has coefficients close to zero through R2 and positive
-coefficients at R3 and R4. R5 and R6 are not estimable because the observed
-actions are at a floor or ceiling in those cells. The contrast with GPT-5-nano
-shows why the result should not be compressed into a single position effect:
-the association depends on the checkpoint and on the prompt-assigned persona.
-Separating persona from rank would require a design that crosses the two
-factors while controlling or randomizing prior action history.
-
-Read together, the two models show that ``does position matter'' has no single
-answer even within one model family. The assigned persona is the more stable
-source of variation in this pilot, while position is a secondary association
-whose sign and estimability depend on the checkpoint. The bands here are the
-prompt-embedded risk \emph{persona} examined next in
-\S\ref{sec:results-persona}, not the mechanism's private-risk parameter
-$p_r^{\max}$ (Eq.~\ref{eq:risk}), and each band pools over $p_r^{\max}$
-rather than fixing it. The distinction matters: the persona is an
-instruction re-assigned per race, $p_r^{\max}$ a property of the game. This
-section therefore shows rank associations modulated by persona; separating
-that from the mechanical risk treatment needs a design crossing the two, which
-this pilot lacks. The broader
-$N\in\{3,4,5\}$ self-play scope (180 pilot races, 6,120 decisions;
-aggregate \Unsafe{} rates of 16.2\%, 26.8\%, 21.9\% for GPT-5-nano and
-83.7\%, 87.0\%, 84.0\% for GPT-5.4-nano at $N=3,4,5$) is reported in
-the supplementary material; because changing $N$ also changes the
-stage-payoff table, opponent count, and prompt length, we do not treat
-that comparison as an isolated group-size effect.
 
 \subsection{Measured human risk and prompted LLM personas}
 \label{sec:results-persona}
@@ -1171,12 +1119,11 @@ workflow.
 
 Strategic safety behaviour in these AI races is not a fixed property of an LLM.
 In two-player races, models differ in their responses to risk, opponents, and
-relative progress. Across three to five agents, position patterns vary by model
-and persona and are not monotone in group size. Yet rule recall does not ensure
-state tracking, and equivalent presentations can change later play. Multi-agent
-AI-race studies should therefore report dynamic response rules and validity,
-not only aggregate Unsafe rates. These findings remain exploratory until
-matched confirmatory runs pass the same gates.
+relative progress. Yet rule recall does not ensure state tracking, and
+equivalent presentations can change later play. AI-race studies should
+therefore report dynamic response rules and validity, not only aggregate Unsafe
+rates. The supplementary multiplayer pilots remain exploratory until matched
+confirmatory runs cover more checkpoints and pass the same gates.
 
 % Acknowledgements name individuals, their institutions and a grant number, so
 % they identify the authors. The class does not suppress this section in

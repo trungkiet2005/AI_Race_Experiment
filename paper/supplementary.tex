@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%%% LaTeX Template for AAMAS-2026 (based on sample-sigconf.tex)
-%%% Prepared by the AAMAS-2026 Publication Chairs based on the version from AAMAS-2025. 
+%%% LaTeX Template for AAMAS-2027 (based on sample-sigconf.tex)
+%%% Prepared from the official AAMAS-2027 submission instructions.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -29,14 +29,14 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%%% AAMAS-2026 copyright block (do not change!)
+%%% AAMAS-2027 copyright block
 
 \setcopyright{ifaamas}
-\acmConference[AAMAS '26]{Proc.\@ of the 25th International Conference
-on Autonomous Agents and Multiagent Systems (AAMAS 2026)}{May 25 -- 29, 2026}
-{Paphos, Cyprus}{C.~Amato, L.~Dennis, V.~Mascardi, J.~Thangarajah (eds.)}
-\copyrightyear{2026}
-\acmYear{2026}
+\acmConference[AAMAS '27]{Proc.\@ of the 26th International Conference
+on Autonomous Agents and Multiagent Systems (AAMAS 2027)}{May 3 -- 7, 2027}
+{Hanoi, Vietnam}{AAMAS 2027 editors}
+\copyrightyear{2027}
+\acmYear{2027}
 % \acmDOI{}
 % \acmPrice{}
 % \acmISBN{}
@@ -649,8 +649,10 @@ contrast to the tournament literature's general finding that human
 risk-taking responds to competitive standing rather than remaining a fixed
 trait \citep{risk-taking_touraments,risk_taking_in_competition,%
 competition_and_risk-taking}: in this task, the round-by-round interaction
-captured in the two-player strategic diversity results in the main paper and the multi-agent position results in the main paper
-is a stronger organising signal than static pre-game disposition. A
+captured in the two-player strategic diversity results in the main paper
+is a stronger organising signal than static pre-game disposition. The
+multiplayer position analysis is exploratory and is not used as a second
+independent confirmation of this two-player result. A
 weaker, second-order association does survive at the level of behavioural
 phenotype rather than mean rate: the same elicited measure differs across
 the raw-sequence archetypes of the two-player strategic diversity results in the main paper (Kruskal--
@@ -747,6 +749,49 @@ private-risk-controlled logistic fit run for only three of those five,
 this comparison remains exploratory and cross-experimental rather than a
 like-for-like measurement.
 
+\subsection{Population identity in first-five-round trajectories}
+\label{app:population-identity}
+
+The population-identity diagnostic in the main paper uses the same 15 raw
+features as the trajectory visualisation. We fit a shallow decision tree with
+class-balanced loss under stratified five-fold grouped cross-validation. The
+two seats of an LLM race remain in the same fold; human observations are
+grouped by participant. Since the pooled classes are unequal, balanced
+accuracy and macro-F1 are the primary measures. A 200-repetition permutation
+null preserves the observed class counts and the same folds.
+
+\begin{table}[t]
+    \caption{Race-grouped population-identity diagnostic on 760 complete
+    first-five-round trajectories. The eight populations are imbalanced
+    (340 human and 60 per checkpoint), so balanced accuracy and macro-F1 are
+    primary. The null interval is the 2.5--97.5 percentile range over grouped
+    label permutations.}
+    \label{tab:population-identity}
+    \centering
+    \scriptsize
+    \setlength{\tabcolsep}{3pt}
+    \resizebox{\columnwidth}{!}{%
+    \begin{tabular}{@{}lccc@{}}
+        \toprule
+        Metric & Observed & Permutation null mean & Null 95\% interval \\
+        \midrule
+        Raw accuracy & 0.292 $\pm$ 0.053 & 0.086 & 0.039--0.178 \\
+        Balanced accuracy & \textbf{0.423 $\pm$ 0.043} & 0.124 & 0.070--0.182 \\
+        Macro-F1 & \textbf{0.252 $\pm$ 0.047} & 0.063 & 0.025--0.112 \\
+        \bottomrule
+    \end{tabular}
+    }
+\end{table}
+
+The balanced accuracy exceeds the class-balanced chance level of $1/8$ and
+the grouped permutation null ($p<0.001$); raw accuracy is shown only for
+completeness because it is affected by the large human class. This result
+supports observable differences in the first-five-round trajectories, while
+the overlap and the shallow classifier do not support a claim that a latent
+strategy or model identity is cleanly recoverable. The machine-readable
+result and source hashes are stored in
+\texttt{results/cross\_model\_pilot\_synthesis/data/}.
+
 \subsection{Predictive structure of \Unsafe{} choices}
 \label{app:predictive-structure}
 
@@ -754,7 +799,9 @@ The preceding section shows that populations produce different action
 patterns. We now ask which recorded parts of the game best predict their next
 Unsafe choice. This is a study of association, not cause or internal
 reasoning. For each population, we fit a random forest, a model that combines
-many decision trees. It predicts decisions after round one from five values
+many decision trees. Predictive scores use five-fold grouped cross-validation,
+with all decisions from one participant or race kept in one fold. The forest
+predicts decisions after round one from five values
 known before the choice: the player's previous action, the opponent's previous
 action, the progress gap, the assigned maximum private risk, and the round
 number. TreeSHAP then measures how much each value contributes to the fitted
@@ -776,17 +823,18 @@ on that feature. It does not mean that the feature caused the decision.
     row per population and one column per feature: own previous action,
     opponent's previous action, progress gap, assigned risk treatment, and
     round number. The human row is dominated by the opponent's previous
-    action at 48 percent. GPT-5-nano is dominated instead by progress gap
-    at 44 percent, the two Gemini Flash checkpoints by the risk treatment
-    at 35 and 40 percent, and Claude Sonnet 5 by the opponent's previous
-    action at 51 percent.}
+    action at 56 percent. GPT-5-nano is dominated instead by progress gap
+    and round number at 41 and 38 percent, the two Gemini Flash checkpoints by
+    the risk treatment at 33 and 37 percent, and Claude Sonnet 5 by the
+    opponent's previous action at 48 percent.}
 \end{figure}
 
 \begin{table*}[t]
     \caption{Population-specific random-forest prediction of \Unsafe{}
     play. Feature columns report shares of total mean absolute SHAP
     magnitude (rows sum to 100\%, up to rounding); AUC and balanced
-    accuracy are evaluated on the population-specific test split.}
+    accuracy are mean out-of-fold values from the population-specific
+    race/participant-grouped five-fold split.}
     \label{tab:feature-importance}
     \centering
     \footnotesize
@@ -799,17 +847,17 @@ on that feature. It does not mean that the feature caused the decision.
         & Progress gap
         & Risk
         & Round
-        & Test AUC
+        & OOF AUC
         & Balanced accuracy \\
         \midrule
-        Human                   & 6\%  & \textbf{48\%} & 14\% & 12\%          & 20\% & 0.62 & 0.54 \\
-        GPT-5-nano              & 2\%  & 4\%           & \textbf{44\%} & 16\% & 33\% & 0.82 & 0.50 \\
-        GPT-5.4-nano            & 18\% & 7\%           & \textbf{33\%} & 22\% & 20\% & 0.56 & 0.53 \\
-        Gemini-3-Flash          & 5\%  & 15\%          & 23\% & \textbf{35\%} & 23\% & 0.95 & 0.81 \\
-        Gemini-3.1-Flash-Lite   & 16\% & 7\%           & 13\% & \textbf{40\%} & 24\% & 0.94 & 0.81 \\
-        Gemini-3.5-Flash-Lite   & 14\% & \textbf{34\%} & 27\% & 17\%          & 9\%  & 0.80 & 0.70 \\
-        Claude Opus 5           & 26\% & 43\%$^\dagger$ & 0\% & 30\%         & 0\%  & 1.00 & 1.00 \\
-        Claude Sonnet 5         & 22\% & \textbf{51\%} & 4\%  & 14\%          & 10\% & 0.96 & 0.92 \\
+        Human                   & 5\%  & \textbf{56\%} & 12\% & 12\%          & 15\% & 0.63 & 0.58 \\
+        GPT-5-nano              & 3\%  & 7\%           & \textbf{41\%} & 10\% & 38\% & 0.80 & 0.50 \\
+        GPT-5.4-nano            & 16\% & 10\%          & \textbf{37\%} & 19\% & 19\% & 0.54 & 0.52 \\
+        Gemini-3-Flash          & 4\%  & 17\%          & 22\% & \textbf{33\%} & 25\% & 0.92 & 0.77 \\
+        Gemini-3.1-Flash-Lite   & 13\% & 4\%           & 23\% & \textbf{37\%} & 23\% & 0.95 & 0.75 \\
+        Gemini-3.5-Flash-Lite   & 12\% & \textbf{33\%} & 30\% & 17\%          & 8\%  & 0.83 & 0.71 \\
+        Claude Opus 5           & 24\% & 42\%$^\dagger$ & 0\% & 34\%         & 0\%  & 1.00 & 1.00 \\
+        Claude Sonnet 5         & 23\% & \textbf{48\%} & 5\%  & 15\%          & 10\% & 0.97 & 0.93 \\
         \bottomrule
     \end{tabular}
 
@@ -818,32 +866,32 @@ on that feature. It does not mean that the feature caused the decision.
     reciprocity estimate; see the discussion below.\par}
 \end{table*}
 
-For human participants, the opponent's previous action accounts for 48\%
+For human participants, the opponent's previous action accounts for 56\%
 of total SHAP magnitude, far more than any other feature, while the
-player's own previous action contributes only 6\%: a reciprocity-dominated
+player's own previous action contributes only 5\%: a reciprocity-dominated
 profile that independently recovers the pattern found in the human
 logistic analysis. GPT-5-nano is close to the opposite profile: relative
-race position (progress gap) accounts for 44\% of its predictive
-importance and opponent history for only 4\%, and its apparently strong
-test AUC of 0.82 is misleading on its own, since balanced accuracy is
+race position (progress gap) accounts for 41\% of its predictive
+importance and opponent history for only 7\%, and its apparently strong
+out-of-fold AUC of 0.80 is misleading on its own, since balanced accuracy is
 exactly 0.50: the model plays so close to the \Safe{} floor that the
 classifier effectively fails to recover the rare \Unsafe{} class. Gemini-3-
-Flash and Gemini-3.1-Flash-Lite are primarily risk-treatment-driven (35\%
-and 40\% of SHAP magnitude), consistent with their strong, monotone
+Flash and Gemini-3.1-Flash-Lite are primarily risk-treatment-driven (33\%
+and 37\% of SHAP magnitude), consistent with their strong, monotone
 descriptive risk-response curves. Claude Sonnet 5 is the only model whose
 profile matches the human ordering outright, with the opponent's previous
-action largest at 51\%, slightly above the human 48\%;
-Gemini-3.5-Flash-Lite is the next closest (34\%), though its progress gap
+action largest at 48\%, below the human 56\%;
+Gemini-3.5-Flash-Lite is the next closest (33\%), though its progress gap
 remains more influential than in the human model. GPT-5.4-nano has no
 comparably dominant predictor: importance is
 spread across progress gap, risk, round, and its own previous action,
-with opponent history at only 7\% and the lowest above-chance predictive
-fit in the table (AUC 0.56, balanced accuracy 0.53), so its behaviour is
+with opponent history at 10\% and the lowest above-chance predictive
+fit in the table (AUC 0.54, balanced accuracy 0.52), so its behaviour is
 comparatively difficult to reconstruct from these five mechanical state
 variables rather than clearly governed by any one signal.
 
 Claude Opus 5 shows why these shares must be read against the design that
-produced them. Its 43\% opponent share reads as strong reciprocity and is
+produced them. Its 42\% opponent share reads as strong reciprocity and is
 not: on the neutral lane it plays \Unsafe{} on essentially every low-risk
 decision and essentially none at high risk, so the risk treatment alone
 separates its choices, and since both seats behave that way the opponent's
@@ -854,7 +902,7 @@ fit. A feature-importance share is interpretable only where the feature
 keeps variation independent of the others, which is what a
 near-deterministic policy removes.
 
-Predictive performance varies substantially across populations (AUC 0.56
+Predictive performance varies substantially across populations (AUC 0.54
 to 1.00), so SHAP shares should not be read as directly comparable measures
 of decision quality; floor and ceiling behaviour mechanically limits
 minority-class prediction for several models. The defensible
@@ -912,7 +960,9 @@ sample sizes differ across checkpoints, these five curves demonstrate
 qualitative heterogeneity in how each checkpoint responds to the risk
 manipulation; we do not pool them into a single model-family estimate, and
 the formal test of that heterogeneity is the checkpoint-by-risk interaction
-reported in the two-player strategic diversity results in the main paper ($\chi^2(10)=354.7$).
+reported in the two-player strategic diversity results in the main paper
+($\chi^2(10)=354.7$, with a convergence warning, so only the conservative
+$p<10^{-3}$ threshold is used in the main text).
 Table~\ref{tab:twoplayer-baseline-full} gives the per-checkpoint,
 per-risk-level rates underlying the qualitative curve descriptions above.
 
@@ -939,9 +989,9 @@ per-risk-level rates underlying the qualitative curve descriptions above.
 \subsection{$N$-player self-play scope ($N=3,4,5$)}
 \label{app:nplayer-scope}
 
-the multi-agent position results in the main paper reports position effects for GPT-5-nano and
-GPT-5.4-nano at fixed $N$; this subsection gives the broader group-size
-scope referenced there. Matched OpenAI self-play baselines cover
+The exploratory multiplayer position analysis reports position effects for
+GPT-5-nano and GPT-5.4-nano at fixed $N$; this subsection gives the broader
+group-size scope. Matched OpenAI self-play baselines cover
 $N\in\{3,4,5\}$ for both checkpoints: 180 pilot races, 720 player
 trajectories, and 6{,}120 decisions in total, pooled across the mechanism's
 three risk levels. Table~\ref{tab:nplayer-scope} reports the aggregate
@@ -977,39 +1027,42 @@ use only ten independent races per model--risk--$N$ cell, which is a small
 base for the per-cell rates entering Table~\ref{tab:nplayer-scope} and
 leaves individual cells vulnerable to the same kind of small-$n$ noise
 flagged for specific rank $\times$ risk-band cells in
-the multi-agent position results in the main paper. Table~\ref{tab:nplayer-scope-full} disaggregates
-Table~\ref{tab:nplayer-scope} by assigned risk level and reports a 95\%
-Wilson interval for every cell.
+the exploratory position analysis. Table~\ref{tab:nplayer-scope-full}
+disaggregates Table~\ref{tab:nplayer-scope} by assigned risk level and
+reports a 95\% percentile bootstrap interval over the ten independent races
+in each cell. The decision count is retained only as a descriptive row count.
 
 \begin{table}[h]
     \caption{\Unsafe{} rate by checkpoint, group size, and assigned
-    maximum-private-risk level, OpenAI $N$-player self-play (95\% Wilson
-    intervals; $n$ is the decision count per cell).}
+    maximum-private-risk level, OpenAI $N$-player self-play. Intervals are
+    95\% percentile bootstrap intervals over race clusters; $n_{\rm race}$ is
+    the independent-unit count and $n_{\rm dec}$ is the descriptive decision
+    count.}
     \label{tab:nplayer-scope-full}
     \centering
     \small
     \begin{tabular}{@{}llrrr@{}}
         \toprule
-        $N$ & Checkpoint & Risk & $n$ & \Unsafe{} rate (95\% CI) \\
+        $N$ & Checkpoint & Risk & $n_{\rm race}$ & \Unsafe{} rate (95\% CI) \\
         \midrule
-        3 & GPT-5 nano    & 0.10 & 255 & 17.3\% (13.1--22.4\%) \\
-        3 & GPT-5 nano    & 0.60 & 255 & 18.0\% (13.8--23.2\%) \\
-        3 & GPT-5 nano    & 0.90 & 255 & 13.3\% (9.7--18.1\%) \\
-        3 & GPT-5.4 nano  & 0.10 & 255 & 84.3\% (79.3--88.3\%) \\
-        3 & GPT-5.4 nano  & 0.60 & 255 & 84.3\% (79.3--88.3\%) \\
-        3 & GPT-5.4 nano  & 0.90 & 255 & 82.4\% (77.2--86.5\%) \\
-        4 & GPT-5 nano    & 0.10 & 340 & 21.2\% (17.2--25.8\%) \\
-        4 & GPT-5 nano    & 0.60 & 340 & 30.3\% (25.7--35.4\%) \\
-        4 & GPT-5 nano    & 0.90 & 340 & 28.8\% (24.3--33.9\%) \\
-        4 & GPT-5.4 nano  & 0.10 & 340 & 87.6\% (83.7--90.7\%) \\
-        4 & GPT-5.4 nano  & 0.60 & 340 & 88.8\% (85.0--91.7\%) \\
-        4 & GPT-5.4 nano  & 0.90 & 340 & 84.4\% (80.2--87.9\%) \\
-        5 & GPT-5 nano    & 0.10 & 425 & 20.2\% (16.7--24.3\%) \\
-        5 & GPT-5 nano    & 0.60 & 425 & 21.2\% (17.6--25.3\%) \\
-        5 & GPT-5 nano    & 0.90 & 425 & 24.2\% (20.4--28.5\%) \\
-        5 & GPT-5.4 nano  & 0.10 & 425 & 80.2\% (76.2--83.7\%) \\
-        5 & GPT-5.4 nano  & 0.60 & 425 & 87.1\% (83.5--89.9\%) \\
-        5 & GPT-5.4 nano  & 0.90 & 425 & 84.7\% (81.0--87.8\%) \\
+        3 & GPT-5 nano    & 0.10 & 10 & 17.4\% (14.5--20.0\%) \\
+        3 & GPT-5 nano    & 0.60 & 10 & 18.1\% (13.3--22.4\%) \\
+        3 & GPT-5 nano    & 0.90 & 10 & 11.3\% (6.1--16.9\%) \\
+        3 & GPT-5.4 nano  & 0.10 & 10 & 85.4\% (82.5--88.5\%) \\
+        3 & GPT-5.4 nano  & 0.60 & 10 & 83.7\% (78.5--88.7\%) \\
+        3 & GPT-5.4 nano  & 0.90 & 10 & 83.3\% (80.0--86.9\%) \\
+        4 & GPT-5 nano    & 0.10 & 10 & 19.2\% (14.5--23.8\%) \\
+        4 & GPT-5 nano    & 0.60 & 10 & 27.8\% (21.6--33.3\%) \\
+        4 & GPT-5 nano    & 0.90 & 10 & 24.1\% (15.5--32.1\%) \\
+        4 & GPT-5.4 nano  & 0.10 & 10 & 88.1\% (85.9--90.3\%) \\
+        4 & GPT-5.4 nano  & 0.60 & 10 & 88.4\% (86.2--90.6\%) \\
+        4 & GPT-5.4 nano  & 0.90 & 10 & 83.8\% (80.3--87.5\%) \\
+        5 & GPT-5 nano    & 0.10 & 10 & 18.9\% (14.7--22.4\%) \\
+        5 & GPT-5 nano    & 0.60 & 10 & 20.0\% (16.1--23.6\%) \\
+        5 & GPT-5 nano    & 0.90 & 10 & 22.7\% (18.7--26.9\%) \\
+        5 & GPT-5.4 nano  & 0.10 & 10 & 80.0\% (75.4--84.9\%) \\
+        5 & GPT-5.4 nano  & 0.60 & 10 & 87.1\% (84.5--89.6\%) \\
+        5 & GPT-5.4 nano  & 0.90 & 10 & 85.1\% (82.5--88.0\%) \\
         \bottomrule
     \end{tabular}
 \end{table}
@@ -1155,7 +1208,7 @@ population and archetype.
   space. The sample sizes are summarized in the evidence-strata table in the
   main paper. This table draws on the full nine-checkpoint cross-model pilot
   and therefore includes GPT-5.6 Luna and Terra, which are not part of
-  the seven-model HDBSCAN/t-SNE/decision-tree comparison earlier in
+  the seven-model t-SNE/trajectory comparison earlier in
   this subsection.}
   \label{tab:archetype-coverage}
   \centering

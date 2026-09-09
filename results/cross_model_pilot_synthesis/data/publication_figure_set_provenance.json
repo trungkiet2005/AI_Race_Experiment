@@ -18,7 +18,9 @@
       "figures\\paper\\egt_theory_vs_llm_unsafe.svg"
     ],
     "figure_4_rate": [
-      "figures\\paper\\llm_human_clustering\\05b_unsafe_rate_by_group.png"
+      "figures\\paper\\llm_human_clustering\\05b_unsafe_rate_by_group.pdf",
+      "figures\\paper\\llm_human_clustering\\05b_unsafe_rate_by_group.png",
+      "figures\\paper\\llm_human_clustering\\05b_unsafe_rate_by_group.svg"
     ],
     "figure_5_archetypes": [
       "figures\\paper\\llm_human_clustering\\02_archetype_signatures_and_coverage.pdf",
@@ -34,9 +36,6 @@
       "figures\\paper\\human_vs_llm_distribution.pdf",
       "figures\\paper\\human_vs_llm_distribution.png",
       "figures\\paper\\human_vs_llm_distribution.svg"
-    ],
-    "figure_8_position": [
-      "figures\\paper\\11_relative_position_grouped_bars.png"
     ],
     "fresh_frontier_risk_profiles": [
       "figures\\paper\\frontier_many_model_risk_profiles.pdf",
@@ -78,11 +77,10 @@
     "figure_1_mechanism": "manual",
     "figure_2_persona": "manual",
     "figure_3_egt": "generated",
-    "figure_4_rate": "manual",
+    "figure_4_rate": "generated",
     "figure_5_archetypes": "generated",
     "figure_6_tsne": "generated",
     "figure_7_distribution": "generated",
-    "figure_8_position": "manual",
     "fresh_frontier_risk_profiles": "generated",
     "supplement_figure_1_egt_insights": "generated",
     "supplement_figure_2_egt_invasion": "generated",
@@ -91,7 +89,7 @@
     "supplement_figure_5_tsne_outcome": "generated",
     "supplement_figure_6_round_profiles": "generated"
   },
-  "generated_utc": "2026-09-09T01:27:39.562731+00:00",
+  "generated_utc": "2026-09-09T11:30:14.346836+00:00",
   "generator": "scripts/build_publication_figures.py",
   "manual_figure_origin": {
     "commit": "f0dde0d",
@@ -103,12 +101,6 @@
     },
     "figure_2_persona": {
       "figures\\paper\\ExpOverview.pdf": "b0d34a750c1f21fedaca0df2689213729b426be054e3b042ce30f5a0c4e01b40"
-    },
-    "figure_4_rate": {
-      "figures\\paper\\llm_human_clustering\\05b_unsafe_rate_by_group.png": "5e915f8a4b9e9498c43fedae8d6beb9ba6a108ad35ab8589b06ab12b82f7f210"
-    },
-    "figure_8_position": {
-      "figures\\paper\\11_relative_position_grouped_bars.png": "00f26a9330db7a0cc8a5eaeb08b6351418e3c4e04dfe76c51e8362f123bdc2c7"
     }
   },
   "source_sha256": {

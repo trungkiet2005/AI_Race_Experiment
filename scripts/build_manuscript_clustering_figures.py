@@ -35,7 +35,6 @@ PROTECTED_MANUAL_FIGURE_STEMS = frozenset(
     {
         "figures/paper/AIRaceOverview",
         "figures/paper/ExpOverview",
-        "figures/paper/llm_human_clustering/05b_unsafe_rate_by_group",
         "figures/paper/11_relative_position_grouped_bars",
     }
 )
@@ -291,6 +290,10 @@ def flatten_features(frame: pd.DataFrame) -> np.ndarray:
 
 
 def redraw_figure_4(frame: pd.DataFrame) -> dict[str, float]:
+    raise RuntimeError(
+        "Legacy Figure 4 redraw is retired; run scripts/build_publication_figures.py "
+        "to build the table-backed publication figure."
+    )
     order = list(BASELINE_INPUTS) + ["human"]
     rates = {population: float(frame.loc[frame.population == population, "unsafe_rate"].mean()) for population in order}
     expected = {

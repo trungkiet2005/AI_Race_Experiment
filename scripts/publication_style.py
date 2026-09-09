@@ -57,15 +57,15 @@ FULL_WIDTH_IN = 7.10
 MIN_TEXT_POINTS = 8.0
 PNG_DPI = 600
 
-# Figures 1, 2, 4, and 8 are author-supplied artwork.  Keep them under their
-# canonical paper paths, but make every publication writer fail closed before
-# it can replace them with a generated variant.
+# Figures 1 and 2 are author-supplied artwork. Keep them under their canonical
+# paper paths, but make every publication writer fail closed before it can
+# replace them with a generated variant. Figure 4 is generated from the
+# checked-in trajectory table. The former Figure 8 remains archived, but is
+# not part of the current protected manuscript set.
 PROTECTED_MANUAL_FIGURE_STEMS = frozenset(
     {
         "figures/paper/AIRaceOverview",
         "figures/paper/ExpOverview",
-        "figures/paper/llm_human_clustering/05b_unsafe_rate_by_group",
-        "figures/paper/11_relative_position_grouped_bars",
     }
 )
 

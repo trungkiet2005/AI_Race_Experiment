@@ -15,7 +15,7 @@ The focal prior work—Fernández Domingos and Han (2026), arXiv:2607.26034—is
 - [`main.tex`](main.tex): article source with the canonical game, validation protocol, admitted audit, analysis plan, and limitations.
 - [`supplementary.tex`](supplementary.tex): supplementary source.
 - [`references.bib`](references.bib): bibliography for both documents.
-- [`../figures/paper/`](../figures/paper/): paper and presentation figures; Figures 1, 2, 4, and 8 are protected author artwork and the remaining slots are reproducibly generated.
+- [`../figures/paper/`](../figures/paper/): paper and presentation figures; Figures 1 and 2 are protected author artwork, Figure 4 is table-backed, and the former position plot is retained as an archived diagnostic and is not referenced by the current manuscript.
 
 ## Evidence rules
 
@@ -31,8 +31,8 @@ The analysis should first reproduce a deterministic validation suite for payoff,
 
 ## Current visual workflow
 
-The canonical fourteen-slot set (eight main-paper and six supplementary)
-combines four protected author-supplied artworks with generated figures. The
+The canonical referenced set (seven main-paper and six supplementary slots)
+combines two protected author-supplied artworks with generated figures. The
 generated subset is built by
 [`scripts/build_publication_figures.py`](../scripts/build_publication_figures.py)
 which also checks that the protected artwork is present and does not overwrite
@@ -41,7 +41,8 @@ and selection notes are in
 [`figures/SELECTION_GUIDE.md`](../figures/SELECTION_GUIDE.md). Candidate and
 diagnostic figures remain in `figures/gallery/` and `figures/diagnostics/`;
 they are not paper evidence until their source, evidence class, estimand, and
-caption are checked.
+caption are checked. The build also emits one unreferenced frontier-risk
+diagnostic for internal inspection; it is not an additional manuscript figure.
 
 ## Historical visual wishlist (superseded)
 
@@ -51,7 +52,8 @@ The pilot includes rule/arithmetic accuracy and calculator-ablation figures. Lat
 2. a canonical game schematic with simultaneous choices, progress, payoff, stopping, and terminal risk;
 3. a treatment/model overview with the number of independent races;
 4. an Unsafe-choice dynamics figure with uncertainty intervals;
-5. a race-position and opponent-response effect plot; and
+5. a multi-checkpoint race-position and opponent-response effect plot with
+   matched coverage; and
 6. a reproducibility/data-flow diagram; and
 7. an EGT-versus-frontier Unsafe-rate comparison with independent-chain diagnostics.
 

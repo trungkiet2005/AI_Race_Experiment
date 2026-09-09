@@ -1,0 +1,120 @@
+{
+  "schema_version": "ai-race-population-identity-grouped-v1",
+  "evidence_class": "diagnostic",
+  "estimand": "first-five-round population classification under race-grouped CV",
+  "n_trajectories": 760,
+  "n_groups": 550,
+  "class_counts": {
+    "claude-opus-5": 60,
+    "claude-sonnet-5": 60,
+    "google/gemini-3-flash-preview": 60,
+    "google/gemini-3.1-flash-lite-preview": 60,
+    "google/gemini-3.5-flash-lite": 60,
+    "gpt-5-nano": 60,
+    "gpt-5.4-nano": 60,
+    "human": 340
+  },
+  "human_trajectories": 340,
+  "llm_trajectories_per_checkpoint": [
+    60
+  ],
+  "feature_count": 15,
+  "tree": {
+    "max_depth": 3,
+    "min_samples_leaf": 8,
+    "class_weight": "balanced"
+  },
+  "split": {
+    "method": "StratifiedGroupKFold",
+    "n_splits": 5,
+    "group_definition": "race for LLM; participant for human",
+    "seed": 20260909
+  },
+  "permutation_null": {
+    "n_permutations": 200,
+    "seed": 20260909
+  },
+  "metrics": {
+    "accuracy": {
+      "mean": 0.29210526315789476,
+      "std": 0.05254927775714699,
+      "null_mean": 0.08578947368421053,
+      "null_std": 0.03473052939815565,
+      "null_95": [
+        0.039473684210526314,
+        0.1777960526315788
+      ],
+      "permutation_p": 0.005994005994005994
+    },
+    "balanced_accuracy": {
+      "mean": 0.4230392156862745,
+      "std": 0.042641071813247694,
+      "null_mean": 0.1242590292105352,
+      "null_std": 0.02900914239318546,
+      "null_95": [
+        0.0697065239448052,
+        0.18235930735930736
+      ],
+      "permutation_p": 0.000999000999000999
+    },
+    "macro_f1": {
+      "mean": 0.2520281515190208,
+      "std": 0.0472346451021996,
+      "null_mean": 0.06290367301400127,
+      "null_std": 0.022341773922382464,
+      "null_95": [
+        0.02478210598691719,
+        0.11161013479008204
+      ],
+      "permutation_p": 0.000999000999000999
+    }
+  },
+  "fold_metrics": [
+    {
+      "accuracy": 0.27631578947368424,
+      "balanced_accuracy": 0.4375,
+      "macro_f1": 0.2480840847915726,
+      "n_test": 152,
+      "fold": 0
+    },
+    {
+      "accuracy": 0.3092105263157895,
+      "balanced_accuracy": 0.3952205882352941,
+      "macro_f1": 0.2477360884557761,
+      "n_test": 152,
+      "fold": 1
+    },
+    {
+      "accuracy": 0.375,
+      "balanced_accuracy": 0.4908088235294118,
+      "macro_f1": 0.3294638329469719,
+      "n_test": 152,
+      "fold": 2
+    },
+    {
+      "accuracy": 0.24342105263157895,
+      "balanced_accuracy": 0.38541666666666663,
+      "macro_f1": 0.2016186383144695,
+      "n_test": 152,
+      "fold": 3
+    },
+    {
+      "accuracy": 0.2565789473684211,
+      "balanced_accuracy": 0.40625,
+      "macro_f1": 0.23323811308631398,
+      "n_test": 152,
+      "fold": 4
+    }
+  ],
+  "source_hashes": {
+    "references/source_study_dataset/airace_deidentified_long.csv": "ba6009ed5a6702e9f3ec9782289226099edc2b78c63057e57967927a539f8eee",
+    "results/frontier/openai/baseline/gpt-5-nano/turns.jsonl": "5ba5bf6dc0e384ead89eee63cb5fc6b2f49fe56de3531c94256b4308e22d8313",
+    "results/frontier/openai/baseline/gpt-5.4-nano/turns.jsonl": "1bd41cf76f616f56db278c591d7ef8fce28d89a1cdba8fc2073501990463518b",
+    "results/frontier/baseline/google-gemini-3-flash-preview/turns.jsonl": "5bdc7bec766532c59baef206a558a2e8199bb37bdde9ab74c5aa27fef3119237",
+    "results/frontier/baseline/google-gemini-3.1-flash-lite-preview/turns.jsonl": "a3b34464b10619d1d64e63b79c9c72a6ce08a3d3ff72fba96babb49726ed22db",
+    "results/frontier/baseline/google-gemini-3.5-flash-lite/turns.jsonl": "8db97643168c744f9495a3300f406799671b77520f01ccf9746134f673bfba80",
+    "results/frontier/bedrock/baseline/us.anthropic.claude-opus-5/turns.jsonl": "c3683ddc5937bec955aef855eb69e51fae1368673088c18d7109bc30e18d118d",
+    "results/frontier/bedrock/baseline/us.anthropic.claude-sonnet-5/turns.jsonl": "d2bfd78cf6d05dda127cb682396424d483cd61017320fdcdb09de48de7ec2956"
+  },
+  "interpretation": "Use balanced accuracy and macro-F1; raw accuracy is descriptive only because the pooled classes are imbalanced."
+}

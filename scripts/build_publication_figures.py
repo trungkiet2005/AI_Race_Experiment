@@ -1,10 +1,14 @@
 #!/usr/bin/env python3
 """Build the generated portion of the manuscript figure set.
 
-Figures 1, 2, 4, and 8 are author-supplied artwork and are deliberately not
-regenerated. All other exported figures read a checked-in result table or an
-admitted raw run. New analyses that expand model coverage must use a new
-output stem rather than changing a protected manuscript figure.
+Figures 1 and 2 are author-supplied artwork and are deliberately not
+regenerated. Figure 4 is generated from the checked-in first-five-trajectory
+table with the same publication style as the other quantitative figures. The
+former Figure 8 artwork is retained as an archived diagnostic but is not part
+of the current manuscript figure set. All other exported figures read a
+checked-in result table or an admitted raw run. New analyses that expand model
+coverage must use a new output stem rather than changing a protected manuscript
+figure.
 """
 
 from __future__ import annotations
@@ -75,8 +79,6 @@ FRESH_FRONTIER_INPUT = ROOT / "results/kaggle-benchmarks/frontier_full_20260908/
 MANUAL_FIGURE_FILES = {
     "figure_1_mechanism": [PAPER / "AIRaceOverview.pdf"],
     "figure_2_persona": [PAPER / "ExpOverview.pdf"],
-    "figure_4_rate": [CLUSTER / "05b_unsafe_rate_by_group.png"],
-    "figure_8_position": [PAPER / "11_relative_position_grouped_bars.png"],
 }
 
 BASELINE_ORDER = list(BASELINE_INPUTS) + ["human"]
@@ -227,37 +229,47 @@ def build_egt() -> list[Path]:
     if not required.issubset(table.columns):
         raise RuntimeError(f"EGT table is missing columns: {sorted(required - set(table.columns))}")
     risks = table["max_private_risk"].to_numpy(float)
-    fig, axes = plt.subplots(1, 2, figsize=(TEXT_WIDTH_IN, 2.72),
-                             gridspec_kw={"width_ratios": [1.22, 1.0], "wspace": 0.38})
+    fig, axes = plt.subplots(1, 2, figsize=(TEXT_WIDTH_IN, 2.82),
+                             gridspec_kw={"width_ratios": [1.18, 1.0], "wspace": 0.38})
+    fig.subplots_adjust(left=0.12, right=0.99, top=0.86, bottom=0.24)
     ax = axes[0]
+    ax.fill_between(risks, table["llm_primary_t0_unsafe_context_min"],
+                    table["llm_primary_t0_unsafe_context_max"], color=GREY_LIGHT,
+                    edgecolor=LINE, linewidth=0.6, alpha=0.95,
+                    label="Prompt-context range", zorder=1)
     ax.plot(risks, table["theory_unsafe_main_reference"], color=BLUE, marker="o",
-            linewidth=1.8, label="EGT main reference")
+            linewidth=1.9, label="EGT reference", zorder=3)
     ax.plot(risks, table["theory_unsafe_reported_best_fit"], color=GOLD, marker="s",
-            linewidth=1.5, linestyle="--", label="EGT reported best fit")
+            linewidth=1.5, linestyle="--", label="EGT reported fit", zorder=3)
     ax.scatter(risks, table["llm_primary_t0_unsafe_technology_race"], color=RED,
-               marker="D", s=38, edgecolor=INK, linewidth=0.6, label="Frontier route")
-    ax.vlines(risks + 0.012, table["llm_primary_t0_unsafe_context_min"],
-              table["llm_primary_t0_unsafe_context_max"], color=LINE,
-              linewidth=2.4, alpha=0.65, label="Frontier context range")
+               marker="D", s=38, edgecolor=INK, linewidth=0.6,
+               label="Prompted route", zorder=4)
     ax.set_xticks(risks, ["10%", "60%", "90%"])
     ax.set_xlabel("Maximum private setback risk")
-    ax.set_ylabel("Decision-weighted Unsafe rate")
+    ax.set_ylabel("Unsafe rate")
     set_percent_axis(ax); style_axis(ax)
     panel_label(ax, "A", "Risk response")
-    ax.legend(frameon=False, loc="lower left", fontsize=8)
+    ax.legend(frameon=False, loc="lower left", fontsize=8, ncol=2,
+              handlelength=1.6, columnspacing=0.9)
 
     ax = axes[1]
     delta = table["llm_primary_t0_unsafe_technology_race"] - table["theory_unsafe_main_reference"]
     colours = [RED if value < 0 else GREEN for value in delta]
     ax.axhline(0, color=INK, linewidth=0.8)
-    ax.vlines(np.arange(len(risks)), 0, delta, color=colours, linewidth=3.0, alpha=0.75)
-    ax.scatter(np.arange(len(risks)), delta, color=colours, marker="D", s=38,
-               edgecolor=INK, linewidth=0.6, zorder=3)
+    bars = ax.bar(np.arange(len(risks)), delta, color=colours, alpha=0.88,
+                  edgecolor=INK, linewidth=0.5, width=0.54, zorder=2)
+    for bar, value in zip(bars, delta):
+        y = value + (0.035 if value >= 0 else -0.045)
+        va = "bottom" if value >= 0 else "top"
+        ax.text(bar.get_x() + bar.get_width() / 2, y, f"{value:+.2f}",
+                ha="center", va=va, fontsize=8.0, color=INK)
     ax.set_xticks(np.arange(len(risks)), ["10%", "60%", "90%"])
     ax.set_xlabel("Risk cap")
-    ax.set_ylabel("Frontier minus EGT reference")
+    ax.set_ylabel("Prompted route minus EGT")
+    limit = max(0.45, float(np.max(np.abs(delta))) * 1.32)
+    ax.set_ylim(-limit, limit)
     style_axis(ax)
-    panel_label(ax, "B", "Boundary of the comparison")
+    panel_label(ax, "B", "The gap changes sign")
     return save_publication_figure(fig, PAPER / "egt_theory_vs_llm_unsafe", formats=("pdf", "png", "svg"))
 
 
@@ -520,6 +532,7 @@ def main() -> None:
         **_manual_figure_outputs(),
         **_fresh_frontier_outputs(),
         "figure_3_egt": build_egt(),
+        "figure_4_rate": build_rate_figure(frame),
         "figure_5_archetypes": build_archetype_figure(),
         "figure_6_tsne": build_tsne(frame),
         "figure_7_distribution": build_distribution(),
