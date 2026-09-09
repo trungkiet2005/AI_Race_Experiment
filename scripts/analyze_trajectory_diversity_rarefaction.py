@@ -23,6 +23,8 @@ from __future__ import annotations
 
 import ast
 from collections import Counter
+import hashlib
+import json
 from pathlib import Path
 
 import matplotlib
@@ -49,6 +51,14 @@ MODEL_INPUTS = [
 RISKS = (0.1, 0.6, 0.9)
 N_RESAMPLES = 2000
 SEED = 20260908
+
+
+def sha256(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
 
 
 def action_bits(value: str) -> tuple[int, ...]:
@@ -246,6 +256,28 @@ def main() -> None:
     DATA_OUT.mkdir(parents=True, exist_ok=True)
     table.to_csv(DATA_OUT / "trajectory_diversity_rarefaction.csv", index=False)
     draw(table)
+    source_files = [HUMAN_CSV]
+    for _, raw_path in MODEL_INPUTS:
+        source_path = Path(raw_path)
+        source_files.append(
+            source_path / "all_results.csv" if source_path.is_dir() else source_path
+        )
+    provenance = {
+        "schema_version": "ai-race-trajectory-diversity-rarefaction-v2",
+        "evidence_class": "diagnostic",
+        "estimand": "Sample-size-matched observed diversity of paired first-five-round trajectories",
+        "n_resamples": N_RESAMPLES,
+        "seed": SEED,
+        "comparison_n": int(table["comparison_n"].min()),
+        "risk_caps": list(RISKS),
+        "source_hashes": {path.relative_to(ROOT).as_posix(): sha256(path) for path in source_files},
+        "output": "trajectory_diversity_rarefaction.csv",
+    }
+    (DATA_OUT / "trajectory_diversity_rarefaction.json").write_text(
+        json.dumps(provenance, indent=2, ensure_ascii=False) + "\n",
+        encoding="utf-8",
+        newline="\n",
+    )
 
     print(table.to_string(index=False))
     print("\nKey boundary: GPT-5.4 nano is close to the rarefied human reference in every risk cell;")

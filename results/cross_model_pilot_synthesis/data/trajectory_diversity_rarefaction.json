@@ -1,0 +1,24 @@
+{
+  "schema_version": "ai-race-trajectory-diversity-rarefaction-v2",
+  "evidence_class": "diagnostic",
+  "estimand": "Sample-size-matched observed diversity of paired first-five-round trajectories",
+  "n_resamples": 2000,
+  "seed": 20260908,
+  "comparison_n": 20,
+  "risk_caps": [
+    0.1,
+    0.6,
+    0.9
+  ],
+  "source_hashes": {
+    "references/source_study_dataset/airace_deidentified_long.csv": "ba6009ed5a6702e9f3ec9782289226099edc2b78c63057e57967927a539f8eee",
+    "results/frontier/openai/baseline/gpt-5-nano/all_results.csv": "76ef98209c8712a445293a5d3b7ff3c9688fa96ddb073da8adb77b8486c65349",
+    "results/frontier/openai/baseline/gpt-5.4-nano/all_results.csv": "c991b0383ca10dcd578ff155d5cf3ed61db83fd618bfe161204ebcbfebbcd499",
+    "results/frontier/baseline/google-gemini-3-flash-preview/all_results.csv": "e325360d9b5e7835e016ee8eac9e86c107481a6fae1b854ecef19a92dc162179",
+    "results/frontier/baseline/google-gemini-3.1-flash-lite-preview/all_results.csv": "7a5d64130156cdbfdd591ed824c81fbc3658682d47e47ba1b187a7969ef5b819",
+    "results/frontier/baseline/google-gemini-3.5-flash-lite/all_results.csv": "7bcf6badf5907d800ccb1aa22edd5e8d66fd558c26bb7c4670850f8c1fe6815f",
+    "results/frontier/bedrock/baseline/us.anthropic.claude-opus-5/all_results.csv": "de0bb4671485815777d24808ddb39bdaf4c134b9fdc5f1bcb4ef9be38539cc89",
+    "results/frontier/bedrock/baseline/us.anthropic.claude-sonnet-5/all_results.csv": "812e7933910329e7522009d3c69672bd9f8e97efa53be99fee2694c79c00cbdd"
+  },
+  "output": "trajectory_diversity_rarefaction.csv"
+}

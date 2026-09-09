@@ -4,7 +4,7 @@ This is the single browsing entry point for every project-generated figure.
 The original result directories remain the provenance source; files here are
 canonical paper assets or a hash-tracked selection copy.
 
-Total unique visual files: **544**
+Total unique visual files: **546**
 
 ## How to use this folder
 
@@ -15,7 +15,7 @@ Total unique visual files: **544**
 
 ## Paper and presentation assets
 
-71 unique files are in the active paper asset set.
+73 unique files are in the active paper asset set.
 
 | File | Status | SHA256 |
 |---|---|---|
@@ -88,6 +88,8 @@ Total unique visual files: **544**
 | [paper/nplayer_position_effect_sign_flip.pdf](paper/nplayer_position_effect_sign_flip.pdf) | paper-ready | `917434902600` |
 | [paper/nplayer_position_effect_sign_flip_paper.pdf](paper/nplayer_position_effect_sign_flip_paper.pdf) | paper-ready | `7a42ee633719` |
 | [paper/trajectory_divergence_curve.pdf](paper/trajectory_divergence_curve.pdf) | paper-ready | `a1e3443dcae1` |
+| [paper/trajectory_diversity_rarefaction.pdf](paper/trajectory_diversity_rarefaction.pdf) | paper-ready | `90f04f9f3475` |
+| [paper/trajectory_diversity_rarefaction.png](paper/trajectory_diversity_rarefaction.png) | paper-ready | `2a0dca472053` |
 | [paper/two_player_baseline_risk_response.pdf](paper/two_player_baseline_risk_response.pdf) | paper-ready | `31acedcc2526` |
 | [paper/xai_decodability_vs_control.pdf](paper/xai_decodability_vs_control.pdf) | paper-ready | `d0222a247fec` |
 

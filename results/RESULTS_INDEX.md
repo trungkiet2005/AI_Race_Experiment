@@ -4,11 +4,11 @@
 
 ## At a glance
 
-- Canonical files (excluding reproducible `_build/`): **3,834**
-- Total canonical size: **1266.50 MiB**
-- Parsed manifest records: **451**
+- Canonical files (excluding reproducible `_build/`): **3,964**
+- Total canonical size: **1389.64 MiB**
+- Parsed manifest records: **495**
 - Invalid manifest JSON files: **0**
-- Exact duplicate hash groups: **253** (archives may intentionally retain immutable copies)
+- Exact duplicate hash groups: **0** (archives may intentionally retain immutable copies)
 
 Evidence labels are conservative: a completed pilot stays `pilot`; a prepared or diagnostic artifact is never promoted by directory name alone.
 
@@ -34,186 +34,11 @@ Evidence labels are conservative: a completed pilot stays `pilot`; a prepared or
 - [Payoff-scale mechanical contract](derived/payoff_scale_contract/README.md)
 - [Experiment impact roadmap](../docs/experiments/impact_experiment_program.md)
 
-## Complete visual artifact map (538)
+## Complete visual artifact map (387)
 
 Every rendered chart, publication PDF, and interactive HTML surface in the canonical results root is linked below. The narrative synthesis embeds the decision-relevant subset in `visualization_insight_full.md`.
 
-- [`artifacts/figure_gallery/ADMITTED_activation_sae/causal_selfplay__fast-sae-pilot-L12-v1__analysis__figures__association_selected_features.png`](<artifacts/figure_gallery/ADMITTED_activation_sae/causal_selfplay__fast-sae-pilot-L12-v1__analysis__figures__association_selected_features.png>)
-- [`artifacts/figure_gallery/ADMITTED_activation_sae/causal_selfplay__fast-sae-pilot-L12-v1__analysis__figures__fixed_state_dose_response.png`](<artifacts/figure_gallery/ADMITTED_activation_sae/causal_selfplay__fast-sae-pilot-L12-v1__analysis__figures__fixed_state_dose_response.png>)
-- [`artifacts/figure_gallery/ADMITTED_activation_sae/causal_selfplay__fast-sae-pilot-L12-v1__analysis__figures__fixed_state_intervention_diagnostics.png`](<artifacts/figure_gallery/ADMITTED_activation_sae/causal_selfplay__fast-sae-pilot-L12-v1__analysis__figures__fixed_state_intervention_diagnostics.png>)
-- [`artifacts/figure_gallery/ADMITTED_activation_sae/causal_selfplay__fast-sae-pilot-L12-v1__analysis__figures__fixed_state_target_minus_controls.png`](<artifacts/figure_gallery/ADMITTED_activation_sae/causal_selfplay__fast-sae-pilot-L12-v1__analysis__figures__fixed_state_target_minus_controls.png>)
-- [`artifacts/figure_gallery/ADMITTED_activation_sae/causal_selfplay__fast-sae-pilot-L12-v1__analysis__figures__live_direct_comparable_flips.png`](<artifacts/figure_gallery/ADMITTED_activation_sae/causal_selfplay__fast-sae-pilot-L12-v1__analysis__figures__live_direct_comparable_flips.png>)
-- [`artifacts/figure_gallery/ADMITTED_activation_sae/causal_selfplay__fast-sae-pilot-L12-v1__analysis__figures__live_endogenous_payoff_effects.png`](<artifacts/figure_gallery/ADMITTED_activation_sae/causal_selfplay__fast-sae-pilot-L12-v1__analysis__figures__live_endogenous_payoff_effects.png>)
-- [`artifacts/figure_gallery/ADMITTED_activation_sae/context_fast_sae_analysis__causal_steering_controls.png`](<artifacts/figure_gallery/ADMITTED_activation_sae/context_fast_sae_analysis__causal_steering_controls.png>)
-- [`artifacts/figure_gallery/ADMITTED_activation_sae/context_fast_sae_analysis__context_shift_descriptives.png`](<artifacts/figure_gallery/ADMITTED_activation_sae/context_fast_sae_analysis__context_shift_descriptives.png>)
-- [`artifacts/figure_gallery/ADMITTED_activation_sae/context_fast_sae_analysis__heldout_action_probe.png`](<artifacts/figure_gallery/ADMITTED_activation_sae/context_fast_sae_analysis__heldout_action_probe.png>)
-- [`artifacts/figure_gallery/ADMITTED_activation_sae/figures__sae_token_position_robustness.png`](<artifacts/figure_gallery/ADMITTED_activation_sae/figures__sae_token_position_robustness.png>)
-- [`artifacts/figure_gallery/ADMITTED_activation_sae/surface_n600_strict_pre_action__figures__sae_feature_confirmation.png`](<artifacts/figure_gallery/ADMITTED_activation_sae/surface_n600_strict_pre_action__figures__sae_feature_confirmation.png>)
-- [`artifacts/figure_gallery/ADMITTED_activation_sae/surface_n600_strict_pre_action__figures__sae_fidelity_by_layer.png`](<artifacts/figure_gallery/ADMITTED_activation_sae/surface_n600_strict_pre_action__figures__sae_fidelity_by_layer.png>)
-- [`artifacts/figure_gallery/ADMITTED_activation_sae/surface_n600_strict_pre_action__figures__sae_probe_by_layer.png`](<artifacts/figure_gallery/ADMITTED_activation_sae/surface_n600_strict_pre_action__figures__sae_probe_by_layer.png>)
-- [`artifacts/figure_gallery/ADMITTED_activation_sae/surface_n600_strict_prompt_last__figures__sae_feature_confirmation.png`](<artifacts/figure_gallery/ADMITTED_activation_sae/surface_n600_strict_prompt_last__figures__sae_feature_confirmation.png>)
-- [`artifacts/figure_gallery/ADMITTED_activation_sae/surface_n600_strict_prompt_last__figures__sae_fidelity_by_layer.png`](<artifacts/figure_gallery/ADMITTED_activation_sae/surface_n600_strict_prompt_last__figures__sae_fidelity_by_layer.png>)
-- [`artifacts/figure_gallery/ADMITTED_activation_sae/surface_n600_strict_prompt_last__figures__sae_probe_by_layer.png`](<artifacts/figure_gallery/ADMITTED_activation_sae/surface_n600_strict_prompt_last__figures__sae_probe_by_layer.png>)
-- [`artifacts/figure_gallery/ADMITTED_context_skin_pilot/analysis_live_pilot_t07__figures__comprehension_admission.png`](<artifacts/figure_gallery/ADMITTED_context_skin_pilot/analysis_live_pilot_t07__figures__comprehension_admission.png>)
-- [`artifacts/figure_gallery/ADMITTED_context_skin_pilot/analysis_live_pilot_t07__figures__context_mapping_diagnostic.png`](<artifacts/figure_gallery/ADMITTED_context_skin_pilot/analysis_live_pilot_t07__figures__context_mapping_diagnostic.png>)
-- [`artifacts/figure_gallery/ADMITTED_context_skin_pilot/analysis_live_pilot_t07__figures__live_payoff_setback.png`](<artifacts/figure_gallery/ADMITTED_context_skin_pilot/analysis_live_pilot_t07__figures__live_payoff_setback.png>)
-- [`artifacts/figure_gallery/ADMITTED_context_skin_pilot/analysis_live_pilot_t07__figures__live_unsafe_context_risk_mapping.png`](<artifacts/figure_gallery/ADMITTED_context_skin_pilot/analysis_live_pilot_t07__figures__live_unsafe_context_risk_mapping.png>)
-- [`artifacts/figure_gallery/ADMITTED_context_skin_pilot/analysis_live_pilot_t07__figures__paired_context_effects.png`](<artifacts/figure_gallery/ADMITTED_context_skin_pilot/analysis_live_pilot_t07__figures__paired_context_effects.png>)
-- [`artifacts/figure_gallery/ADMITTED_context_skin_pilot/analysis_live_pilot_t07__figures__paired_flip_directions.png`](<artifacts/figure_gallery/ADMITTED_context_skin_pilot/analysis_live_pilot_t07__figures__paired_flip_directions.png>)
-- [`artifacts/figure_gallery/ADMITTED_context_skin_pilot/analysis_live_pilot_t07__figures__planned_realistic_fictional_contrasts.png`](<artifacts/figure_gallery/ADMITTED_context_skin_pilot/analysis_live_pilot_t07__figures__planned_realistic_fictional_contrasts.png>)
-- [`artifacts/figure_gallery/ADMITTED_context_skin_pilot/analysis_live_pilot_t0__figures__comprehension_admission.png`](<artifacts/figure_gallery/ADMITTED_context_skin_pilot/analysis_live_pilot_t0__figures__comprehension_admission.png>)
-- [`artifacts/figure_gallery/ADMITTED_context_skin_pilot/analysis_live_pilot_t0__figures__context_mapping_diagnostic.png`](<artifacts/figure_gallery/ADMITTED_context_skin_pilot/analysis_live_pilot_t0__figures__context_mapping_diagnostic.png>)
-- [`artifacts/figure_gallery/ADMITTED_context_skin_pilot/analysis_live_pilot_t0__figures__live_payoff_setback.png`](<artifacts/figure_gallery/ADMITTED_context_skin_pilot/analysis_live_pilot_t0__figures__live_payoff_setback.png>)
-- [`artifacts/figure_gallery/ADMITTED_context_skin_pilot/analysis_live_pilot_t0__figures__live_unsafe_context_risk_mapping.png`](<artifacts/figure_gallery/ADMITTED_context_skin_pilot/analysis_live_pilot_t0__figures__live_unsafe_context_risk_mapping.png>)
-- [`artifacts/figure_gallery/ADMITTED_context_skin_pilot/analysis_live_pilot_t0__figures__paired_context_effects.png`](<artifacts/figure_gallery/ADMITTED_context_skin_pilot/analysis_live_pilot_t0__figures__paired_context_effects.png>)
-- [`artifacts/figure_gallery/ADMITTED_context_skin_pilot/analysis_live_pilot_t0__figures__paired_flip_directions.png`](<artifacts/figure_gallery/ADMITTED_context_skin_pilot/analysis_live_pilot_t0__figures__paired_flip_directions.png>)
-- [`artifacts/figure_gallery/ADMITTED_context_skin_pilot/analysis_live_pilot_t0__figures__planned_realistic_fictional_contrasts.png`](<artifacts/figure_gallery/ADMITTED_context_skin_pilot/analysis_live_pilot_t0__figures__planned_realistic_fictional_contrasts.png>)
-- [`artifacts/figure_gallery/ADMITTED_context_skin_pilot/analysis_smoke_t0__figures__comprehension_admission.png`](<artifacts/figure_gallery/ADMITTED_context_skin_pilot/analysis_smoke_t0__figures__comprehension_admission.png>)
-- [`artifacts/figure_gallery/ADMITTED_context_skin_pilot/analysis_smoke_t0__figures__context_mapping_diagnostic.png`](<artifacts/figure_gallery/ADMITTED_context_skin_pilot/analysis_smoke_t0__figures__context_mapping_diagnostic.png>)
-- [`artifacts/figure_gallery/ADMITTED_context_skin_pilot/analysis_smoke_t0__figures__live_payoff_setback.png`](<artifacts/figure_gallery/ADMITTED_context_skin_pilot/analysis_smoke_t0__figures__live_payoff_setback.png>)
-- [`artifacts/figure_gallery/ADMITTED_context_skin_pilot/analysis_smoke_t0__figures__live_unsafe_context_risk_mapping.png`](<artifacts/figure_gallery/ADMITTED_context_skin_pilot/analysis_smoke_t0__figures__live_unsafe_context_risk_mapping.png>)
-- [`artifacts/figure_gallery/ADMITTED_context_skin_pilot/analysis_smoke_t0__figures__paired_context_effects.png`](<artifacts/figure_gallery/ADMITTED_context_skin_pilot/analysis_smoke_t0__figures__paired_context_effects.png>)
-- [`artifacts/figure_gallery/ADMITTED_context_skin_pilot/analysis_smoke_t0__figures__paired_flip_directions.png`](<artifacts/figure_gallery/ADMITTED_context_skin_pilot/analysis_smoke_t0__figures__paired_flip_directions.png>)
-- [`artifacts/figure_gallery/ADMITTED_context_skin_pilot/analysis_smoke_t0__figures__planned_realistic_fictional_contrasts.png`](<artifacts/figure_gallery/ADMITTED_context_skin_pilot/analysis_smoke_t0__figures__planned_realistic_fictional_contrasts.png>)
-- [`artifacts/figure_gallery/ADMITTED_context_skin_pilot/analysis_temperature_robustness__figures__context_effect_temperature_change.png`](<artifacts/figure_gallery/ADMITTED_context_skin_pilot/analysis_temperature_robustness__figures__context_effect_temperature_change.png>)
-- [`artifacts/figure_gallery/ADMITTED_context_skin_pilot/analysis_temperature_robustness__figures__context_effect_temperature_stability.png`](<artifacts/figure_gallery/ADMITTED_context_skin_pilot/analysis_temperature_robustness__figures__context_effect_temperature_stability.png>)
-- [`artifacts/figure_gallery/ADMITTED_context_skin_pilot/analysis_temperature_robustness__figures__temperature_mapping_interaction_heatmap.png`](<artifacts/figure_gallery/ADMITTED_context_skin_pilot/analysis_temperature_robustness__figures__temperature_mapping_interaction_heatmap.png>)
-- [`artifacts/figure_gallery/ADMITTED_context_skin_pilot/analysis_temperature_robustness__figures__temperature_trajectory_agreement.png`](<artifacts/figure_gallery/ADMITTED_context_skin_pilot/analysis_temperature_robustness__figures__temperature_trajectory_agreement.png>)
-- [`artifacts/figure_gallery/ADMITTED_context_skin_pilot/analysis_temperature_robustness__figures__temperature_unsafe_delta_by_context.png`](<artifacts/figure_gallery/ADMITTED_context_skin_pilot/analysis_temperature_robustness__figures__temperature_unsafe_delta_by_context.png>)
-- [`artifacts/figure_gallery/ADMITTED_context_skin_pilot/context_recognition_t0_pilot__figures__context_recognition_audit.png`](<artifacts/figure_gallery/ADMITTED_context_skin_pilot/context_recognition_t0_pilot__figures__context_recognition_audit.png>)
-- [`artifacts/figure_gallery/ADMITTED_egt_reproduction/egt_chain_diagnostics.png`](<artifacts/figure_gallery/ADMITTED_egt_reproduction/egt_chain_diagnostics.png>)
-- [`artifacts/figure_gallery/ADMITTED_egt_reproduction/egt_expected_payoff_matrices.png`](<artifacts/figure_gallery/ADMITTED_egt_reproduction/egt_expected_payoff_matrices.png>)
-- [`artifacts/figure_gallery/ADMITTED_egt_reproduction/egt_stationary_strategy_composition.png`](<artifacts/figure_gallery/ADMITTED_egt_reproduction/egt_stationary_strategy_composition.png>)
-- [`artifacts/figure_gallery/ADMITTED_egt_reproduction/egt_strategy_lens_vs_llm.png`](<artifacts/figure_gallery/ADMITTED_egt_reproduction/egt_strategy_lens_vs_llm.png>)
-- [`artifacts/figure_gallery/ADMITTED_egt_reproduction/egt_theory_vs_llm_unsafe.png`](<artifacts/figure_gallery/ADMITTED_egt_reproduction/egt_theory_vs_llm_unsafe.png>)
-- [`artifacts/figure_gallery/ADMITTED_prompt_sensitivity_pilot/xai_auto_vector_encoder__xai_top_global_coefficients.png`](<artifacts/figure_gallery/ADMITTED_prompt_sensitivity_pilot/xai_auto_vector_encoder__xai_top_global_coefficients.png>)
-- [`artifacts/figure_gallery/ADMITTED_prompt_sensitivity_pilot/xai_auto_vector_encoder__xai_top_permutation_importance.png`](<artifacts/figure_gallery/ADMITTED_prompt_sensitivity_pilot/xai_auto_vector_encoder__xai_top_permutation_importance.png>)
-- [`artifacts/figure_gallery/ADMITTED_prompt_sensitivity_pilot/xai_auto_vector_encoder_no_response__xai_top_global_coefficients.png`](<artifacts/figure_gallery/ADMITTED_prompt_sensitivity_pilot/xai_auto_vector_encoder_no_response__xai_top_global_coefficients.png>)
-- [`artifacts/figure_gallery/ADMITTED_prompt_sensitivity_pilot/xai_auto_vector_encoder_no_response__xai_top_permutation_importance.png`](<artifacts/figure_gallery/ADMITTED_prompt_sensitivity_pilot/xai_auto_vector_encoder_no_response__xai_top_permutation_importance.png>)
-- [`artifacts/figure_gallery/expected_end_rounds.png`](<artifacts/figure_gallery/expected_end_rounds.png>)
-- [`artifacts/figure_gallery/n3_group_escalation_response.png`](<artifacts/figure_gallery/n3_group_escalation_response.png>)
-- [`artifacts/figure_gallery/n3_individual_unsafe_rate.png`](<artifacts/figure_gallery/n3_individual_unsafe_rate.png>)
-- [`artifacts/figure_gallery/n3_joint_action_composition.png`](<artifacts/figure_gallery/n3_joint_action_composition.png>)
-- [`artifacts/figure_gallery/n3_terminal_outcomes.png`](<artifacts/figure_gallery/n3_terminal_outcomes.png>)
-- [`artifacts/figure_gallery/NEW_00_overview/cross_pilot_canonical_unsafe_rate.png`](<artifacts/figure_gallery/NEW_00_overview/cross_pilot_canonical_unsafe_rate.png>)
-- [`artifacts/figure_gallery/NEW_01_persona/clustered_logit_across_specifications.png`](<artifacts/figure_gallery/NEW_01_persona/clustered_logit_across_specifications.png>)
-- [`artifacts/figure_gallery/NEW_01_persona/clustered_logit_forest_full_spec.png`](<artifacts/figure_gallery/NEW_01_persona/clustered_logit_forest_full_spec.png>)
-- [`artifacts/figure_gallery/NEW_01_persona/first_round_persistence.png`](<artifacts/figure_gallery/NEW_01_persona/first_round_persistence.png>)
-- [`artifacts/figure_gallery/NEW_01_persona/gap_bin_unsafe_rate.png`](<artifacts/figure_gallery/NEW_01_persona/gap_bin_unsafe_rate.png>)
-- [`artifacts/figure_gallery/NEW_01_persona/human_comparison_scorecard.png`](<artifacts/figure_gallery/NEW_01_persona/human_comparison_scorecard.png>)
-- [`artifacts/figure_gallery/NEW_01_persona/lag_profile_heatmap.png`](<artifacts/figure_gallery/NEW_01_persona/lag_profile_heatmap.png>)
-- [`artifacts/figure_gallery/NEW_01_persona/logit_jackknife_robustness.png`](<artifacts/figure_gallery/NEW_01_persona/logit_jackknife_robustness.png>)
-- [`artifacts/figure_gallery/NEW_01_persona/opponent_response_effect.png`](<artifacts/figure_gallery/NEW_01_persona/opponent_response_effect.png>)
-- [`artifacts/figure_gallery/NEW_01_persona/persona_contrasts_effect_sizes.png`](<artifacts/figure_gallery/NEW_01_persona/persona_contrasts_effect_sizes.png>)
-- [`artifacts/figure_gallery/NEW_01_persona/persona_unsafe_rate_by_risk.png`](<artifacts/figure_gallery/NEW_01_persona/persona_unsafe_rate_by_risk.png>)
-- [`artifacts/figure_gallery/NEW_01_persona/race_state_unsafe.png`](<artifacts/figure_gallery/NEW_01_persona/race_state_unsafe.png>)
-- [`artifacts/figure_gallery/NEW_01_persona/sample_quality_overview.png`](<artifacts/figure_gallery/NEW_01_persona/sample_quality_overview.png>)
-- [`artifacts/figure_gallery/NEW_01_persona/strategy_classification_shares.png`](<artifacts/figure_gallery/NEW_01_persona/strategy_classification_shares.png>)
-- [`artifacts/figure_gallery/NEW_01_persona/theory_vs_experiment_persona.png`](<artifacts/figure_gallery/NEW_01_persona/theory_vs_experiment_persona.png>)
-- [`artifacts/figure_gallery/NEW_01_persona/treatment_contrasts_effect_sizes.png`](<artifacts/figure_gallery/NEW_01_persona/treatment_contrasts_effect_sizes.png>)
-- [`artifacts/figure_gallery/NEW_01_persona/winner_loser_scatter.png`](<artifacts/figure_gallery/NEW_01_persona/winner_loser_scatter.png>)
-- [`artifacts/figure_gallery/NEW_02_surface/surface_family_boxplot.png`](<artifacts/figure_gallery/NEW_02_surface/surface_family_boxplot.png>)
-- [`artifacts/figure_gallery/NEW_02_surface/surface_first_round_direction_stacked.png`](<artifacts/figure_gallery/NEW_02_surface/surface_first_round_direction_stacked.png>)
-- [`artifacts/figure_gallery/NEW_02_surface/surface_variant_by_risk_heatmap.png`](<artifacts/figure_gallery/NEW_02_surface/surface_variant_by_risk_heatmap.png>)
-- [`artifacts/figure_gallery/NEW_02_surface/surface_variant_first_round_flip_forest.png`](<artifacts/figure_gallery/NEW_02_surface/surface_variant_first_round_flip_forest.png>)
-- [`artifacts/figure_gallery/NEW_02_surface/surface_variant_pilot_vs_smoke.png`](<artifacts/figure_gallery/NEW_02_surface/surface_variant_pilot_vs_smoke.png>)
-- [`artifacts/figure_gallery/NEW_02_surface/surface_variant_unsafe_rate_forest.png`](<artifacts/figure_gallery/NEW_02_surface/surface_variant_unsafe_rate_forest.png>)
-- [`artifacts/figure_gallery/NEW_03_game_understanding/behavior_setback_payoff_panels.png`](<artifacts/figure_gallery/NEW_03_game_understanding/behavior_setback_payoff_panels.png>)
-- [`artifacts/figure_gallery/NEW_03_game_understanding/behavior_unsafe_rate_by_condition_risk.png`](<artifacts/figure_gallery/NEW_03_game_understanding/behavior_unsafe_rate_by_condition_risk.png>)
-- [`artifacts/figure_gallery/NEW_03_game_understanding/probe_accuracy_heatmap.png`](<artifacts/figure_gallery/NEW_03_game_understanding/probe_accuracy_heatmap.png>)
-- [`artifacts/figure_gallery/NEW_03_game_understanding/probe_flip_rate_by_domain.png`](<artifacts/figure_gallery/NEW_03_game_understanding/probe_flip_rate_by_domain.png>)
-- [`artifacts/figure_gallery/NEW_03_game_understanding/probe_strict_vs_semantic.png`](<artifacts/figure_gallery/NEW_03_game_understanding/probe_strict_vs_semantic.png>)
-- [`artifacts/figure_gallery/NEW_04_context_supplement/context_skin_action_map_effect.png`](<artifacts/figure_gallery/NEW_04_context_supplement/context_skin_action_map_effect.png>)
-- [`artifacts/figure_gallery/NEW_04_context_supplement/context_skin_fixed_state_paired_context.png`](<artifacts/figure_gallery/NEW_04_context_supplement/context_skin_fixed_state_paired_context.png>)
-- [`artifacts/figure_gallery/NEW_04_context_supplement/context_skin_outcome_rates.png`](<artifacts/figure_gallery/NEW_04_context_supplement/context_skin_outcome_rates.png>)
-- [`artifacts/figure_gallery/NEW_04_context_supplement/context_skin_round_trajectory.png`](<artifacts/figure_gallery/NEW_04_context_supplement/context_skin_round_trajectory.png>)
-- [`artifacts/figure_gallery/NEW_04_context_supplement/context_skin_t0_vs_t07_scatter.png`](<artifacts/figure_gallery/NEW_04_context_supplement/context_skin_t0_vs_t07_scatter.png>)
-- [`artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig01_baseline_risk_response.pdf`](<artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig01_baseline_risk_response.pdf>)
-- [`artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig01_baseline_risk_response.png`](<artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig01_baseline_risk_response.png>)
-- [`artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig01_baseline_risk_response.svg`](<artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig01_baseline_risk_response.svg>)
-- [`artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig01b_protocol_robustness_baselines.pdf`](<artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig01b_protocol_robustness_baselines.pdf>)
-- [`artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig01b_protocol_robustness_baselines.png`](<artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig01b_protocol_robustness_baselines.png>)
-- [`artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig01b_protocol_robustness_baselines.svg`](<artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig01b_protocol_robustness_baselines.svg>)
-- [`artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig02_initialization_and_dynamics.pdf`](<artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig02_initialization_and_dynamics.pdf>)
-- [`artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig02_initialization_and_dynamics.png`](<artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig02_initialization_and_dynamics.png>)
-- [`artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig02_initialization_and_dynamics.svg`](<artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig02_initialization_and_dynamics.svg>)
-- [`artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig03_conditional_dynamics.pdf`](<artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig03_conditional_dynamics.pdf>)
-- [`artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig03_conditional_dynamics.png`](<artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig03_conditional_dynamics.png>)
-- [`artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig03_conditional_dynamics.svg`](<artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig03_conditional_dynamics.svg>)
-- [`artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig04_strategy_composition.pdf`](<artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig04_strategy_composition.pdf>)
-- [`artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig04_strategy_composition.png`](<artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig04_strategy_composition.png>)
-- [`artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig04_strategy_composition.svg`](<artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig04_strategy_composition.svg>)
-- [`artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig05_safety_payoff_frontier.pdf`](<artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig05_safety_payoff_frontier.pdf>)
-- [`artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig05_safety_payoff_frontier.png`](<artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig05_safety_payoff_frontier.png>)
-- [`artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig05_safety_payoff_frontier.svg`](<artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig05_safety_payoff_frontier.svg>)
-- [`artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig06_persona_effects.pdf`](<artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig06_persona_effects.pdf>)
-- [`artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig06_persona_effects.png`](<artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig06_persona_effects.png>)
-- [`artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig06_persona_effects.svg`](<artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig06_persona_effects.svg>)
-- [`artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig07_persona_role_asymmetry.pdf`](<artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig07_persona_role_asymmetry.pdf>)
-- [`artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig07_persona_role_asymmetry.png`](<artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig07_persona_role_asymmetry.png>)
-- [`artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig07_persona_role_asymmetry.svg`](<artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig07_persona_role_asymmetry.svg>)
-- [`artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig08_gpt_risk_persona_surfaces.pdf`](<artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig08_gpt_risk_persona_surfaces.pdf>)
-- [`artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig08_gpt_risk_persona_surfaces.png`](<artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig08_gpt_risk_persona_surfaces.png>)
-- [`artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig08_gpt_risk_persona_surfaces.svg`](<artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig08_gpt_risk_persona_surfaces.svg>)
-- [`artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig09_gemini_risk_persona_partial.pdf`](<artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig09_gemini_risk_persona_partial.pdf>)
-- [`artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig09_gemini_risk_persona_partial.png`](<artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig09_gemini_risk_persona_partial.png>)
-- [`artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig09_gemini_risk_persona_partial.svg`](<artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig09_gemini_risk_persona_partial.svg>)
-- [`artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig10_surface_sensitivity.pdf`](<artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig10_surface_sensitivity.pdf>)
-- [`artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig10_surface_sensitivity.png`](<artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig10_surface_sensitivity.png>)
-- [`artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig10_surface_sensitivity.svg`](<artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig10_surface_sensitivity.svg>)
-- [`artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig11_context_temperature_diagnostic.pdf`](<artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig11_context_temperature_diagnostic.pdf>)
-- [`artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig11_context_temperature_diagnostic.png`](<artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig11_context_temperature_diagnostic.png>)
-- [`artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig11_context_temperature_diagnostic.svg`](<artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig11_context_temperature_diagnostic.svg>)
-- [`artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig12_evidence_inventory.pdf`](<artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig12_evidence_inventory.pdf>)
-- [`artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig12_evidence_inventory.png`](<artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig12_evidence_inventory.png>)
-- [`artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig12_evidence_inventory.svg`](<artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig12_evidence_inventory.svg>)
-- [`artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig13_repeat_run_stability.pdf`](<artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig13_repeat_run_stability.pdf>)
-- [`artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig13_repeat_run_stability.png`](<artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig13_repeat_run_stability.png>)
-- [`artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig13_repeat_run_stability.svg`](<artifacts/figure_gallery/NEW_05_two_player_paper_analysis/fig13_repeat_run_stability.svg>)
-- [`artifacts/figure_gallery/pair_reciprocity.png`](<artifacts/figure_gallery/pair_reciprocity.png>)
-- [`artifacts/figure_gallery/pair_stage_payoff.png`](<artifacts/figure_gallery/pair_stage_payoff.png>)
-- [`artifacts/figure_gallery/pair_unsafe_rate.png`](<artifacts/figure_gallery/pair_unsafe_rate.png>)
-- [`artifacts/figure_gallery/pair_unsafe_trajectory.png`](<artifacts/figure_gallery/pair_unsafe_trajectory.png>)
-- [`artifacts/figure_gallery/redraw/figures/figA_human_reference.pdf`](<artifacts/figure_gallery/redraw/figures/figA_human_reference.pdf>)
-- [`artifacts/figure_gallery/redraw/figures/figA_human_reference.png`](<artifacts/figure_gallery/redraw/figures/figA_human_reference.png>)
-- [`artifacts/figure_gallery/redraw/figures/figB2_surface_flip_direction.pdf`](<artifacts/figure_gallery/redraw/figures/figB2_surface_flip_direction.pdf>)
-- [`artifacts/figure_gallery/redraw/figures/figB2_surface_flip_direction.png`](<artifacts/figure_gallery/redraw/figures/figB2_surface_flip_direction.png>)
-- [`artifacts/figure_gallery/redraw/figures/figB_surface_wording.pdf`](<artifacts/figure_gallery/redraw/figures/figB_surface_wording.pdf>)
-- [`artifacts/figure_gallery/redraw/figures/figB_surface_wording.png`](<artifacts/figure_gallery/redraw/figures/figB_surface_wording.png>)
-- [`artifacts/figure_gallery/redraw/figures/figC_opponent_contingency.pdf`](<artifacts/figure_gallery/redraw/figures/figC_opponent_contingency.pdf>)
-- [`artifacts/figure_gallery/redraw/figures/figC_opponent_contingency.png`](<artifacts/figure_gallery/redraw/figures/figC_opponent_contingency.png>)
-- [`artifacts/figure_gallery/redraw/figures/figD_race_position.pdf`](<artifacts/figure_gallery/redraw/figures/figD_race_position.pdf>)
-- [`artifacts/figure_gallery/redraw/figures/figD_race_position.png`](<artifacts/figure_gallery/redraw/figures/figD_race_position.png>)
-- [`artifacts/figure_gallery/redraw/figures/figE_baseline_risk_response.pdf`](<artifacts/figure_gallery/redraw/figures/figE_baseline_risk_response.pdf>)
-- [`artifacts/figure_gallery/redraw/figures/figE_baseline_risk_response.png`](<artifacts/figure_gallery/redraw/figures/figE_baseline_risk_response.png>)
-- [`artifacts/figure_gallery/redraw/figures/figF_repeat_run_stability.pdf`](<artifacts/figure_gallery/redraw/figures/figF_repeat_run_stability.pdf>)
-- [`artifacts/figure_gallery/redraw/figures/figF_repeat_run_stability.png`](<artifacts/figure_gallery/redraw/figures/figF_repeat_run_stability.png>)
-- [`artifacts/figure_gallery/redraw/figures/figG_comprehension_audit.pdf`](<artifacts/figure_gallery/redraw/figures/figG_comprehension_audit.pdf>)
-- [`artifacts/figure_gallery/redraw/figures/figG_comprehension_audit.png`](<artifacts/figure_gallery/redraw/figures/figG_comprehension_audit.png>)
-- [`artifacts/figure_gallery/SELECTED_FOR_PAPER/01_human_comparison_scorecard.png`](<artifacts/figure_gallery/SELECTED_FOR_PAPER/01_human_comparison_scorecard.png>)
-- [`artifacts/figure_gallery/SELECTED_FOR_PAPER/02_clustered_logit_forest_full_spec.png`](<artifacts/figure_gallery/SELECTED_FOR_PAPER/02_clustered_logit_forest_full_spec.png>)
-- [`artifacts/figure_gallery/SELECTED_FOR_PAPER/03_surface_variant_unsafe_rate_forest.png`](<artifacts/figure_gallery/SELECTED_FOR_PAPER/03_surface_variant_unsafe_rate_forest.png>)
-- [`artifacts/figure_gallery/SELECTED_FOR_PAPER/04_x7_aggression_forest_plot.png`](<artifacts/figure_gallery/SELECTED_FOR_PAPER/04_x7_aggression_forest_plot.png>)
-- [`artifacts/figure_gallery/SELECTED_FOR_PAPER/05_x10a_n3_rank_response.png`](<artifacts/figure_gallery/SELECTED_FOR_PAPER/05_x10a_n3_rank_response.png>)
-- [`artifacts/figure_gallery/SELECTED_FOR_PAPER/06_fig01_baseline_risk_response.pdf`](<artifacts/figure_gallery/SELECTED_FOR_PAPER/06_fig01_baseline_risk_response.pdf>)
-- [`artifacts/figure_gallery/SELECTED_FOR_PAPER/06_fig01_baseline_risk_response.png`](<artifacts/figure_gallery/SELECTED_FOR_PAPER/06_fig01_baseline_risk_response.png>)
-- [`artifacts/figure_gallery/SELECTED_FOR_PAPER/06_fig01_baseline_risk_response.svg`](<artifacts/figure_gallery/SELECTED_FOR_PAPER/06_fig01_baseline_risk_response.svg>)
-- [`artifacts/figure_gallery/SELECTED_FOR_PAPER/07_fig13_repeat_run_stability.pdf`](<artifacts/figure_gallery/SELECTED_FOR_PAPER/07_fig13_repeat_run_stability.pdf>)
-- [`artifacts/figure_gallery/SELECTED_FOR_PAPER/07_fig13_repeat_run_stability.png`](<artifacts/figure_gallery/SELECTED_FOR_PAPER/07_fig13_repeat_run_stability.png>)
-- [`artifacts/figure_gallery/SELECTED_FOR_PAPER/07_fig13_repeat_run_stability.svg`](<artifacts/figure_gallery/SELECTED_FOR_PAPER/07_fig13_repeat_run_stability.svg>)
-- [`artifacts/figure_gallery/SELECTED_FOR_PAPER/08_comprehension_admission.png`](<artifacts/figure_gallery/SELECTED_FOR_PAPER/08_comprehension_admission.png>)
-- [`artifacts/figure_gallery/x10a_n3_rank_response.png`](<artifacts/figure_gallery/x10a_n3_rank_response.png>)
-- [`artifacts/figure_gallery/x10b_joint_action_dynamics.png`](<artifacts/figure_gallery/x10b_joint_action_dynamics.png>)
-- [`artifacts/figure_gallery/x11_unsafe_rate_matrix_heatmap.png`](<artifacts/figure_gallery/x11_unsafe_rate_matrix_heatmap.png>)
-- [`artifacts/figure_gallery/x1_unsafe_rate_theory_overlay.png`](<artifacts/figure_gallery/x1_unsafe_rate_theory_overlay.png>)
-- [`artifacts/figure_gallery/x2_conditional_response_heatmap.png`](<artifacts/figure_gallery/x2_conditional_response_heatmap.png>)
-- [`artifacts/figure_gallery/x3_strategy_classification.png`](<artifacts/figure_gallery/x3_strategy_classification.png>)
-- [`artifacts/figure_gallery/x4_progress_gap_trajectory.png`](<artifacts/figure_gallery/x4_progress_gap_trajectory.png>)
-- [`artifacts/figure_gallery/x5_final_payoff_distribution.png`](<artifacts/figure_gallery/x5_final_payoff_distribution.png>)
-- [`artifacts/figure_gallery/x6_outcome_rates.png`](<artifacts/figure_gallery/x6_outcome_rates.png>)
-- [`artifacts/figure_gallery/x7_aggression_forest_plot.png`](<artifacts/figure_gallery/x7_aggression_forest_plot.png>)
-- [`artifacts/figure_gallery/x8_logit_coefficients.png`](<artifacts/figure_gallery/x8_logit_coefficients.png>)
-- [`artifacts/figure_gallery/x9_theory_beta_fit.png`](<artifacts/figure_gallery/x9_theory_beta_fit.png>)
+- [`_qa/supplementary_page4/page-4.png`](<_qa/supplementary_page4/page-4.png>)
 - [`artifacts/publication/ai_race_paper.pdf`](<artifacts/publication/ai_race_paper.pdf>)
 - [`artifacts/publication/ai_race_research_deck.pdf`](<artifacts/publication/ai_race_research_deck.pdf>)
 - [`artifacts/publication/ai_race_supplementary.pdf`](<artifacts/publication/ai_race_supplementary.pdf>)
@@ -419,6 +244,30 @@ Every rendered chart, publication PDF, and interactive HTML surface in the canon
 - [`derived/two_player_paper_analysis/figures/fig13_repeat_run_stability.pdf`](<derived/two_player_paper_analysis/figures/fig13_repeat_run_stability.pdf>)
 - [`derived/two_player_paper_analysis/figures/fig13_repeat_run_stability.png`](<derived/two_player_paper_analysis/figures/fig13_repeat_run_stability.png>)
 - [`derived/two_player_paper_analysis/figures/fig13_repeat_run_stability.svg`](<derived/two_player_paper_analysis/figures/fig13_repeat_run_stability.svg>)
+- [`frontier/egt_frontier_comparison/egt_chain_diagnostics.pdf`](<frontier/egt_frontier_comparison/egt_chain_diagnostics.pdf>)
+- [`frontier/egt_frontier_comparison/egt_chain_diagnostics.png`](<frontier/egt_frontier_comparison/egt_chain_diagnostics.png>)
+- [`frontier/egt_frontier_comparison/egt_expected_payoff_matrices.pdf`](<frontier/egt_frontier_comparison/egt_expected_payoff_matrices.pdf>)
+- [`frontier/egt_frontier_comparison/egt_expected_payoff_matrices.png`](<frontier/egt_frontier_comparison/egt_expected_payoff_matrices.png>)
+- [`frontier/egt_frontier_comparison/egt_stationary_strategy_composition.pdf`](<frontier/egt_frontier_comparison/egt_stationary_strategy_composition.pdf>)
+- [`frontier/egt_frontier_comparison/egt_stationary_strategy_composition.png`](<frontier/egt_frontier_comparison/egt_stationary_strategy_composition.png>)
+- [`frontier/egt_frontier_comparison/egt_strategy_lens_vs_llm.pdf`](<frontier/egt_frontier_comparison/egt_strategy_lens_vs_llm.pdf>)
+- [`frontier/egt_frontier_comparison/egt_strategy_lens_vs_llm.png`](<frontier/egt_frontier_comparison/egt_strategy_lens_vs_llm.png>)
+- [`frontier/egt_frontier_comparison/egt_theory_vs_llm_unsafe.pdf`](<frontier/egt_frontier_comparison/egt_theory_vs_llm_unsafe.pdf>)
+- [`frontier/egt_frontier_comparison/egt_theory_vs_llm_unsafe.png`](<frontier/egt_frontier_comparison/egt_theory_vs_llm_unsafe.png>)
+- [`frontier/egt_frontier_comparison_v2/egt_chain_diagnostics.pdf`](<frontier/egt_frontier_comparison_v2/egt_chain_diagnostics.pdf>)
+- [`frontier/egt_frontier_comparison_v2/egt_chain_diagnostics.png`](<frontier/egt_frontier_comparison_v2/egt_chain_diagnostics.png>)
+- [`frontier/egt_frontier_comparison_v2/egt_expected_payoff_matrices.pdf`](<frontier/egt_frontier_comparison_v2/egt_expected_payoff_matrices.pdf>)
+- [`frontier/egt_frontier_comparison_v2/egt_expected_payoff_matrices.png`](<frontier/egt_frontier_comparison_v2/egt_expected_payoff_matrices.png>)
+- [`frontier/egt_frontier_comparison_v2/egt_frontier_insights.pdf`](<frontier/egt_frontier_comparison_v2/egt_frontier_insights.pdf>)
+- [`frontier/egt_frontier_comparison_v2/egt_frontier_insights.png`](<frontier/egt_frontier_comparison_v2/egt_frontier_insights.png>)
+- [`frontier/egt_frontier_comparison_v2/egt_frontier_invasion.pdf`](<frontier/egt_frontier_comparison_v2/egt_frontier_invasion.pdf>)
+- [`frontier/egt_frontier_comparison_v2/egt_frontier_invasion.png`](<frontier/egt_frontier_comparison_v2/egt_frontier_invasion.png>)
+- [`frontier/egt_frontier_comparison_v2/egt_stationary_strategy_composition.pdf`](<frontier/egt_frontier_comparison_v2/egt_stationary_strategy_composition.pdf>)
+- [`frontier/egt_frontier_comparison_v2/egt_stationary_strategy_composition.png`](<frontier/egt_frontier_comparison_v2/egt_stationary_strategy_composition.png>)
+- [`frontier/egt_frontier_comparison_v2/egt_strategy_lens_vs_llm.pdf`](<frontier/egt_frontier_comparison_v2/egt_strategy_lens_vs_llm.pdf>)
+- [`frontier/egt_frontier_comparison_v2/egt_strategy_lens_vs_llm.png`](<frontier/egt_frontier_comparison_v2/egt_strategy_lens_vs_llm.png>)
+- [`frontier/egt_frontier_comparison_v2/egt_theory_vs_llm_unsafe.pdf`](<frontier/egt_frontier_comparison_v2/egt_theory_vs_llm_unsafe.pdf>)
+- [`frontier/egt_frontier_comparison_v2/egt_theory_vs_llm_unsafe.png`](<frontier/egt_frontier_comparison_v2/egt_theory_vs_llm_unsafe.png>)
 - [`impact_upgrade/demo_mobile_final.png`](<impact_upgrade/demo_mobile_final.png>)
 - [`impact_upgrade/demo_playing_final.png`](<impact_upgrade/demo_playing_final.png>)
 - [`impact_upgrade/figures/behavior_payoff_tradeoff.pdf`](<impact_upgrade/figures/behavior_payoff_tradeoff.pdf>)
@@ -581,10 +430,11 @@ Every rendered chart, publication PDF, and interactive HTML surface in the canon
 
 | Evidence class | Manifest records |
 |---|---:|
-| `diagnostic` | 22 |
-| `failed-or-incomplete` | 9 |
+| `confirmatory-unadmitted` | 9 |
+| `diagnostic` | 36 |
+| `failed-or-incomplete` | 26 |
 | `pilot` | 402 |
-| `unclassified` | 18 |
+| `unclassified` | 22 |
 
 ## Run and analysis manifests
 
@@ -599,10 +449,38 @@ Every rendered chart, publication PDF, and interactive HTML surface in the canon
 | `results/derived/agent_check_persona/analysis_manifest.json` | recorded | unclassified |  |  |  |
 | `results/derived/two_player_paper_analysis/analysis_manifest.json` | complete | diagnostic |  |  |  |
 | `results/failed_runs/comprehension_reaudit_v2_greennode_66f1029/allocator_batch8/run_manifest.json` | failed | failed-or-incomplete |  |  |  |
+| `results/frontier/admission_campaign/ai-race-frontier-admission/1/claude-sonnet-5-default/1343115/results/ai_race_frontier_admission/anthropic-claude-sonnet-5-default/run_manifest.json` | completed | diagnostic |  |  |  |
+| `results/frontier/admission_campaign/ai-race-frontier-admission/1/deepseek-r1-0528/1343117/results/ai_race_frontier_admission/deepseek-ai-deepseek-r1-0528/run_manifest.json` | failed | failed-or-incomplete |  |  |  |
+| `results/frontier/admission_campaign/ai-race-frontier-admission/1/gemini-3-flash-preview/1343113/results/ai_race_frontier_admission/google-gemini-3-flash-preview/run_manifest.json` | completed | diagnostic |  |  |  |
+| `results/frontier/admission_campaign/ai-race-frontier-admission/1/gemini-3.1-flash-lite-preview/1343114/results/ai_race_frontier_admission/google-gemini-3.1-flash-lite-preview/run_manifest.json` | completed | diagnostic |  |  |  |
+| `results/frontier/admission_campaign/ai-race-frontier-admission/1/gemma-4-26b-a4b-it/1343120/results/ai_race_frontier_admission/google-gemma-4-26b-a4b/run_manifest.json` | failed | failed-or-incomplete |  |  |  |
+| `results/frontier/admission_campaign/ai-race-frontier-admission/1/gpt-5.4-nano-2026-03-17/1343116/results/ai_race_frontier_admission/openai-gpt-5.4-nano-2026-03-17/run_manifest.json` | completed | diagnostic |  |  |  |
+| `results/frontier/admission_campaign/ai-race-frontier-admission/1/gpt-oss-120b/1343119/results/ai_race_frontier_admission/openai-gpt-oss-120b/run_manifest.json` | failed | failed-or-incomplete |  |  |  |
+| `results/frontier/admission_campaign/ai-race-frontier-admission/1/qwen3-next-80b-a3b-instruct/1343118/results/ai_race_frontier_admission/qwen-qwen3-next-80b-a3b-instruct/run_manifest.json` | failed | failed-or-incomplete |  |  |  |
+| `results/frontier/admission_campaign_v5/ai-race-frontier-admission/5/claude-sonnet-5-default/1343312/results/ai_race_frontier_admission/anthropic-claude-sonnet-5-default/run_manifest.json` | completed | diagnostic |  |  |  |
+| `results/frontier/admission_campaign_v5/ai-race-frontier-admission/5/deepseek-r1-0528/1343314/results/ai_race_frontier_admission/deepseek-ai-deepseek-r1-0528/run_manifest.json` | failed | failed-or-incomplete |  |  |  |
+| `results/frontier/admission_campaign_v5/ai-race-frontier-admission/5/gemini-3-flash-preview/1343310/results/ai_race_frontier_admission/google-gemini-3-flash-preview/run_manifest.json` | completed | diagnostic |  |  |  |
+| `results/frontier/admission_campaign_v5/ai-race-frontier-admission/5/gemini-3.1-flash-lite-preview/1343311/results/ai_race_frontier_admission/google-gemini-3.1-flash-lite-preview/run_manifest.json` | completed | diagnostic |  |  |  |
+| `results/frontier/admission_campaign_v5/ai-race-frontier-admission/5/gemma-4-26b-a4b-it/1343317/results/ai_race_frontier_admission/google-gemma-4-26b-a4b/run_manifest.json` | failed | failed-or-incomplete |  |  |  |
+| `results/frontier/admission_campaign_v5/ai-race-frontier-admission/5/gpt-5.4-nano-2026-03-17/1343313/results/ai_race_frontier_admission/openai-gpt-5.4-nano-2026-03-17/run_manifest.json` | completed | diagnostic |  |  |  |
+| `results/frontier/admission_campaign_v5/ai-race-frontier-admission/5/gpt-oss-120b/1343316/results/ai_race_frontier_admission/openai-gpt-oss-120b/run_manifest.json` | failed | failed-or-incomplete |  |  |  |
+| `results/frontier/admission_campaign_v5/ai-race-frontier-admission/5/qwen3-next-80b-a3b-instruct/1343315/results/ai_race_frontier_admission/qwen-qwen3-next-80b-a3b-instruct/run_manifest.json` | failed | failed-or-incomplete |  |  |  |
+| `results/frontier/admission_confirmatory/google-gemini-3-flash-preview/run_manifest.json` | completed | diagnostic |  |  |  |
+| `results/frontier/admission_smoke/anthropic-claude-sonnet-5-default/run_manifest.json` | completed | diagnostic |  |  |  |
+| `results/frontier/admission_smoke/deepseek-ai-deepseek-r1-0528/run_manifest.json` | failed | failed-or-incomplete |  |  |  |
+| `results/frontier/admission_smoke/google-gemini-3-flash-preview/run_manifest.json` | completed | diagnostic |  |  |  |
+| `results/frontier/admission_smoke/google-gemini-3.1-flash-lite-preview/run_manifest.json` | completed | diagnostic |  |  |  |
+| `results/frontier/admission_smoke/ibm-granite-4.0-h-small/run_manifest.json` | failed | failed-or-incomplete |  |  |  |
+| `results/frontier/admission_smoke/openai-gpt-5.4-nano-2026-03-17/run_manifest.json` | completed | diagnostic |  |  |  |
+| `results/frontier/admission_smoke/openai-gpt-oss-120b/run_manifest.json` | failed | failed-or-incomplete |  |  |  |
+| `results/frontier/admission_smoke/qwen-qwen3-next-80b-a3b-instruct/run_manifest.json` | failed | failed-or-incomplete |  |  |  |
 | `results/frontier/api_5games_allrisk/google-gemini-3-flash-preview/run_manifest.json` | completed | pilot | google/gemini-3-flash-preview | 15 | 222 |
 | `results/frontier/baseline/google-gemini-3-flash-preview/run_manifest.json` | completed | pilot | google/gemini-3-flash-preview | 30 | 558 |
 | `results/frontier/baseline/google-gemini-3.1-flash-lite-preview/run_manifest.json` | completed | pilot | google/gemini-3.1-flash-lite-preview | 30 | 558 |
 | `results/frontier/baseline/google-gemini-3.5-flash-lite/run_manifest.json` | completed | pilot | google/gemini-3.5-flash-lite | 30 | 558 |
+| `results/frontier/baseline_campaign_v2/ai-race-baseline/2/claude-sonnet-5-default/1371961/results/ai_race_baseline/run_manifest.json` | completed | confirmatory-unadmitted | anthropic-claude-sonnet-5-default | 30 | 558 |
+| `results/frontier/baseline_campaign_v2/ai-race-baseline/2/gemini-3-flash-preview/1371960/results/ai_race_baseline/run_manifest.json` | completed | confirmatory-unadmitted | google-gemini-3-flash-preview | 30 | 558 |
+| `results/frontier/baseline_campaign_v2/creation_smoke/ai-race-baseline/2/gemini-3-flash-preview/1343605/results/ai_race_baseline/run_manifest.json` | completed | confirmatory-unadmitted | google-gemini-3-flash-preview | 30 | 558 |
 | `results/frontier/bedrock/baseline/us.anthropic.claude-opus-5/run_manifest.json` | completed | pilot | us.anthropic.claude-opus-5 | 30 | 558 |
 | `results/frontier/bedrock/baseline/us.anthropic.claude-sonnet-5/run_manifest.json` | completed | pilot | us.anthropic.claude-sonnet-5 | 30 | 558 |
 | `results/frontier/bedrock/persona/R0_neutral/us.anthropic.claude-opus-5/run_manifest.json` | completed | pilot | us.anthropic.claude-opus-5 | 30 | 558 |
@@ -779,6 +657,12 @@ Every rendered chart, publication PDF, and interactive HTML surface in the canon
 | `results/frontier/bedrock_mantle/terra/persona/S_AC_adv_coop/openai.gpt-5.6-terra/run_manifest.json` | completed | pilot | openai.gpt-5.6-terra | 30 | 558 |
 | `results/frontier/bedrock_mantle/terra/persona/S_CA_coop_adv/openai.gpt-5.6-terra/run_manifest.json` | completed | pilot | openai.gpt-5.6-terra | 30 | 558 |
 | `results/frontier/bedrock_mantle/terra/persona/S_CC_coop_coop/openai.gpt-5.6-terra/run_manifest.json` | completed | pilot | openai.gpt-5.6-terra | 30 | 558 |
+| `results/frontier/context_mapping_campaign_v3/ai-race-frontier-context-mapping/3/gemini-3-flash-preview/1373757/results/ai_race_context_mapping/google-gemini-3-flash-preview/run_manifest.json` | completed | diagnostic |  | 120 | 2232 |
+| `results/frontier/egt_frontier_comparison/reconstruction_manifest.json` | recorded | unclassified |  |  |  |
+| `results/frontier/egt_frontier_comparison_v2/reconstruction_manifest.json` | recorded | unclassified |  |  |  |
+| `results/frontier/kbench/confirmatory/gemini-3-flash-preview/analysis/analysis_manifest.json` | recorded | unclassified |  |  |  |
+| `results/frontier/kbench/confirmatory/gemini-3-flash-preview/run_manifest.json` | completed | confirmatory-unadmitted | google-gemini-3-flash-preview | 30 | 558 |
+| `results/frontier/nplayer_failed_attempt_1377133/ai-race-nplayer-baseline-n3/1/gemini-3-flash-preview/1377133/results/ai_race_nplayer_baseline_n3/google-gemini-3-flash-preview/run_manifest.json` | failed | failed-or-incomplete | google-gemini-3-flash-preview | 0 | 0 |
 | `results/frontier/nvidia/baseline/deepseek-ai-deepseek-v4-flash/run_manifest.json` | failed | failed-or-incomplete | deepseek-ai/deepseek-v4-flash | 0 | 0 |
 | `results/frontier/nvidia/persona/R0_neutral/deepseek-ai-deepseek-v4-flash/run_manifest.json` | running | unclassified | deepseek-ai/deepseek-v4-flash | 0 | 0 |
 | `results/frontier/openai/baseline/gpt-5-nano/run_manifest.json` | completed | pilot | gpt-5-nano | 30 | 558 |
@@ -926,6 +810,16 @@ Every rendered chart, publication PDF, and interactive HTML surface in the canon
 | `results/kaggle-benchmarks/_task-creation/ai-race-nplayer-baseline-n3-v1/results/ai_race_nplayer_baseline_n3/google-gemini-3-flash-preview/run_manifest.json` | failed | failed-or-incomplete | google-gemini-3-flash-preview | 0 | 540 |
 | `results/kaggle-benchmarks/ai-race-baseline/4/claude-haiku-4-5-20251001/357889/results/ai_race_baseline/run_manifest.json` | protocol_failed | failed-or-incomplete | anthropic-claude-haiku-4-5-20251001 | 9 | 126 |
 | `results/kaggle-benchmarks/ai-race-baseline/7/claude-haiku-4-5-20251001/357935/results/ai_race_baseline/run_manifest.json` | completed | pilot | anthropic-claude-haiku-4-5-20251001 | 9 | 126 |
+| `results/kaggle-benchmarks/frontier_full_20260908/admission_v6/all/ai-race-frontier-admission/6/gemma-4-31b-it/1394180/results/ai_race_frontier_admission/google-gemma-4-31b/run_manifest.json` | failed | failed-or-incomplete |  |  |  |
+| `results/kaggle-benchmarks/frontier_full_20260908/admission_v6/all/ai-race-frontier-admission/6/glm-5/1394178/results/ai_race_frontier_admission/zai-glm-5/run_manifest.json` | failed | failed-or-incomplete |  |  |  |
+| `results/kaggle-benchmarks/frontier_full_20260908/admission_v6/all/ai-race-frontier-admission/6/gpt-oss-120b/1394252/results/ai_race_frontier_admission/openai-gpt-oss-120b/run_manifest.json` | failed | failed-or-incomplete |  |  |  |
+| `results/kaggle-benchmarks/frontier_full_20260908/admission_v6/all/ai-race-frontier-admission/6/grok-4.6/1394179/results/ai_race_frontier_admission/xai-grok-4.6/run_manifest.json` | failed | failed-or-incomplete |  |  |  |
+| `results/kaggle-benchmarks/frontier_full_20260908/baseline_v3/gemini-3-flash/ai-race-baseline/3/gemini-3-flash-preview/1395291/results/ai_race_baseline/run_manifest.json` | completed | confirmatory-unadmitted | google-gemini-3-flash-preview | 30 | 558 |
+| `results/kaggle-benchmarks/frontier_full_20260908/baseline_v3/gpt-5.4/ai-race-baseline/3/gpt-5.4-2026-03-05/1460634/results/ai_race_baseline/run_manifest.json` | completed | confirmatory-unadmitted | openai-gpt-5.4-2026-03-05 | 30 | 558 |
+| `results/kaggle-benchmarks/frontier_full_20260908/baseline_v3/gpt-5.4-mini/ai-race-baseline/3/gpt-5.4-mini-2026-03-17/1460633/results/ai_race_baseline/run_manifest.json` | completed | confirmatory-unadmitted | openai-gpt-5.4-mini-2026-03-17 | 30 | 558 |
+| `results/kaggle-benchmarks/frontier_full_20260908/baseline_v3/gpt-5.4-nano/ai-race-baseline/3/gpt-5.4-nano-2026-03-17/1460632/results/ai_race_baseline/run_manifest.json` | completed | confirmatory-unadmitted | openai-gpt-5.4-nano-2026-03-17 | 30 | 558 |
+| `results/kaggle-benchmarks/frontier_full_20260908/baseline_v3/gpt-5.5/ai-race-baseline/3/gpt-5.5-2026-04-23/1460635/results/ai_race_baseline/run_manifest.json` | completed | confirmatory-unadmitted | openai-gpt-5.5-2026-04-23 | 30 | 558 |
+| `results/kaggle-benchmarks/frontier_full_20260908/derived/ai_race_analysis/analysis_manifest.json` | recorded | unclassified |  |  |  |
 | `results/nplayer/nplayer-riskaware/qwen2.5-14b-instruct/persona_nplayer_baseline_risk_1_n3/run_manifest.json` | completed | pilot | qwen2.5-14b-instruct | 6 | 99 |
 | `results/nplayer/nplayer-riskaware/qwen2.5-14b-instruct/persona_nplayer_baseline_risk_2_n3/run_manifest.json` | completed | pilot | qwen2.5-14b-instruct | 6 | 99 |
 | `results/nplayer/nplayer-riskaware/qwen2.5-14b-instruct/persona_nplayer_baseline_risk_3_n3/run_manifest.json` | completed | pilot | qwen2.5-14b-instruct | 6 | 99 |
