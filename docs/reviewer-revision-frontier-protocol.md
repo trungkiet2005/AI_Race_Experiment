@@ -62,6 +62,38 @@ provided. Account rotation must never be used to bypass a quota or private-input
 restriction; separate authorised accounts must receive separate task versions
 and separate output directories.
 
+## Protocol amendments
+
+Amendments are recorded here rather than applied silently, so a reader can see
+what changed, when, and which artefacts each version covers.
+
+### 2026-09-09 - route-resolved reasoning budget
+
+Both frontier tasks previously passed `reasoning="none"` to every route. Two
+route families reject the reasoning-budget *argument itself* rather than its
+value: naming `reasoning` at all returns HTTP 400 "Request contains an invalid
+argument" before a single probe or decision is sampled. That is a transport
+contract mismatch, not evidence about the model, and it silently removed
+`google/gemini-3.5-flash-lite` from the audit even though the same route answers
+the identical probe bank in other tasks on this identity.
+
+The tasks now resolve the reasoning budget per route and omit the parameter
+entirely for the routes that refuse it, listed in the task source. Nothing else
+changed: the mechanism, canonical prompt, probe bank, parser, seed streams,
+temperature, and token cap are untouched.
+
+Scope of the amendment:
+
+- For every route whose resolved contract is still `reasoning="none"`, the
+  outgoing request is byte-identical to the earlier runs, so those artefacts
+  stay poolable with the earlier task versions.
+- For a route whose resolved contract is `reasoning=null`, the manifest records
+  that value. The difference is therefore visible in the artefact rather than
+  inferred, and any table that pools such a route must say so.
+
+Affected task versions: `ai-race-frontier-admission` version 8 and
+`ai-race-baseline` version 4 onward.
+
 ## Stopping rule
 
 The revision does not rewrite the paper around a failed or partial campaign.

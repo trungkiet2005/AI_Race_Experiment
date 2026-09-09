@@ -59,6 +59,8 @@ STAGE_PAYOFF = {
 
 TEMPERATURE = 0.7
 REASONING = "none"
+# Routes that refuse the `reasoning` argument outright; see resolve_llm_contract.
+REASONING_OMITTED_ROUTES = ("gemma", "gemini-3.5-flash-lite")
 MAX_OUTPUT_TOKENS = 256
 MAX_PARSE_RETRIES = 3
 MAX_TRANSPORT_RETRIES = 3
@@ -213,6 +215,17 @@ def resolve_llm_contract(llm):
 
     request_timeout_applied = "OpenAI" in backend_names
 
+    # Some routes reject the reasoning-budget argument itself rather than its
+    # value: naming `reasoning` at all returns 400 "Request contains an invalid
+    # argument" before a single decision is sampled. Omitting the parameter for
+    # those routes keeps the observable decision contract identical to every
+    # other route, and the resolved value is recorded in the manifest so the
+    # difference is visible rather than silent.
+    if any(prefix in normalized_route for prefix in REASONING_OMITTED_ROUTES):
+        reasoning_requested = None
+    else:
+        reasoning_requested = REASONING
+
     seed_strip_probe = getattr(llm, "_should_remove_seed", None)
     if callable(seed_strip_probe):
         try:
@@ -269,6 +282,7 @@ def resolve_llm_contract(llm):
         "output_token_limit": MAX_OUTPUT_TOKENS,
         "output_token_limit_selection": token_limit_selection,
         "request_timeout_applied": request_timeout_applied,
+        "reasoning_requested": reasoning_requested,
         "sampling_seed_requested": True,
         "sampling_seed_forwarded_by_sdk": seed_forwarded,
         "sampling_seed_applied": seed_applied,
@@ -463,13 +477,18 @@ def prompt_with_transport_retries(
                     # OpenAI's request options accept ``timeout``. GoogleGenAI
                     # instead validates extras as GenerateContentConfig fields.
                     extra_api_params["timeout"] = REQUEST_TIMEOUT_SECONDS
+                reasoning_kwargs = (
+                    {}
+                    if llm_contract["reasoning_requested"] is None
+                    else {"reasoning": llm_contract["reasoning_requested"]}
+                )
                 response = llm.prompt(
                     prompt,
                     schema=ActionDecision,
-                    reasoning=REASONING,
                     temperature=TEMPERATURE,
                     seed=seed,
                     extra_api_params=extra_api_params,
+                    **reasoning_kwargs,
                 )
             return response, errors
         except Exception as error:
@@ -1028,7 +1047,7 @@ def ai_race_baseline(llm) -> dict:
             ],
             "structured_output": True,
             "response_schema": ActionDecision.model_json_schema(),
-            "reasoning_requested": REASONING,
+            "reasoning_requested": llm_contract["reasoning_requested"],
             "max_parse_retries": MAX_PARSE_RETRIES,
             "max_transport_retries": MAX_TRANSPORT_RETRIES,
             "request_timeout_seconds": (
