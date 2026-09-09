@@ -1,0 +1,26 @@
+{
+  "name": "companies_nplayer_default_n2",
+  "nPlayers": 2,
+  "names": [
+    "Company_1",
+    "Company_2"
+  ],
+  "personaCondition": "none",
+  "personaRoles": [
+    "",
+    ""
+  ],
+  "personas": {
+    "en": [
+      "",
+      ""
+    ]
+  },
+  "personaProbabilities": {
+    "en": [
+      100.0,
+      100.0
+    ]
+  },
+  "description": "Neutral 2-company seats for the matched N-player sweep; no persona is injected. This is the group-size baseline the N=3 to 5 pilots lacked, and it deliberately runs through the N-player engine rather than the two-player one so that group size is the only thing that varies."
+}

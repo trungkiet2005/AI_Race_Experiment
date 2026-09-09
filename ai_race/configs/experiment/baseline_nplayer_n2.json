@@ -1,0 +1,23 @@
+{
+  "name": "baseline_nplayer_n2",
+  "runPhase": "pilot",
+  "description": "N-player baseline, 2 companies: the group-size baseline for the matched sweep, across the same risk treatments 0.1/0.6/0.9. Uses ai_race/engine_nplayer, not the two-player engine, so that N=2 is comparable to N=3 to 5 rather than to the separate two-player lane.",
+  "games": [
+    "ai_race_nplayer_n2_risk_10",
+    "ai_race_nplayer_n2_risk_60",
+    "ai_race_nplayer_n2_risk_90"
+  ],
+  "agents": "companies_nplayer_default_n2",
+  "languages": [
+    "en"
+  ],
+  "models": [
+    "LocalQwen"
+  ],
+  "useOffline": true,
+  "offlineSettings": "offline_settings",
+  "repetitions": 10,
+  "seed": 260726,
+  "maxParseRetries": 3,
+  "verbose": true
+}
