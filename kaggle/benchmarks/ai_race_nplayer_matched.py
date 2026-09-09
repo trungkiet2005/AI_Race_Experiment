@@ -92,7 +92,12 @@ MAX_PARSE_RETRIES = 3
 MAX_TRANSPORT_RETRIES = 8
 REQUEST_TIMEOUT_SECONDS = 120
 
+# The collaborator snapshot predates the two-player arm's configs, so the
+# sweep mounts its own engine dataset and that path is searched first. The
+# older paths stay as fallbacks so the file still runs where they are mounted.
 REPO_INPUT_DIRS = (
+    Path("/kaggle/input/datasets/daosyduyminh/ai-race-experiment-engine"),
+    Path("/kaggle/input/ai-race-experiment-engine"),
     Path("/kaggle/input/datasets/nguyenlamphuquy/ai-race-experiment"),
     Path("/kaggle/input/ai-race-experiment"),
 )
@@ -310,14 +315,21 @@ def _input_file_hashes() -> dict[str, str]:
 
 
 def _mechanism_snapshot() -> dict:
-    games = [
-        load_json(path)
-        for group in GAME_PATHS_BY_SIZE.values()
-        for path in group
-    ]
-    shared_fields = (
+    """Assert the game is one game at every group size, and record what varies.
+
+    Two fields are supposed to differ across the sweep and must not be asserted
+    equal: ``nPlayers``, which is the treatment, and ``agents``, which names the
+    seat roster for that many companies. Everything else is the mechanism and
+    has to be identical, or the group-size contrast would be comparing two
+    different games rather than two group sizes.
+    """
+    by_size = {
+        n: [load_json(path) for path in GAME_PATHS_BY_SIZE[n]]
+        for n in GROUP_SIZES
+    }
+    games = [game for group in by_size.values() for game in group]
+    invariant_fields = (
         "engine",
-        "nPlayers",
         "safeProgress",
         "speed",
         "cost",
@@ -329,18 +341,38 @@ def _mechanism_snapshot() -> dict:
         "historyMode",
         "promptTemplate",
         "promptVersion",
-        "agents",
     )
-    snapshot = {field: games[0][field] for field in shared_fields}
+    snapshot = {field: games[0][field] for field in invariant_fields}
     for game in games[1:]:
         for field, expected in snapshot.items():
             if game[field] != expected:
                 raise RuntimeError(
-                    f"Game configs disagree on mechanism field {field!r}"
+                    f"Game configs disagree on mechanism field {field!r}; the "
+                    "sweep may vary the group size and nothing else"
                 )
-    snapshot["maxPrivateRiskTreatments"] = [
-        game["maxPrivateRisk"] for game in games
-    ]
+    for n, group in by_size.items():
+        for game in group:
+            if game["nPlayers"] != n:
+                raise RuntimeError(
+                    f"Game {game['name']!r} declares {game['nPlayers']} players "
+                    f"but sits in the N={n} arm"
+                )
+            if game["agents"] != f"companies_nplayer_default_n{n}":
+                raise RuntimeError(
+                    f"Game {game['name']!r} does not use the neutral N={n} roster"
+                )
+    snapshot["groupSizes"] = list(GROUP_SIZES)
+    snapshot["agentsByGroupSize"] = {
+        str(n): by_size[n][0]["agents"] for n in GROUP_SIZES
+    }
+    snapshot["maxPrivateRiskTreatments"] = sorted(
+        {game["maxPrivateRisk"] for game in games}
+    )
+    snapshot["groupSizeVariesStagePayoffOnly"] = (
+        "The group-count stage rule depends on how many companies there are, so "
+        "the stage payoff necessarily changes with the group size; every other "
+        "mechanism field is asserted identical above."
+    )
     return snapshot
 
 
