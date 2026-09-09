@@ -1,0 +1,34 @@
+{
+  "schema_version": "ai-race-failed-run-link-v1",
+  "note": "This zero-race attempt was superseded by a successful re-run of the same route. The failure record is kept so a reader sees the failed attempt and its re-run, not only the success.",
+  "failed_attempt": {
+    "route": "google/gemini-3.5-flash-lite",
+    "run_id": "1494095",
+    "task_version": "3",
+    "status": "failed",
+    "n_races": 0,
+    "n_turns": 0,
+    "reasoning_requested": "none",
+    "error": "RuntimeError: Model proxy failed after transport retries. Refresh Kaggle Benchmark authentication and resume with a new run; no fallback action was applied.",
+    "path": "results/frontier/baseline_campaign_v6/failed_runs/ai-race-baseline/3/gemini-3.5-flash-lite/1494095",
+    "tabulated": false
+  },
+  "superseded_by": {
+    "route": "google/gemini-3.5-flash-lite",
+    "run_id": "1494638",
+    "task_version": "4",
+    "status": "completed",
+    "n_races": 30,
+    "n_turns": 558,
+    "reasoning_requested": null,
+    "path": "results/frontier/baseline_campaign_v6/ai-race-baseline/4/gemini-3.5-flash-lite/1494638",
+    "tabulated": true
+  },
+  "cause_of_failure": "The reasoning-budget argument was named in the request. The provider rejects the argument itself and returns HTTP 400 before any decision is sampled, which the harness surfaced as a transport failure. This is an infrastructure contract mismatch, not evidence about the model.",
+  "amendment": {
+    "document": "docs/reviewer-revision-frontier-protocol.md",
+    "section": "2026-09-09 - route-resolved reasoning budget",
+    "status": "open",
+    "resolution": "The task now omits the reasoning-budget parameter for routes that refuse it. The re-run records reasoning_requested = null; mechanism, prompt, parser, seed streams, temperature and token cap are unchanged."
+  }
+}

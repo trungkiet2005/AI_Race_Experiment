@@ -6,7 +6,18 @@ endpoint can read the game state it is asked to play.  The gameplay baseline
 (``ai-race-frontier-baseline-v3``) measures what the same endpoint actually does
 when the assigned maximum private risk moves from 0.1 to 0.9.  This script joins
 the two campaigns route by route and reports the association between them as a
-descriptive statement over eight endpoints, never as a population effect.
+descriptive statement over nine endpoints, never as a population effect.
+
+Every audited route now has matched gameplay.  Eight routes ran at
+``ai-race-baseline`` task version 3 and one, ``google/gemini-3.5-flash-lite``,
+at version 4, because that provider rejects the reasoning-budget argument itself
+and the task now omits the parameter for such routes.  The manifest records
+``reasoning_requested = null`` for that route and ``"none"`` for the other
+eight; the derived table carries the value as a column so the difference is
+visible rather than inferred.  See the ``2026-09-09 route-resolved reasoning
+budget`` amendment in ``docs/reviewer-revision-frontier-protocol.md``.  The
+correlation block reports both the nine-route sample and the earlier eight-route
+sample so the change is auditable.
 
 Uncertainty follows the house convention in ``analyze_nplayer_scope_clustered.py``:
 the race (``game_id``) is the resampling cluster, both seats of a race travel
@@ -30,8 +41,8 @@ import publication_style as ps
 
 ROOT = Path(__file__).resolve().parents[1]
 CAMPAIGN = ROOT / "results" / "frontier" / "baseline_campaign_v6"
-RUNS_ROOT = CAMPAIGN / "ai-race-baseline" / "3"
-FAILED_ROOT = CAMPAIGN / "failed_runs" / "ai-race-baseline" / "3"
+RUNS_ROOT = CAMPAIGN / "ai-race-baseline"
+FAILED_ROOT = CAMPAIGN / "failed_runs" / "ai-race-baseline"
 DERIVED = CAMPAIGN / "derived"
 FIGURE_STEMS = (
     CAMPAIGN / "figures" / "audit_versus_behaviour",
@@ -50,6 +61,15 @@ EXPECTED_RACES_PER_CELL = 10
 BASELINE_PROTOCOL = "ai-race-frontier-baseline-v3"
 ADMISSION_PROTOCOL = "ai-race-frontier-admission-v6"
 BOUNDARY_ROUTE = "anthropic/claude-opus-5@default"
+EXPECTED_ROUTES = 9
+# The route that the reasoning-budget amendment added, and the task version it
+# ran at.  The eight routes tabulated before it stay the reference sample.
+AMENDED_ROUTE = "google/gemini-3.5-flash-lite"
+AMENDED_TASK_VERSION = "4"
+PRIOR_TASK_VERSION = "3"
+AMENDMENT_REFERENCE = (
+    "docs/reviewer-revision-frontier-protocol.md :: 2026-09-09 - route-resolved reasoning budget"
+)
 
 SHORT_NAMES = {
     "anthropic/claude-opus-5@default": "Claude Opus 5",
@@ -74,17 +94,25 @@ def sha256(path: Path) -> str:
 
 def discover_runs() -> list[dict]:
     runs = []
-    for manifest_path in sorted(RUNS_ROOT.glob("*/*/results/ai_race_baseline/run_manifest.json")):
+    seen: dict[str, Path] = {}
+    for manifest_path in sorted(RUNS_ROOT.glob("*/*/*/results/ai_race_baseline/run_manifest.json")):
         manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
         if manifest["status"] != "completed":
             raise RuntimeError(f"Non-completed run under the tabulated path: {manifest_path}")
         if manifest["protocol_id"] != BASELINE_PROTOCOL:
             raise RuntimeError(f"Unexpected protocol in {manifest_path}: {manifest['protocol_id']}")
+        route = manifest["model_route"]
+        if route in seen:
+            raise RuntimeError(
+                f"Route {route} is tabulated twice: {seen[route]} and {manifest_path}"
+            )
+        seen[route] = manifest_path
         runs.append(
             {
-                "route": manifest["model_route"],
+                "route": route,
                 "model_tag": manifest["model"],
                 "run_id": manifest_path.parents[2].name,
+                "task_version": manifest_path.parents[3].name,
                 "manifest": manifest,
                 "turns_path": manifest_path.parent / "turns.jsonl",
                 "summary_path": manifest_path.parent / "summary.json",
@@ -96,23 +124,37 @@ def discover_runs() -> list[dict]:
 
 
 def failure_record() -> dict:
-    paths = sorted(FAILED_ROOT.glob("*/*/results/ai_race_baseline/run_manifest.json"))
+    paths = sorted(FAILED_ROOT.glob("*/*/*/results/ai_race_baseline/run_manifest.json"))
     records = []
     for path in paths:
         manifest = json.loads(path.read_text(encoding="utf-8"))
         if manifest["status"] == "completed":
             raise RuntimeError(f"Completed run filed as a failure: {path}")
-        records.append(
-            {
-                "route": manifest["model_route"],
-                "run_id": path.parents[2].name,
-                "status": manifest["status"],
-                "n_races": manifest["n_races"],
-                "n_turns": manifest["n_turns"],
-                "error": manifest["error"],
-                "tabulated": False,
-            }
-        )
+        run_dir = path.parents[2]
+        record = {
+            "route": manifest["model_route"],
+            "run_id": run_dir.name,
+            "task_version": path.parents[3].name,
+            "status": manifest["status"],
+            "n_races": manifest["n_races"],
+            "n_turns": manifest["n_turns"],
+            "reasoning_requested": manifest["decoding"].get("reasoning_requested"),
+            "error": manifest["error"],
+            "path": str(run_dir.relative_to(ROOT).as_posix()),
+            "tabulated": False,
+        }
+        link_path = run_dir / "superseded_by.json"
+        if link_path.exists():
+            link = json.loads(link_path.read_text(encoding="utf-8"))
+            record["superseded_by"] = link["superseded_by"]
+            record["cause_of_failure"] = link["cause_of_failure"]
+            record["amendment"] = link["amendment"]
+            successor = ROOT / link["superseded_by"]["path"]
+            if not (successor / "results" / "ai_race_baseline" / "turns.jsonl").exists():
+                raise RuntimeError(
+                    f"{link_path} names a successor run whose turns.jsonl is missing: {successor}"
+                )
+        records.append(record)
     return {"failed_routes": records}
 
 
@@ -426,11 +468,15 @@ def make_figure(frame: pd.DataFrame) -> list[Path]:
         "anthropic/claude-sonnet-5@default": (5.5, 2.5, "left"),
         "openai/gpt-5.4-2026-03-05": (5.5, 3.0, "left"),
         "google/gemini-3-flash-preview": (2.0, -11.5, "left"),
-        "openai/gpt-5.5-2026-04-23": (0.0, 8.0, "center"),
-        "google/gemini-3.1-flash-lite-preview": (-5.5, -11.5, "right"),
+        "openai/gpt-5.5-2026-04-23": (0.0, -12.0, "center"),
+        "google/gemini-3.1-flash-lite-preview": (-4.0, 6.5, "right"),
         "openai/gpt-5.4-nano-2026-03-17": (6.0, 1.5, "left"),
         "openai/gpt-5.4-mini-2026-03-17": (6.0, -1.5, "left"),
+        "google/gemini-3.5-flash-lite": (-6.0, -1.0, "right"),
     }
+    # A route without a hand-placed label still gets drawn, offset to the right,
+    # so adding one never silently drops a point from the panel.
+    default_offset = (6.0, 2.0, "left")
     for row in frame.itertuples():
         admitted = bool(row.admitted_for_gameplay)
         colour = ps.BLUE if admitted else ps.RED
@@ -455,9 +501,9 @@ def make_figure(frame: pd.DataFrame) -> list[Path]:
         ax_b.annotate(
             row.short_name,
             xy=(row.admission_state_reconstruction_accuracy, row.risk_response_pp),
-            xytext=label_offsets[row.route][:2],
+            xytext=label_offsets.get(row.route, default_offset)[:2],
             textcoords="offset points",
-            ha=label_offsets[row.route][2],
+            ha=label_offsets.get(row.route, default_offset)[2],
             fontsize=8.0,
             color=ps.INK if admitted else ps.MUTED,
             zorder=4,
@@ -490,8 +536,13 @@ def main() -> None:
     frame, hashes, problems = build_rows(runs, admission)
     if problems:
         raise RuntimeError("Integrity checks failed:\n  " + "\n  ".join(problems))
-    if len(frame) != 8:
-        raise RuntimeError(f"Expected 8 tabulated routes, found {len(frame)}")
+    # The count is declared beside the other frozen expectations rather than
+    # written here, so re-running after a route is added fails loudly once, at
+    # the constant, instead of silently tabulating a different sample.
+    if len(frame) != EXPECTED_ROUTES:
+        raise RuntimeError(
+            f"Expected {EXPECTED_ROUTES} tabulated routes, found {len(frame)}"
+        )
 
     corr = correlations(frame)
     contrast = admission_contrast(frame)

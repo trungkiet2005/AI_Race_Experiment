@@ -705,7 +705,7 @@ time it is asked to play.
 \end{table}
 
 Two points follow. No route reaches 75\% on closed-form expected payoff and
-four score zero, so the arithmetic gap is general rather than a property of one
+five score zero, so the arithmetic gap is general rather than a property of one
 weak endpoint. And a correctly formatted action carries no information about
 whether the agent tracked the state behind it: the parser was satisfied on all
 540 outputs while state reconstruction varied across the full range. That is
@@ -717,8 +717,8 @@ the supplementary material.
 \label{sec:results-audit-behaviour}
 
 The audit is only worth running if it tells us something about the behaviour it
-gates. We can now ask that directly, because eight of the nine audited routes
-also completed the confirmatory two-player baseline under one frozen protocol:
+gates. We can now ask that directly, because all nine audited routes also
+completed the confirmatory two-player baseline under one frozen protocol:
 30 races, 558 decisions, and zero parse failures each, with 10 races in every
 risk cell. We summarise each route's strategic sensitivity by its \emph{risk
 response}, the \Unsafe{}-rate difference between the lowest and highest
@@ -735,17 +735,17 @@ no provider confirmed applying the requested seed.
 The risk response spans almost the whole available range, from 7.0 percentage
 points for GPT-5.4 mini to 100.0 for Claude Opus 5
 (Figure~\ref{fig:audit-behaviour}a), and it ranks with measured comprehension.
-Across the eight routes, the rank correlation between risk response and
-state-reconstruction accuracy is $\rho=0.87$ (exact permutation
-$p=0.009$, $n=8$), rising to $\rho=0.96$ ($p=0.004$, $n=7$) when Claude
-Opus 5 is set aside; that route plays \Unsafe{} on every decision at risk
-0.1 and \Safe{} on every decision at both higher levels, a degenerate step
-policy whose within-cell variance is zero. We report the correlation with and
-without it rather than choosing one, because a single extreme route should not
-be able to carry a rank statistic computed over eight.
+Across the nine routes, the rank correlation between risk response and
+state-reconstruction accuracy is $\rho=0.87$ (exact permutation $p=0.004$,
+$n=9$), rising to $\rho=0.92$ ($p=0.003$, $n=8$) when Claude Opus 5 is set
+aside; that route plays \Unsafe{} on every decision at risk 0.1 and \Safe{}
+on every decision at both higher levels, a degenerate step policy whose
+within-cell variance is zero. We report the correlation with and without it
+rather than choosing one, because a single extreme route should not be able to
+carry a rank statistic computed over nine.
 
 Three cautions belong with that number, and none is removable by more careful
-statistics. Eight commercial endpoints are not a sample from a population of
+statistics. Nine commercial endpoints are not a sample from a population of
 models, so this is a descriptive association, not an estimated effect. The
 endpoints differ in far more than their probe scores, so nothing here separates
 comprehension from provider, scale, or training. And the gate does not
@@ -754,20 +754,21 @@ reconstruction, 73.3\% against the 75\% threshold, yet responds to risk as
 strongly as three admitted routes (Figure~\ref{fig:audit-behaviour}b). The
 threshold is a declared entry condition, not a behavioural predictor.
 
-What the pattern does establish is the practical point. The two routes that
-sit far below the threshold, GPT-5.4 nano at 20.0\% and GPT-5.4 mini at
-66.7\% state reconstruction, are also the two whose play is nearly flat in the
-assigned risk, at 9.7 and 7.0 percentage points. Their \Unsafe{} rates near
-60\% would sit unremarkably in a cross-model table and are close to the human
-mean, yet they come from endpoints that mostly cannot rebuild the state the
-risk applies to. An aggregate rate reported without a comprehension gate
-cannot tell that apart from a deliberate policy of moderate risk-taking.
+What the pattern does establish is the practical point. The two routes whose
+play is flattest in risk, GPT-5.4 nano at 9.7 percentage points and GPT-5.4
+mini at 7.0, score 20.0\% and 66.7\% on state reconstruction, both below the
+gate. Their \Unsafe{} rates near 60\% would sit unremarkably in a cross-model
+table and are close to the human mean, yet they come from endpoints that
+largely cannot rebuild the state the risk applies to. An aggregate rate
+reported without a comprehension gate cannot tell that apart from a
+deliberate policy of moderate risk-taking. Across the four refused routes the
+risk response averages 19.4 points against 54.8 for the five admitted ones.
 
 \begin{figure*}[t]
   \centering
   \includegraphics[width=\textwidth]{../figures/paper/audit_versus_behaviour.pdf}
   \caption{Measured comprehension against strategic sensitivity, over the
-  eight audited routes that completed the confirmatory baseline. (a)
+  nine audited routes, each of which completed the confirmatory baseline. (a)
   \Unsafe{} rate against assigned maximum private risk, with 95\%
   race-clustered bootstrap bands; solid lines are admitted routes and dashed
   lines refused ones. (b) State-reconstruction accuracy from the admission
@@ -778,15 +779,15 @@ cannot tell that apart from a deliberate policy of moderate risk-taking.
   reported as a boundary case.}
   \label{fig:audit-behaviour}
   \Description{Two panels. Panel a plots Unsafe rate against assigned maximum
-  private risk for eight routes, each line directly labelled. Five solid lines
+  private risk for nine routes, each line directly labelled. Five solid lines
   for admitted routes fall steeply from between 87 and 100 percent at risk 0.1
   to between 0 and 60 percent at risk 0.9. Two dashed lines, GPT-5.4 nano and
   GPT-5.4 mini, are nearly flat near 60 percent across all three risk levels.
   Panel b plots state-reconstruction accuracy on the horizontal axis against
-  the risk response in percentage points on the vertical axis. The two routes
-  with the lowest state-reconstruction accuracy have the smallest risk
-  response, near 10 and 7 percentage points, while the routes above the
-  0.75 threshold cluster between 38 and 100 percentage points.}
+  the risk response in percentage points on the vertical axis. GPT-5.4 nano
+  and GPT-5.4 mini have the smallest risk response, near 10 and 7 percentage
+  points, while the routes above the 0.75 threshold cluster between 38 and 100
+  percentage points.}
 \end{figure*}
 
 
@@ -1117,7 +1118,7 @@ invalidate the human result. Every comparison here is scoped to its tested
 route, prompt version, decoding contract, provider path and run period.
 
 Three limitations bound the claims directly. The comprehension-to-behaviour
-association covers eight endpoints that differ in far more than their probe
+association covers nine endpoints that differ in far more than their probe
 scores, so it is descriptive and cannot separate comprehension from
 provider, scale or training. The representation-robustness design is fully
 crossed for one route only, since the matched second route stopped on a
