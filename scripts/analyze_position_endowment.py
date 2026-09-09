@@ -65,6 +65,41 @@ ADMISSION_FILES = {
     ),
 }
 
+# ---------------------------------------------------------------------------
+# Uncertainty policy for this diagnostic.
+#
+# The repo convention is to cluster uncertainty on the independent experimental
+# unit: `game_id` for a live race, or `source_run/model/rep` where matched
+# repetitions share common-random-number draws (see
+# scripts/analyze_ai_race.py::_resolve_repetition_blocks).  This design contains
+# NEITHER.  There is no race and no repetition block: the input is a frozen bank
+# of 96 prompt states, each answered exactly once per checkpoint at temperature
+# zero.  The only independent unit available is therefore the frozen prompt
+# state (`probe_id`); `permutation_id` encodes position itself, so positions are
+# not matched inside any block and a contrast is an unpaired difference between
+# two disjoint sets of states.
+#
+# Intervals are percentile bootstraps that resample those state clusters with
+# replacement, following
+# scripts/analyze_nplayer_scope_clustered.py::race_bootstrap (5000 resamples,
+# one explicitly recorded seed).  A decision-level Wilson interval would be
+# pseudoreplication here and is never emitted.
+#
+# CLAUDE.md, "Analyzing LLM behavioral results": cells that cannot support
+# inference (zero variance, fewer than 5 independent units) stay strictly
+# descriptive.  Those cells carry inference_supported=False and an EMPTY
+# interval rather than a number that means nothing.
+# ---------------------------------------------------------------------------
+CLUSTER_UNIT = "probe_id"
+CLUSTER_UNIT_DESCRIPTION = (
+    "frozen prompt state; this design has no race and no CRN repetition block"
+)
+BOOTSTRAP_RESAMPLES = 5000
+BOOTSTRAP_SEED = 20260909
+DESCRIPTIVE_ONLY_MIN_UNITS = 5
+CI_METHOD = "state-clustered percentile bootstrap over probe_id"
+CI_METHOD_SUPPRESSED = "descriptive_only"
+
 MODEL_LABELS = {
     "qwen25_7b": "Qwen2.5-7B",
     "mistral7_01": "Mistral-7B",
@@ -511,6 +546,53 @@ def load_and_validate(
     return frames, audits, source_paths, mailbox_audits
 
 
+def _cluster_values(subset: pd.DataFrame) -> np.ndarray:
+    """One Unsafe value per independent unit (frozen prompt state)."""
+
+    return (
+        subset.groupby(CLUSTER_UNIT, observed=True)["unsafe"]
+        .mean()
+        .sort_index()
+        .to_numpy(dtype=float)
+    )
+
+
+def _has_variance(values: np.ndarray) -> bool:
+    return bool(values.size) and float(values.min()) != float(values.max())
+
+
+def _bootstrap_mean_ci(values: np.ndarray) -> tuple[float, float]:
+    rng = np.random.default_rng(BOOTSTRAP_SEED)
+    samples = rng.choice(
+        values, size=(BOOTSTRAP_RESAMPLES, len(values)), replace=True
+    ).mean(axis=1)
+    return float(np.quantile(samples, 0.025)), float(np.quantile(samples, 0.975))
+
+
+def _bootstrap_difference_ci(
+    left: np.ndarray, right: np.ndarray
+) -> tuple[float, float]:
+    """Unpaired cluster bootstrap: positions are not matched within a block."""
+
+    rng = np.random.default_rng(BOOTSTRAP_SEED)
+    left_draws = rng.choice(
+        left, size=(BOOTSTRAP_RESAMPLES, len(left)), replace=True
+    ).mean(axis=1)
+    right_draws = rng.choice(
+        right, size=(BOOTSTRAP_RESAMPLES, len(right)), replace=True
+    ).mean(axis=1)
+    samples = left_draws - right_draws
+    return float(np.quantile(samples, 0.025)), float(np.quantile(samples, 0.975))
+
+
+def _descriptive_reason(values: np.ndarray) -> str | None:
+    if len(values) < DESCRIPTIVE_ONLY_MIN_UNITS:
+        return f"fewer than {DESCRIPTIVE_ONLY_MIN_UNITS} independent units"
+    if not _has_variance(values):
+        return "zero variance across independent units"
+    return None
+
+
 def position_rates(primary: pd.DataFrame) -> pd.DataFrame:
     groups = [
         "model_key",
@@ -520,13 +602,31 @@ def position_rates(primary: pd.DataFrame) -> pd.DataFrame:
         "mapping_id",
         "position",
     ]
-    return (
-        primary.groupby(groups, observed=True)["unsafe"]
-        .agg(n_prompts="size", unsafe_count="sum", unsafe_rate="mean")
-        .reset_index()
-        .sort_values(groups)
-        .reset_index(drop=True)
-    )
+    rows: list[dict[str, Any]] = []
+    for keys, subset in primary.groupby(groups, observed=True, sort=True):
+        values = _cluster_values(subset)
+        record: dict[str, Any] = dict(zip(groups, keys))
+        record["n_prompts"] = int(len(subset))
+        record["unsafe_count"] = int(subset["unsafe"].sum())
+        record["unsafe_rate"] = float(subset["unsafe"].mean())
+        record["n_race"] = int(len(values))
+        record["n_dec"] = int(len(subset))
+        record["cluster_unit"] = CLUSTER_UNIT
+        reason = _descriptive_reason(values)
+        record["inference_supported"] = reason is None
+        if reason is None:
+            low, high = _bootstrap_mean_ci(values)
+            record["unsafe_rate_ci_low"] = low
+            record["unsafe_rate_ci_high"] = high
+            record["ci_method"] = CI_METHOD
+            record["descriptive_only_reason"] = ""
+        else:
+            record["unsafe_rate_ci_low"] = ""
+            record["unsafe_rate_ci_high"] = ""
+            record["ci_method"] = CI_METHOD_SUPPRESSED
+            record["descriptive_only_reason"] = reason
+        rows.append(record)
+    return pd.DataFrame(rows).sort_values(groups).reset_index(drop=True)
 
 
 def direct_contrasts(primary: pd.DataFrame) -> pd.DataFrame:
@@ -551,28 +651,62 @@ def direct_contrasts(primary: pd.DataFrame) -> pd.DataFrame:
         rates = subset.groupby("position", observed=True)["unsafe"].agg(
             n="size", rate="mean"
         )
+        clusters = {
+            str(position): _cluster_values(block)
+            for position, block in subset.groupby("position", observed=True)
+        }
         for contrast, left, right in contrasts[int(game_size)]:
             if left not in rates.index or right not in rates.index:
                 raise ValueError(f"Missing {left}/{right} cell for {model_key} N={game_size}")
-            rows.append(
-                {
-                    "model_key": model_key,
-                    "model": model,
-                    "game_size": int(game_size),
-                    "rank_label_condition": label,
-                    "contrast": contrast,
-                    "left_position": left,
-                    "right_position": right,
-                    "left_n": int(rates.loc[left, "n"]),
-                    "right_n": int(rates.loc[right, "n"]),
-                    "left_unsafe_rate": float(rates.loc[left, "rate"]),
-                    "right_unsafe_rate": float(rates.loc[right, "rate"]),
-                    "direct_effect": float(
-                        rates.loc[left, "rate"] - rates.loc[right, "rate"]
-                    ),
-                    "estimand_scope": "direct fixed-state prompt effect",
-                }
-            )
+            left_values = clusters[left]
+            right_values = clusters[right]
+            pooled = np.concatenate((left_values, right_values))
+            if min(len(left_values), len(right_values)) < DESCRIPTIVE_ONLY_MIN_UNITS:
+                reason: str | None = (
+                    f"fewer than {DESCRIPTIVE_ONLY_MIN_UNITS} independent units on "
+                    "at least one side"
+                )
+            elif not _has_variance(pooled):
+                reason = "zero variance across independent units"
+            else:
+                reason = None
+            row: dict[str, Any] = {
+                "model_key": model_key,
+                "model": model,
+                "game_size": int(game_size),
+                "rank_label_condition": label,
+                "contrast": contrast,
+                "left_position": left,
+                "right_position": right,
+                "left_n": int(rates.loc[left, "n"]),
+                "right_n": int(rates.loc[right, "n"]),
+                "left_unsafe_rate": float(rates.loc[left, "rate"]),
+                "right_unsafe_rate": float(rates.loc[right, "rate"]),
+                "direct_effect": float(
+                    rates.loc[left, "rate"] - rates.loc[right, "rate"]
+                ),
+                "estimand_scope": "direct fixed-state prompt effect",
+                "left_n_race": int(len(left_values)),
+                "right_n_race": int(len(right_values)),
+                "n_race": int(len(pooled)),
+                "left_n_dec": int(rates.loc[left, "n"]),
+                "right_n_dec": int(rates.loc[right, "n"]),
+                "n_dec": int(rates.loc[left, "n"] + rates.loc[right, "n"]),
+                "cluster_unit": CLUSTER_UNIT,
+                "inference_supported": reason is None,
+            }
+            if reason is None:
+                low, high = _bootstrap_difference_ci(left_values, right_values)
+                row["direct_effect_ci_low"] = low
+                row["direct_effect_ci_high"] = high
+                row["ci_method"] = CI_METHOD
+                row["descriptive_only_reason"] = ""
+            else:
+                row["direct_effect_ci_low"] = ""
+                row["direct_effect_ci_high"] = ""
+                row["ci_method"] = CI_METHOD_SUPPRESSED
+                row["descriptive_only_reason"] = reason
+            rows.append(row)
     return pd.DataFrame(rows).sort_values(
         ["game_size", "contrast", "rank_label_condition", "model_key"]
     ).reset_index(drop=True)
@@ -908,7 +1042,7 @@ def write_report(
         "",
         "## Primary direct effects",
         "",
-        "The table reports exact percentage-point differences from the numeric-only arm in block 1. It does not attach sampling confidence intervals because there is one deterministic response per frozen prompt and only one common history.",
+        "The table reports exact percentage-point differences from the numeric-only arm in block 1. Uncertainty, where it is reported at all, is a percentile bootstrap over frozen prompt states (5000 resamples, seed 20260909); this design has no race and no common-random-number repetition block, so the frozen state is the only independent unit available. Cells with fewer than five independent states, or with no variance across them, stay strictly descriptive and carry no interval.",
         "",
         "| Checkpoint | Behind − ahead (2P) | Last − leader (N=3) | Last − middle (N=3) |",
         "|---|---:|---:|---:|",
@@ -949,7 +1083,8 @@ def write_report(
             "",
             "## Files",
             "",
-            "- `primary_position_rates.csv`: block-1 rates by checkpoint, game size, label, mapping, and position",
+            "- `primary_position_rates.csv`: block-1 rates by checkpoint, game size, label, mapping, and position, each with `n_race` independent frozen states, `n_dec` decisions, and either a state-clustered bootstrap interval or an explicit descriptive-only flag",
+            "- `uncertainty_provenance.json`: cluster unit, resamples, seed, and the descriptive-only threshold behind those intervals",
             "- `primary_direct_contrasts.csv`: prespecified direct position contrasts",
             "- `lane_reproducibility_summary.csv`: block-level rate and exact-action agreement",
             "- `probe_level_lane_comparison.csv`: one-to-one block comparison",
@@ -966,6 +1101,59 @@ def write_json(path: Path, payload: Any) -> None:
         encoding="utf-8",
         newline="\n",
     )
+
+
+def uncertainty_provenance(
+    rates: pd.DataFrame,
+    contrasts: pd.DataFrame,
+    source_paths: Iterable[Path],
+    experiment_root: Path,
+) -> dict[str, Any]:
+    """Provenance for the state-clustered intervals, in the shape used by the
+    other provenance files under results/cross_model_pilot_synthesis/data/."""
+
+    return {
+        "schema_version": "ai-race-position-endowment-state-bootstrap-v1",
+        "evidence_class": EVIDENCE_CLASS,
+        "estimand": (
+            "mean Unsafe rate, and unpaired position contrast, with equal weight "
+            "per frozen prompt state"
+        ),
+        "ci": CI_METHOD,
+        "cluster_unit": CLUSTER_UNIT,
+        "cluster_unit_note": CLUSTER_UNIT_DESCRIPTION,
+        "n_bootstrap": BOOTSTRAP_RESAMPLES,
+        "seed": BOOTSTRAP_SEED,
+        "descriptive_only_threshold": (
+            f"fewer than {DESCRIPTIVE_ONLY_MIN_UNITS} independent units, or zero "
+            "variance across independent units"
+        ),
+        "descriptive_only_min_units": DESCRIPTIVE_ONLY_MIN_UNITS,
+        "suppressed_interval_marker": CI_METHOD_SUPPRESSED,
+        "cells": {
+            "primary_position_rates.csv": {
+                "n_cells": int(len(rates)),
+                "n_inference_supported": int(rates["inference_supported"].sum()),
+                "n_descriptive_only": int((~rates["inference_supported"]).sum()),
+            },
+            "primary_direct_contrasts.csv": {
+                "n_cells": int(len(contrasts)),
+                "n_inference_supported": int(contrasts["inference_supported"].sum()),
+                "n_descriptive_only": int((~contrasts["inference_supported"]).sum()),
+            },
+        },
+        "source_hashes": {
+            path.resolve().relative_to(experiment_root.resolve()).as_posix(): sha256_file(path)
+            for path in source_paths
+        },
+        "interpretation": (
+            "n_race is the independent-unit count (one frozen prompt state, answered "
+            "once at temperature zero); n_dec is reported only as a descriptive "
+            "decision count. No decision-level Wilson interval is emitted anywhere: "
+            "decisions inside one state are not independent replicates. Cells the "
+            "policy marks descriptive-only carry an empty interval on purpose."
+        ),
+    }
 
 
 def output_manifest(
@@ -1033,6 +1221,10 @@ def analyze(experiment_root: Path, output_dir: Path) -> dict[str, Any]:
             "n_primary_probe_ids": int(primary["probe_id"].nunique()),
             "parse_failures": 0,
         },
+    )
+    write_json(
+        output_dir / "uncertainty_provenance.json",
+        uncertainty_provenance(rates, contrasts, source_paths, experiment_root),
     )
     plot_position_response(primary, output_dir)
     plot_direct_contrasts(contrasts, output_dir)

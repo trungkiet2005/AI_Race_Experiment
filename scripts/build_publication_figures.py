@@ -82,6 +82,9 @@ MANUAL_FIGURE_FILES = {
 }
 
 BASELINE_ORDER = list(BASELINE_INPUTS) + ["human"]
+# Filled by build_rate_figure so the provenance record can state the interval
+# method and the cluster count actually used for each population.
+RATE_FIGURE_CLUSTERS: dict[str, dict[str, object]] = {}
 CLUSTER_NAMES = {
     0: "Persister",
     1: "Aggressive starter / reciprocator",
@@ -273,22 +276,91 @@ def build_egt() -> list[Path]:
     return save_publication_figure(fig, PAPER / "egt_theory_vs_llm_unsafe", formats=("pdf", "png", "svg"))
 
 
-def _bootstrap_interval(values: np.ndarray, *, seed: int) -> tuple[float, float, float]:
+BOOTSTRAP_RESAMPLES = 4000
+BOOTSTRAP_BASE_SEED = 20260908
+
+
+def _cluster_labels(population: str, player_ids: np.ndarray) -> np.ndarray:
+    """Return the independent experimental unit for each trajectory row.
+
+    For a model population the unit is the race: both seats of a race share the
+    sampled horizon and the private-setback draw under the common-random-number
+    design, so they are not separate random samples. For the human population
+    the unit is the participant, because each participant is one independent
+    subject in the source study.
+    """
+
+    identifiers = np.asarray([str(value) for value in player_ids])
+    if population == "human":
+        return identifiers
+    return np.asarray([value.split("::")[0] for value in identifiers])
+
+
+def _cluster_bootstrap_interval(
+    values: np.ndarray, clusters: np.ndarray, *, seed: int,
+    resamples: int = BOOTSTRAP_RESAMPLES,
+) -> tuple[float, float, float, int]:
+    """Percentile bootstrap that resamples clusters, not single decisions.
+
+    The point estimate is the unweighted mean over trajectory rows and is
+    therefore identical to the previous row-level estimator; only the interval
+    changes.
+    """
+
     values = np.asarray(values, dtype=float)
-    if values.size < 2:
-        return float(values.mean()), np.nan, np.nan
+    point = float(values.mean())
+    unique, inverse = np.unique(np.asarray(clusters), return_inverse=True)
+    n_clusters = int(unique.size)
+    if n_clusters < 2:
+        return point, float("nan"), float("nan"), n_clusters
+    sums = np.zeros(n_clusters, dtype=float)
+    counts = np.zeros(n_clusters, dtype=float)
+    np.add.at(sums, inverse, values)
+    np.add.at(counts, inverse, 1.0)
     rng = np.random.default_rng(seed)
-    draws = rng.choice(values, size=(4000, values.size), replace=True).mean(axis=1)
-    return float(values.mean()), float(np.quantile(draws, 0.025)), float(np.quantile(draws, 0.975))
+    picks = rng.integers(0, n_clusters, size=(resamples, n_clusters))
+    draws = sums[picks].sum(axis=1) / counts[picks].sum(axis=1)
+    return (
+        point,
+        float(np.quantile(draws, 0.025)),
+        float(np.quantile(draws, 0.975)),
+        n_clusters,
+    )
 
 
 def build_rate_figure(frame: pd.DataFrame) -> list[Path]:
     rows = []
+    cluster_report: dict[str, dict[str, object]] = {}
     for idx, population in enumerate(BASELINE_ORDER):
-        values = frame.loc[frame["population"].eq(population), "unsafe_rate"].to_numpy(float)
-        rows.append((population, *_bootstrap_interval(values, seed=20260908 + idx)))
-    fig, ax = plt.subplots(figsize=(TEXT_WIDTH_IN, 3.32))
-    fig.subplots_adjust(left=0.28, right=0.98, top=0.95, bottom=0.25)
+        subset = frame.loc[frame["population"].eq(population)]
+        values = subset["unsafe_rate"].to_numpy(float)
+        clusters = _cluster_labels(population, subset["player_id"].to_numpy())
+        seed = BOOTSTRAP_BASE_SEED + idx
+        point, low, high, n_clusters = _cluster_bootstrap_interval(
+            values, clusters, seed=seed
+        )
+        rows.append((population, point, low, high))
+        cluster_report[population] = {
+            "cluster_unit": "participant_id" if population == "human" else "game_id",
+            "n_clusters": n_clusters,
+            "n_trajectories": int(values.size),
+            "point_estimate": point,
+            "ci_low": low,
+            "ci_high": high,
+            "seed": seed,
+        }
+    RATE_FIGURE_CLUSTERS.clear()
+    RATE_FIGURE_CLUSTERS.update(cluster_report)
+    race_clusters = sorted(
+        {
+            int(info["n_clusters"])
+            for population, info in cluster_report.items()
+            if population != "human"
+        }
+    )
+    human_clusters = int(cluster_report["human"]["n_clusters"])
+    fig, ax = plt.subplots(figsize=(TEXT_WIDTH_IN, 3.56))
+    fig.subplots_adjust(left=0.28, right=0.98, top=0.96, bottom=0.31)
     y = np.arange(len(rows))[::-1]
     for yi, (population, mean, low, high) in zip(y, rows):
         colour = MODEL_COLOURS.get(population, INK)
@@ -306,9 +378,16 @@ def build_rate_figure(frame: pd.DataFrame) -> list[Path]:
     ax.xaxis.set_major_formatter(matplotlib.ticker.PercentFormatter(1.0, decimals=0))
     style_axis(ax, grid_axis="x")
     panel_label(ax, "A", "Aggregate level")
-    fig.text(0.50, 0.035,
-             "Points are player-race trajectories; whiskers are trajectory bootstrap intervals.",
-             ha="center", fontsize=8.0, color=MUTED)
+    race_text = (
+        f"{race_clusters[0]} races" if len(race_clusters) == 1
+        else f"{min(race_clusters)} to {max(race_clusters)} races"
+    )
+    fig.text(0.50, 0.012,
+             "Points are mean Unsafe rates over player-race trajectories;\n"
+             "whiskers are 95% race-clustered bootstrap intervals\n"
+             f"({race_text} per model, {human_clusters} participants for humans; "
+             f"{BOOTSTRAP_RESAMPLES} resamples).",
+             ha="center", va="bottom", fontsize=8.0, color=MUTED, linespacing=1.25)
     return save_publication_figure(fig, CLUSTER / "05b_unsafe_rate_by_group", formats=("pdf", "png", "svg"))
 
 
@@ -568,6 +647,20 @@ def main() -> None:
             "nplayer_position_rows": int(len(pd.read_csv(POSITION_TABLE))),
         },
         "figure_5_change": "replaced unrecoverable HDBSCAN artwork with the maintained four-archetype human-reference projection",
+        "figure_4_rate_uncertainty": {
+            "ci_method": "percentile cluster bootstrap over independent experimental units",
+            "statistic": "unweighted mean Unsafe rate over player-race trajectories, rounds 1 to 5",
+            "point_estimate_unchanged": True,
+            "resamples": BOOTSTRAP_RESAMPLES,
+            "base_seed": BOOTSTRAP_BASE_SEED,
+            "seed_rule": "base_seed + population index in BASELINE_ORDER",
+            "cluster_unit": {
+                "llm_populations": "game_id (race); both seats of a race share the sampled horizon and setback draw under the common-random-number design",
+                "human_population": "participant_id (one independent subject per participant)",
+            },
+            "populations": RATE_FIGURE_CLUSTERS,
+            "supersedes": "row-level bootstrap over player-race trajectories, which treated the two seats of a race as independent samples",
+        },
     }
     out = DATA / "publication_figure_set_provenance.json"
     out.parent.mkdir(parents=True, exist_ok=True)

@@ -1,0 +1,33 @@
+{
+  "bootstrap_resamples": 4000,
+  "ci_method": "percentile cluster bootstrap resampling races with replacement; the race is the independent experimental unit because both seats share the sampled horizon and the private-setback draw",
+  "cluster_unit": {
+    "calculator_decision_card": "game_id",
+    "canonical": "game_id"
+  },
+  "estimand": "condition mean Unsafe rate and mean final payoff in the disclosed-arithmetic (calculator) diagnostic",
+  "evidence_class": "diagnostic",
+  "generated_utc": "2026-09-09T11:54:59.661692+00:00",
+  "generator": "race-clustered recomputation for tab:disclosed-arithmetic",
+  "n_decisions": {
+    "calculator_decision_card": 558,
+    "canonical": 558
+  },
+  "n_races": {
+    "calculator_decision_card": 30,
+    "canonical": 30
+  },
+  "outputs": [
+    "results/cross_model_pilot_synthesis/data/disclosed_arithmetic_race_bootstrap.csv"
+  ],
+  "schema_version": "ai-race-disclosed-arithmetic-race-bootstrap-v1",
+  "seed": 20260909,
+  "seed_rule": "unsafe rate: seed + condition index; mean payoff: seed + 100 + condition index",
+  "source_hashes": {
+    "results/open_source/game_understanding_pilot/raw/behavior_lane/behavior/calculator_decision_card/races.csv": "bc8e1d8d9ae3017552da2e8f8e8e902ae733ad329da9db9299391ebc1cde308c",
+    "results/open_source/game_understanding_pilot/raw/behavior_lane/behavior/calculator_decision_card/turns.jsonl": "8e98e0dd978d3cb6a5b588b6e81a8dd458b055c8a62dcecf3f5364e5da1e2016",
+    "results/open_source/game_understanding_pilot/raw/behavior_lane/behavior/canonical/races.csv": "c3e47bf4541fea5480ebc938bf8f2405d5be0451c432d3b4de15c1c871918913",
+    "results/open_source/game_understanding_pilot/raw/behavior_lane/behavior/canonical/turns.jsonl": "d7d647f1ece29bc58db0f32674f5bb1581724980106b8482351bad987956e625"
+  },
+  "supersedes": "results/open_source/game_understanding_pilot/behavior_summary.csv cluster CI, which resampled the 10 repetition blocks (each pooling three risk levels) rather than the 30 races"
+}

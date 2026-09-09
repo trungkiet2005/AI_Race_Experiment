@@ -17,7 +17,7 @@ Both checkpoints failed the separate comprehension admission gate. These actions
 
 ## Primary direct effects
 
-The table reports exact percentage-point differences from the numeric-only arm in block 1. It does not attach sampling confidence intervals because there is one deterministic response per frozen prompt and only one common history.
+The table reports exact percentage-point differences from the numeric-only arm in block 1. Uncertainty, where it is reported at all, is a percentile bootstrap over frozen prompt states (5000 resamples, seed 20260909); this design has no race and no common-random-number repetition block, so the frozen state is the only independent unit available. Cells with fewer than five independent states, or with no variance across them, stay strictly descriptive and carry no interval.
 
 | Checkpoint | Behind − ahead (2P) | Last − leader (N=3) | Last − middle (N=3) |
 |---|---:|---:|---:|
@@ -50,7 +50,8 @@ Further boundaries:
 
 ## Files
 
-- `primary_position_rates.csv`: block-1 rates by checkpoint, game size, label, mapping, and position
+- `primary_position_rates.csv`: block-1 rates by checkpoint, game size, label, mapping, and position, each with `n_race` independent frozen states, `n_dec` decisions, and either a state-clustered bootstrap interval or an explicit descriptive-only flag
+- `uncertainty_provenance.json`: cluster unit, resamples, seed, and the descriptive-only threshold behind those intervals
 - `primary_direct_contrasts.csv`: prespecified direct position contrasts
 - `lane_reproducibility_summary.csv`: block-level rate and exact-action agreement
 - `probe_level_lane_comparison.csv`: one-to-one block comparison

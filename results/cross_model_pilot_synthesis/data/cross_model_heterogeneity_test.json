@@ -1,15 +1,16 @@
 {
+  "default_roster": "nine",
   "n_decisions": 8928,
   "n_models": 9,
-  "loglik_A_risk_only": -5705.94935837332,
-  "loglik_B_risk_x_model": -3930.868190610374,
+  "loglik_A_risk_only": -5705.949358373322,
+  "loglik_B_risk_x_model": -3930.8681906057036,
   "loglik_C_model_only": -5089.560011021076,
   "loglik_intercept_only": -6165.745603713469,
-  "pseudo_r2_A": 0.07457269171665593,
-  "pseudo_r2_B": 0.36246669215265515,
+  "pseudo_r2_A": 0.07457269171665559,
+  "pseudo_r2_B": 0.36246669215341265,
   "pseudo_r2_C": 0.17454265267286972,
   "lr_test_B_vs_A_slope_heterogeneity_given_common_slope_baseline": {
-    "lr_stat": 3550.1623355258926,
+    "lr_stat": 3550.1623355352367,
     "df": 24,
     "p_value": 0.0
   },
@@ -19,8 +20,304 @@
     "p_value": 0.0
   },
   "lr_test_B_vs_C_slope_heterogeneity_beyond_level": {
-    "lr_stat": 2317.3836408214047,
+    "lr_stat": 2317.383640830745,
     "df": 18,
     "p_value": 0.0
+  },
+  "roster_definitions": {
+    "five": {
+      "models": [
+        "gpt-5-nano",
+        "gpt-5.4-nano",
+        "google/gemini-3-flash-preview",
+        "google/gemini-3.1-flash-lite-preview",
+        "google/gemini-3.5-flash-lite"
+      ],
+      "description": "The five original LLM checkpoints: two OpenAI nano and three Google Gemini. Excludes the GPT-5.6 (Luna/Terra) generation and both Claude checkpoints."
+    },
+    "seven": {
+      "models": [
+        "gpt-5-nano",
+        "gpt-5.4-nano",
+        "google/gemini-3-flash-preview",
+        "google/gemini-3.1-flash-lite-preview",
+        "google/gemini-3.5-flash-lite",
+        "gpt-5.6-luna",
+        "gpt-5.6-terra"
+      ],
+      "description": "The five original checkpoints plus the GPT-5.6 generation (Luna, Terra). Excludes both Claude checkpoints."
+    },
+    "nine": {
+      "models": [
+        "gpt-5-nano",
+        "gpt-5.4-nano",
+        "google/gemini-3-flash-preview",
+        "google/gemini-3.1-flash-lite-preview",
+        "google/gemini-3.5-flash-lite",
+        "gpt-5.6-luna",
+        "gpt-5.6-terra",
+        "claude-opus-5",
+        "claude-sonnet-5"
+      ],
+      "description": "All nine neutral-lane checkpoints, including Claude Opus 5 and Claude Sonnet 5. This is the default and the currently published roster."
+    }
+  },
+  "rosters": {
+    "five": {
+      "roster": "five",
+      "roster_description": "The five original LLM checkpoints: two OpenAI nano and three Google Gemini. Excludes the GPT-5.6 (Luna/Terra) generation and both Claude checkpoints.",
+      "models": [
+        "gpt-5-nano",
+        "gpt-5.4-nano",
+        "google/gemini-3-flash-preview",
+        "google/gemini-3.1-flash-lite-preview",
+        "google/gemini-3.5-flash-lite"
+      ],
+      "n_decisions": 4464,
+      "n_models": 5,
+      "n_races": 240,
+      "n_risk_levels": 3,
+      "n_decisions_per_model": {
+        "google/gemini-3-flash-preview": 1116,
+        "google/gemini-3.1-flash-lite-preview": 558,
+        "google/gemini-3.5-flash-lite": 558,
+        "gpt-5-nano": 1116,
+        "gpt-5.4-nano": 1116
+      },
+      "loglik_A_risk_only": -3038.231378666005,
+      "loglik_B_risk_x_model": -2059.613713308166,
+      "loglik_C_model_only": -2236.9498980746885,
+      "loglik_intercept_only": -3083.1564303881437,
+      "pseudo_r2_A": 0.014571123147983589,
+      "pseudo_r2_B": 0.33197884713263226,
+      "pseudo_r2_C": 0.2744611088172495,
+      "n_params_A": 3,
+      "n_params_B": 15,
+      "n_params_C": 5,
+      "n_params_intercept": 1,
+      "lr_test_B_vs_A_slope_heterogeneity_given_common_slope_baseline": {
+        "lr_stat": 1957.2353307156782,
+        "df": 12,
+        "p_value": 0.0
+      },
+      "lr_test_C_vs_intercept_level_heterogeneity": {
+        "lr_stat": 1692.4130646269105,
+        "df": 4,
+        "p_value": 0.0
+      },
+      "lr_test_B_vs_C_slope_heterogeneity_beyond_level": {
+        "lr_stat": 354.67236953304473,
+        "df": 10,
+        "p_value": 4.0616518909474684e-70
+      },
+      "converged": {
+        "A": true,
+        "B": false,
+        "C": true,
+        "intercept": true
+      },
+      "fit_warnings": {
+        "A": [],
+        "B": [
+          "ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals"
+        ],
+        "C": [],
+        "intercept": []
+      },
+      "source_sha256": {
+        "results/frontier/openai/baseline/gpt-5-nano/turns.jsonl": "5ba5bf6dc0e384ead89eee63cb5fc6b2f49fe56de3531c94256b4308e22d8313",
+        "results/frontier/openai/persona/R0_neutral/gpt-5-nano/turns.jsonl": "fa4308eb1ec7b5943ed3ba341dca7cd13eae6f300766ae098c3403313c1c18d2",
+        "results/frontier/openai/baseline/gpt-5.4-nano/turns.jsonl": "1bd41cf76f616f56db278c591d7ef8fce28d89a1cdba8fc2073501990463518b",
+        "results/frontier/openai/persona/R0_neutral/gpt-5.4-nano/turns.jsonl": "ecd31b11fab9ad0a4eb909e577235a445109d3ca85d2fdfaedfeb25d845f493b",
+        "results/frontier/baseline/google-gemini-3-flash-preview/turns.jsonl": "5bdc7bec766532c59baef206a558a2e8199bb37bdde9ab74c5aa27fef3119237",
+        "results/frontier/persona/R0_neutral/google-gemini-3-flash-preview/turns.jsonl": "d8dff3bdcefc5251f108bf36be43867223299679c680fb73a575715b539e19dd",
+        "results/frontier/baseline/google-gemini-3.1-flash-lite-preview/turns.jsonl": "a3b34464b10619d1d64e63b79c9c72a6ce08a3d3ff72fba96babb49726ed22db",
+        "results/frontier/baseline/google-gemini-3.5-flash-lite/turns.jsonl": "8db97643168c744f9495a3300f406799671b77520f01ccf9746134f673bfba80"
+      }
+    },
+    "seven": {
+      "roster": "seven",
+      "roster_description": "The five original checkpoints plus the GPT-5.6 generation (Luna, Terra). Excludes both Claude checkpoints.",
+      "models": [
+        "gpt-5-nano",
+        "gpt-5.4-nano",
+        "google/gemini-3-flash-preview",
+        "google/gemini-3.1-flash-lite-preview",
+        "google/gemini-3.5-flash-lite",
+        "gpt-5.6-luna",
+        "gpt-5.6-terra"
+      ],
+      "n_decisions": 6696,
+      "n_models": 7,
+      "n_races": 360,
+      "n_risk_levels": 3,
+      "n_decisions_per_model": {
+        "google/gemini-3-flash-preview": 1116,
+        "google/gemini-3.1-flash-lite-preview": 558,
+        "google/gemini-3.5-flash-lite": 558,
+        "gpt-5-nano": 1116,
+        "gpt-5.4-nano": 1116,
+        "gpt-5.6-luna": 1116,
+        "gpt-5.6-terra": 1116
+      },
+      "loglik_A_risk_only": -4446.896662046949,
+      "loglik_B_risk_x_model": -3346.2922439980057,
+      "loglik_C_model_only": -3608.347516966539,
+      "loglik_intercept_only": -4548.884761094891,
+      "pseudo_r2_A": 0.022420462249177264,
+      "pseudo_r2_B": 0.2643708469805236,
+      "pseudo_r2_C": 0.20676216117494384,
+      "n_params_A": 3,
+      "n_params_B": 21,
+      "n_params_C": 7,
+      "n_params_intercept": 1,
+      "lr_test_B_vs_A_slope_heterogeneity_given_common_slope_baseline": {
+        "lr_stat": 2201.208836097887,
+        "df": 18,
+        "p_value": 0.0
+      },
+      "lr_test_C_vs_intercept_level_heterogeneity": {
+        "lr_stat": 1881.0744882567033,
+        "df": 6,
+        "p_value": 0.0
+      },
+      "lr_test_B_vs_C_slope_heterogeneity_beyond_level": {
+        "lr_stat": 524.1105459370665,
+        "df": 14,
+        "p_value": 7.143082526618301e-103
+      },
+      "converged": {
+        "A": true,
+        "B": false,
+        "C": true,
+        "intercept": true
+      },
+      "fit_warnings": {
+        "A": [],
+        "B": [
+          "ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals"
+        ],
+        "C": [],
+        "intercept": []
+      },
+      "source_sha256": {
+        "results/frontier/openai/baseline/gpt-5-nano/turns.jsonl": "5ba5bf6dc0e384ead89eee63cb5fc6b2f49fe56de3531c94256b4308e22d8313",
+        "results/frontier/openai/persona/R0_neutral/gpt-5-nano/turns.jsonl": "fa4308eb1ec7b5943ed3ba341dca7cd13eae6f300766ae098c3403313c1c18d2",
+        "results/frontier/openai/baseline/gpt-5.4-nano/turns.jsonl": "1bd41cf76f616f56db278c591d7ef8fce28d89a1cdba8fc2073501990463518b",
+        "results/frontier/openai/persona/R0_neutral/gpt-5.4-nano/turns.jsonl": "ecd31b11fab9ad0a4eb909e577235a445109d3ca85d2fdfaedfeb25d845f493b",
+        "results/frontier/baseline/google-gemini-3-flash-preview/turns.jsonl": "5bdc7bec766532c59baef206a558a2e8199bb37bdde9ab74c5aa27fef3119237",
+        "results/frontier/persona/R0_neutral/google-gemini-3-flash-preview/turns.jsonl": "d8dff3bdcefc5251f108bf36be43867223299679c680fb73a575715b539e19dd",
+        "results/frontier/baseline/google-gemini-3.1-flash-lite-preview/turns.jsonl": "a3b34464b10619d1d64e63b79c9c72a6ce08a3d3ff72fba96babb49726ed22db",
+        "results/frontier/baseline/google-gemini-3.5-flash-lite/turns.jsonl": "8db97643168c744f9495a3300f406799671b77520f01ccf9746134f673bfba80",
+        "results/frontier/bedrock_mantle/luna/baseline/openai.gpt-5.6-luna/turns.jsonl": "a5d4d4c90fe878180c7ae0b2a5f8b979f511019e0835a4bd3d958cc97515d9e9",
+        "results/frontier/bedrock_mantle/luna/persona/R0_neutral/openai.gpt-5.6-luna/turns.jsonl": "ead35d4ac97ec30db2f207ab77cf7f9459e8bccb63ce543b053be89c3a4a13d0",
+        "results/frontier/bedrock_mantle/terra/baseline/openai.gpt-5.6-terra/turns.jsonl": "d368329d8dbb897f13afac5e38b7ce20e08deea31469aba01eacccffe19d47c3",
+        "results/frontier/bedrock_mantle/terra/persona/R0_neutral/openai.gpt-5.6-terra/turns.jsonl": "92cc228a9b71fc78cf31c0d77a4bf988995f73407912ea36bca6b1fd3a0fd0ba"
+      }
+    },
+    "nine": {
+      "roster": "nine",
+      "roster_description": "All nine neutral-lane checkpoints, including Claude Opus 5 and Claude Sonnet 5. This is the default and the currently published roster.",
+      "models": [
+        "gpt-5-nano",
+        "gpt-5.4-nano",
+        "google/gemini-3-flash-preview",
+        "google/gemini-3.1-flash-lite-preview",
+        "google/gemini-3.5-flash-lite",
+        "gpt-5.6-luna",
+        "gpt-5.6-terra",
+        "claude-opus-5",
+        "claude-sonnet-5"
+      ],
+      "n_decisions": 8928,
+      "n_models": 9,
+      "n_races": 480,
+      "n_risk_levels": 3,
+      "n_decisions_per_model": {
+        "claude-opus-5": 1116,
+        "claude-sonnet-5": 1116,
+        "google/gemini-3-flash-preview": 1116,
+        "google/gemini-3.1-flash-lite-preview": 558,
+        "google/gemini-3.5-flash-lite": 558,
+        "gpt-5-nano": 1116,
+        "gpt-5.4-nano": 1116,
+        "gpt-5.6-luna": 1116,
+        "gpt-5.6-terra": 1116
+      },
+      "loglik_A_risk_only": -5705.949358373322,
+      "loglik_B_risk_x_model": -3930.8681906057036,
+      "loglik_C_model_only": -5089.560011021076,
+      "loglik_intercept_only": -6165.745603713469,
+      "pseudo_r2_A": 0.07457269171665559,
+      "pseudo_r2_B": 0.36246669215341265,
+      "pseudo_r2_C": 0.17454265267286972,
+      "n_params_A": 3,
+      "n_params_B": 27,
+      "n_params_C": 9,
+      "n_params_intercept": 1,
+      "lr_test_B_vs_A_slope_heterogeneity_given_common_slope_baseline": {
+        "lr_stat": 3550.1623355352367,
+        "df": 24,
+        "p_value": 0.0
+      },
+      "lr_test_C_vs_intercept_level_heterogeneity": {
+        "lr_stat": 2152.3711853847853,
+        "df": 8,
+        "p_value": 0.0
+      },
+      "lr_test_B_vs_C_slope_heterogeneity_beyond_level": {
+        "lr_stat": 2317.383640830745,
+        "df": 18,
+        "p_value": 0.0
+      },
+      "converged": {
+        "A": true,
+        "B": false,
+        "C": true,
+        "intercept": true
+      },
+      "fit_warnings": {
+        "A": [],
+        "B": [
+          "ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals"
+        ],
+        "C": [],
+        "intercept": []
+      },
+      "source_sha256": {
+        "results/frontier/openai/baseline/gpt-5-nano/turns.jsonl": "5ba5bf6dc0e384ead89eee63cb5fc6b2f49fe56de3531c94256b4308e22d8313",
+        "results/frontier/openai/persona/R0_neutral/gpt-5-nano/turns.jsonl": "fa4308eb1ec7b5943ed3ba341dca7cd13eae6f300766ae098c3403313c1c18d2",
+        "results/frontier/openai/baseline/gpt-5.4-nano/turns.jsonl": "1bd41cf76f616f56db278c591d7ef8fce28d89a1cdba8fc2073501990463518b",
+        "results/frontier/openai/persona/R0_neutral/gpt-5.4-nano/turns.jsonl": "ecd31b11fab9ad0a4eb909e577235a445109d3ca85d2fdfaedfeb25d845f493b",
+        "results/frontier/baseline/google-gemini-3-flash-preview/turns.jsonl": "5bdc7bec766532c59baef206a558a2e8199bb37bdde9ab74c5aa27fef3119237",
+        "results/frontier/persona/R0_neutral/google-gemini-3-flash-preview/turns.jsonl": "d8dff3bdcefc5251f108bf36be43867223299679c680fb73a575715b539e19dd",
+        "results/frontier/baseline/google-gemini-3.1-flash-lite-preview/turns.jsonl": "a3b34464b10619d1d64e63b79c9c72a6ce08a3d3ff72fba96babb49726ed22db",
+        "results/frontier/baseline/google-gemini-3.5-flash-lite/turns.jsonl": "8db97643168c744f9495a3300f406799671b77520f01ccf9746134f673bfba80",
+        "results/frontier/bedrock_mantle/luna/baseline/openai.gpt-5.6-luna/turns.jsonl": "a5d4d4c90fe878180c7ae0b2a5f8b979f511019e0835a4bd3d958cc97515d9e9",
+        "results/frontier/bedrock_mantle/luna/persona/R0_neutral/openai.gpt-5.6-luna/turns.jsonl": "ead35d4ac97ec30db2f207ab77cf7f9459e8bccb63ce543b053be89c3a4a13d0",
+        "results/frontier/bedrock_mantle/terra/baseline/openai.gpt-5.6-terra/turns.jsonl": "d368329d8dbb897f13afac5e38b7ce20e08deea31469aba01eacccffe19d47c3",
+        "results/frontier/bedrock_mantle/terra/persona/R0_neutral/openai.gpt-5.6-terra/turns.jsonl": "92cc228a9b71fc78cf31c0d77a4bf988995f73407912ea36bca6b1fd3a0fd0ba",
+        "results/frontier/bedrock/baseline/us.anthropic.claude-opus-5/turns.jsonl": "c3683ddc5937bec955aef855eb69e51fae1368673088c18d7109bc30e18d118d",
+        "results/frontier/bedrock/persona/R0_neutral/us.anthropic.claude-opus-5/turns.jsonl": "49dba157de698e362673b0db263d2cb24e45af5b87e46450c6287bbbd2037578",
+        "results/frontier/bedrock/baseline/us.anthropic.claude-sonnet-5/turns.jsonl": "d2bfd78cf6d05dda127cb682396424d483cd61017320fdcdb09de48de7ec2956",
+        "results/frontier/bedrock/persona/R0_neutral/us.anthropic.claude-sonnet-5/turns.jsonl": "d665d9831b91c4848e78286fe12241d8b3325de93290d3511caa3897496f7464"
+      }
+    }
+  },
+  "provenance": {
+    "script": "results/cross_model_pilot_synthesis/analyze_heterogeneity_test.py",
+    "script_sha256": "c1d9ccf733bb77a91cf572856d1befabcd530776a0ed1c698bfe1954e5d0a92a",
+    "generated_utc": "2026-09-09T11:50:27.093088+00:00",
+    "seed": null,
+    "seed_note": "Deterministic: Newton/BFGS maximum-likelihood fits on a fixed table, no randomness.",
+    "python_version": "3.14.0",
+    "statsmodels_version": "0.14.6",
+    "scipy_version": "1.16.3",
+    "pandas_version": "2.3.3",
+    "rosters_run_this_pass": [
+      "five",
+      "seven",
+      "nine"
+    ]
   }
 }

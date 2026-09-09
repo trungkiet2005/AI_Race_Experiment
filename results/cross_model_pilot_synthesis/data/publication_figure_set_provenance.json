@@ -4,6 +4,93 @@
     "first_five_trajectories": 760,
     "nplayer_position_rows": 14
   },
+  "figure_4_rate_uncertainty": {
+    "base_seed": 20260908,
+    "ci_method": "percentile cluster bootstrap over independent experimental units",
+    "cluster_unit": {
+      "human_population": "participant_id (one independent subject per participant)",
+      "llm_populations": "game_id (race); both seats of a race share the sampled horizon and setback draw under the common-random-number design"
+    },
+    "point_estimate_unchanged": true,
+    "populations": {
+      "claude-opus-5": {
+        "ci_high": 0.5,
+        "ci_low": 0.16666666666666666,
+        "cluster_unit": "game_id",
+        "n_clusters": 30,
+        "n_trajectories": 60,
+        "point_estimate": 0.3333333333333333,
+        "seed": 20260913
+      },
+      "claude-sonnet-5": {
+        "ci_high": 0.33000000000000007,
+        "ci_low": 0.11000000000000003,
+        "cluster_unit": "game_id",
+        "n_clusters": 30,
+        "n_trajectories": 60,
+        "point_estimate": 0.21666666666666667,
+        "seed": 20260914
+      },
+      "google/gemini-3-flash-preview": {
+        "ci_high": 0.8033333333333335,
+        "ci_low": 0.6533333333333334,
+        "cluster_unit": "game_id",
+        "n_clusters": 30,
+        "n_trajectories": 60,
+        "point_estimate": 0.73,
+        "seed": 20260910
+      },
+      "google/gemini-3.1-flash-lite-preview": {
+        "ci_high": 0.8733333333333334,
+        "ci_low": 0.78,
+        "cluster_unit": "game_id",
+        "n_clusters": 30,
+        "n_trajectories": 60,
+        "point_estimate": 0.8266666666666665,
+        "seed": 20260911
+      },
+      "google/gemini-3.5-flash-lite": {
+        "ci_high": 0.8000000000000002,
+        "ci_low": 0.686666666666667,
+        "cluster_unit": "game_id",
+        "n_clusters": 30,
+        "n_trajectories": 60,
+        "point_estimate": 0.7433333333333334,
+        "seed": 20260912
+      },
+      "gpt-5-nano": {
+        "ci_high": 0.21000000000000002,
+        "ci_low": 0.12991666666666668,
+        "cluster_unit": "game_id",
+        "n_clusters": 30,
+        "n_trajectories": 60,
+        "point_estimate": 0.16999999999999998,
+        "seed": 20260908
+      },
+      "gpt-5.4-nano": {
+        "ci_high": 0.5866666666666667,
+        "ci_low": 0.48333333333333334,
+        "cluster_unit": "game_id",
+        "n_clusters": 30,
+        "n_trajectories": 60,
+        "point_estimate": 0.5366666666666667,
+        "seed": 20260909
+      },
+      "human": {
+        "ci_high": 0.5852941176470589,
+        "ci_low": 0.5347058823529413,
+        "cluster_unit": "participant_id",
+        "n_clusters": 340,
+        "n_trajectories": 340,
+        "point_estimate": 0.56,
+        "seed": 20260915
+      }
+    },
+    "resamples": 4000,
+    "seed_rule": "base_seed + population index in BASELINE_ORDER",
+    "statistic": "unweighted mean Unsafe rate over player-race trajectories, rounds 1 to 5",
+    "supersedes": "row-level bootstrap over player-race trajectories, which treated the two seats of a race as independent samples"
+  },
   "figure_5_change": "replaced unrecoverable HDBSCAN artwork with the maintained four-archetype human-reference projection",
   "figure_outputs": {
     "figure_1_mechanism": [
@@ -89,7 +176,7 @@
     "supplement_figure_5_tsne_outcome": "generated",
     "supplement_figure_6_round_profiles": "generated"
   },
-  "generated_utc": "2026-09-09T11:30:14.346836+00:00",
+  "generated_utc": "2026-09-09T12:05:08.555624+00:00",
   "generator": "scripts/build_publication_figures.py",
   "manual_figure_origin": {
     "commit": "f0dde0d",

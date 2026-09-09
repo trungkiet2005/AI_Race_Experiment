@@ -1,0 +1,859 @@
+{
+  "schema_version": "ai-race-frontier-admission-campaign-derived-v1",
+  "generated_utc": "2026-09-09T12:46:30+00:00",
+  "date": "2026-09-09",
+  "estimand": "Per-endpoint share of 60 frozen comprehension probes answered correctly under the ai-race-frontier-admission-v6 contract, used only to admit or refuse a route for frontier gameplay.",
+  "campaign": {
+    "campaign_id": "admission_campaign_v6",
+    "protocol_id": "ai-race-frontier-admission-v6",
+    "task_name": "ai-race-frontier-admission",
+    "task_versions": [
+      "7",
+      "8"
+    ],
+    "kaggle_identity": "daosyduyminh",
+    "probe_bank_sha256": "2953fb472dcba47511de108a47d4126b0f661e79bf60c96a3ab46f581abca8bc",
+    "rules_context_sha256": "b80981a5e888d04649300f79b7388ca7a755b958f239f0172efd9ca35aab2ae0",
+    "expected_rows_per_route": 60,
+    "repetitions_requested": 3,
+    "probes": 20,
+    "base_seed": 260726,
+    "n_tabulated_routes": 9
+  },
+  "thresholds_applied": {
+    "overall_accuracy_min": 0.8,
+    "state_reconstruction_accuracy_min": 0.75,
+    "terminal_scoring_accuracy_min": 0.75,
+    "expected_payoff_accuracy_min": 0.75,
+    "expected_payoff_is_diagnostic_only": true,
+    "paper_ready_requires_repetitions_at_least": 3
+  },
+  "routes": [
+    {
+      "route": "google/gemini-3-flash-preview",
+      "model_tag": "google-gemini-3-flash-preview",
+      "task_version": "7",
+      "run_id": "1463707",
+      "n_rows": 60,
+      "repetitions": 3,
+      "by_domain_accuracy": {
+        "rule_recall": 1.0,
+        "stage_payoff": 1.0,
+        "state_reconstruction": 0.9333333333333333,
+        "state_transition": 1.0,
+        "terminal_scoring": 1.0,
+        "expected_payoff": 0.5
+      },
+      "by_domain_counts": {
+        "rule_recall": {
+          "rows": 12,
+          "valid": 12,
+          "correct": 12
+        },
+        "stage_payoff": {
+          "rows": 6,
+          "valid": 6,
+          "correct": 6
+        },
+        "state_reconstruction": {
+          "rows": 15,
+          "valid": 15,
+          "correct": 14
+        },
+        "state_transition": {
+          "rows": 6,
+          "valid": 6,
+          "correct": 6
+        },
+        "terminal_scoring": {
+          "rows": 15,
+          "valid": 15,
+          "correct": 15
+        },
+        "expected_payoff": {
+          "rows": 6,
+          "valid": 6,
+          "correct": 3
+        }
+      },
+      "overall_accuracy": 0.9333333333333333,
+      "gate_values": {
+        "overall_accuracy": 0.9333333333333333,
+        "state_reconstruction": 0.9333333333333333,
+        "terminal_scoring": 1.0
+      },
+      "gate_outcomes": {
+        "overall_accuracy": true,
+        "state_reconstruction": true,
+        "terminal_scoring": true
+      },
+      "admitted_for_gameplay": true,
+      "evidence_class": "paper-ready",
+      "reasoning_requested": "none",
+      "reasoning_parameter_omitted": false,
+      "temperature_requested": 0.0,
+      "output_token_limit": 256,
+      "prompt_version": "ai-race-fairgame-v3",
+      "seed_status": "requested; per-probe stream matches base 260726 + 1000*rep + index",
+      "sources": {
+        "admission_json": {
+          "path": "results/frontier/admission_campaign_v6/ai-race-frontier-admission/7/gemini-3-flash-preview/1463707/results/ai_race_frontier_admission/google-gemini-3-flash-preview/admission.json",
+          "sha256": "1cc48e9d23e32bd1bc10e28e121f80f4e6a6717c900a107e2649e90e9dec63d3"
+        },
+        "raw_responses_jsonl": {
+          "path": "results/frontier/admission_campaign_v6/ai-race-frontier-admission/7/gemini-3-flash-preview/1463707/results/ai_race_frontier_admission/google-gemini-3-flash-preview/raw_responses.jsonl",
+          "sha256": "01662b30295ea7386c7ce8f69a6b01f6767f33eac625eb4e09deea660c153adb",
+          "lines": 60
+        },
+        "run_manifest_json": {
+          "path": "results/frontier/admission_campaign_v6/ai-race-frontier-admission/7/gemini-3-flash-preview/1463707/results/ai_race_frontier_admission/google-gemini-3-flash-preview/run_manifest.json",
+          "sha256": "2fc6da7ed815ca2fc8c8790167aba992d3c997e1ee7d535bf1b14cf82a90ef16"
+        }
+      }
+    },
+    {
+      "route": "anthropic/claude-opus-5@default",
+      "model_tag": "anthropic-claude-opus-5-default",
+      "task_version": "7",
+      "run_id": "1494033",
+      "n_rows": 60,
+      "repetitions": 3,
+      "by_domain_accuracy": {
+        "rule_recall": 1.0,
+        "stage_payoff": 1.0,
+        "state_reconstruction": 0.9333333333333333,
+        "state_transition": 1.0,
+        "terminal_scoring": 1.0,
+        "expected_payoff": 0.3333333333333333
+      },
+      "by_domain_counts": {
+        "rule_recall": {
+          "rows": 12,
+          "valid": 12,
+          "correct": 12
+        },
+        "stage_payoff": {
+          "rows": 6,
+          "valid": 6,
+          "correct": 6
+        },
+        "state_reconstruction": {
+          "rows": 15,
+          "valid": 15,
+          "correct": 14
+        },
+        "state_transition": {
+          "rows": 6,
+          "valid": 6,
+          "correct": 6
+        },
+        "terminal_scoring": {
+          "rows": 15,
+          "valid": 15,
+          "correct": 15
+        },
+        "expected_payoff": {
+          "rows": 6,
+          "valid": 5,
+          "correct": 2
+        }
+      },
+      "overall_accuracy": 0.9166666666666666,
+      "gate_values": {
+        "overall_accuracy": 0.9166666666666666,
+        "state_reconstruction": 0.9333333333333333,
+        "terminal_scoring": 1.0
+      },
+      "gate_outcomes": {
+        "overall_accuracy": true,
+        "state_reconstruction": true,
+        "terminal_scoring": true
+      },
+      "admitted_for_gameplay": true,
+      "evidence_class": "paper-ready",
+      "reasoning_requested": "none",
+      "reasoning_parameter_omitted": false,
+      "temperature_requested": 0.0,
+      "output_token_limit": 256,
+      "prompt_version": "ai-race-fairgame-v3",
+      "seed_status": "requested; per-probe stream matches base 260726 + 1000*rep + index",
+      "sources": {
+        "admission_json": {
+          "path": "results/frontier/admission_campaign_v6/ai-race-frontier-admission/7/claude-opus-5-default/1494033/results/ai_race_frontier_admission/anthropic-claude-opus-5-default/admission.json",
+          "sha256": "34f1fdf3d9110febfbb430a397283c3d6c4db1149d4049ec9c2167c7b9123d42"
+        },
+        "raw_responses_jsonl": {
+          "path": "results/frontier/admission_campaign_v6/ai-race-frontier-admission/7/claude-opus-5-default/1494033/results/ai_race_frontier_admission/anthropic-claude-opus-5-default/raw_responses.jsonl",
+          "sha256": "dc6e9a7706283ae21fc88d276c6447804768ee439d680c9a0627e49107993e20",
+          "lines": 60
+        },
+        "run_manifest_json": {
+          "path": "results/frontier/admission_campaign_v6/ai-race-frontier-admission/7/claude-opus-5-default/1494033/results/ai_race_frontier_admission/anthropic-claude-opus-5-default/run_manifest.json",
+          "sha256": "9cd17825f17e600fb9388ddb16425a0f99e353978809d527cfdc16a1a5edb28b"
+        }
+      }
+    },
+    {
+      "route": "openai/gpt-5.4-2026-03-05",
+      "model_tag": "openai-gpt-5.4-2026-03-05",
+      "task_version": "7",
+      "run_id": "1494043",
+      "n_rows": 60,
+      "repetitions": 3,
+      "by_domain_accuracy": {
+        "rule_recall": 1.0,
+        "stage_payoff": 1.0,
+        "state_reconstruction": 1.0,
+        "state_transition": 1.0,
+        "terminal_scoring": 1.0,
+        "expected_payoff": 0.0
+      },
+      "by_domain_counts": {
+        "rule_recall": {
+          "rows": 12,
+          "valid": 12,
+          "correct": 12
+        },
+        "stage_payoff": {
+          "rows": 6,
+          "valid": 6,
+          "correct": 6
+        },
+        "state_reconstruction": {
+          "rows": 15,
+          "valid": 15,
+          "correct": 15
+        },
+        "state_transition": {
+          "rows": 6,
+          "valid": 6,
+          "correct": 6
+        },
+        "terminal_scoring": {
+          "rows": 15,
+          "valid": 15,
+          "correct": 15
+        },
+        "expected_payoff": {
+          "rows": 6,
+          "valid": 6,
+          "correct": 0
+        }
+      },
+      "overall_accuracy": 0.9,
+      "gate_values": {
+        "overall_accuracy": 0.9,
+        "state_reconstruction": 1.0,
+        "terminal_scoring": 1.0
+      },
+      "gate_outcomes": {
+        "overall_accuracy": true,
+        "state_reconstruction": true,
+        "terminal_scoring": true
+      },
+      "admitted_for_gameplay": true,
+      "evidence_class": "paper-ready",
+      "reasoning_requested": "none",
+      "reasoning_parameter_omitted": false,
+      "temperature_requested": 0.0,
+      "output_token_limit": 256,
+      "prompt_version": "ai-race-fairgame-v3",
+      "seed_status": "requested; per-probe stream matches base 260726 + 1000*rep + index",
+      "sources": {
+        "admission_json": {
+          "path": "results/frontier/admission_campaign_v6/ai-race-frontier-admission/7/gpt-5.4-2026-03-05/1494043/results/ai_race_frontier_admission/openai-gpt-5.4-2026-03-05/admission.json",
+          "sha256": "572f6c2ae0b1f2f5a2ad5611c16758285a93a18781c8f7a9772755c5ce0ce6c0"
+        },
+        "raw_responses_jsonl": {
+          "path": "results/frontier/admission_campaign_v6/ai-race-frontier-admission/7/gpt-5.4-2026-03-05/1494043/results/ai_race_frontier_admission/openai-gpt-5.4-2026-03-05/raw_responses.jsonl",
+          "sha256": "ddef355319933c079667de7c76b3a60e81903e5e9863a89df90e086b7afe5252",
+          "lines": 60
+        },
+        "run_manifest_json": {
+          "path": "results/frontier/admission_campaign_v6/ai-race-frontier-admission/7/gpt-5.4-2026-03-05/1494043/results/ai_race_frontier_admission/openai-gpt-5.4-2026-03-05/run_manifest.json",
+          "sha256": "cdbfd803a4727f3f484fd24173a98cebfe4cad349014895aad5a39143cdfaf66"
+        }
+      }
+    },
+    {
+      "route": "openai/gpt-5.5-2026-04-23",
+      "model_tag": "openai-gpt-5.5-2026-04-23",
+      "task_version": "7",
+      "run_id": "1494045",
+      "n_rows": 60,
+      "repetitions": 3,
+      "by_domain_accuracy": {
+        "rule_recall": 1.0,
+        "stage_payoff": 1.0,
+        "state_reconstruction": 0.8,
+        "state_transition": 1.0,
+        "terminal_scoring": 1.0,
+        "expected_payoff": 0.5
+      },
+      "by_domain_counts": {
+        "rule_recall": {
+          "rows": 12,
+          "valid": 12,
+          "correct": 12
+        },
+        "stage_payoff": {
+          "rows": 6,
+          "valid": 6,
+          "correct": 6
+        },
+        "state_reconstruction": {
+          "rows": 15,
+          "valid": 15,
+          "correct": 12
+        },
+        "state_transition": {
+          "rows": 6,
+          "valid": 6,
+          "correct": 6
+        },
+        "terminal_scoring": {
+          "rows": 15,
+          "valid": 15,
+          "correct": 15
+        },
+        "expected_payoff": {
+          "rows": 6,
+          "valid": 6,
+          "correct": 3
+        }
+      },
+      "overall_accuracy": 0.9,
+      "gate_values": {
+        "overall_accuracy": 0.9,
+        "state_reconstruction": 0.8,
+        "terminal_scoring": 1.0
+      },
+      "gate_outcomes": {
+        "overall_accuracy": true,
+        "state_reconstruction": true,
+        "terminal_scoring": true
+      },
+      "admitted_for_gameplay": true,
+      "evidence_class": "paper-ready",
+      "reasoning_requested": "none",
+      "reasoning_parameter_omitted": false,
+      "temperature_requested": 0.0,
+      "output_token_limit": 256,
+      "prompt_version": "ai-race-fairgame-v3",
+      "seed_status": "requested; per-probe stream matches base 260726 + 1000*rep + index",
+      "sources": {
+        "admission_json": {
+          "path": "results/frontier/admission_campaign_v6/ai-race-frontier-admission/7/gpt-5.5-2026-04-23/1494045/results/ai_race_frontier_admission/openai-gpt-5.5-2026-04-23/admission.json",
+          "sha256": "bae51705d034092d94ec51a5ec239f38ff84dff0819001953a2add8df3d36aee"
+        },
+        "raw_responses_jsonl": {
+          "path": "results/frontier/admission_campaign_v6/ai-race-frontier-admission/7/gpt-5.5-2026-04-23/1494045/results/ai_race_frontier_admission/openai-gpt-5.5-2026-04-23/raw_responses.jsonl",
+          "sha256": "2d36ef27feb9d30121ed5907681eb9a850f728d021ec018ae8479706185cf93e",
+          "lines": 60
+        },
+        "run_manifest_json": {
+          "path": "results/frontier/admission_campaign_v6/ai-race-frontier-admission/7/gpt-5.5-2026-04-23/1494045/results/ai_race_frontier_admission/openai-gpt-5.5-2026-04-23/run_manifest.json",
+          "sha256": "4d7cdee55e425a5639393f60a4259d50180d471781fed87625f7c6d3ea1f1709"
+        }
+      }
+    },
+    {
+      "route": "anthropic/claude-sonnet-5@default",
+      "model_tag": "anthropic-claude-sonnet-5-default",
+      "task_version": "7",
+      "run_id": "1494039",
+      "n_rows": 60,
+      "repetitions": 3,
+      "by_domain_accuracy": {
+        "rule_recall": 1.0,
+        "stage_payoff": 1.0,
+        "state_reconstruction": 1.0,
+        "state_transition": 1.0,
+        "terminal_scoring": 0.8,
+        "expected_payoff": 0.0
+      },
+      "by_domain_counts": {
+        "rule_recall": {
+          "rows": 12,
+          "valid": 12,
+          "correct": 12
+        },
+        "stage_payoff": {
+          "rows": 6,
+          "valid": 6,
+          "correct": 6
+        },
+        "state_reconstruction": {
+          "rows": 15,
+          "valid": 15,
+          "correct": 15
+        },
+        "state_transition": {
+          "rows": 6,
+          "valid": 6,
+          "correct": 6
+        },
+        "terminal_scoring": {
+          "rows": 15,
+          "valid": 15,
+          "correct": 12
+        },
+        "expected_payoff": {
+          "rows": 6,
+          "valid": 2,
+          "correct": 0
+        }
+      },
+      "overall_accuracy": 0.85,
+      "gate_values": {
+        "overall_accuracy": 0.85,
+        "state_reconstruction": 1.0,
+        "terminal_scoring": 0.8
+      },
+      "gate_outcomes": {
+        "overall_accuracy": true,
+        "state_reconstruction": true,
+        "terminal_scoring": true
+      },
+      "admitted_for_gameplay": true,
+      "evidence_class": "paper-ready",
+      "reasoning_requested": "none",
+      "reasoning_parameter_omitted": false,
+      "temperature_requested": 0.0,
+      "output_token_limit": 256,
+      "prompt_version": "ai-race-fairgame-v3",
+      "seed_status": "requested; per-probe stream matches base 260726 + 1000*rep + index",
+      "sources": {
+        "admission_json": {
+          "path": "results/frontier/admission_campaign_v6/ai-race-frontier-admission/7/claude-sonnet-5-default/1494039/results/ai_race_frontier_admission/anthropic-claude-sonnet-5-default/admission.json",
+          "sha256": "94440545e5a88b30337a19229498f18b1c7de107fb034e0e3128aad5c2eea5b7"
+        },
+        "raw_responses_jsonl": {
+          "path": "results/frontier/admission_campaign_v6/ai-race-frontier-admission/7/claude-sonnet-5-default/1494039/results/ai_race_frontier_admission/anthropic-claude-sonnet-5-default/raw_responses.jsonl",
+          "sha256": "db9c4de41fb04cc542e43d5b60b05610856a7c0a1f7e9c0d8b330f1b1cf80fc6",
+          "lines": 60
+        },
+        "run_manifest_json": {
+          "path": "results/frontier/admission_campaign_v6/ai-race-frontier-admission/7/claude-sonnet-5-default/1494039/results/ai_race_frontier_admission/anthropic-claude-sonnet-5-default/run_manifest.json",
+          "sha256": "6b968275d398f61325663a5917559a4e59ac2bf2ac5074115370df372523d72a"
+        }
+      }
+    },
+    {
+      "route": "google/gemini-3.1-flash-lite-preview",
+      "model_tag": "google-gemini-3.1-flash-lite-preview",
+      "task_version": "7",
+      "run_id": "1494040",
+      "n_rows": 60,
+      "repetitions": 3,
+      "by_domain_accuracy": {
+        "rule_recall": 1.0,
+        "stage_payoff": 1.0,
+        "state_reconstruction": 0.7333333333333333,
+        "state_transition": 1.0,
+        "terminal_scoring": 0.8,
+        "expected_payoff": 0.16666666666666666
+      },
+      "by_domain_counts": {
+        "rule_recall": {
+          "rows": 12,
+          "valid": 12,
+          "correct": 12
+        },
+        "stage_payoff": {
+          "rows": 6,
+          "valid": 6,
+          "correct": 6
+        },
+        "state_reconstruction": {
+          "rows": 15,
+          "valid": 15,
+          "correct": 11
+        },
+        "state_transition": {
+          "rows": 6,
+          "valid": 6,
+          "correct": 6
+        },
+        "terminal_scoring": {
+          "rows": 15,
+          "valid": 15,
+          "correct": 12
+        },
+        "expected_payoff": {
+          "rows": 6,
+          "valid": 6,
+          "correct": 1
+        }
+      },
+      "overall_accuracy": 0.8,
+      "gate_values": {
+        "overall_accuracy": 0.8,
+        "state_reconstruction": 0.7333333333333333,
+        "terminal_scoring": 0.8
+      },
+      "gate_outcomes": {
+        "overall_accuracy": true,
+        "state_reconstruction": false,
+        "terminal_scoring": true
+      },
+      "admitted_for_gameplay": false,
+      "evidence_class": "diagnostic",
+      "reasoning_requested": "none",
+      "reasoning_parameter_omitted": false,
+      "temperature_requested": 0.0,
+      "output_token_limit": 256,
+      "prompt_version": "ai-race-fairgame-v3",
+      "seed_status": "requested; per-probe stream matches base 260726 + 1000*rep + index",
+      "sources": {
+        "admission_json": {
+          "path": "results/frontier/admission_campaign_v6/ai-race-frontier-admission/7/gemini-3.1-flash-lite-preview/1494040/results/ai_race_frontier_admission/google-gemini-3.1-flash-lite-preview/admission.json",
+          "sha256": "fc220904f53c7cdf8198b170f63f51641dea7e7cee69af1de9b31b87e306aca3"
+        },
+        "raw_responses_jsonl": {
+          "path": "results/frontier/admission_campaign_v6/ai-race-frontier-admission/7/gemini-3.1-flash-lite-preview/1494040/results/ai_race_frontier_admission/google-gemini-3.1-flash-lite-preview/raw_responses.jsonl",
+          "sha256": "3af28f50e04c73c384cbc896c4dbf62843ec53805f9cfaa29fa92c0b07b7ee9c",
+          "lines": 60
+        },
+        "run_manifest_json": {
+          "path": "results/frontier/admission_campaign_v6/ai-race-frontier-admission/7/gemini-3.1-flash-lite-preview/1494040/results/ai_race_frontier_admission/google-gemini-3.1-flash-lite-preview/run_manifest.json",
+          "sha256": "71a22cbb13a729e0f13b40aa74398c2008ef416b4a61d978d5d08d8ceae47fe9"
+        }
+      }
+    },
+    {
+      "route": "openai/gpt-5.4-mini-2026-03-17",
+      "model_tag": "openai-gpt-5.4-mini-2026-03-17",
+      "task_version": "7",
+      "run_id": "1494044",
+      "n_rows": 60,
+      "repetitions": 3,
+      "by_domain_accuracy": {
+        "rule_recall": 1.0,
+        "stage_payoff": 1.0,
+        "state_reconstruction": 0.6666666666666666,
+        "state_transition": 0.6666666666666666,
+        "terminal_scoring": 0.8666666666666667,
+        "expected_payoff": 0.0
+      },
+      "by_domain_counts": {
+        "rule_recall": {
+          "rows": 12,
+          "valid": 12,
+          "correct": 12
+        },
+        "stage_payoff": {
+          "rows": 6,
+          "valid": 6,
+          "correct": 6
+        },
+        "state_reconstruction": {
+          "rows": 15,
+          "valid": 15,
+          "correct": 10
+        },
+        "state_transition": {
+          "rows": 6,
+          "valid": 6,
+          "correct": 4
+        },
+        "terminal_scoring": {
+          "rows": 15,
+          "valid": 15,
+          "correct": 13
+        },
+        "expected_payoff": {
+          "rows": 6,
+          "valid": 6,
+          "correct": 0
+        }
+      },
+      "overall_accuracy": 0.75,
+      "gate_values": {
+        "overall_accuracy": 0.75,
+        "state_reconstruction": 0.6666666666666666,
+        "terminal_scoring": 0.8666666666666667
+      },
+      "gate_outcomes": {
+        "overall_accuracy": false,
+        "state_reconstruction": false,
+        "terminal_scoring": true
+      },
+      "admitted_for_gameplay": false,
+      "evidence_class": "diagnostic",
+      "reasoning_requested": "none",
+      "reasoning_parameter_omitted": false,
+      "temperature_requested": 0.0,
+      "output_token_limit": 256,
+      "prompt_version": "ai-race-fairgame-v3",
+      "seed_status": "requested; per-probe stream matches base 260726 + 1000*rep + index",
+      "sources": {
+        "admission_json": {
+          "path": "results/frontier/admission_campaign_v6/ai-race-frontier-admission/7/gpt-5.4-mini-2026-03-17/1494044/results/ai_race_frontier_admission/openai-gpt-5.4-mini-2026-03-17/admission.json",
+          "sha256": "34bc6f0dd903aac62bcecc1054ba55232a0b448bbabde563671b7c2d9add6369"
+        },
+        "raw_responses_jsonl": {
+          "path": "results/frontier/admission_campaign_v6/ai-race-frontier-admission/7/gpt-5.4-mini-2026-03-17/1494044/results/ai_race_frontier_admission/openai-gpt-5.4-mini-2026-03-17/raw_responses.jsonl",
+          "sha256": "93555d87ecf71297f3fb80a83d012a26be263d5735fe833dca248aafb6aba625",
+          "lines": 60
+        },
+        "run_manifest_json": {
+          "path": "results/frontier/admission_campaign_v6/ai-race-frontier-admission/7/gpt-5.4-mini-2026-03-17/1494044/results/ai_race_frontier_admission/openai-gpt-5.4-mini-2026-03-17/run_manifest.json",
+          "sha256": "00cc5059cd08c54abc6ade5f0c3422eaf443cbf978682870dd2696570f816272"
+        }
+      }
+    },
+    {
+      "route": "google/gemini-3.5-flash-lite",
+      "model_tag": "google-gemini-3.5-flash-lite",
+      "task_version": "8",
+      "run_id": "1494138",
+      "n_rows": 60,
+      "repetitions": 3,
+      "by_domain_accuracy": {
+        "rule_recall": 1.0,
+        "stage_payoff": 1.0,
+        "state_reconstruction": 0.6,
+        "state_transition": 0.5,
+        "terminal_scoring": 0.6,
+        "expected_payoff": 0.0
+      },
+      "by_domain_counts": {
+        "rule_recall": {
+          "rows": 12,
+          "valid": 12,
+          "correct": 12
+        },
+        "stage_payoff": {
+          "rows": 6,
+          "valid": 6,
+          "correct": 6
+        },
+        "state_reconstruction": {
+          "rows": 15,
+          "valid": 15,
+          "correct": 9
+        },
+        "state_transition": {
+          "rows": 6,
+          "valid": 6,
+          "correct": 3
+        },
+        "terminal_scoring": {
+          "rows": 15,
+          "valid": 15,
+          "correct": 9
+        },
+        "expected_payoff": {
+          "rows": 6,
+          "valid": 6,
+          "correct": 0
+        }
+      },
+      "overall_accuracy": 0.65,
+      "gate_values": {
+        "overall_accuracy": 0.65,
+        "state_reconstruction": 0.6,
+        "terminal_scoring": 0.6
+      },
+      "gate_outcomes": {
+        "overall_accuracy": false,
+        "state_reconstruction": false,
+        "terminal_scoring": false
+      },
+      "admitted_for_gameplay": false,
+      "evidence_class": "diagnostic",
+      "reasoning_requested": null,
+      "reasoning_parameter_omitted": true,
+      "temperature_requested": 0.0,
+      "output_token_limit": 256,
+      "prompt_version": "ai-race-fairgame-v3",
+      "seed_status": "requested; per-probe stream matches base 260726 + 1000*rep + index",
+      "sources": {
+        "admission_json": {
+          "path": "results/frontier/admission_campaign_v6/ai-race-frontier-admission/8/gemini-3.5-flash-lite/1494138/results/ai_race_frontier_admission/google-gemini-3.5-flash-lite/admission.json",
+          "sha256": "f70626a4274c0aca6a4bbb3fa9cbe2a5e516c783ff933abaa7c21eb34ef1b7da"
+        },
+        "raw_responses_jsonl": {
+          "path": "results/frontier/admission_campaign_v6/ai-race-frontier-admission/8/gemini-3.5-flash-lite/1494138/results/ai_race_frontier_admission/google-gemini-3.5-flash-lite/raw_responses.jsonl",
+          "sha256": "154ee9c05cb9d5a602da4b89229e27629879a0e945d3eaa7fd7fcd53337e51e5",
+          "lines": 60
+        },
+        "run_manifest_json": {
+          "path": "results/frontier/admission_campaign_v6/ai-race-frontier-admission/8/gemini-3.5-flash-lite/1494138/results/ai_race_frontier_admission/google-gemini-3.5-flash-lite/run_manifest.json",
+          "sha256": "6cadcc2475399990181a2ad6e948ed3c6e1665eff0d20c989ef5a07e25610ef5"
+        }
+      }
+    },
+    {
+      "route": "openai/gpt-5.4-nano-2026-03-17",
+      "model_tag": "openai-gpt-5.4-nano-2026-03-17",
+      "task_version": "7",
+      "run_id": "1494042",
+      "n_rows": 60,
+      "repetitions": 3,
+      "by_domain_accuracy": {
+        "rule_recall": 0.75,
+        "stage_payoff": 1.0,
+        "state_reconstruction": 0.2,
+        "state_transition": 0.5,
+        "terminal_scoring": 0.6666666666666666,
+        "expected_payoff": 0.0
+      },
+      "by_domain_counts": {
+        "rule_recall": {
+          "rows": 12,
+          "valid": 12,
+          "correct": 9
+        },
+        "stage_payoff": {
+          "rows": 6,
+          "valid": 6,
+          "correct": 6
+        },
+        "state_reconstruction": {
+          "rows": 15,
+          "valid": 15,
+          "correct": 3
+        },
+        "state_transition": {
+          "rows": 6,
+          "valid": 6,
+          "correct": 3
+        },
+        "terminal_scoring": {
+          "rows": 15,
+          "valid": 15,
+          "correct": 10
+        },
+        "expected_payoff": {
+          "rows": 6,
+          "valid": 6,
+          "correct": 0
+        }
+      },
+      "overall_accuracy": 0.5166666666666667,
+      "gate_values": {
+        "overall_accuracy": 0.5166666666666667,
+        "state_reconstruction": 0.2,
+        "terminal_scoring": 0.6666666666666666
+      },
+      "gate_outcomes": {
+        "overall_accuracy": false,
+        "state_reconstruction": false,
+        "terminal_scoring": false
+      },
+      "admitted_for_gameplay": false,
+      "evidence_class": "diagnostic",
+      "reasoning_requested": "none",
+      "reasoning_parameter_omitted": false,
+      "temperature_requested": 0.0,
+      "output_token_limit": 256,
+      "prompt_version": "ai-race-fairgame-v3",
+      "seed_status": "requested; per-probe stream matches base 260726 + 1000*rep + index",
+      "sources": {
+        "admission_json": {
+          "path": "results/frontier/admission_campaign_v6/ai-race-frontier-admission/7/gpt-5.4-nano-2026-03-17/1494042/results/ai_race_frontier_admission/openai-gpt-5.4-nano-2026-03-17/admission.json",
+          "sha256": "338a49dd04b00046b0583793dc0a40a4c234f6d9f20d97fe8b8394d044fdfd0c"
+        },
+        "raw_responses_jsonl": {
+          "path": "results/frontier/admission_campaign_v6/ai-race-frontier-admission/7/gpt-5.4-nano-2026-03-17/1494042/results/ai_race_frontier_admission/openai-gpt-5.4-nano-2026-03-17/raw_responses.jsonl",
+          "sha256": "7e298173f7f53e54753db6e7f25591209f95f33b7dc5ca1f9aa41cebb8a5df7d",
+          "lines": 60
+        },
+        "run_manifest_json": {
+          "path": "results/frontier/admission_campaign_v6/ai-race-frontier-admission/7/gpt-5.4-nano-2026-03-17/1494042/results/ai_race_frontier_admission/openai-gpt-5.4-nano-2026-03-17/run_manifest.json",
+          "sha256": "4630c24ef30b33e5ca07cef494391088f559321b1ea98caefa0b0b59fa00850f"
+        }
+      }
+    }
+  ],
+  "retained_failures": [
+    {
+      "task_version": "7",
+      "run_id": "1494041",
+      "route": "google/gemini-3.5-flash-lite",
+      "status": "failed",
+      "status_reason": "RuntimeError: bounded transport retries exhausted",
+      "path": "results/frontier/admission_campaign_v6/failed_runs/ai-race-frontier-admission/7/gemini-3.5-flash-lite/1494041/results/ai_race_frontier_admission/google-gemini-3.5-flash-lite/run_manifest.json"
+    }
+  ],
+  "earlier_campaign_comparison": {
+    "v5": {
+      "admits": true,
+      "note": "Protocol ai-race-frontier-admission-v5, 60 retained rows per route.",
+      "routes": {
+        "anthropic/claude-sonnet-5@default": {
+          "protocol_id": "ai-race-frontier-admission-v5",
+          "n_rows": 60,
+          "overall_accuracy": 0.8166666666666667,
+          "admitted_for_gameplay": true,
+          "evidence_class": "paper-ready",
+          "path": "results/frontier/admission_campaign_v5/ai-race-frontier-admission/5/claude-sonnet-5-default/1343312/results/ai_race_frontier_admission/anthropic-claude-sonnet-5-default/admission.json"
+        },
+        "google/gemini-3-flash-preview": {
+          "protocol_id": "ai-race-frontier-admission-v5",
+          "n_rows": 60,
+          "overall_accuracy": 0.9333333333333333,
+          "admitted_for_gameplay": true,
+          "evidence_class": "paper-ready",
+          "path": "results/frontier/admission_campaign_v5/ai-race-frontier-admission/5/gemini-3-flash-preview/1343310/results/ai_race_frontier_admission/google-gemini-3-flash-preview/admission.json"
+        },
+        "google/gemini-3.1-flash-lite-preview": {
+          "protocol_id": "ai-race-frontier-admission-v5",
+          "n_rows": 60,
+          "overall_accuracy": 0.7666666666666667,
+          "admitted_for_gameplay": false,
+          "evidence_class": "diagnostic",
+          "path": "results/frontier/admission_campaign_v5/ai-race-frontier-admission/5/gemini-3.1-flash-lite-preview/1343311/results/ai_race_frontier_admission/google-gemini-3.1-flash-lite-preview/admission.json"
+        },
+        "openai/gpt-5.4-nano-2026-03-17": {
+          "protocol_id": "ai-race-frontier-admission-v5",
+          "n_rows": 60,
+          "overall_accuracy": 0.5166666666666667,
+          "admitted_for_gameplay": false,
+          "evidence_class": "diagnostic",
+          "path": "results/frontier/admission_campaign_v5/ai-race-frontier-admission/5/gpt-5.4-nano-2026-03-17/1343313/results/ai_race_frontier_admission/openai-gpt-5.4-nano-2026-03-17/admission.json"
+        }
+      }
+    },
+    "smoke_2026_09_07": {
+      "admits": false,
+      "note": "Protocol ai-race-frontier-admission-v1, one repetition and 20 retained rows per route. Diagnostic by construction: no route is admitted from this smoke alone, so a verdict difference against it is not a flip.",
+      "routes": {
+        "anthropic/claude-sonnet-5@default": {
+          "protocol_id": "ai-race-frontier-admission-v1",
+          "n_rows": 20,
+          "overall_accuracy": 0.75,
+          "admitted_for_gameplay": false,
+          "evidence_class": "diagnostic",
+          "path": "results/frontier/admission_smoke/anthropic-claude-sonnet-5-default/admission.json"
+        },
+        "google/gemini-3-flash-preview": {
+          "protocol_id": "ai-race-frontier-admission-v1",
+          "n_rows": 20,
+          "overall_accuracy": 0.95,
+          "admitted_for_gameplay": false,
+          "evidence_class": "diagnostic",
+          "path": "results/frontier/admission_smoke/google-gemini-3-flash-preview/admission.json"
+        },
+        "google/gemini-3.1-flash-lite-preview": {
+          "protocol_id": "ai-race-frontier-admission-v1",
+          "n_rows": 20,
+          "overall_accuracy": 0.75,
+          "admitted_for_gameplay": false,
+          "evidence_class": "diagnostic",
+          "path": "results/frontier/admission_smoke/google-gemini-3.1-flash-lite-preview/admission.json"
+        },
+        "openai/gpt-5.4-nano-2026-03-17": {
+          "protocol_id": "ai-race-frontier-admission-v1",
+          "n_rows": 20,
+          "overall_accuracy": 0.5,
+          "admitted_for_gameplay": false,
+          "evidence_class": "diagnostic",
+          "path": "results/frontier/admission_smoke/openai-gpt-5.4-nano-2026-03-17/admission.json"
+        }
+      }
+    }
+  }
+}

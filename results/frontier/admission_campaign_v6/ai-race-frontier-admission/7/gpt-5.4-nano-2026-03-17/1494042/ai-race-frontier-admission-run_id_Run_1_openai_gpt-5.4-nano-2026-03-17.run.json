@@ -1,0 +1,100 @@
+{
+  "taskVersion": {
+    "versionNumber": 1,
+    "name": "ai-race-frontier-admission",
+    "description": "Per-endpoint admission audit for the repeated AI race before frontier gameplay.",
+    "definition": "@kbench.task(\n    name=TASK_NAME,\n    description=\"Per-endpoint admission audit for the repeated AI race before frontier gameplay.\",\n)\ndef ai_race_frontier_admission(llm) -> dict:\n    contract = llm_contract(llm)\n    route = str(contract[\"model_route\"])\n    output_dir = OUTPUT_ROOT / model_tag(route)\n    output_dir.mkdir(parents=True, exist_ok=True)\n    raw_path = output_dir / \"raw_responses.jsonl\"\n    raw_path.unlink(missing_ok=True)\n    manifest = {\n        \"schema_version\": \"ai-race-frontier-admission-v5\",\n        \"status\": \"running\",\n        \"protocol_id\": PROTOCOL_ID,\n        \"started_utc\": utc_now(),\n        \"model_route\": route,\n        \"model_tag\": model_tag(route),\n        \"repetitions\": REPETITIONS,\n        \"expected_rows\": len(PROBES) * REPETITIONS,\n        \"rules_context_sha256\": sha256_text(RULES_CONTEXT),\n        \"probe_bank_sha256\": sha256_text(json.dumps(PROBES, sort_keys=True)),\n        \"decoding\": contract,\n        \"package_versions\": package_versions(),\n        \"status_reason\": None,\n    }\n    write_json(output_dir / \"run_manifest.json\", manifest)\n\n    rows: list[dict[str, object]] = []\n    try:\n        for rep in range(REPETITIONS):\n            for index, (probe_id, domain, question, expected, allowed) in enumerate(PROBES):\n                prompt = prompt_for(probe_id, question, allowed)\n                answer, transport_errors = call_one(\n                    llm,\n                    prompt,\n                    rep * len(PROBES) + index,\n                    BASE_SEED + rep * 1000 + index,\n                    contract,\n                )\n                valid, correct = score(expected, allowed, answer)\n                row = {\n                    \"protocol_id\": PROTOCOL_ID,\n                    \"model_route\": route,\n                    \"repetition\": rep,\n                    \"sampling_seed_requested\": BASE_SEED + rep * 1000 + index,\n                    \"probe_id\": probe_id,\n                    \"domain\": domain,\n                    \"answer\": answer,\n                    \"semantic_valid\": valid,\n                    \"semantic_correct\": correct,\n                    \"transport_errors\": transport_errors,\n                }\n                rows.append(row)\n                append_jsonl(raw_path, row)\n\n        if len(rows) != manifest[\"expected_rows\"]:\n            raise RuntimeError(\"incomplete probe coverage\")\n        by_domain: dict[str, dict[str, int]] = {}\n        for row in rows:\n            domain = str(row[\"domain\"])\n            stats = by_domain.setdefault(domain, {\"rows\": 0, \"valid\": 0, \"correct\": 0})\n            stats[\"rows\"] += 1\n            stats[\"valid\"] += int(bool(row[\"semantic_valid\"]))\n            stats[\"correct\"] += int(bool(row[\"semantic_correct\"]))\n        rates = {\n            domain: {\n                **stats,\n                \"valid_rate\": stats[\"valid\"] / stats[\"rows\"],\n                \"accuracy\": stats[\"correct\"] / stats[\"rows\"],\n            }\n            for domain, stats in by_domain.items()\n        }\n        overall_accuracy = sum(bool(row[\"semantic_correct\"]) for row in rows) / len(rows)\n        admission_thresholds = {\n            \"overall_accuracy_min\": 0.80,\n            \"state_reconstruction_accuracy_min\": 0.75,\n            \"terminal_scoring_accuracy_min\": 0.75,\n            \"expected_payoff_accuracy_min\": 0.75,\n        }\n        # Expected-payoff probes remain a required diagnostic, but are not a\n        # gameplay exclusion criterion. The live task asks for action choices,\n        # not closed-form expected values; conflating these would discard an\n        # endpoint that reconstructs the mechanism and terminal eligibility\n        # correctly merely because it makes an optional arithmetic error.\n        admitted = (\n            overall_accuracy >= admission_thresholds[\"overall_accuracy_min\"]\n            and rates.get(\"state_reconstruction\", {}).get(\"accuracy\", 0.0) >= admission_thresholds[\"state_reconstruction_accuracy_min\"]\n            and rates.get(\"terminal_scoring\", {}).get(\"accuracy\", 0.0) >= admission_thresholds[\"terminal_scoring_accuracy_min\"]\n        )\n        summary = {\n            \"schema_version\": \"ai-race-frontier-admission-summary-v1\",\n            \"protocol_id\": PROTOCOL_ID,\n            \"model_route\": route,\n            \"n_rows\": len(rows),\n            \"overall_accuracy\": overall_accuracy,\n            \"by_domain\": rates,\n            \"admission_thresholds\": admission_thresholds,\n            \"admitted_for_gameplay\": admitted,\n            \"expected_payoff_is_diagnostic_only\": True,\n            \"evidence_class\": \"paper-ready\" if admitted and REPETITIONS >= 3 else \"diagnostic\",\n        }\n        write_json(output_dir / \"admission.json\", summary)\n        manifest.update({\"status\": \"completed\", \"completed_utc\": utc_now(), \"summary\": summary})\n        write_json(output_dir / \"run_manifest.json\", manifest)\n        kbench.assertions.assert_equal(manifest[\"expected_rows\"], len(rows), expectation=\"Every frozen admission probe must return one response.\")\n        return summary\n    except Exception as error:\n        manifest.update({\"status\": \"failed\", \"completed_utc\": utc_now(), \"status_reason\": f\"{type(error).__name__}: {error}\"})\n        write_json(output_dir / \"run_manifest.json\", manifest)\n        raise\n"
+  },
+  "modelVersion": {
+    "slug": "openai/gpt-5.4-nano-2026-03-17"
+  },
+  "state": "BENCHMARK_TASK_RUN_STATE_COMPLETED",
+  "startTime": "2026-09-09T11:45:58.142689Z",
+  "endTime": "2026-09-09T11:46:40.943145Z",
+  "conversations": [
+    {
+      "id": "ai-race-frontier-admission-052cd419",
+      "metrics": {},
+      "modelVersionSlug": "model_version_slug for conversation is DEPRECATED"
+    }
+  ],
+  "results": [
+    {
+      "type": "AGGREGATED",
+      "dictResult": {
+        "schema_version": "ai-race-frontier-admission-summary-v1",
+        "admitted_for_gameplay": false,
+        "admission_thresholds": {
+          "terminal_scoring_accuracy_min": 0.75,
+          "expected_payoff_accuracy_min": 0.75,
+          "overall_accuracy_min": 0.8,
+          "state_reconstruction_accuracy_min": 0.75
+        },
+        "expected_payoff_is_diagnostic_only": true,
+        "n_rows": 60.0,
+        "protocol_id": "ai-race-frontier-admission-v6",
+        "evidence_class": "diagnostic",
+        "overall_accuracy": 0.5166666666666667,
+        "model_route": "openai/gpt-5.4-nano-2026-03-17",
+        "by_domain": {
+          "rule_recall": {
+            "rows": 12.0,
+            "accuracy": 0.75,
+            "valid": 12.0,
+            "correct": 9.0,
+            "valid_rate": 1.0
+          },
+          "stage_payoff": {
+            "rows": 6.0,
+            "accuracy": 1.0,
+            "valid": 6.0,
+            "correct": 6.0,
+            "valid_rate": 1.0
+          },
+          "state_reconstruction": {
+            "rows": 15.0,
+            "accuracy": 0.2,
+            "valid": 15.0,
+            "correct": 3.0,
+            "valid_rate": 1.0
+          },
+          "state_transition": {
+            "rows": 6.0,
+            "accuracy": 0.5,
+            "valid": 6.0,
+            "correct": 3.0,
+            "valid_rate": 1.0
+          },
+          "terminal_scoring": {
+            "rows": 15.0,
+            "accuracy": 0.6666666666666666,
+            "valid": 15.0,
+            "correct": 10.0,
+            "valid_rate": 1.0
+          },
+          "expected_payoff": {
+            "rows": 6.0,
+            "accuracy": 0.0,
+            "valid": 6.0,
+            "correct": 0.0,
+            "valid_rate": 1.0
+          }
+        }
+      }
+    }
+  ],
+  "assertions": [
+    {
+      "expectation": "Every frozen admission probe must return one response.",
+      "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_PASSED",
+      "lineNumber": 314,
+      "definition": "kbench.assertions.assert_equal(manifest[\"expected_rows\"], len(rows), expectation=\"Every frozen admission probe must return one response.\")",
+      "conversationRequestIds": [
+        {
+          "conversationId": "ai-race-frontier-admission-052cd419"
+        }
+      ]
+    }
+  ],
+  "pyRunId": "ai-race-frontier-admission-Run #1"
+}

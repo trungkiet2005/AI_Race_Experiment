@@ -1,0 +1,1149 @@
+{
+  "any_cell_matches_llm_shape": true,
+  "any_well_mixed_cell_matches_llm_shape": true,
+  "best_fit_per_route": {
+    "claude": {
+      "beta": 0.01,
+      "max_absolute_deviation_percentage_points": 17.704240200563966,
+      "mutation": 0.05,
+      "mutation_rule": "fixed_0p05",
+      "profile_mixing_suspect": false,
+      "rmse_percentage_points": 10.28317179109563,
+      "route": "anthropic/claude-sonnet-5@default",
+      "route_unsafe_r0p1": 0.8924731182795699,
+      "route_unsafe_r0p6": 0.46236559139784944,
+      "route_unsafe_r0p9": 0.3763440860215054,
+      "shape_matches_llm_pattern": true,
+      "theory_unsafe_r0p1": 0.8733404856015274,
+      "theory_unsafe_r0p6": 0.6394079934034891,
+      "theory_unsafe_r0p9": 0.37995197798719077
+    },
+    "gemini": {
+      "beta": 0.01,
+      "max_absolute_deviation_percentage_points": 21.144587147517484,
+      "mutation": 0.05,
+      "mutation_rule": "fixed_0p05",
+      "profile_mixing_suspect": false,
+      "rmse_percentage_points": 15.127858983934114,
+      "route": "google/gemini-3-flash-preview",
+      "route_unsafe_r0p1": 0.989247311827957,
+      "route_unsafe_r0p6": 0.7419354838709677,
+      "route_unsafe_r0p9": 0.5913978494623656,
+      "shape_matches_llm_pattern": true,
+      "theory_unsafe_r0p1": 0.8733404856015274,
+      "theory_unsafe_r0p6": 0.6394079934034891,
+      "theory_unsafe_r0p9": 0.37995197798719077
+    }
+  },
+  "best_fit_per_route_well_mixed": {
+    "claude": {
+      "beta": 0.01,
+      "max_absolute_deviation_percentage_points": 17.704240200563966,
+      "mutation": 0.05,
+      "mutation_rule": "fixed_0p05",
+      "profile_mixing_suspect": false,
+      "rmse_percentage_points": 10.28317179109563,
+      "route": "anthropic/claude-sonnet-5@default",
+      "route_unsafe_r0p1": 0.8924731182795699,
+      "route_unsafe_r0p6": 0.46236559139784944,
+      "route_unsafe_r0p9": 0.3763440860215054,
+      "shape_matches_llm_pattern": true,
+      "theory_unsafe_r0p1": 0.8733404856015274,
+      "theory_unsafe_r0p6": 0.6394079934034891,
+      "theory_unsafe_r0p9": 0.37995197798719077
+    },
+    "gemini": {
+      "beta": 0.01,
+      "max_absolute_deviation_percentage_points": 21.144587147517484,
+      "mutation": 0.05,
+      "mutation_rule": "fixed_0p05",
+      "profile_mixing_suspect": false,
+      "rmse_percentage_points": 15.127858983934114,
+      "route": "google/gemini-3-flash-preview",
+      "route_unsafe_r0p1": 0.989247311827957,
+      "route_unsafe_r0p6": 0.7419354838709677,
+      "route_unsafe_r0p9": 0.5913978494623656,
+      "shape_matches_llm_pattern": true,
+      "theory_unsafe_r0p1": 0.8733404856015274,
+      "theory_unsafe_r0p6": 0.6394079934034891,
+      "theory_unsafe_r0p9": 0.37995197798719077
+    }
+  },
+  "cells_matching_llm_shape": [
+    {
+      "beta": 0.01,
+      "mutation": 0.05,
+      "mutation_rule": "fixed_0p05"
+    },
+    {
+      "beta": 0.03,
+      "mutation": 0.05,
+      "mutation_rule": "fixed_0p05"
+    },
+    {
+      "beta": 0.003,
+      "mutation": 0.01,
+      "mutation_rule": "one_over_Z"
+    },
+    {
+      "beta": 0.01,
+      "mutation": 0.01,
+      "mutation_rule": "one_over_Z"
+    }
+  ],
+  "cells_matching_llm_shape_well_mixed": [
+    {
+      "beta": 0.01,
+      "mutation": 0.05,
+      "mutation_rule": "fixed_0p05"
+    },
+    {
+      "beta": 0.03,
+      "mutation": 0.05,
+      "mutation_rule": "fixed_0p05"
+    },
+    {
+      "beta": 0.01,
+      "mutation": 0.01,
+      "mutation_rule": "one_over_Z"
+    }
+  ],
+  "csv_layout": {
+    "egt_beta_fit_to_routes.csv": "one row per (route, mutation_rule, beta, mutation) giving the three-point profile distance to that route, with is_best_fit_for_route marking the minimum-RMSE cell per route",
+    "egt_beta_sensitivity.csv": "one row per (mutation_rule, beta, mutation, max_private_risk) with the four strategy shares as columns; each share and the aggregate Unsafe fraction carry a chain mean, a chain minimum, a chain maximum, and a between-chain range, and the Unsafe fraction additionally carries a between-chain standard deviation and standard error; mixing_suspect marks a cell whose independent chains did not demonstrably mix"
+  },
+  "distance": {
+    "definition": "root mean squared deviation, in percentage points, between the theory's three-point Unsafe profile at risks 0.1/0.6/0.9 and the route's observed decision-weighted Unsafe rates at the same three risks",
+    "primary": "rmse_percentage_points",
+    "secondary": "max_absolute_deviation_percentage_points",
+    "why": "the three risk levels are the only commensurable coordinates between the two designs, RMSE weights them equally, penalises a single badly missed condition more than a mean absolute error would, and reports in the same percentage-point units the manuscript's tables use; the Chebyshev distance is reported beside it so one bad condition stays visible"
+  },
+  "environment": {
+    "numpy": "2.3.5",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.14.0 (tags/v3.14.0:ebf955d, Oct  7 2025, 10:15:03) [MSC v.1944 64 bit (AMD64)]"
+  },
+  "estimand": "For each (selection strength beta, mutation rate mu, maximum private risk r): the stationary population share of AS, AU, CS and CAS and the implied decision-weighted Unsafe fraction in a well-mixed population of Z=100 under Fermi imitation with uniform mutation, and the distance between the resulting three-point risk profile and each admitted frontier route's observed profile.",
+  "evidence_boundary": "Repo-native reconstruction of the disclosed reduced evolutionary model, not a bitwise reproduction: the source paper's analysis code, generated payoff matrices, payoff Monte Carlo seeds, and EGTtools revision are not public in arXiv v1. The compiled EGTtools PairwiseComparison class could not be executed on this interpreter because no matching wheel exists for it, so this lane's parity audit ran the pinned pure-Python StochDynamics class instead. Stationary quantities are seeded-chain estimates reported with their between-chain spread, not exact stationary distributions, and the frontier route rates are descriptive prompted self-play endpoints rather than draws from the population process.",
+  "grid": {
+    "beta": [
+      0.001,
+      0.003,
+      0.01,
+      0.03,
+      0.1,
+      0.3,
+      1.0,
+      2.0,
+      3.0,
+      10.0
+    ],
+    "coinciding_pairs_simulated_once": true,
+    "max_private_risk": [
+      0.1,
+      0.6,
+      0.9
+    ],
+    "mutation_rules": {
+      "beta_over_Z": {
+        "definition": "mu = beta/Z (main-text convention; gives mu=0.02 at beta=2)",
+        "pairs": [
+          {
+            "beta": 0.001,
+            "mutation": 1e-05
+          },
+          {
+            "beta": 0.003,
+            "mutation": 3e-05
+          },
+          {
+            "beta": 0.01,
+            "mutation": 0.0001
+          },
+          {
+            "beta": 0.03,
+            "mutation": 0.0003
+          },
+          {
+            "beta": 0.1,
+            "mutation": 0.001
+          },
+          {
+            "beta": 0.3,
+            "mutation": 0.003
+          },
+          {
+            "beta": 1.0,
+            "mutation": 0.01
+          },
+          {
+            "beta": 2.0,
+            "mutation": 0.02
+          },
+          {
+            "beta": 3.0,
+            "mutation": 0.03
+          },
+          {
+            "beta": 10.0,
+            "mutation": 0.1
+          }
+        ]
+      },
+      "fixed_0p05": {
+        "definition": "mu = 0.05 (reported best-fit convention)",
+        "pairs": [
+          {
+            "beta": 0.001,
+            "mutation": 0.05
+          },
+          {
+            "beta": 0.003,
+            "mutation": 0.05
+          },
+          {
+            "beta": 0.01,
+            "mutation": 0.05
+          },
+          {
+            "beta": 0.03,
+            "mutation": 0.05
+          },
+          {
+            "beta": 0.1,
+            "mutation": 0.05
+          },
+          {
+            "beta": 0.3,
+            "mutation": 0.05
+          },
+          {
+            "beta": 1.0,
+            "mutation": 0.05
+          },
+          {
+            "beta": 2.0,
+            "mutation": 0.05
+          },
+          {
+            "beta": 3.0,
+            "mutation": 0.05
+          },
+          {
+            "beta": 10.0,
+            "mutation": 0.05
+          }
+        ]
+      },
+      "one_over_Z": {
+        "definition": "mu = 1/Z = 0.01 (Figure S5 convention)",
+        "pairs": [
+          {
+            "beta": 0.001,
+            "mutation": 0.01
+          },
+          {
+            "beta": 0.003,
+            "mutation": 0.01
+          },
+          {
+            "beta": 0.01,
+            "mutation": 0.01
+          },
+          {
+            "beta": 0.03,
+            "mutation": 0.01
+          },
+          {
+            "beta": 0.1,
+            "mutation": 0.01
+          },
+          {
+            "beta": 0.3,
+            "mutation": 0.01
+          },
+          {
+            "beta": 1.0,
+            "mutation": 0.01
+          },
+          {
+            "beta": 2.0,
+            "mutation": 0.01
+          },
+          {
+            "beta": 3.0,
+            "mutation": 0.01
+          },
+          {
+            "beta": 10.0,
+            "mutation": 0.01
+          }
+        ]
+      }
+    },
+    "mutation_semantics": "mutation is the per-update probability that the sampled focal individual switches uniformly to one of the other three strategies, as implemented in analysis.strategy.egt_reconstruction.simulate_pairwise_comparison_chain",
+    "unique_simulated_parameter_pairs": [
+      {
+        "beta": 0.001,
+        "mutation": 1e-05
+      },
+      {
+        "beta": 0.001,
+        "mutation": 0.01
+      },
+      {
+        "beta": 0.001,
+        "mutation": 0.05
+      },
+      {
+        "beta": 0.003,
+        "mutation": 3e-05
+      },
+      {
+        "beta": 0.003,
+        "mutation": 0.01
+      },
+      {
+        "beta": 0.003,
+        "mutation": 0.05
+      },
+      {
+        "beta": 0.01,
+        "mutation": 0.0001
+      },
+      {
+        "beta": 0.01,
+        "mutation": 0.01
+      },
+      {
+        "beta": 0.01,
+        "mutation": 0.05
+      },
+      {
+        "beta": 0.03,
+        "mutation": 0.0003
+      },
+      {
+        "beta": 0.03,
+        "mutation": 0.01
+      },
+      {
+        "beta": 0.03,
+        "mutation": 0.05
+      },
+      {
+        "beta": 0.1,
+        "mutation": 0.001
+      },
+      {
+        "beta": 0.1,
+        "mutation": 0.01
+      },
+      {
+        "beta": 0.1,
+        "mutation": 0.05
+      },
+      {
+        "beta": 0.3,
+        "mutation": 0.003
+      },
+      {
+        "beta": 0.3,
+        "mutation": 0.01
+      },
+      {
+        "beta": 0.3,
+        "mutation": 0.05
+      },
+      {
+        "beta": 1.0,
+        "mutation": 0.01
+      },
+      {
+        "beta": 1.0,
+        "mutation": 0.05
+      },
+      {
+        "beta": 2.0,
+        "mutation": 0.01
+      },
+      {
+        "beta": 2.0,
+        "mutation": 0.02
+      },
+      {
+        "beta": 2.0,
+        "mutation": 0.05
+      },
+      {
+        "beta": 3.0,
+        "mutation": 0.01
+      },
+      {
+        "beta": 3.0,
+        "mutation": 0.03
+      },
+      {
+        "beta": 3.0,
+        "mutation": 0.05
+      },
+      {
+        "beta": 10.0,
+        "mutation": 0.01
+      },
+      {
+        "beta": 10.0,
+        "mutation": 0.05
+      },
+      {
+        "beta": 10.0,
+        "mutation": 0.1
+      }
+    ]
+  },
+  "mixing_diagnostic": {
+    "reading": "a cell whose independent chains disagree by more than this threshold on the aggregate Unsafe fraction has not demonstrably mixed within the given burn-in and steps, so its chain mean must not be read as the stationary distribution. Very low mutation, which mu=beta/Z produces at small beta, makes the four monomorphic states near-absorbing and is the main cause.",
+    "suspect_between_chain_range_threshold": 0.05,
+    "suspect_cell_count": 10,
+    "suspect_cells": [
+      {
+        "beta": 0.001,
+        "max_private_risk": 0.1,
+        "mutation": 1e-05,
+        "mutation_rule": "beta_over_Z"
+      },
+      {
+        "beta": 0.001,
+        "max_private_risk": 0.6,
+        "mutation": 1e-05,
+        "mutation_rule": "beta_over_Z"
+      },
+      {
+        "beta": 0.001,
+        "max_private_risk": 0.9,
+        "mutation": 1e-05,
+        "mutation_rule": "beta_over_Z"
+      },
+      {
+        "beta": 0.003,
+        "max_private_risk": 0.6,
+        "mutation": 3e-05,
+        "mutation_rule": "beta_over_Z"
+      },
+      {
+        "beta": 0.01,
+        "max_private_risk": 0.9,
+        "mutation": 0.0001,
+        "mutation_rule": "beta_over_Z"
+      },
+      {
+        "beta": 0.03,
+        "max_private_risk": 0.9,
+        "mutation": 0.0003,
+        "mutation_rule": "beta_over_Z"
+      },
+      {
+        "beta": 0.001,
+        "max_private_risk": 0.6,
+        "mutation": 0.01,
+        "mutation_rule": "one_over_Z"
+      },
+      {
+        "beta": 0.001,
+        "max_private_risk": 0.9,
+        "mutation": 0.01,
+        "mutation_rule": "one_over_Z"
+      },
+      {
+        "beta": 0.003,
+        "max_private_risk": 0.6,
+        "mutation": 0.01,
+        "mutation_rule": "one_over_Z"
+      },
+      {
+        "beta": 0.003,
+        "max_private_risk": 0.9,
+        "mutation": 0.01,
+        "mutation_rule": "one_over_Z"
+      }
+    ],
+    "total_cell_count": 90
+  },
+  "model": {
+    "chain_runner": "analysis.strategy.egt_reconstruction.run_independent_chains (unchanged)",
+    "maximum_discarded_horizon_mass": 8.26319960987817e-14,
+    "payoff_construction": "analysis.strategy.egt_reconstruction.expected_game (unchanged)",
+    "population_size": 100,
+    "strategies": [
+      "AS",
+      "AU",
+      "CS",
+      "CAS"
+    ]
+  },
+  "numerics": {
+    "burn_in": 100000,
+    "chains_per_cell": 4,
+    "samples_per_chain": 4000,
+    "seed_base": 990726,
+    "seed_rule": "seed = SEED_BASE + (sha256('beta|mutation|risk')[:4] mod 1e6) + chain index; deliberately disjoint from the reproduction script's seed scheme so the reference check is an independent-seed check",
+    "seeds_by_cell": {
+      "beta=0.001,mu=0.01,risk=0.1": [
+        1075743,
+        1075744,
+        1075745,
+        1075746
+      ],
+      "beta=0.001,mu=0.01,risk=0.6": [
+        1959508,
+        1959509,
+        1959510,
+        1959511
+      ],
+      "beta=0.001,mu=0.01,risk=0.9": [
+        1206391,
+        1206392,
+        1206393,
+        1206394
+      ],
+      "beta=0.001,mu=0.05,risk=0.1": [
+        1979668,
+        1979669,
+        1979670,
+        1979671
+      ],
+      "beta=0.001,mu=0.05,risk=0.6": [
+        1866876,
+        1866877,
+        1866878,
+        1866879
+      ],
+      "beta=0.001,mu=0.05,risk=0.9": [
+        1261426,
+        1261427,
+        1261428,
+        1261429
+      ],
+      "beta=0.001,mu=1e-05,risk=0.1": [
+        1546702,
+        1546703,
+        1546704,
+        1546705
+      ],
+      "beta=0.001,mu=1e-05,risk=0.6": [
+        1813948,
+        1813949,
+        1813950,
+        1813951
+      ],
+      "beta=0.001,mu=1e-05,risk=0.9": [
+        1586099,
+        1586100,
+        1586101,
+        1586102
+      ],
+      "beta=0.003,mu=0.01,risk=0.1": [
+        1701137,
+        1701138,
+        1701139,
+        1701140
+      ],
+      "beta=0.003,mu=0.01,risk=0.6": [
+        1016243,
+        1016244,
+        1016245,
+        1016246
+      ],
+      "beta=0.003,mu=0.01,risk=0.9": [
+        1229052,
+        1229053,
+        1229054,
+        1229055
+      ],
+      "beta=0.003,mu=0.05,risk=0.1": [
+        1158713,
+        1158714,
+        1158715,
+        1158716
+      ],
+      "beta=0.003,mu=0.05,risk=0.6": [
+        1372159,
+        1372160,
+        1372161,
+        1372162
+      ],
+      "beta=0.003,mu=0.05,risk=0.9": [
+        1641706,
+        1641707,
+        1641708,
+        1641709
+      ],
+      "beta=0.003,mu=3e-05,risk=0.1": [
+        1555437,
+        1555438,
+        1555439,
+        1555440
+      ],
+      "beta=0.003,mu=3e-05,risk=0.6": [
+        1033197,
+        1033198,
+        1033199,
+        1033200
+      ],
+      "beta=0.003,mu=3e-05,risk=0.9": [
+        1618381,
+        1618382,
+        1618383,
+        1618384
+      ],
+      "beta=0.01,mu=0.0001,risk=0.1": [
+        1987456,
+        1987457,
+        1987458,
+        1987459
+      ],
+      "beta=0.01,mu=0.0001,risk=0.6": [
+        1514343,
+        1514344,
+        1514345,
+        1514346
+      ],
+      "beta=0.01,mu=0.0001,risk=0.9": [
+        1952730,
+        1952731,
+        1952732,
+        1952733
+      ],
+      "beta=0.01,mu=0.01,risk=0.1": [
+        1257582,
+        1257583,
+        1257584,
+        1257585
+      ],
+      "beta=0.01,mu=0.01,risk=0.6": [
+        1031842,
+        1031843,
+        1031844,
+        1031845
+      ],
+      "beta=0.01,mu=0.01,risk=0.9": [
+        1174456,
+        1174457,
+        1174458,
+        1174459
+      ],
+      "beta=0.01,mu=0.05,risk=0.1": [
+        1179110,
+        1179111,
+        1179112,
+        1179113
+      ],
+      "beta=0.01,mu=0.05,risk=0.6": [
+        1608456,
+        1608457,
+        1608458,
+        1608459
+      ],
+      "beta=0.01,mu=0.05,risk=0.9": [
+        1810045,
+        1810046,
+        1810047,
+        1810048
+      ],
+      "beta=0.03,mu=0.0003,risk=0.1": [
+        1277727,
+        1277728,
+        1277729,
+        1277730
+      ],
+      "beta=0.03,mu=0.0003,risk=0.6": [
+        1245521,
+        1245522,
+        1245523,
+        1245524
+      ],
+      "beta=0.03,mu=0.0003,risk=0.9": [
+        1442776,
+        1442777,
+        1442778,
+        1442779
+      ],
+      "beta=0.03,mu=0.01,risk=0.1": [
+        1334911,
+        1334912,
+        1334913,
+        1334914
+      ],
+      "beta=0.03,mu=0.01,risk=0.6": [
+        1108450,
+        1108451,
+        1108452,
+        1108453
+      ],
+      "beta=0.03,mu=0.01,risk=0.9": [
+        1277858,
+        1277859,
+        1277860,
+        1277861
+      ],
+      "beta=0.03,mu=0.05,risk=0.1": [
+        1035839,
+        1035840,
+        1035841,
+        1035842
+      ],
+      "beta=0.03,mu=0.05,risk=0.6": [
+        1709773,
+        1709774,
+        1709775,
+        1709776
+      ],
+      "beta=0.03,mu=0.05,risk=0.9": [
+        996326,
+        996327,
+        996328,
+        996329
+      ],
+      "beta=0.1,mu=0.001,risk=0.1": [
+        1265721,
+        1265722,
+        1265723,
+        1265724
+      ],
+      "beta=0.1,mu=0.001,risk=0.6": [
+        1923033,
+        1923034,
+        1923035,
+        1923036
+      ],
+      "beta=0.1,mu=0.001,risk=0.9": [
+        1413272,
+        1413273,
+        1413274,
+        1413275
+      ],
+      "beta=0.1,mu=0.01,risk=0.1": [
+        1762882,
+        1762883,
+        1762884,
+        1762885
+      ],
+      "beta=0.1,mu=0.01,risk=0.6": [
+        1799997,
+        1799998,
+        1799999,
+        1800000
+      ],
+      "beta=0.1,mu=0.01,risk=0.9": [
+        1533924,
+        1533925,
+        1533926,
+        1533927
+      ],
+      "beta=0.1,mu=0.05,risk=0.1": [
+        1673626,
+        1673627,
+        1673628,
+        1673629
+      ],
+      "beta=0.1,mu=0.05,risk=0.6": [
+        1798322,
+        1798323,
+        1798324,
+        1798325
+      ],
+      "beta=0.1,mu=0.05,risk=0.9": [
+        1074749,
+        1074750,
+        1074751,
+        1074752
+      ],
+      "beta=0.3,mu=0.003,risk=0.1": [
+        1955949,
+        1955950,
+        1955951,
+        1955952
+      ],
+      "beta=0.3,mu=0.003,risk=0.6": [
+        1093978,
+        1093979,
+        1093980,
+        1093981
+      ],
+      "beta=0.3,mu=0.003,risk=0.9": [
+        1060183,
+        1060184,
+        1060185,
+        1060186
+      ],
+      "beta=0.3,mu=0.01,risk=0.1": [
+        1176511,
+        1176512,
+        1176513,
+        1176514
+      ],
+      "beta=0.3,mu=0.01,risk=0.6": [
+        1278828,
+        1278829,
+        1278830,
+        1278831
+      ],
+      "beta=0.3,mu=0.01,risk=0.9": [
+        1134471,
+        1134472,
+        1134473,
+        1134474
+      ],
+      "beta=0.3,mu=0.05,risk=0.1": [
+        1035410,
+        1035411,
+        1035412,
+        1035413
+      ],
+      "beta=0.3,mu=0.05,risk=0.6": [
+        1665912,
+        1665913,
+        1665914,
+        1665915
+      ],
+      "beta=0.3,mu=0.05,risk=0.9": [
+        1588654,
+        1588655,
+        1588656,
+        1588657
+      ],
+      "beta=1.0,mu=0.01,risk=0.1": [
+        1263124,
+        1263125,
+        1263126,
+        1263127
+      ],
+      "beta=1.0,mu=0.01,risk=0.6": [
+        1227598,
+        1227599,
+        1227600,
+        1227601
+      ],
+      "beta=1.0,mu=0.01,risk=0.9": [
+        1769871,
+        1769872,
+        1769873,
+        1769874
+      ],
+      "beta=1.0,mu=0.05,risk=0.1": [
+        1420794,
+        1420795,
+        1420796,
+        1420797
+      ],
+      "beta=1.0,mu=0.05,risk=0.6": [
+        1798347,
+        1798348,
+        1798349,
+        1798350
+      ],
+      "beta=1.0,mu=0.05,risk=0.9": [
+        1266081,
+        1266082,
+        1266083,
+        1266084
+      ],
+      "beta=10.0,mu=0.01,risk=0.1": [
+        1337885,
+        1337886,
+        1337887,
+        1337888
+      ],
+      "beta=10.0,mu=0.01,risk=0.6": [
+        1667673,
+        1667674,
+        1667675,
+        1667676
+      ],
+      "beta=10.0,mu=0.01,risk=0.9": [
+        1464680,
+        1464681,
+        1464682,
+        1464683
+      ],
+      "beta=10.0,mu=0.05,risk=0.1": [
+        1177770,
+        1177771,
+        1177772,
+        1177773
+      ],
+      "beta=10.0,mu=0.05,risk=0.6": [
+        1492195,
+        1492196,
+        1492197,
+        1492198
+      ],
+      "beta=10.0,mu=0.05,risk=0.9": [
+        1285929,
+        1285930,
+        1285931,
+        1285932
+      ],
+      "beta=10.0,mu=0.1,risk=0.1": [
+        1842675,
+        1842676,
+        1842677,
+        1842678
+      ],
+      "beta=10.0,mu=0.1,risk=0.6": [
+        1049262,
+        1049263,
+        1049264,
+        1049265
+      ],
+      "beta=10.0,mu=0.1,risk=0.9": [
+        1929148,
+        1929149,
+        1929150,
+        1929151
+      ],
+      "beta=2.0,mu=0.01,risk=0.1": [
+        1795489,
+        1795490,
+        1795491,
+        1795492
+      ],
+      "beta=2.0,mu=0.01,risk=0.6": [
+        1132409,
+        1132410,
+        1132411,
+        1132412
+      ],
+      "beta=2.0,mu=0.01,risk=0.9": [
+        1293074,
+        1293075,
+        1293076,
+        1293077
+      ],
+      "beta=2.0,mu=0.02,risk=0.1": [
+        1001676,
+        1001677,
+        1001678,
+        1001679
+      ],
+      "beta=2.0,mu=0.02,risk=0.6": [
+        1614430,
+        1614431,
+        1614432,
+        1614433
+      ],
+      "beta=2.0,mu=0.02,risk=0.9": [
+        1411232,
+        1411233,
+        1411234,
+        1411235
+      ],
+      "beta=2.0,mu=0.05,risk=0.1": [
+        1166230,
+        1166231,
+        1166232,
+        1166233
+      ],
+      "beta=2.0,mu=0.05,risk=0.6": [
+        1611361,
+        1611362,
+        1611363,
+        1611364
+      ],
+      "beta=2.0,mu=0.05,risk=0.9": [
+        1250633,
+        1250634,
+        1250635,
+        1250636
+      ],
+      "beta=3.0,mu=0.01,risk=0.1": [
+        1962113,
+        1962114,
+        1962115,
+        1962116
+      ],
+      "beta=3.0,mu=0.01,risk=0.6": [
+        1500947,
+        1500948,
+        1500949,
+        1500950
+      ],
+      "beta=3.0,mu=0.01,risk=0.9": [
+        1413663,
+        1413664,
+        1413665,
+        1413666
+      ],
+      "beta=3.0,mu=0.03,risk=0.1": [
+        1929610,
+        1929611,
+        1929612,
+        1929613
+      ],
+      "beta=3.0,mu=0.03,risk=0.6": [
+        1342942,
+        1342943,
+        1342944,
+        1342945
+      ],
+      "beta=3.0,mu=0.03,risk=0.9": [
+        1788616,
+        1788617,
+        1788618,
+        1788619
+      ],
+      "beta=3.0,mu=0.05,risk=0.1": [
+        1874872,
+        1874873,
+        1874874,
+        1874875
+      ],
+      "beta=3.0,mu=0.05,risk=0.6": [
+        1946012,
+        1946013,
+        1946014,
+        1946015
+      ],
+      "beta=3.0,mu=0.05,risk=0.9": [
+        1393482,
+        1393483,
+        1393484,
+        1393485
+      ]
+    },
+    "steps": 400000,
+    "thin": 100,
+    "uncertainty": "between_independent_chain_spread_diagnostic_not_confidence_interval"
+  },
+  "output_files": [
+    "egt_beta_sensitivity.csv",
+    "egt_beta_fit_to_routes.csv",
+    "egt_beta_sensitivity.json"
+  ],
+  "question": "Is the reported gap between the evolutionary benchmark and the admitted frontier routes robust to selection strength, or an artefact of beta=2?",
+  "reference_verification": {
+    "cell": {
+      "beta": 2.0,
+      "mutation": 0.02,
+      "regime": "main_reference"
+    },
+    "checks": [
+      {
+        "absolute_difference": 0.00020065110236122674,
+        "max_private_risk": 0.1,
+        "max_strategy_share_absolute_difference": 0.005612500000000006,
+        "published_between_chain_range": 0.00038423709340507095,
+        "published_unsafe_frequency_mean": 0.9919093728762386,
+        "sweep_between_chain_range": 0.00038630230515435127,
+        "sweep_unsafe_frequency_mean": 0.9917087217738774,
+        "within_tolerance": true
+      },
+      {
+        "absolute_difference": 6.306880547179983e-05,
+        "max_private_risk": 0.6,
+        "max_strategy_share_absolute_difference": 0.0006237499999993679,
+        "published_between_chain_range": 0.0006036594950773466,
+        "published_unsafe_frequency_mean": 0.9799434882327352,
+        "sweep_between_chain_range": 0.0009089416063166045,
+        "sweep_unsafe_frequency_mean": 0.9798804194272634,
+        "within_tolerance": true
+      },
+      {
+        "absolute_difference": 9.209895110006555e-05,
+        "max_private_risk": 0.9,
+        "max_strategy_share_absolute_difference": 0.001936250000001083,
+        "published_between_chain_range": 0.0011974477115843825,
+        "published_unsafe_frequency_mean": 0.018613914499612395,
+        "sweep_between_chain_range": 0.000623420862665907,
+        "sweep_unsafe_frequency_mean": 0.01870601345071246,
+        "within_tolerance": true
+      }
+    ],
+    "passed": true,
+    "published_artifact": "results\\open_source\\egt_reproduction\\egt_stationary_summary.csv",
+    "tolerance_absolute": 0.02
+  },
+  "routes": {
+    "claude": {
+      "decisions_per_cell": {
+        "0.1": 186,
+        "0.6": 186,
+        "0.9": 186
+      },
+      "player_trajectories_per_cell": {
+        "0.1": 20,
+        "0.6": 20,
+        "0.9": 20
+      },
+      "profile": {
+        "0.1": 0.8924731182795699,
+        "0.6": 0.46236559139784944,
+        "0.9": 0.3763440860215054
+      },
+      "route": "anthropic/claude-sonnet-5@default"
+    },
+    "gemini": {
+      "decisions_per_cell": {
+        "0.1": 186,
+        "0.6": 186,
+        "0.9": 186
+      },
+      "player_trajectories_per_cell": {
+        "0.1": 20,
+        "0.6": 20,
+        "0.9": 20
+      },
+      "profile": {
+        "0.1": 0.989247311827957,
+        "0.6": 0.7419354838709677,
+        "0.9": 0.5913978494623656
+      },
+      "route": "google/gemini-3-flash-preview"
+    }
+  },
+  "schema_version": "egt-beta-sensitivity-v1",
+  "shape_criteria": {
+    "description": "the qualitative pattern the admitted routes show: near-total Unsafe play at risk 0.1, a middling rate at 0.6, and a lower but clearly non-zero rate at 0.9, declining monotonically",
+    "high_risk_window": [
+      0.1,
+      0.65
+    ],
+    "low_risk_at_least": 0.85,
+    "medium_risk_window": [
+      0.25,
+      0.8
+    ],
+    "minimum_decline_per_step": 0.05
+  },
+  "sources_read": {
+    "frontier_route_summary": {
+      "path": "results\\frontier\\egt_frontier_comparison_v2\\llm_strategy_summary_primary_t0.csv",
+      "sha256": "40c8ee6194f68244fb6ba12dc5336f70501c6446b3fe85eb95ea49ded4227078"
+    },
+    "paper_source": {
+      "path": "references\\papers\\sources\\arXiv-2607.26034v1\\paper.tex",
+      "sha256": "f73254201dfc510e19b40a720299eb5207d3396fc4456bd815caaeac04993eec"
+    },
+    "pinned_source_validation": {
+      "path": "results\\open_source\\egt_reproduction\\egttools_pinned_source_validation.json",
+      "sha256": "a83a6843d081481ee09714a486bd24e45b95df8b8d12e6ca79306e8662303eb0"
+    },
+    "published_chain_summary": {
+      "path": "results\\open_source\\egt_reproduction\\egt_stationary_summary.csv",
+      "sha256": "5f6b77fa50a16c7d282991fde1bbbf14893984d0bc587e10ea6b473c5077dc75"
+    },
+    "reconstruction_module": {
+      "path": "analysis\\strategy\\egt_reconstruction.py",
+      "sha256": "2bdf513d95c0e200a5839579555016fb1327b9710fb0962104c05b5a75927d70"
+    },
+    "reconstruction_script": {
+      "path": "scripts\\reproduce_egt_model.py",
+      "sha256": "3b50d263c14764dca48006262286e0e377c0caa0fad887f7449c8cfaca3deec1"
+    },
+    "this_script": {
+      "path": "scripts\\analyze_egt_beta_sensitivity.py",
+      "sha256": "bb234cc656d0c5231555da872434e1ef9830c3922c98e8846a774732757090fc"
+    }
+  },
+  "status": "complete"
+}

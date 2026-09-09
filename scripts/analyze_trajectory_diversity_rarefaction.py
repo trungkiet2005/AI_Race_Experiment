@@ -12,12 +12,58 @@ size (20 in the current seven-checkpoint baseline).  Populations with more
 observations are rarefied by sampling without replacement.  Diversity is
 reported as:
   * q=0: number of distinct paired trajectories;
-  * q=1: exp(Shannon entropy), the effective number of paired trajectories.
+  * q=1: exp(Shannon entropy), the effective number of paired trajectories;
+  * mean pairwise Hamming distance between the paired 10-bit action strings,
+    divided by 10 so it lands in [0, 1].
 
-The human reference is resampled 2,000 times with a fixed RNG seed.  Current
-LLM cells have exactly 20 trajectories per risk condition and therefore enter
-without resampling.  This analysis is descriptive: it measures observed
-trajectory diversity in the tested samples, not latent policy entropy.
+Why a third statistic.  Hill numbers count distinct strings and are blind to
+how far apart those strings are: a cell holding twenty trajectories that differ
+in a single round scores the same q=0 as a cell holding twenty trajectories
+that differ in all ten bits.  Mean pairwise Hamming distance does not cluster
+or bin anything, so it separates "many nearly identical policies" from "many
+genuinely different policies" without inheriting any tuning parameter.
+
+Why the point estimates are computed the way they are.  The published point
+values are the mean over the rarefaction draws (for a cell larger than the
+comparison size) or the exact cell value (for a cell already at the comparison
+size).  That definition is kept unchanged, and the draw order and RNG stream
+that produce it are kept unchanged, so the point estimates in this table are
+bit-identical to the ones the earlier version published.
+
+Why the interval is a two-stage cluster bootstrap.  Rarefaction without
+replacement quantifies only subsampling noise, so a cell whose source size
+already equals the comparison size of 20 gets an interval of exactly zero
+width.  Every LLM cell is in that position, which made the earlier intervals
+uninformative rather than tight.  The honest question is sampling
+uncertainty over the units that were actually drawn independently, so the
+interval comes from resampling those units with replacement.
+
+Why the cluster is the race, not the seat.  ``load_model`` emits two rows per
+race, one per seat, because both seats of a race are trajectories.  They are
+not independent draws: under the common-random-number design both seats of one
+race share the horizon draw and the setback draw, so a race is the smallest
+exchangeable unit.  Resampling seats independently would treat one experimental
+unit as two and shrink the interval by roughly a factor of sqrt(2).  For the
+human population the exchangeable unit is the participant, who contributes one
+trajectory.  When a race is drawn, both of its seats come with it.
+
+Why rarefaction happens inside each bootstrap draw and not around it.  The
+comparison is defined at a fixed sample size of 20; if we rarefied once and
+then bootstrapped the rarefied sample, the interval would describe uncertainty
+in a single 20-trajectory subsample rather than in the population, and the
+human cell would lose the very rarefaction step that makes it comparable.
+Drawing clusters first and then rarefying to 20 inside the draw keeps every
+bootstrap replicate on the same footing as the point estimate: each replicate
+is itself a size-20 comparison.  A cell whose bootstrap replicate is already
+of size 20 (every LLM cell: ten races, two seats each) skips the inner step,
+and all of its interval width comes from the cluster stage.
+
+A cell in which all twenty trajectories are identical has q=0 = q=1 = 1 and
+mean pairwise Hamming 0 in every replicate, so its interval is a point by
+construction, not by a defect in the interval.
+
+This analysis is descriptive: it measures observed trajectory diversity in the
+tested samples, not latent policy entropy.
 """
 from __future__ import annotations
 
@@ -51,6 +97,14 @@ MODEL_INPUTS = [
 RISKS = (0.1, 0.6, 0.9)
 N_RESAMPLES = 2000
 SEED = 20260908
+TRAJECTORY_BITS = 10
+CI_METHOD = (
+    "two-stage cluster bootstrap over races/participants, then rarefaction to n=20"
+)
+CLUSTER_UNIT = {
+    "Human": "participant_id (one trajectory per participant)",
+    "LLM": "game_id (one race; both seats travel together because they share the horizon and setback draws)",
+}
 
 
 def sha256(path: Path) -> str:
@@ -85,6 +139,7 @@ def load_human() -> pd.DataFrame:
             {
                 "population": "Human",
                 "unit": str(participant_id),
+                "cluster": str(participant_id),
                 "risk_cap": float(first["max_private_risk"].iloc[0]),
                 "trajectory": paired_key(own, opponent),
             }
@@ -105,6 +160,7 @@ def load_model(label: str, path: Path) -> pd.DataFrame:
             {
                 "population": label,
                 "unit": f"{record.game_id}::p1",
+                "cluster": str(record.game_id),
                 "risk_cap": risk,
                 "trajectory": paired_key(a1, a2),
             }
@@ -113,6 +169,7 @@ def load_model(label: str, path: Path) -> pd.DataFrame:
             {
                 "population": label,
                 "unit": f"{record.game_id}::p2",
+                "cluster": str(record.game_id),
                 "risk_cap": risk,
                 "trajectory": paired_key(a2, a1),
             }
@@ -130,11 +187,46 @@ def hill_numbers(keys: list[str]) -> tuple[float, float]:
     return q0, q1
 
 
+def to_bits(keys: list[str]) -> np.ndarray:
+    """Return an (n, 10) 0/1 matrix for the paired action strings."""
+    stripped = [key.replace("|", "") for key in keys]
+    matrix = np.frombuffer("".join(stripped).encode("ascii"), dtype=np.uint8)
+    matrix = matrix.reshape(len(stripped), TRAJECTORY_BITS) - ord("0")
+    return matrix.astype(np.int64)
+
+
+def mean_pairwise_hamming(keys: list[str]) -> float:
+    """Mean pairwise Hamming distance over the 10 bits, normalised to [0, 1].
+
+    For each bit position with ``k`` ones among ``n`` strings there are exactly
+    ``k * (n - k)`` discordant pairs, so the mean over all ``C(n, 2)`` pairs is
+    obtained in O(10) rather than O(n^2).
+    """
+    n = len(keys)
+    if n < 2:
+        return 0.0
+    ones = to_bits(keys).sum(axis=0)
+    discordant = float((ones * (n - ones)).sum())
+    n_pairs = n * (n - 1) / 2.0
+    return discordant / (n_pairs * TRAJECTORY_BITS)
+
+
+def cell_statistics(keys: list[str]) -> tuple[float, float, float]:
+    q0, q1 = hill_numbers(keys)
+    return q0, q1, mean_pairwise_hamming(keys)
+
+
 def rarefy(keys: list[str], target_n: int, rng: np.random.Generator) -> dict[str, float]:
+    """Point estimates at the comparison size.
+
+    The RNG draw sequence is exactly the one the earlier version used, so the
+    published q=0 and q=1 point values do not move; the Hamming mean is
+    computed on the same drawn subsamples rather than on new draws.
+    """
     if len(keys) < target_n:
         raise ValueError(f"Cell has {len(keys)} rows but target_n={target_n}")
     if len(keys) == target_n:
-        q0, q1 = hill_numbers(keys)
+        q0, q1, hamming = cell_statistics(keys)
         return {
             "q0_mean": q0,
             "q0_low": q0,
@@ -142,14 +234,16 @@ def rarefy(keys: list[str], target_n: int, rng: np.random.Generator) -> dict[str
             "q1_mean": q1,
             "q1_low": q1,
             "q1_high": q1,
+            "mean_pairwise_hamming": hamming,
         }
 
     q0_values = np.empty(N_RESAMPLES, dtype=float)
     q1_values = np.empty(N_RESAMPLES, dtype=float)
+    hamming_values = np.empty(N_RESAMPLES, dtype=float)
     values = np.asarray(keys, dtype=object)
     for i in range(N_RESAMPLES):
         sample = rng.choice(values, size=target_n, replace=False).tolist()
-        q0_values[i], q1_values[i] = hill_numbers(sample)
+        q0_values[i], q1_values[i], hamming_values[i] = cell_statistics(sample)
     return {
         "q0_mean": float(q0_values.mean()),
         "q0_low": float(np.quantile(q0_values, 0.025)),
@@ -157,11 +251,52 @@ def rarefy(keys: list[str], target_n: int, rng: np.random.Generator) -> dict[str
         "q1_mean": float(q1_values.mean()),
         "q1_low": float(np.quantile(q1_values, 0.025)),
         "q1_high": float(np.quantile(q1_values, 0.975)),
+        "mean_pairwise_hamming": float(hamming_values.mean()),
+    }
+
+
+def cluster_bootstrap(
+    cell: pd.DataFrame, target_n: int, rng: np.random.Generator
+) -> dict[str, float]:
+    """Two-stage cluster bootstrap: resample clusters, then rarefy to target_n.
+
+    Stage one draws the same number of clusters as the cell contains, with
+    replacement, so a race enters as a whole (both seats) or not at all.  Stage
+    two rarefies the pooled replicate down to the comparison size when it is
+    larger, which is what keeps every replicate a size-``target_n`` comparison.
+    """
+    groups = [
+        np.asarray(group["trajectory"].tolist(), dtype=object)
+        for _, group in cell.groupby("cluster", sort=True)
+    ]
+    n_clusters = len(groups)
+    if n_clusters == 0:
+        raise ValueError("Empty cell")
+
+    q0_values = np.empty(N_RESAMPLES, dtype=float)
+    q1_values = np.empty(N_RESAMPLES, dtype=float)
+    hamming_values = np.empty(N_RESAMPLES, dtype=float)
+    for i in range(N_RESAMPLES):
+        picks = rng.integers(0, n_clusters, size=n_clusters)
+        pooled = np.concatenate([groups[j] for j in picks])
+        if len(pooled) > target_n:
+            pooled = rng.choice(pooled, size=target_n, replace=False)
+        keys = pooled.tolist()
+        q0_values[i], q1_values[i], hamming_values[i] = cell_statistics(keys)
+    return {
+        "n_clusters": n_clusters,
+        "q0_ci_low": float(np.quantile(q0_values, 0.025)),
+        "q0_ci_high": float(np.quantile(q0_values, 0.975)),
+        "q1_ci_low": float(np.quantile(q1_values, 0.025)),
+        "q1_ci_high": float(np.quantile(q1_values, 0.975)),
+        "hamming_ci_low": float(np.quantile(hamming_values, 0.025)),
+        "hamming_ci_high": float(np.quantile(hamming_values, 0.975)),
     }
 
 
 def build_table(frame: pd.DataFrame) -> pd.DataFrame:
     rng = np.random.default_rng(SEED)
+    boot_rng = np.random.default_rng([SEED, 1])
     min_cell = int(
         frame.groupby(["population", "risk_cap"], observed=True).size().min()
     )
@@ -175,6 +310,7 @@ def build_table(frame: pd.DataFrame) -> pd.DataFrame:
                 & np.isclose(frame["risk_cap"].astype(float), risk)
             ]
             summary = rarefy(cell["trajectory"].tolist(), target_n, rng)
+            interval = cluster_bootstrap(cell, target_n, boot_rng)
             rows.append(
                 {
                     "risk_cap": risk,
@@ -182,6 +318,7 @@ def build_table(frame: pd.DataFrame) -> pd.DataFrame:
                     "source_n": len(cell),
                     "comparison_n": target_n,
                     **summary,
+                    **interval,
                 }
             )
     return pd.DataFrame(rows)
@@ -203,8 +340,8 @@ def draw(table: pd.DataFrame) -> None:
         )
         xx = x + offsets[risk]
         y = sub["q1_mean"].to_numpy(float)
-        low = sub["q1_low"].to_numpy(float)
-        high = sub["q1_high"].to_numpy(float)
+        low = sub["q1_ci_low"].to_numpy(float)
+        high = sub["q1_ci_high"].to_numpy(float)
         ax.scatter(
             xx,
             y,
@@ -221,7 +358,12 @@ def draw(table: pd.DataFrame) -> None:
             ax.errorbar(
                 xx[varying],
                 y[varying],
-                yerr=np.vstack([y[varying] - low[varying], high[varying] - y[varying]]),
+                yerr=np.vstack(
+                    [
+                        np.clip(y[varying] - low[varying], 0.0, None),
+                        np.clip(high[varying] - y[varying], 0.0, None),
+                    ]
+                ),
                 fmt="none",
                 ecolor=colors[risk],
                 elinewidth=1.5,
@@ -233,7 +375,7 @@ def draw(table: pd.DataFrame) -> None:
     ax.set_xticks(x, order, rotation=28, ha="right")
     ax.set_ylabel("Effective number of paired 5-round trajectories (Hill q=1)")
     ax.set_xlabel("Population")
-    ax.set_ylim(0, max(21, float(table["q1_high"].max()) * 1.04))
+    ax.set_ylim(0, max(21, float(table["q1_ci_high"].max()) * 1.04))
     ax.grid(axis="y", linewidth=0.55, alpha=0.35)
     ax.spines[["top", "right"]].set_visible(False)
     ax.legend(frameon=False, ncol=3, loc="upper center")
@@ -263,11 +405,25 @@ def main() -> None:
             source_path / "all_results.csv" if source_path.is_dir() else source_path
         )
     provenance = {
-        "schema_version": "ai-race-trajectory-diversity-rarefaction-v2",
+        "schema_version": "ai-race-trajectory-diversity-rarefaction-v3",
         "evidence_class": "diagnostic",
         "estimand": "Sample-size-matched observed diversity of paired first-five-round trajectories",
+        "diversity_statistics": [
+            "hill_q0_distinct_paired_trajectories",
+            "hill_q1_effective_paired_trajectories",
+            "mean_pairwise_hamming_over_10_bits",
+        ],
+        "point_estimate_method": (
+            "mean over rarefaction draws without replacement for cells larger than "
+            "the comparison size; exact cell value for cells already at it "
+            "(unchanged from schema v2)"
+        ),
+        "ci_method": CI_METHOD,
+        "ci_level": 0.95,
         "n_resamples": N_RESAMPLES,
         "seed": SEED,
+        "bootstrap_seed": [SEED, 1],
+        "cluster_unit": CLUSTER_UNIT,
         "comparison_n": int(table["comparison_n"].min()),
         "risk_caps": list(RISKS),
         "source_hashes": {path.relative_to(ROOT).as_posix(): sha256(path) for path in source_files},

@@ -1,0 +1,314 @@
+{
+  "estimand": "Does the pre-game incentivised Eckel-Grossman elicited risk score (0-5) differ in distribution across the four K-means behavioural archetypes fitted to five standardised trajectory descriptors of the human two-player race participants?",
+  "omnibus_test": {
+    "test": "Kruskal-Wallis H (scipy.stats.kruskal, tie-corrected)",
+    "variable": "risk_gamble_choice",
+    "grouping": "cluster label from analyze_behavioral_clustering.py (K=4, SEED=0)",
+    "H": 4.540346380237744,
+    "df": 3,
+    "p": 0.20871959208396715,
+    "n": 341,
+    "n_groups": 4,
+    "significant_at_05": false,
+    "conclusion": "no detectable difference in elicited risk score across archetypes"
+  },
+  "effect_size": {
+    "epsilon_squared": 0.004570760772218825,
+    "eta_squared_from_H": 0.004570760772218825,
+    "eta_squared_H_over_n_minus_1": 0.013353959941875718,
+    "formula_epsilon_squared": "(H - k + 1) / (n - k)",
+    "formula_eta_squared_H_over_n_minus_1": "H / (n - 1)"
+  },
+  "group_descriptives": [
+    {
+      "cluster": 0,
+      "n": 19,
+      "median": 2.0,
+      "q1": 1.0,
+      "q3": 2.5,
+      "iqr": 1.5,
+      "mean": 1.7894736842105263,
+      "sd": 1.2727462594467416,
+      "min": 0.0,
+      "max": 4.0,
+      "descriptor_centroid": {
+        "overall_unsafe_rate": 0.6367099790474404,
+        "reciprocity": -0.09194577352472091,
+        "position_sensitivity": 0.10350877192982456,
+        "own_autocorrelation": 0.12562087035771247,
+        "first_round_unsafe": 0.3684210526315789
+      }
+    },
+    {
+      "cluster": 1,
+      "n": 170,
+      "median": 2.0,
+      "q1": 1.0,
+      "q3": 3.0,
+      "iqr": 2.0,
+      "mean": 2.2941176470588234,
+      "sd": 1.65571293149539,
+      "min": 0.0,
+      "max": 5.0,
+      "descriptor_centroid": {
+        "overall_unsafe_rate": 0.6842603912038084,
+        "reciprocity": 0.15219112287889097,
+        "position_sensitivity": -0.4428427732174711,
+        "own_autocorrelation": -0.2177652472905777,
+        "first_round_unsafe": 1.0
+      }
+    },
+    {
+      "cluster": 2,
+      "n": 133,
+      "median": 2.0,
+      "q1": 1.0,
+      "q3": 3.0,
+      "iqr": 2.0,
+      "mean": 2.0,
+      "sd": 1.6376257758774382,
+      "min": 0.0,
+      "max": 5.0,
+      "descriptor_centroid": {
+        "overall_unsafe_rate": 0.4516164537971731,
+        "reciprocity": 0.021100783148651023,
+        "position_sensitivity": -0.43775925839990115,
+        "own_autocorrelation": -0.25053464869396896,
+        "first_round_unsafe": 0.0
+      }
+    },
+    {
+      "cluster": 3,
+      "n": 19,
+      "median": 2.0,
+      "q1": 1.5,
+      "q3": 3.5,
+      "iqr": 2.0,
+      "mean": 2.473684210526316,
+      "sd": 1.6454793645565071,
+      "min": 0.0,
+      "max": 5.0,
+      "descriptor_centroid": {
+        "overall_unsafe_rate": 0.5254469214995531,
+        "reciprocity": 0.4749373433583959,
+        "position_sensitivity": -0.9605263157894737,
+        "own_autocorrelation": -0.39097744360902253,
+        "first_round_unsafe": 0.7368421052631579
+      }
+    }
+  ],
+  "pairwise": {
+    "dunn_holm": [
+      {
+        "group_a": 0,
+        "group_b": 1,
+        "mean_rank_a": 154.0,
+        "mean_rank_b": 179.38235294117646,
+        "z": -1.0858171589254222,
+        "p_raw": 0.2775598933321479,
+        "p_holm": 0.9162773345811437,
+        "significant_holm_05": false
+      },
+      {
+        "group_a": 0,
+        "group_b": 2,
+        "mean_rank_a": 154.0,
+        "mean_rank_b": 159.75563909774436,
+        "z": -0.24284481974459854,
+        "p_raw": 0.8081256134816447,
+        "p_holm": 1.0,
+        "significant_holm_05": false
+      },
+      {
+        "group_a": 0,
+        "group_b": 3,
+        "mean_rank_a": 154.0,
+        "mean_rank_b": 191.71052631578948,
+        "z": -1.2027596751426919,
+        "p_raw": 0.22906933364528592,
+        "p_holm": 0.9162773345811437,
+        "significant_holm_05": false
+      },
+      {
+        "group_a": 1,
+        "group_b": 2,
+        "mean_rank_a": 179.38235294117646,
+        "mean_rank_b": 159.75563909774436,
+        "z": 1.7544097010890622,
+        "p_raw": 0.07936033024744929,
+        "p_holm": 0.47616198148469574,
+        "significant_holm_05": false
+      },
+      {
+        "group_a": 1,
+        "group_b": 3,
+        "mean_rank_a": 179.38235294117646,
+        "mean_rank_b": 191.71052631578948,
+        "z": -0.5273798776411583,
+        "p_raw": 0.5979298143293761,
+        "p_holm": 1.0,
+        "significant_holm_05": false
+      },
+      {
+        "group_a": 2,
+        "group_b": 3,
+        "mean_rank_a": 159.75563909774436,
+        "mean_rank_b": 191.71052631578948,
+        "z": -1.3482566739576007,
+        "p_raw": 0.17757584200708953,
+        "p_holm": 0.8878792100354477,
+        "significant_holm_05": false
+      }
+    ],
+    "mann_whitney_holm": [
+      {
+        "group_a": 0,
+        "group_b": 1,
+        "n_a": 19,
+        "n_b": 170,
+        "u": 1367.0,
+        "p_raw": 0.2637902625353087,
+        "rank_biserial": -0.15356037151702784,
+        "p_holm": 0.9440126357609191,
+        "significant_holm_05": false
+      },
+      {
+        "group_a": 0,
+        "group_b": 2,
+        "n_a": 19,
+        "n_b": 133,
+        "u": 1232.5,
+        "p_raw": 0.8619770144195905,
+        "rank_biserial": -0.024535021764938714,
+        "p_holm": 1.0,
+        "significant_holm_05": false
+      },
+      {
+        "group_a": 0,
+        "group_b": 3,
+        "n_a": 19,
+        "n_b": 19,
+        "u": 136.5,
+        "p_raw": 0.19322590412638296,
+        "rank_biserial": -0.24376731301939059,
+        "p_holm": 0.9440126357609191,
+        "significant_holm_05": false
+      },
+      {
+        "group_a": 1,
+        "group_b": 2,
+        "n_a": 170,
+        "n_b": 133,
+        "u": 12600.0,
+        "p_raw": 0.08104354172671625,
+        "rank_biserial": 0.11455108359133126,
+        "p_holm": 0.48626125036029755,
+        "significant_holm_05": false
+      },
+      {
+        "group_a": 1,
+        "group_b": 3,
+        "n_a": 170,
+        "n_b": 19,
+        "u": 1497.0,
+        "p_raw": 0.5961258555760474,
+        "rank_biserial": -0.0730650154798762,
+        "p_holm": 1.0,
+        "significant_holm_05": false
+      },
+      {
+        "group_a": 2,
+        "group_b": 3,
+        "n_a": 133,
+        "n_b": 19,
+        "u": 1032.0,
+        "p_raw": 0.18880252715218382,
+        "rank_biserial": -0.1832212109220419,
+        "p_holm": 0.9440126357609191,
+        "significant_holm_05": false
+      }
+    ],
+    "correction": "Holm-Bonferroni across all 6 unordered archetype pairs, alpha=0.05"
+  },
+  "elicited_variable_identity_check": {
+    "reported_in_supplement": {
+      "slope": -0.004,
+      "r": -0.015,
+      "p": 0.79,
+      "n": 341
+    },
+    "participant_level": {
+      "slope": -0.0020478172762209805,
+      "r": -0.014698339966880447,
+      "p": 0.7868215796362595,
+      "n": 341
+    },
+    "six_bin_mean_trend": {
+      "slope": -0.0036957310276480655,
+      "r": -0.14521302085438223,
+      "p": 0.7837115092381448,
+      "n": 6
+    },
+    "r_p_n_reproduce": true,
+    "note": "r, p and n reproduce at the participant level; the quoted slope -0.004 matches the six-bin-mean trend line, not the participant-level slope."
+  },
+  "exclusion_accounting": {
+    "participants_in_source_table": 341,
+    "participants_with_descriptors": 341,
+    "participants_with_cluster_label": 341,
+    "participants_with_elicited_risk": 341,
+    "participants_missing_elicited_risk": 0,
+    "n_used_by_kruskal_wallis": 341,
+    "excluded": 0,
+    "missing_descriptor_counts_before_imputation": {
+      "overall_unsafe_rate": 0,
+      "reciprocity": 38,
+      "position_sensitivity": 268,
+      "own_autocorrelation": 38,
+      "first_round_unsafe": 0
+    },
+    "participants_with_at_least_one_missing_descriptor": 268,
+    "explanation": "Nothing is excluded. Every one of the 341 human participants in airace_deidentified_long.csv contributes a cluster label and an elicited risk score, so the Kruskal-Wallis test runs on n=341. The elicitation is complete: risk_gamble_choice is non-missing for all 341 participants and is constant within a participant. Descriptors are incomplete for some participants (position_sensitivity is undefined for 268 participants who were never observed both ahead and behind, reciprocity and own_autocorrelation for 38), but analyze_behavioral_clustering.py mean-imputes those cells rather than dropping the participant, exactly as the published clustering does, so no participant is lost at the clustering step either. There is therefore no subset of this dataset of size 286, and the supplement's n=286 cannot be reconstructed from any documented step of this pipeline.",
+    "prior_claim_in_supplement": {
+      "H": 21.95,
+      "p": 0.001,
+      "n": 286,
+      "reproduced": false,
+      "source_found_in_repository": false
+    }
+  },
+  "provenance": {
+    "generated_utc": "2026-09-09T12:15:08.963239+00:00",
+    "script": "scripts/analyze_elicited_risk_by_archetype.py",
+    "clustering_reused_from": "results/cross_model_pilot_synthesis/analyze_behavioral_clustering.py",
+    "sources": [
+      {
+        "path": "references/source_study_dataset/airace_deidentified_long.csv",
+        "sha256": "ba6009ed5a6702e9f3ec9782289226099edc2b78c63057e57967927a539f8eee",
+        "bytes": 278108
+      },
+      {
+        "path": "results/cross_model_pilot_synthesis/analyze_behavioral_clustering.py",
+        "sha256": "fc84274ec866c7eb55330854cd9a66e4060bef92428ad982c784ce7e82c8e181",
+        "bytes": 8810
+      }
+    ],
+    "seed": 0,
+    "k_clusters": 4,
+    "features": [
+      "overall_unsafe_rate",
+      "reciprocity",
+      "position_sensitivity",
+      "own_autocorrelation",
+      "first_round_unsafe"
+    ],
+    "kmeans_n_init": 10,
+    "versions": {
+      "python": "3.14.0",
+      "numpy": "2.3.5",
+      "pandas": "2.3.3",
+      "scipy": "1.16.3",
+      "scikit-learn": "1.8.0"
+    }
+  }
+}

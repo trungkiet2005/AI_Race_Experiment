@@ -3,16 +3,16 @@
   "evidence_class": "diagnostic_unadmitted",
   "outputs": {
     "README.md": {
-      "bytes": 4138,
-      "sha256": "5991111784fcaff2005d59dffdad06287b7e8dfdb500f459ff346a874e9d9d46"
+      "bytes": 4657,
+      "sha256": "6b4cd33cc5bf75110aacced1fa2f233209e969e8630b553bbc57ff832e70c0b9"
     },
     "block_validation.csv": {
       "bytes": 846,
       "sha256": "3dc5a5ce6be88702e9348c5cf3d45d9bc464b23c51fb087d271a3e3e58572be2"
     },
     "lane_reproducibility.pdf": {
-      "bytes": 31852,
-      "sha256": "7dde432e10220a1c698e8d8c0c181b344625a39fae7ca96b2aa6413badf599ec"
+      "bytes": 25956,
+      "sha256": "302d807e6a38f979e73b09033dc91cb4f9525bbc19eb35f210cce00926db7dc8"
     },
     "lane_reproducibility.png": {
       "bytes": 162066,
@@ -27,24 +27,24 @@
       "sha256": "3848b69a316fe90907126dea5e165b1a35af707018b045705adf6d66fbe42a31"
     },
     "primary_direct_contrasts.csv": {
-      "bytes": 3498,
-      "sha256": "1cd176e60d009df7a18cfc78294331451fddb515b77e943a9608f04596c42af3"
+      "bytes": 6090,
+      "sha256": "21e7a75479f5a96b4e2a425e8e999de9e87e486d1019c40eb2e5b9b709b11c81"
     },
     "primary_direct_contrasts.pdf": {
-      "bytes": 26347,
-      "sha256": "dc62370c92614cbb907ab13e9b362db106bb1f6f59798b0f740ec7d7be663ddf"
+      "bytes": 24650,
+      "sha256": "9315be9ede6dad7a30db07c7158cc24b72cd48ddbd8790bb3fc0aadf081e6d23"
     },
     "primary_direct_contrasts.png": {
       "bytes": 145823,
       "sha256": "7c2a31c60876663c908d68508fcff9b9b55b349411f47b0833dd12e5a1ad8b9b"
     },
     "primary_position_rates.csv": {
-      "bytes": 3648,
-      "sha256": "36e66a05b6f476327f30b7f09016e35b9b4585b779c94e9f171bb94420cc0674"
+      "bytes": 7421,
+      "sha256": "9be8bea0651d64e00375fdfc10993864165a578080f5e1dfee90f19f40045074"
     },
     "primary_position_response.pdf": {
-      "bytes": 29947,
-      "sha256": "2c65a6a84c0919959948b887f05182eb3241a3d4b7affe0cbf930039a5bc0c38"
+      "bytes": 26762,
+      "sha256": "a156eed8f3b7d499d7e0ff2138689af1880518626a7895069ba93eac81ae505f"
     },
     "primary_position_response.png": {
       "bytes": 193363,
@@ -57,6 +57,10 @@
     "quality_audit.json": {
       "bytes": 3657,
       "sha256": "bb237d9a14a78f22689d6c3833c21c686e84ee45a4e7bc77f6601fcc400553cd"
+    },
+    "uncertainty_provenance.json": {
+      "bytes": 3476,
+      "sha256": "5f3c1fe65d9d49cb839769a5cafac3b6c5bb574b7a66b2dfe5287a0434042cf9"
     }
   },
   "primary_block": "block1",

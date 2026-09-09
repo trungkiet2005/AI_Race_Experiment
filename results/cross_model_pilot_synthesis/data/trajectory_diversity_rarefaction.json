@@ -1,9 +1,25 @@
 {
-  "schema_version": "ai-race-trajectory-diversity-rarefaction-v2",
+  "schema_version": "ai-race-trajectory-diversity-rarefaction-v3",
   "evidence_class": "diagnostic",
   "estimand": "Sample-size-matched observed diversity of paired first-five-round trajectories",
+  "diversity_statistics": [
+    "hill_q0_distinct_paired_trajectories",
+    "hill_q1_effective_paired_trajectories",
+    "mean_pairwise_hamming_over_10_bits"
+  ],
+  "point_estimate_method": "mean over rarefaction draws without replacement for cells larger than the comparison size; exact cell value for cells already at it (unchanged from schema v2)",
+  "ci_method": "two-stage cluster bootstrap over races/participants, then rarefaction to n=20",
+  "ci_level": 0.95,
   "n_resamples": 2000,
   "seed": 20260908,
+  "bootstrap_seed": [
+    20260908,
+    1
+  ],
+  "cluster_unit": {
+    "Human": "participant_id (one trajectory per participant)",
+    "LLM": "game_id (one race; both seats travel together because they share the horizon and setback draws)"
+  },
   "comparison_n": 20,
   "risk_caps": [
     0.1,
