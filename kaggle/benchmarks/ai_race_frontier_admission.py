@@ -166,6 +166,15 @@ def llm_contract(llm) -> dict[str, object]:
     elif "gemma" in route_lower:
         # This route rejects the reasoning budget parameter entirely.
         reasoning_requested = None
+    elif "gemini-3.5-flash-lite" in route_lower:
+        # This route answers the probe bank in other tasks but rejects the
+        # request outright when a reasoning budget is named at all, including
+        # the literal `none`: the provider returns 400 "Request contains an
+        # invalid argument" before any probe is scored. The parameter is
+        # therefore omitted for this route and the omission is recorded in the
+        # manifest, so a reader can see that the observable probe contract is
+        # otherwise identical to every other route.
+        reasoning_requested = None
     elif "deepseek" in route_lower:
         # DeepSeek rejects the literal `none` but accepts an explicit low budget.
         reasoning_requested = "low"
@@ -193,6 +202,12 @@ def call_one(
     contract: dict[str, object],
 ):
     extra = {str(contract["output_token_limit_parameter"]): MAX_OUTPUT_TOKENS}
+    # A route that rejects the reasoning budget parameter must not receive it as
+    # an explicit None either; naming the argument is itself what the provider
+    # refuses. Everything else about the probe contract stays fixed.
+    reasoning_kwargs: dict[str, object] = {}
+    if contract["reasoning_requested"] is not None:
+        reasoning_kwargs["reasoning"] = contract["reasoning_requested"]
     errors: list[str] = []
     for attempt in range(MAX_TRANSPORT_RETRIES + 1):
         try:
@@ -200,10 +215,10 @@ def call_one(
                 response = llm.prompt(
                     prompt,
                     schema=AuditAnswer,
-                    reasoning=contract["reasoning_requested"],
                     temperature=TEMPERATURE,
                     seed=int(seed),
                     extra_api_params=extra,
+                    **reasoning_kwargs,
                 )
             if isinstance(response, AuditAnswer):
                 return response.answer, errors

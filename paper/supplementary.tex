@@ -330,8 +330,8 @@ letters restart at A because this is supplementary matter.
   \item \textbf{$N$-player self-play scope.} Group sizes three to five.
   \item \textbf{Trajectory embedding recoloured by outcome.} The same
   embedding as the main paper, coloured by unsafe rate instead of population.
-  \item \textbf{Unsafe rate by persona band and relative position.} The
-    cell-level numbers behind the grouped-bar figure in the main paper.
+  \item \textbf{Unsafe rate by persona band and relative position.} Cells
+    reported only here, with observed rather than assigned position.
 \end{itemize}
 
 \appendix
@@ -348,7 +348,7 @@ letters restart at A because this is supplementary matter.
 \providecommand{\Unsafe}{\textsc{Unsafe}}
 \providecommand{\todo}[1]{\textbf{[TODO: #1]}}
 
-This appendix collects the material referenced from
+This supplement collects the material referenced from
 the results section in the main paper as supporting rather than extending the main
 claims: the full task-validity probe breakdown
 (\S\ref{app:task-validity-full}), the human-benchmark replication check
@@ -362,11 +362,12 @@ descriptive results (\S\ref{app:twoplayer-baseline},
 \label{app:task-validity-full}
 
 Table~\ref{tab:task-validity-full} reports the full breakdown behind the
-frontier endpoint admission in the main paper. The confirmatory audit used the
+frontier endpoint admission in the main paper. The confirmatory audit used
 the two exact routes listed in Table~\ref{tab:frontier-admission-registry} under
 the frozen protocol v5: 20 atomic probes spanning rule recall,
 one-stage payoffs, state reconstruction, state transition, terminal scoring,
-and expected payoff, repeated three times per route for 120 retained outputs.
+and expected payoff, repeated three times per route, for 60 retained outputs
+per route and 120 retained outputs in total.
 Every response was schema-valid and no transport retry was needed. Numeric
 probes used a fixed structured-output contract; categorical probes explicitly
 listed the allowed answer set.
@@ -536,6 +537,16 @@ reconstructed estimation sample contains 2{,}888 round-level observations,
 172 race-pair clusters, and 338 participants. Table~\ref{tab:human-replication} compares the refit coefficients against the values reported in the
 original study.
 
+Four human sample sizes appear across this supplement, and they differ
+because each analysis needs a different part of the same public record. The
+raw first-five-round sequence comparison keeps the 340 participants with a
+complete five-round action history. The descriptor and elicitation analyses
+keep 341, because the five aggregate descriptors and the elicited risk score
+can be computed for one further participant whose complete sequence is
+unavailable. The dynamic refit above keeps the 338 participants with complete
+values on every covariate in the published specification. No participant is
+added anywhere; each figure is a subset of the same released dataset.
+
 \begin{table}[h]
     \caption{Replication of \citet{falling_behind_unsafe}'s dynamic
     specification on the public de-identified human data. ``Reconstructed''
@@ -655,7 +666,8 @@ multiplayer position analysis is exploratory and is not used as a second
 independent confirmation of this two-player result. A
 weaker, second-order association does survive at the level of behavioural
 phenotype rather than mean rate: the same elicited measure differs across
-the raw-sequence archetypes of the two-player strategic diversity results in the main paper (Kruskal--
+the five-descriptor $k$-means archetypes of the two-player strategic
+diversity results in the main paper (Kruskal--
 Wallis $H=21.95$, $p=0.001$, $n=286$ clustered human players), so the
 elicitation may help stratify \emph{which} dynamic pattern a participant
 falls into even though it does not predict \emph{how much} \Unsafe{} they
@@ -700,8 +712,8 @@ model with a six-level sweep climbs 50.5 to 98.3 points from R1 to R6, all
 but the two nano models monotonically, and those two dip by well under a
 point at R2 before rising. The label does not, however, move models by a
 common factor; GPT-5.6 Terra runs lowest at R1 and finishes within 1.3
-points of the top, while GPT-5-nano starts fifth of seven and ends last
-last, so curve order is not preserved, and the same instruction is worth
+points of the top, while GPT-5-nano starts fifth of seven and ends last,
+so curve order is not preserved, and the same instruction is worth
 very different amounts to different models. Of the seven tested models, five have such a sweep;
 neither Gemini Flash-Lite checkpoint does. In logistic models that
 additionally control for the mechanism's actual private-risk treatment, the
@@ -1035,9 +1047,8 @@ in each cell. The decision count is retained only as a descriptive row count.
 \begin{table}[h]
     \caption{\Unsafe{} rate by checkpoint, group size, and assigned
     maximum-private-risk level, OpenAI $N$-player self-play. Intervals are
-    95\% percentile bootstrap intervals over race clusters; $n_{\rm race}$ is
-    the independent-unit count and $n_{\rm dec}$ is the descriptive decision
-    count.}
+    95\% percentile bootstrap intervals over race clusters, and $n_{\rm race}$
+    is the independent-unit count.}
     \label{tab:nplayer-scope-full}
     \centering
     \small
@@ -1129,10 +1140,10 @@ that neither scale obscures the other.
 \subsection{Unsafe rate by persona band and relative position}
 \label{app:position-cells}
 
-The main paper plots these rates as grouped bars for both checkpoints and
-reports the pattern they show. The tables below give the cell-level numbers
-behind that figure, so a single rate, its sample size and its confidence
-interval can be checked directly.
+The main paper does not report these cells. The tables below give them in
+full, so a single rate, its independent-race count and its interval can be
+checked directly. Relative position is observed rather than assigned, so
+these are associations within a persona band, not position effects.
 
 \begin{table}[t]
     \caption{\Unsafe{} rate by persona band and relative position,
@@ -1194,10 +1205,10 @@ interval can be checked directly.
 \subsection{Behavioural-archetype coverage by population}
 \label{app:archetype-coverage}
 
-The main paper reports that human trajectories spread across more archetypes
-than any single checkpoint's do. This table is the per-population breakdown
-behind that statement, so a single share can be checked against its
-population and archetype.
+The main paper reports that human trajectories spread more evenly across the
+archetypes than most single checkpoints do, with GPT-5.4-nano the exception.
+This table is the per-population breakdown behind that statement, so a single
+share can be checked against its population and archetype.
 
 \begin{table}[t]
   \caption{Behavioural-archetype coverage: share of each population's
@@ -1205,11 +1216,9 @@ population and archetype.
   Human row is the reference clustering ($n{=}341$); each LLM row
   projects that checkpoint's own no-persona player-races
   ($n{=}60$ to $120$) into the same
-  space. The sample sizes are summarized in the evidence-strata table in the
-  main paper. This table draws on the full nine-checkpoint cross-model pilot
-  and therefore includes GPT-5.6 Luna and Terra, which are not part of
-  the seven-model t-SNE/trajectory comparison earlier in
-  this subsection.}
+  space. This table draws on the full nine-checkpoint cross-model pilot and
+  therefore includes GPT-5.6 Luna and Terra, which are not part of the
+  seven-checkpoint trajectory comparison in the main paper.}
   \label{tab:archetype-coverage}
   \centering
   \footnotesize

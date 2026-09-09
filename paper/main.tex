@@ -615,7 +615,7 @@ changes later states, one parse failure marks the whole race as contaminated.
 \subsection{Evidence strata and admission}
 
 We separate mechanical validity, task validity, diagnostic pilots, and
-confirmatory evidence. A \emph{diagnostic pilot} is a small exploratory test
+confirmatory evidence (Table~\ref{tab:evidence-strata}). A \emph{diagnostic pilot} is a small exploratory test
 used to find possible effects or failures. It does not estimate a stable
 population effect. A \emph{confirmatory} study tests a question under a plan
 fixed before its results are inspected. A result enters that stronger evidence
@@ -666,7 +666,7 @@ not informed optimisation of the game.
     \midrule
     Frontier endpoint admission (two admitted routes) & 120 probe responses & 120 answers & confirmatory gate \\
     Calculator diagnostic & 60 races & 1,116 decisions & paired diagnostic \\
-    Context pilot ($T=0$) & 768 races & 13,680 decisions & robustness diagnostic \\
+    Context pilot (temperature $0$) & 768 races & 13,680 decisions & robustness diagnostic \\
     Fixed-state replay & 1,536 state cells & 1,536 responses & direct prompt diagnostic \\
     Five-checkpoint baseline & 150 races & 2,790 decisions & descriptive only \\
     OpenAI $N=3$ to $5$ baseline & 180 races & 6,120 decisions & exploratory only \\
@@ -704,8 +704,9 @@ This separation prevents a failure on optional arithmetic from being mistaken
 for a failure to follow the action protocol.
 
 \begin{table}[t]
-    \caption{Semantic accuracy on the 60-probe frontier endpoint admission for
-    the two admitted routes, by probe subtask.}
+    \caption{Semantic accuracy on the frontier endpoint admission for the two
+    admitted routes, by probe subtask. Each route contributes 20 probes at
+    three requested repetitions, for 60 retained outputs per route.}
     \label{tab:task-audit}
     \centering
     \small
@@ -784,7 +785,8 @@ the low-, medium-, and high-risk conditions. This pattern follows the shift
 from AU to CAS and then CS described in \S\ref{sec:theory-benchmark}.
 The frontier confirmatory baselines instead produce the following Unsafe rates
 at maximum risks 0.1, 0.6, and 0.9, respectively: Gemini 3 Flash, 98.9\%,
-74.2\%, and 59.1\%; Claude Sonnet 5, 89.2\%, 46.2\%, and 37.6\%.
+74.2\%, and 59.1\%; Claude Sonnet 5, 89.2\%, 46.2\%, and 37.6\%
+(Figure~\ref{fig:egt-frontier-comparison}).
 Each route contributed 30 completed races and 558 decisions. These are
 descriptive endpoint results, not equilibrium estimates. The Gemini SDK route
 stripped the requested seed, while the Claude route forwarded it without
@@ -1032,14 +1034,14 @@ not causal effects or evidence about internal reasoning. The full random-
 forest and SHAP analysis is reported in the supplementary material.
 
 The human data are organised mainly by the opponent's previous action, which
-accounts for 48\% of the fitted model's total SHAP magnitude. The tested LLMs
-do not share one pattern. Progress gap is largest for GPT-5-nano (44\%), the
-assigned risk condition is largest for two Gemini checkpoints (35 to 40\%), and
-opponent history is largest for Claude Sonnet 5 (51\%). GPT-5.4-nano has no
-single strong predictor. These results support a game-theoretic point: two
-populations can have similar Unsafe rates while following different response
-rules. the supplementary material reports model fit, confounding,
-and floor/ceiling limits.
+accounts for 56\% of the fitted model's total SHAP magnitude. The tested
+checkpoints do not share one pattern. Progress gap is largest for GPT-5-nano
+(41\%), the assigned risk condition is largest for two Gemini checkpoints
+(33\% and 37\%), and opponent history is largest for Claude Sonnet 5 (48\%).
+GPT-5.4-nano has no single strong predictor. These results support a
+game-theoretic point: two populations can have similar \Unsafe{} rates while
+following different response rules. The supplementary material reports model
+fit, confounding, and floor/ceiling limits.
 
 \subsection{Measured human risk and prompted LLM personas}
 \label{sec:results-persona}
