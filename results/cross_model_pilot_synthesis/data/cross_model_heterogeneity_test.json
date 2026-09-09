@@ -307,7 +307,7 @@
   "provenance": {
     "script": "results/cross_model_pilot_synthesis/analyze_heterogeneity_test.py",
     "script_sha256": "c1d9ccf733bb77a91cf572856d1befabcd530776a0ed1c698bfe1954e5d0a92a",
-    "generated_utc": "2026-09-09T11:50:27.093088+00:00",
+    "generated_utc": "2026-09-09T13:20:09.105220+00:00",
     "seed": null,
     "seed_note": "Deterministic: Newton/BFGS maximum-likelihood fits on a fixed table, no randomness.",
     "python_version": "3.14.0",
@@ -315,8 +315,6 @@
     "scipy_version": "1.16.3",
     "pandas_version": "2.3.3",
     "rosters_run_this_pass": [
-      "five",
-      "seven",
       "nine"
     ]
   }

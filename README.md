@@ -10,6 +10,12 @@ Drives Unsafe Development in an Idealised AI Race Experiment_ (arXiv:2607.26034)
 The source study used human participants; this project is an LLM adaptation and does
 not present its future model outputs as a replication of human cognition.
 
+The manuscript targets **AAMAS 2027** (Hanoi, Vietnam, 3 to 7 May 2027): at most
+8 pages of main content, unlimited additional pages for references only, and one
+supplementary ZIP of at most 25 MB that reviewers are not obliged to read. Both
+`paper/main.tex` and `paper/supplementary.tex` use the AAMAS 2027 sigconf
+template and copyright block.
+
 ## Setup
 
 ```bash
@@ -154,12 +160,33 @@ push/status/log commands; do not invent a kernel slug when no
   configuration are implemented.
 - CRSD-specific documents, experiments, results, manuscript figures, and slides have
   been removed from the active project.
-- Open-weight smoke and diagnostic pilot runs have been executed for persona
-  sensitivity, prompt-surface sensitivity, and game understanding. Confirmatory
-  inference has not been executed.
+- **Endpoint admission: nine hosted routes audited, five admitted.** The audit
+  (`results/frontier/admission_campaign_v6/`, protocol
+  `ai-race-frontier-admission-v6`) puts 20 frozen probes at three repetitions,
+  60 retained rows, through every route and requires overall accuracy at least
+  0.80 together with state-reconstruction and terminal-scoring accuracy at least
+  0.75. Admitted: Gemini 3 Flash 93.3%, Claude Opus 5 91.7%, GPT-5.4 90.0%,
+  GPT-5.5 90.0%, Claude Sonnet 5 85.0%. Refused: Gemini 3.1 Flash-Lite 80.0%,
+  GPT-5.4 mini 75.0%, Gemini 3.5 Flash-Lite 65.0%, GPT-5.4 nano 51.7%. Expected
+  payoff is recorded but never gates admission, and it is the weakest domain on
+  every route. A refused route is kept as evidence about the route, not deleted.
+- **Gameplay: eight of those routes have a matched confirmatory baseline**
+  (`results/frontier/baseline_campaign_v6/`, protocol
+  `ai-race-frontier-baseline-v3`): 30 races, 558 decisions and zero parse
+  failures each. Gemini 3.5 Flash-Lite failed at the transport layer with zero
+  races and is retained as a failure record rather than reported as a result. The
+  requested temperature was not forwarded by the SDK and the sampling seed is
+  confirmed only as requested, so both are cited as unconfirmed.
+- One fully crossed context-and-mapping run is complete, on Gemini 3 Flash, with
+  120 races and 2,232 decisions and a passing independent validator. The N-player
+  frontier rerun is not admitted; its attempts are kept under
+  `results/failed_runs/`.
 - Deterministic checks and analysis run locally. Model evidence must run in a
-  declared GPU environment with exact source, model, decoding, and hardware
-  provenance; the current understanding pilot used two GreenNode H100 lanes.
+  declared GPU environment or on the audited Kaggle Benchmark identity, with exact
+  source, model, decoding, and hardware provenance; the earlier understanding
+  pilot used two GreenNode H100 lanes. Open-weight smoke and diagnostic pilots for
+  persona sensitivity, prompt-surface sensitivity, and game understanding remain
+  historical diagnostics and are never pooled with the frontier campaigns.
 
 See [`PROJECT.md`](PROJECT.md) for research questions, estimands, and validation
 criteria.

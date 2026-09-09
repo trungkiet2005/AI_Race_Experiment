@@ -315,7 +315,10 @@ letters restart at A because this is supplementary matter.
 
 \begin{itemize}
   \item \textbf{Task-validity probe battery.} Every probe, its wording family,
-    and the per-model pass rate behind the summary in the main paper.
+    and the per-route pass rate behind the summary in the main paper.
+  \item \textbf{Nine-route endpoint-admission campaign.} The full per-domain
+    admission result for every route the main paper reports, including the two
+    domains it omits, the admission thresholds, and the retained failure.
   \item \textbf{Human-benchmark replication check.} Whether the reference
     human study's reported pattern reproduces on the released participant data
     under our own analysis code.
@@ -323,16 +326,35 @@ letters restart at A because this is supplementary matter.
     is used to support and the claim it does not support.
   \item \textbf{Risk preference and assigned personas.} The persona families,
     and how a prompted persona compares with measured human risk preference.
+  \item \textbf{Selection-strength sweep of the evolutionary benchmark.}
+    Whether the gap between theory and the audited routes depends on one
+    parameter setting.
+  \item \textbf{Crossed representation-robustness cell.} The one narrative
+    skin by symbol mapping rerun that completed, and why no general mapping
+    claim follows from it.
   \item \textbf{Predictive structure of unsafe choices.} The feature analysis
     behind the drivers reported in the main paper.
   \item \textbf{Two-player descriptive baseline, full scope.} Every checkpoint
     and condition, including those the main paper does not plot.
   \item \textbf{$N$-player self-play scope.} Group sizes three to five.
-  \item \textbf{Trajectory embedding recoloured by outcome.} The same
-  embedding as the main paper, coloured by unsafe rate instead of population.
-  \item \textbf{Unsafe rate by persona band and relative position.} Cells
+  \item \textbf{Trajectory embedding, by population and by outcome.} The
+    same embedding twice, coloured by population and then by \Unsafe{} rate.
+  \item \textbf{Cluster-count sensitivity and trajectory diversity.} How the
+    human archetypes and the diversity comparison behave as the analysis
+    choices move.
+  \item \textbf{\Unsafe{} rate by persona band and relative position.} Cells
     reported only here, with observed rather than assigned position.
 \end{itemize}
+
+Four terms are used with fixed meanings throughout. A \emph{route} is the
+exact provider string a request is addressed to, for example
+\path{google/gemini-3-flash-preview}. An \emph{endpoint} is a route that
+carries an admission verdict from the probe battery below. A
+\emph{checkpoint} is one dated model version, which is what a comparison
+across the rows of a behavioural table compares. \emph{Model} is used only
+generically, for a language model as a kind of system. Where a number belongs
+to a route rather than to a model in general, the route string is printed
+beside it.
 
 \appendix
 \section{Extended results and robustness checks}
@@ -344,8 +366,6 @@ letters restart at A because this is supplementary matter.
 % Fallback definitions so this file compiles standalone or under a master
 % file that has not defined these yet; \providecommand is a no-op if the
 % surrounding document already defines them.
-\providecommand{\Safe}{\textsc{Safe}}
-\providecommand{\Unsafe}{\textsc{Unsafe}}
 \providecommand{\todo}[1]{\textbf{[TODO: #1]}}
 
 This supplement collects the material referenced from
@@ -356,13 +376,23 @@ claims: the full task-validity probe breakdown
 (\S\ref{app:persona-detail}), the predictive analysis
 (\S\ref{app:predictive-structure}), and the full two-player and $N$-player
 descriptive results (\S\ref{app:twoplayer-baseline},
-\S\ref{app:nplayer-scope}).
+\S\ref{app:nplayer-scope}). It also carries the evidence the main paper only
+summarises: the nine-route admission campaign
+(\S\ref{app:admission-v6}), the selection-strength sweep of the evolutionary
+benchmark (\S\ref{app:egt-beta}), the one completed crossed
+representation-robustness cell (\S\ref{app:context-mapping}), the
+cluster-count sweep behind the human archetypes
+(\S\ref{app:k-sensitivity}), and the trajectory-diversity statistics
+(\S\ref{app:diversity}).
 
 \subsection{Task-validity probe battery: full breakdown}
 \label{app:task-validity-full}
 
 Table~\ref{tab:task-validity-full} reports the full breakdown behind the
-frontier endpoint admission in the main paper. The confirmatory audit used
+first confirmatory frontier endpoint admission, protocol v5, which admitted
+two routes. It is superseded as the campaign the main paper reports by the
+nine-route v6 campaign of \S\ref{app:admission-v6}, and is retained here
+because no v6 verdict contradicts it. The confirmatory audit used
 the two exact routes listed in Table~\ref{tab:frontier-admission-registry} under
 the frozen protocol v5: 20 atomic probes spanning rule recall,
 one-stage payoffs, state reconstruction, state transition, terminal scoring,
@@ -444,6 +474,129 @@ closed-form arithmetic diagnostic rather than an action-task requirement.
 The active identity exposed no second authorised account, so no multi-account
 pooling is claimed.
 
+
+\subsection{Nine-route endpoint-admission campaign}
+\label{app:admission-v6}
+
+The main paper summarises a later and larger admission campaign,
+\texttt{ai-race-frontier-admission-v6}, which put nine routes through the same
+gate. This subsection gives it in full, including the two domains the main
+paper's table omits for space: rule recall and one-stage payoff lookup.
+Table~\ref{tab:admission-v6} is the complete per-domain result. Each route
+answered the same frozen bank of 20 probes three times, giving 60 retained
+rows per route and 540 retained rows in total, at temperature 0 with a
+256-token output cap and base seed 260726, on the Kaggle Benchmark identity
+\texttt{daosyduyminh}.
+
+The three admission thresholds were fixed before the campaign ran: overall
+semantic accuracy at least 80\%, state-reconstruction accuracy at least 75\%,
+and terminal-scoring accuracy at least 75\%. A route is admitted only if it
+clears all three. Expected-payoff accuracy is recorded but never blocks
+admission, because it is a closed-form arithmetic diagnostic rather than
+something the action task requires. Five of the nine routes were admitted:
+\begin{sloppypar}
+\noindent
+\path{google/gemini-3-flash-preview}, \path{anthropic/claude-opus-5@default},
+\path{openai/gpt-5.4-2026-03-05}, \path{openai/gpt-5.5-2026-04-23}, and
+\path{anthropic/claude-sonnet-5@default}. Four were refused:
+\path{google/gemini-3.1-flash-lite-preview} on state reconstruction alone,
+\path{openai/gpt-5.4-mini-2026-03-17} on overall accuracy and state
+reconstruction, and \path{google/gemini-3.5-flash-lite} and
+\path{openai/gpt-5.4-nano-2026-03-17} on all three thresholds.
+\end{sloppypar}
+
+\begin{table*}[t]
+    \caption{Complete nine-route endpoint-admission result, protocol
+    \texttt{ai-race-frontier-admission-v6}. Every cell is the percentage of
+    that domain's probes answered correctly, out of 60 retained probe answers
+    per route (20 probes, three repetitions each). ``Task ver'' is the frozen
+    benchmark task version the route ran under. Expected payoff is a recorded
+    diagnostic and does not gate admission; the three gates are overall
+    accuracy at least 80\%, state reconstruction at least 75\%, and terminal
+    scoring at least 75\%. Rule recall, stage payoff, state transition, and
+    expected payoff each rest on six probe answers per route, so their
+    accuracy can only move in steps of one sixth, about 16.7 percentage
+    points.}
+    \label{tab:admission-v6}
+    \centering
+    \footnotesize
+    \setlength{\tabcolsep}{4pt}
+    \begin{tabular}{@{}lrrrrrrrrl@{}}
+        \toprule
+        Exact route & Task & Rule & Stage & State & State & Terminal
+        & Exp.\ payoff & Overall & Admitted \\
+        & ver & recall & payoff & recon. & trans. & scoring
+        & (diagnostic) & & \\
+        \midrule
+        \path{google/gemini-3-flash-preview} & 7 & 100.0 & 100.0 & 93.3 & 100.0 & 100.0 & 50.0 & 93.3 & yes \\
+        \path{anthropic/claude-opus-5@default} & 7 & 100.0 & 100.0 & 93.3 & 100.0 & 100.0 & 33.3 & 91.7 & yes \\
+        \path{openai/gpt-5.4-2026-03-05} & 7 & 100.0 & 100.0 & 100.0 & 100.0 & 100.0 & 0.0 & 90.0 & yes \\
+        \path{openai/gpt-5.5-2026-04-23} & 7 & 100.0 & 100.0 & 80.0 & 100.0 & 100.0 & 50.0 & 90.0 & yes \\
+        \path{anthropic/claude-sonnet-5@default} & 7 & 100.0 & 100.0 & 100.0 & 100.0 & 80.0 & 0.0 & 85.0 & yes \\
+        \path{google/gemini-3.1-flash-lite-preview} & 7 & 100.0 & 100.0 & 73.3 & 100.0 & 80.0 & 16.7 & 80.0 & no \\
+        \path{openai/gpt-5.4-mini-2026-03-17} & 7 & 100.0 & 100.0 & 66.7 & 66.7 & 86.7 & 0.0 & 75.0 & no \\
+        \path{google/gemini-3.5-flash-lite} & 8 & 100.0 & 100.0 & 60.0 & 50.0 & 60.0 & 0.0 & 65.0 & no \\
+        \path{openai/gpt-5.4-nano-2026-03-17} & 7 & 75.0 & 100.0 & 20.0 & 50.0 & 66.7 & 0.0 & 51.7 & no \\
+        \bottomrule
+    \end{tabular}
+\end{table*}
+
+Three facts make the nine rows of Table~\ref{tab:admission-v6} directly
+comparable with one another. All nine ran under the same protocol identifier,
+\texttt{ai-race-frontier-admission-v6}. All nine answered the same probe bank,
+whose SHA-256 hash is this.
+\begin{center}\ttfamily\scriptsize
+2953fb472dcba47511de108a47d4126b\\
+0f661e79bf60c96a3ab46f581abca8bc
+\end{center}
+
+\noindent The shared hash is what licenses placing
+the routes side by side, and the analysis script fails closed, marking a route
+non-comparable and refusing to tabulate it beside the others if its hash
+differs. All nine also read the same rules context, whose hash is this.
+\begin{center}\ttfamily\scriptsize
+b80981a5e888d04649300f79b7388ca7\\
+a755b958f239f0172efd9ca35aab2ae0
+\end{center}
+
+\noindent Eight routes ran at benchmark task version 7 and one,
+\path{google/gemini-3.5-flash-lite}, at task version 8.
+
+That one route's decoding contract differs from the other eight, and the
+difference is visible in its manifest rather than inferred. The eight
+version-7 routes were sent an explicit reasoning budget of \texttt{none}. The
+version-8 route omits the reasoning-budget argument altogether, because this
+provider rejects the presence of the argument itself, returning an HTTP 400
+invalid-argument error before a single probe is sampled. That is a mismatch
+in the transport contract, not evidence about the model, and it had previously
+removed the route from the audit entirely. The amendment that introduced the
+per-route contract is dated 2026-09-09 in
+\texttt{docs/reviewer-revision-frontier-protocol.md}, which also records its
+scope: for every route whose resolved contract is still \texttt{none} the
+outgoing request is byte-identical to the earlier runs, so those artifacts
+stay poolable with them, while a route whose resolved contract omits the
+argument records that omission in its manifest, and any table that pools such
+a route must say so. This table says so.
+
+One failed run is retained rather than deleted. Run 1494041, route
+\path{google/gemini-3.5-flash-lite} at task version 7, ended in a
+\texttt{RuntimeError} from exhausted bounded transport retries. It appears
+nowhere in Table~\ref{tab:admission-v6} because it produced no scoreable
+probe answer, and it is kept in the accounting chain as a transport failure
+under \path{results/frontier/admission_campaign_v6/failed_runs/}. The
+successful rerun of that same route is the task-version-8 row.
+
+No route changed its verdict relative to the earlier v5 campaign of
+\S\ref{app:task-validity-full} and \S\ref{app:frontier-admission}, which is
+the only earlier campaign entitled to admit anything. One reason for refusal
+did change: \path{google/gemini-3.1-flash-lite-preview} rose from 76.7\% to
+80.0\% overall accuracy and now clears the overall gate, yet is still refused,
+because its state reconstruction is 73.3\%, below the 75\% threshold.
+Expected payoff is the weakest domain on every one of the nine routes,
+including the strongest, which is why it was frozen as a diagnostic before the
+campaign began: had it gated admission, no route would have been admitted at
+all.
+
 \subsection{Frontier neutral baseline}
 \label{app:frontier-baseline}
 
@@ -451,7 +604,7 @@ The new neutral gameplay baseline used protocol v3, the same mechanism and
 prompt for both admitted routes, ten repetitions per risk level, and 30 races
 per route. Each
 route produced 558 structured decisions with zero parse failures. The entries
-in Table~\ref{tab:frontier-baseline} are decision-weighted Unsafe rates; they
+in Table~\ref{tab:frontier-baseline} are decision-weighted \Unsafe{} rates; they
 are not pooled across routes and do not estimate an evolutionary equilibrium.
 
 \begin{table}[h]
@@ -487,7 +640,7 @@ stationary population composition.
     \centering
     \includegraphics[width=\textwidth]{../figures/paper/egt_frontier_insights.pdf}
     \caption{Boundary analysis for the reconstructed evolutionary model and
-    the two admitted frontier routes. Panel A shows route-specific Unsafe
+    the two admitted frontier routes. Panel A shows route-specific \Unsafe{}
     responses alongside the two EGT parameter regimes. Panel B shows the
     deviation from the strong-selection EGT reference. Panel C gives the
     nearest-rule composition, and Panel D shows why those labels are only a
@@ -525,6 +678,160 @@ population process.
     EGTtools fixation probabilities above neutral drift.}
     \label{fig:egt-frontier-invasion}
 \end{figure*}
+
+
+\subsection{Selection-strength sweep of the evolutionary benchmark}
+\label{app:egt-beta}
+
+The comparison in \S\ref{app:frontier-baseline} uses one setting of the
+reconstructed evolutionary model. A reviewer may reasonably ask whether the
+gap between that model and the audited routes is a property of the model or an
+artifact of that one setting. This subsection answers that question by
+sweeping the setting.
+
+Two numbers govern the model. \emph{Selection strength} $\beta$ says how
+strongly a simulated agent prefers to copy a better-performing neighbour: at
+$\beta$ near zero copying is almost random, and at large $\beta$ it is almost
+deterministic. The \emph{mutation rate} $\mu$ is the chance, per update, that
+the sampled individual abandons its strategy and switches uniformly to one of
+the other three. The sweep covers ten values of selection strength,
+$\beta \in \{0.001, 0.003, 0.01, 0.03, 0.1, 0.3, 1, 2, 3, 10\}$, crossed with
+three rules for setting the mutation rate: $\mu = \beta/Z$, the main-text
+convention, which gives $\mu = 0.02$ at $\beta = 2$; $\mu = 1/Z = 0.01$; and a
+fixed $\mu = 0.05$, the convention under which the source study reports its
+best fit. With $Z = 100$ individuals, four strategies, and the mechanism's
+three maximum-private-risk levels ($0.1$, $0.6$, $0.9$), the sweep contains
+90 cells built from 29 distinct parameter pairs, since some pairs coincide
+across rules and were simulated once. Each cell is estimated from four
+independent chains of 400{,}000 steps with a burn-in of 100{,}000, thinned by
+100, giving 4{,}000 retained samples per chain.
+
+The reference setting reproduces. At $\beta = 2$ with $\mu = \beta/Z = 0.02$,
+the sweep returns a decision-weighted \Unsafe{} share of 99.2\%, 98.0\%, and
+1.9\% at maximum risks $0.1$, $0.6$, and $0.9$: the same three-point profile
+the main paper attributes to the published reference, matched to within
+0.0002, 0.0001, and 0.0001 in share, far inside the 0.02 tolerance the check
+declares in advance. The sweep uses a deliberately disjoint seed scheme from
+the reproduction script, so this agreement is an independent-seed check rather
+than a rerun of the same random numbers.
+
+The qualitative gap does not close anywhere on the grid at the reference
+selection strength, but it does close at very weak selection. Of the 90 cells,
+four reproduce the qualitative shape the admitted endpoints show, namely
+near-total \Unsafe{} play at risk $0.1$, a middling rate at $0.6$, and a lower
+but clearly non-zero rate at $0.9$, declining at every step. Three of those
+four also pass the mixing diagnostic. All of them sit at weak selection:
+$\beta = 0.01$ and $\beta = 0.03$ under $\mu = 0.05$, and $\beta = 0.003$ and
+$\beta = 0.01$ under $\mu = 1/Z$. Ten of the 90 cells are flagged as
+mixing-suspect, meaning their four independent chains disagreed by more than
+0.05 on the aggregate \Unsafe{} share, so their chain mean must not be read as
+a stationary distribution; almost all of them are the very small mutation
+rates that $\mu = \beta/Z$ produces at small $\beta$, which make the four
+uniform-strategy states nearly absorbing.
+
+The best-fitting cell is the same for both audited routes, and it is not the
+reference setting. Fitting is by root-mean-squared deviation, in percentage
+points, between the model's three-point \Unsafe{} profile and the route's
+observed decision-weighted \Unsafe{} rates at the same three risk levels; the
+largest single-condition deviation is reported beside it so that one badly
+missed condition stays visible. For both routes the minimum-error cell is
+$\beta = 0.01$ with fixed $\mu = 0.05$, whose profile is 87.3\%, 63.9\%, and
+38.0\%. Against \path{anthropic/claude-sonnet-5@default}, observed at 89.2\%,
+46.2\%, and 37.6\%, that cell has an error of 10.28 percentage points and a
+largest single-condition miss of 17.70 points, at risk $0.6$. Against
+\path{google/gemini-3-flash-preview}, observed at 98.9\%, 74.2\%, and 59.1\%,
+the error is 15.13 points and the largest miss 21.14 points, at risk $0.9$.
+Even the best cell on the grid is therefore more than ten percentage points
+away from either route.
+
+One boundary is worth restating, because the reproduction lane states it
+itself. This is a repo-native reconstruction of the disclosed reduced
+evolutionary model, not a bitwise reproduction of the original authors' code:
+that code, the generated payoff matrices, the payoff Monte Carlo seeds, and
+the exact library revision are not public in the preprint version we worked
+from, and the compiled comparison class could not be executed on this
+interpreter because no matching wheel exists for it, so the sweep ran the
+pinned pure-Python implementation instead. The quantities above are therefore
+seeded-chain estimates reported with their between-chain spread, not exact
+stationary distributions, and the route rates beside them are descriptive
+prompted self-play endpoints rather than draws from a population process.
+
+\subsection{Crossed representation-robustness cell}
+\label{app:context-mapping}
+
+An earlier local pilot varied the story the game is told through and the
+symbols used for the two actions, but varied them together with repetition
+parity, so the two could not be separated, and it failed its comprehension
+gate. The main paper therefore excludes it and requires a fully crossed rerun
+before any claim about representation. This subsection reports the one cell of
+that rerun that completed.
+
+The rerun crosses two \emph{narrative skins}, that is two stories that leave
+the rules untouched, against two \emph{symbol mappings}, that is which of the
+two opaque response codes $P$ and $Q$ stands for \Safe{} and which for
+\Unsafe{}, inside repetition blocks, at each of the mechanism's three
+maximum-private-risk levels. That is twelve cells. It completed on the route
+\path{google/gemini-3-flash-preview} under protocol
+\texttt{ai-race-frontier-context-mapping-v3}: ten repetitions, 120 races,
+2{,}232 recorded decisions, and zero parse failures, with the horizon and
+setback random-number streams held common across conditions so that two cells
+differ in their prompt and not in the environment they met.
+Table~\ref{tab:context-mapping} gives all twelve cells.
+
+\begin{table}[t]
+    \caption{Fully crossed narrative-skin by symbol-mapping rerun on the
+    single route that completed it,
+    	exttt{google/gemini-3-flash-preview}.
+    ``Mapping'' names which response code stands for \Safe{}: under
+    \texttt{P\_SAFE\_Q\_UNSAFE} the code $P$ means \Safe{}, and under
+    \texttt{Q\_SAFE\_P\_UNSAFE} it means \Unsafe{}. $n_{\rm race}$ is the
+    number of independent races in the cell and $n_{\rm dec}$ the number of
+    decisions recorded in it; the \Unsafe{} rate is decision-weighted. All
+    twelve cells are complete and no response failed to parse.}
+    \label{tab:context-mapping}
+    \centering
+    \scriptsize
+    \setlength{\tabcolsep}{4pt}
+    \begin{tabular}{@{}llrrrrr@{}}
+        \toprule
+        Narrative skin & Mapping & Risk & $n_{\rm race}$ & $n_{\rm dec}$
+        & \Unsafe{} actions & \Unsafe{} rate \\
+        \midrule
+        \texttt{abstract\_game} & \texttt{P\_SAFE\_Q\_UNSAFE} & 0.1 & 10 & 186 & 186 & 100.0\% \\
+        \texttt{abstract\_game} & \texttt{P\_SAFE\_Q\_UNSAFE} & 0.6 & 10 & 186 & 156 & 83.9\% \\
+        \texttt{abstract\_game} & \texttt{P\_SAFE\_Q\_UNSAFE} & 0.9 & 10 & 186 & 111 & 59.7\% \\
+        \texttt{abstract\_game} & \texttt{Q\_SAFE\_P\_UNSAFE} & 0.1 & 10 & 186 & 186 & 100.0\% \\
+        \texttt{abstract\_game} & \texttt{Q\_SAFE\_P\_UNSAFE} & 0.6 & 10 & 186 & 186 & 100.0\% \\
+        \texttt{abstract\_game} & \texttt{Q\_SAFE\_P\_UNSAFE} & 0.9 & 10 & 186 & 166 & 89.2\% \\
+        \texttt{technology\_race} & \texttt{P\_SAFE\_Q\_UNSAFE} & 0.1 & 10 & 186 & 186 & 100.0\% \\
+        \texttt{technology\_race} & \texttt{P\_SAFE\_Q\_UNSAFE} & 0.6 & 10 & 186 & 144 & 77.4\% \\
+        \texttt{technology\_race} & \texttt{P\_SAFE\_Q\_UNSAFE} & 0.9 & 10 & 186 & 81 & 43.5\% \\
+        \texttt{technology\_race} & \texttt{Q\_SAFE\_P\_UNSAFE} & 0.1 & 10 & 186 & 186 & 100.0\% \\
+        \texttt{technology\_race} & \texttt{Q\_SAFE\_P\_UNSAFE} & 0.6 & 10 & 186 & 185 & 99.5\% \\
+        \texttt{technology\_race} & \texttt{Q\_SAFE\_P\_UNSAFE} & 0.9 & 10 & 186 & 83 & 44.6\% \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+Two things are visible in Table~\ref{tab:context-mapping} and neither is a
+general finding. First, the risk response survives both manipulations: in
+every one of the four skin-by-mapping combinations the \Unsafe{} rate is
+100\% at risk $0.1$ and lower at risk $0.9$. Second, the mapping is not
+inert. Holding the skin fixed, swapping which code means \Safe{} moves the
+rate at risk $0.9$ from 59.7\% to 89.2\% under the abstract story and from
+43.5\% to 44.6\% under the technology story, and at risk $0.6$ from 83.9\% to
+100\% and from 77.4\% to 99.5\% respectively. A relabelling that a correct
+model of the game should ignore therefore changes the action sequence.
+
+No general claim about symbol mapping or narrative skin follows from this
+table, because the design is crossed for one route only. A single route cannot
+separate a property of this task from a property of this provider's decoder at
+this revision, and a second route is what would be needed to do so. The
+matched rerun on \path{anthropic/claude-sonnet-5@default} did not complete: it
+was stopped by a provider quota refusal, and a run stopped part-way is a
+failure record in this project's accounting, not a partial result to be
+reported beside a complete one. We therefore report the completed cell, name
+its single-route limit, and make no mapping claim.
 
 \subsection{Human-benchmark replication check}
 \label{app:human-benchmark-replication}
@@ -643,16 +950,56 @@ rather than on a reimplementation error.
 We finally distinguish three constructs that should not be conflated: the
 human participants' pre-game elicited risk preference, the mechanism's
 assigned private-risk treatment, and the narrative risk persona supplied to
-an LLM in its prompt. Human participants completed an incentivised
+an LLM in its prompt.
+
+The three persona framings themselves are drawn in
+Figure~\ref{fig:persona-families}, which the main paper's design section points
+to rather than reproducing.
+
+\begin{figure*}[t]
+    \centering
+    \includegraphics[width=\textwidth]{../figures/paper/ExpOverview.pdf}
+    \caption{The persona framings assigned to each company's executive, and
+    the placebo that separates a persona from the mere presence of an extra
+    sentence. Three families are used. The first assigns no persona at all,
+    and is the neutral condition behind every baseline number in this
+    supplement. The second is a risk-aware family with six ordered levels, R1
+    to R6, whose wording is adapted from the six-choice Eckel--Grossman gamble
+    scale so that R1 is the most risk-averse framing and R6 the least. The
+    third is a social family that frames the rival either as cooperative or as
+    adversarial. The neutral placebo adds a sentence of matched length that
+    carries no risk content and no social content, so a difference between
+    the placebo and no persona at all is an effect of prompt length rather
+    than of persona. All of these are prompt conditions written into the
+    instruction the model receives. None is a trait measured on the agent, and
+    nothing here is elicited from the model, which is the distinction the rest
+    of this section turns on.}
+    \label{fig:persona-families}
+    \Description{A schematic of the experimental persona conditions. One
+    branch shows the no-persona neutral prompt. A second branch shows a
+    six-level risk-aware persona family, labelled R1 to R6 from most
+    risk-averse to least, adapted from the Eckel-Grossman gamble scale. A
+    third branch shows a social persona family with a cooperative framing and
+    an adversarial framing of the rival company. A fourth element shows a
+    neutral placebo sentence of matched length used to separate the persona
+    content from the effect of adding a sentence.}
+\end{figure*}
+
+Human participants completed an incentivised
 Eckel--Grossman gamble elicitation (0 = most risk-averse, 5 = least
-risk-averse) before playing the two-player race. This elicited measure has
-essentially no direct association with subsequent \Unsafe{} rate,
+risk-averse) before playing the two-player race: a choice among six gambles,
+made once, before any round is played. This elicited measure has essentially
+no direct association with subsequent \Unsafe{} rate,
 \[
     \text{slope}=-0.004,\qquad r=-0.015,\qquad p=0.79,\qquad n=341,
 \]
-with the difference in mean \Unsafe{} play between the most and least
-risk-accepting human groups (approximately five percentage points) lying
-within the corresponding uncertainty interval. This null result
+where the slope is the trend across the six group means plotted in
+Figure~\ref{fig:own-risk-dependence}; the participant-level slope of the same
+relationship is $-0.002$, while the correlation, the $p$ value and the sample
+size above are participant-level. The difference in mean \Unsafe{} play
+between the most and the least risk-accepting human groups, about five
+percentage points, lies inside the corresponding uncertainty interval. This
+null result
 independently reproduces \citeauthor{falling_behind_unsafe}'s own
 preregistered finding that elicited risk preference did not significantly
 predict \Unsafe{} choice \citep{falling_behind_unsafe}, and stands in
@@ -663,15 +1010,57 @@ competition_and_risk-taking}: in this task, the round-by-round interaction
 captured in the two-player strategic diversity results in the main paper
 is a stronger organising signal than static pre-game disposition. The
 multiplayer position analysis is exploratory and is not used as a second
-independent confirmation of this two-player result. A
-weaker, second-order association does survive at the level of behavioural
-phenotype rather than mean rate: the same elicited measure differs across
-the five-descriptor $k$-means archetypes of the two-player strategic
-diversity results in the main paper (Kruskal--
-Wallis $H=21.95$, $p=0.001$, $n=286$ clustered human players), so the
-elicitation may help stratify \emph{which} dynamic pattern a participant
-falls into even though it does not predict \emph{how much} \Unsafe{} they
-play overall.
+independent confirmation of this two-player result.
+
+One further place remained where an association could have survived, and it
+does not. The elicitation might have failed to predict \emph{how much}
+\Unsafe{} a participant plays while still predicting \emph{which} dynamic
+pattern that participant follows. It does not do that either. Comparing the
+elicited score across the four behavioural archetypes of
+\S\ref{app:k-sensitivity}, which are the $k$-means groups fitted to five
+standardised trajectory descriptors of the same human participants, returns a
+null:
+\[
+    H=4.540,\qquad \mathrm{df}=3,\qquad p=0.209,\qquad n=341,
+\]
+by a tie-corrected Kruskal--Wallis test, which asks whether the distribution
+of one variable differs across several groups without assuming a normal
+distribution. The effect size is $\varepsilon^2=0.0046$, so the archetype
+label accounts for under half of one percent of the variance in the elicited
+score, which is negligible on any convention. No participant is excluded: all
+341 human participants carry both an archetype label and an elicited score,
+and the elicitation is complete.
+
+The archetype medians are identical. All four groups have a median elicited
+score of 2.0 on the 0 to 5 scale, with interquartile ranges of 1.0 to 2.5
+($n=19$), 1.0 to 3.0 ($n=170$), 1.0 to 3.0 ($n=133$), and 1.5 to 3.5
+($n=19$). None of the six pairwise comparisons between archetypes is
+significant after Holm--Bonferroni correction across all six pairs. The
+smallest uncorrected $p$ is 0.079, between the two largest archetypes, which
+becomes 0.476 after correction; every other corrected $p$ is above 0.88. The
+same conclusion follows from Dunn's test on mean ranks and from pairwise
+Mann--Whitney tests, which the artifact reports side by side.
+
+\emph{Correction.} An earlier version of this supplement reported
+$H=21.95$, $p=0.001$, $n=286$ for this comparison and read it as a weaker,
+second-order association surviving the null above. That value has no source
+anywhere in the analysis record, and no subset of 286 participants arises at
+any documented step of this pipeline: the elicitation is non-missing for all
+341 participants and the clustering drops nobody. It is superseded by the
+artifact
+\path{results/cross_model_pilot_synthesis/data/elicited_risk_by_archetype.json},
+whose numbers are the ones
+reported above.
+
+The null is not a weakness in the comparison; it sharpens it. A measured
+human risk preference predicts neither the level of \Unsafe{} play nor the
+pattern of it, whereas a prompted risk persona moves a checkpoint's \Unsafe{}
+rate by between 50.5 and 98.3 percentage points from its lowest to its highest
+level (Table~\ref{tab:persona-effect}). An elicited disposition and an
+instructed persona are therefore not two measurements of one construct; they
+are different kinds of variable, and the shared axis in
+Figure~\ref{fig:own-risk-dependence} aligns them for visual comparison only.
+
 
 \begin{figure*}[t]
     \centering
@@ -701,41 +1090,43 @@ play overall.
 
 Figure~\ref{fig:own-risk-dependence} (left) shows how little that null
 leaves. Human mean \Unsafe{} play stays inside a 49--62\% band across the
-entire elicitation range, never approaching the low-\Unsafe{} models of
+entire elicitation range, never approaching the low-\Unsafe{} checkpoints of
 the two-player strategic diversity results in the main paper (GPT-5-nano 17\%, Claude Sonnet 5 22\%,
 Claude Opus 5 33\%) or the high-\Unsafe{} Gemini models (73--83\%).
 Elicited risk preference does not move a participant far enough to resemble
-a different model's policy.
+a different checkpoint's policy.
 
 The right panel is the opposite (Table~\ref{tab:persona-effect}): every
-model with a six-level sweep climbs 50.5 to 98.3 points from R1 to R6, all
-but the two nano models monotonically, and those two dip by well under a
-point at R2 before rising. The label does not, however, move models by a
-common factor; GPT-5.6 Terra runs lowest at R1 and finishes within 1.3
-points of the top, while GPT-5-nano starts fifth of seven and ends last,
-so curve order is not preserved, and the same instruction is worth
-very different amounts to different models. Of the seven tested models, five have such a sweep;
-neither Gemini Flash-Lite checkpoint does. In logistic models that
-additionally control for the mechanism's actual private-risk treatment, the
-coefficients on the agent's own assigned risk label remain large for the
-three models where that controlled fit has been run, so the persona effect
-is not simply standing in for the mechanical risk treatment.
+checkpoint with a six-level sweep climbs 50.5 to 98.3 points from R1 to R6,
+all but the two nano checkpoints monotonically, and those two dip by well
+under a point at R2 before rising. The label does not, however, move
+checkpoints by a common factor. GPT-5.6 Terra runs lowest at R1 and finishes
+within 1.3 points of the top, while GPT-5-nano starts fifth of seven and ends
+last, so the order of the curves is not preserved, and the same instruction is
+worth very different amounts to different checkpoints. Of the seven tested
+checkpoints, five have such a sweep; neither Gemini Flash-Lite checkpoint
+does. In logistic fits that additionally control for the mechanism's actual
+private-risk treatment, the coefficients on the agent's own assigned risk
+label remain large for the three checkpoints where that controlled fit has
+been run, so the persona effect is not simply standing in for the mechanical
+risk treatment.
 
 \begin{table}[t]
     \caption{LLM risk-persona effect: change in \Unsafe{} rate from the
     lowest (R1) to the highest (R6) assigned risk label, and the per-level
-    OLS slope, for every model with a six-level risk-label sweep ($n=360$
+    OLS slope, for every checkpoint with a six-level risk-label sweep ($n=360$
     players per level, $n=330$ for Gemini-3-Flash). The persona coefficient
-    (logistic model additionally controlling for the mechanism's actual
-    private-risk treatment) has been fit only for the first three; ``not
-    estimated'' marks models for which only the descriptive delta and slope are
-    available. Starred rows sit outside the seven-model roster.}
+    (a logistic fit that additionally controls for the mechanism's actual
+    private-risk treatment) has been run only for the first three; ``not
+    estimated'' marks checkpoints for which only the descriptive change and
+    slope are available. Starred rows sit outside the seven-checkpoint
+    roster.}
     \label{tab:persona-effect}
     \centering
     \small
     \begin{tabular}{@{}lrrr@{}}
         \toprule
-        Model & $\Delta$ \Unsafe{} (pp) & Per-level slope & Coefficient \\
+        Checkpoint & $\Delta$ \Unsafe{} (pp) & Per-level slope & Coefficient \\
         \midrule
         GPT-5-nano       & 50.5 & 0.123 & 0.93 \\
         GPT-5.4-nano     & 98.2 & 0.212 & 1.47 \\
@@ -756,7 +1147,7 @@ embedded in the prompt. The more defensible reading is that an assigned
 risk persona functions as a high-salience behavioural instruction for
 these models, not as an analogue of a stable human risk
 disposition. Because the LLM estimates come from a separate risk-matrix
-experiment, available for five of the seven tested models and with the
+experiment, available for five of the seven tested checkpoints and with the
 private-risk-controlled logistic fit run for only three of those five,
 this comparison remains exploratory and cross-experimental rather than a
 like-for-like measurement.
@@ -764,8 +1155,10 @@ like-for-like measurement.
 \subsection{Population identity in first-five-round trajectories}
 \label{app:population-identity}
 
-The population-identity diagnostic in the main paper uses the same 15 raw
-features as the trajectory visualisation. We fit a shallow decision tree with
+Table~\ref{tab:population-identity} is the diagnostic the main paper
+summarises: it asks how well a simple classifier can name the population that
+produced a trajectory, using the same 15 raw features as the trajectory
+embedding of \S\ref{app:tsne-outcome}. We fit a shallow decision tree with
 class-balanced loss under stratified five-fold grouped cross-validation. The
 two seats of an LLM race remain in the same fold; human observations are
 grouped by participant. Since the pooled classes are unequal, balanced
@@ -809,9 +1202,11 @@ result and source hashes are stored in
 
 The preceding section shows that populations produce different action
 patterns. We now ask which recorded parts of the game best predict their next
-Unsafe choice. This is a study of association, not cause or internal
+\Unsafe{} choice. This is a study of association, not cause or internal
 reasoning. For each population, we fit a random forest, a model that combines
-many decision trees. Predictive scores use five-fold grouped cross-validation,
+many decision trees. Table~\ref{tab:feature-importance} reports the result
+and Figure~\ref{fig:feature-importance} shows the same shares as a heatmap.
+Predictive scores use five-fold grouped cross-validation,
 with all decisions from one participant or race kept in one fold. The forest
 predicts decisions after round one from five values
 known before the choice: the player's previous action, the opponent's previous
@@ -886,9 +1281,10 @@ logistic analysis. GPT-5-nano is close to the opposite profile: relative
 race position (progress gap) accounts for 41\% of its predictive
 importance and opponent history for only 7\%, and its apparently strong
 out-of-fold AUC of 0.80 is misleading on its own, since balanced accuracy is
-exactly 0.50: the model plays so close to the \Safe{} floor that the
-classifier effectively fails to recover the rare \Unsafe{} class. Gemini-3-
-Flash and Gemini-3.1-Flash-Lite are primarily risk-treatment-driven (33\%
+exactly 0.50: the checkpoint plays so close to the \Safe{} floor that the
+classifier effectively fails to recover the rare \Unsafe{} class.
+Gemini-3-Flash and Gemini-3.1-Flash-Lite are primarily
+risk-treatment-driven (33\%
 and 37\% of SHAP magnitude), consistent with their strong, monotone
 descriptive risk-response curves. Claude Sonnet 5 is the only model whose
 profile matches the human ordering outright, with the opponent's previous
@@ -966,7 +1362,7 @@ descriptive curves rather than the pooled aggregate rates already reported
 in the main text, GPT-5-nano's \Unsafe{} rate was low and nearly flat
 across the three risk levels; GPT-5.4-nano's response to risk level was
 non-monotone; and the three Gemini checkpoints' \Unsafe{} rate declined as
-the assigned maximum risk increased -- the opposite direction from the two
+the assigned maximum risk increased, the opposite direction from the two
 OpenAI checkpoints. Because provider routes, protocol signatures, and pilot
 sample sizes differ across checkpoints, these five curves demonstrate
 qualitative heterogeneity in how each checkpoint responds to the risk
@@ -1032,7 +1428,7 @@ $N=3$ to $N=4$ before partially receding at $N=5$, while GPT-5.4-nano stays
 within a narrow 83--87\% band throughout. We do not read either pattern as
 an isolated group-size effect, for two reasons. First, changing $N$ also
 changes the stage-payoff rule itself (Eq.~(3)--(4) use the joint count
-$k^t$ of Safe-choosing companies rather than a single opponent's move),
+$k^t$ of \Safe{}-choosing companies rather than a single opponent's move),
 the number of opponents, and prompt length, so $N$ is confounded with the
 representation of the game as well as with its size. Second, the pilots
 use only ten independent races per model--risk--$N$ cell, which is a small
@@ -1083,8 +1479,49 @@ in each cell. The decision count is retained only as a descriptive row count.
 
 The main paper reports that the embedding of raw five-round trajectories
 separates almost entirely by how much \Unsafe{} play a trajectory carries.
-This is that check: the same coordinates, with only the colouring changed,
-so any structure visible here is structure the embedding already had.
+Both colourings of that embedding now live here.
+Figure~\ref{fig:human-tsne-population} colours it by population, and
+Figure~\ref{fig:human-tsne-outcome} is the check: the same coordinates, with
+only the colouring changed, so any structure visible in the second is
+structure the embedding already had. Reading them in that order is the point.
+The population panels look like eight different regions; recolouring the
+identical points by each player's own \Unsafe{} rate splits the embedding
+into a \Safe{} region, an \Unsafe{} region and a thin mixed band, with very
+few points on the wrong side. The apparent separation of populations is
+therefore largely a separation of action rates, which is why the main paper
+rests no conclusion on either picture and uses the grouped classifier of
+Table~\ref{tab:population-identity} instead.
+
+\begin{figure*}[t]
+    \centering
+    \includegraphics[width=\textwidth]{../figures/paper/llm_human_clustering/01_tsne_hero_human_left.png}
+    \caption{The population-coloured embedding, shown here so that
+    Figure~\ref{fig:human-tsne-outcome} can be compared against it directly.
+    A t-SNE embedding places each of the 760 complete first-five-round
+    trajectories at a point in two dimensions, arranged so that trajectories
+    with similar action-and-position histories fall near each other; the input
+    is the pooled 15-dimensional first-five-round action-and-position space,
+    the same input as the population-identity classifier below. One panel is
+    drawn per population, human first. The axes have no units and no direction: only
+    relative closeness carries meaning, and distances between well-separated
+    clusters are not interpretable. The main paper rests no conclusion on this
+    figure, and the reason is
+    Figure~\ref{fig:human-tsne-outcome}: recolouring these identical
+    coordinates by each player's own \Unsafe{} rate separates the embedding
+    almost entirely, so what looks like a separation of populations here is
+    largely a separation of action rates. The quantitative statement about
+    population identity is the grouped classifier of
+    Table~\ref{tab:population-identity}, not this picture.}
+    \label{fig:human-tsne-population}
+    \Description{A grid of two-dimensional scatter panels, one per
+    population, all sharing the same t-SNE coordinates computed from the
+    pooled fifteen-dimensional first-five-round action and position
+    space. The human panel is drawn first and its points spread across the
+    whole extent of the embedding. Each model panel occupies a narrower
+    region of the same space, and several models occupy a single tight
+    cluster.}
+\end{figure*}
+
 
 \begin{figure*}[t]
     \centering
@@ -1111,16 +1548,16 @@ so any structure visible here is structure the embedding already had.
 \label{app:human-radar}
 
 The embedding in the main paper shows that human trajectories spread more
-widely than any single model's. This is the same comparison read one
-feature at a time: population means over the fourteen features every
-trajectory shares, with action probabilities and absolute progress gaps separated so
-that neither scale obscures the other.
+widely than any single checkpoint's. Figure~\ref{fig:human-radar} is the same
+comparison read one feature at a time: population means over the fourteen
+features every trajectory shares, with action probabilities and absolute
+progress gaps separated so that neither scale obscures the other.
 
 \begin{figure*}[t]
     \centering
     \includegraphics[width=\textwidth]{../figures/paper/llm_human_clustering/03_radar_small_multiples_by_group_no_gap_r1.pdf}
     \caption{Round-by-round profile for each population, shown as two
-    source-backed heatmaps. Panel A reports the probability of an Unsafe
+    source-backed heatmaps. Panel A reports the probability of an \Unsafe{}
     action for each player's own and opponent action at rounds 1--5. Panel B
     reports the mean absolute progress gap entering rounds 2--5, so it
     measures how far apart the two players are after pooling focal-player
@@ -1137,18 +1574,67 @@ that neither scale obscures the other.
 
 
 
-\subsection{Unsafe rate by persona band and relative position}
+
+\subsection{Player-level \Unsafe{} rate by population}
+\label{app:unsafe-rate-by-group}
+
+Figure~\ref{fig:unsafe-rate-by-group} is the aggregate level of the same
+comparison: one number per population, the mean share of a player's first five
+decisions that were \Unsafe{}. It is the plainest form of the point that a
+matching aggregate rate does not imply matching behaviour, because a
+population can reach a middling rate either by mixing or by every player
+behaving the same way.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.95\linewidth]{../figures/paper/llm_human_clustering/05b_unsafe_rate_by_group.pdf}
+    \caption{Player-level mean \Unsafe{} rate over rounds 1 to 5, one row per
+    population. The point is the unweighted mean over player-race
+    trajectories. The whisker is a 95\% percentile bootstrap interval that
+    resamples \emph{clusters}, not single trajectories, because the two seats
+    of a race are not independent of each other: they share the sampled
+    stopping horizon and the setback draws. The cluster is therefore the race
+    for every checkpoint row, 30 races each, and the participant for the human
+    row, 340 participants; the interval uses 4{,}000 resamples. The point
+    estimates are unchanged from a trajectory-level calculation; only the
+    interval changed, and it supersedes an earlier interval that resampled
+    player-race trajectories and so treated the two seats of a race as
+    independent.}
+    \label{fig:unsafe-rate-by-group}
+    \Description{A horizontal dot-and-whisker chart with one row per
+    population, showing the mean Unsafe rate over rounds one to five on a
+    zero to one hundred percent axis. Each row has a marker at the population
+    mean and a horizontal whisker for the 95 percent race-clustered bootstrap
+    interval. The human row sits near the middle of the axis, GPT-5 nano and
+    the two Claude rows sit low, and the three Gemini rows sit high.}
+\end{figure}
+
+\subsection{\Unsafe{} rate by persona band and relative position}
 \label{app:position-cells}
 
-The main paper does not report these cells. The tables below give them in
-full, so a single rate, its independent-race count and its interval can be
-checked directly. Relative position is observed rather than assigned, so
-these are associations within a persona band, not position effects.
+The main paper does not report these cells.
+Tables~\ref{tab:position-gpt5nano} and~\ref{tab:position-gpt54nano} give them
+in full for the two checkpoints that have a persona sweep and an observed
+position, so a single rate and its interval can be checked directly. Relative
+position is observed rather than assigned, so these are associations within a
+persona band, not position effects. One further caveat governs both tables and
+is stated in each caption as well: the intervals are Wilson score intervals
+computed over \emph{decisions}, whereas this paper's method statement makes
+the race the independent unit. Decisions taken inside one race are not
+independent of each other, so a decision-level interval is narrower than the
+race-level uncertainty warrants. The per-race source for these two specific
+tables could not be located in the analysis record, so we neither recompute
+the intervals nor delete the cells: they are printed as descriptive
+breakdowns, and no inference rests on them.
 
 \begin{table}[t]
     \caption{\Unsafe{} rate by persona band and relative position,
-    GPT-5-nano. $n$ is the number of decisions in the cell; CI is the
-    95\% confidence interval on the unsafe rate.}
+    GPT-5-nano. $n$ is the number of decisions in the cell. The interval is a
+    95\% Wilson score interval computed at the level of the decision.
+    Decisions within a race are not independent, and the race is this paper's
+    independent unit, so the interval is anti-conservative: it is narrower
+    than a race-clustered interval would be. These cells are descriptive only
+    and support no inference.}
     \label{tab:position-gpt5nano}
     \centering
     \small
@@ -1175,7 +1661,13 @@ these are associations within a persona band, not position effects.
 
 \begin{table}[t]
     \caption{\Unsafe{} rate by persona band and relative position,
-    GPT-5.4-nano. Cells marked $^\dagger$ have $n<20$.}
+    GPT-5.4-nano. $n$ is the number of decisions in the cell and cells marked
+    $^\dagger$ have $n<20$. The interval is a 95\% Wilson score interval
+    computed at the level of the decision. Decisions within a race are not
+    independent, and the race is this paper's independent unit, so the
+    interval is anti-conservative: it is narrower than a race-clustered
+    interval would be. These cells are descriptive only and support no
+    inference.}
     \label{tab:position-gpt54nano}
     \centering
     \small
@@ -1202,15 +1694,248 @@ these are associations within a persona band, not position effects.
 
 
 
+
+\subsection{Cluster-count sensitivity and stability of the human archetypes}
+\label{app:k-sensitivity}
+
+The behavioural archetypes used in this supplement and in the main paper are
+$k$-means groups: the 341 human participants are described by five
+standardised summary numbers each, and $k$-means partitions them into $k$
+groups so that each participant is near the average of its own group. The
+number of groups is a choice, not a measurement, so this subsection reports
+what changes when that choice changes. The five descriptors are the overall
+\Unsafe{} rate, reciprocity, position sensitivity, own-action
+autocorrelation, and whether the first round was \Unsafe{}. They are
+standardised on the human sample alone, and every other population is later
+projected into that same human space rather than re-standardised.
+
+Table~\ref{tab:k-sensitivity} gives the diagnostics for $k = 2$ to $6$. Three
+of them describe how tight and separated the groups are: the silhouette
+coefficient, which is higher when a participant is closer to its own group
+than to the nearest other one; the Calinski--Harabasz index, higher when
+between-group spread is large relative to within-group spread; and the
+Davies--Bouldin index, which is \emph{lower} when groups are better separated.
+The fourth, inertia, is the total squared distance to group centres and falls
+mechanically as $k$ grows, so it is reported for completeness rather than as
+evidence. The choice of $k = 4$ used elsewhere is the best cell on two of the
+three interpretable indices, with the highest silhouette (0.316, against
+0.278 at $k = 2$ and 0.241 at $k = 5$) and the lowest Davies--Bouldin (1.218).
+
+\begin{table*}[t]
+    \caption{Cluster-count sweep for the human behavioural archetypes,
+    $k = 2$ to $6$, on the same matrix of 341 human participants by five
+    standardised descriptors, seed 0. Higher is better for silhouette and
+    Calinski--Harabasz, lower is better for Davies--Bouldin; inertia falls
+    with $k$ by construction. ``Group sizes'' is the number of participants
+    per group. The adjusted Rand index (ARI) measures how much a partition
+    refitted on a resampled sample agrees with the partition fitted on the
+    full sample: 1 is identical, 0 is chance agreement. It is computed over
+    500 bootstrap resamples of participants, and the interval is the 2.5 to
+    97.5 percentile range across those resamples.}
+    \label{tab:k-sensitivity}
+    \centering
+    \small
+    \setlength{\tabcolsep}{5pt}
+    \begin{tabular}{@{}rrrrrlrrl@{}}
+        \toprule
+        $k$ & Silhouette & Calinski & Davies & Inertia & Group sizes
+        & Smallest & ARI mean & ARI 95\% interval \\
+         & & Harabasz & Bouldin & & & group $n$ & & \\
+        \midrule
+        2 & 0.278 & 110.9 & 1.578 & 1280.9 & 187 / 154 & 154 & 0.961 & 0.76--1.00 \\
+        3 & 0.267 & 91.7 & 1.542 & 1102.1 & 107 / 63 / 171 & 63 & 0.717 & 0.37--0.98 \\
+        4 & 0.316 & 83.5 & 1.218 & 975.3 & 19 / 170 / 133 / 19 & 19 & 0.626 & 0.39--0.98 \\
+        5 & 0.241 & 78.2 & 1.363 & 880.2 & 20 / 57 / 118 / 87 / 59 & 20 & 0.458 & 0.30--0.69 \\
+        6 & 0.239 & 79.0 & 1.405 & 780.2 & 42 / 78 / 56 / 55 / 91 / 19 & 19 & 0.518 & 0.34--0.79 \\
+        \bottomrule
+    \end{tabular}
+\end{table*}
+
+Stability is only moderate, and we say so rather than presenting the groups as
+recovered types. The bootstrap adjusted Rand index falls from 0.961 at
+$k = 2$, where the split is nearly always the same one, to 0.717 at $k = 3$,
+0.626 at $k = 4$, 0.458 at $k = 5$, and 0.518 at $k = 6$. At $k = 4$ the
+interval runs from 0.39 to 0.98, which is wide. The groups are therefore
+useful descriptions of where the human sample sits in this five-number space,
+not evidence that four discrete human strategies exist.
+
+The conclusion the main paper draws from these groups does not depend on $k$.
+That conclusion is about coverage: the human sample spreads across the whole
+set of archetypes while almost every single checkpoint concentrates on a few.
+Table~\ref{tab:k-occupancy} counts, for each population and each $k$, how many
+of the $k$ archetypes that population actually occupies, where a population
+counts as occupying an archetype when at least 5\% of its entities project to
+it. The human row occupies all $k$ archetypes at every $k$ from two to six.
+No checkpoint matches that. The closest is the exception the main paper names,
+GPT-5.4 nano, which occupies all $k$ archetypes at $k = 2$, $3$, $5$ and $6$
+and three of four at $k = 4$. Every other checkpoint falls short from $k = 4$
+upward, and GPT-5 nano is the extreme case, occupying exactly one archetype at
+every $k$. The 5\% threshold is a reporting choice, and the artifact
+records the counts at a 1\% threshold and at strictly positive occupancy
+alongside it so the claim can be read at any of the three.
+
+\begin{table}[t]
+    \caption{Archetype occupancy by population and cluster count. Each cell
+    counts how many of the $k$ human-fitted archetypes that population
+    occupies, where occupying means that at least 5\% of the population's
+    entities project nearest to that archetype. $n$ is the number of entities
+    projected: participants for the human row, no-persona player-races for
+    each checkpoint. A row that reaches $k$ at every $k$ covers the full
+    human-fitted space; the human reference does so at every $k$ and no
+    checkpoint does.}
+    \label{tab:k-occupancy}
+    \centering
+    \small
+    \setlength{\tabcolsep}{5pt}
+    \begin{tabular}{@{}lrrrrrr@{}}
+        \toprule
+        Population & $n$ & $k{=}2$ & $k{=}3$ & $k{=}4$ & $k{=}5$ & $k{=}6$ \\
+        \midrule
+        Human (reference) & 341 & 2 & 3 & 4 & 5 & 6 \\
+        GPT-5 nano & 120 & 1 & 1 & 1 & 1 & 1 \\
+        GPT-5.4 nano & 120 & 2 & 3 & 3 & 5 & 6 \\
+        Gemini 3 Flash & 120 & 1 & 1 & 2 & 3 & 3 \\
+        Gemini 3.1 Flash Lite & 60 & 1 & 1 & 2 & 2 & 3 \\
+        Gemini 3.5 Flash Lite & 60 & 1 & 1 & 2 & 3 & 3 \\
+        GPT-5.6 Luna & 120 & 2 & 1 & 2 & 2 & 3 \\
+        GPT-5.6 Terra & 120 & 2 & 2 & 3 & 3 & 4 \\
+        Claude Opus 5 & 120 & 2 & 2 & 2 & 2 & 2 \\
+        Claude Sonnet 5 & 120 & 2 & 3 & 2 & 3 & 4 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+One property of these descriptors is ours to disclose rather than a reviewer's
+to discover. Two of the five are undefined for some participants, and the
+clustering fills the gap with the sample mean instead of dropping the
+participant, exactly as the published clustering does. Position sensitivity,
+which contrasts a participant's behaviour when ahead against when behind, is
+undefined for 268 of the 341 participants, because those participants were
+never observed both ahead and behind; it is mean-imputed for all 268, that is
+for 79\% of the sample. Reciprocity and own-action autocorrelation are each
+undefined and mean-imputed for 38 participants. The overall \Unsafe{} rate and
+the first-round action are complete for all 341. A mean-imputed cell carries no
+information about the participant it is attached to, so position sensitivity
+does most of its work on under a quarter of the sample, and the archetype
+signatures should be read with that in mind. No participant is excluded at any
+step: all 341 receive a cluster label.
+
+\subsection{Trajectory-diversity statistics}
+\label{app:diversity}
+
+The main paper reports that human first-five-round trajectories are more
+varied than any single checkpoint's. Table~\ref{tab:diversity-rarefaction}
+gives the numbers behind that, one row per population per risk level, so a
+single value can be checked against its population, its risk condition, and
+the number of independent units it rests on.
+
+A trajectory here is the pair of actions taken by the two players over the
+first five rounds, that is ten \Safe{} or \Unsafe{} bits. Three statistics
+describe how varied a set of such trajectories is. Hill $q = 0$ counts how
+many \emph{distinct} trajectories appear, so it treats a trajectory seen once
+and a trajectory seen forty times alike. Hill $q = 1$ is the effective number
+of trajectories, the exponential of Shannon entropy, which discounts
+trajectories that are rare: it equals $q = 0$ when every trajectory is equally
+common and falls below it when a few dominate. Mean pairwise Hamming distance
+is the average number of the ten bits on which two trajectories drawn from the
+set differ, divided by ten, so 0 means every trajectory in the set is
+identical and 0.5 means two trajectories differ on half their bits on average.
+
+Sample sizes differ across populations, and both counting statistics rise with
+sample size, so every cell is compared at the same size. The point estimate is
+the mean over draws of 20 trajectories taken without replacement from the
+cell, or the exact cell value where the cell already holds exactly 20. The
+interval is a two-stage cluster bootstrap: clusters are resampled with
+replacement first, and only then is the draw rarefied to 20 inside each
+resample, over 2{,}000 resamples. The cluster is the independent unit of the
+design: a participant for the human rows, one per trajectory, and a race for
+the checkpoint rows, because the two seats of a race share the same sampled
+horizon and setback draws and so are not independent of each other. The
+$n_{\rm cluster}$ column is that count.
+
+\begin{table*}[t]
+    \caption{Sample-size-matched diversity of paired first-five-round
+    trajectories, by maximum-private-risk level and population. A trajectory
+    is the two players' ten actions over rounds 1 to 5. Hill $q{=}0$ is the
+    number of distinct trajectories, Hill $q{=}1$ the effective number after
+    discounting rare ones, and Hamming the mean fraction of the ten bits on
+    which two trajectories differ. $n_{\rm src}$ is the trajectories
+    available in the cell and $n_{\rm cluster}$ the independent units it
+    rests on: participants for the human rows, races for the checkpoint rows.
+    Every cell is compared at 20 trajectories. Intervals are 95\% two-stage
+    cluster bootstrap intervals: clusters resampled with replacement, then
+    rarefied to 20 within each resample, 2{,}000 resamples. Because the point
+    estimate is the observed cell value while the interval is computed on
+    resampled clusters, which lose distinct trajectories to duplication, an
+    interval can sit below its point estimate; the interval bounds resampling
+    variability and is not a confidence statement about the observed count.}
+    \label{tab:diversity-rarefaction}
+    \centering
+    \footnotesize
+    \setlength{\tabcolsep}{5pt}
+    \begin{tabular}{@{}llrlllr@{}}
+        \toprule
+        Risk & Population & $n_{\rm src}$ & Hill $q{=}0$ (95\% CI)
+        & Hill $q{=}1$ (95\% CI) & Hamming (95\% CI) & $n_{\rm cluster}$ \\
+        \midrule
+        0.1 & Human & 98 & 19.2 (15.0--20.0) & 18.9 (13.2--20.0) & 0.467 (0.407--0.504) & 98 \\
+         & GPT-5 nano & 20 & 13.0 (5.0--12.0) & 10.2 (3.4--10.7) & 0.275 (0.163--0.339) & 10 \\
+         & GPT-5.4 nano & 20 & 19.0 (9.0--16.0) & 18.7 (7.3--15.2) & 0.478 (0.405--0.505) & 10 \\
+         & Gemini 3 Flash & 20 & 1.0 (1.0--1.0) & 1.0 (1.0--1.0) & 0.000 (0.000--0.000) & 10 \\
+         & Gemini 3.1 Flash Lite & 20 & 1.0 (1.0--1.0) & 1.0 (1.0--1.0) & 0.000 (0.000--0.000) & 10 \\
+         & Gemini 3.5 Flash Lite & 20 & 5.0 (3.0--5.0) & 3.6 (1.9--4.8) & 0.166 (0.076--0.227) & 10 \\
+         & Claude Opus 5 & 20 & 1.0 (1.0--1.0) & 1.0 (1.0--1.0) & 0.000 (0.000--0.000) & 10 \\
+         & Claude Sonnet 5 & 20 & 5.0 (3.0--5.0) & 4.5 (2.6--5.0) & 0.354 (0.246--0.413) & 10 \\
+        \midrule
+        0.6 & Human & 104 & 19.7 (15.0--20.0) & 19.7 (14.1--20.0) & 0.495 (0.455--0.513) & 104 \\
+         & GPT-5 nano & 20 & 8.0 (5.0--8.0) & 7.2 (3.4--7.7) & 0.244 (0.154--0.301) & 10 \\
+         & GPT-5.4 nano & 20 & 19.0 (9.0--16.0) & 18.7 (7.2--15.2) & 0.506 (0.402--0.520) & 10 \\
+         & Gemini 3 Flash & 20 & 11.0 (5.0--11.0) & 9.3 (4.4--10.2) & 0.312 (0.208--0.371) & 10 \\
+         & Gemini 3.1 Flash Lite & 20 & 4.0 (2.0--4.0) & 2.8 (2.0--3.7) & 0.229 (0.211--0.255) & 10 \\
+         & Gemini 3.5 Flash Lite & 20 & 12.0 (6.0--12.0) & 11.5 (5.5--10.9) & 0.364 (0.267--0.397) & 10 \\
+         & Claude Opus 5 & 20 & 1.0 (1.0--1.0) & 1.0 (1.0--1.0) & 0.000 (0.000--0.000) & 10 \\
+         & Claude Sonnet 5 & 20 & 5.0 (1.0--5.0) & 2.7 (1.0--4.0) & 0.074 (0.000--0.133) & 10 \\
+        \midrule
+        0.9 & Human & 138 & 19.5 (16.0--20.0) & 19.3 (14.8--20.0) & 0.497 (0.457--0.516) & 138 \\
+         & GPT-5 nano & 20 & 12.0 (6.0--12.0) & 10.0 (3.9--10.7) & 0.232 (0.134--0.304) & 10 \\
+         & GPT-5.4 nano & 20 & 19.0 (9.0--16.0) & 18.7 (7.3--15.2) & 0.486 (0.394--0.504) & 10 \\
+         & Gemini 3 Flash & 20 & 11.0 (6.0--11.0) & 10.7 (5.5--10.2) & 0.311 (0.262--0.314) & 10 \\
+         & Gemini 3.1 Flash Lite & 20 & 3.0 (2.0--3.0) & 2.9 (2.0--3.0) & 0.101 (0.079--0.105) & 10 \\
+         & Gemini 3.5 Flash Lite & 20 & 12.0 (6.0--12.0) & 11.5 (5.2--10.9) & 0.401 (0.319--0.417) & 10 \\
+         & Claude Opus 5 & 20 & 1.0 (1.0--1.0) & 1.0 (1.0--1.0) & 0.000 (0.000--0.000) & 10 \\
+         & Claude Sonnet 5 & 20 & 3.0 (1.0--3.0) & 1.5 (1.0--2.3) & 0.020 (0.000--0.054) & 10 \\
+        \bottomrule
+    \end{tabular}
+\end{table*}
+
+The ordering in Table~\ref{tab:diversity-rarefaction} is consistent across all
+three risk levels and all three statistics. The human rows sit near the
+ceiling of the comparison: 19.2, 19.7, and 19.5 distinct trajectories out of a
+possible 20, with mean pairwise Hamming distance between 0.467 and 0.497,
+close to the 0.5 that two unrelated trajectories would give. Only one
+checkpoint reaches that: GPT-5.4 nano returns 19.0 distinct trajectories at
+every risk level, with Hamming between 0.478 and 0.506. The rest are far
+below. Claude Opus 5 returns exactly one distinct trajectory at all three risk
+levels, with Hamming 0, meaning every one of its player-races produced the
+identical ten-action sequence. Gemini 3 Flash and Gemini 3.1 Flash Lite
+collapse the same way at risk $0.1$. Claude Sonnet 5 falls from 5.0 distinct
+trajectories at risk $0.1$ to 3.0 at risk $0.9$, with Hamming 0.020 at the
+latter. This is what the main paper's diversity claim rests on: a checkpoint
+can match a human aggregate action rate while producing a small handful of
+distinct action sequences, or only one.
+
 \subsection{Behavioural-archetype coverage by population}
 \label{app:archetype-coverage}
 
 The main paper reports that human trajectories spread more evenly across the
 archetypes than most single checkpoints do, with GPT-5.4-nano the exception.
-This table is the per-population breakdown behind that statement, so a single
-share can be checked against its population and archetype.
+Table~\ref{tab:archetype-coverage} is the per-population breakdown behind
+that statement at the four archetypes used throughout, so a single share can
+be checked against its population and its archetype;
+Table~\ref{tab:k-occupancy} is the same comparison read as a count, at every
+cluster count from two to six.
 
-\begin{table}[t]
+\begin{table}[!ht]
   \caption{Behavioural-archetype coverage: share of each population's
   neutral-lane player-races assigned to each human-fit archetype.
   Human row is the reference clustering ($n{=}341$); each LLM row
@@ -1242,6 +1967,7 @@ share can be checked against its population and archetype.
 \end{table}
 
 
+\clearpage
 \bibliographystyle{ACM-Reference-Format}
 % \bibliography{sample}
 \bibliography{references}

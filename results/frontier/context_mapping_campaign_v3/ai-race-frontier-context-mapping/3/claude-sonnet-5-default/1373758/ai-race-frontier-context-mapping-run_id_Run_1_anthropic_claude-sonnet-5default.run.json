@@ -1,0 +1,29 @@
+{
+  "taskVersion": {
+    "versionNumber": 1,
+    "name": "ai-race-frontier-context-mapping",
+    "description": "Fully crossed frontier context and opaque action-mapping robustness task for AI Race.",
+    "definition": "@kbench.task(\n    name=TASK_NAME,\n    description=\"Fully crossed frontier context and opaque action-mapping robustness task for AI Race.\",\n)\ndef ai_race_frontier_context_mapping(llm) -> dict:\n    if RUN_PHASE not in {\"pilot\", \"confirmatory\"}:\n        raise ValueError(\"AI_RACE_RUN_PHASE must be pilot or confirmatory\")\n    if REPETITIONS < 1:\n        raise ValueError(\"AI_RACE_CONTEXT_REPS must be positive\")\n    contract = llm_contract(llm)\n    route_dir = OUTPUT_DIR / model_tag(str(contract[\"model_route\"]))\n    route_dir.mkdir(parents=True, exist_ok=True)\n    turns_path = route_dir / \"turns.jsonl\"\n    turns_path.unlink(missing_ok=True)\n    races_path = route_dir / \"races.csv\"\n    races_path.unlink(missing_ok=True)\n    manifest = {\n        \"schema_version\": \"ai-race-frontier-context-mapping-manifest-v1\",\n        \"status\": \"running\",\n        \"protocol_id\": PROTOCOL_ID,\n        \"task_name\": TASK_NAME,\n        \"started_utc\": utc_now(),\n        \"completed_utc\": None,\n        \"model_route\": contract[\"model_route\"],\n        \"model_tag\": model_tag(str(contract[\"model_route\"])),\n        \"source_sha256\": (\n            sha256_text(Path(source_path).read_text(encoding=\"utf-8\"))\n            if (source_path := globals().get(\"__file__\"))\n            and Path(source_path).is_file()\n            else None\n        ),\n        \"prompt_version\": PROMPT_VERSION,\n        \"prompt_sha256\": sha256_text(PROMPT_TEMPLATE),\n        \"contexts_sha256\": sha256_text(json.dumps(CONTEXTS, sort_keys=True)),\n        \"mappings_sha256\": sha256_text(json.dumps(MAPPINGS, sort_keys=True)),\n        \"mechanism\": {\"minimum_rounds\": MIN_ROUNDS, \"stop_probability\": STOP_PROBABILITY, \"risk_levels\": list(RISK_LEVELS), \"progress\": PROGRESS, \"stage_payoff\": STAGE_PAYOFF},\n        \"decoding\": contract,\n        \"seed\": BASE_SEED,\n        \"repetitions\": REPETITIONS,\n        \"factor_order\": \"context x mapping x risk, repetition-blocked\",\n        \"package_versions\": package_versions(),\n        \"n_races\": 0,\n        \"n_turns\": 0,\n        \"error\": None,\n    }\n    write_json(route_dir / \"run_manifest.json\", manifest)\n    races: list[dict[str, object]] = []\n    turns: list[dict[str, object]] = []\n    started = time.time()\n    try:\n        for repetition in range(REPETITIONS):\n            for context_name in CONTEXTS:\n                for mapping_name in MAPPINGS:\n                    for risk in RISK_LEVELS:\n                        race = play_race(llm, context_name, mapping_name, risk, repetition, contract, turns_path)\n                        races.append(race)\n                        append_csv(races_path, [race])\n                        print(f\"[{len(races)}/{REPETITIONS * len(CONTEXTS) * len(MAPPINGS) * len(RISK_LEVELS)}] {race['game_id']} rounds={race['n_rounds']}\")\n        with turns_path.open(\"r\", encoding=\"utf-8\") as handle:\n            turns = [json.loads(line) for line in handle if line.strip()]\n        summary = summarize(races, turns, contract, time.time() - started)\n        write_json(route_dir / \"summary.json\", summary)\n        manifest.update({\"status\": \"completed\", \"completed_utc\": utc_now(), \"n_races\": len(races), \"n_turns\": len(turns)})\n        write_json(route_dir / \"run_manifest.json\", manifest)\n        kbench.assertions.assert_equal(0, summary[\"parse_failures\"], expectation=\"Every decision must satisfy the cell action-code contract.\")\n        return summary\n    except Exception as error:\n        manifest.update({\"status\": \"failed\", \"completed_utc\": utc_now(), \"n_races\": len(races), \"n_turns\": len(turns), \"error\": f\"{type(error).__name__}: {error}\"})\n        write_json(route_dir / \"run_manifest.json\", manifest)\n        raise\n"
+  },
+  "modelVersion": {
+    "slug": "anthropic/claude-sonnet-5@default"
+  },
+  "state": "BENCHMARK_TASK_RUN_STATE_ERRORED",
+  "startTime": "2026-09-08T03:53:14.600662Z",
+  "endTime": "2026-09-08T04:49:19.144535Z",
+  "conversations": [
+    {
+      "id": "ai-race-frontier-context-mapping-63fd5250",
+      "metrics": {},
+      "modelVersionSlug": "model_version_slug for conversation is DEPRECATED"
+    }
+  ],
+  "results": [
+    {
+      "type": "AGGREGATED",
+      "booleanResult": false
+    }
+  ],
+  "pyRunId": "ai-race-frontier-context-mapping-Run #1",
+  "errorMessage": "Traceback (most recent call last):\n  File \"/benchmarks/src/kaggle_benchmarks/tasks.py\", line 171, in run\n    run.result = self.func(*args, **kwargs)\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/ipykernel_12/3376182006.py\", line 457, in ai_race_frontier_context_mapping\n    race = play_race(llm, context_name, mapping_name, risk, repetition, contract, turns_path)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/ipykernel_12/3376182006.py\", line 301, in play_race\n    action, retries, errors = decide(\n                              ^^^^^^^\n  File \"/tmp/ipykernel_12/3376182006.py\", line 289, in decide\n    raise RuntimeError(f\"No valid action after bounded retries: {errors[-1] if errors else 'unknown'}\")\nRuntimeError: No valid action after bounded retries: {'type': 'transport', 'error': \"PermissionDeniedError: Error code: 403 - {'code': '', 'message': 'The max estimated cost of operation ($0.005148) exceeds your available quota (based on max_output_tokens). Set max_output_tokens in your request to lower the reservation, or try again later.', 'param': '', 'type': 'permission_error'}\"}\n"
+}

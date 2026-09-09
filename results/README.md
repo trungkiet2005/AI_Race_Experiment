@@ -13,9 +13,39 @@ program. Machine-readable receipts are [`catalog.json`](catalog.json),
 [`catalog.csv`](catalog.csv), and
 [`migration_manifest.json`](migration_manifest.json).
 
-This tree contains admitted open-weight smoke and pilot artifacts. It does not
-retain Collective Risk outputs, placeholder observations, or fabricated effect
-sizes. Confirmatory AI Race inference remains pending.
+This tree contains admitted open-weight smoke and pilot artifacts alongside the
+frontier campaigns landed on 2026-09-09. It does not retain Collective Risk
+outputs, placeholder observations, or fabricated effect sizes. Confirmatory
+two-player frontier gameplay now exists on eight audited routes
+(`frontier/baseline_campaign_v6/`, `run_phase = confirmatory`); N-player
+confirmatory inference remains pending and its attempts are kept under
+`failed_runs/`.
+
+## Current frontier campaigns (2026-09-09)
+
+| Directory | Protocol | Contents | Derived artifacts |
+|---|---|---|---|
+| [`frontier/admission_campaign_v6/`](frontier/admission_campaign_v6/) | `ai-race-frontier-admission-v6` | endpoint-admission audit of **9 routes, 5 admitted**; 20 frozen probes at 3 repetitions, 60 retained rows per route; task versions 7 and 8; one retained failed attempt under `failed_runs/` | `derived/admission_campaign_v6.csv`, `derived/admission_campaign_v6.json`, `derived/report.md` |
+| [`frontier/baseline_campaign_v6/`](frontier/baseline_campaign_v6/) | `ai-race-frontier-baseline-v3` | matched gameplay for **8 routes**, 30 races and 558 decisions and 0 parse failures each, `run_phase = confirmatory`; `google/gemini-3.5-flash-lite` failed in transport with 0 races and is retained under `failed_runs/` | `derived/audit_versus_behaviour.csv`, `derived/audit_versus_behaviour.json`, `figures/audit_versus_behaviour.pdf` and `.png` |
+| [`frontier/context_mapping_campaign_v3/`](frontier/context_mapping_campaign_v3/) | `ai-race-frontier-context-mapping-v3` | the one completed fully crossed context-by-mapping route, `google/gemini-3-flash-preview`, 120 races and 2,232 decisions, 0 parse failures | [`derived/frontier_context_mapping_campaign_v3/`](derived/frontier_context_mapping_campaign_v3/) cells table and `_validation.json` (`status = passed`) |
+
+Reviewer-question tables that landed with the same revision:
+
+| Artifact | Generator | What it answers |
+|---|---|---|
+| [`cross_model_pilot_synthesis/data/cross_model_heterogeneity_test.json`](cross_model_pilot_synthesis/data/cross_model_heterogeneity_test.json) | `cross_model_pilot_synthesis/analyze_heterogeneity_test.py --roster {five,seven,nine,all}` | nested-logit cross-model heterogeneity under every named checkpoint roster, so each historically reported version stays regenerable |
+| [`cross_model_pilot_synthesis/data/human_archetype_k_sensitivity.json`](cross_model_pilot_synthesis/data/human_archetype_k_sensitivity.json) and `.csv`, plus `human_archetype_k_projection.csv` | `scripts/analyze_human_archetype_k_sensitivity.py` | why k=4: internal validity indices over k=2..6 plus a 500-draw bootstrap adjusted-Rand stability curve, on the published 341x5 standardized matrix |
+| [`cross_model_pilot_synthesis/data/elicited_risk_by_archetype.json`](cross_model_pilot_synthesis/data/elicited_risk_by_archetype.json) | `scripts/analyze_elicited_risk_by_archetype.py` | elicited Eckel-Grossman risk across the four archetypes; the result is a null (H = 4.540, df = 3, p = 0.209, n = 341) |
+| [`open_source/egt_reproduction/egt_beta_sensitivity.csv`](open_source/egt_reproduction/egt_beta_sensitivity.csv), `.json`, `egt_beta_fit_to_routes.csv` | `scripts/analyze_egt_beta_sensitivity.py` | whether the theory-versus-LLM risk-response gap depends on selection strength, sweeping beta over ten values crossed with three mutation conventions and all three risk levels |
+| [`cross_model_pilot_synthesis/data/trajectory_diversity_rarefaction.csv`](cross_model_pilot_synthesis/data/trajectory_diversity_rarefaction.csv) | `scripts/analyze_trajectory_diversity_rarefaction.py`, drawn by `scripts/build_diversity_figure.py` | within-population trajectory diversity, rarefied to 20 trajectories per cell, with cluster-bootstrap intervals on Hill q=1 and mean pairwise Hamming distance |
+
+**`baseline_campaign_v2` and `baseline_campaign_v6` are two separate samples.**
+They share a `protocol_id` but differ in task version and run id, and the same
+route gives different numbers: `google/gemini-3-flash-preview` plays Unsafe
+0.7419 at risk 0.6 in v2 (run 1371960) against 0.7312 in v6 (run 1395291), and
+`anthropic/claude-sonnet-5@default` plays 0.3763 at risk 0.9 in v2 (run 1371961)
+against 0.3226 in v6 (run 1494092). Never pool them and never substitute one for
+the other; a table must name the run it read.
 
 ## Current expanded pilot index
 

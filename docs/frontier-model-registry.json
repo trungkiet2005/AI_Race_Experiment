@@ -6,22 +6,22 @@
     {
       "route": "openai/gpt-5.4-nano-2026-03-17",
       "family": "OpenAI",
-      "role": "primary frontier candidate"
+      "role": "primary frontier candidate; audited in the 2026-09-09 ai-race-frontier-admission-v6 campaign; not admitted (overall 0.5167)"
     },
     {
       "route": "anthropic/claude-sonnet-5@default",
       "family": "Anthropic",
-      "role": "primary frontier candidate; active route"
+      "role": "primary frontier candidate; active route; audited in the 2026-09-09 ai-race-frontier-admission-v6 campaign; admitted (overall 0.8500)"
     },
     {
       "route": "google/gemini-3-flash-preview",
       "family": "Google",
-      "role": "primary frontier candidate; active route"
+      "role": "primary frontier candidate; active route; audited in the 2026-09-09 ai-race-frontier-admission-v6 campaign; admitted (overall 0.9333)"
     },
     {
       "route": "google/gemini-3.1-flash-lite-preview",
       "family": "Google",
-      "role": "secondary frontier candidate; active route"
+      "role": "secondary frontier candidate; active route; audited in the 2026-09-09 ai-race-frontier-admission-v6 campaign; not admitted (overall 0.8000 meets the overall gate but state_reconstruction 0.7333 is below 0.75)"
     },
     {
       "route": "deepseek-ai/deepseek-r1-0528",
@@ -46,27 +46,27 @@
     {
       "route": "anthropic/claude-opus-5@default",
       "family": "Anthropic",
-      "role": "primary frontier candidate; added for the 2026-09-09 ai-race-frontier-admission-v6 campaign; admitted"
+      "role": "primary frontier candidate; added for the 2026-09-09 ai-race-frontier-admission-v6 campaign; admitted (overall 0.9167)"
     },
     {
       "route": "openai/gpt-5.5-2026-04-23",
       "family": "OpenAI",
-      "role": "primary frontier candidate; added for the 2026-09-09 ai-race-frontier-admission-v6 campaign; admitted"
+      "role": "primary frontier candidate; added for the 2026-09-09 ai-race-frontier-admission-v6 campaign; admitted (overall 0.9000)"
     },
     {
       "route": "openai/gpt-5.4-2026-03-05",
       "family": "OpenAI",
-      "role": "primary frontier candidate; added for the 2026-09-09 ai-race-frontier-admission-v6 campaign; admitted"
+      "role": "primary frontier candidate; added for the 2026-09-09 ai-race-frontier-admission-v6 campaign; admitted (overall 0.9000)"
     },
     {
       "route": "openai/gpt-5.4-mini-2026-03-17",
       "family": "OpenAI",
-      "role": "capacity-ladder candidate; added for the 2026-09-09 ai-race-frontier-admission-v6 campaign; not admitted"
+      "role": "capacity-ladder candidate; added for the 2026-09-09 ai-race-frontier-admission-v6 campaign; not admitted (overall 0.7500)"
     },
     {
       "route": "google/gemini-3.5-flash-lite",
       "family": "Google",
-      "role": "secondary frontier candidate; added for the 2026-09-09 ai-race-frontier-admission-v6 campaign; not admitted; route rejects the reasoning-budget parameter itself, so the parameter is omitted per the 2026-09-09 protocol amendment"
+      "role": "secondary frontier candidate; added for the 2026-09-09 ai-race-frontier-admission-v6 campaign; not admitted (overall 0.6500); route rejects the reasoning-budget parameter itself, so the parameter is omitted per the 2026-09-09 protocol amendment and this route ran at task version 8; its gameplay run failed in transport with zero races"
     }
   ],
   "admission_rule": "Only routes with a completed admission artifact and domain accuracy thresholds in the task manifest may enter behavioural headline tables.",
@@ -76,6 +76,9 @@
     "Model route names are data and must not be stripped from analysis artifacts.",
     "The 2026-09-07 smoke used one repetition per route. It is diagnostic only; no route is admitted from that smoke alone.",
     "Only the daosyduyminh identity was configured for this campaign. No second-account credential root was present.",
-    "The 2026-09-09 ai-race-frontier-admission-v6 campaign added five routes to this list and audited nine in total; artefacts and the derived table are in results/frontier/admission_campaign_v6/."
+    "The 2026-09-09 ai-race-frontier-admission-v6 campaign added five routes to this list and audited nine in total; artefacts and the derived table are in results/frontier/admission_campaign_v6/.",
+    "Nine routes were audited on 2026-09-09 under ai-race-frontier-admission-v6 and five were admitted: google/gemini-3-flash-preview, anthropic/claude-opus-5@default, openai/gpt-5.4-2026-03-05, openai/gpt-5.5-2026-04-23 and anthropic/claude-sonnet-5@default. Four were refused: google/gemini-3.1-flash-lite-preview, openai/gpt-5.4-mini-2026-03-17, google/gemini-3.5-flash-lite and openai/gpt-5.4-nano-2026-03-17. Every verdict recorded in this file is a copy of results/frontier/admission_campaign_v6/derived/admission_campaign_v6.csv, which is the source of truth.",
+    "Four routes in this list carry no v6 verdict: deepseek-ai/deepseek-r1-0528, qwen/qwen3-next-80b-a3b-instruct, openai/gpt-oss-120b and ibm/granite-4.0-h-small. Their earlier admission attempts are retained as failed runs under results/frontier/admission_campaign/, admission_campaign_v5/ and admission_smoke/, and they were not retried in the v6 campaign.",
+    "Eight of the nine audited routes also have a matched gameplay baseline under ai-race-frontier-baseline-v3 in results/frontier/baseline_campaign_v6/, 30 races and 558 decisions and zero parse failures each; google/gemini-3.5-flash-lite has none because its gameplay run failed in transport with zero races."
   ]
 }

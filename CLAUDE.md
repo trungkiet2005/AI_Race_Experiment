@@ -4,17 +4,26 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-**Venue:** AAMAS-2026
+**Venue:** AAMAS 2027, Hanoi, Vietnam, 3 to 7 May 2027.
 
-`paper/main.tex` is built on the AAMAS-2026 sigconf template, submission
-instructions at cyprusconferences.org/aamas2026. No submission date is recorded
-here, so check the call before planning against one.
+`paper/main.tex` and `paper/supplementary.tex` are both built on the AAMAS 2027
+sigconf template: `\documentclass[sigconf,anonymous]{aamas}` with
+`\acmConference[AAMAS '27]{... (AAMAS 2027)}{May 3 -- 7, 2027}{Hanoi, Vietnam}`
+and `\copyrightyear{2027}`. AAMAS 2027 allows at most **8 pages of main
+content**, with unlimited *additional* pages for references only. Supplementary
+material is a single ZIP of at most 25 MB, and reviewers are not obliged to read
+it, so nothing a claim depends on may live only there. No submission date is
+recorded in this repository, so check the call before planning against one.
 
 A research codebase that runs the two-player repeated "AI race" of Fernández Domingos and Han (2026) with LLM agents instead of human participants. Two model-controlled companies simultaneously choose SAFE or UNSAFE each round; UNSAFE advances faster and pays more now but accumulates a private setback risk that only bites if you win or tie.
 
 [README.md](README.md) states the canonical mechanism; [PROJECT.md](PROJECT.md) is the research protocol (estimands, validation gates, planned sequence). Both are binding on code changes — the engine is meant to be *paper-faithful*, so changing payoffs, horizons, or risk accounting is a protocol change, not a refactor.
 
-Diagnostic pilots have been run. The current frontier campaign admits Gemini 3 Flash and Claude Sonnet 5 for the bounded two-player confirmatory baseline. Gemini 3 Flash also has a completed 120-race context/mapping run that passes the independent validator; Claude's matched context run is quota-blocked. The N=3 frontier rerun is not yet admitted: the v3 attempt exhausted quota and v4/v5 creation validations respectively hit a length limit and quota. Persona and language reruns are not part of the admitted frontier campaign. The seven-checkpoint human-diversity comparison is historical descriptive evidence, not a cross-model task-validity audit, because five of those checkpoints do not have the current admission artifact. Every admitted artifact must trace to a completed manifest, immutable raw logs, and a fail-closed analyzer. Never pool pilot and confirmatory evidence or generalize checkpoint-scoped audits into claims about subjective understanding, stable preferences, or all LLMs.
+Diagnostic pilots have been run. **Nine endpoint routes are now audited and five are admitted** (`results/frontier/admission_campaign_v6/`, protocol `ai-race-frontier-admission-v6`, 20 frozen probes at three repetitions, 60 retained rows per route). Admitted: `google/gemini-3-flash-preview` 93.3%, `anthropic/claude-opus-5@default` 91.7%, `openai/gpt-5.4-2026-03-05` 90.0%, `openai/gpt-5.5-2026-04-23` 90.0%, `anthropic/claude-sonnet-5@default` 85.0%. Refused: `google/gemini-3.1-flash-lite-preview` 80.0%, `openai/gpt-5.4-mini-2026-03-17` 75.0%, `google/gemini-3.5-flash-lite` 65.0%, `openai/gpt-5.4-nano-2026-03-17` 51.7%. Admission needs all three gates (overall ≥ 0.80, `state_reconstruction` ≥ 0.75, `terminal_scoring` ≥ 0.75), which is why Gemini 3.1 Flash-Lite is refused at exactly 0.80 overall: its `state_reconstruction` is 0.7333. `expected_payoff` is recorded but diagnostic-only and never gates; it is the weakest domain on every one of the nine routes, so no analysis may lean on a route's expected-payoff arithmetic.
+
+A matched gameplay baseline now exists for eight of those routes (`results/frontier/baseline_campaign_v6/`, protocol `ai-race-frontier-baseline-v3`, `run_phase = confirmatory`): 30 races, 558 decisions, zero parse failures and zero parse retries each, 10 races per risk cell. `google/gemini-3.5-flash-lite` failed at the transport layer with 0 races and is retained under `failed_runs/` as a failure record, never as behaviour. Two contract facts must travel with any citation of this campaign, because both are written in the manifests: the effective temperature is **not confirmed** (0.7 requested, not forwarded by the SDK), and the sampling seed is confirmed only as *requested* — stripped by the SDK for `google/` routes, forwarded but unconfirmed for the OpenAI and Anthropic routes. `results/frontier/baseline_campaign_v6/derived/audit_versus_behaviour.csv` joins admission accuracy to risk response over the eight routes as a descriptive statement, not a population effect.
+
+Gemini 3 Flash has a completed fully crossed context/mapping run, 120 races and 2,232 decisions, that passes the independent validator (`results/derived/frontier_context_mapping_campaign_v3/google-gemini-3-flash-preview_validation.json`, `status = passed`). The matched Claude run is **not present in this repository**: `paper/main.tex` records it as stopping at 106 of 120 races on a provider quota refusal and retained as a failure record, but `results/frontier/context_mapping_campaign_v3/` holds only the Gemini route, so treat the partial Claude run as an unfiled claim until its artifact lands. The design is therefore crossed for one route only and supports no general mapping or narrative-skin claim. The N=3 frontier rerun is still not admitted; the retained records are `results/failed_runs/nplayer_baseline_n3_20260908.json` (non-retryable model request failures, no admissible raw output) and `results/failed_runs/nplayer_baseline_n3_v5_20260908.json` (HTTP 403 Model Proxy quota refusal at task-creation validation, 0 races). A quota or transport refusal is never model evidence. Persona and language reruns are not part of the admitted frontier campaign. Six of the seven checkpoints in the human-diversity comparison now carry an admission verdict; `gpt-5-nano` is no longer offered on the audited identity and can never receive one, which bounds that comparison by route availability rather than by design. Every admitted artifact must trace to a completed manifest, immutable raw logs, and a fail-closed analyzer. Never pool pilot and confirmatory evidence or generalize checkpoint-scoped audits into claims about subjective understanding, stable preferences, or all LLMs.
 
 ## Commands
 
@@ -82,6 +91,24 @@ Analysis over completed run directories (requires the `analysis` extra):
 python scripts/analyze_ai_race.py --input <run-root> --output <derived-dir> [--fit-logit]
 ```
 
+Campaign and reviewer-question analysers added with the 2026-09-09 revision. Each
+one owns exactly one derived artifact and is fail-closed or provenance-stamped;
+run the generator, never hand-edit its output:
+
+```bash
+python scripts/analyze_frontier_admission_campaign.py      # 9-route admission table, refuses a row whose artefacts fail a structural check
+python scripts/analyze_audit_versus_behaviour.py           # joins admission accuracy to gameplay risk response over the 8 baseline routes
+python scripts/analyze_egt_beta_sensitivity.py             # sweeps EGT selection strength beta x mutation rule x risk against the routes
+python scripts/analyze_human_archetype_k_sensitivity.py    # k-sweep validity indices plus a bootstrap ARI stability curve for the human archetypes
+python scripts/analyze_elicited_risk_by_archetype.py       # Kruskal-Wallis on elicited Eckel-Grossman risk across the four published archetypes
+python scripts/build_diversity_figure.py                   # draws the main-paper trajectory-diversity panel from the rarefaction table
+python results/cross_model_pilot_synthesis/analyze_heterogeneity_test.py --roster five
+```
+
+The last one regenerates the nested-logit heterogeneity statistic under any named
+checkpoint roster, so every historically reported version of that test stays
+reproducible instead of being re-derived by hand.
+
 ## Execution policy
 
 Experiments do not run on this workstation — there is no GPU and no configured API path. Static review and `pytest` are what happens locally; behavioral and GPU validation happen on Kaggle:
@@ -108,7 +135,7 @@ Data flows config → games → lockstep batch → journal → analyser.
 
 **Recording** ([ai_race/dataio/recorder.py](ai_race/dataio/recorder.py)). `RunJournal` appends after every completed round, so an interrupted run leaves incomplete races visible in `turns.jsonl` with no matching terminal CSV row. Output per model: `turns.jsonl` (one row per player decision), `races.csv`, `players.csv`, `run_manifest.json`.
 
-**Analysis.** [ai_race/analysis/metrics.py](ai_race/analysis/metrics.py) is a dependency-free descriptive layer used in tests/notebooks. [scripts/analyze_ai_race.py](scripts/analyze_ai_race.py) (~3.2k lines) is the real analyser: it validates joins, mechanism arithmetic, CRN blocks, and protocol signatures before emitting any table. [analysis/strategy/classify.py](analysis/strategy/classify.py) does nearest-strategy Hamming classification and keeps ties rather than forcing a unique label.
+**Analysis.** [ai_race/analysis/metrics.py](ai_race/analysis/metrics.py) is a dependency-free descriptive layer used in tests/notebooks. [scripts/analyze_ai_race.py](scripts/analyze_ai_race.py) (~3.2k lines) is the real analyser: it validates joins, mechanism arithmetic, CRN blocks, and protocol signatures before emitting any table. [analysis/strategy/classify.py](analysis/strategy/classify.py) does nearest-strategy Hamming classification and keeps ties rather than forcing a unique label. Alongside it sit six single-purpose analysers, one derived artifact each: [analyze_frontier_admission_campaign.py](scripts/analyze_frontier_admission_campaign.py) derives the nine-route admission table and refuses to tabulate a route whose row count, per-domain sums, recomputed accuracy, recomputed admit flag, `protocol_id`, or probe-bank and rules-context hashes do not check out; [analyze_audit_versus_behaviour.py](scripts/analyze_audit_versus_behaviour.py) joins measured probe accuracy to measured risk response route by route, clustering the bootstrap on the race; [analyze_egt_beta_sensitivity.py](scripts/analyze_egt_beta_sensitivity.py) layers a selection-strength and mutation-rule sweep on the existing EGT reconstruction so the theory-versus-LLM gap can be checked for dependence on beta=2; [analyze_human_archetype_k_sensitivity.py](scripts/analyze_human_archetype_k_sensitivity.py) answers "why k=4" with internal validity indices plus a bootstrap adjusted-Rand stability curve on the paper's own 341x5 standardized matrix, imported from the clustering generator rather than reimplemented; [analyze_elicited_risk_by_archetype.py](scripts/analyze_elicited_risk_by_archetype.py) computes the elicited-risk-by-archetype test the supplement had asserted without code, reusing the published labels and refusing to run if the label sizes are not the published multiset; and [build_diversity_figure.py](scripts/build_diversity_figure.py) draws the diversity panel from the rarefaction table only, so presentation can never move a published value.
 
 **vendor/FAIRGAME/** is vendored upstream (Apache-2.0, LIST/SOM Research Lab) and reused only for its LLM connectors. Treat it as a dependency: don't refactor it to match project style.
 
@@ -136,6 +163,25 @@ stay strictly descriptive — say so explicitly rather than fitting a model that
 or mean nothing. See `results/reports/nplayer/report.md`'s "Đối chiếu độ sâu" table for a worked example
 of holding an N-player pilot to this same bar, and what stayed descriptive-only and why.
 
+### Two previously reported statistics, resolved 2026-09-09
+
+Both were unreproducible when checked, and they resolved in opposite directions.
+Do not re-derive either one by hand:
+
+- **The nested-logit heterogeneity statistic is real.** chi-squared(10) = 354.67,
+  p = 4.1e-70, is the B-versus-C likelihood-ratio test on the five-checkpoint
+  neutral-lane roster (4,464 decisions, 240 races). It is regenerable with
+  `python results/cross_model_pilot_synthesis/analyze_heterogeneity_test.py --roster five`
+  and lands in `results/cross_model_pilot_synthesis/data/cross_model_heterogeneity_test.json`.
+  The default roster there is now `nine`, whose same test is 2,317.38 on 18 df, so
+  always name the roster with the number.
+- **The Kruskal-Wallis statistic H = 21.95 with n = 286 had no source and is
+  withdrawn.** The correct recomputation is a null:
+  H = 4.540, df = 3, p = 0.209, n = 341, epsilon-squared = 0.0046, in
+  `results/cross_model_pilot_synthesis/data/elicited_risk_by_archetype.json`.
+  Elicited Eckel-Grossman risk does not differ detectably across the four
+  archetypes. Report the null; do not restore the old number.
+
 ## Conventions
 
 - Python ≥3.10, `from __future__ import annotations`, dataclasses for records, module docstrings that state *why* a design is the way it is. Comments explain non-obvious protocol reasoning, not mechanics.
@@ -152,6 +198,42 @@ before a hosted route enters behavioural claims. The candidate route registry is
 [`docs/frontier-model-registry.json`](docs/frontier-model-registry.json), and the
 review-to-evidence matrix is
 [`docs/reviewer-revision-frontier-protocol.md`](docs/reviewer-revision-frontier-protocol.md).
+
+Current campaign artifacts, all on the single configured Kaggle identity
+`daosyduyminh`:
+
+| Campaign | Protocol | What it holds |
+|---|---|---|
+| `results/frontier/admission_campaign_v6/` | `ai-race-frontier-admission-v6` | 9 routes audited, 5 admitted; 60 retained rows per route; `derived/admission_campaign_v6.csv`, `.json`, `report.md`; one retained failed attempt |
+| `results/frontier/baseline_campaign_v6/` | `ai-race-frontier-baseline-v3` | 8 routes of gameplay, 30 races and 558 decisions each, 0 parse failures; `derived/audit_versus_behaviour.csv`, `.json`; one retained failed route |
+| `results/frontier/context_mapping_campaign_v3/` | `ai-race-frontier-context-mapping-v3` | the one completed crossed context/mapping route, 120 races and 2,232 decisions, validator passed |
+
+Three things about these directories are load-bearing:
+
+- **The protocol was amended in the open on 2026-09-09.** Both frontier tasks used
+  to pass `reasoning="none"` to every route. Some routes reject the
+  reasoning-budget *argument itself* — naming `reasoning` at all returns HTTP 400
+  before a single probe is sampled — which is a transport contract mismatch, not
+  model evidence. The tasks now **resolve the budget per route and omit the
+  parameter entirely for routes that refuse it**, and the manifest records the
+  omission. A route whose resolved contract is still `reasoning="none"` sends a
+  byte-identical request and stays poolable with the earlier task versions; a
+  route whose parameter was dropped has a different contract, and any table that
+  puts it beside the others must say so. In the v6 admission campaign that is
+  exactly one route, `google/gemini-3.5-flash-lite` at task version 8. The
+  amendment is recorded under "Protocol amendments" in
+  `docs/reviewer-revision-frontier-protocol.md`; amend there, never silently.
+- **`baseline_campaign_v2` and `baseline_campaign_v6` are two separate samples and
+  must never be pooled or swapped.** They carry the same `protocol_id` but
+  different task versions and different run ids, and the same route gives
+  different numbers: `google/gemini-3-flash-preview` plays Unsafe 0.7419 at risk
+  0.6 in v2 (run 1371960) and 0.7312 in v6 (run 1395291);
+  `anthropic/claude-sonnet-5@default` plays 0.3763 at risk 0.9 in v2 (run 1371961)
+  and 0.3226 in v6 (run 1494092). Any table must name the run it read.
+- **Failure records stay in the accounting chain.** A failed or superseded attempt
+  is kept under the campaign's `failed_runs/` and is never deleted, never
+  substituted with a different route, and never tabulated. The derived analysers
+  walk only the live task tree and never descend into `failed_runs/`.
 
 ## Current execution note
 
