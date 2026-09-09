@@ -1,6 +1,8 @@
 # AI Race Kaggle Benchmark
 
-The reviewer-revision admission task is `ai_race_frontier_admission.py`. It
+The reviewer-revision admission task is `ai_race_frontier_admission.py`. The
+current route-contract amendment is protocol v6; v5 artifacts remain immutable
+and are not pooled with v6. It
 audits every hosted endpoint on the same frozen rule, state, terminal, and
 expected-payoff probes before that endpoint can contribute behavioural claims.
 

@@ -26,7 +26,7 @@ from pydantic import BaseModel, Field
 
 # Frozen admission contract. A change requires a new task name and protocol id.
 TASK_NAME = "ai-race-frontier-admission"
-PROTOCOL_ID = "ai-race-frontier-admission-v5"
+PROTOCOL_ID = "ai-race-frontier-admission-v6"
 PROMPT_VERSION = "ai-race-fairgame-v3"
 BASE_SEED = 260726
 REPETITIONS = int(os.environ.get("AI_RACE_ADMISSION_REPS", "3"))
@@ -152,7 +152,18 @@ def llm_contract(llm) -> dict[str, object]:
         token_parameter = "max_tokens"
     else:
         raise RuntimeError(f"Unknown Kaggle Benchmark backend: {sorted(names)}")
-    if "gemma" in route_lower:
+    if "gemini-3.1-pro" in route_lower:
+        # Gemini 3.1 Pro rejects a zero reasoning budget; the route is only
+        # callable in thinking mode. Record the route-specific contract rather
+        # than misclassifying the endpoint as unavailable.
+        reasoning_requested = "high"
+    elif "qwen3-next-80b-a3b-thinking" in route_lower:
+        reasoning_requested = "high"
+    elif "qwen3-next" in route_lower or "qwen3-235b" in route_lower or "glm-5" in route_lower:
+        # These routes reject the literal `none` but accept an explicit low
+        # reasoning budget. The value is retained in the manifest.
+        reasoning_requested = "low"
+    elif "gemma" in route_lower:
         # This route rejects the reasoning budget parameter entirely.
         reasoning_requested = None
     elif "deepseek" in route_lower:
