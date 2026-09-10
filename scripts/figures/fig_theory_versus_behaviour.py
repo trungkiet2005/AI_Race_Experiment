@@ -410,8 +410,13 @@ def panel_a(ax, res, d) -> None:
     ax.plot([0.945, 0.945], [ends.min(), ends.max()], color=S.MUTED, lw=0.8,
             clip_on=False, zorder=4)
     S.direct_label(ax, 0.965, ends.mean(), "the other\neight routes", color=S.MUTED)
+    # Naming the regime on the page, not only in the docstring. Every curve here
+    # is the small-mutation limit, which the theory metadata states cannot
+    # represent the finite mutation rate of the parameter points it is drawn at,
+    # and a reader who sees only "the model" would not know which model.
     S.panel(ax, "a",
-            "the model steps off a cliff; eight of the nine routes walk a ramp")
+            "the small-mutation limit steps off a cliff; eight of the nine "
+            "routes walk a ramp")
 
 
 def panel_b(ax, res, d) -> None:
@@ -462,7 +467,8 @@ def panel_b(ax, res, d) -> None:
     ax.set_axisbelow(True)
     ax.grid(True, axis="y", zorder=0)
     S.panel(ax, "b",
-            f"{d['span']:.2f} of configured risk comes back as {d['width']:.2f}")
+            f"inverted, {d['span']:.2f} of configured risk comes back as "
+            f"{d['width']:.2f}")
 
 
 def dodge(values, *, separation, step=0.22, levels=5):
