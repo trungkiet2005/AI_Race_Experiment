@@ -2086,10 +2086,10 @@ exactly, at $1.0$, $0.6$, $2.4$, $2.0$, which
 task is pushed, together with the invariance of every other mechanism field and
 the sharing of the horizon draw described below.
 
-\paragraph{What was collected, and how.} Eight cells: every group size at the
-low and medium private-risk conditions $p_r^{\max}=0.1$ and $0.6$, ten
-repetitions each, on the admitted route
-\texttt{google/\discretionary{}{}{}gemini-\discretionary{}{}{}3-\discretionary{}{}{}flash-\discretionary{}{}{}preview}. That is 80 races and 2{,}464
+\paragraph{What was collected, and how.} The full grid: every group size at
+every private-risk condition, $p_r^{\max}\in\{0.1,0.6,0.9\}$, ten repetitions
+each, on the admitted route
+\texttt{google/\discretionary{}{}{}gemini-\discretionary{}{}{}3-\discretionary{}{}{}flash-\discretionary{}{}{}preview}. That is 120 races and 3{,}696
 decisions
 with zero parse failures. No Model Proxy identity available to us sustains the
 whole four-by-three grid, which needs roughly 7{,}800 requests, so the sweep was
@@ -2099,10 +2099,11 @@ carries its own race-clustered interval rather than being stitched together
 across accounts. Cells were assigned to identities in a plan committed before
 the first was started, and the assignment rotates across risk levels so that no
 identity is confounded with a group size; every cell records its collecting
-identity in the artifact. The high-risk condition $p_r^{\max}=0.9$ is reported
-here only if all four of its cells were collected, since
+identity in the artifact. Every cell's bootstrap generator is derived from a
+digest of that cell alone, so collecting one condition cannot move an interval
+already reported for another, and
 \texttt{scripts/\discretionary{}{}{}analyze\_\discretionary{}{}{}nplayer\_\discretionary{}{}{}matched.py}
-refuses to report a risk level that is missing an arm.
+refuses to report any risk level that is missing an arm.
 
 Each cell was collected on a different Kaggle identity, again by a plan fixed in
 advance rather than by retrying until something succeeded: $N=2$ on one account,
@@ -2129,7 +2130,10 @@ instead of assuming it, and it holds for all ten blocks in every contrast.
     a repetition block, with its interval taken over the ten blocks. Horizon
     pairing was verified for 10 of 10 blocks in every row. At $p_r^{\max}=0.1$
     every cell is at the ceiling, so its intervals have zero width: that is an
-    absence of variation in the sample, not precision.}
+    absence of variation in the sample, not precision. The five-company cell at
+    $p_r^{\max}=0.6$ is at the ceiling too, so its contrast there is
+    truncated, which leaves the high-risk condition as the only one that
+    measures the five-company effect against no boundary.}
     \label{tab:nplayer-matched}
     \centering
     \small
@@ -2148,30 +2152,46 @@ instead of assuming it, and it holds for all ten blocks in every contrast.
         3 & 264 & 80.3\% (76.0--83.8) & $+11.1$ pp & ($+6.3$ to $+15.1$) \\
         4 & 352 & 98.3\% (95.6--100.0) & $+28.2$ pp & ($+22.6$ to $+33.2$) \\
         5 & 440 & 100.0\% (100.0--100.0) & $+31.0$ pp & ($+26.4$ to $+35.3$) \\
+        \midrule
+        \multicolumn{5}{@{}l}{\emph{High private risk,} $p_r^{\max}=0.9$} \\
+        2 & 176 & 58.0\% (50.7--63.7) & \multicolumn{2}{l}{baseline} \\
+        3 & 264 & 68.9\% (62.3--74.7) & $+11.0$ pp & ($+5.9$ to $+16.4$) \\
+        4 & 352 & 83.8\% (80.6--86.2) & $+28.1$ pp & ($+24.5$ to $+32.0$) \\
+        5 & 440 & 96.1\% (92.3--98.6) & $+40.0$ pp & ($+33.2$ to $+47.4$) \\
         \bottomrule
     \end{tabular}
 \end{table}
 
-\paragraph{What it shows.} At the medium risk condition, \Unsafe{} play rises
-monotonically with the number of competing companies and then saturates: at five
-companies this route chose \Unsafe{} on every one of its 440 decisions, and all
-three contrasts against the two-player arm exclude zero. Because the two-player
+\paragraph{What it shows.} \Unsafe{} play rises monotonically with the number
+of competing companies at every private-risk condition that leaves room for it
+to rise, and all six of those contrasts exclude zero. Because the two-player
 arm is the headline game itself, this also says something about the rest of the
 paper: the two-player results are the low end of that curve, not a special case
 beside it.
 
-The low risk condition is where the comparison becomes informative about its own
-limits. There, every cell is at $100\%$, so the group-size contrast is exactly
-zero at every size. The right reading is not that group size stops mattering
-when private risk is low. It is that this route is already at the ceiling before
-any competitor is added, so the design has no room left in which an effect could
-appear. The same route reaches $98.9\%$ and $100.0\%$ \Unsafe{} at
-$p_r^{\max}=0.1$ in the two independent neutral-baseline runs of
+The size of the effect is what makes the grid worth having. Going from two
+companies to three adds $11.1$ points at $p_r^{\max}=0.6$ and $11.0$ at $0.9$;
+going to four adds $28.2$ and $28.1$. The two risk conditions were collected on
+different days and different identities, and they agree to a tenth of a point.
+The five-company contrast is the exception, $+31.0$ against $+40.0$, and the
+reason is visible in the table rather than interesting: at $p_r^{\max}=0.6$ the
+five-company cell is already at $100\%$, so its contrast is truncated by the
+boundary and understates the effect. The high-risk condition is the only one
+that measures the five-company step against no ceiling.
+
+The low risk condition is where the comparison becomes informative about its
+own limits. There every cell is at $100\%$, so the group-size contrast is
+exactly zero at every size. The right reading is not that group size stops
+mattering when private risk is low. It is that this route is already at the
+ceiling before any competitor is added, so the design has no room left in which
+an effect could appear. The same route reaches $98.9\%$ and $100.0\%$ \Unsafe{}
+at $p_r^{\max}=0.1$ in the two independent neutral-baseline runs of
 \S\ref{app:baseline-replication}, collected under a different protocol on a
 different engine, so the ceiling is a property of the route at low risk rather
-than an artifact of this sweep. A group-size effect is therefore visible only in
-the interior of the risk range, which is a statement about where this
-measurement has power and not about where the mechanism operates.
+than an artifact of this sweep. Read together with the ceiling at
+$p_r^{\max}=0.6$ for five companies, the pattern is that this measurement has
+power only where play is off the boundary, which is a statement about the
+instrument and not about where the mechanism operates.
 
 \paragraph{What it does not show.} Group size cannot be separated from
 everything that comes with it, and no analysis repairs that. The group-count

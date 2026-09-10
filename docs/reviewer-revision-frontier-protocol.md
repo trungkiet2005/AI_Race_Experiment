@@ -188,10 +188,17 @@ failed twice with HTTP 429 route congestion, retained as
 `results/failed_runs/nplayer_matched_n3_risk0p1_hunhtrungkit_20260910.json`, and
 was later collected on its assigned identity once the route was no longer
 congested. That is a retry of the same cell on the same declared identity, not a
-rotation: nothing about the assignment moved because a run failed. Risk 0.9 is
-in collection at the time of writing and is reported only if all four of its
-cells arrive, since `scripts/analyze_nplayer_matched.py` refuses a risk level
-missing any group size.
+rotation: nothing about the assignment moved because a run failed. Risk 0.9 was then collected the same way and
+completed the grid: 12 cells, 120 races, 3,696 decisions, zero parse failures,
+every cell whole on a single declared identity.
+
+The grid answers a question a single risk level could not. The three- and
+four-company steps are +11.1 and +28.2 points at risk 0.6 and +11.0 and +28.1
+at risk 0.9, agreeing to about a tenth of a point across conditions collected on
+different days and different identities. The five-company step differs, +31.0
+against +40.0, because the risk-0.6 five-company cell is at 100 per cent and its
+contrast is truncated by the ceiling; the risk-0.9 figure is the one to quote for
+that step.
 
 Two facts about risk 0.1 belong in the record rather than only in the paper.
 Every cell sits at 100 per cent unsafe, so every contrast is exactly zero and
