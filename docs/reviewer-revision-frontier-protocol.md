@@ -161,6 +161,54 @@ Until it runs, the manuscript keeps the limitation as written. A specified and
 unexecuted design is not evidence, and must never be reported as an attempted or
 inconclusive result.
 
+## 2026-09-10 - the matched sweep, resumed by partitioning it
+
+The section above records the sweep as blocked, and that record stands as
+written: it was true when written, and the two failure records it names remain
+in the tree. What follows supersedes its conclusion, not its account.
+
+The blockage was resolved without rotating on failure. Rather than retrying the
+whole sweep until an identity happened to survive it, the workload was
+partitioned into the analysis unit itself, one (group size, risk) cell of ten
+repetitions, roughly 370 to 930 requests, which fits inside a single identity's
+quota. Each cell is therefore complete in itself and carries its own
+race-clustered interval; no cell is stitched together from more than one
+account. The assignment of cells to identities was fixed in a plan committed
+before the first cell was started
+(`docs/matched-nplayer-collection-plan-2026-09-10.md`, extended by
+`docs/matched-nplayer-collection-plan-2026-09-10-extension.md`), and the
+extension rotates the assignment so that no identity is confounded with a group
+size. Every cell records its collecting identity in a
+`collection_receipt.json`, because the benchmark server exposes no identity
+variable to task code.
+
+What this produced: `maxPrivateRisk = 0.6` complete at all four group sizes,
+reported in the supplement. Risk 0.1 has only its two-player cell, the
+three-player cell having failed twice with HTTP 429 route congestion
+(`results/failed_runs/nplayer_matched_n3_risk0p1_hunhtrungkit_20260910.json`),
+and risk 0.9 was not reached. `scripts/analyze_nplayer_matched.py` refuses to
+report a risk level missing any group size, so the incomplete levels are held
+and not published. The two-player cell at risk 0.1 is retained in the tree
+anyway, because discarding a cell that was collected exactly as planned merely
+because its neighbours were not collected would be a silent edit of the record.
+
+## 2026-09-10 - archive reconciliation
+
+Every Kaggle Benchmark task version on every authorised identity was downloaded
+and reconciled against the repository by content hash. All matched-sweep cells
+were already stored. Two completed runs were not:
+
+- A second thirty-race baseline run of `google/gemini-3-flash-preview` at task
+  version 4, which rode along with the reasoning-budget amendment push. It is a
+  genuine independent repeat of a reported cell, since sampling on these routes
+  is not reproducible, and is now reported as a run-to-run reproducibility check
+  in the supplement. It is stored at `results/frontier/baseline_replication/`,
+  **outside** the campaign tree, because both campaign analysers key results by
+  model route and would silently displace the reported run instead of raising.
+- A nine-race pilot from 2026-08-01 whose manifest carries no `protocol_id` at
+  all. It is retained under `results/frontier/pilots/` as provenance and is read
+  by no analyser.
+
 ## Stopping rule
 
 The revision does not rewrite the paper around a failed or partial campaign.

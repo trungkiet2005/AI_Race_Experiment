@@ -329,6 +329,32 @@ check("horizon pairing verified for every matched contrast",
       all(mc[n]["pairing_verified"] and mc[n]["n_blocks"] == 10 for n in ("3", "4", "5")),
       "10 of 10 blocks in each")
 
+# --- run-to-run replication of one baseline cell -----------------------------
+rp = json.load(open("results/derived/baseline_replication.json", encoding="utf-8"))
+check("the repeat is the same route under the same protocol",
+      rp["route"] == "google/gemini-3-flash-preview"
+      and rp["protocol_id"] == "ai-race-frontier-baseline-v3",
+      f"{rp['route']} / {rp['protocol_id']}")
+check("repeat rates are 100.0 / 74.2 / 59.7 against 98.9 / 73.1 / 60.2",
+      [round(rp["per_risk"][k]["reference_pct"], 1) for k in ("0.1", "0.6", "0.9")] == [98.9, 73.1, 60.2]
+      and [round(rp["per_risk"][k]["repeat_pct"], 1) for k in ("0.1", "0.6", "0.9")] == [100.0, 74.2, 59.7],
+      ", ".join(f"{rp['per_risk'][k]['reference_pct']:.1f}->{rp['per_risk'][k]['repeat_pct']:.1f}"
+                for k in ("0.1", "0.6", "0.9")))
+check("largest per-risk run-to-run difference is 1.1 pp over 186 decisions",
+      round(rp["largest_absolute_difference_pp"], 1) == 1.1
+      and all(v["decisions"] == 186 for v in rp["per_risk"].values()),
+      f"{rp['largest_absolute_difference_pp']:.1f} pp")
+check("risk response moves 38.7 -> 40.3 pp between the two runs",
+      round(rp["risk_response_reference_pp"], 1) == 38.7
+      and round(rp["risk_response_repeat_pp"], 1) == 40.3,
+      f"{rp['risk_response_reference_pp']:.1f} -> {rp['risk_response_repeat_pp']:.1f}")
+check("run-to-run movement is small beside the between-route spread",
+      rp["largest_absolute_difference_pp"] < 0.05 * (max(resp.values()) - min(resp.values())),
+      f"{rp['largest_absolute_difference_pp']:.1f} pp against a "
+      f"{max(resp.values()) - min(resp.values()):.1f} pp spread")
+check("the repeat is stored outside the campaign tree the analysers read",
+      "baseline_campaign_v6" not in rp["repeat_run"], rp["repeat_run"])
+
 # --- report ------------------------------------------------------------------
 width = max(len(n) for n, _, _ in results)
 fails = 0

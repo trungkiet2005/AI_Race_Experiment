@@ -681,6 +681,45 @@ population process.
 \end{figure*}
 
 
+\subsection{How much of a route's number is the run?}
+\label{app:baseline-replication}
+
+Every route-level rate in this paper comes from one thirty-race run, so a
+reader is entitled to ask how much of a rate is the route and how much is the
+particular run. One route answers that question directly. Sampling on these
+endpoints is not reproducible: the SDK strips the seed request before it
+reaches the provider, which every run manifest records as
+\texttt{not\_applied\_sdk\_stripped\_for\_route}. Two runs of the same cell are
+therefore genuinely independent draws from the route, not a rerun of one draw.
+
+\texttt{google/gemini-3-flash-preview} was collected twice under the frozen
+protocol \texttt{ai-race-frontier-baseline-v3}: at task version~3 on
+2026-09-08, which is the run reported everywhere else in this paper, and again
+at task version~4 on 2026-09-09 on a different billing identity. The repeat was
+not planned as evidence. It rode along with the push that carried the
+reasoning-budget amendment of \S\ref{app:admission-v6} and was recovered from
+the Kaggle archive afterwards. Protocol, prompt hash, mechanism, seed structure
+and the full set of thirty (game seed, risk) blocks are identical across the
+two runs, and \texttt{scripts/analyze\_baseline\_replication.py} refuses the
+comparison unless they are.
+
+Agreement is close. \Unsafe{} rates move from $98.9\%$ to $100.0\%$ at
+$p_r^{\max}=0.1$, from $73.1\%$ to $74.2\%$ at $0.6$, and from $60.2\%$ to
+$59.7\%$ at $0.9$: the largest per-risk difference over $186$ decisions is
+$1.1$ percentage points, and the risk response, the quantity the admission
+analysis in \S\ref{app:admission-v6} actually uses, moves from $38.7$ to $40.3$
+percentage points. That is small beside the between-route spread of $7.0$ to
+$100.0$ points that the same analysis reports, which is the comparison this
+check exists to protect.
+
+It is one route and one repeat, so it bounds run-to-run variation for this
+route at this sample size and licenses nothing for the routes that were
+collected once. The repeat is stored at
+\texttt{results/\discretionary{}{}{}frontier/\discretionary{}{}{}baseline\_replication/}, deliberately outside the
+campaign tree: both campaign analysers key their results by model route, so a
+second run of an already-represented route placed inside that tree would not
+raise an error, it would quietly displace the reported one.
+
 \subsection{Selection-strength sweep of the evolutionary benchmark}
 \label{app:egt-beta}
 
