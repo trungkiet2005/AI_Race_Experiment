@@ -234,6 +234,42 @@ were already stored. Two completed runs were not:
   all. It is retained under `results/frontier/pilots/` as provenance and is read
   by no analyser.
 
+## 2026-09-10 - the scripted-opponent campaign
+
+The largest gap in this study was never a missing route or a missing risk level.
+It was that every gameplay result was self-play, so a route responding to its
+rival could not be distinguished from a route running through a phase of its
+own, and the evolutionary lane's four reduced strategies had never been played
+against by anything.
+
+The campaign puts `google/gemini-3-flash-preview` against those four strategies,
+executed by the task file rather than called, which also means the rival costs no
+requests: one cell is 93 route decisions and the whole grid is 1,116. Twelve
+cells, each collected whole on one declared identity under
+`docs/scripted-opponent-collection-plan-2026-09-10.md`, with the assignment
+rotated so no identity is confounded with a strategy.
+
+Three properties were asserted offline before any push, by
+`scripts/verify_scripted_opponent_design.py`, and all fifteen of its checks pass.
+The prompt is byte-identical to the neutral baseline's and never says the rival
+is scripted, so races here are comparable with races there. The route's seat is
+counterbalanced five and five, because this study has measured a seat effect on
+prompts differing only in which of two names is whose. And a conditional strategy
+answers the route rather than itself, which is the check that separates a rival
+from a mirror; a strategy that answered its own history would be a constant and
+the whole conditional arm would measure nothing.
+
+The rival is code, so it cannot be audited by reading a response. It is audited
+by replay: `scripts/ingest_scripted_cell.py` recomputes every rival move from the
+route's own moves and refuses the cell on a single deviation. All twelve cells
+replayed clean. That is the one failure mode that would have left the data
+looking perfectly healthy while answering a different question.
+
+What it found is in `CLAUDE.md` and in the supplement. The part that bears on the
+rest of the manuscript is that a self-play rate is not a measurement of how a
+route treats risk. It is an equilibrium of two copies of one policy escalating
+each other, and this campaign is what separates the two.
+
 ## Stopping rule
 
 The revision does not rewrite the paper around a failed or partial campaign.
