@@ -453,6 +453,23 @@ def _load_experiment(
     run_phase: str,
 ) -> dict:
     experiment = load_json(EXPERIMENT_PATHS[n_players])
+    # The experiment config names one game per risk treatment, so a run that
+    # collects a subset of the risk grid has to drop the games it is not
+    # collecting; otherwise the builder produces the whole grid and the race
+    # count check fires. The frozen grid itself is untouched.
+    selected_risk_suffixes = {
+        f"_risk_{int(round(risk * 100)):02d}" for risk in RISK_LEVELS
+    }
+    experiment["games"] = [
+        name
+        for name in experiment["games"]
+        if any(name.endswith(suffix) for suffix in selected_risk_suffixes)
+    ]
+    if len(experiment["games"]) != len(RISK_LEVELS):
+        raise RuntimeError(
+            f"N={n_players}: selected risks {RISK_LEVELS} matched "
+            f"{experiment['games']}, which is not one game per risk"
+        )
     experiment.update(
         {
             "name": f"hosted_nplayer_matched_n{n_players}",
