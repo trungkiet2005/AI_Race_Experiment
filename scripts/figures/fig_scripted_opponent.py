@@ -7,13 +7,16 @@ stratification separates them.  This campaign breaks the symmetry.  The audited
 route, google/gemini-3-flash-preview, plays against the four reduced strategies
 the paper's evolutionary lane is built on, executed by the task file rather than
 by a model: Always Safe, Always Unsafe, Conditional Safe and Conditional Unsafe.
-The rival is now exogenous, so what the route does to it is the route's own
-behaviour and nothing else.  The route is never told the rival is scripted.
+The rival's strategy is now exogenous: the two unconditional rivals ignore the
+route entirely and the two conditional ones answer only the route's own last
+move, so nothing the rival does carries a second model's private state.  The
+route is never told the rival is scripted.
 
 The claim.  The rival's strategy moves this route several times further than the
-stated private risk does, and the direction is the one a safety argument would
-least like: the route exploits a rival that will never punish it, and abandons
-restraint almost completely against a rival that already has.
+stated private risk does, and it moves it by mirroring: the route keeps most of
+its restraint against a rival that stays safe, and abandons almost all of it
+against a rival that never does.  What the stated risk was meant to govern, the
+rival governs instead.
 
 Panels
   a  The twelve cells, rival down, stated risk across.  Read down a column and
@@ -29,7 +32,8 @@ Panels
      horizon from the comparison.  The second series is the opening-move
      contrast: Conditional Unsafe and Conditional Safe are the same strategy
      from round two onward, so their difference isolates the rival's very first
-     move and nothing else.
+     move.  What sits beside that move is sampling noise, which the two arms do
+     not share and which the interval is there to bound.
   c  The comparison that reframes the rest of the paper.  Against Always Safe
      the route's rate falls monotonically with stated risk; the same route in
      the neutral self-play baseline sits far above that at every risk level.
@@ -252,8 +256,8 @@ def draw_surface(fig, ax, surface, spread_col, spread_row):
     bar.ax.tick_params(labelsize=S.FS_NOTE, length=1.6)
     bar.outline.set_visible(False)
     for line, offset, colour in (
-        (f"down a column {spread_col:.0f} pp, across a row {spread_row:.0f} pp", -24, S.INK_2),
-        ("ringed cells sit on the 100% boundary", -33, S.MUTED),
+        (f"down a column {spread_col:.0f} pp, across a row {spread_row:.0f} pp", -27, S.INK_2),
+        ("ringed cells sit on the 100% boundary", -36, S.MUTED),
     ):
         ax.annotate(line, xy=(0.5, 0.0), xycoords="axes fraction",
                     xytext=(0, offset), textcoords="offset points",
@@ -271,7 +275,6 @@ def draw_contrasts(ax, retal, opening):
             ax.plot([100 * lo, 100 * hi], [y, y], lw=1.1, color=colour,
                     solid_capstyle="round", zorder=3)
             S.dot(ax, 100 * point, y, color=colour, marker=marker, size=15)
-    S.zero_rule(ax, 0.0, vertical=True)
     ax.set_yticks(list(ypos.values()))
     ax.set_yticklabels([S.RISK_LABEL[r] for r in ypos])
     # The key sits in a band above the data rather than beside it: the two
@@ -283,7 +286,14 @@ def draw_contrasts(ax, retal, opening):
     ax.set_xticks([0, 25, 50, 75])
     ax.set_xlabel("difference in unsafe play, percentage points")
     ax.set_ylabel(r"$p_r^{\max}$", labelpad=1)
-    S.strip(ax, grid_axis="x")
+    S.strip(ax, grid_axis=None)
+    # The key band is inside the axes, so an axes-wide grid and an axes-wide
+    # zero rule both run through the key's own words.  Both stop at the top of
+    # the data instead, which leaves the key on clean paper.
+    band = (-0.75, 2.40)
+    for value in (25, 50, 75):
+        ax.vlines(value, *band, color=S.GRID, lw=0.5, zorder=0)
+    ax.vlines(0.0, *band, color=S.MUTED, lw=0.8, zorder=1)
     S.panel(ax, "b", "it retaliates, at every risk")
     for y, colour, marker, text in (
         (3.00, RETAL_C, "o", "vs Always Unsafe minus vs Always Safe"),

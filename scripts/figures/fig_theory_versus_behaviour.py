@@ -46,9 +46,11 @@ decision-level frequencies with no interval attached: this figure is about the
 shape of the two objects and never about which route differs from which.  Panel
 b is an inversion and not an estimate of anybody's perceived risk; it says what
 the model would have to be handed, which is a statement about the model.  And a
-compressed inverse is not an unresponsive route.  Eight of the nine do move the
-right way with risk.  The figure is about how little of the model's own axis
-that movement could possibly cover.
+compressed inverse is not an unresponsive route.  All nine move the right way
+with risk, Claude Opus 5 most steeply of all; eight of them merely also land
+inside the model's own range, which is what lets the inversion answer at all.
+The figure is about how little of the model's own axis that movement could
+possibly cover.
 """
 
 from __future__ import annotations
@@ -341,6 +343,10 @@ def panel_a(ax, res, d) -> None:
     # it would offer the reader a negative unsafe-play reading that does not
     # exist.  Bound the spine to the range the ticks actually cover.
     ax.spines["left"].set_bounds(0.0, 100.0)
+    # Same argument on the other axis: the axes run to 1.15 so the notes and the
+    # bracket have room, but risk stops at 1, and a spine drawn past it offers a
+    # reading of the risk axis that the mechanism does not define.
+    ax.spines["bottom"].set_bounds(0.0, 1.0)
     S.ceiling_rule(ax, 100.0, label="ceiling")
     S.ceiling_rule(ax, 0.0, label="floor")
 
@@ -348,7 +354,8 @@ def panel_a(ax, res, d) -> None:
     # the drop, not a caption over the panel title: the strip above the axes
     # belongs to the claim, and a note that has to live there is a note in the
     # wrong place.
-    ax.axvline(d["cliff"], color=S.MUTED, lw=0.6, ls=(0, (1.5, 1.8)), zorder=2)
+    ax.plot([d["cliff"], d["cliff"]], [0.0, 100.0], color=S.MUTED, lw=0.6,
+            ls=(0, (1.5, 1.8)), zorder=2)
     S.direct_label(ax, 0.715, 97.0, f"model, $\\beta$ = {d['reference']:g}",
                    color=BETA_C[d["reference"]], ha="left", va="top", dx=0, dy=0,
                    weight="bold")
@@ -403,7 +410,8 @@ def panel_a(ax, res, d) -> None:
     ax.plot([0.945, 0.945], [ends.min(), ends.max()], color=S.MUTED, lw=0.8,
             clip_on=False, zorder=4)
     S.direct_label(ax, 0.965, ends.mean(), "the other\neight routes", color=S.MUTED)
-    S.panel(ax, "a", "the model steps off a cliff; the routes walk down a ramp")
+    S.panel(ax, "a",
+            "the model steps off a cliff; eight of the nine routes walk a ramp")
 
 
 def panel_b(ax, res, d) -> None:
@@ -457,7 +465,7 @@ def panel_b(ax, res, d) -> None:
             f"{d['span']:.2f} of configured risk comes back as {d['width']:.2f}")
 
 
-def dodge(values, *, separation, step=0.30, levels=5):
+def dodge(values, *, separation, step=0.22, levels=5):
     """Offsets that stop two nearly equal points from hiding each other.
 
     Within a row the vertical position carries no information, so a point may be
@@ -488,6 +496,12 @@ def panel_c(ax, res, d) -> None:
                 color=S.HAIRLINE, zorder=2, solid_capstyle="round")
         offsets = dodge(column.to_numpy(), separation=separation)
         for (route, value), offset in zip(column.items(), offsets):
+            if offset:
+                # The offset carries no information, so it has to cost none: a
+                # leader back to the row is what keeps a nudged marker readable
+                # as a member of its row rather than of the gap beside it.
+                ax.plot([value, value], [row, row + offset], lw=0.4,
+                        color=S.ROUTE_C[route], zorder=3, alpha=0.55)
             ax.plot([value], [row + offset], marker=S.ROUTE_M[route], ms=3.0,
                     color=S.ROUTE_C[route], mec=S.SURFACE, mew=0.35, zorder=4)
     ax.annotate(f"the $\\beta$ = {d['reference']:g} cliff", xy=(d["cliff"], -0.80),

@@ -7,17 +7,22 @@ The quantity self-play cannot measure.  In every other campaign in this study
 both companies are the same endpoint, so a route that plays Unsafe after its
 rival did cannot be distinguished from a route running through an unsafe phase
 of its own: the rival IS the route.  Against a rival that is fixed and known,
-two things come apart:
-
-* **exploitation**, the rate of Unsafe against Always Safe, which is what the
-  route does to a rival that will never punish it;
-* **retaliation**, the rate of Unsafe against Always Unsafe, which is what it
-  does to a rival that has already abandoned restraint.
+two rates come apart: what the route plays against a rival that stays Safe
+whatever happens, and what it plays against one that stays Unsafe whatever
+happens.
 
 Their difference is the headline of this campaign.  A route whose two rates are
 equal is not responding to its rival at all, whatever a self-play correlation
-suggested; a route whose retaliation rate is far higher is responding, and this
-is the design that establishes it.
+suggested; a route whose rates differ is responding, and this is the design that
+establishes it.
+
+The difference is deliberately not named for a motive.  Calling the safe-rival
+arm "exploitation" would assert that the route takes the opportunity a
+non-punishing rival offers, and the measured rates say the opposite: that arm
+carries the lowest rates in the whole campaign, well below what the same route
+plays against itself.  What the contrast measures is how far the rival's stance
+moves the route, and naming it after a mechanism would smuggle in a conclusion
+the design cannot reach.
 
 The two conditional rivals differ only in their opening move, so the pair
 separates answering the rival's first move from answering the rival's pattern.
@@ -65,7 +70,12 @@ STRATEGY_LABEL = {
 RISKS = (0.1, 0.6, 0.9)
 EXPECTED_RACES = 10
 MIN_RACES_FOR_INFERENCE = 5
-N_BOOT = 5000
+# Ten repetition blocks make the resampling distribution coarse, and at 5,000
+# draws the interval endpoints still moved by up to 0.4 points when the
+# generator was re-keyed. That movement is Monte Carlo noise rather than
+# evidence, so the count is raised until the endpoints are a property of the
+# data. It costs nothing: ten blocks.
+N_BOOT = 200_000
 SEED = 20260910
 
 SAFE, UNSAFE = "safe", "unsafe"
@@ -250,16 +260,21 @@ def main() -> None:
         })
     table = pd.DataFrame(rows).sort_values(["max_private_risk", "opponent_strategy"])
 
-    # The headline contrast: what the route does to a rival that will never
-    # punish it, against what it does to one that already has.
+    # The headline contrast: how far the rival's stance moves the route. It is
+    # deliberately not called exploitation-versus-retaliation. Against the safe
+    # rival the route's rate is the lowest in the campaign, so the safe arm
+    # measures restraint kept rather than an opportunity taken.
     contrasts = defaultdict(dict)
     for risk in sorted(set(route["cell_risk"])):
         present = set(route[route["cell_risk"] == risk]["strategy"])
-        for left, right, name in (("AU", "AS", "retaliation_minus_exploitation"),
+        for left, right, name in (("AU", "AS", "rival_unsafe_minus_rival_safe"),
                                   ("CAS", "CS", "rival_opened_unsafe_minus_safe")):
             if {left, right} <= present:
+                # Keyed on the arms being compared rather than on the label,
+                # because a display name is not part of the estimand and
+                # renaming a contrast must not move its interval.
                 result = paired_contrast(turns, risk, left, right,
-                                         cell_rng("contrast", name, risk))
+                                         cell_rng("contrast", left, right, risk))
                 if result:
                     contrasts[str(risk)][name] = result
 

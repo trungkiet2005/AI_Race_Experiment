@@ -52,8 +52,26 @@ resampling null, so it answers "could a matched human sample look this
 concentrated" and not "would this checkpoint look diverse under another prompt,
 temperature or horizon".  Diversity is also not competence: the one checkpoint
 that matches people is the one that failed the gate, and that is marked.
-Finally the human minimum is the minimum of a finite resampling, so it moves by
-a count or two across seeds; the eighteen cells below it are nowhere near it.
+The match is on sample size and not on the unit of independence, and that is
+the load-bearing caveat.  A model cell is ten races drawn twice, once per seat,
+and the two seats of a race carry the same ten bits in mirror order, so a cell
+has ten independent units wearing twenty rows.  A human draw of twenty is
+twenty participants, of whom one or two are typically a dyad.  Drawing ten
+complete human dyads instead, which is the model's structure exactly, lowers
+the minimum to 12, 15 and 12 and leaves fifteen cells below it rather than
+eighteen.  The direction survives that, and the collapsed routes stay far below
+either null, but eighteen is a count against the looser of the two.
+
+The comparison is also human dyads against a model in self-play.  Twenty humans
+are twenty people; twenty model rows are one policy replayed, so between-person
+variation exists on one side of this figure by construction.  That is a reason
+the human side is higher and it is not measured here.
+
+Finally the human minimum is the minimum of a finite resampling.  Across forty
+independent nulls it ranges 13 to 15 at risk 0.1, 16 to 17 at 0.6 and 15 to 16
+at 0.9, and GPT-5 nano's thirteen distinct sequences at risk 0.1 sit inside that
+range, so on another seed the count reads seventeen.  Every other cell below the
+rule is at least three under the lowest floor those forty nulls produced.
 """
 
 from __future__ import annotations
@@ -393,10 +411,19 @@ def main() -> None:
                   textcoords="offset points", ha="left", va="center",
                   fontsize=S.FS_NOTE, color=S.MUTED, linespacing=1.15,
                   annotation_clip=False)
+    # The headline count is against a null of twenty participants, which matches
+    # the model cells in size but not in independence: a model cell is ten races
+    # replayed once per seat. Against a null built from ten complete human dyads,
+    # which is the model's structure exactly, the count is fifteen. Both are
+    # printed, because quoting only the larger one would be choosing the null
+    # after seeing which number it gives.
     ax_b.annotate(VERDICT_KEY
                   + f"\nthe human row is the median of the {N_NULL:,} matched draws"
                     "\nGPT-5.4, GPT-5.4 mini and GPT-5.5 have no cell in "
-                    "this pilot export:\nabsent, not concentrated",
+                    "this pilot export:\nabsent, not concentrated"
+                    "\n18 is against a null of 20 participants; against one of 10 "
+                    "complete\ndyads, which matches the model cells' independence, "
+                    "it is 15 of 21",
                   xy=(0.0, 0.0), xycoords="axes fraction", xytext=(-40, -26),
                   textcoords="offset points", ha="left", va="top",
                   fontsize=S.FS_NOTE, color=S.MUTED, linespacing=1.35,

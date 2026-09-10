@@ -2254,9 +2254,11 @@ a different question than the one asked.
     cell. Rates carry 95\% percentile bootstrap intervals over races. Contrasts
     are differenced inside a repetition, so the horizon stopping draw is removed
     from the comparison, with the interval taken over the ten blocks; the seed
-    pairing was verified for all ten in every contrast. The two cells at
-    $100.0\%$ sit on a boundary and their intervals have zero width for that
-    reason.}
+    pairing was verified for all ten in every contrast. Ten blocks make the
+    resampling distribution coarse, so an endpoint carries a few tenths of a
+    point of Monte Carlo movement and is quoted to one decimal for consistency
+    rather than because it is resolved that finely. The two cells at $100.0\%$
+    sit on a boundary and their intervals have zero width for that reason.}
     \label{tab:scripted-opponent}
     \centering
     \small
@@ -2269,20 +2271,28 @@ a different question than the one asked.
         Conditional Unsafe & 100.0\% & 74.2\% & 67.7\% \\
         Always Unsafe & 100.0\% & 89.2\% & 88.2\% \\
         \midrule
-        Retaliation minus exploitation & $+73.5$ & $+67.4$ & $+71.7$ \\
-        \quad 95\% CI & (67.9, 78.6) & (57.1, 76.4) & (65.6, 77.5) \\
+        Rival unsafe minus rival safe & $+73.5$ & $+67.4$ & $+71.7$ \\
+        \quad 95\% CI & (67.8, 78.7) & (57.1, 76.6) & (65.6, 77.5) \\
         The rival's opening move alone & $+25.1$ & $+15.8$ & $+11.5$ \\
-        \quad 95\% CI & (21.0, 29.6) & (8.3, 23.3) & (4.5, 19.8) \\
+        \quad 95\% CI & (20.9, 29.7) & (8.3, 23.5) & (4.5, 19.7) \\
         \bottomrule
     \end{tabular}
 \end{table}
 
-\paragraph{What it shows.} The rival's strategy moves this route by about
-seventy points, and the stated risk barely changes that number. Retaliation
-minus exploitation, the rate against \emph{Always Unsafe} minus the rate against
-\emph{Always Safe}, is $+73.5$, $+67.4$ and $+71.7$ points at the three risk
-levels. Read down a column instead and the whole range of the rival's behaviour
-is worth far more than the whole range of the stated risk.
+\paragraph{What it shows.} The rival's stance moves this route by about seventy
+points, and the stated risk barely changes that number. The rate against
+\emph{Always Unsafe} minus the rate against \emph{Always Safe} is $+73.5$,
+$+67.4$ and $+71.7$ points at the three risk levels. Read down a column instead
+and the whole range of the rival's behaviour is worth far more than the whole
+range of the stated risk.
+
+We name that contrast for what it compares rather than for a motive. Calling the
+safe-rival arm exploitation would assert that the route takes the opportunity a
+non-punishing rival offers, and the measured rates say the opposite: at $24.7\%$,
+$17.2\%$ and $14.0\%$ that arm carries the lowest rates anywhere in the campaign,
+far below what the same route plays against itself. What the route does is match
+its rival, keeping most of its restraint against a rival that keeps its own and
+abandoning nearly all of it against one that never had any.
 
 The rival's opening move alone is worth $+25.1$, $+15.8$ and $+11.5$ points.
 \emph{Conditional Safe} and \emph{Conditional Unsafe} are the same strategy from

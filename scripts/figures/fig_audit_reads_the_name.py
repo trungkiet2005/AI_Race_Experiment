@@ -17,8 +17,8 @@ Panels
   a  The dumbbell.  Left anchor, the audit's verdict after sixty calls; right
      anchor, the tier the name announces after none.  Disagreement would read as
      a bold size word above the dashed rule or a plain ``none`` below it, and
-     there is neither.  The exact permutation
-     p-value is enumerated rather than sampled: with four size-word names among
+     there is neither.  The exact permutation p-value is enumerated rather than
+     sampled: with four size-word names among
      nine routes there are C(9,4) = 126 assignments of the tier labels and
      exactly one reproduces the verdict.
   b  Where the ordering comes from.  Accuracy per route per probe domain, with
@@ -190,13 +190,19 @@ def mark_cell(ax, i, j, ink: str, *, style: str):
     rings that decide the paper's admission line.
     """
     from matplotlib.patches import Rectangle
+    from matplotlib import patheffects
 
     if style == "gate":
         # Inset, because the white gutter is painted along the tile edge, so a
         # ring drawn on that edge is a ring drawn inside a white line: three of
         # the six gate failures did not render at all until this moved inwards.
-        ax.add_patch(Rectangle((j - 0.42, i - 0.40), 0.84, 0.80, fill=False,
-                               edgecolor=ink, lw=1.0, zorder=6))
+        # The counter-ink halo is what lets one ring read on a yellow tile and
+        # on an indigo one without becoming two different marks.
+        halo = S.SURFACE if ink == S.INK else S.INK
+        ax.add_patch(Rectangle((j - 0.42, i - 0.34), 0.84, 0.68, fill=False,
+                               edgecolor=ink, lw=1.0, zorder=6,
+                               path_effects=[patheffects.withStroke(
+                                   linewidth=2.0, foreground=halo)]))
         return
     # Well inside the tile, and a dot rather than a corner wedge: the white
     # gutter runs along every tile edge, so a light mark that touches an edge
@@ -358,6 +364,16 @@ def main() -> None:
         cmap="viridis", vmin=0.0, vmax=100.0, fmt="{:.0f}",
         row_colors=colours,
     )
+    # Immediately, while ``ax_b.texts`` is still exactly the tile numbers and
+    # nothing this script annotates later.  The module flips its tile text on a
+    # fixed cut in the value, which is right for a map that darkens as the value
+    # rises and wrong for viridis, which brightens: it was printing white on
+    # yellow at one end and near-black on indigo at the other.  Repaint each
+    # number in the ink its own tile can actually carry.
+    if len(ax_b.texts) != acc.size:
+        raise SystemExit(f"{len(ax_b.texts)} tile labels against {acc.size} tiles")
+    for text, value in zip(ax_b.texts, acc.ravel()):
+        text.set_color(tile_ink(value, 0.0, 100.0))
     for j, domain in enumerate(DOMAINS):
         ax_b.annotate(str(calls[domain]), xy=(j, -0.5), xytext=(0, 3),
                       textcoords="offset points", ha="center", va="bottom",
@@ -366,13 +382,6 @@ def main() -> None:
                   textcoords="offset points", ha="right", va="bottom",
                   fontsize=S.FS_NOTE, color=S.MUTED, annotation_clip=False)
     lo, hi = 0.0, 100.0
-    # The module flips its tile text on a fixed cut in the value, which is right
-    # for a map that darkens as the value rises and wrong for viridis, which
-    # brightens.  Repaint each number in the ink its own tile can carry.
-    for text in ax_b.texts:
-        x, y = text.get_position()
-        if 0 <= round(y) < acc.shape[0] and 0 <= round(x) < acc.shape[1]:
-            text.set_color(tile_ink(acc[round(y), round(x)], lo, hi))
     for i in range(acc.shape[0]):
         for j, domain in enumerate(DOMAINS):
             value = acc[i, j]
