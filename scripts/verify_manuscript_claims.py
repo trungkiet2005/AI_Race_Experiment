@@ -293,6 +293,42 @@ check("60 paired repetition blocks per contrast",
       all(r[f]["n_blocks"] == 60 for r in (gem, cla) for f in ("mapping", "context")),
       "all four contrasts use 60 blocks")
 
+# --- matched group-size comparison -------------------------------------------
+mm = json.load(open("results/derived/nplayer_matched_campaign/nplayer_matched_rates.json", encoding="utf-8"))
+mrows = list(csv.DictReader(open("results/derived/nplayer_matched_campaign/nplayer_matched_rates.csv", encoding="utf-8-sig")))
+by_n = {int(r["n_players"]): r for r in mrows if r["risk"] == "0.6"}
+check("the matched sweep covers all four group sizes at risk 0.6",
+      sorted(by_n) == [2, 3, 4, 5], f"group sizes {sorted(by_n)}")
+check("every matched cell has ten races and no parse failure",
+      all(int(r["n_races"]) == 10 for r in by_n.values()),
+      ", ".join(f"N={n}:{by_n[n]['n_races']}" for n in sorted(by_n)))
+check("matched decision counts are 176 / 264 / 352 / 440",
+      [int(by_n[n]["n_decisions"]) for n in (2, 3, 4, 5)] == [176, 264, 352, 440],
+      str([int(by_n[n]["n_decisions"]) for n in (2, 3, 4, 5)]))
+check("matched unsafe rates are 68.8 / 80.3 / 98.3 / 100.0 percent",
+      [round(100 * float(by_n[n]["unsafe_rate"]), 1) for n in (2, 3, 4, 5)]
+      == [68.8, 80.3, 98.3, 100.0],
+      str([round(100 * float(by_n[n]["unsafe_rate"]), 1) for n in (2, 3, 4, 5)]))
+check("unsafe play rises monotonically with the number of competitors",
+      all(float(by_n[n]["unsafe_rate"]) < float(by_n[n + 1]["unsafe_rate"]) for n in (2, 3, 4)),
+      "strictly increasing in N")
+check("each matched cell records the identity that collected it",
+      len({by_n[n]["executing_identity"] for n in sorted(by_n)}) == 4,
+      ", ".join(f"N={n}:{by_n[n]['executing_identity']}" for n in sorted(by_n)))
+
+mc = mm["paired_contrasts"]["google/gemini-3-flash-preview"]["0.6"]
+for n, expect in (("3", (11.1, 6.4, 15.1)), ("4", (28.2, 22.8, 33.2)), ("5", (31.0, 26.4, 35.6))):
+    got = (round(100 * mc[n]["mean_difference"], 1),
+           round(100 * mc[n]["ci95_low"], 1),
+           round(100 * mc[n]["ci95_high"], 1))
+    check(f"matched contrast N={n} minus N=2 is {expect[0]} pp [{expect[1]}, {expect[2]}]",
+          got == expect, str(got))
+check("every matched contrast excludes zero",
+      all(mc[n]["ci95_low"] > 0 for n in ("3", "4", "5")), "all three lower bounds positive")
+check("horizon pairing verified for every matched contrast",
+      all(mc[n]["pairing_verified"] and mc[n]["n_blocks"] == 10 for n in ("3", "4", "5")),
+      "10 of 10 blocks in each")
+
 # --- report ------------------------------------------------------------------
 width = max(len(n) for n, _, _ in results)
 fails = 0

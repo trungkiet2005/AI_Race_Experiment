@@ -380,7 +380,8 @@ descriptive results (\S\ref{app:twoplayer-baseline},
 summarises: the nine-route admission campaign
 (\S\ref{app:admission-v6}), the selection-strength sweep of the evolutionary
 benchmark (\S\ref{app:egt-beta}), the one completed crossed
-representation-robustness cell (\S\ref{app:context-mapping}), the
+representation-robustness cell (\S\ref{app:context-mapping}), the matched
+group-size comparison (\S\ref{app:nplayer-matched}), the
 cluster-count sweep behind the human archetypes
 (\S\ref{app:k-sensitivity}), and the trajectory-diversity statistics
 (\S\ref{app:diversity}).
@@ -2026,6 +2027,96 @@ cluster count from two to six.
   \end{tabular}
 \end{table}
 
+
+\subsection{Matched group-size comparison}
+\label{app:nplayer-matched}
+
+The three- to five-player pilots reported elsewhere in this supplement have no
+two-player arm, so a difference between group sizes could not be told apart from
+a difference between two separately built lanes. This subsection reports a
+matched comparison that removes that particular ambiguity.
+
+Every group size, including two, is run through the same $N$-player engine, the
+same prompt template, the same parser and one protocol,
+\texttt{ai-race-nplayer-}\discretionary{}{}{}\texttt{matched-}\discretionary{}{}{}\texttt{hosted-}\discretionary{}{}{}\texttt{confirmatory-v1},
+so the number of seats is the only thing deliberately varied. The two-player arm is not a near
+neighbour of the headline game: evaluating the group-count stage
+rule of the main paper at two companies returns its two-player payoff matrix
+exactly, at $1.0$, $0.6$, $2.4$, $2.0$, which
+\texttt{scripts/verify\_matched\_nplayer\_design.py} asserts offline before the
+task is pushed, together with the invariance of every other mechanism field and
+the sharing of the horizon draw described below.
+
+\paragraph{What was collected, and how.} Four cells, one per group size, at the
+medium private-risk condition $p_r^{\max}=0.6$, ten repetitions each, on the
+admitted route \texttt{google/gemini-3-flash-preview}. That is 40 races and
+1{,}232 decisions with zero parse failures. The scope was fixed before any of it
+was run, in a plan committed beforehand: no Model Proxy identity available to us
+sustains the whole four-by-three grid, which needs roughly 7{,}800 requests, so
+the comparison was reduced to one risk level rather than run at a size that
+would put every cell below the five-race floor this supplement uses elsewhere.
+The remaining two risk levels are not collected, and the claim here is
+accordingly a group-size comparison \emph{at the medium risk condition} and not
+a statement about the risk grid.
+
+Each cell was collected on a different Kaggle identity, again by a plan fixed in
+advance rather than by retrying until something succeeded: $N=2$ on one account,
+$N=3$, $N=4$ and $N=5$ on three others, each cell collected whole so that it
+carries its own race-clustered interval. The identity is a billing boundary
+rather than a model boundary, since the route, prompt, parser, protocol,
+temperature request and seed structure are identical across cells, but it is a
+difference between runs and is recorded per cell in the artifact rather than
+argued away.
+
+\paragraph{The contrast is paired on the horizon.} The game seed is
+$\mathrm{base} + \mathrm{rep}$ and does not depend on the treatment name or on
+the number of seats, so one repetition index reuses a single horizon
+stopping-draw stream at every group size. Differencing a group size against the
+two-player arm inside a repetition therefore removes the horizon draw from the
+comparison. The analyser re-derives that pairing from the recorded game seed
+instead of assuming it, and it holds for all ten blocks in every contrast.
+
+\begin{table}[h]
+    \caption{Matched group-size comparison at $p_r^{\max}=0.6$ on
+    \texttt{google/gemini-3-flash-preview}. Ten races per cell, zero parse
+    failures. Rates carry 95\% percentile bootstrap intervals over races; the
+    contrast is the mean difference against the two-player arm within a
+    repetition block, with its interval taken over the ten blocks. Horizon
+    pairing was verified for 10 of 10 blocks in every row.}
+    \label{tab:nplayer-matched}
+    \centering
+    \small
+    \begin{tabular}{@{}rrlrl@{}}
+        \toprule
+        $N$ & Decisions & \Unsafe{} rate (95\% CI) & \multicolumn{2}{c}{minus $N{=}2$ (95\% CI)} \\
+        \midrule
+        2 & 176 & 68.8\% (65.4--72.5) & \multicolumn{2}{l}{baseline} \\
+        3 & 264 & 80.3\% (75.9--83.8) & $+11.1$ pp & ($+6.4$ to $+15.1$) \\
+        4 & 352 & 98.3\% (95.6--100.0) & $+28.2$ pp & ($+22.8$ to $+33.2$) \\
+        5 & 440 & 100.0\% (100.0--100.0) & $+31.0$ pp & ($+26.4$ to $+35.6$) \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\paragraph{What it shows.} \Unsafe{} play rises monotonically with the number of
+competing companies and then saturates: at five companies this route chose
+\Unsafe{} on every one of its 440 decisions. All three contrasts against the
+two-player arm exclude zero. Because the two-player arm is the headline game
+itself, the comparison also says something about the rest of the paper: the
+two-player results are the low end of this curve, not a special case beside it.
+
+\paragraph{What it does not show.} Group size cannot be separated from
+everything that comes with it, and no analysis repairs that. The group-count
+rule makes the stage payoff depend on how many companies there are, and the
+state description names each of them, so a larger group is also a different
+payoff and a longer prompt. The estimand is therefore the effect of group size
+\emph{within this game's own definition}. The comparison covers one route, one
+risk level and ten races per cell, so it is not a claim about endpoints, about
+the risk grid, or about a population of models. It is regenerated by
+\texttt{scripts/analyze\_nplayer\_matched.py}, which refuses to report a risk
+level unless all four group sizes are present, refuses a cell with a parse
+failure or the wrong seat count, and records the collecting identity of every
+cell it uses.
 
 \clearpage
 \bibliographystyle{ACM-Reference-Format}
