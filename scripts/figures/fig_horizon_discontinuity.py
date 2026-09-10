@@ -10,8 +10,9 @@ the future, and it is the one quantity in this game that the folk-theorem
 tradition says should move cooperative play: a threat that is certain to be
 carried out sustains cooperation that a threat with a one-in-five chance of
 never arriving does not.  Every player is told where the cliff is before it
-arrives.  One of the nine steps up at it, one steps down, and the other
-seven do not move at all.
+arrives.  One of the nine steps up at it, one steps down, and the other seven
+have intervals that cover zero, several of them wide enough to hold a
+twenty-point move in either direction.
 
 Three confounds sit between this design and a discontinuity estimate, and the
 figure handles them in the open rather than in a footnote.
@@ -27,13 +28,15 @@ Every rung of that ladder is one round of extra history, and exactly one rung
 crosses the cliff.
 
 Survivorship.  Races have different sampled lengths, so the races that reach
-round twelve are not the races that reached round three.  The nine routes were
-run against the same thirty horizon draws, so no route is favoured by this, but
-the race set still changes along the axis.  Panel a prints the surviving race
-count under every round.  Panel b's filled estimate and the whole of panel c
-stay inside the common horizon, rounds one to five, which every race reaches by
-construction, so there the contributing set is fixed at thirty races per route
-and survivorship is not in play at all.
+round twelve are not the races that reached round three.  Every route was run
+against the same ten horizon draws, once at each of the three risk levels, so no
+route is favoured by this, but the race set still changes along the axis.  Panel
+a prints the surviving race count under every round.  Panel b's filled estimate
+and the first four rungs of panel c stay inside the common horizon, rounds one
+to five, which every race reaches by construction, so there the contributing set
+is fixed at thirty races per route and survivorship is not in play.  The last
+two rungs of panel c reach past it, onto the twenty-four races per route that
+get that far, and the panel says so on its face.
 
 Opening moves.  Round one is not a round like the others: nothing has happened,
 so the step out of it is a step out of a state that never recurs.  It is drawn
@@ -58,7 +61,11 @@ Panels
      crosses the cliff is the only rung after the opening two whose interval
      clears zero, so it is not nothing; but it is 6.5 pp against an opening step
      of 39.3 pp, and its sign is negative, which is the direction opposite to the
-     one a shortening shadow is supposed to push.
+     one a shortening shadow is supposed to push.  The grey context is not
+     decoration: three of the nine route means point the other way, so the
+     pooled interval is a statement these nine routes make together and not one
+     that each of them makes.  Resampling routes rather than races widens it to
+     cover zero.
 
 What this does not show.  Not a regression discontinuity: the running variable
 is a round index that also carries history, the design has no observations
@@ -66,7 +73,10 @@ arbitrarily close to the threshold, and nothing here is a causal estimate of the
 horizon.  Nor is it a test of whether these routes can reason about a horizon at
 all; it is a test of whether their play moves when the stated horizon changes,
 in this game, at this prompt version.  Nine commercial endpoints are not a
-sample from a population of models.  The absence of a step is evidence about the
+sample from a population of models.  Both seats of every race are the same
+route, so what is measured is a route's horizon response against a copy of
+itself; nothing here is a horizon response against a different opponent.  The
+absence of a step is evidence about the
 step, not proof that the prompt sentence was unread: panel a shows one route
 whose play is a constant, and a constant cannot move at a boundary.
 """
@@ -103,8 +113,15 @@ ALL_C = S.MUTED       # the same contrast over all rounds, kept visibly secondar
 
 def horizon_rule(turns: pd.DataFrame) -> tuple[int, int, float]:
     """Minimum length, first round that can end the race, and the stop chance."""
-    found = {HORIZON_RE.search(p).groups() for p in turns["prompt"]
-             if HORIZON_RE.search(p)}
+    hits = [HORIZON_RE.search(p) for p in turns["prompt"]]
+    # One distinct rule is not enough on its own: a corpus where only some
+    # prompts carry the sentence would also state one rule, and the figure's
+    # premise is that every player read it before every decision.
+    missing = sum(m is None for m in hits)
+    if missing:
+        raise SystemExit(
+            f"{missing} of {len(hits)} prompts do not state the horizon rule")
+    found = {m.groups() for m in hits}
     if len(found) != 1:
         raise SystemExit(f"the corpus states {len(found)} different horizon rules: {found}")
     minimum, first_stop, pct = (int(x) for x in found.pop())

@@ -25,15 +25,27 @@ Panels
   a  One transition matrix per route, in reading order from the route that
      spends most of its time in mutual restraint to the route that spends least.
      Rows are this round, columns the next, and a row sums to 100.  Claude Opus 5
-     is degenerate and the panel draws it as such: two absorbing states, a split
-     row that has no value because in 279 rounds its two seats never once played
-     differently, and tiles ringed because they sit on a boundary rather than
-     near one.
+     never changed state inside a race and the panel draws it as such: every
+     count on the diagonal, a split row that has no value because in 279 rounds
+     its two seats never once played differently, and tiles ringed because they
+     sit on a boundary rather than near one.  That constancy is within a race
+     and not across the design, and the distinction decides what the panel is
+     allowed to say.  At risk 0.1 all ten of its races sat in mutual escalation
+     for every round; at risk 0.6 and 0.9 all twenty sat in mutual restraint.
+     So the route moves further with risk than any of the other eight, 100
+     points of unsafe rate against 57 for the next most responsive, and calling
+     its pooled matrix frozen or unresponsive would invert the manuscript's own
+     reading of it.  It is a step policy: deterministic inside a cell, and the
+     one route in this figure whose pooled matrix is an artefact of the pooling
+     rather than a summary of it.
   b  Occupancy: how a race divides its rounds between the three states.
   c  The two roads back to mutual restraint, drawn against each other.  Repair
-     from a split is the rarer road in every route where a split ever occurred;
-     restraint is reached, when it is reached, by both seats standing down at the
-     same moment out of mutual escalation.
+     from a split is the rarer road in every route where a split ever occurred,
+     and four arrivals at restraint in five are both seats standing down at the
+     same moment out of mutual escalation, 176 against 42.  The ordering is a
+     property of the pooled rows and not of every regime inside them: at risk
+     0.1, where restraint is reached at all in only 4% of rounds, the two roads
+     swap and the split is the likelier one, 7.1% against 3.8%.
 
 What this does not show.  A transition count is not a mechanism: nothing here
 says a route noticed the state, and the same matrix would be produced by two
@@ -41,8 +53,11 @@ seats reacting only to their own accumulated risk.  Rows are pooled over the
 three risk levels, and risk moves these dynamics hard, so a route's matrix is a
 summary of three regimes and not a law; the script prints the per-risk matrices
 so the pooling can be audited.  Thirty races per route is enough to separate a
-degenerate route from a mobile one and not enough to pin a single cell to a
-point.  Nine commercial endpoints are not a sample from a population of models.
+route that never moves inside a race from a mobile one and not enough to pin a
+single cell to a point.  These are self-play races: every number here is what a
+route does against a copy of itself under the same prompt, which is a statement
+about that route and not about how it would meet a different one.  Nine
+commercial endpoints are not a sample from a population of models.
 And a state is only a joint action: two routes can walk the same three states
 with entirely different progress, payoff and accumulated private risk behind
 them.
@@ -69,6 +84,7 @@ STATE_WORD = {0: "both safe", 1: "one each", 2: "both racing"}
 CMAP = "Blues"          # high values print dark, so white numerals stay legible
 N_BOOT = 2000
 SEED = 260910
+OPUS = "anthropic/claude-opus-5@default"
 
 
 def joint_walk(turns: pd.DataFrame) -> pd.DataFrame:
@@ -155,7 +171,11 @@ def draw_matrix(ax, pct, *, title, colour):
     im = S.heat_tiles(
         ax, pct, [str(i) for i in STATES], [str(j) for j in STATES],
         cmap=CMAP, vmin=0.0, vmax=100.0, fmt="{:.0f}", gutter=1.6,
-        textcolor_flip=0.55,
+        # White on Blues at 56 is 2.9:1 and ink on the same tile is 6.5:1.  The
+        # two curves cross at 71, so that is where the numeral should change
+        # colour; a lower flip sets the mid-range cells in the weakest type in
+        # the figure.
+        textcolor_flip=0.71,
         row_colors=[STATE_C[i] for i in STATES],
     )
     im.cmap.set_bad(S.GREY_BAD)
@@ -242,7 +262,7 @@ def main() -> None:
 
     # The degenerate route has to be held out of the pooled claim: it contributes
     # 166 self-transitions at exactly 100% and would carry the average on its own.
-    mobile = walk[walk["model_route"] != "anthropic/claude-opus-5@default"]
+    mobile = walk[walk["model_route"] != OPUS]
     pooled = row_normalise(transitions(mobile))
     print(f"  {mobile['model_route'].nunique()} mobile routes, pooled rows (%):")
     for i in STATES:
@@ -259,11 +279,17 @@ def main() -> None:
           f"{from_race:.0f} from mutual escalation "
           f"({100 * from_race / (from_split + from_race):.1f}% by simultaneous stand-down)")
 
+    # Both pools, because the step route dominates the restraint row wherever it
+    # sits in restraint: at risk 0.6 it moves the pooled 0->0 cell from 25 to 58.
+    # A number lifted from the nine-route line into prose would be its artefact.
     for risk, block in walk.groupby("max_private_risk"):
-        pct = row_normalise(transitions(block))
-        rows = "  ".join("/".join(f"{float(pct[i, j]):.0f}" for j in STATES) for i in STATES)
-        occ = " ".join(f"{100 * float((block['state'] == i).mean()):.0f}" for i in STATES)
-        print(f"  risk {risk}: rows {rows}   occupancy {occ}")
+        for tag, part in (("all 9", block),
+                          ("mobile 8", block[block["model_route"] != OPUS])):
+            pct = row_normalise(transitions(part))
+            rows = "  ".join("/".join(f"{float(pct[i, j]):.0f}" for j in STATES)
+                             for i in STATES)
+            occ = " ".join(f"{100 * float((part['state'] == i).mean()):.0f}" for i in STATES)
+            print(f"  risk {risk} {tag:>8}: rows {rows}   occupancy {occ}")
 
     # ---- figure ----------------------------------------------------------
     fig = plt.figure(figsize=(S.TEXT, 4.48))
@@ -279,10 +305,13 @@ def main() -> None:
         axes.append(ax)
     draw_key(fig.add_subplot(grid[1, 4]))
     breaks = sum(1 for r in routes if float(pcts[r][0, 0]) < 50.0)
-    frozen = [r for r in routes if np.ma.getmaskarray(pcts[r])[1].all()]
+    # Derived from the condition the claim states rather than from the empty
+    # split row, so the sentence cannot outlive the thing it describes.
+    still = [r for r in routes if counts[r].sum() == np.trace(counts[r])]
     S.panel(axes[0], "a",
-            f"{S.ROUTE_SHORT[frozen[0]]} is frozen, and in {breaks} of {len(routes)} "
-            f"routes restraint breaks more often than it holds", pad=19)
+            f"{S.ROUTE_SHORT[still[0]]} never changes state inside a race, and in "
+            f"{breaks} of {len(routes)} routes restraint breaks more often than "
+            f"it holds", pad=19)
 
     # --- b: occupancy --------------------------------------------------------
     ax_b = fig.add_subplot(lower[0, 0])
@@ -293,7 +322,7 @@ def main() -> None:
             share = 100 * occupancy[route][state]
             ax_b.barh(y, share, left=left, height=0.70,
                       color=STATE_C[state], edgecolor=S.SURFACE, linewidth=0.7)
-            if share >= 11:
+            if share >= 6:
                 ax_b.text(left + share / 2, y, f"{share:.0f}", ha="center",
                           va="center", fontsize=S.FS_NOTE, color=S.SURFACE)
             elif share == 0:
@@ -309,11 +338,22 @@ def main() -> None:
     ax_b.set_xlim(0, 100)
     ax_b.set_xticks([0, 50, 100])
     ax_b.set_xlabel("share of rounds (%)", labelpad=1)
-    ax_b.set_ylim(-0.7, len(routes) - 0.24)
+    # The same nine rows as c, so the two panels read as one table and a reader
+    # can carry a route across without recounting.
+    ax_b.set_ylim(-0.7, len(routes) + 0.85)
     S.strip(ax_b, grid_axis=None)
     ax_b.spines["left"].set_visible(False)
     ax_b.tick_params(axis="y", length=0)
-    S.panel(ax_b, "b", "only the frozen route spends most rounds safe, and it never splits")
+    # The stack order is the key, so it is named in the panel rather than left
+    # to the colours and a legend two panels away.
+    # Each word sits over the span its own colour actually occupies in eight of
+    # the nine rows.  Centring "one each" on 50 would put it over green or red
+    # in five of them, which teaches the reader the wrong stack.
+    for x, state, ha in ((0, 0, "left"), (33, 1, "center"), (100, 2, "right")):
+        S.direct_label(ax_b, x, len(routes) + 0.42, STATE_WORD[state],
+                       color=STATE_C[state], ha=ha, dx=0, weight="bold")
+    S.panel(ax_b, "b", f"only {S.ROUTE_SHORT[still[0]]} spends most rounds safe, "
+                       f"and it never splits")
 
     # --- c: the two roads back to restraint ----------------------------------
     ax_c = fig.add_subplot(lower[0, 1])

@@ -40,10 +40,14 @@ What this figure does not show.  It is descriptive.  It measures observed
 diversity in these samples, not latent policy entropy, and a cell below the
 human floor says nothing about any checkpoint outside the seven drawn here,
 which are commercial endpoints rather than a sample from a population of models.
-Two routes the nine-route baseline reports, GPT-5.4 and GPT-5.5, publish no
-paired first-five-action export anywhere under ``results/``, so they are absent
-from this figure; absent is not diverse and not concentrated, and the figure
-says so rather than leaving seven rows to be read as nine.  The null is a human
+Three routes the nine-route baseline reports, GPT-5.4, GPT-5.4 mini and
+GPT-5.5, have no cell in the pilot export this analyser reads, so they are
+absent from this figure; absent is not diverse and not concentrated, and the
+figure says so rather than leaving seven rows to be read as nine.  They are not
+absent from ``results/``: ``baseline_campaign_v6``, the campaign every other
+figure reads through ``figdata``, carries their paired actions in
+``turns.jsonl`` like every other route.  Read this figure as the pilot export's
+seven checkpoints and nothing wider.  The null is a human
 resampling null, so it answers "could a matched human sample look this
 concentrated" and not "would this checkpoint look diverse under another prompt,
 temperature or horizon".  Diversity is also not competence: the one checkpoint
@@ -171,6 +175,11 @@ def draw_facet(ax, counts, cells, rows, *, risk, show_ylabels, show_xlabel, note
     # reader who cannot see that boundary reads a saturated cell as merely small.
     ax.plot([1.0, 1.0], [RULE_LO, Y_HI], color=S.MUTED, lw=0.5, ls=(0, (1, 2)),
             zorder=1)
+    # And the other boundary.  Most human draws sit exactly on 20, so the human
+    # reference is a ceiling reading, and a reader who cannot see the ceiling
+    # reads the human null as a distribution with room above it.
+    ax.plot([float(COMPARISON_N)] * 2, [RULE_LO, Y_HI], color=S.MUTED, lw=0.5,
+            ls=(0, (1, 2)), zorder=1)
 
     ax.fill_between(np.arange(COMPARISON_N + 1),
                     HUMAN_BASE, HUMAN_BASE + HUMAN_HEIGHT * hist / hist.max(),
@@ -196,7 +205,8 @@ def draw_facet(ax, counts, cells, rows, *, risk, show_ylabels, show_xlabel, note
                 xycoords="axes fraction", xytext=(0, 2.0),
                 textcoords="offset points", ha="left", va="bottom",
                 fontsize=S.FS_NOTE, color=S.INK, fontweight="bold")
-    ax.annotate(f"min {floor}", xy=(floor - 0.7, TOP_Y), ha="right",
+    ax.annotate(f"min {floor}", xy=(floor - 0.5, TOP_Y), xytext=(-3.5, 0),
+                textcoords="offset points", ha="right",
                 va="center", fontsize=S.FS_NOTE, color=S.UNSAFE_C)
     for text, x, y, colour, ha in notes:
         ax.annotate(text, xy=(x, y), ha=ha, va="center", fontsize=S.FS_NOTE,
@@ -317,9 +327,13 @@ def main() -> None:
     for i, (ax, risk) in enumerate(zip(axes_a, S.RISKS)):
         notes = []
         if i == 0:
-            notes.append(("no human\ndraw ever\nlanded here", 1.2, 6.50,
-                          S.UNSAFE_C, "left"))
             notes.append(("1 = all 20 identical,\nthe floor of the measure",
+                          0.6, NOTE_Y, S.MUTED, "left"))
+        if i == 1:
+            notes.append(("no human draw\never landed here", 1.2, 6.56,
+                          S.UNSAFE_C, "left"))
+            notes.append(("20 = all 20 different,\n"
+                          "the measure's ceiling",
                           0.6, NOTE_Y, S.MUTED, "left"))
         if i == 2:
             notes.append((f"only {exception_short} {VERDICT_MARK[exception_verdict]}\n"
@@ -329,9 +343,9 @@ def main() -> None:
                    {label: model_counts[label][i] for label in order},
                    rows, risk=risk, show_ylabels=(i == 0), show_xlabel=(i == 1),
                    notes=notes)
-    S.direct_label(axes_a[0], 1.3, HUMAN_TICK,
+    S.direct_label(axes_a[0], 1.3, HUMAN_BASE + 0.10,
                    f"{N_NULL:,} draws\nof 20 humans", color=S.INK_2,
-                   ha="left", va="center", dx=0, dy=0)
+                   ha="left", va="bottom", dx=0, dy=0)
     S.panel(axes_a[0], "a",
             f"{len(below)} of {n_cells} model cells sit below every human draw",
             pad=16)
@@ -381,8 +395,8 @@ def main() -> None:
                   annotation_clip=False)
     ax_b.annotate(VERDICT_KEY
                   + f"\nthe human row is the median of the {N_NULL:,} matched draws"
-                    "\nGPT-5.4 and GPT-5.5 export no paired actions: absent, "
-                    "not concentrated",
+                    "\nGPT-5.4, GPT-5.4 mini and GPT-5.5 have no cell in "
+                    "this pilot export:\nabsent, not concentrated",
                   xy=(0.0, 0.0), xycoords="axes fraction", xytext=(-40, -26),
                   textcoords="offset points", ha="left", va="top",
                   fontsize=S.FS_NOTE, color=S.MUTED, linespacing=1.35,

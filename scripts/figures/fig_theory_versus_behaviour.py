@@ -336,6 +336,11 @@ def panel_a(ax, res, d) -> None:
     # data instead of on top of the curve they are about.
     ax.set_ylim(-23, 108)
     S.strip(ax, grid_axis="y")
+    # The floor of the axes is 23 points below zero so the two Opus notes have
+    # somewhere to sit, but there is no scale down there: a spine drawn through
+    # it would offer the reader a negative unsafe-play reading that does not
+    # exist.  Bound the spine to the range the ticks actually cover.
+    ax.spines["left"].set_bounds(0.0, 100.0)
     S.ceiling_rule(ax, 100.0, label="ceiling")
     S.ceiling_rule(ax, 0.0, label="floor")
 

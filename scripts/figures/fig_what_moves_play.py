@@ -7,11 +7,15 @@ design factor that produces something for the wrong reason is worse than one
 that produces nothing at all.
 
 The claim.  Group size moves play and moves it into the ceiling, so the surface
-is a saturated corner rather than a plane.  Representation does not: the
-narrative frame and the opaque code do not interact, and the code effect that
-survives is not a representation effect but a fixed preference for one letter.
-The seat is supposed to be inert, its two prompts being symmetric word for word,
-and it is not quite inert at the opening.
+is a saturated corner rather than a plane.  Representation moves it too, but not
+in the crossed way a representation account would predict: the narrative frame
+and the opaque code do not interact, they simply add.  The seat is supposed to be
+inert, its two prompts being symmetric word for word, and it is not quite inert
+at the opening.
+
+Every panel is self-play.  One route holds every seat of a race, so nothing here
+is a mixed population, and the three factors are manipulations on a route
+playing copies of itself.
 
 Panels
   a  The matched group-size grid, four group sizes by three risk levels, one
@@ -22,10 +26,16 @@ Panels
      have been.
   b  The crossed representation design, two factors and two routes, drawn on a
      common thirty-point vertical span so a slope in the upper panel is the same
-     slope as in the lower one.  Parallel lines are the finding.  The code
-     effect is then re-expressed as what it algebraically is: twice the route's
-     excess tendency to emit one particular letter, an identity the script
-     checks rather than asserts.
+     slope as in the lower one.  Parallel lines are the finding, and parallel is
+     not flat: both main effects are there on both routes, the frame at -3.4 and
+     -10.8 points and the code at -8.3 and -9.5.  The code effect is also
+     re-expressed as what it algebraically is: twice the route's excess tendency
+     to emit one particular letter.  That re-expression is an identity of the
+     counterbalancing and holds for any data at all, so it explains nothing on
+     its own, and the letter usage behind it is not a fixed habit: Gemini 3 Flash
+     emits Q on 77% of its turns when Q means unsafe and on 11% when Q means
+     safe.  The code effect is a representation effect; the algebra only says
+     which surface carries it.
   c  The two seats, whose prompts are symmetric, at the opening move of every
      race.  Four routes open unsafe from both seats in all thirty races and sit
      on the ceiling, where a seat effect could not appear even if it existed, so
@@ -39,11 +49,15 @@ Panels
 
 What this figure does NOT show.  Panel a is one route, so nothing here separates
 a property of group size from a property of that route in groups; the twelve
-cells are matched to each other and to nothing outside the grid.  Panel b tests
-two factors on two routes at one prompt version, and a null there is a null for
-this design, not evidence that representation is inert in general; the letter
-identity is arithmetic about this counterbalancing and says nothing about why a
-route prefers a letter.  Panel c is a validity check: it establishes that the
+cells are matched to each other and to nothing outside the grid.  Nor is the
+column a manipulation of group size alone: the N-player payoffs divide one
+market benefit among N, so a company that plays safe while everyone else does
+earns 1.0 at N=2 and -0.2 at N=5, and a route that only reads the sign of that
+number would draw this same grid.  Panel b tests two factors on two routes at one
+prompt version, and an interaction that spans zero is inconclusive rather than
+absent, the more so on the route whose interval reaches +14 points; nothing here
+is evidence that representation is inert, and the two main effects say the
+opposite.  Panel c is a validity check: it establishes that the
 seat is not perfectly inert, and it does not licence reading the direction as a
 finding about first-mover psychology.  Its pooled gap is an average over these
 nine routes and not an estimate of the seat effect a route would show if it had
@@ -56,6 +70,7 @@ asking three questions on one figure.
 
 from __future__ import annotations
 
+import re
 import sys
 import textwrap
 from pathlib import Path
@@ -130,6 +145,26 @@ def seat_gap_ci(paired: pd.DataFrame):
             float(np.percentile(draws, 97.5)))
 
 
+# The N-player payoffs split one market benefit among N, so the reward for safe
+# play is not held constant down the row of the grid.  Read it out of the prompts
+# the route actually saw rather than quoting it from the protocol, because the
+# number is the panel's own caveat and a caveat typed by hand is a caveat that
+# can go stale.
+ALL_SAFE = re.compile(
+    r"If all (\d+) companies choose SAFE: each company earns (-?[0-9.]+)")
+
+
+def all_safe_payoff(turns):
+    found = {}
+    for n, block in turns.groupby("n_players"):
+        seen = {m.group(2).rstrip(".")
+                for m in (ALL_SAFE.search(p) for p in block["prompt"]) if m}
+        if len(seen) != 1:
+            raise SystemExit(f"N={n} shows {len(seen)} all-safe payoffs: {seen}")
+        found[int(n)] = float(seen.pop())
+    return found
+
+
 def group_size_grid():
     turns = D.matched_cells()
     route = turns["model"].unique()
@@ -140,7 +175,7 @@ def group_size_grid():
         races=("game_id", "nunique")).reset_index()
     cells["safe"] = cells["decisions"] - cells["unsafe"]
     cells["rate"] = 100 * cells["unsafe"] / cells["decisions"]
-    return str(route[0]), cells
+    return str(route[0]), cells, all_safe_payoff(turns)
 
 
 def representation():
@@ -187,6 +222,13 @@ def representation():
         # is doing about the game.  Checked here so the figure can say so.
         record["letter_q"] = float(letter_q.loc[route].mean())
         record["code_identity"] = 2 * (record["letter_q"] - 0.5)
+        # And the identity holds whatever the letters are doing, so it is not
+        # evidence of a letter habit.  The two mapping-conditional shares are,
+        # and on both routes they are far apart: the letter follows the meaning.
+        block_q = turns[turns["model_route"] == route]
+        for code in CODE:
+            side = block_q[block_q["mapping"] == code]
+            record[f"q_{code}"] = float((side["action_code"] == "Q").mean())
         record["cells"] = pooled.loc[route]
         rows.append(record)
     return pd.DataFrame(rows).set_index("model_route")
@@ -208,7 +250,7 @@ def seat():
     return wide, per_route, seat_gap_ci(wide), seat_gap_ci(every)
 
 
-def draw_group_size(ax, fig, cells, route):
+def draw_group_size(ax, fig, cells, route, payoff):
     risks = sorted(cells["cell_risk"].unique())
     sizes = sorted(cells["n_players"].unique())
     rate = cells.pivot(index="cell_risk", columns="n_players", values="rate").loc[risks, sizes]
@@ -243,9 +285,13 @@ def draw_group_size(ax, fig, cells, route):
     cb.ax.tick_params(labelsize=S.FS_NOTE, length=1.6)
     cb.outline.set_visible(False)
     S.panel(ax, "a", "group size pushes play into the ceiling, not up a plane")
-    ax.annotate(wrap(f"{S.ROUTE_LABEL[route]}, {int(cells['races'].iloc[0])} races per cell. "
-                     "Hatched: the cell contained no safe decision at all, so it is pinned "
-                     "and its distance from the cells below is a floor, not an estimate.",
+    lo_n, hi_n = min(payoff), max(payoff)
+    ax.annotate(wrap(f"{S.ROUTE_LABEL[route]}, {int(cells['races'].iloc[0])} races per cell, "
+                     "self-play. Hatched: the cell contained no safe decision at all, so it "
+                     "is pinned and its distance from the cells below is a floor, not an "
+                     "estimate. The column is not group size alone: all-safe pays "
+                     f"{payoff[lo_n]:+.1f} at $N$={lo_n} and {payoff[hi_n]:+.1f} at "
+                     f"$N$={hi_n}.",
                      3.7),
                 xy=(0.0, -0.31), xycoords="axes fraction", ha="left", va="top",
                 fontsize=S.FS_NOTE, color=S.INK_2, annotation_clip=False,
@@ -316,9 +362,11 @@ def draw_representation(ax, row, route, *, show_x):
                 xytext=(0, 2.5), textcoords="offset points", ha="right", va="bottom",
                 fontsize=S.FS_NOTE, color=colour, fontweight="bold",
                 annotation_clip=False)
+    # "a null" was the wording here, and an interval reaching +14.3 pp is not a
+    # null, it is an interval that spans zero.  Say which one it is.
     ax.annotate(f"interaction {100 * row['interaction']:+.1f} pp "
-                f"[{100 * row['interaction_lo']:+.1f}, {100 * row['interaction_hi']:+.1f}], "
-                "a null",
+                f"[{100 * row['interaction_lo']:+.1f}, {100 * row['interaction_hi']:+.1f}] "
+                "spans 0",
                 xy=(0.0, 1.0), xycoords="axes fraction", xytext=(0, 2.5),
                 textcoords="offset points", ha="left", va="bottom",
                 fontsize=S.FS_NOTE, color=S.MUTED, annotation_clip=False)
@@ -400,7 +448,7 @@ def draw_seat(ax, per_route, pooled, allround, discordant):
                 textcoords="offset points", ha="left", va="top",
                 fontsize=S.FS_NOTE + 1.6, color=S.INK, fontweight="bold",
                 bbox=box, zorder=6)
-    ax.annotate(f"races resampled within route, all nine of them\n"
+    ax.annotate(f"self-play; races resampled within route, all nine\n"
                 f"{discordant[0]} of the {discordant[1]} discordant openings favour seat 2\n"
                 f"over every round the gap falls to {100 * am:+.1f} pp "
                 f"[{100 * alo:+.1f}, {100 * ahi:+.1f}]",
@@ -412,10 +460,12 @@ def draw_seat(ax, per_route, pooled, allround, discordant):
 
 
 def main() -> None:
-    route_a, cells = group_size_grid()
+    route_a, cells, payoff = group_size_grid()
     pinned_cells = int((cells["safe"] == 0).sum())
     print(f"  a  {S.ROUTE_LABEL[route_a]}, {len(cells)} cells, "
           f"{int(cells['decisions'].sum())} decisions, {pinned_cells} with zero safe decisions")
+    print("       all-safe payoff by group size: "
+          + ", ".join(f"N={n} {v:+.3f}" for n, v in sorted(payoff.items())))
     for _, c in cells.iterrows():
         print(f"       N={int(c['n_players'])} risk={c['cell_risk']:.1f}  "
               f"unsafe {c['rate']:6.2f}%  safe {int(c['safe']):3d}/{int(c['decisions'])}")
@@ -429,6 +479,9 @@ def main() -> None:
             print(f"       {name:12s} {100 * row[name]:+7.2f} pp "
                   f"[{100 * row[f'{name}_lo']:+7.2f}, {100 * row[f'{name}_hi']:+7.2f}]"
                   + ("   NULL" if row[f"{name}_lo"] < 0 < row[f"{name}_hi"] else ""))
+        print("       letter Q share by mapping: "
+              + ", ".join(f"{CODE_LABEL[c]} {100 * row['q_' + c]:.1f}%" for c in CODE)
+              + "   (a fixed letter habit would print one number twice)")
         gap = abs(row["code"] - row["code_identity"])
         print(f"       P(letter Q) = {100 * row['letter_q']:.2f}%, so 2(P(Q)-1/2) = "
               f"{100 * row['code_identity']:+.2f} pp against the code contrast "
@@ -479,7 +532,7 @@ def main() -> None:
     ax_b2 = fig.add_subplot(inner[1])
     ax_c = fig.add_subplot(gs[1, :])
 
-    draw_group_size(ax_a, fig, cells, route_a)
+    draw_group_size(ax_a, fig, cells, route_a, payoff)
 
     draw_representation(ax_b1, rep.loc[MAP_ROUTES[0]], MAP_ROUTES[0], show_x=False)
     draw_representation(ax_b2, rep.loc[MAP_ROUTES[1]], MAP_ROUTES[1], show_x=True)
@@ -489,10 +542,11 @@ def main() -> None:
     # point of the note, so it keeps both numbers and loses the sentence that
     # only restated them.
     ax_b2.annotate(
-        wrap("The surviving code effect is arithmetic: "
-             f"{100 * anchor['code']:.1f} pp is exactly twice this route's "
-             f"{100 * (0.5 - anchor['letter_q']):.1f} pp pull toward emitting the letter P, "
-             "an anchor on a letter rather than a representation effect.",
+        wrap("Parallel is not flat: frame "
+             f"{100 * anchor['frame']:+.1f} and code {100 * anchor['code']:+.1f} pp both move "
+             "this route. The code number restates its letter use, which is no fixed habit: "
+             f"Q on {100 * anchor['q_' + CODE[0]]:.0f}% of turns when Q means unsafe, "
+             f"{100 * anchor['q_' + CODE[1]]:.0f}% when Q means safe.",
              2.62),
         xy=(0.0, -0.46), xycoords="axes fraction", ha="left", va="top",
         fontsize=S.FS_NOTE, color=S.INK_2, annotation_clip=False, linespacing=1.45)

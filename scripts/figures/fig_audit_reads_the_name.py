@@ -15,16 +15,17 @@ put the admission line in exactly the same place.
 
 Panels
   a  The dumbbell.  Left anchor, the audit's verdict after sixty calls; right
-     anchor, the tier the name announces after none.  One connector per route,
-     and not one of them crosses the admission line.  The exact permutation
+     anchor, the tier the name announces after none.  Disagreement would read as
+     a bold size word above the dashed rule or a plain ``none`` below it, and
+     there is neither.  The exact permutation
      p-value is enumerated rather than sampled: with four size-word names among
      nine routes there are C(9,4) = 126 assignments of the tier labels and
      exactly one reproduces the verdict.
   b  Where the ordering comes from.  Accuracy per route per probe domain, with
-     the calls behind each column.  Two of the six domains are pinned at the top
-     for every route and carry no ordering at all; state reconstruction is the
-     domain that fails all four refused routes, and it is the only gate that
-     does.
+     the calls behind each column.  One of the six domains, stage payoff, is
+     pinned at the top for every route and carries no ordering at all; state
+     reconstruction is the domain that fails all four refused routes, and it is
+     the only gate that does.
   c  Rank correlation between each domain's accuracy and the risk response, the
      behavioural quantity the rest of the paper reports.  The domain that does
      the refusing is also the domain that tracks the behaviour, on nine points.
@@ -167,7 +168,19 @@ def exact_spearman(x: np.ndarray, y: np.ndarray, perms: np.ndarray) -> tuple[flo
     return rho, p
 
 
-def mark_cell(ax, i, j, light: bool, *, style: str):
+def tile_ink(value: float, lo: float, hi: float, cmap: str = "viridis") -> str:
+    """The ink that survives on the tile this value paints.
+
+    Viridis runs dark at the bottom and bright at the top, so a fixed cut on the
+    value is the wrong test at both ends: it puts white on yellow at one and
+    near-black on indigo at the other.  Ask the colormap for the colour it will
+    actually draw and take the ink from that colour's luminance instead.
+    """
+    r, g, b, _ = plt.get_cmap(cmap)((value - lo) / ((hi - lo) or 1.0))
+    return S.INK if (0.2126 * r + 0.7152 * g + 0.0722 * b) > 0.55 else S.SURFACE
+
+
+def mark_cell(ax, i, j, ink: str, *, style: str):
     """Flag one tile, in whichever ink survives that tile's own colour.
 
     Two marks, deliberately different in kind rather than in weight.  A gate
@@ -178,9 +191,11 @@ def mark_cell(ax, i, j, light: bool, *, style: str):
     """
     from matplotlib.patches import Rectangle
 
-    ink = S.INK if light else S.SURFACE
     if style == "gate":
-        ax.add_patch(Rectangle((j - 0.5, i - 0.5), 1.0, 1.0, fill=False,
+        # Inset, because the white gutter is painted along the tile edge, so a
+        # ring drawn on that edge is a ring drawn inside a white line: three of
+        # the six gate failures did not render at all until this moved inwards.
+        ax.add_patch(Rectangle((j - 0.42, i - 0.40), 0.84, 0.80, fill=False,
                                edgecolor=ink, lw=1.0, zorder=6))
         return
     # Well inside the tile, and a dot rather than a corner wedge: the white
@@ -310,9 +325,11 @@ def main() -> None:
         ax_a.annotate(head, xy=(x, ys[0]), xytext=(0, 7), textcoords="offset points",
                       ha="center", va="bottom", fontsize=S.FS_NOTE, color=S.INK,
                       fontweight="bold", linespacing=1.25)
+    # Below the rule, not beside the other note: at column width the two strings
+    # are 2.8 in of type in a 2.65 in panel and overprint each other.
     ax_a.annotate("filled marks admitted, open refused", xy=(1.0, line_y),
-                  xytext=(0, 1.5), textcoords="offset points", ha="right",
-                  va="bottom", fontsize=S.FS_NOTE, color=S.MUTED)
+                  xytext=(0, -2.5), textcoords="offset points", ha="right",
+                  va="top", fontsize=S.FS_NOTE, color=S.MUTED)
 
     ax_a.set_xlim(0.0, 1.0)
     ax_a.set_ylim(min(ys) - 0.5, max(ys) + 0.5)
@@ -349,16 +366,23 @@ def main() -> None:
                   textcoords="offset points", ha="right", va="bottom",
                   fontsize=S.FS_NOTE, color=S.MUTED, annotation_clip=False)
     lo, hi = 0.0, 100.0
+    # The module flips its tile text on a fixed cut in the value, which is right
+    # for a map that darkens as the value rises and wrong for viridis, which
+    # brightens.  Repaint each number in the ink its own tile can carry.
+    for text in ax_b.texts:
+        x, y = text.get_position()
+        if 0 <= round(y) < acc.shape[0] and 0 <= round(x) < acc.shape[1]:
+            text.set_color(tile_ink(acc[round(y), round(x)], lo, hi))
     for i in range(acc.shape[0]):
         for j, domain in enumerate(DOMAINS):
             value = acc[i, j]
-            light = (value - lo) / (hi - lo) > 0.62
+            ink = tile_ink(value, lo, hi)
             gate = thresholds.get(f"{domain}_accuracy_min")
             enforced = gate is not None and domain != "expected_payoff"
             if enforced and value < 100 * gate - 1e-9:
-                mark_cell(ax_b, i, j, light, style="gate")
+                mark_cell(ax_b, i, j, ink, style="gate")
             elif value in (0.0, 100.0):
-                mark_cell(ax_b, i, j, light, style="boundary")
+                mark_cell(ax_b, i, j, ink, style="boundary")
     ax_b.axhline(split - 0.5, color=S.INK, lw=0.9, ls=(0, (3, 2)), zorder=7)
     S.panel(ax_b, "b", "one domain does all the refusing", pad=17)
     cb = fig.colorbar(im, ax=ax_b, fraction=0.030, pad=0.035)
