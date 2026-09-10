@@ -80,6 +80,20 @@ def main() -> int:
         if not f.is_file():
             raise SystemExit(f"missing {f}; run scripts/build_publication.py first")
 
+    # This script copies a PDF; it does not compile one.  So a bundle can be
+    # built from a PDF older than the manuscript that is supposed to be inside
+    # it, and nothing downstream would notice: the file is valid, the anonymity
+    # scan passes, and the size looks right.  That happened once, and the zip
+    # that went out was missing a whole appendix while every gate reported clean.
+    for pdf, source in ((paper, PAPER_DIR / "main.tex"),
+                        (supp, PAPER_DIR / "supplementary.tex")):
+        if source.is_file() and pdf.stat().st_mtime < source.stat().st_mtime:
+            raise SystemExit(
+                f"{pdf.name} is older than {source.name}, so the bundle would "
+                "ship a manuscript that no longer matches its source. Run "
+                "scripts/build_publication.py, then build the bundle again."
+            )
+
     hits = scan(paper) + scan(supp)
     if hits and not args.allow_identifying:
         print("anonymity scan found identifying text:")
