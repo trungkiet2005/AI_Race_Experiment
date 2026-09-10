@@ -97,6 +97,7 @@ REQUEST_TIMEOUT_SECONDS = 120
 # older paths stay as fallbacks so the file still runs where they are mounted.
 REPO_INPUT_DIRS = (
     Path("/kaggle/input/datasets/daosyduyminh/ai-race-experiment-engine"),
+    Path("/kaggle/input/datasets/trungkiet/ai-race-experiment-engine"),
     Path("/kaggle/input/ai-race-experiment-engine"),
     Path("/kaggle/input/datasets/nguyenlamphuquy/ai-race-experiment"),
     Path("/kaggle/input/ai-race-experiment"),
@@ -781,6 +782,14 @@ def ai_race_nplayer_matched(llm) -> dict:
         "task_name": TASK_NAME,
         "model": _model_tag(contract["model_route"]),
         "model_route": contract["model_route"],
+        "executing_identity": os.environ.get("KAGGLE_USERNAME")
+        or os.environ.get("KAGGLE_KERNEL_RUN_OWNER")
+        or "unrecorded",
+        "identity_note": (
+            "Runs from different Kaggle identities are separate samples and are "
+            "never pooled without naming both, per the 2026-09-09 "
+            "collaborator-identity amendment."
+        ),
         "group_sizes": list(GROUP_SIZES),
         "repetitions_per_cell": repetitions,
         "races_per_group_size": races_per_size,
