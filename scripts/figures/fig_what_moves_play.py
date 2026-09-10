@@ -1,0 +1,438 @@
+"""Which features of the situation actually change how these routes play.
+
+Three manipulations were run against the same game.  Only one of them moves the
+play, and the other two are worth drawing precisely because they do not: a
+design factor that produces nothing is evidence about the construct, and a
+design factor that produces something for the wrong reason is worse than one
+that produces nothing at all.
+
+The claim.  Group size moves play and moves it into the ceiling, so the surface
+is a saturated corner rather than a plane.  Representation does not: the
+narrative frame and the opaque code do not interact, and the code effect that
+survives is not a representation effect but a fixed preference for one letter.
+The seat is supposed to be inert, its two prompts being symmetric word for word,
+and it is not quite inert at the opening.
+
+Panels
+  a  The matched group-size grid, four group sizes by three risk levels, one
+     route.  Colour is the unsafe rate, the printed second line is the number of
+     safe decisions the cell actually contained.  Five cells contain none, and
+     those are hatched, because a cell with no safe decision in it has no room
+     left to move and is not a measurement of how much larger the effect could
+     have been.
+  b  The crossed representation design, two factors and two routes, drawn on a
+     common thirty-point vertical span so a slope in the upper panel is the same
+     slope as in the lower one.  Parallel lines are the finding.  The code
+     effect is then re-expressed as what it algebraically is: twice the route's
+     excess tendency to emit one particular letter, an identity the script
+     checks rather than asserts.
+  c  The two seats, whose prompts are symmetric, at the opening move of every
+     race.  Four routes open unsafe from both seats in all thirty races and sit
+     on the ceiling, where a seat effect could not appear even if it existed, so
+     the pooled gap is carried by the routes with room.
+
+What this figure does NOT show.  Panel a is one route, so nothing here separates
+a property of group size from a property of that route in groups; the twelve
+cells are matched to each other and to nothing outside the grid.  Panel b tests
+two factors on two routes at one prompt version, and a null there is a null for
+this design, not evidence that representation is inert in general; the letter
+identity is arithmetic about this counterbalancing and says nothing about why a
+route prefers a letter.  Panel c is a validity check: it establishes that the
+seat is not perfectly inert, and it does not licence reading the direction as a
+finding about first-mover psychology.  None of the three panels is a causal
+estimate outside the manipulated factor, and no interval here is corrected for
+asking three questions on one figure.
+"""
+
+from __future__ import annotations
+
+import sys
+import textwrap
+from pathlib import Path
+
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+from matplotlib.patches import Rectangle
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+import figstyle as S  # noqa: E402
+import figdata as D  # noqa: E402
+
+N_BOOT = 20000
+SEED = 20260910
+
+FRAME = {"technology_race": "race story", "abstract_game": "neutral"}
+FRAME_LS = {"technology_race": "-", "abstract_game": (0, (2.6, 1.6))}
+CODE = ["P_SAFE_Q_UNSAFE", "Q_SAFE_P_UNSAFE"]
+CODE_LABEL = {"P_SAFE_Q_UNSAFE": "Safe = P", "Q_SAFE_P_UNSAFE": "Safe = Q"}
+MAP_ROUTES = ["anthropic/claude-sonnet-5@default", "google/gemini-3-flash-preview"]
+
+# One vertical span for both representation panels.  The two routes sit thirty
+# points apart, and a panel autoscaled to its own cells would draw the smaller
+# route's slopes at three times the gradient of the larger one's, which is the
+# one thing an interaction plot must not do.
+B_SPAN = 30.0
+
+# Half the horizontal separation between the two seats of one route.
+SEAT_DX = 0.115
+
+
+def wrap(text, inches, *, fs=None):
+    """Wrap a note to the width of the panel it hangs under.
+
+    An unwrapped note is drawn as one long line, and ``bbox_inches='tight'``
+    then measures the figure as that line's width, so ``save`` rescales the
+    whole figure to fit a sentence.
+    """
+    chars = max(20, int(inches * 72.0 / ((fs or S.FS_NOTE) * 0.50)))
+    return "\n".join(textwrap.wrap(" ".join(text.split()), chars))
+
+
+def ci(values):
+    """Percentile interval over independent units, seeded once."""
+    return D.cluster_bootstrap_ci(values, n_boot=N_BOOT, seed=SEED)
+
+
+def seat_gap_ci(paired: pd.DataFrame):
+    """Race-clustered interval that resamples races within their own route.
+
+    The design fixes thirty races per route, so an unstratified resample would
+    let a draw weight the routes unequally and would carry variance the design
+    does not have.
+    """
+    rng = np.random.default_rng(SEED)
+    blocks = [g["d"].to_numpy() for _, g in paired.groupby("model_route")]
+    draws = np.concatenate(
+        [b[rng.integers(0, b.size, size=(N_BOOT, b.size))] for b in blocks], axis=1
+    ).mean(axis=1)
+    return (float(paired["d"].mean()),
+            float(np.percentile(draws, 2.5)),
+            float(np.percentile(draws, 97.5)))
+
+
+def group_size_grid():
+    turns = D.matched_cells()
+    route = turns["model"].unique()
+    if len(route) != 1:
+        raise SystemExit(f"panel a expects one route, found {list(route)}")
+    cells = turns.groupby(["cell_risk", "n_players"]).agg(
+        decisions=("unsafe", "size"), unsafe=("unsafe", "sum"),
+        races=("game_id", "nunique")).reset_index()
+    cells["safe"] = cells["decisions"] - cells["unsafe"]
+    cells["rate"] = 100 * cells["unsafe"] / cells["decisions"]
+    return str(route[0]), cells
+
+
+def representation():
+    turns = D.mapping_turns()
+    # The horizon draw is shared across the four cells of a repetition, so a
+    # repetition is a genuine matched quadruple and the contrast can be taken
+    # inside it rather than between two independent samples.
+    shared = turns.groupby(["model_route", "max_private_risk", "repetition"])[
+        "horizon_draws_sha256"].nunique()
+    if (shared != 1).any():
+        raise SystemExit("repetitions do not share a horizon draw; pairing is unsound")
+
+    per_pair = turns.groupby(
+        ["model_route", "max_private_risk", "repetition", "context", "mapping"]
+    )["unsafe"].mean().unstack(["context", "mapping"])
+    pooled = turns.groupby(["model_route", "context", "mapping"])["unsafe"].mean()
+    letter_q = turns.assign(is_q=(turns["action_code"] == "Q").astype(float)).groupby(
+        ["model_route", "max_private_risk", "repetition"])["is_q"].mean()
+
+    rows = []
+    for route in MAP_ROUTES:
+        block = per_pair.loc[route]
+        tp = block[("technology_race", CODE[0])]
+        tq = block[("technology_race", CODE[1])]
+        ap = block[("abstract_game", CODE[0])]
+        aq = block[("abstract_game", CODE[1])]
+        contrasts = {
+            "interaction": (tp - tq) - (ap - aq),
+            "code": 0.5 * ((tp + ap) - (tq + aq)),
+            "frame": 0.5 * ((tp + tq) - (ap + aq)),
+        }
+        record = {"model_route": route, "pairs": len(block)}
+        for name, series in contrasts.items():
+            m, lo, hi = ci(series.to_numpy())
+            record.update({name: m, f"{name}_lo": lo, f"{name}_hi": hi})
+        # The counterbalancing makes the code contrast an identity, not an
+        # effect: under one mapping Unsafe is the letter Q and under the other it
+        # is the letter P, so their difference is 2 P(Q) - 1 whatever the route
+        # is doing about the game.  Checked here so the figure can say so.
+        record["letter_q"] = float(letter_q.loc[route].mean())
+        record["code_identity"] = 2 * (record["letter_q"] - 0.5)
+        record["cells"] = pooled.loc[route]
+        rows.append(record)
+    return pd.DataFrame(rows).set_index("model_route")
+
+
+def seat():
+    turns = D.baseline_turns()
+    opening = turns[turns["round"] == 1]
+    wide = opening.pivot_table(index=["model_route", "game_id"], columns="player",
+                               values="unsafe").reset_index()
+    wide["d"] = wide["Company_2"] - wide["Company_1"]
+    per_route = wide.groupby("model_route").agg(
+        seat1=("Company_1", "mean"), seat2=("Company_2", "mean"),
+        d=("d", "mean"), races=("game_id", "size"))
+
+    every = turns.pivot_table(index=["model_route", "game_id"], columns="player",
+                              values="unsafe").reset_index()
+    every["d"] = every["Company_2"] - every["Company_1"]
+    return wide, per_route, seat_gap_ci(wide), seat_gap_ci(every)
+
+
+def draw_group_size(ax, fig, cells, route):
+    risks = sorted(cells["cell_risk"].unique())
+    sizes = sorted(cells["n_players"].unique())
+    rate = cells.pivot(index="cell_risk", columns="n_players", values="rate").loc[risks, sizes]
+    safe = cells.pivot(index="cell_risk", columns="n_players", values="safe").loc[risks, sizes]
+    arr = rate.to_numpy(dtype=float)
+    per_size = {int(n): int(cells[cells["n_players"] == n]["decisions"].iloc[0]) for n in sizes}
+
+    im = S.heat_tiles(
+        ax, arr,
+        [f"{r:g}" for r in risks],
+        [f"{n:g}\n({per_size[int(n)]})" for n in sizes],
+        cmap="viridis", vmin=50.0, vmax=100.0, fmt=None,
+    )
+    for i in range(arr.shape[0]):
+        for j in range(arr.shape[1]):
+            pinned = safe.iat[i, j] == 0
+            tone = S.SURFACE if (arr[i, j] - 50.0) / 50.0 <= 0.62 else S.INK
+            ax.text(j, i - 0.15, f"{arr[i, j]:.0f}%", ha="center", va="center",
+                    fontsize=S.FS_NOTE + 1.0, color=tone, fontweight="bold", zorder=4)
+            ax.text(j, i + 0.22, f"{int(safe.iat[i, j])} safe",
+                    ha="center", va="center", fontsize=S.FS_NOTE, zorder=4,
+                    color=tone, style="italic" if pinned else "normal",
+                    fontweight="bold" if pinned else "normal")
+            if pinned:
+                ax.add_patch(Rectangle((j - 0.5, i - 0.5), 1.0, 1.0, fill=False,
+                                       edgecolor=S.INK, hatch="////", lw=0.0,
+                                       zorder=2, alpha=0.55))
+    ax.set_xlabel("group size $N$   (decisions in the cell)", labelpad=1.5)
+    ax.set_ylabel("max private risk $p_r^{\\max}$", labelpad=2)
+    cb = fig.colorbar(im, ax=ax, fraction=0.030, pad=0.02)
+    cb.set_label("Unsafe (%)", fontsize=S.FS_NOTE, labelpad=2)
+    cb.ax.tick_params(labelsize=S.FS_NOTE, length=1.6)
+    cb.outline.set_visible(False)
+    S.panel(ax, "a", "group size pushes play into the ceiling, not up a plane")
+    ax.annotate(wrap(f"{S.ROUTE_LABEL[route]}, {int(cells['races'].iloc[0])} races per cell. "
+                     "Hatched: the cell contained no safe decision at all, so it is pinned "
+                     "and its distance from the cells below is a floor, not an estimate.",
+                     3.7),
+                xy=(0.0, -0.31), xycoords="axes fraction", ha="left", va="top",
+                fontsize=S.FS_NOTE, color=S.INK_2, annotation_clip=False,
+                linespacing=1.45)
+
+
+def draw_representation(ax, row, route, *, show_x):
+    colour = S.ROUTE_C[route]
+    cells = row["cells"]
+    values = {(c, m): 100 * cells[(c, m)] for c in FRAME for m in CODE}
+    upper = max(FRAME, key=lambda c: values[(c, CODE[0])] + values[(c, CODE[1])])
+
+    top = max(values.values())
+    if top > 95.0:
+        # Snap the window to the boundary rather than centring it, so the reader
+        # sees how little room the highest cell has left above it.
+        lo, hi = 100.0 - B_SPAN, 100.0
+    else:
+        centre = float(np.mean(list(values.values())))
+        lo = 5.0 * round((centre - B_SPAN / 2) / 5.0)
+        hi = lo + B_SPAN
+
+    for frame in FRAME:
+        ys = [values[(frame, m)] for m in CODE]
+        above = frame == upper
+        ax.plot([0, 1], ys, ls=FRAME_LS[frame], color=colour, lw=1.15,
+                marker=S.ROUTE_M[route], ms=3.0, mec=S.SURFACE, mew=0.6,
+                clip_on=False, zorder=3)
+        for x, y in zip((0, 1), ys):
+            # A cell within five points of an edge has no room for a label there,
+            # and one placed anyway would sit on the ceiling rule or under the
+            # axis, so it goes out sideways instead.
+            if (above and y > hi - 5.0) or (not above and y < lo + 5.0):
+                ax.annotate(f"{y:.0f}", xy=(x, y), xytext=(-5.0 if x == 0 else 5.0, 0),
+                            textcoords="offset points",
+                            ha="right" if x == 0 else "left", va="center",
+                            fontsize=S.FS_NOTE, color=colour, zorder=4)
+            else:
+                ax.annotate(f"{y:.0f}", xy=(x, y), xytext=(0, 4.4 if above else -4.4),
+                            textcoords="offset points", ha="center",
+                            va="bottom" if above else "top",
+                            fontsize=S.FS_NOTE, color=colour, zorder=4)
+        # Series names instead of a legend.  Staggered in x and pushed clear of
+        # the pair, because on the flatter route the two lines are three points
+        # apart and a label centred on one of them would break the other.  A name
+        # hung off the right end instead would push the tight bounding box past
+        # the column and make ``save`` rescale the whole figure to fit it.
+        lx = 0.24 if above else 0.76
+        ax.annotate(FRAME[frame], xy=(lx, ys[0] + lx * (ys[1] - ys[0])),
+                    xytext=(0, 5.0 if above else -5.0), textcoords="offset points",
+                    ha="center", va="bottom" if above else "top",
+                    fontsize=S.FS_NOTE, color=colour, zorder=5,
+                    bbox=dict(facecolor=S.SURFACE, edgecolor="none", pad=0.9))
+
+    if hi >= 99.99:
+        S.ceiling_rule(ax, 100.0, label="")
+        ax.annotate("ceiling", xy=(0.01, 100.0), xycoords=("axes fraction", "data"),
+                    xytext=(0, -2), textcoords="offset points", ha="left", va="top",
+                    fontsize=S.FS_NOTE, color=S.MUTED)
+    ax.set_xlim(-0.22, 1.22)
+    ax.set_ylim(lo, hi)
+    ax.set_yticks([lo, lo + B_SPAN / 2, hi])
+    ax.set_xticks([0, 1])
+    ax.set_xticklabels([CODE_LABEL[m] for m in CODE] if show_x else ["", ""])
+    S.strip(ax, grid_axis="y")
+    ax.set_ylabel("Unsafe (%)", labelpad=2)
+    ax.annotate(S.ROUTE_LABEL[route], xy=(1.0, 1.0), xycoords="axes fraction",
+                xytext=(0, 2.5), textcoords="offset points", ha="right", va="bottom",
+                fontsize=S.FS_NOTE, color=colour, fontweight="bold",
+                annotation_clip=False)
+    ax.annotate(f"interaction {100 * row['interaction']:+.1f} pp "
+                f"[{100 * row['interaction_lo']:+.1f}, {100 * row['interaction_hi']:+.1f}], "
+                "a null",
+                xy=(0.0, 1.0), xycoords="axes fraction", xytext=(0, 2.5),
+                textcoords="offset points", ha="left", va="bottom",
+                fontsize=S.FS_NOTE, color=S.MUTED, annotation_clip=False)
+
+
+def draw_seat(ax, per_route, pooled, allround, discordant):
+    # Routes with room first, largest gap leftmost, and the four that are pinned
+    # at the ceiling gathered on the right, so the eye reads the gap where it can
+    # exist before it reaches the routes where it could not.
+    pinned = (per_route["seat1"] >= 1) & (per_route["seat2"] >= 1)
+    order = list(per_route.assign(pinned=pinned).sort_values(
+        ["pinned", "d", "seat1"], ascending=[True, False, True]).index)
+    xs = np.arange(len(order), dtype=float)
+    for x, route in zip(xs, order):
+        row = per_route.loc[route]
+        y1, y2 = 100 * row["seat1"], 100 * row["seat2"]
+        colour = S.ROUTE_C[route]
+        # The two seats are drawn side by side rather than on one abscissa: five
+        # of the nine routes give the two seats identical rates, and stacked on
+        # one x those five would each render as a single marker, which is the one
+        # reading this panel must not invite.
+        ax.plot([x - SEAT_DX, x + SEAT_DX], [y1, y2], color=colour, lw=1.1,
+                zorder=2, solid_capstyle="round")
+        S.dot(ax, x - SEAT_DX, y1, color=colour, marker="o", size=17, filled=False)
+        S.dot(ax, x + SEAT_DX, y2, color=colour, marker=S.ROUTE_M[route], size=17)
+        if pinned[route]:
+            ax.annotate("pinned", xy=(x, 100.0), xytext=(0, 6.5),
+                        textcoords="offset points", ha="center", va="bottom",
+                        fontsize=S.FS_NOTE, color=S.MUTED, style="italic")
+        elif abs(y2 - y1) > 1.0:
+            ax.annotate(f"{y2 - y1:+.0f}", xy=(x + SEAT_DX, 0.5 * (y1 + y2)),
+                        xytext=(5.0, 0), textcoords="offset points",
+                        ha="left", va="center",
+                        fontsize=S.FS_NOTE, color=colour, fontweight="bold")
+
+    S.ceiling_rule(ax, 100.0, label="")
+    ax.annotate("ceiling: a pinned route is already here in both seats", xy=(0.006, 100.0),
+                xycoords=("axes fraction", "data"), xytext=(0, 3),
+                textcoords="offset points", ha="left", va="bottom",
+                fontsize=S.FS_NOTE, color=S.MUTED)
+    ax.set_xticks(xs)
+    ax.set_xticklabels([S.ROUTE_SHORT[r] for r in order])
+    for tick, route in zip(ax.get_xticklabels(), order):
+        tick.set_color(S.ROUTE_C[route])
+    ax.set_xlim(-0.75, len(order) - 0.25)
+    S.rate_axis(ax, label="Opening move: unsafe (%)")
+    ax.set_ylim(-9, 116)
+    S.strip(ax, grid_axis="y")
+
+    first = order[0]
+    S.direct_label(ax, xs[0] - SEAT_DX, 100 * per_route.loc[first, "seat1"], "seat 1",
+                   color=S.ROUTE_C[first], ha="right", dx=-5)
+    S.direct_label(ax, xs[0] + SEAT_DX, 100 * per_route.loc[first, "seat2"], "seat 2",
+                   color=S.ROUTE_C[first], ha="right", dx=-6)
+    m, lo, hi = pooled
+    am, alo, ahi = allround
+    # Anchored in the block the pinned routes leave empty, to the right of every
+    # route that still has room, so no line of it crosses a marker.
+    ax.annotate(
+        wrap(f"Seat 2 opens unsafe {100 * m:+.1f} pp more often than seat 1 "
+             f"[{100 * lo:+.1f}, {100 * hi:+.1f}], resampling races within route. "
+             f"Of the {discordant[1]} races whose openings differed, {discordant[0]} went "
+             f"that way. Over all rounds the gap falls to {100 * am:+.1f} pp "
+             f"[{100 * alo:+.1f}, {100 * ahi:+.1f}]: a small asymmetry in a prompt pair "
+             "that is symmetric word for word, and one no pinned route could have "
+             "shown.", 2.85),
+        xy=(0.995, 0.05), xycoords="axes fraction", ha="right", va="bottom",
+        fontsize=S.FS_NOTE, color=S.INK_2, linespacing=1.45)
+    S.panel(ax, "c", "the seat is meant to be inert; at the opening it is not quite")
+
+
+def main() -> None:
+    route_a, cells = group_size_grid()
+    pinned_cells = int((cells["safe"] == 0).sum())
+    print(f"  a  {S.ROUTE_LABEL[route_a]}, {len(cells)} cells, "
+          f"{int(cells['decisions'].sum())} decisions, {pinned_cells} with zero safe decisions")
+    for _, c in cells.iterrows():
+        print(f"       N={int(c['n_players'])} risk={c['cell_risk']:.1f}  "
+              f"unsafe {c['rate']:6.2f}%  safe {int(c['safe']):3d}/{int(c['decisions'])}")
+    if pinned_cells != 5:
+        print(f"  !! expected 5 ceiling cells, computed {pinned_cells}")
+
+    rep = representation()
+    for route, row in rep.iterrows():
+        print(f"  b  {S.ROUTE_SHORT[route]}  {row['pairs']} matched repetitions")
+        for name in ("interaction", "code", "frame"):
+            print(f"       {name:12s} {100 * row[name]:+7.2f} pp "
+                  f"[{100 * row[f'{name}_lo']:+7.2f}, {100 * row[f'{name}_hi']:+7.2f}]"
+                  + ("   NULL" if row[f"{name}_lo"] < 0 < row[f"{name}_hi"] else ""))
+        gap = abs(row["code"] - row["code_identity"])
+        print(f"       P(letter Q) = {100 * row['letter_q']:.2f}%, so 2(P(Q)-1/2) = "
+              f"{100 * row['code_identity']:+.2f} pp against the code contrast "
+              f"{100 * row['code']:+.2f} pp, |difference| {100 * gap:.6f} pp")
+        if gap > 1e-9:
+            print("  !! the counterbalancing identity does not hold")
+
+    paired, per_route, pooled, allround = seat()
+    disc = paired[paired["d"] != 0]
+    discordant = (int((disc["d"] > 0).sum()), int(len(disc)))
+    print(f"  c  {len(paired)} races, seat gap at the opening "
+          f"{100 * pooled[0]:+.2f} pp [{100 * pooled[1]:+.2f}, {100 * pooled[2]:+.2f}], "
+          f"all rounds {100 * allround[0]:+.2f} pp "
+          f"[{100 * allround[1]:+.2f}, {100 * allround[2]:+.2f}]")
+    print(f"       {discordant[0]} of {discordant[1]} discordant openings favour seat 2; "
+          f"{int(((per_route['seat1'] >= 1) & (per_route['seat2'] >= 1)).sum())} routes pinned")
+    for route, row in per_route.iterrows():
+        print(f"       {S.ROUTE_SHORT[route]:>9}  seat1 {100 * row['seat1']:5.1f}  "
+              f"seat2 {100 * row['seat2']:5.1f}  gap {100 * row['d']:+5.1f}")
+
+    fig = plt.figure(figsize=(S.TEXT, 4.25))
+    gs = fig.add_gridspec(2, 2, height_ratios=[1.30, 1.00],
+                          width_ratios=[1.46, 1.00], hspace=0.92, wspace=0.30)
+    ax_a = fig.add_subplot(gs[0, 0])
+    inner = gs[0, 1].subgridspec(2, 1, hspace=0.55)
+    ax_b1 = fig.add_subplot(inner[0])
+    ax_b2 = fig.add_subplot(inner[1])
+    ax_c = fig.add_subplot(gs[1, :])
+
+    draw_group_size(ax_a, fig, cells, route_a)
+
+    draw_representation(ax_b1, rep.loc[MAP_ROUTES[0]], MAP_ROUTES[0], show_x=False)
+    draw_representation(ax_b2, rep.loc[MAP_ROUTES[1]], MAP_ROUTES[1], show_x=True)
+    S.panel(ax_b1, "b", "frame and code do not interact", pad=13)
+    anchor = rep.loc[MAP_ROUTES[1]]
+    ax_b2.annotate(
+        wrap("What the surviving code effect is. Swapping which letter denotes Safe moves "
+             f"this route {100 * anchor['code']:.1f} pp, and because the assignment is "
+             "counterbalanced that is exactly twice its "
+             f"{100 * (0.5 - anchor['letter_q']):.1f} pp pull toward emitting the letter P. "
+             "An identity, not a result: a letter anchor rather than a representation effect.",
+             2.5),
+        xy=(0.0, -0.50), xycoords="axes fraction", ha="left", va="top",
+        fontsize=S.FS_NOTE, color=S.INK_2, annotation_clip=False, linespacing=1.45)
+
+    draw_seat(ax_c, per_route, pooled, allround, discordant)
+
+    S.save(fig, "what_moves_play", width=S.TEXT)
+
+
+if __name__ == "__main__":
+    main()
