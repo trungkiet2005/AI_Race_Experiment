@@ -78,6 +78,11 @@ kaggle.json
 !/results/derived/payoff_scale_contract/**
 !/results/derived/capacity_family_protocol_contract/
 !/results/derived/capacity_family_protocol_contract/**
+!/results/derived/nplayer_matched_campaign/
+!/results/derived/nplayer_matched_campaign/**
+!/results/derived/scripted_opponent_campaign/
+!/results/derived/scripted_opponent_campaign/**
+!/results/derived/baseline_replication.json
 !/results/capacity_family/
 !/results/capacity_family/**
 !/results/catalog.json
