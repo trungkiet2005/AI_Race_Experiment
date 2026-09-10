@@ -64,8 +64,35 @@ TASK_NAME = "ai-race-nplayer-matched"
 PROTOCOL_ID = "ai-race-nplayer-matched-hosted-confirmatory-v1"
 # Every group size the engine supports, run under one protocol so that the
 # two-player arm is a condition of this experiment rather than a separate lane.
-GROUP_SIZES = (2, 3, 4, 5)
-RISK_LEVELS = (0.1, 0.6, 0.9)
+GROUP_SIZES_FROZEN = (2, 3, 4, 5)
+RISK_LEVELS_FROZEN = (0.1, 0.6, 0.9)
+
+
+def _selected(env_name: str, frozen: tuple, cast) -> tuple:
+    """Restrict this invocation to a declared subset of the frozen grid.
+
+    A Model Proxy identity sustains far fewer requests than the whole sweep
+    needs, so the sweep is collected one (group size, risk) cell at a time. The
+    subset only chooses which cells this run collects; it can never introduce a
+    value that was not frozen, and the manifest records what was selected so a
+    partial collection cannot be read as the whole design.
+    """
+    raw = os.environ.get(env_name)
+    if not raw:
+        return frozen
+    chosen = tuple(cast(part.strip()) for part in raw.split(",") if part.strip())
+    unknown = [value for value in chosen if value not in frozen]
+    if unknown:
+        raise ValueError(
+            f"{env_name} names {unknown}, which is not in the frozen grid {frozen}"
+        )
+    if not chosen:
+        raise ValueError(f"{env_name} selected nothing")
+    return chosen
+
+
+GROUP_SIZES = _selected("AI_RACE_GROUP_SIZES", GROUP_SIZES_FROZEN, int)
+RISK_LEVELS = _selected("AI_RACE_RISKS", RISK_LEVELS_FROZEN, float)
 # Frozen before the run. See the module docstring for why this is 10 and not 60.
 CONFIRMATORY_REPETITIONS = 10
 # Ten races in a cell supports a race-clustered interval and no more; the repo
@@ -268,8 +295,8 @@ def _task_source_runtime_sha256() -> str:
         (
             TASK_NAME,
             PROTOCOL_ID,
-            GROUP_SIZES,
-            RISK_LEVELS,
+            GROUP_SIZES_FROZEN,
+            RISK_LEVELS_FROZEN,
             CONFIRMATORY_REPETITIONS,
             BASE_SEED,
             CONFIRMATORY_MODEL_ROUTES,
@@ -363,6 +390,7 @@ def _mechanism_snapshot() -> dict:
                     f"Game {game['name']!r} does not use the neutral N={n} roster"
                 )
     snapshot["groupSizes"] = list(GROUP_SIZES)
+    snapshot["groupSizesFrozen"] = list(GROUP_SIZES_FROZEN)
     snapshot["agentsByGroupSize"] = {
         str(n): by_size[n][0]["agents"] for n in GROUP_SIZES
     }
@@ -791,6 +819,23 @@ def ai_race_nplayer_matched(llm) -> dict:
             "collaborator-identity amendment."
         ),
         "group_sizes": list(GROUP_SIZES),
+        "group_sizes_frozen": list(GROUP_SIZES_FROZEN),
+        "risk_levels": [float(r) for r in RISK_LEVELS],
+        "risk_levels_frozen": [float(r) for r in RISK_LEVELS_FROZEN],
+        "is_partial_collection": (
+            tuple(GROUP_SIZES) != GROUP_SIZES_FROZEN
+            or tuple(RISK_LEVELS) != RISK_LEVELS_FROZEN
+        ),
+        "partial_collection_note": (
+            "The sweep is collected one (group size, risk) cell at a time "
+            "because a Model Proxy identity cannot sustain the whole design. "
+            "Every cell is collected whole, with all its repetitions, so it "
+            "still supports a race-clustered interval, and the game seed is "
+            "independent of the treatment and of the seat count so repetitions "
+            "still pair across cells collected separately. A run that covers "
+            "less than the frozen grid is not the sweep and must not be "
+            "reported as one."
+        ),
         "repetitions_per_cell": repetitions,
         "races_per_group_size": races_per_size,
         "expected_races_total": races_per_size * len(GROUP_SIZES),
