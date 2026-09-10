@@ -1,0 +1,15 @@
+{
+  "schema_version": "matched-cell-collection-receipt-v1",
+  "recorded_at": "2026-09-10",
+  "cell": {
+    "n_players": 5,
+    "max_private_risk": 0.6
+  },
+  "executing_identity": "tnkiet",
+  "identity_source": "Recorded at ingestion from the Kaggle account that owned and ran the task; the server exposes no identity variable to task code.",
+  "model_route": "google/gemini-3-flash-preview",
+  "declared_in": "docs/matched-nplayer-collection-plan-2026-09-10.md",
+  "n_races": 10,
+  "n_decisions": 440,
+  "parse_failures": 0
+}

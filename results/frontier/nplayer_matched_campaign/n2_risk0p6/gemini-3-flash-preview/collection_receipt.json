@@ -1,0 +1,15 @@
+{
+  "schema_version": "matched-cell-collection-receipt-v1",
+  "recorded_at": "2026-09-10",
+  "cell": {
+    "n_players": 2,
+    "max_private_risk": 0.6
+  },
+  "executing_identity": "foundnotkiet",
+  "identity_source": "Recorded at ingestion from the Kaggle account that owned the task and ran it. The task itself cannot read the identity: the server exposes neither KAGGLE_USERNAME nor KAGGLE_KERNEL_RUN_OWNER to task code, so the manifest's executing_identity field reads 'unrecorded'.",
+  "model_route": "google/gemini-3-flash-preview",
+  "declared_in": "docs/matched-nplayer-collection-plan-2026-09-10.md",
+  "n_races": 10,
+  "n_decisions": 176,
+  "parse_failures": 0
+}
