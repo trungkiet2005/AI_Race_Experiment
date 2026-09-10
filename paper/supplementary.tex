@@ -2086,17 +2086,23 @@ exactly, at $1.0$, $0.6$, $2.4$, $2.0$, which
 task is pushed, together with the invariance of every other mechanism field and
 the sharing of the horizon draw described below.
 
-\paragraph{What was collected, and how.} Four cells, one per group size, at the
-medium private-risk condition $p_r^{\max}=0.6$, ten repetitions each, on the
-admitted route \texttt{google/gemini-3-flash-preview}. That is 40 races and
-1{,}232 decisions with zero parse failures. The scope was fixed before any of it
-was run, in a plan committed beforehand: no Model Proxy identity available to us
-sustains the whole four-by-three grid, which needs roughly 7{,}800 requests, so
-the comparison was reduced to one risk level rather than run at a size that
-would put every cell below the five-race floor this supplement uses elsewhere.
-The remaining two risk levels are not collected, and the claim here is
-accordingly a group-size comparison \emph{at the medium risk condition} and not
-a statement about the risk grid.
+\paragraph{What was collected, and how.} Eight cells: every group size at the
+low and medium private-risk conditions $p_r^{\max}=0.1$ and $0.6$, ten
+repetitions each, on the admitted route
+\texttt{google/\discretionary{}{}{}gemini-\discretionary{}{}{}3-\discretionary{}{}{}flash-\discretionary{}{}{}preview}. That is 80 races and 2{,}464
+decisions
+with zero parse failures. No Model Proxy identity available to us sustains the
+whole four-by-three grid, which needs roughly 7{,}800 requests, so the sweep was
+partitioned into the analysis unit itself, one (group size, risk) cell of ten
+repetitions, and each cell was collected whole on one identity so that it
+carries its own race-clustered interval rather than being stitched together
+across accounts. Cells were assigned to identities in a plan committed before
+the first was started, and the assignment rotates across risk levels so that no
+identity is confounded with a group size; every cell records its collecting
+identity in the artifact. The high-risk condition $p_r^{\max}=0.9$ is reported
+here only if all four of its cells were collected, since
+\texttt{scripts/\discretionary{}{}{}analyze\_\discretionary{}{}{}nplayer\_\discretionary{}{}{}matched.py}
+refuses to report a risk level that is missing an arm.
 
 Each cell was collected on a different Kaggle identity, again by a plan fixed in
 advance rather than by retrying until something succeeded: $N=2$ on one account,
@@ -2116,12 +2122,14 @@ comparison. The analyser re-derives that pairing from the recorded game seed
 instead of assuming it, and it holds for all ten blocks in every contrast.
 
 \begin{table}[h]
-    \caption{Matched group-size comparison at $p_r^{\max}=0.6$ on
+    \caption{Matched group-size comparison on
     \texttt{google/gemini-3-flash-preview}. Ten races per cell, zero parse
-    failures. Rates carry 95\% percentile bootstrap intervals over races; the
-    contrast is the mean difference against the two-player arm within a
-    repetition block, with its interval taken over the ten blocks. Horizon
-    pairing was verified for 10 of 10 blocks in every row.}
+    failures throughout. Rates carry 95\% percentile bootstrap intervals over
+    races; the contrast is the mean difference against the two-player arm within
+    a repetition block, with its interval taken over the ten blocks. Horizon
+    pairing was verified for 10 of 10 blocks in every row. At $p_r^{\max}=0.1$
+    every cell is at the ceiling, so its intervals have zero width: that is an
+    absence of variation in the sample, not precision.}
     \label{tab:nplayer-matched}
     \centering
     \small
@@ -2129,29 +2137,50 @@ instead of assuming it, and it holds for all ten blocks in every contrast.
         \toprule
         $N$ & Decisions & \Unsafe{} rate (95\% CI) & \multicolumn{2}{c}{minus $N{=}2$ (95\% CI)} \\
         \midrule
-        2 & 176 & 68.8\% (65.4--72.5) & \multicolumn{2}{l}{baseline} \\
-        3 & 264 & 80.3\% (75.9--83.8) & $+11.1$ pp & ($+6.4$ to $+15.1$) \\
-        4 & 352 & 98.3\% (95.6--100.0) & $+28.2$ pp & ($+22.8$ to $+33.2$) \\
-        5 & 440 & 100.0\% (100.0--100.0) & $+31.0$ pp & ($+26.4$ to $+35.6$) \\
+        \multicolumn{5}{@{}l}{\emph{Low private risk,} $p_r^{\max}=0.1$} \\
+        2 & 176 & 100.0\% (100.0--100.0) & \multicolumn{2}{l}{baseline} \\
+        3 & 264 & 100.0\% (100.0--100.0) & $+0.0$ pp & ($+0.0$ to $+0.0$) \\
+        4 & 352 & 100.0\% (100.0--100.0) & $+0.0$ pp & ($+0.0$ to $+0.0$) \\
+        5 & 440 & 100.0\% (100.0--100.0) & $+0.0$ pp & ($+0.0$ to $+0.0$) \\
+        \midrule
+        \multicolumn{5}{@{}l}{\emph{Medium private risk,} $p_r^{\max}=0.6$} \\
+        2 & 176 & 68.8\% (65.2--72.4) & \multicolumn{2}{l}{baseline} \\
+        3 & 264 & 80.3\% (76.0--83.8) & $+11.1$ pp & ($+6.3$ to $+15.1$) \\
+        4 & 352 & 98.3\% (95.6--100.0) & $+28.2$ pp & ($+22.6$ to $+33.2$) \\
+        5 & 440 & 100.0\% (100.0--100.0) & $+31.0$ pp & ($+26.4$ to $+35.3$) \\
         \bottomrule
     \end{tabular}
 \end{table}
 
-\paragraph{What it shows.} \Unsafe{} play rises monotonically with the number of
-competing companies and then saturates: at five companies this route chose
-\Unsafe{} on every one of its 440 decisions. All three contrasts against the
-two-player arm exclude zero. Because the two-player arm is the headline game
-itself, the comparison also says something about the rest of the paper: the
-two-player results are the low end of this curve, not a special case beside it.
+\paragraph{What it shows.} At the medium risk condition, \Unsafe{} play rises
+monotonically with the number of competing companies and then saturates: at five
+companies this route chose \Unsafe{} on every one of its 440 decisions, and all
+three contrasts against the two-player arm exclude zero. Because the two-player
+arm is the headline game itself, this also says something about the rest of the
+paper: the two-player results are the low end of that curve, not a special case
+beside it.
+
+The low risk condition is where the comparison becomes informative about its own
+limits. There, every cell is at $100\%$, so the group-size contrast is exactly
+zero at every size. The right reading is not that group size stops mattering
+when private risk is low. It is that this route is already at the ceiling before
+any competitor is added, so the design has no room left in which an effect could
+appear. The same route reaches $98.9\%$ and $100.0\%$ \Unsafe{} at
+$p_r^{\max}=0.1$ in the two independent neutral-baseline runs of
+\S\ref{app:baseline-replication}, collected under a different protocol on a
+different engine, so the ceiling is a property of the route at low risk rather
+than an artifact of this sweep. A group-size effect is therefore visible only in
+the interior of the risk range, which is a statement about where this
+measurement has power and not about where the mechanism operates.
 
 \paragraph{What it does not show.} Group size cannot be separated from
 everything that comes with it, and no analysis repairs that. The group-count
 rule makes the stage payoff depend on how many companies there are, and the
 state description names each of them, so a larger group is also a different
 payoff and a longer prompt. The estimand is therefore the effect of group size
-\emph{within this game's own definition}. The comparison covers one route, one
-risk level and ten races per cell, so it is not a claim about endpoints, about
-the risk grid, or about a population of models. It is regenerated by
+\emph{within this game's own definition}. The comparison covers one route and ten
+races per cell, so it is not a claim about endpoints or about a population of
+models. It is regenerated by
 \texttt{scripts/analyze\_nplayer\_matched.py}, which refuses to report a risk
 level unless all four group sizes are present, refuses a cell with a parse
 failure or the wrong seat count, and records the collecting identity of every

@@ -1,0 +1,15 @@
+{
+  "schema_version": "matched-cell-collection-receipt-v1",
+  "cell": {
+    "n_players": 5,
+    "max_private_risk": 0.1
+  },
+  "executing_identity": "foundnotkiet",
+  "identity_source": "Supplied at ingestion, because the benchmark server exposes no identity variable to task code; the run manifest's own field therefore reads 'unrecorded'.",
+  "model_route": "google/gemini-3-flash-preview",
+  "declared_in": "docs/matched-nplayer-collection-plan-2026-09-10-extension.md",
+  "protocol_id": "ai-race-nplayer-matched-hosted-confirmatory-v1",
+  "n_races": 10,
+  "n_decisions": 440,
+  "parse_failures": 0
+}

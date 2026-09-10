@@ -1,0 +1,29 @@
+{
+  "task_name": "ai-race-nplayer-matched",
+  "protocol_id": "ai-race-nplayer-matched-hosted-confirmatory-v1",
+  "execution_profile": "confirmatory",
+  "model": "google-gemini-3-flash-preview",
+  "model_route": "google/gemini-3-flash-preview",
+  "n_players": 4,
+  "n_races": 10,
+  "n_player_rows": 40,
+  "n_decisions": 352,
+  "repetitions_per_risk": 10,
+  "risk_counts": {
+    "0.1": 10
+  },
+  "parse_failures": 0,
+  "mean_rounds": 8.8,
+  "usage": {
+    "decision_attempts": 352,
+    "requests": 352,
+    "transport_retries": 0,
+    "request_errors": 0,
+    "input_tokens": 267680,
+    "output_tokens": 2464,
+    "input_cost_nanodollars": 133840000,
+    "output_cost_nanodollars": 7392000,
+    "total_cost_usd": 0.141232
+  },
+  "output_dir": "results/ai_race_nplayer_matched/google-gemini-3-flash-preview/n4"
+}

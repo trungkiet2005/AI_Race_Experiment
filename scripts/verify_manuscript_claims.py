@@ -299,6 +299,15 @@ mrows = list(csv.DictReader(open("results/derived/nplayer_matched_campaign/nplay
 by_n = {int(r["n_players"]): r for r in mrows if r["risk"] == "0.6"}
 check("the matched sweep covers all four group sizes at risk 0.6",
       sorted(by_n) == [2, 3, 4, 5], f"group sizes {sorted(by_n)}")
+by_n01 = {int(r["n_players"]): r for r in mrows if r["risk"] == "0.1"}
+check("the matched sweep also covers all four group sizes at risk 0.1",
+      sorted(by_n01) == [2, 3, 4, 5], f"group sizes {sorted(by_n01)}")
+check("every risk-0.1 cell is at the ceiling, so its contrast is exactly zero",
+      all(float(by_n01[n]["unsafe_rate"]) == 1.0 for n in (2, 3, 4, 5)),
+      ", ".join(f"N={n}:{100 * float(by_n01[n]['unsafe_rate']):.1f}%" for n in (2, 3, 4, 5)))
+check("risk-0.1 decision counts match risk 0.6",
+      [int(by_n01[n]["n_decisions"]) for n in (2, 3, 4, 5)] == [176, 264, 352, 440],
+      str([int(by_n01[n]["n_decisions"]) for n in (2, 3, 4, 5)]))
 check("every matched cell has ten races and no parse failure",
       all(int(r["n_races"]) == 10 for r in by_n.values()),
       ", ".join(f"N={n}:{by_n[n]['n_races']}" for n in sorted(by_n)))
@@ -317,7 +326,7 @@ check("each matched cell records the identity that collected it",
       ", ".join(f"N={n}:{by_n[n]['executing_identity']}" for n in sorted(by_n)))
 
 mc = mm["paired_contrasts"]["google/gemini-3-flash-preview"]["0.6"]
-for n, expect in (("3", (11.1, 6.4, 15.1)), ("4", (28.2, 22.8, 33.2)), ("5", (31.0, 26.4, 35.6))):
+for n, expect in (("3", (11.1, 6.3, 15.1)), ("4", (28.2, 22.6, 33.2)), ("5", (31.0, 26.4, 35.3))):
     got = (round(100 * mc[n]["mean_difference"], 1),
            round(100 * mc[n]["ci95_low"], 1),
            round(100 * mc[n]["ci95_high"], 1))
@@ -328,6 +337,10 @@ check("every matched contrast excludes zero",
 check("horizon pairing verified for every matched contrast",
       all(mc[n]["pairing_verified"] and mc[n]["n_blocks"] == 10 for n in ("3", "4", "5")),
       "10 of 10 blocks in each")
+
+check("each cell's interval is derived from that cell alone",
+      "cell_rng" in open("scripts/analyze_nplayer_matched.py", encoding="utf-8").read(),
+      "per-cell generator, so adding a risk level cannot move a reported interval")
 
 # --- run-to-run replication of one baseline cell -----------------------------
 rp = json.load(open("results/derived/baseline_replication.json", encoding="utf-8"))

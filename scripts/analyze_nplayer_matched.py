@@ -155,6 +155,21 @@ def load_cell(entry: dict, n_players: int, risk: str) -> tuple[dict[str, dict], 
     return races, problems
 
 
+def cell_rng(*key) -> np.random.Generator:
+    """A generator determined by the cell alone, not by the campaign around it.
+
+    A single generator threaded through every cell makes each interval depend on
+    how many cells were analysed before it, so collecting one more risk level
+    silently moves the intervals of the levels already reported.  Deriving the
+    stream from a stable digest of the cell's own identity keeps a cell's
+    interval reproducible whatever else is in the tree.
+    """
+    digest = hashlib.sha256(
+        "|".join(str(part) for part in key).encode("utf-8")
+    ).digest()
+    return np.random.default_rng([SEED, int.from_bytes(digest[:8], "big")])
+
+
 def cluster_bootstrap(cells: list[tuple[int, int]], rng: np.random.Generator):
     unsafe = np.array([c[0] for c in cells], dtype=float)
     total = np.array([c[1] for c in cells], dtype=float)
@@ -259,7 +274,6 @@ def main() -> None:
             refused.setdefault(route, []).extend(problems)
             continue
 
-        rng = np.random.default_rng(SEED)
         for risk in complete_risks:
             for n in GROUP_SIZES:
                 cells_for_boot = [
@@ -267,7 +281,9 @@ def main() -> None:
                 ]
                 supported = len(cells_for_boot) >= MIN_RACES_FOR_INFERENCE
                 if supported:
-                    point, low, high = cluster_bootstrap(cells_for_boot, rng)
+                    point, low, high = cluster_bootstrap(
+                        cells_for_boot, cell_rng("rate", route, risk, n)
+                    )
                 else:
                     point = sum(c[0] for c in cells_for_boot) / max(
                         sum(c[1] for c in cells_for_boot), 1
@@ -288,7 +304,9 @@ def main() -> None:
                     }
                 )
             contrasts.setdefault(route, {})[risk] = {
-                str(n): paired_group_size_contrast(by_risk[risk], n, rng)
+                str(n): paired_group_size_contrast(
+                    by_risk[risk], n, cell_rng("contrast", route, risk, n)
+                )
                 for n in GROUP_SIZES
                 if n != BASELINE_SIZE
             }

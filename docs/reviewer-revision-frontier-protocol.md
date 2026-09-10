@@ -182,15 +182,33 @@ size. Every cell records its collecting identity in a
 `collection_receipt.json`, because the benchmark server exposes no identity
 variable to task code.
 
-What this produced: `maxPrivateRisk = 0.6` complete at all four group sizes,
-reported in the supplement. Risk 0.1 has only its two-player cell, the
-three-player cell having failed twice with HTTP 429 route congestion
-(`results/failed_runs/nplayer_matched_n3_risk0p1_hunhtrungkit_20260910.json`),
-and risk 0.9 was not reached. `scripts/analyze_nplayer_matched.py` refuses to
-report a risk level missing any group size, so the incomplete levels are held
-and not published. The two-player cell at risk 0.1 is retained in the tree
-anyway, because discarding a cell that was collected exactly as planned merely
-because its neighbours were not collected would be a silent edit of the record.
+What this produced: `maxPrivateRisk = 0.6` and `0.1` both complete at all four
+group sizes, reported in the supplement. The three-player cell at risk 0.1 first
+failed twice with HTTP 429 route congestion, retained as
+`results/failed_runs/nplayer_matched_n3_risk0p1_hunhtrungkit_20260910.json`, and
+was later collected on its assigned identity once the route was no longer
+congested. That is a retry of the same cell on the same declared identity, not a
+rotation: nothing about the assignment moved because a run failed. Risk 0.9 is
+in collection at the time of writing and is reported only if all four of its
+cells arrive, since `scripts/analyze_nplayer_matched.py` refuses a risk level
+missing any group size.
+
+Two facts about risk 0.1 belong in the record rather than only in the paper.
+Every cell sits at 100 per cent unsafe, so every contrast is exactly zero and
+every bootstrap interval has zero width. That is an absence of variation in the
+sample, not precision, and it means the route is already at the ceiling before a
+competitor is added rather than that group size stops mattering at low risk.
+The same route reaches 98.9 and 100.0 per cent unsafe at risk 0.1 in the two
+independent neutral-baseline runs, collected under a different protocol on a
+different engine, so the ceiling is a property of the route.
+
+One reproducibility defect was found and fixed while collecting this level. The
+analyser threaded a single bootstrap generator through every cell, so each
+interval depended on how many cells had been analysed before it, and adding risk
+0.1 moved the already-reported risk-0.6 intervals by up to 0.2 points. Each cell
+now derives its generator from a digest of its own identity (`cell_rng`), so a
+cell's interval is reproducible whatever else is in the tree, and the supplement
+carries the corrected values.
 
 ## 2026-09-10 - archive reconciliation
 
