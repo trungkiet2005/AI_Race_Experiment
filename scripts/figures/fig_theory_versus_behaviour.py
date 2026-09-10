@@ -20,12 +20,15 @@ wide, and the three configured levels are not separable in the answers.
 
 Panels
   a  The model at both declared selection strengths, on 201 risks, against the
-     nine route profiles at the three configured risks.  Eight routes are a
-     shallow ramp inside a narrow band.  Claude Opus 5 is the exception, and it
-     is an exception in the wrong place: it has a cliff of its own, somewhere in
-     the gap between 0.1 and 0.6 where the protocol ran no level, while the
-     model's cliff is above 0.6.  Its saturated cells sit on marked boundaries,
-     because 0% and 100% are measurements with no room beside them.
+     nine route profiles at the three configured risks.  Eight of the routes are
+     drawn in one grey inside their own band, labelled once: they are the
+     context, and which of them is which is panel b's question and panel c's,
+     not this one's.  Claude Opus 5 keeps its colour because it is the exception
+     the panel argues about, and it is an exception in the wrong place: it has a
+     cliff of its own, somewhere in the gap between 0.1 and 0.6 where the
+     protocol ran no level, while the model's cliff is above 0.6.  Its saturated
+     cells sit on marked boundaries and carry their decision counts, because 0%
+     and 100% are measurements with no room beside them.
   b  The inversion as a slope chart: configured risk on the left at full scale,
      the risk the model would need in order to emit the observed rate on the
      right at the same full scale.  The fan closes.
@@ -51,6 +54,7 @@ that movement could possibly cover.
 from __future__ import annotations
 
 import sys
+import textwrap
 from dataclasses import replace
 from pathlib import Path
 
@@ -271,9 +275,34 @@ def report(res: dict) -> dict:
                   f"{[round(100 * float(obs.loc[route, level]), 1) for level in bad]}% "
                   f"over {[int(counts.loc[route, level]) for level in bad]} decisions")
 
+    # A cell at 0% or 100% is a saturated cell, and the count is what stops a
+    # reader from taking it for a rate that merely happened to land there.  The
+    # count is also the reason the inversion refuses it, so the panel that draws
+    # the boundary and the panel that refuses it quote the same number.
+    boundary = {}
+    for rate in (1.0, 0.0):
+        levels = [level for level in obs.columns if float(obs.loc[OPUS, level]) == rate]
+        if levels:
+            boundary[rate] = {
+                "levels": levels,
+                "decisions": int(counts.loc[OPUS, levels].sum()),
+            }
+            print(f"  {S.ROUTE_SHORT[OPUS]:>9} sits on {100 * rate:.0f}% at "
+                  f"{[float(level) for level in levels]}, "
+                  f"{boundary[rate]['decisions']} decisions with no room beside them")
+
     return {"facts": facts, "reference": reference, "cliff": cliff,
             "step_width": step_width, "model_slope": model_slope, "slopes": slopes,
-            "band": band, "width": width, "span": span, "refused": refused}
+            "band": band, "width": width, "span": span, "refused": refused,
+            "boundary": boundary}
+
+
+def spoken(levels) -> str:
+    """``[0.6, 0.9]`` as ``0.6 and 0.9``, for a note a reader reads aloud."""
+    names = [f"{float(level):g}" for level in levels]
+    if len(names) == 1:
+        return names[0]
+    return ", ".join(names[:-1]) + " and " + names[-1]
 
 
 def panel_a(ax, res, d) -> None:
@@ -283,11 +312,16 @@ def panel_a(ax, res, d) -> None:
     lo = 100 * obs.loc[others].min(axis=0).to_numpy()
     hi = 100 * obs.loc[others].max(axis=0).to_numpy()
     ax.fill_between(risks, lo, hi, color=S.BAND, zorder=1, lw=0)
+    # Eight routes in one grey.  Their identities are spent in panels b and c,
+    # and eight hues crossing each other here would read as eight arguments
+    # where the panel is making one: the band is a ramp and the model is not.
+    # The markers stay so the three configured levels remain visible as the only
+    # places anything was measured.
     for route in others:
-        ax.plot(risks, 100 * obs.loc[route].to_numpy(), lw=0.75,
-                color=S.ROUTE_C[route], marker=S.ROUTE_M[route], ms=2.5,
-                mec=S.SURFACE, mew=0.4, zorder=3, clip_on=False)
-    ax.plot(risks, 100 * obs.loc[OPUS].to_numpy(), lw=1.5, color=S.ROUTE_C[OPUS],
+        ax.plot(risks, 100 * obs.loc[route].to_numpy(), lw=0.55, color=S.MUTED,
+                marker="o", ms=1.7, mfc=S.MUTED, mec=S.MUTED, zorder=2,
+                clip_on=False)
+    ax.plot(risks, 100 * obs.loc[OPUS].to_numpy(), lw=1.6, color=S.ROUTE_C[OPUS],
             marker=S.ROUTE_M[OPUS], ms=4.0, mec=S.SURFACE, mew=0.6, zorder=5,
             clip_on=False)
     for beta in sorted(curves, reverse=True):
@@ -297,18 +331,29 @@ def panel_a(ax, res, d) -> None:
     S.rate_axis(ax, label="Unsafe play (%)")
     S.risk_axis(ax, label=r"maximum private risk $p_r^{\max}$")
     ax.set_xlim(0.0, 1.15)
-    # The floor of the axes sits well below zero on purpose: it is where the
-    # note about the unrun gap goes, and putting it there keeps it off the data.
-    ax.set_ylim(-15, 108)
+    # The floor of the axes sits well below zero on purpose: it is where the two
+    # notes about Claude Opus 5 go, and putting them there keeps them off the
+    # data instead of on top of the curve they are about.
+    ax.set_ylim(-23, 108)
     S.strip(ax, grid_axis="y")
     S.ceiling_rule(ax, 100.0, label="ceiling")
     S.ceiling_rule(ax, 0.0, label="floor")
 
+    # The cliff note is a leader into open sky above the weak curve and right of
+    # the drop, not a caption over the panel title: the strip above the axes
+    # belongs to the claim, and a note that has to live there is a note in the
+    # wrong place.
     ax.axvline(d["cliff"], color=S.MUTED, lw=0.6, ls=(0, (1.5, 1.8)), zorder=2)
-    ax.annotate(f"{d['facts'][d['reference']]['drop']:.0f} points in one "
-                f"{d['step_width']:.3f} step",
-                xy=(d["cliff"], 102.5), ha="center", va="bottom",
-                fontsize=S.FS_NOTE, color=S.INK)
+    S.direct_label(ax, 0.715, 97.0, f"model, $\\beta$ = {d['reference']:g}",
+                   color=BETA_C[d["reference"]], ha="left", va="top", dx=0, dy=0,
+                   weight="bold")
+    ax.annotate(f"{d['facts'][d['reference']]['drop']:.0f} points of unsafe play\n"
+                f"in one {d['step_width']:.3f} step of risk",
+                xy=(d["cliff"], 85.0), xytext=(0.715, 90.5), textcoords="data",
+                ha="left", va="top", fontsize=S.FS_NOTE, color=S.INK,
+                linespacing=1.35,
+                arrowprops=dict(arrowstyle="->", lw=0.6, color=S.INK,
+                                shrinkA=3.0, shrinkB=0.0))
 
     # Opus falls between two configured levels and the protocol ran no level in
     # between, so the only honest statement about where its cliff is, is that it
@@ -317,27 +362,42 @@ def panel_a(ax, res, d) -> None:
     ax.annotate("", xy=(gap[0], -4.5), xytext=(gap[1], -4.5),
                 arrowprops=dict(arrowstyle="<->", lw=0.6, color=S.ROUTE_C[OPUS],
                                 shrinkA=0, shrinkB=0))
-    ax.annotate("Opus 5's own cliff is in here;\nno level was run inside it",
-                xy=(0.5 * (gap[0] + gap[1]), -6.0), ha="center", va="top",
-                fontsize=S.FS_NOTE, color=S.ROUTE_C[OPUS], linespacing=1.3)
+    ax.annotate("Opus 5's cliff is in here;\nno level was run inside",
+                xy=(0.5 * (gap[0] + gap[1]), -7.5), ha="center", va="top",
+                fontsize=S.FS_NOTE, color=S.ROUTE_C[OPUS], linespacing=1.35)
 
-    # Both model labels go where the two strengths are furthest apart, which is
-    # past the cliff: below the floor the strong point has already reached, and
-    # above the tail the weak one is still descending.
-    weak, strong = min(curves), d["reference"]
-    for beta, at, dy, ha, va in ((weak, 0.705, 3.5, "left", "bottom"),
-                                 (strong, 0.860, -3.5, "center", "top")):
-        i = int(round(at * (len(RISK_GRID) - 1)))
-        S.direct_label(ax, RISK_GRID[i], 100 * curves[beta][i],
-                       f"model, $\\beta$ = {beta:g}", color=BETA_C[beta],
-                       ha=ha, va=va, dx=4 if ha == "left" else 0, dy=dy,
-                       weight="bold")
+    # The saturated cells are marked with their counts, in the strip beside the
+    # gap note, because a reader who sees a line lying on 0 has to be told
+    # whether that is a small rate or a rate with nowhere left to fall.
+    said = []
+    for rate, word in ((1.0, "unsafe"), (0.0, "safe")):
+        cell = d["boundary"].get(rate)
+        if cell:
+            # The noun is said once and the second clause inherits it, because
+            # three lines of note fit under this axes and four do not.
+            noun = " decisions" if not said else ""
+            said.append(f"{word} in all {cell['decisions']}{noun} at "
+                        f"{spoken(cell['levels'])}")
+    if said:
+        ax.annotate("\n".join(textwrap.wrap("Opus 5 is " + ", ".join(said), 28)),
+                    xy=(1.15, -7.5), ha="right", va="top", fontsize=S.FS_NOTE,
+                    color=S.ROUTE_C[OPUS], linespacing=1.35)
+
+    # The weak curve is named on the tail it is still descending, which is the
+    # only stretch where the two strengths are far enough apart for a label to
+    # belong to one of them without ambiguity.  The reference strength is named
+    # above, on the step that is its whole shape.
+    weak = min(curves)
+    i = int(round(0.705 * (len(RISK_GRID) - 1)))
+    S.direct_label(ax, RISK_GRID[i], 100 * curves[weak][i],
+                   f"model, $\\beta$ = {weak:g}", color=BETA_C[weak],
+                   ha="left", va="bottom", dx=4, dy=3.5, weight="bold")
     S.direct_label(ax, risks[0], 100.0, "Claude Opus 5", color=S.ROUTE_C[OPUS],
                    dx=4, dy=4.5, weight="bold")
     ends = 100 * obs.loc[others, obs.columns[-1]].to_numpy()
     ax.plot([0.945, 0.945], [ends.min(), ends.max()], color=S.MUTED, lw=0.8,
             clip_on=False, zorder=4)
-    S.direct_label(ax, 0.965, ends.mean(), "the other\neight routes", color=S.INK_2)
+    S.direct_label(ax, 0.965, ends.mean(), "the other\neight routes", color=S.MUTED)
     S.panel(ax, "a", "the model steps off a cliff; the routes walk down a ramp")
 
 

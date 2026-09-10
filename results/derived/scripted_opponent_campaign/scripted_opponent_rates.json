@@ -1,7 +1,7 @@
 {
   "schema_version": "scripted-opponent-campaign-v1",
   "protocol_id": "ai-race-scripted-opponent-v1",
-  "n_cells": 2,
+  "n_cells": 6,
   "refused": [],
   "rates": [
     {
@@ -33,6 +33,66 @@
         0,
         1
       ]
+    },
+    {
+      "opponent_strategy": "AS",
+      "max_private_risk": 0.6,
+      "n_races": 10,
+      "n_route_decisions": 93,
+      "unsafe_rate": 0.17204301075268819,
+      "ci95_low": 0.125,
+      "ci95_high": 0.24,
+      "inference_supported": true,
+      "executing_identity": "hunhtrungkit",
+      "seats_used": [
+        0,
+        1
+      ]
+    },
+    {
+      "opponent_strategy": "CAS",
+      "max_private_risk": 0.6,
+      "n_races": 10,
+      "n_route_decisions": 93,
+      "unsafe_rate": 0.7419354838709677,
+      "ci95_low": 0.7,
+      "ci95_high": 0.7849462365591398,
+      "inference_supported": true,
+      "executing_identity": "kit567",
+      "seats_used": [
+        0,
+        1
+      ]
+    },
+    {
+      "opponent_strategy": "CAS",
+      "max_private_risk": 0.9,
+      "n_races": 10,
+      "n_route_decisions": 93,
+      "unsafe_rate": 0.6774193548387096,
+      "ci95_low": 0.6288659793814433,
+      "ci95_high": 0.7333333333333333,
+      "inference_supported": true,
+      "executing_identity": "hunhtrungkit",
+      "seats_used": [
+        0,
+        1
+      ]
+    },
+    {
+      "opponent_strategy": "CS",
+      "max_private_risk": 0.9,
+      "n_races": 10,
+      "n_route_decisions": 93,
+      "unsafe_rate": 0.5698924731182796,
+      "ci95_low": 0.5411764705882353,
+      "ci95_high": 0.5977011494252874,
+      "inference_supported": true,
+      "executing_identity": "kit567",
+      "seats_used": [
+        0,
+        1
+      ]
     }
   ],
   "paired_contrasts": {
@@ -41,6 +101,15 @@
         "mean_difference": 0.7346701909201909,
         "ci95_low": 0.6787286324786325,
         "ci95_high": 0.7859648337773337,
+        "n_blocks": 10,
+        "pairing_verified": true
+      }
+    },
+    "0.9": {
+      "rival_opened_unsafe_minus_safe": {
+        "mean_difference": 0.11491452991452991,
+        "ci95_low": 0.045,
+        "ci95_high": 0.19760683760683756,
         "n_blocks": 10,
         "pairing_verified": true
       }

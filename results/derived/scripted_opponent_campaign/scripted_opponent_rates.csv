@@ -1,3 +1,7 @@
 opponent_strategy,max_private_risk,n_races,n_route_decisions,unsafe_rate,ci95_low,ci95_high,inference_supported,executing_identity,seats_used
 AS,0.1,10,93,0.24731182795698925,0.21052631578947367,0.29577464788732394,True,kit567,"[0, 1]"
 AU,0.1,10,93,1.0,1.0,1.0,True,hunhtrungkit,"[0, 1]"
+AS,0.6,10,93,0.17204301075268819,0.125,0.24,True,hunhtrungkit,"[0, 1]"
+CAS,0.6,10,93,0.7419354838709677,0.7,0.7849462365591398,True,kit567,"[0, 1]"
+CAS,0.9,10,93,0.6774193548387096,0.6288659793814433,0.7333333333333333,True,hunhtrungkit,"[0, 1]"
+CS,0.9,10,93,0.5698924731182796,0.5411764705882353,0.5977011494252874,True,kit567,"[0, 1]"

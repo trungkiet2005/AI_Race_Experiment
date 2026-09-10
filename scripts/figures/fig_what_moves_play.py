@@ -29,7 +29,13 @@ Panels
   c  The two seats, whose prompts are symmetric, at the opening move of every
      race.  Four routes open unsafe from both seats in all thirty races and sit
      on the ceiling, where a seat effect could not appear even if it existed, so
-     the pooled gap is carried by the routes with room.
+     the pooled gap is carried by the routes with room.  Both boundaries are
+     marked: the four routes at the ceiling and the one seat that opened unsafe
+     in none of its thirty races.  The pooled number
+     divides by all nine routes, because all nine were run under the same design
+     with thirty races each.  A route whose measured gap came out at zero is a
+     result and not a defect, so none is dropped: the script prints what the
+     other denominators would have given, and every one of them is larger.
 
 What this figure does NOT show.  Panel a is one route, so nothing here separates
 a property of group size from a property of that route in groups; the twelve
@@ -39,7 +45,11 @@ this design, not evidence that representation is inert in general; the letter
 identity is arithmetic about this counterbalancing and says nothing about why a
 route prefers a letter.  Panel c is a validity check: it establishes that the
 seat is not perfectly inert, and it does not licence reading the direction as a
-finding about first-mover psychology.  None of the three panels is a causal
+finding about first-mover psychology.  Its pooled gap is an average over these
+nine routes and not an estimate of the seat effect a route would show if it had
+room: four routes are at the ceiling in both seats and can only pull the average
+toward zero, so the number is a floor on the asymmetry rather than a measure of
+its size.  None of the three panels is a causal
 estimate outside the manipulated factor, and no interval here is corrected for
 asking three questions on one figure.
 """
@@ -76,6 +86,15 @@ B_SPAN = 30.0
 
 # Half the horizontal separation between the two seats of one route.
 SEAT_DX = 0.115
+
+# A value label that will not fit beside its own marker goes out sideways, and
+# the two sides do not need the same room.  Each representation panel is 36 pt
+# of plot for a thirty point span, so a 6.2 pt note hung below a marker occupies
+# 11.6 pt, which is 9.6 of those units, and anything closer to the floor than
+# that lands on the bottom spine and the tick row.  Above the axes there is only
+# open gutter, so a note there may overhang it.
+BELOW_PAD = 9.6
+ABOVE_PAD = 5.0
 
 
 def wrap(text, inches, *, fs=None):
@@ -137,7 +156,12 @@ def representation():
     per_pair = turns.groupby(
         ["model_route", "max_private_risk", "repetition", "context", "mapping"]
     )["unsafe"].mean().unstack(["context", "mapping"])
-    pooled = turns.groupby(["model_route", "context", "mapping"])["unsafe"].mean()
+    # The cells the panel draws have to be the same estimand as the contrasts it
+    # annotates.  Pooling every decision of a cell weights a long race more than
+    # a short one, and the contrasts are means over repetitions, so the two
+    # disagree by up to 1.9 pp and a reader who does the arithmetic on the four
+    # drawn numbers does not get the number printed above them.
+    pooled = per_pair.groupby("model_route").mean()
     letter_q = turns.assign(is_q=(turns["action_code"] == "Q").astype(float)).groupby(
         ["model_route", "max_private_risk", "repetition"])["is_q"].mean()
 
@@ -251,10 +275,10 @@ def draw_representation(ax, row, route, *, show_x):
                 marker=S.ROUTE_M[route], ms=3.0, mec=S.SURFACE, mew=0.6,
                 clip_on=False, zorder=3)
         for x, y in zip((0, 1), ys):
-            # A cell within five points of an edge has no room for a label there,
+            # A cell too close to an edge has no room for a label there,
             # and one placed anyway would sit on the ceiling rule or under the
             # axis, so it goes out sideways instead.
-            if (above and y > hi - 5.0) or (not above and y < lo + 5.0):
+            if (above and y > hi - ABOVE_PAD) or (not above and y < lo + BELOW_PAD):
                 ax.annotate(f"{y:.0f}", xy=(x, y), xytext=(-5.0 if x == 0 else 5.0, 0),
                             textcoords="offset points",
                             ha="right" if x == 0 else "left", va="center",
@@ -324,7 +348,15 @@ def draw_seat(ax, per_route, pooled, allround, discordant):
             ax.annotate("pinned", xy=(x, 100.0), xytext=(0, 6.5),
                         textcoords="offset points", ha="center", va="bottom",
                         fontsize=S.FS_NOTE, color=S.MUTED, style="italic")
-        elif abs(y2 - y1) > 1.0:
+        elif min(y1, y2) <= 0.0:
+            # The other boundary, and it is a boundary in the same sense: this
+            # seat opened unsafe in none of its thirty races, so the gap beside
+            # it is measured off a floor rather than off a rate.
+            floor_x = x - SEAT_DX if y1 <= y2 else x + SEAT_DX
+            ax.annotate("floor", xy=(floor_x, min(y1, y2)), xytext=(5.0, 0),
+                        textcoords="offset points", ha="left", va="center",
+                        fontsize=S.FS_NOTE, color=S.MUTED, style="italic")
+        if abs(y2 - y1) > 1.0:
             ax.annotate(f"{y2 - y1:+.0f}", xy=(x + SEAT_DX, 0.5 * (y1 + y2)),
                         xytext=(5.0, 0), textcoords="offset points",
                         ha="left", va="center",
@@ -351,18 +383,31 @@ def draw_seat(ax, per_route, pooled, allround, discordant):
                    color=S.ROUTE_C[first], ha="right", dx=-6)
     m, lo, hi = pooled
     am, alo, ahi = allround
-    # Anchored in the block the pinned routes leave empty, to the right of every
-    # route that still has room, so no line of it crosses a marker.
-    ax.annotate(
-        wrap(f"Seat 2 opens unsafe {100 * m:+.1f} pp more often than seat 1 "
-             f"[{100 * lo:+.1f}, {100 * hi:+.1f}], resampling races within route. "
-             f"Of the {discordant[1]} races whose openings differed, {discordant[0]} went "
-             f"that way. Over all rounds the gap falls to {100 * am:+.1f} pp "
-             f"[{100 * alo:+.1f}, {100 * ahi:+.1f}]: a small asymmetry in a prompt pair "
-             "that is symmetric word for word, and one no pinned route could have "
-             "shown.", 2.85),
-        xy=(0.995, 0.05), xycoords="axes fraction", ha="right", va="bottom",
-        fontsize=S.FS_NOTE, color=S.INK_2, linespacing=1.45)
+    # A stat block rather than a paragraph: the sentence is the panel's claim,
+    # and a five-line paragraph anchored to the foot of the axes sat on the
+    # bottom spine and let the gridlines run through its type.  The rectangle
+    # the pinned routes leave under the ceiling is the only region of this panel
+    # where the block crosses no marker, so the three pieces hang off one anchor
+    # in that block and cannot drift apart.  Each carries a surface-coloured box
+    # so the y grid stops at the type instead of striking through it.
+    box = dict(facecolor=S.SURFACE, edgecolor="none", pad=0.9)
+    head = (0.555, 0.80)
+    ax.annotate("Opening move, seat 2 minus seat 1", xy=head,
+                xycoords="axes fraction", ha="left", va="top",
+                fontsize=S.FS_NOTE, color=S.MUTED, bbox=box, zorder=6)
+    ax.annotate(f"{100 * m:+.1f} pp   [{100 * lo:+.1f}, {100 * hi:+.1f}]", xy=head,
+                xycoords="axes fraction", xytext=(0, -10.5),
+                textcoords="offset points", ha="left", va="top",
+                fontsize=S.FS_NOTE + 1.6, color=S.INK, fontweight="bold",
+                bbox=box, zorder=6)
+    ax.annotate(f"races resampled within route, all nine of them\n"
+                f"{discordant[0]} of the {discordant[1]} discordant openings favour seat 2\n"
+                f"over every round the gap falls to {100 * am:+.1f} pp "
+                f"[{100 * alo:+.1f}, {100 * ahi:+.1f}]",
+                xy=head, xycoords="axes fraction", xytext=(0, -25.5),
+                textcoords="offset points", ha="left", va="top",
+                fontsize=S.FS_NOTE, color=S.INK_2, linespacing=1.5,
+                bbox=box, zorder=6)
     S.panel(ax, "c", "the seat is meant to be inert; at the opening it is not quite")
 
 
@@ -404,9 +449,30 @@ def main() -> None:
         print(f"       {S.ROUTE_SHORT[route]:>9}  seat1 {100 * row['seat1']:5.1f}  "
               f"seat2 {100 * row['seat2']:5.1f}  gap {100 * row['d']:+5.1f}")
 
-    fig = plt.figure(figsize=(S.TEXT, 4.25))
-    gs = fig.add_gridspec(2, 2, height_ratios=[1.30, 1.00],
-                          width_ratios=[1.46, 1.00], hspace=0.92, wspace=0.30)
+    # The denominator is the whole disagreement about this number, so print what
+    # every other denominator would have given rather than leaving a reader to
+    # guess which one the panel drew.  Dropping a route because its measured gap
+    # came out at zero is selection on the outcome, and it is not the reason the
+    # panel keeps all nine: the panel keeps all nine because all nine were run
+    # under the same design, thirty races each.
+    for drop, label in ((None, "all nine routes, as drawn"),
+                        ("anthropic/claude-opus-5@default",
+                         "less Claude Opus 5, whose two seats never diverge")):
+        block = paired if drop is None else paired[paired["model_route"] != drop]
+        d_m, d_lo, d_hi = seat_gap_ci(block)
+        print(f"       {label:52s} {100 * d_m:+6.2f} pp "
+              f"[{100 * d_lo:+6.2f}, {100 * d_hi:+6.2f}] "
+              f"over {block['model_route'].nunique()} routes")
+    with_room = per_route[(per_route["seat1"] < 1) | (per_route["seat2"] < 1)].index
+    r_m, r_lo, r_hi = seat_gap_ci(paired[paired["model_route"].isin(with_room)])
+    print(f"       {'only the routes with room below the ceiling':52s} {100 * r_m:+6.2f} pp "
+          f"[{100 * r_lo:+6.2f}, {100 * r_hi:+6.2f}] over {len(with_room)} routes")
+
+    # Panel c is the row that has to hold a stat block inside its own axes, so
+    # it gets height rather than the notes getting squeezed out of the figure.
+    fig = plt.figure(figsize=(S.TEXT, 4.62))
+    gs = fig.add_gridspec(2, 2, height_ratios=[1.30, 1.22],
+                          width_ratios=[1.46, 1.00], hspace=0.86, wspace=0.30)
     ax_a = fig.add_subplot(gs[0, 0])
     inner = gs[0, 1].subgridspec(2, 1, hspace=0.55)
     ax_b1 = fig.add_subplot(inner[0])
@@ -419,14 +485,16 @@ def main() -> None:
     draw_representation(ax_b2, rep.loc[MAP_ROUTES[1]], MAP_ROUTES[1], show_x=True)
     S.panel(ax_b1, "b", "frame and code do not interact", pad=13)
     anchor = rep.loc[MAP_ROUTES[1]]
+    # Six lines here reached into panel c's axes.  The identity is the whole
+    # point of the note, so it keeps both numbers and loses the sentence that
+    # only restated them.
     ax_b2.annotate(
-        wrap("What the surviving code effect is. Swapping which letter denotes Safe moves "
-             f"this route {100 * anchor['code']:.1f} pp, and because the assignment is "
-             "counterbalanced that is exactly twice its "
-             f"{100 * (0.5 - anchor['letter_q']):.1f} pp pull toward emitting the letter P. "
-             "An identity, not a result: a letter anchor rather than a representation effect.",
-             2.5),
-        xy=(0.0, -0.50), xycoords="axes fraction", ha="left", va="top",
+        wrap("The surviving code effect is arithmetic: "
+             f"{100 * anchor['code']:.1f} pp is exactly twice this route's "
+             f"{100 * (0.5 - anchor['letter_q']):.1f} pp pull toward emitting the letter P, "
+             "an anchor on a letter rather than a representation effect.",
+             2.62),
+        xy=(0.0, -0.46), xycoords="axes fraction", ha="left", va="top",
         fontsize=S.FS_NOTE, color=S.INK_2, annotation_clip=False, linespacing=1.45)
 
     draw_seat(ax_c, per_route, pooled, allround, discordant)
