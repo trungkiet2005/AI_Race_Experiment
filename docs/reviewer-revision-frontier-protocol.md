@@ -123,6 +123,44 @@ Scope of the amendment:
 Affected task versions: `ai-race-frontier-admission` version 8 and
 `ai-race-baseline` version 4 onward.
 
+## Matched group-size sweep: specified, verified, and quota-blocked
+
+The three- to five-player pilots lack a matched two-player condition, which is a
+stated limitation of the manuscript. The design that would remove it exists and
+is frozen:
+
+- Task `kaggle/benchmarks/ai_race_nplayer_matched.py`, protocol
+  `ai-race-nplayer-matched-hosted-confirmatory-v1`, group sizes 2 to 5 crossed
+  with the three risk treatments at ten repetitions per cell.
+- Verified offline by `scripts/verify_matched_nplayer_design.py`: the mechanism
+  outside the group-count rule is identical at every group size; the two-player
+  arm reproduces the headline payoff matrix exactly at 1.0 / 0.6 / 2.4 / 2.0, so
+  it is the paper's own game rather than a near neighbour; and one repetition
+  index shares a single horizon stopping-draw stream across every risk and every
+  group size, so the contrast can be differenced within a repetition.
+- Analysed by `scripts/analyze_nplayer_matched.py`, written before any data
+  existed so the estimand was fixed in advance, and fail-closed on a missing
+  arm, a parse failure, an unbalanced cell or a wrong seat count.
+
+It has produced no data. Both authorised identities refused it with HTTP 403 on
+the same day, `daosyduyminh` immediately and `trungkiet` after about 48 minutes
+of sequential requests, so an identity here carries on the order of 800 to 1,000
+requests while the frozen sweep needs roughly 7,800. The two failure records are
+`results/failed_runs/nplayer_matched_daosyduyminh_20260910.json` and
+`results/failed_runs/nplayer_matched_trungkiet_20260910.json`.
+
+Three further authorised identities exist and were deliberately not tried.
+Rotating until one happens to complete selects on the outcome and would build a
+single sample out of several billing accounts mid-run, which the
+collaborator-identity amendment above forbids. Shrinking the design to fit is
+not available either: at two or three repetitions every cell falls below the
+five-independent-race floor, which makes the cells descriptive only and so
+cannot remove the limitation the design exists to remove.
+
+Until it runs, the manuscript keeps the limitation as written. A specified and
+unexecuted design is not evidence, and must never be reported as an attempted or
+inconclusive result.
+
 ## Stopping rule
 
 The revision does not rewrite the paper around a failed or partial campaign.
