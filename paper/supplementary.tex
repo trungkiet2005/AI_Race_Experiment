@@ -607,30 +607,21 @@ including the strongest, which is why it was frozen as a diagnostic before the
 campaign began: had it gated admission, no route would have been admitted at
 all.
 
-\begin{figure}[t]
+\begin{figure}[!t]
     \centering
     \includegraphics[width=\columnwidth]{../figures/paper/audit_reads_the_name.pdf}
-    \caption{The comprehension gate of this campaign draws the same line the
-    route string already draws. \textbf{(a)} Every route twice: on the left the
-    gate's verdict after 60 calls, on the right the tier its own name announces
-    after none. A size word is \texttt{mini}, \texttt{nano} or \texttt{lite}
-    appearing as a whole word of the route string, so \texttt{gemini} is not
-    \texttt{mini}. Under that rule the two verdicts agree on 9 of 9 routes, an
-    exact permutation $p$ of $1/126$ over the $C(9,4)=126$ ways of relabelling
-    which four names carry a size word; counting \texttt{flash} as a size word
-    as well gives 8 of 9 and $p=5/126$. \textbf{(b)} Accuracy by probe domain,
-    with the number of calls behind each column and a ring on every cell below
-    its gate: state reconstruction is the only one of the three gates that
-    refuses all four refused routes. \textbf{(c)} Spearman correlation between
-    each domain's accuracy and the risk response, so the domain that does the
-    refusing is also the one that tracks behaviour; stage payoff is grey
-    because all nine routes answered it perfectly, which is an absence of
-    variation and not of data. Agreeing with a size tier does not show that the
-    audit measures nothing else, and comprehension that simply tracked model
-    size would look exactly like this. What it shows is narrower: on these nine
-    routes the audit carries no information the name does not already carry.
-    $n=9$ endpoints, and that is the whole basis of every $p$-value drawn
-    here.}
+    \caption{The gate draws the same line the route string already draws.
+    \textbf{(a)} Every route twice: the gate's verdict after 60 calls, then the
+    tier its own name announces after none. The two agree on 9 of 9 routes,
+    exact permutation $p=1/126$. \textbf{(b)} Accuracy by probe domain, calls
+    behind each column, a ring on every cell below its gate. \textbf{(c)}
+    Spearman correlation between each domain's accuracy and the risk response;
+    grey marks the domain every route answered perfectly. Agreeing with a size
+    tier does not show that the audit measures nothing else, since
+    comprehension that simply tracked model size would look like this. It shows
+    that on these nine routes the audit carries no information the name does
+    not already carry. $n=9$ endpoints, which is the whole basis of every
+    $p$-value here.}
     \Description{Three stacked panels at one column width. The top panel lists
     the nine audited routes, each drawn as a horizontal line joining the
     audit's verdict on the left to the tier word in its name on the right, with
@@ -1085,6 +1076,15 @@ payoff matrix, the progress increments, the hidden horizon law and the risk
 formula are identical, and both routes had already passed the comprehension
 gate. Two routes is enough to show the effect replicates and not enough to
 characterise endpoints in general.
+
+Panel b of Figure~\ref{fig:what-moves-play} draws both routes' cells as an
+interaction plot on one common vertical span. That figure is placed with the
+matched group-size comparison of \S\ref{app:nplayer-matched}, because that is
+where all three of this supplement's manipulations of the same game can be read
+side by side. What the panel adds here is the question the table cannot answer:
+the two factors do not interact on either route, so the narrative skin and the
+symbol mapping simply add, and the crossing that this rerun was built to test
+returns an interval spanning zero on both routes.
 
 \begin{table}[h]
     \caption{Repetition-paired presentation contrasts on the two crossed
@@ -2378,12 +2378,81 @@ instead of assuming it, and it holds for all ten blocks in every contrast.
     \end{tabular}
 \end{table}
 
+\begin{figure*}[!t]
+    \centering
+    \includegraphics[width=\textwidth]{../figures/paper/what_moves_play.pdf}
+    \caption{Three manipulations on the same game, and only one of them moves
+    play a long way. \textbf{(a)} The matched group-size grid of
+    Table~\ref{tab:nplayer-matched} drawn as a surface, on
+    \texttt{google/gemini-3-flash-preview}, ten races per cell and 3{,}696
+    decisions in all. Colour is the \Unsafe{} rate; the second line in each
+    cell is the number of safe decisions the cell actually contained. Five of
+    the twelve cells contained none, and those are hatched, because a cell with
+    no safe decision left in it has no room to move and its distance from the
+    cells below is a floor rather than an estimate. The column is also not
+    group size alone: playing safe while everyone else does pays $+1.0$ at
+    $N=2$ and $-0.2$ at $N=5$. \textbf{(b)} The crossed representation design
+    of \S\ref{app:context-mapping} on both admitted routes, drawn on a common
+    thirty-point vertical span so that a slope in the upper panel is the same
+    slope as in the lower one. The lines are parallel: the interaction spans
+    zero on both routes, $-1.4$ pp $[-9.2,+3.5]$ on Claude Sonnet 5 and $+5.7$
+    pp $[-2.0,+14.3]$ on Gemini 3 Flash. Parallel is not flat, and both main
+    effects are present on both routes: the race story lowers \Unsafe{} play by
+    $3.4$ and $10.8$ points against the neutral frame, and the mapping under
+    which $Q$ means \Safe{} raises it by $8.3$ and $9.5$ points. \textbf{(c)}
+    The two seats, whose prompts are symmetric word for word, at the opening
+    move of all 270 neutral-baseline races. Four routes open \Unsafe{} from
+    both seats in all thirty of their races and sit on the marked ceiling,
+    where a seat effect could not appear at all; one seat opened \Unsafe{} in
+    none of its races and is marked at the floor. Pooled over all nine routes,
+    with races resampled inside their own route, the opening gap is $+9.3$ pp
+    $[+5.9,+13.0]$, and over every round of the race it falls to $+2.6$ pp
+    $[+1.6,+3.7]$. Three limits travel with the figure. Panel a is one route,
+    so it does not separate a property of group size from a property of this
+    route in groups. An interaction that spans zero is inconclusive rather than
+    absent, the more so on the route whose interval reaches $+14$ points, so
+    panel b is not evidence that representation is inert. And because four
+    routes in panel c are at the ceiling in both seats and can only pull the
+    average toward zero, its pooled gap is a floor on the seat asymmetry rather
+    than a measure of its size. No interval here is corrected for asking three
+    questions on one figure.}
+    \Description{A three-panel figure spanning both columns. The left panel is
+    a four-by-three heatmap of unsafe play by group size and maximum private
+    risk, with the number of safe decisions printed inside each cell and
+    hatching over the five cells that contained no safe decision at all. The
+    upper right panel is a pair of stacked interaction plots, one per route,
+    each showing two nearly parallel lines running from the first symbol
+    mapping to the second. The bottom panel spans the full width and shows,
+    for each of the nine routes, a short segment joining the first seat's
+    opening unsafe rate to the second seat's, with four routes marked as
+    pinned at the hundred per cent ceiling, one seat marked at the zero floor,
+    and the pooled gap of plus nine point three percentage points printed
+    beside them.}
+    \label{fig:what-moves-play}
+\end{figure*}
+
 \paragraph{What it shows.} \Unsafe{} play rises monotonically with the number
 of competing companies at every private-risk condition that leaves room for it
 to rise, and all six of those contrasts exclude zero. Because the two-player
 arm is the headline game itself, this also says something about the rest of the
 paper: the two-player results are the low end of that curve, not a special case
 beside it.
+
+Figure~\ref{fig:what-moves-play} draws that grid as its first panel, beside the
+two other manipulations this supplement ran on the same game: the crossed
+representation design of \S\ref{app:context-mapping} and the seat asymmetry of
+the neutral baseline. The figure sits in this subsection rather than with the
+representation design for two reasons. Group size is the only one of the three
+factors that moves play a long way, so it is the panel the figure leads with;
+and by this point in the supplement the other two designs have already been
+described in full, whereas a reader meeting the figure at
+\S\ref{app:context-mapping} would meet this grid many pages before the
+subsection that defines it. Read as a surface rather than as a table, the grid
+also makes plain something the rows do not. Adding companies does not carry play
+up a plane. It carries play into the ceiling, and the five hatched cells are
+where the measurement stops being a measurement: those cells contained no safe
+decision at all, so their contrast against the two-player arm is bounded by the
+boundary and not by the route.
 
 The size of the effect is what makes the grid worth having. Going from two
 companies to three adds $11.1$ points at $p_r^{\max}=0.6$ and $11.0$ at $0.9$;
@@ -2550,7 +2619,7 @@ than drawing a boundary the players were never told about.
     intervals cover zero and the two that do not point in opposite directions,
     $+24.6$ points for GPT-5.4 and $-17.1$ for Gemini 3.5 Flash Lite. Panel c is
     the placebo ladder: within-race change from one round to the next, pooled
-    over routes, with the nine route means as grey context. \textbf{This is a
+    over routes, with the nine route means as grey context. \emph{This is a
     comparison across round positions and not a discontinuity estimate.} A later
     round also carries more accumulated history and, because private risk is the
     fraction of a player's own completed actions that were \Unsafe{}, more
@@ -2770,8 +2839,9 @@ measurement of how a route treats risk. Against a fixed and safe rival this
 route's rates fall monotonically with the stated risk, $24.7\%$, $17.2\%$,
 $14.0\%$, which is the response the game is designed to elicit. The same route
 in the neutral baseline of \S\ref{app:frontier-baseline} reads $98.9\%$,
-$73.1\%$ and $60.2\%$, which is the distance
-Figure~\ref{fig:scripted-opponent}c prints at each risk level. That is an equilibrium of two copies of one policy
+$73.1\%$ and $60.2\%$; Figure~\ref{fig:scripted-opponent}c prints the
+distance between those two arms at each risk level. That is an equilibrium
+of two copies of one policy
 escalating each other, and it says more about what happens when this policy meets
 itself than about what the policy does with risk. Every self-play number in this
 paper should be read that way.
