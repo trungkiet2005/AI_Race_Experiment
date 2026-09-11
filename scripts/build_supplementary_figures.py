@@ -116,16 +116,27 @@ def _percent_heatmap(ax: plt.Axes, values: np.ndarray, row_labels: list[str],
     ax.spines[:].set_visible(False)
     ax.set_xticks(np.arange(values.shape[1] + 1) - 0.5, minor=True)
     ax.set_yticks(np.arange(values.shape[0] + 1) - 0.5, minor=True)
-    ax.grid(which="minor", color=WHITE, linewidth=1.0)
+    ax.grid(which="minor", color=WHITE, linewidth=1.8)
     ax.tick_params(which="minor", bottom=False, left=False)
     if fmt:
+        # A fixed size runs the values together once a panel has many columns,
+        # and the widest string is what has to fit, not the average one.
+        widest = max(len(fmt.format(v)) for v in values.ravel())
+        per_tile_pt = 72.0 * ax.get_window_extent().width / ax.figure.dpi / values.shape[1]
+        # The house floor is 8.0 pt drawn and this figure prints at 96%, so
+        # the size is fixed and the panel is widened to fit it rather than
+        # the type being shrunk to fit the panel.
+        size = 8.0
         for i in range(values.shape[0]):
             for j in range(values.shape[1]):
                 value = values[i, j]
                 text = fmt.format(value)
-                midpoint = (vmax + vmin) / 2
-                colour = WHITE if abs(value - midpoint) > (vmax - vmin) * 0.27 else INK
-                ax.text(j, i, text, ha="center", va="center", fontsize=8.0,
+                red, green, blue, _ = image.cmap(image.norm(value))
+                # Rec. 709 relative luminance; the 0.55 split is where white
+                # type stops clearing a 4.5:1 contrast ratio on these maps.
+                luminance = 0.2126 * red + 0.7152 * green + 0.0722 * blue
+                colour = WHITE if luminance < 0.55 else INK
+                ax.text(j, i, text, ha="center", va="center", fontsize=size,
                         color=colour, weight="bold")
     return image
 
@@ -200,7 +211,7 @@ def build_egt_insights() -> list[Path]:
         [Patch(facecolor=strategy_colours[name], edgecolor=WHITE, label=name)
          for name in ("AS", "AU", "CS", "CAS")],
         ["AS", "AU", "CS", "CAS"], frameon=False, ncol=4, fontsize=8.0,
-        loc="lower center", bbox_to_anchor=(0.5, 0.075),
+        loc="lower center", bbox_to_anchor=(0.5, 0.012),
     )
 
     ax = axes[1, 1]
@@ -219,7 +230,7 @@ def build_egt_insights() -> list[Path]:
            ylabel="Mean minimum mismatch (%)", xlim=(0, 105), ylim=(0, 35))
     style_axis(ax); panel_label(ax, "D", "Labels are a diagnostic lens")
     ax.legend(frameon=False, fontsize=8.0)
-    fig.text(0.50, 0.025,
+    fig.text(0.50, -0.028,
              "Frontier trajectories are descriptive; nearest-rule matches do not recover latent strategies.",
              ha="center", fontsize=8.0, color=MUTED)
     return save_publication_figure(fig, PAPER / "egt_frontier_insights",
@@ -471,9 +482,12 @@ def build_round_profiles(frame: pd.DataFrame) -> list[Path]:
         "Human", "GPT-5 nano", "GPT-5.4 nano", "Gemini 3 Flash",
         "Gemini 3.1", "Gemini 3.5", "Claude Opus", "Claude Sonnet",
     ]
-    fig, axes = plt.subplots(1, 2, figsize=(FULL_WIDTH_IN, 3.55),
-                             gridspec_kw={"width_ratios": [2.25, 1.0], "wspace": 0.55})
-    fig.subplots_adjust(left=0.25, right=0.98, top=0.84, bottom=0.27)
+    # The widened gutter grows the tight bounding box, and a figure that saves
+    # wider than the column is one LaTeX will shrink, so the declared width is
+    # reduced to land the saved file at the placement width.
+    fig, axes = plt.subplots(1, 2, figsize=(FULL_WIDTH_IN - 0.75, 3.55),
+                             gridspec_kw={"width_ratios": [3.05, 1.0], "wspace": 0.78})
+    fig.subplots_adjust(left=0.145, right=0.985, top=0.84, bottom=0.27)
     image = _percent_heatmap(axes[0], action_values, row_labels, action_labels,
                              title="A Action profile", cmap="RdYlGn_r", vmin=0,
                              vmax=1, fmt="{:.0%}")
