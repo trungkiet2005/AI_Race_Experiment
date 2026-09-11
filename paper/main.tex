@@ -291,36 +291,30 @@ on Autonomous Agents and Multiagent Systems (AAMAS 2027)}{May 3 -- 7, 2027}
 
 %%% Use this environment to specify a short abstract for your paper.
 \begin{abstract}
-An AI development race creates a multi-agent safety dilemma. Each company can
-develop slowly and safely, or move faster while taking a risk that may remove
-its final reward. We use this repeated game to study strategic safety behaviour
-among large language model (LLM) agents in races with two to five players.
-However, a valid action does not show that an agent understands the game. We
-therefore place an audit gate before behavioural interpretation.
-We first verify the game engine, then test rule recall, state tracking, payoff
-calculation, and stability under different but equivalent task descriptions.
-We then compare LLM action sequences with an evolutionary game-theory
-benchmark and published human data, and explore differences across models,
-risk conditions, personas, and two- to five-player races. The multiplayer
-comparison is an exploratory supplementary pilot because the position analysis
-covers only two checkpoints. We audit nine frontier routes on the same frozen probe bank. All nine read the
-payoff matrix perfectly and eight of nine recall the rules, yet accuracy at
-rebuilding the current state ranges from 100\% down to 20\%, and no route
-answers three quarters of the closed-form expected-payoff probes. Five routes
-pass the gate. The action format, by contrast, was satisfied every time, so a
-well-formed action carries no information about whether the agent tracked the
-state behind it. That distinction changes what the behaviour means. Measured
-directly on action sequences, human participants are more diverse than every
-checkpoint that passes the gate, while the one checkpoint whose diversity
-matches the human sample is also the one that fails the gate most severely.
-Endpoint probe accuracy also ranks with how sharply play responds to the
-assigned risk, though the two groups overlap.
-A selection-strength sweep further shows that whether these agents appear to
-contradict the evolutionary benchmark depends on the regime it is read in.
-Multi-agent AI-race simulations therefore need validity checks and
-trajectory-level analysis before their outputs are called strategic,
-human-like, or safety-aware. Our findings apply only to the tested routes,
-prompts, and decoding settings.
+In an AI development race a company can move slowly and safely, or faster
+while risking the loss of its final reward. We use this repeated
+game to study strategic safety behaviour in large language model (LLM)
+agents. A valid action does not show that an agent understands the game, so
+an audit gate comes before behavioural reading: it verifies the engine, then
+tests rule recall, state tracking, payoff calculation and stability under
+equivalent task wordings.
+We audit nine frontier routes on one frozen probe bank. Every route reads the
+payoff matrix perfectly, yet accuracy at rebuilding the current state ranges
+from 100\% to 20\%, and five pass. Across their 5,022 gameplay decisions the
+action format never failed, so a well-formed action says nothing about
+whether the agent tracked the state.
+State-reconstruction accuracy is descriptively associated with how sharply
+play responds to assigned risk, which spans 7.0 to 100.0 percentage points,
+though passing and failing routes overlap. Presentation matters too: swapping which opaque code denotes
+\Safe{} raises \Unsafe{} play by 8.3 and 9.5 points on the two crossed routes,
+mechanism unchanged. On raw action sequences, human participants are more
+diverse than every route that passes the gate, and the only two routes
+reaching their range both fail it.
+AI-race simulations therefore need validity checks and trajectory-level
+analysis before their outputs are called strategic,
+human-like or safety-aware. Our findings apply only to the tested routes,
+prompts and hosted decoding contract, which did not forward the requested
+temperature.
 \end{abstract}
 
 %%% Use this command to specify a few keywords describing your work.
@@ -475,10 +469,11 @@ The order matters, because the audit changes what the behaviour means. The
 tested routes express no common strategic policy: routes with similar
 aggregate \Unsafe{} rates respond differently to risk, to opponents and to
 position, rule recall coexists with incorrect state tracking, and probe
-accuracy ranks with how sharply a route responds to risk. Measured directly on
+accuracy is descriptively associated with how sharply a route responds to
+risk. Measured directly on
 action sequences, human participants are more diverse than every route that
-passes the audit, while the one route whose diversity matches the human sample
-is the one that fails the audit most severely. Our contribution is the
+passes the audit, and the only two routes whose diversity reaches the human
+range are routes the audit refuses. Our contribution is the
 combination: an auditable race mechanism, a validity gate applied before any
 strategic reading, and a comparison against game-theory and human benchmarks
 made only for the routes that pass it. Exploratory multiplayer results remain
@@ -565,6 +560,13 @@ population.
 
 At each decision an agent receives a versioned prompt carrying the round, the assigned maximum private risk, the disclosed state, and the preceding revealed action profile when $t>1$. Same-round decisions are sealed: every response comes from the same pre-action snapshot, before the engine resolves actions, progress, payoffs and risk, so the environment rather than generated text determines all transitions. Raw response, parsed action, retry and parser status, pre-turn state, terminal record, configuration and seed allocation are retained for every decision.
 
+Sampling parameters here are provider-visible contracts, not intended
+settings. The run manifests record a requested temperature of 0.7 that the
+hosted SDK forwarded on no baseline route, and no provider confirmed an
+effective value. Seed handling was route-specific: the SDK stripped the
+requested seed on the Google routes and forwarded it, application
+unconfirmed, on the OpenAI and Anthropic ones.
+
 Both seats of a race are the same endpoint, so every gameplay rate below is
 mirror-match play. Against a scripted always-\Safe{} rival, one admitted route
 plays \Unsafe{} on 24.7\% of decisions at risk 0.1, where its mirror-match rate
@@ -638,36 +640,33 @@ play.
 \label{sec:results}
 
 We report the validity gate first, because every strategic claim below depends
-on it, and then ask whether measured comprehension tracks behaviour at all.
+on it, and then ask how measured comprehension relates to behaviour at all.
 Three- to five-player races, full model tables, predictive diagnostics and
 robustness checks are in the supplementary material.
 
 \subsection{Validity gate: can agents follow the race?}
 \label{sec:results-validity}
 
-We first ask whether a frontier endpoint can carry out the rules it receives.
 Nine routes were audited under one frozen probe bank of 20 atomic probes at
 three requested repetitions, 540 retained outputs in total, with no parse
-failure. Admission requires 80\% overall accuracy with 75\% on state
-reconstruction and 75\% on terminal scoring. The closed-form expected-payoff
+failure. Admission requires 80\% overall accuracy, at least 12 of 15
+state-reconstruction probes (75\%), and 75\% on terminal scoring. The
+closed-form expected-payoff
 probes are recorded but do not gate admission, because the game asks an agent
 to choose an action, not to solve for an expected value.
 
-Table~\ref{tab:task-audit} reports the result, and the striking feature is how
-unevenly comprehension is distributed. Reading the payoff matrix and stating
+Table~\ref{tab:task-audit} reports the result, and comprehension is
+distributed unevenly. Reading the payoff matrix and stating
 the rules are solved by everyone; every difference between endpoints appears
 in the harder subtasks, where accuracy at rebuilding the current state from a
 short history ranges from 100\% down to 20\%. Five routes clear the gate and
-four do not, and GPT-5.4 nano reconstructs the state correctly in only 20\% of
-probes while still returning a correctly formatted action every time it is
-asked to play.
+four do not.
 
 \begin{table}[t]
     \caption{Semantic accuracy on the frontier endpoint admission, one row per
     audited route, ordered by overall accuracy. Reading the stage-payoff matrix
     was answered perfectly by every route, and rule recall by every route
-    except GPT-5.4 nano (75.0\%), so those two subtasks are omitted here.
-    Expected payoff is recorded but does not gate admission.}
+    except GPT-5.4 nano (75.0\%), so those two subtasks are omitted here.}
     \label{tab:task-audit}
     \centering
     \footnotesize
@@ -697,10 +696,14 @@ weak endpoint. And a correctly formatted action carries no information about
 whether the agent tracked the state behind it: the parser was satisfied on all
 540 outputs while state reconstruction varied across the full range, which is
 the concrete sense in which a valid action is not a valid measurement.
+The battery has been administered three times, twice under an identical
+contract; between those two, individual state-reconstruction scores moved by
+up to 13.3 points, two calls in fifteen, while no verdict changed. A verdict
+is therefore an admission decision, not a precise estimate of comprehension.
 Probe-level outputs, retained failure records and unreachable routes are in
 the supplementary material.
 
-\subsection{Does measured comprehension track how play responds to risk?}
+\subsection{Is measured comprehension associated with the risk response?}
 \label{sec:results-audit-behaviour}
 
 The audit is only worth running if it tells us something about the behaviour
@@ -714,21 +717,21 @@ setback draw.
 
 Two routes also ran in the earlier confirmatory block, a temporal replicate of
 one frozen protocol, and agree closely: the largest per-cell difference is 1.1
-percentage points for Gemini 3 Flash and 5.3 for Claude Sonnet 5, against risk
-responses of 38.7 and 57.0 points. Provider-side variation is thus small
-relative to the reported effect, which matters because no provider confirmed
-applying the requested seed.
+points for Gemini 3 Flash and 5.3 for Claude Sonnet 5, against risk responses
+of 38.7 and 57.0. Provider-side variation is thus small relative to the
+reported effect, which matters because no provider confirmed applying the
+requested seed.
 
 The risk response spans almost the whole available range, from 7.0 percentage
 points for GPT-5.4 mini to 100.0 for Claude Opus 5
-(Figure~\ref{fig:audit-behaviour}a), and it ranks with measured comprehension,
-as in a commons game with many more probes \citep{piattiGovSim2024}. Across
+(Figure~\ref{fig:audit-behaviour}a), and state-reconstruction accuracy is
+descriptively associated with it, as in a commons game with many more probes
+\citep{piattiGovSim2024}. Across
 the nine routes, the rank correlation between risk response and
 state-reconstruction accuracy is $\rho=0.87$ (exact permutation $p=0.004$,
-$n=9$), rising to $\rho=0.92$ ($p=0.003$, $n=8$) when Claude Opus 5 is set
-aside; that route plays \Unsafe{} on every decision at risk 0.1 and \Safe{}
-on every decision at both higher levels, a degenerate step policy whose
-within-cell variance is zero. We report the correlation with and without it,
+$n=9$), rising to $\rho=0.92$ ($p=0.003$, $n=8$) when Claude Opus 5, whose
+policy is a step rather than a slope (Figure~\ref{fig:audit-behaviour}c), is
+set aside. We report the correlation with and without it,
 because a single extreme route should not carry a rank statistic computed over
 nine.
 
@@ -736,7 +739,13 @@ Three cautions belong with that number, and none is removable by more careful
 statistics. Nine commercial endpoints are not a sample from a population of
 models, so this is a descriptive association, not an estimated effect. The
 endpoints differ in far more than their probe scores, so nothing here
-separates comprehension from provider, scale or training. And the gate does
+separates comprehension from provider, scale or training. That confound is
+legible in the route strings alone: calling a route small when \texttt{mini},
+\texttt{nano} or \texttt{lite} appears as a whole word reproduces the gate's
+split exactly, 9 of 9, exact permutation $p=1/126=0.008$ (figure in the
+supplementary material), so on these nine routes the association cannot be
+separated from scale or the training differences that travel with it.
+And the gate does
 not partition the sample cleanly: Gemini 3.1 Flash-Lite misses admission on
 state reconstruction, 73.3\% against the 75\% threshold, yet responds to risk
 as strongly as three admitted routes (Figure~\ref{fig:audit-behaviour}b), so
@@ -937,7 +946,10 @@ with no embedding and no clustering step.
 \paragraph{How much diversity, measured directly.} We compare the exact paired
 five-round action sequence of each player, a ten-bit string, within each risk
 condition; because the progress increments are fixed, that string is the whole
-trajectory. Figure~\ref{fig:diversity} counts how many distinct sequences each
+trajectory. This comparison reads all nine audited routes on the confirmatory
+baseline, 60 trajectories per route, not the seven-checkpoint pilot export
+used above.
+Figure~\ref{fig:diversity} counts how many distinct sequences each
 population uses out of twenty, against the distribution of $20{,}000$ draws of
 twenty human participants matched on sample size and risk condition; the human
 sample is five to seven times larger, so without matching a population could
@@ -946,46 +958,48 @@ statistics, since either alone can mislead: Hill $q{=}1$ counts how many
 sequences a population effectively produces, the mean pairwise Hamming distance
 how far apart they are.
 
-The result is not a low percentile but the absence of one. Eighteen of the
-twenty-one checkpoint cells fall below every one of the $20{,}000$ human draws;
-against a stricter null of ten complete dyads, which matches the checkpoints'
-unit of independence and not only their sample size, fifteen do. Humans reach an
+The result is not a low percentile but the absence of one. Twenty-one of the
+twenty-seven route cells fall below every one of the $20{,}000$ human draws;
+against a stricter null of ten complete dyads, which matches the routes'
+unit of independence and not only their sample size, eighteen do, and never
+fewer than sixteen over forty redraws of that null. Humans reach an
 effective 18.9, 19.7 and 19.3 sequences out of 20 at risk 0.1, 0.6 and 0.9, at
 mean pairwise distances of 0.47, 0.50 and 0.50. The compression is severe
 rather than marginal: Claude Opus 5 produces a single sequence, repeated by all
-20 of its trajectories, at every risk level, and Gemini 3 Flash and Gemini 3.1
-Flash-Lite do the same at risk 0.1. A population of twenty agents collapsing to
+20 of its trajectories, at every risk level, and Claude Sonnet 5 uses two at
+risk 0.1. A population of twenty agents collapsing to
 one policy is not a narrower distribution of strategies; it is the absence of
 one.
 
-One checkpoint is the exception, and it is the most informative row in the
-figure. GPT-5.4 nano reaches an effective 18.7 distinct sequences at every
-risk level, with intervals that overlap the human reference on both
-statistics, and mean pairwise distances of 0.48, 0.51 and 0.49 that are
-indistinguishable from the human values. On this measure it is not less
-diverse than people. It is also the checkpoint that fails the comprehension
-gate by the widest margin in Table~\ref{tab:task-audit}, scoring 51.7\%
-overall. Every checkpoint that passes the gate is strictly less diverse than
-the human sample at every risk level, with no exception. The audit is
+Two checkpoints are the exception, and they are the most informative rows in
+the figure. GPT-5.4 mini uses 20, 17 and 17 distinct sequences out of 20 at
+risk 0.1, 0.6 and 0.9, and GPT-5.4 nano 16, 19 and 16; both land inside the
+human null at every risk level, and no other route reaches it once. On this
+measure they are not less diverse than people. Neither passes the gate of
+Table~\ref{tab:task-audit}: GPT-5.4 nano scores 51.7\%, the lowest of the
+nine, and GPT-5.4 mini 75.0\%. Every checkpoint that passes the gate falls
+below every human draw at every risk level, and the rarefied Hill $q{=}1$
+interval puts all five entirely below the human one too. The exception is two
+routes rather than one and the gate refuses both, which strengthens the
+argument. The audit is
 therefore not a formality placed in front of the interesting result; it is
 what separates a population whose variety reflects strategy from one whose
 variety is consistent with not tracking the game. Reported without the gate,
-this single row would read as the headline finding that one small model
-matches human strategic diversity.
+these two rows would read as the headline finding that small models
+match human strategic diversity.
 
 \begin{figure*}[t]
     \centering
     \includegraphics[width=\textwidth]{../figures/paper/human_versus_model.pdf}
-    \caption{Human participants use far more of the policy space than any
-    checkpoint here. Panel a places each checkpoint's count of distinct paired
-    five-round action sequences against $20{,}000$ draws of twenty human
+    \caption{Human participants use far more of the policy space than every
+    checkpoint the gate admits. All nine audited routes are drawn, on the
+    confirmatory baseline. Panel a places each checkpoint's count of distinct
+    paired five-round action sequences against $20{,}000$ draws of twenty human
     participants, matched on sample size and risk condition; the shaded region
     is the range no human draw reached. Panel b shows the mechanism, which
     sequences each population actually uses. Marks give each checkpoint's
-    verdict under the admission gate of Table~\ref{tab:task-audit}, and the one
-    checkpoint reaching the human range is the one that failed it. Three routes
-    the nine-route baseline reports have no cell in this pilot export and are
-    absent rather than concentrated.}
+    verdict under the admission gate of Table~\ref{tab:task-audit}, and the two
+    checkpoints that reach the human range are both checkpoints it refused.}
     \label{fig:diversity}
     \Description{Panel a shows three facets, one per risk condition, each with a
     histogram of a human resampling null and one marker per checkpoint placed on

@@ -33,6 +33,21 @@ IDENTIFYING = [
     re.compile(r"EP/Y00857X", re.I),
     re.compile(r"github\.com/[A-Za-z0-9_.-]+/AI_Race", re.I),
     re.compile(r"\bAI_Race_Experiment\b"),
+    # The compute accounts. These are the identifiers most likely to survive a
+    # rewrite, because they are written down as provenance rather than as
+    # authorship, and a reader who searches one finds a person. The scan missed
+    # exactly this once: a supplement subsection named the account the
+    # admission campaign ran on, and the bundle was reported clean.
+    re.compile(r"\bdaosyduyminh\b", re.I),
+    re.compile(r"\bfoundnotkiet\b", re.I),
+    re.compile(r"\bhunhtrungkit\b", re.I),
+    re.compile(r"\btnkiet\b", re.I),
+    re.compile(r"\bkit567\b", re.I),
+    re.compile(r"\btrungkiet\b", re.I),
+    # Author surnames are deliberately NOT listed. Two of them wrote the source
+    # study this paper builds on, and citing that work in the third person is
+    # both standard and required; a scan that flagged it would be telling the
+    # author to drop a citation in order to look anonymous.
 ]
 
 

@@ -12,6 +12,7 @@ import csv
 import glob
 import json
 import os
+import sys
 from collections import defaultdict
 
 from pathlib import Path
@@ -101,7 +102,12 @@ check("a refused route overlaps the admitted range",
       max(ref_resp) > min(adm_resp) - 1.5,
       f"refused max {max(ref_resp):.1f} vs admitted min {min(adm_resp):.1f}")
 
-# --- diversity ---------------------------------------------------------------
+# --- diversity, pilot export -------------------------------------------------
+# The supplement still prints this seven-checkpoint table, so its rows are still
+# claims. What it cannot support is any statement about the admitted set: it
+# holds GPT-5 nano, which carries no verdict, and holds no row for GPT-5.4 or
+# GPT-5.5, two of the five admitted routes. Those statements are checked against
+# the confirmatory table below instead.
 div = {}
 for row in csv.DictReader(open("results/cross_model_pilot_synthesis/data/trajectory_diversity_rarefaction.csv", encoding="utf-8-sig")):
     div[(row["population"], row["risk_cap"])] = row
@@ -113,40 +119,154 @@ below = []
 for c in CHECKPOINTS:
     if all(float(div[(c, r)]["q1_ci_high"]) < float(div[("Human", r)]["q1_ci_low"]) for r in RISKS):
         below.append(c)
-check("six of seven checkpoints fall entirely below the human q1 interval",
+check("pilot export: six of seven checkpoints fall entirely below the human q1 interval",
       len(below) == 6, f"{len(below)}: {', '.join(below)}")
-check("the exception is GPT-5.4 nano",
+check("pilot export: the exception is GPT-5.4 nano",
       set(CHECKPOINTS) - set(below) == {"GPT-5.4 nano"},
       f"exception {set(CHECKPOINTS) - set(below)}")
-
-check("Claude Opus 5 collapses to one sequence at every risk",
-      all(float(div[("Claude Opus 5", r)]["q1_mean"]) == 1.0 for r in RISKS), "q1 = 1.0 at all three")
-check("Gemini 3 Flash and 3.1 Flash Lite collapse at risk 0.1",
+check("pilot export: it holds neither GPT-5.4 nor GPT-5.5, so it cannot settle the admitted set",
+      not {"GPT-5.4", "GPT-5.5"} & {p for p, _ in div},
+      f"populations {sorted({p for p, _ in div})}")
+check("pilot export: GPT-5.4 nano reaches 18.7 effective sequences at every risk",
+      all(round(float(div[("GPT-5.4 nano", r)]["q1_mean"]), 1) == 18.7 for r in RISKS),
+      f"{[round(float(div[('GPT-5.4 nano', r)]['q1_mean']), 1) for r in RISKS]}")
+check("pilot export: GPT-5.4 nano distances 0.48 / 0.51 / 0.49",
+      [round(float(div[("GPT-5.4 nano", r)]["mean_pairwise_hamming"]), 2) for r in RISKS]
+      == [0.48, 0.51, 0.49],
+      f"{[round(float(div[('GPT-5.4 nano', r)]['mean_pairwise_hamming']), 2) for r in RISKS]}")
+check("pilot export: Gemini 3 Flash and 3.1 Flash Lite collapse at risk 0.1",
       float(div[("Gemini 3 Flash", "0.1")]["q1_mean"]) == 1.0
       and float(div[("Gemini 3.1 Flash Lite", "0.1")]["q1_mean"]) == 1.0, "both 1.0")
 
-hum_q1 = [float(div[("Human", r)]["q1_mean"]) for r in RISKS]
-hum_ham = [float(div[("Human", r)]["mean_pairwise_hamming"]) for r in RISKS]
-check("human effective sequences 18.9 / 19.7 / 19.3",
-      [round(v, 1) for v in hum_q1] == [18.9, 19.7, 19.3], f"{[round(v,1) for v in hum_q1]}")
-check("human pairwise distances 0.47 / 0.50 / 0.50",
-      [round(v, 2) for v in hum_ham] == [0.47, 0.50, 0.50], f"{[round(v,2) for v in hum_ham]}")
+# --- diversity, the nine-route confirmatory table the main paper reads --------
+conf = {}
+for row in csv.DictReader(open("results/derived/trajectory_diversity_confirmatory/trajectory_diversity_confirmatory.csv", encoding="utf-8-sig")):
+    conf[(row["population"], f"{float(row['risk_cap']):.1f}")] = row
 
-nano_q1 = [float(div[("GPT-5.4 nano", r)]["q1_mean"]) for r in RISKS]
-nano_ham = [float(div[("GPT-5.4 nano", r)]["mean_pairwise_hamming"]) for r in RISKS]
-check("GPT-5.4 nano reaches 18.7 effective sequences at every risk",
-      all(round(v, 1) == 18.7 for v in nano_q1), f"{[round(v,1) for v in nano_q1]}")
-check("GPT-5.4 nano distances 0.48 / 0.51 / 0.49",
-      [round(v, 2) for v in nano_ham] == [0.48, 0.51, 0.49], f"{[round(v,2) for v in nano_ham]}")
-check("GPT-5.4 nano overlaps the human interval on both statistics",
-      all(float(div[("GPT-5.4 nano", r)]["q1_ci_high"]) > float(div[("Human", r)]["q1_ci_low"]) for r in RISKS)
-      and all(float(div[("GPT-5.4 nano", r)]["hamming_ci_high"]) > float(div[("Human", r)]["hamming_ci_low"]) for r in RISKS),
-      "overlaps at all three risks")
+ADMITTED_LABELS = ["Gemini 3 Flash", "Claude Opus 5", "GPT-5.4", "GPT-5.5", "Claude Sonnet 5"]
+REFUSED_LABELS = ["Gemini 3.1 Flash Lite", "GPT-5.4 mini", "Gemini 3.5 Flash Lite", "GPT-5.4 nano"]
+ROUTE_LABELS = ADMITTED_LABELS + REFUSED_LABELS
+check("the confirmatory diversity table covers all nine audited routes",
+      {p for p, _ in conf} == set(ROUTE_LABELS) | {"Human"},
+      f"{len({p for p, _ in conf}) - 1} routes plus the human reference")
+check("every confirmatory cell is the matched size of 20",
+      all(int(conf[(p, r)]["comparison_n"]) == 20 and int(conf[(p, r)]["source_n"]) == 20
+          for p in ROUTE_LABELS for r in RISKS),
+      "20 trajectories per route-by-risk cell")
 
-gated = ["Gemini 3 Flash", "Claude Opus 5", "Claude Sonnet 5"]
-check("every gate-passing checkpoint is strictly below the human sample",
-      all(float(div[(c, r)]["q1_mean"]) < float(div[("Human", r)]["q1_mean"]) for c in gated for r in RISKS),
-      "all three, all risks")
+conf_below = [p for p in ROUTE_LABELS
+              if all(float(conf[(p, r)]["q1_ci_high"]) < float(conf[("Human", r)]["q1_ci_low"])
+                     for r in RISKS)]
+check("every admitted route is entirely below the human q1 interval at every risk",
+      set(ADMITTED_LABELS) <= set(conf_below),
+      f"admitted below: {', '.join(p for p in ADMITTED_LABELS if p in conf_below)}")
+check("exactly two routes are not entirely below, and both are refused",
+      set(ROUTE_LABELS) - set(conf_below) == {"GPT-5.4 mini", "GPT-5.4 nano"}
+      and {"GPT-5.4 mini", "GPT-5.4 nano"} <= set(REFUSED_LABELS),
+      f"not below: {sorted(set(ROUTE_LABELS) - set(conf_below))}, both refused")
+
+adm_high = max(float(conf[(p, r)]["q1_ci_high"]) for p in ADMITTED_LABELS for r in RISKS)
+adm_high_risk = max(((float(conf[(p, r)]["q1_ci_high"]), r)
+                     for p in ADMITTED_LABELS for r in RISKS))[1]
+check("the largest admitted q1 upper bound is 12.3, at risk 0.9, under a human bound of 14.8",
+      round(adm_high, 1) == 12.3 and adm_high_risk == "0.9"
+      and round(float(conf[("Human", "0.9")]["q1_ci_low"]), 1) == 14.8,
+      f"{adm_high:.1f} at risk {adm_high_risk} vs human low "
+      f"{float(conf[('Human', '0.9')]['q1_ci_low']):.1f}")
+
+conf_hum_q1 = [float(conf[("Human", r)]["q1_mean"]) for r in RISKS]
+conf_hum_ham = [float(conf[("Human", r)]["mean_pairwise_hamming"]) for r in RISKS]
+check("confirmatory human effective sequences 18.9 / 19.7 / 19.3",
+      [round(v, 1) for v in conf_hum_q1] == [18.9, 19.7, 19.3],
+      f"{[round(v, 1) for v in conf_hum_q1]}")
+check("confirmatory human pairwise distances 0.47 / 0.50 / 0.50",
+      [round(v, 2) for v in conf_hum_ham] == [0.47, 0.50, 0.50],
+      f"{[round(v, 2) for v in conf_hum_ham]}")
+
+check("Claude Opus 5 collapses to one sequence at every risk",
+      all(float(conf[("Claude Opus 5", r)]["q1_mean"]) == 1.0 for r in RISKS),
+      "q1 = 1.0 at all three")
+check("Claude Sonnet 5 uses two sequences at risk 0.1",
+      float(conf[("Claude Sonnet 5", "0.1")]["q0_mean"]) == 2.0,
+      f"q0 = {float(conf[('Claude Sonnet 5', '0.1')]['q0_mean']):.0f}")
+check("no admitted route collapses to one sequence outside Claude Opus 5",
+      {p for p in ADMITTED_LABELS for r in RISKS if float(conf[(p, r)]["q0_mean"]) == 1.0}
+      == {"Claude Opus 5"},
+      "only Claude Opus 5 reaches the measure's floor")
+
+check("GPT-5.4 mini uses 20, 17 and 17 distinct sequences",
+      [int(float(conf[("GPT-5.4 mini", r)]["q0_mean"])) for r in RISKS] == [20, 17, 17],
+      f"{[int(float(conf[('GPT-5.4 mini', r)]['q0_mean'])) for r in RISKS]}")
+check("GPT-5.4 nano uses 16, 19 and 16 distinct sequences",
+      [int(float(conf[("GPT-5.4 nano", r)]["q0_mean"])) for r in RISKS] == [16, 19, 16],
+      f"{[int(float(conf[('GPT-5.4 nano', r)]['q0_mean'])) for r in RISKS]}")
+check("the two routes reaching the human range score 51.7% and 75.0% on the gate",
+      round(100 * adm["openai/gpt-5.4-nano-2026-03-17"]["overall_accuracy"], 1) == 51.7
+      and round(100 * adm["openai/gpt-5.4-mini-2026-03-17"]["overall_accuracy"], 1) == 75.0,
+      "GPT-5.4 nano 51.7, GPT-5.4 mini 75.0")
+check("51.7% is the lowest gate score of the nine",
+      min(adm, key=lambda r: adm[r]["overall_accuracy"]) == "openai/gpt-5.4-nano-2026-03-17",
+      f"lowest {100 * min(a['overall_accuracy'] for a in adm.values()):.1f}%")
+
+# The matched-null counts the figure and the main paper report. Recomputed here
+# from the figure's own functions rather than read back from the figure, because
+# a number copied out of a plot is not an independent check of it.
+sys.path.insert(0, str(ROOT / "scripts" / "figures"))
+import numpy as np  # noqa: E402
+import fig_human_versus_model as FIG  # noqa: E402
+import analyze_trajectory_diversity_rarefaction as _TD  # noqa: E402
+import analyze_trajectory_diversity_confirmatory as _CONF  # noqa: E402
+import pandas as _pd  # noqa: E402
+
+_human = _TD.load_human()
+_raw = _pd.read_csv(_TD.HUMAN_CSV, usecols=["participant_id", "group_id"])
+_group = _raw.drop_duplicates("participant_id").set_index("participant_id")["group_id"]
+_human = _human.assign(group=_human["unit"].map(_group))
+_model = _CONF.confirmatory_frame(_TD)
+_model["population"] = _model["population"].map(lambda r: FIG.S.ROUTE_LABEL.get(r, r))
+
+_vocab: dict[str, int] = {}
+
+
+def _code(key: str) -> int:
+    return _vocab.setdefault(key, len(_vocab))
+
+
+_risks = (0.1, 0.6, 0.9)
+_cells = [np.array([_code(k) for k in _human[np.isclose(_human["risk_cap"], r)]["trajectory"]],
+                   dtype=np.int32) for r in _risks]
+_dyads = []
+for _r in _risks:
+    _block = _human[np.isclose(_human["risk_cap"], _r)]
+    _pairs = [g["trajectory"].tolist() for _, g in _block.groupby("group") if len(g) == 2]
+    _dyads.append(np.array([[_code(k) for k in p] for p in _pairs], dtype=np.int32))
+
+_null, _ = FIG.human_null(_cells, np.random.default_rng(FIG.SEED))
+_dyad_null = FIG.dyad_null(_dyads, np.random.default_rng([FIG.SEED, 2]))
+_floors = _null.min(axis=0)
+_dyad_floors = _dyad_null.min(axis=0)
+_counts = {p: [len(set(_model[(_model["population"] == p) & np.isclose(_model["risk_cap"], r)]
+                       ["trajectory"])) for r in _risks] for p in ROUTE_LABELS}
+_below = [(p, i) for p in ROUTE_LABELS for i in range(3) if _counts[p][i] < _floors[i]]
+_below_dyad = [(p, i) for p in ROUTE_LABELS for i in range(3) if _counts[p][i] < _dyad_floors[i]]
+_inside = sorted({p for p in ROUTE_LABELS for i in range(3) if _counts[p][i] >= _floors[i]})
+
+check("the human null minima are 15, 17 and 16 distinct sequences out of 20",
+      list(_floors) == [15, 17, 16], f"{list(_floors)}")
+check("21 of the 27 route cells fall below every one of the 20,000 human draws",
+      len(_below) == 21 and len(ROUTE_LABELS) * 3 == 27, f"{len(_below)} of 27")
+check("18 of the 27 fall below the stricter ten-dyad null",
+      len(_below_dyad) == 18, f"{len(_below_dyad)} of 27, dyad minima {list(_dyad_floors)}")
+check("every admitted route is below the human minimum at every risk level",
+      all((p, i) in _below for p in ADMITTED_LABELS for i in range(3)),
+      "5 routes, 15 cells, all below")
+check("the only routes reaching the human null are GPT-5.4 mini and GPT-5.4 nano, both refused",
+      _inside == ["GPT-5.4 mini", "GPT-5.4 nano"]
+      and all(p in REFUSED_LABELS for p in _inside),
+      f"{', '.join(_inside)}")
+check("both of them land inside the null at every risk level",
+      all(_counts[p][i] >= _floors[i] for p in _inside for i in range(3)),
+      f"mini {_counts['GPT-5.4 mini']}, nano {_counts['GPT-5.4 nano']}")
 
 # --- k sensitivity -----------------------------------------------------------
 ks = {row["k"]: row for row in csv.DictReader(open("results/cross_model_pilot_synthesis/data/human_archetype_k_sensitivity.csv", encoding="utf-8-sig"))}
