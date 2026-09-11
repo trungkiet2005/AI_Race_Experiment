@@ -563,16 +563,21 @@ population.
 \label{sec:design}
 \subsection{Agent protocol and units of analysis}
 
-At each decision, an agent receives a versioned prompt containing the current round, assigned maximum private risk, the publicly disclosed state, and the preceding revealed action profile when $t>1$. Same-round decisions are sealed: every response is obtained from the same pre-action snapshot before the engine resolves actions, progress, payoffs and risk, so the environment rather than generated text determines all transitions. Raw response, parsed action, retry count, parser status, pre-turn state, terminal record, configuration and seed allocation are retained for every decision.
+At each decision an agent receives a versioned prompt carrying the round, the assigned maximum private risk, the disclosed state, and the preceding revealed action profile when $t>1$. Same-round decisions are sealed: every response comes from the same pre-action snapshot, before the engine resolves actions, progress, payoffs and risk, so the environment rather than generated text determines all transitions. Raw response, parsed action, retry and parser status, pre-turn state, terminal record, configuration and seed allocation are retained for every decision.
+
+Both seats of a race are the same endpoint, so every gameplay rate below is
+mirror-match play. Against a scripted always-\Safe{} rival, one admitted route
+plays \Unsafe{} on 24.7\% of decisions at risk 0.1, where its mirror-match rate
+is 98.9\% (supplementary material): a mirror-match rate is an equilibrium of one
+policy meeting itself, not a measurement of how it treats risk.
 
 The main behavioural outcome is whether an agent chooses Unsafe. The race,
 not the individual decision, is the main independent experimental unit,
-because decisions from the same race depend on earlier states and cannot be
-treated as separate random samples; uncertainty is grouped by race or matched
-repetition wherever possible, and we report the number of races, trajectories
-and decisions. A \emph{parse failure} occurs when a response does not
-follow the required action format. Because the resulting fallback action
-changes later states, one parse failure marks the whole race as contaminated.
+because decisions from one race depend on earlier states and are not
+separate random samples; uncertainty is grouped by race or matched repetition
+wherever possible. A \emph{parse failure} is a response that does not follow
+the required action format, and because the fallback action changes later
+states, one marks the whole race as contaminated.
 \subsection{Evidence strata and admission}
 
 We separate mechanical validity, task validity, diagnostic pilots and
@@ -607,7 +612,7 @@ behavioural difference shows prompt-conditioned output rather than informed
 play.
 
 \begin{table}[t]
-  \caption{Evidence strata used in this paper. Pilot modules are never pooled with confirmatory inference.}
+  \caption{Evidence strata. Pilot modules are never pooled with confirmatory inference. Admission and the neutral baseline cover all nine routes, of which five are admitted; the crossed representation cell uses two of them, and the matched group-size grid and the scripted-rival campaign use one.}
   \label{tab:evidence-strata}
   \centering
   \footnotesize
@@ -616,12 +621,15 @@ play.
     \toprule
     Module & Primary units & Observed outputs & Use \\
     \midrule
-    Frontier endpoint admission (two admitted routes) & 120 probe responses & 120 answers & confirmatory gate \\
+    Endpoint admission & 180 probes & 540 answers & confirmatory gate \\
+    Neutral baseline & 270 races & 5,022 decisions & confirmatory \\
+    Crossed representation & 240 races & 4,464 decisions & confirmatory \\
+    Matched group size & 120 races & 3,696 decisions & confirmatory \\
+    Scripted rival & 120 races & 1,116 decisions & confirmatory \\
     Calculator diagnostic & 60 races & 1,116 decisions & paired diagnostic \\
-    Context pilot (temperature $0$) & 768 races & 13,680 decisions & robustness diagnostic \\
-    Fixed-state replay & 1,536 state cells & 1,536 responses & direct prompt diagnostic \\
-    Five-checkpoint baseline & 150 races & 2,790 decisions & descriptive only \\
-    OpenAI $N=3$ to $5$ baseline & 180 races & 6,120 decisions & exploratory only \\
+    Fixed-state replay & 1,536 cells & 1,536 responses & prompt diagnostic \\
+    Context pilot & 768 races & 13,680 decisions & audit trail only \\
+    OpenAI $N{=}3$--$5$ pilot & 180 races & 6,120 decisions & exploratory only \\
     \bottomrule
   \end{tabular}
 \end{table}
@@ -867,21 +875,18 @@ selection strength, because the sign of the high-risk gap depends on it.
 \begin{figure*}[t]
   \centering
   \includegraphics[width=\textwidth]{../figures/paper/theory_versus_behaviour.pdf}
-  \caption{The reconstructed evolutionary benchmark and the audited routes have
-  different shapes, not different levels. Panel a rebuilds the reduced game's
-  payoff matrix across a fine grid of risk values and solves the small-mutation
-  limit at each, at both declared selection strengths; at $\beta=2$ the
-  predicted \Unsafe{} rate falls by 98 points inside a single $0.005$ step of
-  risk, while eight of the nine routes decline gradually across the whole
-  range. Claude Opus 5 is the exception, drawn in its own colour: it does have
-  a cliff, but no risk level was run inside the interval where it falls. Panel
-  b inverts the model, asking which risk it would need to emit each observed
-  rate; the configured range of $0.80$ returns as a band of $0.12$. Panel c
-  shows the consequence: the three configured levels are not separable in the
-  model's answers. Every curve here is the small-mutation
-  limit, which cannot represent the finite mutation rate of the parameter points
-  it is drawn at, so this bounds the regime in which the benchmark is read and
-  is not a test of the model.}
+  \caption{The evolutionary benchmark and the audited routes differ in shape,
+  not level. Panel a solves the small-mutation limit on a fine grid of risk
+  values at both declared selection strengths: at $\beta=2$ the predicted
+  \Unsafe{} rate falls 98 points inside one $0.005$ step, while eight routes
+  decline gradually. Claude Opus 5, in its own colour, does have a cliff, but no
+  risk level was run inside the interval where it falls. Panel b inverts the
+  model, asking which risk would make it emit each observed rate: the configured
+  range of $0.80$ returns as a band of $0.12$, so panel c's three configured
+  levels are not separable in its answers. Every curve is the small-mutation
+  limit, which cannot represent the finite mutation rate of the points it is
+  drawn at, so this bounds the regime in which the benchmark is read and is not
+  a test of the model.}
   \Description{Three panels. Panel a plots Unsafe rate against maximum private
   risk: two near-vertical theory curves, a grey band containing eight route
   profiles, and one orange route falling from 100 to 0 per cent. Panel b is a
@@ -978,17 +983,12 @@ matches human strategic diversity.
     checkpoint here. Panel a places each checkpoint's count of distinct paired
     five-round action sequences against $20{,}000$ draws of twenty human
     participants, matched on sample size and risk condition; the shaded region
-    is the range no human draw ever reached. Eighteen of the twenty-one
-    checkpoint cells fall below every human draw, so they have no percentile
-    rather than a low one; against a stricter null built from ten complete
-    human dyads, which matches the checkpoints' unit of independence and not
-    only their sample size, the count is fifteen. Panel b shows which
-    sequences each population actually uses, with each checkpoint marked
-    admitted, failed, or without a verdict by the endpoint-admission gate of
-    Table~\ref{tab:task-audit}. The one checkpoint that reaches the human
-    range is the one that failed the gate. Three routes the nine-route
-    baseline reports have no cell in this pilot export and are absent rather
-    than concentrated.}
+    is the range no human draw reached. Panel b shows the mechanism, which
+    sequences each population actually uses. Marks give each checkpoint's
+    verdict under the admission gate of Table~\ref{tab:task-audit}, and the one
+    checkpoint reaching the human range is the one that failed it. Three routes
+    the nine-route baseline reports have no cell in this pilot export and are
+    absent rather than concentrated.}
     \label{fig:diversity}
     \Description{Panel a shows three facets, one per risk condition, each with a
     histogram of a human resampling null and one marker per checkpoint placed on
