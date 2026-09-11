@@ -15,7 +15,7 @@ and the task now omits the parameter for such routes.  The manifest records
 ``reasoning_requested = null`` for that route and ``"none"`` for the other
 eight; the derived table carries the value as a column so the difference is
 visible rather than inferred.  See the ``2026-09-09 route-resolved reasoning
-budget`` amendment in ``docs/reviewer-revision-frontier-protocol.md``.  The
+budget`` amendment in ``docs/frontier-evidence-collection-protocol.md``.  The
 correlation block reports both the nine-route sample and the earlier eight-route
 sample so the change is auditable.
 
@@ -68,7 +68,7 @@ AMENDED_ROUTE = "google/gemini-3.5-flash-lite"
 AMENDED_TASK_VERSION = "4"
 PRIOR_TASK_VERSION = "3"
 AMENDMENT_REFERENCE = (
-    "docs/reviewer-revision-frontier-protocol.md :: 2026-09-09 - route-resolved reasoning budget"
+    "docs/frontier-evidence-collection-protocol.md :: 2026-09-09 - route-resolved reasoning budget"
 )
 
 SHORT_NAMES = {

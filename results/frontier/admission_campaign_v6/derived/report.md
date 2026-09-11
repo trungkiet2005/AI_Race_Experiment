@@ -1,7 +1,7 @@
 # Admission campaign `ai-race-frontier-admission-v6` — 9 endpoint routes
 
 Nguồn dữ liệu: `results/frontier/admission_campaign_v6/` (task `ai-race-frontier-admission` version 7 và 8, identity Kaggle `daosyduyminh`, ngày 2026-09-09). Bảng dẫn xuất: [.](.) — `admission_campaign_v6.csv`, `admission_campaign_v6.json`.
-Giao thức: [docs/reviewer-revision-frontier-protocol.md](../../../../docs/reviewer-revision-frontier-protocol.md).
+Giao thức: [docs/frontier-evidence-collection-protocol.md](../../../../docs/frontier-evidence-collection-protocol.md).
 
 > **Đây là cổng admission, không phải kết quả hành vi.** Mỗi route trả lời 20 probe đóng băng × 3 lần lặp = 60 dòng giữ lại, temperature 0, 256 token đầu ra, base seed 260726. Một route chỉ được `admitted` khi đạt **cả ba** ngưỡng: overall accuracy ≥ 0,80, `state_reconstruction` ≥ 0,75, `terminal_scoring` ≥ 0,75. `expected_payoff` được ghi lại nhưng **chỉ mang tính chẩn đoán** — nó không bao giờ chặn admission. Con số ở đây không nói model chơi game thế nào; nó chỉ nói model có hiểu luật hay không.
 

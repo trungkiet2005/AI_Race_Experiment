@@ -1324,7 +1324,7 @@ Two further problems with the same table:
   Flash's 32.5% that the same paragraph calls largest. The supplement gets this right by
   adding the AUC 0.54 and balanced-accuracy 0.52 justification; the main text drops the
   justification and keeps the conclusion.
-* `docs/reviewer-revision-frontier-protocol.md` says "Two route families reject the
+* `docs/frontier-evidence-collection-protocol.md` says "Two route families reject the
   reasoning-budget argument"; CLAUDE.md and the v6 manifests identify exactly one,
   `google/gemini-3.5-flash-lite`, task version 8.
 
@@ -1413,7 +1413,7 @@ complete accounting chain.
 2. **Exogenous position endowment**, `results/open_source/position_endowment_greennode_e3cf825/`,
    commits `e3cf825` and `15e4bc1`. An engine-scored exogenous progress adjustment applied
    after one common four-round history, which is precisely the randomised-rank design
-   Reviewer Q5 asked for and which `docs/reviewer-revision-frontier-protocol.md` lists in
+   Reviewer Q5 asked for and which `docs/frontier-evidence-collection-protocol.md` lists in
    its review-to-evidence matrix. 192 rows per block, 0 parse failures, both mappings,
    numeric-only and verified-rank-label arms. Primary contrasts from the numeric-only arm,
    block 1: Qwen2.5-7B behind minus ahead in the two-player game **+0.0**, last minus

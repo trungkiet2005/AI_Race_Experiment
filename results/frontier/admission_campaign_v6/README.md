@@ -38,7 +38,7 @@ Task được đóng gói lại giữa hai lần chạy, nên artefact nằm dư
   (xem `failed_runs/` bên dưới) vì nó từ chối chính *tham số* reasoning, không phải giá trị của
   nó: chỉ cần gọi tên `reasoning` là provider trả HTTP 400 "Request contains an invalid argument"
   trước khi có probe nào được lấy mẫu. Theo mục sửa đổi **2026-09-09 "route-resolved reasoning
-  budget"** trong [docs/reviewer-revision-frontier-protocol.md](../../../docs/reviewer-revision-frontier-protocol.md),
+  budget"** trong [docs/frontier-evidence-collection-protocol.md](../../../docs/frontier-evidence-collection-protocol.md),
   task từ version 8 trở đi **bỏ hẳn tham số** cho những route từ chối nó, và ghi lại việc bỏ đó
   trong manifest (`reasoning_requested = null`). Không có gì khác thay đổi: cơ chế, canonical
   prompt, probe bank, parser, seed stream, temperature và token cap đều nguyên vẹn.

@@ -1,11 +1,11 @@
 {
-  "schema_version": "egttools-frontier-invasion-v1",
+  "schema_version": "egttools-frontier-invasion-v2",
   "evidence_class": "diagnostic_egttools_run",
   "source_payoff_matrices": "D:\\PhD_LetGoo\\PhD_Farming\\active\\AI_Race_Experiment\\results\\frontier\\egt_frontier_comparison_v2\\egt_expected_payoff_matrices.csv",
   "source_payoff_matrices_sha256": "e917876281589ebc7369b10fdb73e8fc7fe8dfbe8f3a4685faca981efec86a4a",
   "egttools_version": "0.1.14.2",
   "backend": "egttools.analytical.PairwiseComparison",
-  "plotter": "egttools.plotting.draw_invasion_diagram",
+  "numerical_provenance": "redrawn from egt_frontier_invasion.csv as archived, sha256 56915ef9f6fc07cbe67a66f8e7f66d34ad1c85d21577a9476deaa5158f05416f",
   "population_size": 100,
   "beta": 2.0,
   "neutral_drift": 0.01,
@@ -14,12 +14,14 @@
     0.6,
     0.9
   ],
-  "interpretation": "Edges are EGTtools small-mutation fixation probabilities. Node area is the independently estimated finite-mutation main-reference chain share because the EGTtools small-mutation transition can have multiple absorbing classes at these payoff scales.",
+  "column_semantics": {
+    "resident_strategy": "the population being invaded",
+    "invader_strategy": "the single mutant whose fixation probability this is",
+    "focal_strategy": "alias of invader_strategy",
+    "opponent_strategy": "alias of resident_strategy",
+    "correction": "schema v1 named the EGTtools row focal_strategy and the column opponent_strategy. EGTtools returns fixation_probabilities[resident, invader] (sed_analytical.py:571,719), so v1's names were reversed and any diagram drawn from them points its arrows the wrong way."
+  },
+  "interpretation": "Edges are EGTtools small-mutation fixation probabilities above neutral drift. Node area is the independently estimated finite-mutation main-reference chain share, because the EGTtools small-mutation transition can have multiple absorbing classes at these payoff scales.",
   "sml_stationary_warning": "The EGTtools small-mutation stationary eigenvector is not used when eigenvalue 1 is non-simple.",
-  "node_share_source": "egt_stationary_summary.csv",
-  "outputs": [
-    "egt_frontier_invasion.pdf",
-    "egt_frontier_invasion.png",
-    "egt_frontier_invasion.csv"
-  ]
+  "node_share_source": "egt_stationary_summary.csv"
 }

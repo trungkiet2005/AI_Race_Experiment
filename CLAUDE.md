@@ -201,7 +201,7 @@ It must complete the frozen rule, state, terminal, and expected-payoff audit
 before a hosted route enters behavioural claims. The candidate route registry is
 [`docs/frontier-model-registry.json`](docs/frontier-model-registry.json), and the
 review-to-evidence matrix is
-[`docs/reviewer-revision-frontier-protocol.md`](docs/reviewer-revision-frontier-protocol.md).
+[`docs/frontier-evidence-collection-protocol.md`](docs/frontier-evidence-collection-protocol.md).
 
 Current campaign artifacts, all on the single configured Kaggle identity
 `daosyduyminh`:
@@ -230,7 +230,7 @@ Three things about these directories are load-bearing:
   puts it beside the others must say so. In the v6 admission campaign that is
   exactly one route, `google/gemini-3.5-flash-lite` at task version 8. The
   amendment is recorded under "Protocol amendments" in
-  `docs/reviewer-revision-frontier-protocol.md`; amend there, never silently.
+  `docs/frontier-evidence-collection-protocol.md`; amend there, never silently.
 - **`baseline_campaign_v2` and `baseline_campaign_v6` are two separate samples and
   must never be pooled or swapped.** They carry the same `protocol_id` but
   different task versions and different run ids, and the same route gives

@@ -30,10 +30,11 @@ Panels
      Claude Opus 5 has two empty cells, and they are the finding rather than
      missing data: in 30 races its two companies never once played differently,
      so the mixed contexts do not exist to be measured.
-  b  Two effects on one scale.  The rival term is how far the rival's last move
-     moves this route; the own term is how far its own last move does.  Every
-     route that responds to the rival at all also backs off after its own
-     unsafe move, so the pattern is not momentum in either direction but
+  b  Two lagged associations on one scale, stratified differences and not
+     causal effects.  The rival term is how far unsafe play differs after the
+     rival's unsafe move; the own term is how far it differs after the route's
+     own.  Every route that responds to the rival at all also backs off after
+     its own unsafe move, so the pattern is not momentum in either direction but
      matching the rival while correcting itself.
   c  One race from each extreme, drawn the way this literature draws example
      gameplay.  A responsive route and a locked one, at the same risk level,
@@ -272,9 +273,16 @@ def main() -> None:
     ax_b.set_ylim(-0.7, len(order) + 0.35)
     ax_b.set_xlim(-62, 62)
     ax_b.set_xticks([-50, -25, 0, 25, 50])
-    ax_b.set_xlabel("effect on P(Unsafe), percentage points")
+    # "effect on P(Unsafe)" stood here.  These are Mantel-Haenszel differences
+    # inside a stratum on self-play races, with nothing randomised, so the axis
+    # says difference and the caption says association.
+    ax_b.set_xlabel("stratified difference in P(Unsafe), percentage points")
     S.strip(ax_b, grid_axis="x")
-    S.panel(ax_b, "b", "match the rival, correct yourself")
+    # "match the rival, correct yourself" stood here and was not what the panel
+    # draws.  Six of the nine rival terms are positive, two are negative, and one
+    # route has no term at all; a title that says "match the rival" contradicts
+    # the two rows pointing the other way in the same panel.
+    S.panel(ax_b, "b", "six routes follow the rival, two lean against it")
     key_y = len(order) - 0.35
     S.direct_label(ax_b, 6, key_y, "the rival's last move", color=RIVAL_C,
                    dx=0, weight="bold")
@@ -295,7 +303,10 @@ def main() -> None:
                note=f"the two seats differ in {locked_diverged} of this\n"
                     f"route's {len(locked_wide)} rounds",
                show_x=True)
-    S.panel(ax_c1, "c", "one race from each extreme", pad=14)
+    # pad was 14, and the superscript of the route label below it reached into
+    # the claim between two words.  The claim sits clear of the label's tallest
+    # glyph now rather than of its baseline.
+    S.panel(ax_c1, "c", "one race from each extreme", pad=21)
 
     S.save(fig, "policy_shape", width=S.TEXT)
 

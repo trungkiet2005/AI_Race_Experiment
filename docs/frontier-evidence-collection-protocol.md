@@ -1,4 +1,4 @@
-# Reviewer revision protocol: frontier-only evidence
+# Frontier evidence collection protocol
 
 ## Purpose
 

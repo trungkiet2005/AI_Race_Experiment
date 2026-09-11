@@ -698,10 +698,18 @@ whether the agent tracked the state behind it: the parser was satisfied on all
 the concrete sense in which a valid action is not a valid measurement.
 The battery has been administered three times, twice under an identical
 contract; between those two, individual state-reconstruction scores moved by
-up to 13.3 points, two calls in fifteen, while no verdict changed. A verdict
-is therefore an admission decision, not a precise estimate of comprehension.
-Probe-level outputs, retained failure records and unreachable routes are in
-the supplementary material.
+up to 13.3 points, two calls in fifteen, while no verdict changed. That
+resolution applies to the admitted side too, which is the side every
+behavioural claim below stands on. GPT-5.5 clears state reconstruction at
+12 of 15, the lowest integer above the 11.25 the threshold asks for, and
+Claude Sonnet 5 clears terminal scoring the same way; one probe answered
+otherwise would leave GPT-5.5 at 11 of 15, or 73.3\%, the exact score on which
+Gemini 3.1 Flash-Lite is refused. An admitted route's pass margin can be
+narrower than the movement the instrument shows between identical
+administrations, which is why a verdict is used here as a declared entry
+condition rather than a trait estimate: no analysis interpolates between
+probe scores. Probe-level outputs, retained failure records and
+unreachable routes are in the supplementary material.
 
 \subsection{Is measured comprehension associated with the risk response?}
 \label{sec:results-audit-behaviour}
@@ -740,11 +748,15 @@ statistics. Nine commercial endpoints are not a sample from a population of
 models, so this is a descriptive association, not an estimated effect. The
 endpoints differ in far more than their probe scores, so nothing here
 separates comprehension from provider, scale or training. That confound is
-legible in the route strings alone: calling a route small when \texttt{mini},
-\texttt{nano} or \texttt{lite} appears as a whole word reproduces the gate's
-split exactly, 9 of 9, exact permutation $p=1/126=0.008$ (figure in the
-supplementary material), so on these nine routes the association cannot be
-separated from scale or the training differences that travel with it.
+legible in the route strings alone: sorting the nine on whether
+\texttt{lite}, \texttt{mini} or \texttt{nano} appears as a whole word
+reproduces the gate's split exactly, 9 of 9, exact permutation
+$p=1/126=0.008$ (figure in the supplementary material). The agreement is to
+that one tier suffix, not to small models in general: \texttt{flash} is
+Google's own small-and-fast tier word and the admitted
+\path{google/gemini-3-flash-preview} carries it, so counting \texttt{flash}
+too gives 8 of 9, $p=5/126=0.040$. Either way the association cannot be
+separated here from scale or the training differences that travel with it.
 And the gate does
 not partition the sample cleanly: Gemini 3.1 Flash-Lite misses admission on
 state reconstruction, 73.3\% against the 75\% threshold, yet responds to risk
@@ -759,7 +771,12 @@ table and are close to the human mean, yet come from endpoints that largely
 cannot rebuild the state the risk applies to, and no aggregate rate reported
 without a comprehension gate can tell that apart from a deliberate policy of
 moderate risk-taking. Across the four refused routes the risk response
-averages 19.4 points against 54.8 for the five admitted ones.
+averages 19.4 points against 54.8 for the five admitted ones. The sharpest
+version is GPT-5.4 nano. Its two company seats are symmetric by construction,
+with byte-identical opening prompts under a name swap, yet its \Unsafe{} rate
+differs by 19.4 points $[12.1, 25.9]$ between them, twice its 9.7-point
+response to the stated risk. States diverge after round one, so the clean
+label contrast is the opening, and there its gap is 30.0 points.
 
 \begin{figure*}[t]
   \centering
@@ -785,7 +802,7 @@ averages 19.4 points against 54.8 for the five admitted ones.
 \end{figure*}
 
 
-\subsection{Strategic robustness under equivalent presentations}
+\subsection{Behavioural robustness under equivalent presentations}
 \label{sec:results-sensitivity}
 
 We next ask whether sampled behaviour is stable under manipulations that
@@ -852,9 +869,9 @@ decline smoothly: in the earlier confirmatory block Gemini 3 Flash plays
 37.6\%, each over 30 races and 558 decisions
 (Figure~\ref{fig:egt-frontier-comparison}).
 
-Read against that single reference setting, the prompted routes look like a
-failure to reproduce the theory. That reading does not survive a sensitivity
-check. We swept selection strength across $\beta \in [0.001, 10]$ crossed with
+Read against that single setting the prompted routes look like a failure to
+reproduce the theory, and that reading does not survive a sensitivity check.
+We swept selection strength across $\beta \in [0.001, 10]$ crossed with
 three mutation rules, 90 stationary-distribution cells, each estimated from
 independent chains with the between-chain spread retained so a badly-mixed
 cell cannot be mistaken for a result. The sharp switch is a property of strong
@@ -878,29 +895,28 @@ What the sweep establishes is narrower and still useful: a claim that LLM
 agents contradict the evolutionary benchmark cannot rest on one setting of the
 selection strength, because the sign of the high-risk gap depends on it.
 
-\begin{figure*}[t]
+\begin{figure}[t]
   \centering
-  \includegraphics[width=\textwidth]{../figures/paper/theory_versus_behaviour.pdf}
+  \includegraphics[width=\columnwidth]{../figures/paper/theory_versus_behaviour.pdf}
   \caption{The evolutionary benchmark and the audited routes differ in shape,
-  not level. Panel a solves the small-mutation limit on a fine grid of risk
-  values at both declared selection strengths: at $\beta=2$ the predicted
-  \Unsafe{} rate falls 98 points inside one $0.005$ step, while eight routes
-  decline gradually. Claude Opus 5, in its own colour, does have a cliff, but no
-  risk level was run inside the interval where it falls. Panel b inverts the
-  model, asking which risk would make it emit each observed rate: the configured
-  range of $0.80$ returns as a band of $0.12$, so panel c's three configured
-  levels are not separable in its answers. Every curve is the small-mutation
-  limit, which cannot represent the finite mutation rate of the points it is
-  drawn at, so this bounds the regime in which the benchmark is read and is not
-  a test of the model.}
-  \Description{Three panels. Panel a plots Unsafe rate against maximum private
-  risk: two near-vertical theory curves, a grey band containing eight route
-  profiles, and one orange route falling from 100 to 0 per cent. Panel b is a
-  slope chart from configured risk to the risk implied by the model, with all
-  lines converging into a narrow band. Panel c plots the implied risk for each
-  route at each configured level, showing the three levels overlapping.}
+  not level. The small-mutation limit is solved on a fine grid of risk values at
+  both declared selection strengths: at $\beta=2$ the predicted \Unsafe{} rate
+  falls 98 points inside one $0.005$ step, while eight routes decline gradually.
+  Claude Opus 5, in its own colour, does have a cliff, but no risk level was run
+  inside the interval where it falls, and its two saturated cells have no room
+  beside them: it plays \Unsafe{} on all 186 decisions at risk $0.1$ and \Safe{}
+  on all 372 above it. Every curve is the small-mutation limit, which cannot
+  represent the finite mutation rate of the points it is drawn at, so this
+  bounds the regime in which the benchmark is read and is not a test of the
+  model. The supplementary material inverts that model through these rates,
+  which is a question about the model rather than about the routes.}
+  \Description{One panel plotting Unsafe rate against maximum private risk: two
+  near-vertical theory curves, a grey band containing eight route profiles drawn
+  in one grey, and one orange route, Claude Opus 5, falling from 100 to 0 per
+  cent between the first and second configured risk level, with an arrow below
+  the axis marking the interval in which no risk level was run.}
   \label{fig:egt-frontier-comparison}
-\end{figure*}
+\end{figure}
 
 
 \subsection{Two-player strategic diversity: humans and LLMs}
@@ -1039,8 +1055,13 @@ reproduces the human distribution.
 Which pre-decision variables predict an \Unsafe{} choice is asked separately
 in the supplementary material, as association and not cause: the human data
 are organised mainly by the opponent's previous action, 56\% of total SHAP
-magnitude, while the checkpoints share no such pattern, so two populations can
-have similar \Unsafe{} rates while following different response rules.
+magnitude. One checkpoint leads with the same feature, Claude Sonnet 5 at
+48\%; the two Gemini Flash checkpoints lead with the assigned risk instead
+and GPT-5-nano with relative race position, and past that leading feature no
+checkpoint reproduces the human ordering. Two populations can therefore have
+similar \Unsafe{} rates while following different response rules. The human
+forest is the weakly fitted side of that comparison, ROC AUC $0.63$ against
+$0.97$ for Claude Sonnet 5, so the two are not identified equally well.
 
 \section{Discussion and conclusion}
 \label{sec:discussion}

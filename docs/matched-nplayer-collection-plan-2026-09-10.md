@@ -56,7 +56,7 @@ group-size contrast is not confounded with the model.
 ## Why this is a partition and not identity rotation
 
 The collaborator-identity amendment in
-`docs/reviewer-revision-frontier-protocol.md` forbids rotating identities until a
+`docs/frontier-evidence-collection-protocol.md` forbids rotating identities until a
 run happens to pass, because that selects on the outcome and stitches one sample
 out of several billing accounts mid-run. This is a different thing:
 

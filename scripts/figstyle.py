@@ -126,6 +126,54 @@ ROUTE_SHORT = {
     "human": "Humans",
 }
 
+# Routes that appear only in the supplement.  They were never put through the
+# admission audit, so they are deliberately NOT added to ``ROUTE_ORDER`` below:
+# roster membership is what tells a figure whether a route can carry a verdict.
+# They still need a stable hue, glyph and name, because a supplement that
+# invents a second visual language costs the reader the identities they learnt
+# in the main paper.  The three hues are the unused Tol-muted slots, chosen to
+# sit away from the nine already spent; as everywhere here, hue is the second
+# channel and the glyph plus the written name carry the identity.
+ROUTE_C.update({
+    "openai/gpt-5-nano": "#44aa99",                            # teal
+    "openai/gpt-5.6-luna": "#882255",                          # wine
+    "openai/gpt-5.6-terra": "#999933",                         # olive
+})
+ROUTE_M.update({
+    "openai/gpt-5-nano": "p",
+    "openai/gpt-5.6-luna": "h",
+    "openai/gpt-5.6-terra": "d",
+})
+ROUTE_LABEL.update({
+    "openai/gpt-5-nano": "GPT-5 nano",
+    "openai/gpt-5.6-luna": "GPT-5.6 Luna",
+    "openai/gpt-5.6-terra": "GPT-5.6 Terra",
+})
+ROUTE_SHORT.update({
+    "openai/gpt-5-nano": "5 nano",
+    "openai/gpt-5.6-luna": "5.6 Luna",
+    "openai/gpt-5.6-terra": "5.6 Terra",
+})
+
+# The result tables under ``results/cross_model_pilot_synthesis`` key a route by
+# a short local name rather than by its provider-qualified id.  One alias table,
+# here, is what stops a figure from inventing its own colour and its own
+# spelling for a route the main paper has already named.
+ROUTE_ALIAS = {
+    "gpt-5-nano": "openai/gpt-5-nano",
+    "gpt-5.4-nano": "openai/gpt-5.4-nano-2026-03-17",
+    "gpt-5.6-luna": "openai/gpt-5.6-luna",
+    "gpt-5.6-terra": "openai/gpt-5.6-terra",
+    "claude-opus-5": "anthropic/claude-opus-5@default",
+    "claude-sonnet-5": "anthropic/claude-sonnet-5@default",
+}
+
+
+def route_id(key: str) -> str:
+    """Canonical route id for a local table key, or the key if it is already one."""
+    return ROUTE_ALIAS.get(key, key)
+
+
 # The five admitted routes, in the order they are always listed, then the four
 # refused.  Admission is a property of the route, so the split lives here and
 # not in each figure script.
@@ -143,6 +191,16 @@ REFUSED = [
     "openai/gpt-5.4-nano-2026-03-17",
 ]
 ROUTE_ORDER = ADMITTED + REFUSED
+
+
+def in_roster(key: str) -> bool:
+    """Is this route one of the nine the admission audit ranged over?
+
+    A figure that hard-codes the answer as a list of names drifts the moment a
+    route is added, which is how ``gpt-5-nano`` came to be drawn as a roster
+    member in the supplement while two other non-roster routes were dashed.
+    """
+    return route_id(key) in ROUTE_ORDER
 
 RISKS = (0.1, 0.6, 0.9)
 RISK_LABEL = {0.1: "0.1", 0.6: "0.6", 0.9: "0.9"}

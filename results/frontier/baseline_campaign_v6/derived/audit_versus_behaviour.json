@@ -152,7 +152,7 @@
       },
       "cause_of_failure": "The reasoning-budget argument was named in the request. The provider rejects the argument itself and returns HTTP 400 before any decision is sampled, which the harness surfaced as a transport failure. This is an infrastructure contract mismatch, not evidence about the model.",
       "amendment": {
-        "document": "docs/reviewer-revision-frontier-protocol.md",
+        "document": "docs/frontier-evidence-collection-protocol.md",
         "section": "2026-09-09 - route-resolved reasoning budget",
         "status": "open",
         "resolution": "The task now omits the reasoning-budget parameter for routes that refuse it. The re-run records reasoning_requested = null; mechanism, prompt, parser, seed streams, temperature and token cap are unchanged."

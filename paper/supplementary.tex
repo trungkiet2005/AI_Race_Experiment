@@ -583,7 +583,7 @@ invalid-argument error before a single probe is sampled. That is a mismatch
 in the transport contract, not evidence about the model, and it had previously
 removed the route from the audit entirely. The amendment that introduced the
 per-route contract is dated 2026-09-09 in
-\texttt{docs/}\discretionary{}{}{}\texttt{reviewer-revision-frontier-protocol.md}, which also records its
+\texttt{docs/}\discretionary{}{}{}\texttt{frontier-evidence-collection-protocol.md}, which also records its
 scope: for every route whose resolved contract is still \texttt{none} the
 outgoing request is byte-identical to the earlier runs, so those artifacts
 stay poolable with them, while a route whose resolved contract omits the
@@ -751,45 +751,48 @@ stationary population composition.
 \begin{figure*}[t]
     \centering
     \includegraphics[width=\textwidth]{../figures/paper/egt_frontier_insights.pdf}
-    \caption{Boundary analysis for the reconstructed evolutionary model and
-    the two admitted frontier routes. Panel A shows route-specific \Unsafe{}
-    responses alongside the two EGT parameter regimes. Panel B shows the
-    deviation from the strong-selection EGT reference. Panel C gives the
-    nearest-rule composition, and Panel D shows why those labels are only a
-    diagnostic lens: uniqueness and minimum mismatch vary across routes and
-    risk levels.}
-    \Description{Four-panel figure comparing evolutionary-game theory with
-    Gemini and Claude frontier self-play. The panels show risk responses,
-    deviations from theory, nearest-rule compositions, and classification
-    mismatch against uniqueness.}
+    \caption{The reduced evolutionary model against the two routes that were
+    run through the comparison protocol,
+    \texttt{anthropic/claude-sonnet-5@default} and
+    \texttt{google/gemini-3-flash-preview}. These are two of the five routes the
+    comprehension gate admits, not the admitted set. (a) At its reference
+    parameter point the model is a step in risk, holding \Unsafe{} play near
+    the ceiling through $p_r^{\max}=0.6$ and dropping it to 1.9\% at 0.9; both
+    routes are ramps and both stay far above the model at 0.9. The band on each
+    model curve is the range across four independent seeded chains, which is a
+    convergence diagnostic and not a confidence interval; the route points carry
+    no interval because the archived summary holds none. (b) The same contrast
+    signed against the reference, with each point on the risk it was run at.
+    (c) Which of the four rules each route's trajectories sit nearest, one stack
+    per route. (d) Why (c) is a lens and never a finding: the labels are least
+    unique exactly where the distance to the nearest rule is largest.}
+    \Description{Four panels comparing a reconstructed evolutionary model with
+    self-play by Claude Sonnet 5 and Gemini 3 Flash. The first panel plots
+    unsafe play against maximum private risk, showing the model falling from
+    99 percent to 2 percent while both routes decline gradually. The second
+    plots the signed difference from the model. The third stacks the four
+    nearest-rule fractions for each route at each risk. The fourth plots mean
+    distance to the nearest rule against the share of trajectories with a
+    unique nearest rule.}
 \label{fig:egt-frontier-insights}
 \end{figure*}
 
-The invasion view in Figure~\ref{fig:egt-frontier-invasion} exposes the
-selection topology behind the three theoretical endpoints. Its directed edges
-are computed by the archive-compatible EGTtools implementation. The node areas
-use the finite-mutation main-reference chain because the small-mutation limit
-can contain multiple absorbing classes at extreme payoff scales. This is a
-diagnostic decomposition, not a claim that the frontier routes sample the same
-population process.
-
-\begin{figure*}[t]
-    \centering
-    \includegraphics[width=\textwidth]{../figures/paper/egt_frontier_invasion.pdf}
-    \caption{Risk-conditioned invasion topology for the reduced evolutionary
-    game. Node area shows the finite-mutation main-reference chain share
-    ($\beta=2$, $\mu=0.02$); directed edges show EGTtools
-    \texttt{PairwiseComparison} fixation probabilities above neutral drift.
-    The figure is a hybrid diagnostic: the edge topology is evaluated in the
-    EGTtools small-mutation limit, while node areas come from the independently
-    simulated finite-mutation chains. It should not be read as a latent-strategy
-    diagram for the language models.}
-    \Description{Three network diagrams showing risk-conditioned invasion among
-    Always Safe, Always Unsafe, Conditional Safe, and Conditional Unsafe.
-    Node areas show finite-mutation stationary shares, and arrows show
-    EGTtools fixation probabilities above neutral drift.}
-    \label{fig:egt-frontier-invasion}
-\end{figure*}
+Which strategy takes that population is a one-line result and was previously a
+full-width float, so it is stated here instead. Read off the archived EGTtools
+fixation probabilities in \texttt{egt\_frontier\_}\discretionary{}{}{}%
+\texttt{invasion.csv}, the strategy that dominates the independently simulated
+finite-mutation chain
+($\beta=2$, $\mu=0.02$) switches with risk: Always \Unsafe{} at
+$p_r^{\max}=0.1$ with $91.9\%$ of the chain, the conditional rule that opens
+\Unsafe{} at $0.6$ with $96.3\%$, and the conditional rule that opens \Safe{}
+at $0.9$ with $93.9\%$. Exactly nine of the twelve off-diagonal invasions per
+risk level clear neutral drift $1/Z = 0.01$, and the smallest fixation
+probability among those nine is $0.997$, so the ordering is not marginal. Two
+boundaries travel with that sentence. The fixation probabilities are evaluated
+in the EGTtools small-mutation limit while the shares come from the
+finite-mutation chains, which are two different simulation layers; and no
+language-model route plays this population process, so none of it is a
+latent-strategy statement about any endpoint.
 
 
 \subsection{The shape of a policy behind a rate}
@@ -835,12 +838,20 @@ their risk cell, the same clustering every other interval in this paper uses.
     route colours used throughout the paper, so the panel needs no legend. Two
     of Claude Opus 5's tiles are marked absent rather than left blank: its two
     seats never once played differently, so the mixed contexts did not arise
-    and there is nothing there to measure. (b) The two lagged effects on one
-    scale, how far the rival's last move moves the route and how far its own
-    last move does, with race-clustered 95\% intervals and the routes in the
-    same order as panel~a. (c) Two races at the same risk level under the same
-    protocol, one from a route that answers its rival and one from the route
-    that does not move at all, with the two seats drawn separately.}
+    and there is nothing there to measure. (b) The two lagged associations on
+    one scale, Mantel-Haenszel differences in $P(\Unsafe{})$ stratified on the
+    risk level and on the other lagged move: how far \Unsafe{} play differs
+    after the rival's \Unsafe{} move, and how far it differs after the route's
+    own, with race-clustered 95\% intervals and the routes in the same order as
+    panel~a. (c) Two races at the same risk level under the same protocol, one
+    from a route that answers its rival and one from the route that does not
+    move at all, with the two seats drawn separately. Every quantity here is an
+    association within a stratum and not a causal effect. Nothing is
+    randomised: these are conditional frequencies from nine commercial
+    endpoints in one game at one prompt version, self-play throughout, and the
+    own term in particular also carries the accumulated private risk that an
+    earlier \Unsafe{} move leaves behind, so it is a response to the state and
+    not to the move alone.}
     \Description{Three panels. Panel a is a nine-row, four-column grid of
     conditional probabilities of unsafe play, one row per model route and one
     column per pair of preceding moves: safe-safe, safe-unsafe, unsafe-safe and
@@ -864,9 +875,11 @@ their risk cell, the same clustering every other interval in this paper uses.
 
 Reading the two panels together separates three kinds of route that a rate
 column would print side by side. Six of the nine answer their rival's last move
-by moving toward it, and every route whose effects are defined at all backs off
-after its own \Unsafe{} move, so the pattern is not momentum in either direction
-but matching the rival while correcting itself. Two routes, GPT-5.4 mini and
+by moving toward it, and every route whose terms are defined at all has a
+negative own term, so the pattern is not momentum in either direction but
+matching the rival while correcting itself. On GPT-5.4 mini that own term is
+the one whose interval spans zero, $-4.8$ pp $[-12.7,+3.4]$, so seven of the
+eight are estimated away from zero and the eighth is not. Two routes, GPT-5.4 mini and
 GPT-5.4 nano, carry a rival term pointing the other way; they are also the two
 whose \Unsafe{} rate barely moves with the stated risk. Claude Opus 5 is the
 third kind: a step policy whose two seats never diverged in 279 rounds, for
@@ -995,6 +1008,66 @@ pinned pure-Python implementation instead. The quantities above are therefore
 seeded-chain estimates reported with their between-chain spread, not exact
 stationary distributions, and the route rates beside them are descriptive
 prompted self-play endpoints rather than draws from a population process.
+
+\paragraph{Reading the model backwards.} The sweep above asks what the model
+predicts. The complementary question is what an observed rate would tell us
+about the model's own risk parameter, and Figure~\ref{fig:theory-inversion}
+asks it. The answer bounds how finely this benchmark can be read at all.
+Because the only place the model bends is its cliff, asking which risk would
+make it emit an observed rate sends nearly every answer to the same place: the
+three configured levels span $0.80$ of the risk axis, and the 24 invertible
+route-by-risk cells come back inside a band $0.12$ wide, a compression of about
+sevenfold. What is lost is resolution and not ranking, and the distinction
+matters. All eight invertible routes return their three implied risks in the
+configured order, and seven of the eight cells run at $0.1$ land strictly left
+of every cell run at $0.9$, the two extreme rows sharing only $0.0006$ of the
+axis. But adjacent rows overlap, the $0.1$ and $0.6$ rows on $0.0147$ and the
+$0.6$ and $0.9$ rows on $0.0129$, so a rate read back through this model fixes
+an implied risk only to about a tenth of the axis it was configured on. The
+inversion runs at
+$\beta = 0.01$, the weak-selection point, which is the setting that gives the
+model its best chance of spreading the cells apart; at $\beta = 2$ the inverse
+is defined only inside a $0.005$-wide window, and inverting there would
+manufacture the compression. Three limits travel with the figure. It is a
+statement about the model, not an estimate of any route's perceived risk: it
+says only what the model would have to be handed. A compressed inverse is not
+an unresponsive route, since all nine routes move the right way with risk and
+Claude Opus 5 most steeply of all; eight of them merely also land inside the
+model's own range, which is what lets the inversion answer at all. And every
+curve behind it is the small-mutation limit, which cannot represent the finite
+mutation rate of the parameter points it is drawn at.
+
+\begin{figure*}[t]
+    \centering
+    \includegraphics[width=\textwidth]{../figures/paper/theory_inversion.pdf}
+    \caption{Inverting the reconstructed evolutionary model through the
+    observed \Unsafe{} rates of the nine audited routes, at the weak-selection
+    point $\beta = 0.01$. \textbf{(a)} The inversion as a slope chart:
+    configured risk on the left at full scale, the risk the model would need in
+    order to emit the route's observed rate on the right at the same full
+    scale. The fan closes: $0.80$ of configured risk comes back as $0.12$.
+    Claude Opus 5 has no inverse at any level, because its observed rates of
+    $0\%$ and $100\%$ are rates no risk in the model produces; those three
+    cells are refused rather than placed, and marked as refusals. \textbf{(b)}
+    That band magnified, one row per configured level, with the
+    $\beta = 2$ cliff marked. Adjacent rows overlap, on $0.0147$ and $0.0129$ of
+    the axis, while the whole configured span of $0.80$ collapses to $0.12$;
+    what the inversion loses is resolution rather than ranking, since all eight
+    invertible routes keep the configured order and seven of the eight $0.1$
+    cells lie strictly left of every $0.9$ cell. Where two markers would fall on
+    each other the second is nudged off its row with a leader back to it; the
+    tick is the row. Neither panel is an estimate of a route's perceived risk,
+    and a compressed inverse is not an unresponsive route.}
+    \Description{Two panels. The left panel is a slope chart with configured
+    maximum private risk on the left axis at full scale and the risk implied by
+    the model on the right at the same scale; lines from all three configured
+    levels converge into one narrow band near 0.63, and three dotted lines end
+    in crosses marking the Claude Opus 5 cells that have no inverse. The right
+    panel magnifies that band, with one row per configured level and one marker
+    per route, showing three rows that keep their order but sit inside the same
+    narrow range of implied risk, with adjacent rows overlapping.}
+    \label{fig:theory-inversion}
+\end{figure*}
 
 \subsection{Crossed representation-robustness design}
 \label{app:context-mapping}
@@ -1536,21 +1609,35 @@ on that feature. It does not mean that the feature caused the decision.
     \centering
     \includegraphics[width=0.982\textwidth]{../figures/paper/llm_human_clustering/feature_importance_shap_heatmap.pdf}
     \caption{Population-specific predictive structure for round-$t\geq2$
-    \Unsafe{} choices. Each row reports the share of mean absolute SHAP
+    \Unsafe{} choices. (A) Each row reports the share of mean absolute SHAP
     value assigned to the same five pre-decision features by a random
     forest fitted separately to that population. SHAP magnitudes describe
     how the fitted classifier uses observed features; they are neither
-    causal effects nor evidence of the agents' internal reasoning.}
+    causal effects nor evidence of the agents' internal reasoning. (B) The
+    out-of-fold discrimination each row rests on, because panel A normalises
+    every row to $100\%$ whether or not its forest predicts anything;
+    whiskers are the cross-validated standard deviation and an open marker
+    flags a forest at chance. Read the two panels together, because they are
+    not on the same footing. The human forest discriminates weakly, ROC AUC
+    $0.63$ and balanced accuracy $0.58$, only $3.0$ points of accuracy above
+    guessing the majority class, while the two Claude forests reach $1.00$ and
+    $0.97$. A share from a weakly fitted forest says mostly where that forest
+    found the little signal there was, so it is a much looser proxy for the
+    player's policy than a share from a well fitted one.}
     \label{fig:feature-importance}
-    \Description{Heatmap of the share of mean absolute SHAP value that a
-    random forest assigns to each of five pre-decision features, with one
+    \Description{Two panels. The left panel is a heatmap of the share of mean
+    absolute SHAP value that a random forest assigns to each of five
+    pre-decision features, with one
     row per population and one column per feature: own previous action,
     opponent's previous action, progress gap, assigned risk treatment, and
     round number. The human row is dominated by the opponent's previous
     action at 56 percent. GPT-5-nano is dominated instead by progress gap
     and round number at 41 and 38 percent, the two Gemini Flash checkpoints by
     the risk treatment at 33 and 37 percent, and Claude Sonnet 5 by the
-    opponent's previous action at 48 percent.}
+    opponent's previous action at 48 percent. The right panel plots each
+    population's out-of-fold ROC AUC against a chance line at 0.5, with the
+    human forest just above 0.6, the two nano checkpoints marked as having no
+    skill, and the two Claude forests near 1.0.}
 \end{figure*}
 
 \begin{table*}[t]
@@ -1594,7 +1681,18 @@ For human participants, the opponent's previous action accounts for 56\%
 of total SHAP magnitude, far more than any other feature, while the
 player's own previous action contributes only 5\%: a reciprocity-dominated
 profile that independently recovers the pattern found in the human
-logistic analysis. GPT-5-nano is close to the opposite profile: relative
+logistic analysis. One caveat has to travel with that reference profile
+everywhere it is used below, because it is the yardstick the checkpoints are
+held against and it is the least well identified row in the table. The human
+forest barely discriminates: ROC AUC $0.63$, balanced accuracy $0.58$, and a
+test accuracy of $0.618$ against a majority-class baseline of $0.588$, so it
+is $3.0$ points of accuracy above predicting the more common action and
+nothing else. Adding the demographic covariates does not help, AUC $0.62$.
+The model-side forests are far better fitted, up to AUC $1.00$ for Claude
+Opus 5 and $0.97$ for Claude Sonnet 5, so every comparison in this subsection
+is between shares extracted from very differently identified models. That is
+not a reason to drop the analysis, and it is a reason not to read a matched
+ordering as a matched policy. GPT-5-nano is close to the opposite profile: relative
 race position (progress gap) accounts for 41\% of its predictive
 importance and opponent history for only 7\%, and its apparently strong
 out-of-fold AUC of 0.80 is misleading on its own, since balanced accuracy is
@@ -1603,11 +1701,18 @@ classifier effectively fails to recover the rare \Unsafe{} class.
 Gemini-3-Flash and Gemini-3.1-Flash-Lite are primarily
 risk-treatment-driven (33\%
 and 37\% of SHAP magnitude), consistent with their strong, monotone
-descriptive risk-response curves. Claude Sonnet 5 is the only model whose
-profile matches the human ordering outright, with the opponent's previous
-action largest at 48\%, below the human 56\%;
-Gemini-3.5-Flash-Lite is the next closest (33\%), though its progress gap
-remains more influential than in the human model. GPT-5.4-nano has no
+descriptive risk-response curves. Claude Sonnet 5 is the checkpoint closest to
+the human profile, and it is the exception to any claim that no model shares
+it: the opponent's previous action is its largest predictor too, at 48\%
+against the human 56\%. Be exact about how far that goes. Two other
+checkpoints also rank that feature first, Claude Opus 5 at 42\%, which the
+dagger above marks as collinear with the risk treatment rather than a
+reciprocity estimate, and Gemini-3.5-Flash-Lite at 33\% with its progress gap
+close behind at 30\%. And beyond the leading feature no checkpoint reproduces
+the human rank order: below the opponent term the human profile runs round
+number, progress gap, risk, own previous, while Claude Sonnet 5 runs own
+previous, risk, round number, progress gap. The agreement is in which feature
+leads, not in the ordering as a whole. GPT-5.4-nano has no
 comparably dominant predictor: importance is
 spread across progress gap, risk, round, and its own previous action,
 with opponent history at 10\% and the lowest above-chance predictive
@@ -2480,12 +2585,21 @@ instead of assuming it, and it holds for all ten blocks in every contrast.
     $N=2$ and $-0.2$ at $N=5$. \textbf{(b)} The crossed representation design
     of \S\ref{app:context-mapping} on both admitted routes, drawn on a common
     thirty-point vertical span so that a slope in the upper panel is the same
-    slope as in the lower one. The lines are parallel: the interaction spans
-    zero on both routes, $-1.4$ pp $[-9.2,+3.5]$ on Claude Sonnet 5 and $+5.7$
-    pp $[-2.0,+14.3]$ on Gemini 3 Flash. Parallel is not flat, and both main
+    slope as in the lower one. The lines run close to parallel and the
+    interaction spans zero on both routes, $-1.4$ pp $[-9.2,+3.5]$ on Claude
+    Sonnet 5 and $+5.7$ pp $[-2.0,+14.3]$ on Gemini 3 Flash, which is an
+    imprecise estimate consistent with no interaction rather than a
+    demonstration that there is none. Near-parallel is not flat, and both main
     effects are present on both routes: the race story lowers \Unsafe{} play by
     $3.4$ and $10.8$ points against the neutral frame, and the mapping under
-    which $Q$ means \Safe{} raises it by $8.3$ and $9.5$ points. \textbf{(c)}
+    which $Q$ means \Safe{} raises it by $8.3$ and $9.5$ points. The two
+    contrasts are signed in opposite physical directions, which the figure now
+    states in words; the code contrast is also an algebraic identity of the
+    counterbalancing, exactly twice the route's excess use of the letter $Q$,
+    so it says which response surface carries the effect and does not on its
+    own explain it. The letter use is no fixed habit: Gemini 3 Flash emits $Q$
+    on $77\%$ of its turns when $Q$ means \Unsafe{} and on $11\%$ when it means
+    \Safe{}. \textbf{(c)}
     The two seats, whose prompts are symmetric word for word, at the opening
     move of all 270 neutral-baseline races. Four routes open \Unsafe{} from
     both seats in all thirty of their races and sit on the marked ceiling,
@@ -2576,6 +2690,44 @@ models. It is regenerated by
 level unless all four group sizes are present, refuses a cell with a parse
 failure or the wrong seat count, and records the collecting identity of every
 cell it uses.
+
+\paragraph{Which route carries the seat gap.} Panel~c of
+Figure~\ref{fig:what-moves-play} reports a gap averaged over nine routes, and a
+reader is entitled to ask whether it describes nine routes or one.
+\texttt{scripts/}\discretionary{}{}{}\texttt{analyze\_}\discretionary{}{}{}%
+\texttt{seat\_}\discretionary{}{}{}\texttt{confound.py}
+answers that from the same corpus and writes to
+\texttt{results/}\discretionary{}{}{}\texttt{derived/}\discretionary{}{}{}%
+\texttt{seat\_}\discretionary{}{}{}\texttt{confound/}. Over
+every round of the
+race the pooled gap of $+2.6$ pp is carried almost entirely by GPT-5.4 nano, at
+$+19.5$ pp $[+12.9,+25.7]$. Set that one route aside and the pooled gap falls to
+$+0.5$ pp $[-0.4,+1.4]$; over the five admitted routes it is $-0.5$ pp
+$[-1.3,+0.4]$; and Claude Opus 5 and Claude Sonnet 5 are at exactly $0.000$ in
+all thirty of their races each. These intervals resample races without
+stratifying by route, so the analyser's pooled interval is a little wider than
+the figure's, which resamples inside each route; the point estimates agree
+exactly. The scripted-rival campaign agrees independently. There the rival is
+fixed and the route's seat is counterbalanced five and five inside every cell,
+and the gap over the twelve cells is $-0.9$ pp $[-4.0,+2.0]$.
+
+That turns an unexplained asymmetry into a result, and it points the same way as
+the rest of the paper rather than against it. The mechanism is symmetric exactly
+where the gap is largest: at round one every state field is zero, and the
+regenerating script checks that all 270 opening prompt pairs are byte-identical
+under a \path{Company_1}/\path{Company_2} name swap rather than assuming it. So
+what is left to respond to at that point is an ordinal name token, and the route
+that responds to the name instead of to the state is a route the comprehension
+gate refused. Measured the way its risk response is measured, decision-weighted,
+GPT-5.4 nano's whole-race seat gap of $19.4$ pp is exactly twice its risk
+response of $9.7$ pp, and at the opening, the one place where the two prompts
+are identical and the contrast is therefore a pure label effect, its gap is
+$30.0$ pp $[+13.3,+46.7]$. States diverge after round one, so only the opening
+figure is a clean label contrast; the whole-race figure is the one that is
+comparable with the risk response. The usual bounds hold. This is nine endpoints in one
+game at one prompt version, nothing is randomised except the chair, and a route
+whose measured gap is zero is at zero because its two seats agree, not because
+the design removed the effect.
 
 \subsection{Where a race goes, once it gets somewhere}
 \label{app:joint-dynamics}

@@ -504,8 +504,8 @@ def write_report(
         "Bảng dẫn xuất: [.](.) — `admission_campaign_v6.csv`, `admission_campaign_v6.json`."
     )
     add(
-        "Giao thức: [docs/reviewer-revision-frontier-protocol.md]"
-        "(../../../../docs/reviewer-revision-frontier-protocol.md)."
+        "Giao thức: [docs/frontier-evidence-collection-protocol.md]"
+        "(../../../../docs/frontier-evidence-collection-protocol.md)."
     )
     add("")
     add(

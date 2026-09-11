@@ -7,11 +7,13 @@ design factor that produces something for the wrong reason is worse than one
 that produces nothing at all.
 
 The claim.  Group size moves play and moves it into the ceiling, so the surface
-is a saturated corner rather than a plane.  Representation moves it too, but not
-in the crossed way a representation account would predict: the narrative frame
-and the opaque code do not interact, they simply add.  The seat is supposed to be
-inert, its two prompts being symmetric word for word, and it is not quite inert
-at the opening.
+is a saturated corner rather than a plane.  Representation moves it too, and both
+main effects are present on both routes; what the design does not resolve is
+whether the narrative frame and the opaque code interact.  Both interaction
+intervals span zero, but one of them reaches +14.3 points, so the honest reading
+is an imprecise estimate consistent with no interaction, never a demonstration
+that there is none.  The seat is supposed to be inert, its two prompts being
+symmetric word for word, and it is not quite inert at the opening.
 
 Every panel is self-play.  One route holds every seat of a race, so nothing here
 is a mixed population, and the three factors are manipulations on a route
@@ -26,16 +28,22 @@ Panels
      have been.
   b  The crossed representation design, two factors and two routes, drawn on a
      common thirty-point vertical span so a slope in the upper panel is the same
-     slope as in the lower one.  Parallel lines are the finding, and parallel is
-     not flat: both main effects are there on both routes, the frame at -3.4 and
-     -10.8 points and the code at -8.3 and -9.5.  The code effect is also
-     re-expressed as what it algebraically is: twice the route's excess tendency
-     to emit one particular letter.  That re-expression is an identity of the
-     counterbalancing and holds for any data at all, so it explains nothing on
-     its own, and the letter usage behind it is not a fixed habit: Gemini 3 Flash
-     emits Q on 77% of its turns when Q means unsafe and on 11% when Q means
-     safe.  The code effect is a representation effect; the algebra only says
-     which surface carries it.
+     slope as in the lower one.  Near-parallel lines are the finding, and
+     near-parallel is not flat: both main effects are there on both routes.
+     Mind the sign convention, because the two contrasts are signed in opposite
+     physical directions.  ``frame`` is race story minus neutral, so its -3.4
+     and -10.8 mean the race story LOWERS unsafe play by 3.4 and 10.8 points.
+     ``code`` is Safe = P minus Safe = Q, so its -8.3 and -9.5 mean the mapping
+     under which Q means Safe RAISES unsafe play by 8.3 and 9.5 points.  That
+     is the direction the caption states, and the figure now states it in words
+     rather than leaving a reader to infer a convention from a minus sign.  The
+     code effect is also re-expressed as what it algebraically is: twice the
+     route's excess tendency to emit one particular letter.  That re-expression
+     is an identity of the counterbalancing and holds for any data at all, so it
+     explains nothing on its own, and the letter usage behind it is not a fixed
+     habit: Gemini 3 Flash emits Q on 77% of its turns when Q means unsafe and
+     on 11% when Q means safe.  The code effect is a representation effect; the
+     algebra only says which surface carries it.
   c  The two seats, whose prompts are symmetric, at the opening move of every
      race.  Four routes open unsafe from both seats in all thirty races and sit
      on the ceiling, where a seat effect could not appear even if it existed, so
@@ -525,7 +533,7 @@ def main() -> None:
     # it gets height rather than the notes getting squeezed out of the figure.
     fig = plt.figure(figsize=(S.TEXT, 4.62))
     gs = fig.add_gridspec(2, 2, height_ratios=[1.30, 1.22],
-                          width_ratios=[1.46, 1.00], hspace=0.86, wspace=0.30)
+                          width_ratios=[1.46, 1.00], hspace=1.00, wspace=0.30)
     ax_a = fig.add_subplot(gs[0, 0])
     inner = gs[0, 1].subgridspec(2, 1, hspace=0.55)
     ax_b1 = fig.add_subplot(inner[0])
@@ -536,17 +544,27 @@ def main() -> None:
 
     draw_representation(ax_b1, rep.loc[MAP_ROUTES[0]], MAP_ROUTES[0], show_x=False)
     draw_representation(ax_b2, rep.loc[MAP_ROUTES[1]], MAP_ROUTES[1], show_x=True)
-    S.panel(ax_b1, "b", "frame and code do not interact", pad=13)
+    # "frame and code do not interact" stood here, over an interval that
+    # reaches +14.3 points on the second route.  An interval that wide does not
+    # establish an absence; it establishes that the design did not resolve the
+    # question.  The headline says which of the two it is.
+    S.panel(ax_b1, "b", "frame and code: an imprecise estimate,\n"
+            "consistent with no interaction", pad=13)
     anchor = rep.loc[MAP_ROUTES[1]]
-    # Six lines here reached into panel c's axes.  The identity is the whole
-    # point of the note, so it keeps both numbers and loses the sentence that
-    # only restated them.
+    # The note used to print both contrasts as signed numbers and call them
+    # "both move this route", which reads as one direction.  They are not one
+    # direction: ``frame`` is race story minus neutral and ``code`` is
+    # Safe = P minus Safe = Q, so the same minus sign means the race story
+    # LOWERS unsafe play while the Q-means-Safe mapping RAISES it.  Say the
+    # direction in words and declare the convention, because a reader cannot
+    # infer a sign convention from a number.
     ax_b2.annotate(
-        wrap("Parallel is not flat: frame "
-             f"{100 * anchor['frame']:+.1f} and code {100 * anchor['code']:+.1f} pp both move "
-             "this route. The code number restates its letter use, which is no fixed habit: "
-             f"Q on {100 * anchor['q_' + CODE[0]]:.0f}% of turns when Q means unsafe, "
-             f"{100 * anchor['q_' + CODE[1]]:.0f}% when Q means safe.",
+        wrap("Near-parallel is not flat, and the two signs above point opposite ways: "
+             "they are race story minus neutral, and Safe = P minus Safe = Q. So the "
+             "race story lowers Unsafe play by "
+             f"{abs(100 * anchor['frame']):.1f} pp, while the mapping where Q means Safe "
+             f"raises it by {abs(100 * anchor['code']):.1f} pp. The code number is an identity "
+             "of the counterbalancing, twice this route's excess use of the letter Q.",
              2.62),
         xy=(0.0, -0.46), xycoords="axes fraction", ha="left", va="top",
         fontsize=S.FS_NOTE, color=S.INK_2, annotation_clip=False, linespacing=1.45)

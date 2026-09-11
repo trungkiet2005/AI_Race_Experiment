@@ -1,19 +1,28 @@
 {
-  "schema_version": "egt-frontier-insights-v1",
+  "schema_version": "egt-frontier-insights-v2",
   "evidence_class": "descriptive_frontier_vs_faithful_egt_boundary",
   "source_artifacts": [
     "results\\frontier\\egt_frontier_comparison_v2\\theory_llm_comparison.csv",
     "results\\frontier\\egt_frontier_comparison_v2\\llm_strategy_summary_primary_t0.csv",
+    "results\\frontier\\egt_frontier_comparison_v2\\egt_stationary_summary.csv",
+    "results\\frontier\\egt_frontier_comparison_v2\\reconstruction_manifest.json",
     "results\\frontier\\egt_frontier_comparison_v2\\egttools_pinned_source_validation.json"
   ],
   "routes": [
-    "claude",
-    "gemini"
+    "anthropic/claude-sonnet-5@default",
+    "google/gemini-3-flash-preview"
   ],
+  "routes_are_all_admitted_routes": false,
+  "admitted_route_count": 5,
+  "admitted_route_source": "results/frontier/admission_campaign_v6/derived/admission_campaign_v6.csv",
+  "uncertainty": {
+    "evolutionary_curves": "between_independent_chain_range_diagnostic_not_confidence_interval",
+    "route_points": "no interval is carried by llm_strategy_summary_primary_t0.csv and none is drawn"
+  },
   "rows": 6,
   "interpretation": [
-    "The frontier routes do not reproduce the sharp strong-selection EGT phase change.",
-    "Route differences are large relative to the three risk checkpoints, so pooled endpoint claims are not justified.",
-    "Nearest-rule classification is least unique where mismatch is largest; it is a diagnostic lens, not a latent-policy estimator."
+    "The reference evolutionary regime is a step in risk; both routes are ramps.",
+    "The two routes disagree at every risk checkpoint, so no pooled frontier rate is justified.",
+    "Nearest-rule labels are least unique where the distance to the rule is largest."
   ]
 }

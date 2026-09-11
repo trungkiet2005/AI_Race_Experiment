@@ -11,30 +11,23 @@ to the ceiling, falls almost its whole height inside one 0.005-wide step, and
 stays on the floor.  A step function has no gradient, so there is nothing for a
 route to be calibrated against.
 
-The third claim is the consequence, and it is a claim about the model rather
-than about the routes.  Because the only place the model bends is the cliff,
-asking which risk would make the model emit an observed rate sends nearly every
-answer to the same place.  Twenty-four route-by-risk cells, drawn from three
-configured levels that span 0.80 of the risk axis, come back inside a band 0.12
-wide, and the three configured levels are not separable in the answers.
+One panel, because the main text makes one claim.  This module used to draw
+three: the shape comparison, plus an inversion of the model and a magnification
+of that inversion.  The main text never argued the inversion, so the two
+inversion panels moved to the supplement, where the argument they serve is
+actually written down.  ``fig_theory_inversion.py`` draws them from the numbers
+this module computes, so there is still one computation behind both figures.
 
-Panels
-  a  The model at both declared selection strengths, on 201 risks, against the
-     nine route profiles at the three configured risks.  Eight of the routes are
-     drawn in one grey inside their own band, labelled once: they are the
-     context, and which of them is which is panel b's question and panel c's,
-     not this one's.  Claude Opus 5 keeps its colour because it is the exception
-     the panel argues about, and it is an exception in the wrong place: it has a
-     cliff of its own, somewhere in the gap between 0.1 and 0.6 where the
-     protocol ran no level, while the model's cliff is above 0.6.  Its saturated
-     cells sit on marked boundaries and carry their decision counts, because 0%
-     and 100% are measurements with no room beside them.
-  b  The inversion as a slope chart: configured risk on the left at full scale,
-     the risk the model would need in order to emit the observed rate on the
-     right at the same full scale.  The fan closes.
-  c  That band magnified, one row per configured level.  The rows overlap, which
-     is the sharper version of panel b: inverted through this model, a cell run
-     at 0.1 and a cell run at 0.9 are not distinguishable.
+The panel.  The model at both declared selection strengths, on 201 risks,
+against the nine route profiles at the three configured risks.  Eight of the
+routes are drawn in one grey inside their own band, labelled once: they are the
+context, and which of them is which is the supplement's question, not this
+one's.  Claude Opus 5 keeps its colour because it is the exception the panel
+argues about, and it is an exception in the wrong place: it has a cliff of its
+own, somewhere in the gap between 0.1 and 0.6 where the protocol ran no level,
+while the model's cliff is above 0.6.  Its saturated cells sit on marked
+boundaries, and the caption carries their decision counts, because 0% and 100%
+are measurements with no room beside them.
 
 What this figure does NOT show.  Nothing here is fitted.  The two selection
 strengths are the two points ``scripts/build_theory_tables.py`` already
@@ -43,20 +36,14 @@ behaviour, so this is not a test of the model and cannot be read as one.  The
 small-mutation limit cannot represent the finite mutation rate of the source
 parameter points, and its own metadata says so.  The observed rates are pooled
 decision-level frequencies with no interval attached: this figure is about the
-shape of the two objects and never about which route differs from which.  Panel
-b is an inversion and not an estimate of anybody's perceived risk; it says what
-the model would have to be handed, which is a statement about the model.  And a
+shape of the two objects and never about which route differs from which.  And a
 compressed inverse is not an unresponsive route.  All nine move the right way
-with risk, Claude Opus 5 most steeply of all; eight of them merely also land
-inside the model's own range, which is what lets the inversion answer at all.
-The figure is about how little of the model's own axis that movement could
-possibly cover.
+with risk, Claude Opus 5 most steeply of all.
 """
 
 from __future__ import annotations
 
 import sys
-import textwrap
 from dataclasses import replace
 from pathlib import Path
 
@@ -299,14 +286,6 @@ def report(res: dict) -> dict:
             "boundary": boundary}
 
 
-def spoken(levels) -> str:
-    """``[0.6, 0.9]`` as ``0.6 and 0.9``, for a note a reader reads aloud."""
-    names = [f"{float(level):g}" for level in levels]
-    if len(names) == 1:
-        return names[0]
-    return ", ".join(names[:-1]) + " and " + names[-1]
-
-
 def panel_a(ax, res, d) -> None:
     curves, obs, risks = res["curves"], res["obs"], res["risks"]
     others = [route for route in S.ROUTE_ORDER if route != OPUS]
@@ -314,9 +293,10 @@ def panel_a(ax, res, d) -> None:
     lo = 100 * obs.loc[others].min(axis=0).to_numpy()
     hi = 100 * obs.loc[others].max(axis=0).to_numpy()
     ax.fill_between(risks, lo, hi, color=S.BAND, zorder=1, lw=0)
-    # Eight routes in one grey.  Their identities are spent in panels b and c,
-    # and eight hues crossing each other here would read as eight arguments
-    # where the panel is making one: the band is a ramp and the model is not.
+    # Eight routes in one grey.  Their identities are spent in the supplement's
+    # inversion figure, and eight hues crossing each other here would read as
+    # eight arguments where the panel is making one: the band is a ramp and the
+    # model is not.
     # The markers stay so the three configured levels remain visible as the only
     # places anything was measured.
     for route in others:
@@ -332,36 +312,35 @@ def panel_a(ax, res, d) -> None:
 
     S.rate_axis(ax, label="Unsafe play (%)")
     S.risk_axis(ax, label=r"maximum private risk $p_r^{\max}$")
-    ax.set_xlim(0.0, 1.15)
-    # The floor of the axes sits well below zero on purpose: it is where the two
-    # notes about Claude Opus 5 go, and putting them there keeps them off the
-    # data instead of on top of the curve they are about.
-    ax.set_ylim(-23, 108)
+    ax.set_xlim(0.0, 1.20)
+    # The floor of the axes sits below zero on purpose: it is where the note
+    # about Claude Opus 5's own cliff goes, and putting it there keeps it off
+    # the data instead of on top of the curve it is about.
+    ax.set_ylim(-19, 108)
     S.strip(ax, grid_axis="y")
-    # The floor of the axes is 23 points below zero so the two Opus notes have
-    # somewhere to sit, but there is no scale down there: a spine drawn through
-    # it would offer the reader a negative unsafe-play reading that does not
-    # exist.  Bound the spine to the range the ticks actually cover.
+    # The floor of the axes is below zero so the Opus note has somewhere to sit,
+    # but there is no scale down there: a spine drawn through it would offer the
+    # reader a negative unsafe-play reading that does not exist.  Bound the
+    # spine to the range the ticks actually cover.
     ax.spines["left"].set_bounds(0.0, 100.0)
-    # Same argument on the other axis: the axes run to 1.15 so the notes and the
+    # Same argument on the other axis: the axes run past 1 so the notes and the
     # bracket have room, but risk stops at 1, and a spine drawn past it offers a
     # reading of the risk axis that the mechanism does not define.
     ax.spines["bottom"].set_bounds(0.0, 1.0)
     S.ceiling_rule(ax, 100.0, label="ceiling")
     S.ceiling_rule(ax, 0.0, label="floor")
 
-    # The cliff note is a leader into open sky above the weak curve and right of
-    # the drop, not a caption over the panel title: the strip above the axes
-    # belongs to the claim, and a note that has to live there is a note in the
-    # wrong place.
+    # The cliff note is a leader into the open sky above the weak curve and
+    # right of the drop.  At column width it is two short lines rather than the
+    # two long ones the two-column version could afford.
     ax.plot([d["cliff"], d["cliff"]], [0.0, 100.0], color=S.MUTED, lw=0.6,
             ls=(0, (1.5, 1.8)), zorder=2)
-    S.direct_label(ax, 0.715, 97.0, f"model, $\\beta$ = {d['reference']:g}",
+    S.direct_label(ax, 0.70, 98.0, f"model, $\\beta$ = {d['reference']:g}",
                    color=BETA_C[d["reference"]], ha="left", va="top", dx=0, dy=0,
                    weight="bold")
-    ax.annotate(f"{d['facts'][d['reference']]['drop']:.0f} points of unsafe play\n"
-                f"in one {d['step_width']:.3f} step of risk",
-                xy=(d["cliff"], 85.0), xytext=(0.715, 90.5), textcoords="data",
+    ax.annotate(f"{d['facts'][d['reference']]['drop']:.0f} points in one\n"
+                f"{d['step_width']:.3f} step of risk",
+                xy=(d["cliff"], 84.0), xytext=(0.70, 91.0), textcoords="data",
                 ha="left", va="top", fontsize=S.FS_NOTE, color=S.INK,
                 linespacing=1.35,
                 arrowprops=dict(arrowstyle="->", lw=0.6, color=S.INK,
@@ -369,41 +348,27 @@ def panel_a(ax, res, d) -> None:
 
     # Opus falls between two configured levels and the protocol ran no level in
     # between, so the only honest statement about where its cliff is, is that it
-    # is somewhere inside this gap.
+    # is somewhere inside this gap.  Its two saturated cells carry their
+    # decision counts in the caption rather than here: at column width a
+    # three-line note under the axes costs more height than the claim is worth,
+    # and the counts are a sentence, not a position on the page.
     gap = (risks[0], risks[1])
-    ax.annotate("", xy=(gap[0], -4.5), xytext=(gap[1], -4.5),
+    ax.annotate("", xy=(gap[0], -4.0), xytext=(gap[1], -4.0),
                 arrowprops=dict(arrowstyle="<->", lw=0.6, color=S.ROUTE_C[OPUS],
                                 shrinkA=0, shrinkB=0))
     ax.annotate("Opus 5's cliff is in here;\nno level was run inside",
-                xy=(0.5 * (gap[0] + gap[1]), -7.5), ha="center", va="top",
+                xy=(0.5 * (gap[0] + gap[1]), -6.5), ha="center", va="top",
                 fontsize=S.FS_NOTE, color=S.ROUTE_C[OPUS], linespacing=1.35)
-
-    # The saturated cells are marked with their counts, in the strip beside the
-    # gap note, because a reader who sees a line lying on 0 has to be told
-    # whether that is a small rate or a rate with nowhere left to fall.
-    said = []
-    for rate, word in ((1.0, "unsafe"), (0.0, "safe")):
-        cell = d["boundary"].get(rate)
-        if cell:
-            # The noun is said once and the second clause inherits it, because
-            # three lines of note fit under this axes and four do not.
-            noun = " decisions" if not said else ""
-            said.append(f"{word} in all {cell['decisions']}{noun} at "
-                        f"{spoken(cell['levels'])}")
-    if said:
-        ax.annotate("\n".join(textwrap.wrap("Opus 5 is " + ", ".join(said), 28)),
-                    xy=(1.15, -7.5), ha="right", va="top", fontsize=S.FS_NOTE,
-                    color=S.ROUTE_C[OPUS], linespacing=1.35)
 
     # The weak curve is named on the tail it is still descending, which is the
     # only stretch where the two strengths are far enough apart for a label to
     # belong to one of them without ambiguity.  The reference strength is named
     # above, on the step that is its whole shape.
     weak = min(curves)
-    i = int(round(0.705 * (len(RISK_GRID) - 1)))
+    i = int(round(0.775 * (len(RISK_GRID) - 1)))
     S.direct_label(ax, RISK_GRID[i], 100 * curves[weak][i],
                    f"model, $\\beta$ = {weak:g}", color=BETA_C[weak],
-                   ha="left", va="bottom", dx=4, dy=3.5, weight="bold")
+                   ha="left", va="bottom", dx=3, dy=3.0, weight="bold")
     S.direct_label(ax, risks[0], 100.0, "Claude Opus 5", color=S.ROUTE_C[OPUS],
                    dx=4, dy=4.5, weight="bold")
     ends = 100 * obs.loc[others, obs.columns[-1]].to_numpy()
@@ -413,13 +378,21 @@ def panel_a(ax, res, d) -> None:
     # Naming the regime on the page, not only in the docstring. Every curve here
     # is the small-mutation limit, which the theory metadata states cannot
     # represent the finite mutation rate of the parameter points it is drawn at,
-    # and a reader who sees only "the model" would not know which model.
-    S.panel(ax, "a",
-            "the small-mutation limit steps off a cliff; eight of the nine "
-            "routes walk a ramp")
+    # and a reader who sees only "the model" would not know which model.  One
+    # panel means no panel letter: the claim is the whole title.
+    ax.set_title("the small-mutation limit steps off a cliff;\n"
+                 "eight of the nine routes walk a ramp",
+                 loc="left", pad=4, x=0.0, fontsize=S.FS_CLAIM, color=S.INK_2,
+                 linespacing=1.4)
 
 
-def panel_b(ax, res, d) -> None:
+def panel_b(ax, res, d, letter="b") -> None:
+    """The inversion as a slope chart.  Drawn by the supplement, not here.
+
+    ``letter`` exists because this panel is the first one in the supplementary
+    figure and the second one in the figure it used to belong to.  The panel is
+    the same object either way, so it is written once.
+    """
     obs, risks, implied = res["obs"], res["risks"], res["implied"]
     band = d["band"]
 
@@ -466,17 +439,22 @@ def panel_b(ax, res, d) -> None:
         ax.spines[side].set_visible(False)
     ax.set_axisbelow(True)
     ax.grid(True, axis="y", zorder=0)
-    S.panel(ax, "b",
+    S.panel(ax, letter,
             f"inverted, {d['span']:.2f} of configured risk comes back as "
             f"{d['width']:.2f}")
 
 
-def dodge(values, *, separation, step=0.22, levels=5):
+def dodge(values, *, separation, step=0.11, levels=5):
     """Offsets that stop two nearly equal points from hiding each other.
 
     Within a row the vertical position carries no information, so a point may be
     nudged off the line.  The alternative is two routes drawn on top of each
     other, which reads as one route and loses a measurement.
+
+    ``step`` was 0.22, which put the outermost marker 0.44 of a row spacing from
+    its own row in a panel whose entire claim is about rows.  A vertical offset
+    that large competes with the thing being read, so it is halved here and the
+    panel declares that it exists.
     """
     offsets = np.zeros(len(values))
     placed: dict[int, list[float]] = {}
@@ -490,7 +468,8 @@ def dodge(values, *, separation, step=0.22, levels=5):
     return offsets
 
 
-def panel_c(ax, res, d) -> None:
+def panel_c(ax, res, d, letter="c") -> None:
+    """The band magnified.  Drawn by the supplement; see ``panel_b``."""
     obs, risks, implied = res["obs"], res["risks"], res["implied"]
 
     ax.axvspan(d["band"][0], d["band"][1], color=S.BAND, zorder=0, lw=0)
@@ -513,6 +492,15 @@ def panel_c(ax, res, d) -> None:
     ax.annotate(f"the $\\beta$ = {d['reference']:g} cliff", xy=(d["cliff"], -0.80),
                 xytext=(2.5, 0), textcoords="offset points", ha="left",
                 va="center", fontsize=S.FS_NOTE, color=S.MUTED)
+    # An undeclared vertical nudge is the worst device available in the one
+    # panel whose whole claim is whether three rows separate.  Declare it, in
+    # the empty strip under the last row rather than in the header, which the
+    # cliff label already owns.
+    ax.annotate("markers are nudged off their row only where two would overlap; "
+                "the tick is the row",
+                xy=(0.0, 0.0), xycoords="axes fraction", xytext=(0, 3),
+                textcoords="offset points", ha="left", va="bottom",
+                fontsize=S.FS_NOTE, color=S.MUTED)
 
     ax.set_xlim(*MAGNIFIED)
     ax.set_ylim(2.65, -1.05)
@@ -525,31 +513,20 @@ def panel_c(ax, res, d) -> None:
         ax.spines[side].set_visible(False)
     ax.set_axisbelow(True)
     ax.grid(True, axis="x", zorder=0)
-    S.panel(ax, "c", "the three levels are not separable in the answers")
+    # "the three levels are not separable in the answers" stood here and the
+    # panel does not show it.  Recomputed: the 0.1 row spans 0.5635 to 0.6483
+    # and the 0.9 row 0.6477 to 0.6828, so they share 0.0006, seven of the eight
+    # 0.1 cells lie strictly left of every 0.9 cell, and all eight invertible
+    # routes keep the configured order.  What collapses is the scale, and
+    # adjacent levels overlap.  Say that instead.
+    S.panel(ax, letter, "adjacent levels overlap, but the order survives")
 
 
 def draw(res: dict, d: dict) -> None:
-    fig = plt.figure(figsize=(S.TEXT, 3.25))
-    gs = fig.add_gridspec(2, 2, width_ratios=[1.58, 1.0],
-                          height_ratios=[1.0, 0.72], wspace=0.42, hspace=0.82)
-    ax_a = fig.add_subplot(gs[:, 0])
-    ax_b = fig.add_subplot(gs[0, 1])
-    ax_c = fig.add_subplot(gs[1, 1])
-
-    panel_a(ax_a, res, d)
-    panel_b(ax_b, res, d)
-    panel_c(ax_c, res, d)
-
-    cells = res["implied"].size
-    ax_c.annotate(
-        f"{cells - d['refused']} of {cells} cells invert. The other "
-        f"{d['refused']} are Claude Opus 5 on 0% or 100%,\nrates no risk in the "
-        "model produces, so they are refused rather than placed.",
-        xy=(0.0, 0.0), xycoords="axes fraction", xytext=(0, -25),
-        textcoords="offset points", ha="left", va="top", fontsize=S.FS_NOTE,
-        color=S.MUTED, linespacing=1.35)
-
-    S.save(fig, "theory_versus_behaviour", width=S.TEXT)
+    fig = plt.figure(figsize=(S.COL, 2.92))
+    ax = fig.add_subplot(1, 1, 1)
+    panel_a(ax, res, d)
+    S.save(fig, "theory_versus_behaviour", width=S.COL)
 
 
 def main() -> None:
