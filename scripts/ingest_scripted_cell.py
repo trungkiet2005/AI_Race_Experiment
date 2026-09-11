@@ -1,8 +1,12 @@
 """Move one downloaded scripted-opponent cell into the repository, with its receipt.
 
 The campaign is collected one cell at a time on whichever declared identity owns
-it, so ingestion happens twelve times and by hand is where a provenance mistake
-would creep in. This does it the same way every time.
+it, so ingestion happens twelve times per endpoint and by hand is where a
+provenance mistake would creep in. This does it the same way every time.
+
+A cell is filed under the endpoint its own manifest names, never under a name
+supplied on the command line, so one route's cells cannot land in another's
+directory and be averaged with them later.
 
 Two things it records that the run itself cannot. The executing identity, because
 the benchmark server exposes neither ``KAGGLE_USERNAME`` nor
@@ -32,6 +36,26 @@ PROTOCOL_ID = "ai-race-scripted-opponent-v1"
 DEFAULT_PLAN = "docs/scripted-opponent-collection-plan-2026-09-10.md"
 EXPECTED_RACES = 10
 SAFE, UNSAFE = "safe", "unsafe"
+
+
+def route_tag(route: str) -> str:
+    """The directory a route's cells live in, derived from the route itself.
+
+    The campaign began on one endpoint and the destination was written out by
+    hand.  A second route hard-coded the same way is how one endpoint's cells
+    end up in another's directory, so the tag is computed here and the route in
+    the manifest is the only thing that decides where a cell lands.  The rule
+    reproduces the names the rest of ``results/frontier`` already uses:
+    ``google/gemini-3-flash-preview`` stays ``gemini-3-flash-preview`` and
+    ``anthropic/claude-sonnet-5@default`` becomes ``claude-sonnet-5-default``.
+    """
+    import re
+
+    leaf = str(route).strip().split("/")[-1]
+    tag = re.sub(r"[^A-Za-z0-9._-]+", "-", leaf).strip("-")
+    if not tag:
+        raise SystemExit(f"cannot derive a directory name from route {route!r}")
+    return tag
 
 
 def expected_rival_move(strategy: str, round_number: int, route_moves: list[str]) -> str:
@@ -90,6 +114,10 @@ def main() -> None:
     parser.add_argument("--identity", required=True,
                         help="Kaggle account that ran the cell; the server cannot tell us.")
     parser.add_argument("--plan", default=DEFAULT_PLAN)
+    parser.add_argument("--expect-route", default="",
+                        help="Route the plan assigned to this cell. Checked against the "
+                             "manifest so a run of the wrong endpoint cannot be filed "
+                             "as the right one.")
     parser.add_argument("--force", action="store_true",
                         help="Replace a cell already in the tree. Off by default so a "
                              "repeat download cannot quietly overwrite a different one.")
@@ -134,7 +162,18 @@ def main() -> None:
     route_rows = [row for row in turns if row["is_route_decision"]]
     unsafe = sum(int(row["unsafe"]) for row in route_rows)
 
-    dst = CAMPAIGN / f"{strategy}_risk{str(risk).replace('.', 'p')}" / "gemini-3-flash-preview"
+    route = str(manifest.get("model_route") or "").strip()
+    if not route:
+        raise SystemExit("the manifest records no model_route; a cell that cannot "
+                         "name its endpoint cannot be filed under one")
+    if args.expect_route and route != args.expect_route:
+        raise SystemExit(
+            f"this run is {route!r} but the cell was declared for "
+            f"{args.expect_route!r}; a cell filed under the wrong endpoint would "
+            "report one route's behaviour as another's"
+        )
+
+    dst = CAMPAIGN / f"{strategy}_risk{str(risk).replace('.', 'p')}" / route_tag(route)
     if dst.exists() and not args.force:
         existing = dst / "collection_receipt.json"
         who = (json.loads(existing.read_text(encoding="utf-8")).get("executing_identity")
@@ -178,12 +217,15 @@ def main() -> None:
           f"{100 * unsafe / len(route_rows):.1f}% unsafe, rival replayed clean")
     print(f"  -> {dst.relative_to(ROOT)}")
 
+    # Counted per route.  The grid is twelve cells for one endpoint, so a count
+    # taken over the whole tree would read twenty-four once a second route
+    # exists and would say a route is complete when it is not.
     have = sorted(
         (json.loads(p.read_text(encoding="utf-8"))["cell"]["strategy"],
          json.loads(p.read_text(encoding="utf-8"))["cell"]["max_private_risk"])
-        for p in CAMPAIGN.glob("*/*/collection_receipt.json")
+        for p in CAMPAIGN.glob(f"*/{route_tag(route)}/collection_receipt.json")
     )
-    print(f"  campaign now holds {len(have)} of 12 cells: {have}")
+    print(f"  {route} now holds {len(have)} of 12 cells: {have}")
 
 
 if __name__ == "__main__":

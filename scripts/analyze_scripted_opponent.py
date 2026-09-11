@@ -48,7 +48,9 @@ question.
 
 from __future__ import annotations
 
+import argparse
 import json
+import re
 from collections import defaultdict
 from pathlib import Path
 
@@ -59,6 +61,14 @@ ROOT = Path(__file__).resolve().parents[1]
 CAMPAIGN = ROOT / "results" / "frontier" / "scripted_opponent_campaign"
 DERIVED = ROOT / "results" / "derived" / "scripted_opponent_campaign"
 PROTOCOL_ID = "ai-race-scripted-opponent-v1"
+
+# The route the campaign began on, and the only one whose numbers the manuscript
+# already cites.  It is named here because two things are frozen to it: the
+# derived file it writes, which stays at the root of DERIVED rather than moving
+# into a per-route folder, and its bootstrap generator keys, which stay keyed on
+# the cell alone.  Adding an endpoint must not move an interval that has already
+# been reported, for the same reason adding a risk level must not.
+ORIGINAL_ROUTE = "google/gemini-3-flash-preview"
 
 STRATEGIES = ("AS", "AU", "CS", "CAS")
 STRATEGY_LABEL = {
@@ -105,8 +115,32 @@ def cell_rng(*key) -> np.random.Generator:
     return np.random.default_rng([SEED, int.from_bytes(digest[:8], "big")])
 
 
-def load_cells() -> tuple[pd.DataFrame, dict, list[str]]:
-    """Every route decision in the campaign, with its cell and its receipt."""
+def route_tag(route: str) -> str:
+    """Directory name for a route, matching the rest of ``results/frontier``."""
+    leaf = str(route).strip().split("/")[-1]
+    return re.sub(r"[^A-Za-z0-9._-]+", "-", leaf).strip("-")
+
+
+def routes_present() -> list[str]:
+    """Every endpoint with at least one ingested cell, read from the manifests."""
+    found = set()
+    for manifest_path in sorted(CAMPAIGN.glob("*/*/run_manifest.json")):
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        route = manifest.get("model_route")
+        if route:
+            found.add(str(route))
+    return sorted(found)
+
+
+def load_cells(route: str) -> tuple[pd.DataFrame, dict, list[str]]:
+    """Every decision one endpoint made in the campaign, with cell and receipt.
+
+    One endpoint at a time, never all of them at once.  Two routes read together
+    would key on ``(strategy, risk)`` and silently average one endpoint's rate
+    with another's under a single heading, which is the same failure already on
+    record for the neutral baseline, and it would look like a complete grid of
+    twenty-four cells rather than two grids of twelve.
+    """
     frames, receipts, problems = [], {}, []
     for receipt_path in sorted(CAMPAIGN.glob("*/*/collection_receipt.json")):
         receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
@@ -114,6 +148,8 @@ def load_cells() -> tuple[pd.DataFrame, dict, list[str]]:
         manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
         cell = f"{receipt['cell']['strategy']} at risk {receipt['cell']['max_private_risk']}"
 
+        if str(manifest.get("model_route")) != route:
+            continue
         if manifest.get("protocol_id") != PROTOCOL_ID:
             problems.append(f"{cell}: protocol {manifest.get('protocol_id')!r}")
             continue
@@ -226,27 +262,44 @@ def paired_contrast(turns: pd.DataFrame, risk: float, left: str, right: str, rng
     }
 
 
-def main() -> None:
-    turns, receipts, problems = load_cells()
+def rng_key(route: str, *parts) -> tuple:
+    """Bootstrap generator key for one cell or contrast on one endpoint.
+
+    The endpoint enters the key for every route except the one the campaign
+    began on, whose keys are left exactly as they were.  That asymmetry is
+    deliberate and it is the whole point: the manuscript already quotes that
+    route's intervals, and an interval that moved because a different endpoint
+    was collected later would be measuring the generator rather than the data.
+    """
+    if route == ORIGINAL_ROUTE:
+        return parts
+    return (route,) + parts
+
+
+def analyse_route(route: str) -> dict | None:
+    turns, receipts, problems = load_cells(route)
+    print(f"\n=== {route} ===")
     if problems:
         print("refused cells:")
         for problem in problems:
             print(f"  {problem}")
     if turns.empty:
-        raise SystemExit("no admissible cells; nothing to report")
+        print("no admissible cells; nothing to report for this endpoint")
+        return None
 
-    route = turns[turns["is_route_decision"]]
+    decisions = turns[turns["is_route_decision"]]
     rows = []
-    for (strategy, risk), block in route.groupby(["strategy", "cell_risk"]):
+    for (strategy, risk), block in decisions.groupby(["strategy", "cell_risk"]):
         per_race = [
             (int(race["unsafe"].sum()), len(race))
             for _, race in block.groupby("game_id")
         ]
         supported = len(per_race) >= MIN_RACES_FOR_INFERENCE
-        rng = cell_rng("rate", strategy, risk)
+        rng = cell_rng(*rng_key(route, "rate", strategy, risk))
         point, low, high = rate_with_interval(per_race, rng) if supported else (
             sum(p[0] for p in per_race) / max(sum(p[1] for p in per_race), 1), None, None)
         rows.append({
+            "model_route": route,
             "opponent_strategy": strategy,
             "max_private_risk": risk,
             "n_races": len(per_race),
@@ -265,8 +318,8 @@ def main() -> None:
     # rival the route's rate is the lowest in the campaign, so the safe arm
     # measures restraint kept rather than an opportunity taken.
     contrasts = defaultdict(dict)
-    for risk in sorted(set(route["cell_risk"])):
-        present = set(route[route["cell_risk"] == risk]["strategy"])
+    for risk in sorted(set(decisions["cell_risk"])):
+        present = set(decisions[decisions["cell_risk"] == risk]["strategy"])
         for left, right, name in (("AU", "AS", "rival_unsafe_minus_rival_safe"),
                                   ("CAS", "CS", "rival_opened_unsafe_minus_safe")):
             if {left, right} <= present:
@@ -274,24 +327,34 @@ def main() -> None:
                 # because a display name is not part of the estimand and
                 # renaming a contrast must not move its interval.
                 result = paired_contrast(turns, risk, left, right,
-                                         cell_rng("contrast", left, right, risk))
+                                         cell_rng(*rng_key(route, "contrast",
+                                                           left, right, risk)))
                 if result:
                     contrasts[str(risk)][name] = result
 
-    DERIVED.mkdir(parents=True, exist_ok=True)
-    table.to_csv(DERIVED / "scripted_opponent_rates.csv", index=False)
+    # The route the manuscript cites keeps the file it has always written. A
+    # later endpoint gets a folder of its own rather than extra rows in that
+    # file, because a reader and a verifier both take those twelve rows to be
+    # one endpoint's grid.
+    out = DERIVED if route == ORIGINAL_ROUTE else DERIVED / route_tag(route)
+    out.mkdir(parents=True, exist_ok=True)
+    columns = [c for c in table.columns if c != "model_route"] if route == ORIGINAL_ROUTE \
+        else list(table.columns)
+    table[columns].to_csv(out / "scripted_opponent_rates.csv", index=False)
     payload = {
         "schema_version": "scripted-opponent-campaign-v1",
         "protocol_id": PROTOCOL_ID,
         "n_cells": len(table),
         "refused": problems,
-        "rates": table.to_dict(orient="records"),
+        "rates": table[columns].to_dict(orient="records"),
         "paired_contrasts": {risk: dict(items) for risk, items in contrasts.items()},
     }
-    (DERIVED / "scripted_opponent_rates.json").write_text(
+    if route != ORIGINAL_ROUTE:
+        payload["model_route"] = route
+    (out / "scripted_opponent_rates.json").write_text(
         json.dumps(payload, indent=2, default=str), encoding="utf-8")
 
-    print(f"\n{len(table)} admissible cell(s)")
+    print(f"{len(table)} admissible cell(s)")
     for risk in sorted(set(table["max_private_risk"])):
         print(f"  risk {risk}")
         for _, row in table[table["max_private_risk"] == risk].iterrows():
@@ -306,7 +369,69 @@ def main() -> None:
                   f"[{100 * result['ci95_low']:+.1f}, {100 * result['ci95_high']:+.1f}] "
                   f"over {result['n_blocks']} blocks, "
                   f"{'seed pairing verified' if result['pairing_verified'] else 'PAIRING BROKEN'}")
-    print(f"\nwrote {DERIVED.relative_to(ROOT)}")
+    missing = [(s, r) for s in STRATEGIES for r in RISKS
+               if not ((table["opponent_strategy"] == s)
+                       & (table["max_private_risk"] == r)).any()]
+    if missing:
+        print(f"  not collected: {missing}")
+        print("  this endpoint is a set of cells, not a grid; report it that way")
+    print(f"  wrote {out.relative_to(ROOT)}")
+    return {"route": route, "table": table, "contrasts": contrasts,
+            "refused": problems, "missing": missing}
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--route", action="append", default=None,
+        help="Endpoint to report. Repeatable. Defaults to the route the campaign "
+             "began on, so the command with no arguments writes exactly what it "
+             "has always written.")
+    parser.add_argument(
+        "--all-routes", action="store_true",
+        help="Report every endpoint with ingested cells, each to its own artifact.")
+    args = parser.parse_args()
+
+    if args.all_routes and args.route:
+        raise SystemExit("--all-routes and --route are alternatives; pick one")
+    if args.all_routes:
+        routes = routes_present()
+        if not routes:
+            raise SystemExit("no ingested cells under the campaign tree")
+    else:
+        routes = args.route or [ORIGINAL_ROUTE]
+
+    results = [result for result in (analyse_route(route) for route in routes) if result]
+    if not results:
+        raise SystemExit("no admissible cells; nothing to report")
+
+    if len(results) > 1:
+        print("\n=== side by side, per cent unsafe by the rival it faced ===")
+        print("Each column is a separate endpoint and a separate sample. Nothing "
+              "here is pooled; a blank is a cell that was not collected.")
+        header = "  ".join(f"{r['route']:<34}" for r in results)
+        print(f"{'cell':<22}  {header}")
+        for risk in RISKS:
+            for strategy in STRATEGIES:
+                cells = []
+                for result in results:
+                    table = result["table"]
+                    hit = table[(table["opponent_strategy"] == strategy)
+                                & (table["max_private_risk"] == risk)]
+                    cells.append(f"{100 * hit.iloc[0]['unsafe_rate']:>6.1f}"
+                                 if len(hit) else "     -")
+                label = f"{STRATEGY_LABEL[strategy]} @ {risk}"
+                print(f"{label:<22}  " + "  ".join(f"{c:<34}" for c in cells))
+        print("\n=== the rival's stance, paired inside a repetition ===")
+        for risk in RISKS:
+            for result in results:
+                entry = result["contrasts"].get(str(risk), {}).get(
+                    "rival_unsafe_minus_rival_safe")
+                if entry:
+                    print(f"  risk {risk}  {result['route']:<34} "
+                          f"{100 * entry['mean_difference']:+6.1f} pp "
+                          f"[{100 * entry['ci95_low']:+.1f}, "
+                          f"{100 * entry['ci95_high']:+.1f}]")
 
 
 if __name__ == "__main__":
