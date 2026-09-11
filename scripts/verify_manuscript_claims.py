@@ -387,6 +387,68 @@ check("each cell's interval is derived from that cell alone",
       "cell_rng" in open("scripts/analyze_nplayer_matched.py", encoding="utf-8").read(),
       "per-cell generator, so adding a risk level cannot move a reported interval")
 
+# --- what the gate does when it is asked twice --------------------------------
+# Read from the three administrations rather than from a derived file, because
+# the claim is about the instrument and a derived file would hide a contract
+# difference between administrations.
+adm_runs = {}
+adm_contract = {}
+for _camp, _tag in (("admission_campaign", "v1"),
+                    ("admission_campaign_v5", "v5"),
+                    ("admission_campaign_v6", "v6")):
+    for _p in glob.glob(f"results/frontier/{_camp}/**/admission.json", recursive=True):
+        if "failed_runs" in _p:
+            continue
+        _d = json.load(open(_p, encoding="utf-8"))
+        adm_runs.setdefault(_d["model_route"], {})[_tag] = _d
+    for _p in glob.glob(f"results/frontier/{_camp}/**/run_manifest.json", recursive=True):
+        if "failed_runs" in _p:
+            continue
+        _m = json.load(open(_p, encoding="utf-8"))
+        _flat = dict(_m)
+        for _sub in ("decoding", "probe_bank"):
+            if isinstance(_m.get(_sub), dict):
+                _flat.update(_m[_sub])
+        for _k in ("probe_bank_sha256", "rules_context_sha256", "repetitions",
+                   "output_token_limit", "temperature_requested"):
+            if _flat.get(_k) is not None:
+                adm_contract.setdefault(_k, {}).setdefault(_tag, set()).add(str(_flat[_k]))
+
+check("the three gate administrations share one probe bank",
+      len({v for tag in adm_contract["probe_bank_sha256"].values() for v in tag}) == 1,
+      sorted({v[:10] for tag in adm_contract["probe_bank_sha256"].values() for v in tag})[0])
+check("they share one rules context and one repetition count",
+      len({v for tag in adm_contract["rules_context_sha256"].values() for v in tag}) == 1
+      and len({v for tag in adm_contract["repetitions"].values() for v in tag}) == 1,
+      "identical across v1, v5 and v6")
+check("the only recorded contract difference is the token cap, 128 then 256",
+      sorted({v for tag in adm_contract["output_token_limit"].values() for v in tag}) == ["128", "256"]
+      and adm_contract["output_token_limit"]["v5"] == adm_contract["output_token_limit"]["v6"],
+      "v5 and v6 have no recorded contract difference at all")
+
+def _state_recon(route, tag):
+    return adm_runs[route][tag]["by_domain"]["state_reconstruction"]["accuracy"]
+
+_sonnet = "anthropic/claude-sonnet-5@default"
+_g31 = "google/gemini-3.1-flash-lite-preview"
+check("re-administering the identical gate moves state reconstruction 13.3 points",
+      abs(100 * (_state_recon(_sonnet, "v6") - _state_recon(_sonnet, "v5")) - 13.3) < 0.1
+      and abs(100 * (_state_recon(_g31, "v6") - _state_recon(_g31, "v5")) - 13.3) < 0.1,
+      f"Sonnet 5 {100 * _state_recon(_sonnet, 'v5'):.1f} -> {100 * _state_recon(_sonnet, 'v6'):.1f}, "
+      f"G3.1 FL {100 * _state_recon(_g31, 'v5'):.1f} -> {100 * _state_recon(_g31, 'v6'):.1f}")
+check("that domain is scored over fifteen calls, so 13.3 points is two of them",
+      adm_runs[_sonnet]["v6"]["by_domain"]["state_reconstruction"]["rows"] == 15,
+      "2/15 = 13.3 points")
+check("no verdict moved between the two identical administrations",
+      all(adm_runs[r]["v5"]["admitted_for_gameplay"] == adm_runs[r]["v6"]["admitted_for_gameplay"]
+          for r in adm_runs if {"v5", "v6"} <= set(adm_runs[r])),
+      "four routes present in both, all four agree")
+check("Claude Sonnet 5 was refused at the first administration",
+      adm_runs[_sonnet]["v1"]["admitted_for_gameplay"] is False
+      and adm_runs[_sonnet]["v5"]["admitted_for_gameplay"] is True,
+      f"{100 * adm_runs[_sonnet]['v1']['overall_accuracy']:.1f} refused, then "
+      f"{100 * adm_runs[_sonnet]['v5']['overall_accuracy']:.1f} admitted, across the cap change")
+
 # --- the scripted-opponent grid ----------------------------------------------
 so = json.load(open("results/derived/scripted_opponent_campaign/scripted_opponent_rates.json",
                     encoding="utf-8"))

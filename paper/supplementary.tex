@@ -344,6 +344,12 @@ letters restart at A because this is supplementary matter.
     choices move.
   \item \textbf{\Unsafe{} rate by persona band and relative position.} Cells
     reported only here, with observed rather than assigned position.
+  \item \textbf{Joint outcome dynamics.} The race read as a walk on the three
+    joint states, one transition matrix per route, and the two roads back to
+    mutual restraint.
+  \item \textbf{The designed boundary at round five.} Whether play moves where
+    the stated continuation probability drops, and why that contrast is across
+    round positions rather than a discontinuity estimate.
 \end{itemize}
 
 Four terms are used with fixed meanings throughout. A \emph{route} is the
@@ -384,8 +390,10 @@ representation-robustness cell (\S\ref{app:context-mapping}), the matched
 group-size comparison (\S\ref{app:nplayer-matched}), the scripted-opponent
 campaign (\S\ref{app:scripted-opponent}), the
 cluster-count sweep behind the human archetypes
-(\S\ref{app:k-sensitivity}), and the trajectory-diversity statistics
-(\S\ref{app:diversity}).
+(\S\ref{app:k-sensitivity}), the trajectory-diversity statistics
+(\S\ref{app:diversity}), the joint outcome dynamics of a race
+(\S\ref{app:joint-dynamics}), and the designed horizon boundary at round
+five (\S\ref{app:horizon-boundary}).
 
 \subsection{Task-validity probe battery: full breakdown}
 \label{app:task-validity-full}
@@ -599,6 +607,115 @@ including the strongest, which is why it was frozen as a diagnostic before the
 campaign began: had it gated admission, no route would have been admitted at
 all.
 
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\columnwidth]{../figures/paper/audit_reads_the_name.pdf}
+    \caption{The comprehension gate of this campaign draws the same line the
+    route string already draws. \textbf{(a)} Every route twice: on the left the
+    gate's verdict after 60 calls, on the right the tier its own name announces
+    after none. A size word is \texttt{mini}, \texttt{nano} or \texttt{lite}
+    appearing as a whole word of the route string, so \texttt{gemini} is not
+    \texttt{mini}. Under that rule the two verdicts agree on 9 of 9 routes, an
+    exact permutation $p$ of $1/126$ over the $C(9,4)=126$ ways of relabelling
+    which four names carry a size word; counting \texttt{flash} as a size word
+    as well gives 8 of 9 and $p=5/126$. \textbf{(b)} Accuracy by probe domain,
+    with the number of calls behind each column and a ring on every cell below
+    its gate: state reconstruction is the only one of the three gates that
+    refuses all four refused routes. \textbf{(c)} Spearman correlation between
+    each domain's accuracy and the risk response, so the domain that does the
+    refusing is also the one that tracks behaviour; stage payoff is grey
+    because all nine routes answered it perfectly, which is an absence of
+    variation and not of data. Agreeing with a size tier does not show that the
+    audit measures nothing else, and comprehension that simply tracked model
+    size would look exactly like this. What it shows is narrower: on these nine
+    routes the audit carries no information the name does not already carry.
+    $n=9$ endpoints, and that is the whole basis of every $p$-value drawn
+    here.}
+    \Description{Three stacked panels at one column width. The top panel lists
+    the nine audited routes, each drawn as a horizontal line joining the
+    audit's verdict on the left to the tier word in its name on the right, with
+    a dashed admission line between the five admitted routes above and the four
+    refused routes below; every route below the line is labelled lite, mini or
+    nano, and every route above it is labelled none. The middle panel is a
+    heatmap of accuracy by route and probe domain, with rings drawn on the
+    cells that fall below a gate, almost all of them in the state
+    reconstruction column. The bottom panel is a lollipop chart of Spearman
+    correlation by probe domain, tallest for state reconstruction, with the
+    stage payoff column greyed out and marked as having no variation.}
+    \label{fig:audit-reads-the-name}
+\end{figure}
+
+\paragraph{What the gate adds over the route string.} A gate earns its sixty
+calls per route only if it separates endpoints that a cheaper reading would not,
+and Figure~\ref{fig:audit-reads-the-name} puts that question to this campaign.
+The answer is uncomfortable. Reading the route string alone, and calling a route
+small when \texttt{mini}, \texttt{nano} or \texttt{lite} appears as a whole word
+of its name, splits the nine endpoints into exactly the two sets the gate
+produced: all four refused routes carry a size word and none of the five
+admitted routes does. Enumerating all $C(9,4)=126$ ways of relabelling which
+four names carry a size word gives an exact permutation $p$ of $1/126$, or
+$0.008$. The rule has one judgement in it, which the figure reports rather than
+hides: \texttt{flash} is not counted as a size word, and counting it as well
+makes five names small instead of four and the agreement 8 of 9, $p=5/126$ or
+$0.040$. Either way, a reader who never ran the audit and only read the nine
+names would have put the admission line in the same place.
+
+This is not evidence that the battery measures nothing. Comprehension may simply
+track model size across these nine endpoints, which would produce this picture
+too, and nine routes cannot tell the two apart. What does follow is narrower and
+still awkward for the instrument: on these nine routes the audit carries no
+information the name does not already carry, so no claim that rests on the
+admitted-against-refused split is separable here from a claim about model size.
+The gate would show its worth on a route whose name and comprehension disagree,
+and this sample contains no such route.
+
+\subsection{What the gate does when it is asked twice}
+\label{app:gate-reliability}
+
+The admission gate is the instrument every behavioural claim in this paper rests
+on, so its own repeatability is a fair question, and the repository can answer
+it: the battery has been administered three times. All three administrations use
+the same probe bank, hash \texttt{2953fb47}, the same rules context, hash
+\texttt{b80981a5}, three repetitions per probe and a requested temperature of
+zero. The only recorded contract difference anywhere in the three is the output
+token cap, 128 in the first administration and 256 in the second and third.
+Between the second and the third there is no recorded difference at all.
+
+\paragraph{Between the two identical administrations.} Two of the four routes
+present in both moved, and both moved by the same amount in the same domain.
+Claude Sonnet 5's state-reconstruction accuracy went from $86.7\%$ to $100.0\%$
+and Gemini 3.1 Flash-Lite's from $60.0\%$ to $73.3\%$. That domain is scored
+over fifteen calls, so $13.3$ points is two calls out of fifteen answering
+differently on identical input. Overall accuracy moved $3.3$ points for both.
+Gemini 3 Flash and GPT-5.4 nano did not move at all. No verdict changed.
+
+This has a direct consequence for how a number in the main text should be read.
+The main text reports Gemini 3.1 Flash-Lite missing
+admission on state reconstruction at $73.3\%$ against the $75\%$ threshold. On
+the identical instrument that same route scored $60.0\%$, so the margin by which
+it misses is not a stable quantity, even though the verdict is: it failed both
+times.
+
+\paragraph{Across the token-cap change.} Claude Sonnet 5 is the one route whose
+verdict has ever moved. It was \emph{refused} in the first administration at
+$76.7\%$ overall, below the $80\%$ bar, and admitted in both later ones at
+$81.7\%$ and $85.0\%$. That comparison spans the change from a 128-token cap to
+256, so it is not a clean test-retest result and we do not present it as one; a
+truncated answer is scored wrong, and a low cap can truncate. It is reported
+because Claude Sonnet 5 is an admitted route that carries the crossed
+representation design of \S\ref{app:context-mapping}, and a reader is entitled
+to know that the gate refused it once.
+
+\paragraph{What follows from this.} A gate verdict is a decision, not a
+measurement with a standard error, and this study treats it as one: the
+threshold is a declared entry condition and no analysis here interpolates
+between probe scores. The repeatability above is compatible with that use, since
+no verdict moved on the identical instrument. It is not compatible with reading
+a probe score as a precise trait of a route, and nothing in this paper does.
+The honest summary is that on this battery, at temperature zero, two of fifteen
+calls in one domain can change between administrations, which is the resolution
+a reader should assume for any single probe accuracy quoted here.
+
 \subsection{Frontier neutral baseline}
 \label{app:frontier-baseline}
 
@@ -681,6 +798,95 @@ population process.
     \label{fig:egt-frontier-invasion}
 \end{figure*}
 
+
+\subsection{The shape of a policy behind a rate}
+\label{app:policy-shape}
+
+Every gameplay number in \S\ref{app:frontier-baseline} is a rate: the share of
+decisions that came out \Unsafe{}. A rate is silent about the thing an iterated
+game is for. Two routes can sit at the same rate while one is reading the board
+and the other is reciting a constant, and no table in this supplement separates
+those two cases. Figure~\ref{fig:policy-shape} is the object that does, and that
+is what it adds to the neutral baseline: not another number for how much
+\Unsafe{} play there was, but the policy that produced it.
+
+The read-out is the memory-one fingerprint of the evolutionary game theory
+literature: the probability of playing \Unsafe{} given the pair of moves that
+preceded it, the route's own move first and its rival's second. The choice is
+not an analytical convenience. The prompt shows the players only the
+immediately preceding round, so memory-one is the whole state the game makes
+available, and four conditional probabilities are therefore a complete
+description of a stationary policy rather than a summary of one. The fingerprint
+is computed over the same nine-route neutral baseline the rest of this paper
+reports, 270 races and 5{,}022 decisions, of which the 4{,}482 that have a
+predecessor round enter the calculation; round one is excluded rather than
+folded in, because an opening move is a different object from a reply.
+
+The two lagged effects beside it are Mantel-Haenszel differences, stratified on
+the risk level and on the other lagged move. Both stratifications are
+load-bearing. Risk has to be held fixed because the three risk cells have very
+different base rates, so pooling them would let a route that simply plays more
+\Unsafe{} at low risk look responsive. The other lagged move has to be held
+fixed because these are self-play races: both companies are the same route, so
+an unstratified reading of what a route does after its rival went \Unsafe{}
+would largely measure the route's own phase. Intervals resample races within
+their risk cell, the same clustering every other interval in this paper uses.
+
+\begin{figure*}[t]
+    \centering
+    \includegraphics[width=\textwidth]{../figures/paper/policy_shape.pdf}
+    \caption{The memory-one policy behind each route's \Unsafe{} rate, over the
+    nine-route neutral baseline. (a) One row per route and one column per
+    preceding pair of moves, the route's own first and its rival's second, with
+    the conditional probability printed in every tile; row labels carry the
+    route colours used throughout the paper, so the panel needs no legend. Two
+    of Claude Opus 5's tiles are marked absent rather than left blank: its two
+    seats never once played differently, so the mixed contexts did not arise
+    and there is nothing there to measure. (b) The two lagged effects on one
+    scale, how far the rival's last move moves the route and how far its own
+    last move does, with race-clustered 95\% intervals and the routes in the
+    same order as panel~a. (c) Two races at the same risk level under the same
+    protocol, one from a route that answers its rival and one from the route
+    that does not move at all, with the two seats drawn separately.}
+    \Description{Three panels. Panel a is a nine-row, four-column grid of
+    conditional probabilities of unsafe play, one row per model route and one
+    column per pair of preceding moves: safe-safe, safe-unsafe, unsafe-safe and
+    unsafe-unsafe. Most rows are low in the safe-safe and unsafe-safe columns
+    and high in the two columns where the rival played unsafe, for example
+    Claude Sonnet 5 at 0.28, 1.00, 0.39 and 0.79. The bottom row, Claude Opus
+    5, reads 0.00, then two tiles labelled never because those contexts did not
+    occur, then 1.00. Panel b is a dot-and-interval chart with one row per
+    route and two series: the effect of the rival's last move, which is
+    positive for six routes and reaches about 45 percentage points, and the
+    effect of the route's own last move, which is negative for every route
+    where it is defined and reaches about minus 51 points. The Claude Opus 5
+    row carries the note that neither term is defined. Panel c shows two
+    example races at maximum private risk 0.6 as step traces over sixteen
+    rounds: the Gemini 3 Flash race alternates between safe and unsafe with the
+    two seats tracking each other, while the Claude Opus 5 race is a flat safe
+    line for both seats, annotated that the two seats differ in none of that
+    route's 279 rounds.}
+    \label{fig:policy-shape}
+\end{figure*}
+
+Reading the two panels together separates three kinds of route that a rate
+column would print side by side. Six of the nine answer their rival's last move
+by moving toward it, and every route whose effects are defined at all backs off
+after its own \Unsafe{} move, so the pattern is not momentum in either direction
+but matching the rival while correcting itself. Two routes, GPT-5.4 mini and
+GPT-5.4 nano, carry a rival term pointing the other way; they are also the two
+whose \Unsafe{} rate barely moves with the stated risk. Claude Opus 5 is the
+third kind: a step policy whose two seats never diverged in 279 rounds, for
+which the question the fingerprint asks does not arise.
+
+\paragraph{What it does not show.} Responding to a rival is not understanding a
+rival, and nothing here licenses a claim about strategy, intent or reasoning:
+these are conditional frequencies in one game at one prompt version, on nine
+commercial endpoints that are not a sample from a population of models. The own
+term in particular is not a preference. After its own \Unsafe{} move a route is
+also carrying more accumulated private risk, which is a real feature of the game
+rather than a confound, but it means the term measures a response to the state
+and not to the move alone.
 
 \subsection{How much of a route's number is the run?}
 \label{app:baseline-replication}
@@ -2216,6 +2422,208 @@ level unless all four group sizes are present, refuses a cell with a parse
 failure or the wrong seat count, and records the collecting identity of every
 cell it uses.
 
+\subsection{Where a race goes, once it gets somewhere}
+\label{app:joint-dynamics}
+
+Every behavioural number reported elsewhere in this paper describes one seat: it
+says what a route plays, given the risk it was told about or given what it saw
+its rival do. A race is not one seat. What happens to the world in a round is
+the \emph{joint} outcome, and with two seats and two actions that outcome is one
+of three states: both safe, one each, and both racing. A race is then a walk on
+three states, which is the object the evolutionary lane of this paper reasons
+about and the object the behavioural lane did not have.
+Figure~\ref{fig:joint-dynamics} builds that walk from the same nine-route
+neutral corpus used throughout: 270 races, 2{,}511 rounds, and 2{,}241
+transitions between consecutive rounds of one race.
+
+\begin{figure*}[t]
+    \centering
+    \includegraphics[width=\textwidth]{../figures/paper/joint_dynamics.pdf}
+    \caption{The race as a walk on joint outcome states. The joint outcome of a
+    round is how many of the two seats played \Unsafe{}, giving three states:
+    both safe, one each, and both racing. Panel a gives one transition matrix
+    per route, rows this round and columns the next, each row summing to 100,
+    ordered from the route that spends most of its rounds in mutual restraint to
+    the route that spends least. A ringed tile sits exactly on a boundary of 0
+    or 100 rather than near one, and the grey row for Claude Opus 5 marks a
+    state that never occurred rather than a value that is missing. Panel b
+    divides each route's rounds between the three states. Panel c draws the two
+    roads back to mutual restraint against each other: pooled over the eight
+    routes that ever changed state inside a race, a split is repaired on
+    $5.8\%$ of the rounds that follow one and both seats stand down together on
+    $18.3\%$ of the rounds that follow mutual escalation, so four arrivals at
+    restraint in five are simultaneous. The figure is not a mechanism: a
+    transition count cannot say that a route noticed the state, and the same
+    matrix would follow from two seats reacting only to their own accumulated
+    private risk. Rows pool the three risk levels, which move these dynamics
+    hard. Both seats of every race are the same route, so every number here is
+    what a route does against a copy of itself.}
+    \Description{Three-panel figure. Panel a is a grid of nine three-by-three
+    transition matrices, one per route, showing the chance that a round in each
+    joint state is followed by each joint state; Claude Opus 5 has all of its
+    mass on the diagonal and a greyed row for the split state, which never
+    occurred. Panel b is a stacked bar per route showing the share of rounds
+    spent in each of the three states. Panel c is a paired dot plot per route
+    comparing the chance of reaching mutual restraint after a split with the
+    chance of reaching it after both seats raced.}
+    \label{fig:joint-dynamics}
+\end{figure*}
+
+The two mixed outcomes are collapsed into a single \emph{split} state. These are
+self-play races, so the two seats are the same route under the same prompt and
+differ only by which chair the protocol sat them in, which makes
+\path{Company_1} unsafe and \path{Company_2} unsafe the same event under a
+relabelling. The regenerating script tests that exchangeability rather than
+asserting it: \path{Company_2} is the racing seat in $53.5\%$ of the 818 split
+rounds, close enough to a coin that a four-state chain would buy noise rather
+than structure. Transitions are counted only between consecutive rounds of the
+same race, and the last round of a race is dropped because it has no successor.
+Each race draws its own horizon once, before the first move, so censoring cannot
+depend on where the walk had got to.
+
+Three readings survive the figure. First, restraint is not sticky. Pooled over
+the eight routes that ever changed state inside a race, mutual restraint is
+followed by mutual restraint on only $34.4\%$ of occasions, 105 of 305, and in
+seven of the nine routes the chance that restraint holds into the next round is
+below one half. Second, only \path{anthropic/claude-opus-5@default} spends most
+of its rounds in mutual restraint, $66.7\%$, and it is also the one route whose
+two seats never once played differently. Third, the road back matters: a split
+is repaired on $5.8\%$ of the rounds that follow one, 42 of 723, while both
+seats stand down together on $18.3\%$ of the rounds that follow mutual
+escalation, 176 of 964. Of the 218 arrivals at mutual restraint, $80.7\%$ are
+both seats standing down at the same moment rather than one seat stepping down
+and the other joining it a round later.
+
+The Opus 5 matrix deserves its own sentence, because a pooled matrix with every
+count on the diagonal invites the word \emph{frozen}, and that word would invert
+this paper's own reading of the route. The constancy is within a race and not
+across the design. At $p_r^{\max}=0.1$ all ten of its races sat in mutual
+escalation for every round; at $0.6$ and at $0.9$ all twenty sat in mutual
+restraint. The route therefore moves further with risk than any of the other
+eight, a full 100 points of \Unsafe{} rate against 57 for the next most
+responsive. It is a step policy: deterministic inside a cell, and the one route
+in the figure whose pooled matrix is an artifact of the pooling rather than a
+summary of it.
+
+\paragraph{What it does not show.} A transition count is not a mechanism.
+Nothing here says a route noticed the state, and the same matrix would be
+produced by two seats reacting only to their own accumulated private risk. Rows
+pool the three risk levels, and risk moves these dynamics hard, so a route's
+matrix summarises three regimes rather than stating a law. The ordering in panel
+c is a property of the pooled rows and not of every regime inside them: at
+$p_r^{\max}=0.1$, where mutual restraint is reached at all in only $4\%$ of
+rounds, the two roads swap and repair from a split becomes the likelier one,
+$7.1\%$ against $3.8\%$. Thirty races per route is enough to separate a route
+that never moves inside a race from a mobile one and not enough to pin a single
+cell to a point. And a state is only a joint action, so two routes can walk the
+same three states with entirely different progress, payoff and accumulated
+private risk behind them.
+
+\subsection{The designed boundary at round five}
+\label{app:horizon-boundary}
+
+The mechanism has one sharp, designed, disclosed edge in it, and it sits between
+round four and round five. The prompt every player reads says that the race
+lasts at least five rounds and that from round five onward each completed round
+ends the race with probability $20\%$. The continuation probability is therefore
+exactly $1$ while the race is short of round five and $0.8$ from round five
+onward. The rule is disclosed; the realised length is not. This is the one
+quantity in this game that the folk-theorem tradition says should move
+cooperative play, because a threat certain to be carried out sustains
+cooperation that a threat with a one-in-five chance of never arriving does not.
+Figure~\ref{fig:horizon-discontinuity} asks whether the routes' play moves
+there. The regenerating script parses the horizon sentence out of every prompt
+in the corpus rather than trusting the protocol document, so it fails rather
+than drawing a boundary the players were never told about.
+
+\begin{figure*}[t]
+    \centering
+    \includegraphics[width=\textwidth]{../figures/paper/horizon_discontinuity.pdf}
+    \caption{\Unsafe{} play by round position, with the designed boundary at
+    round five. Panel a gives one row per route and one column per round, with
+    the surviving race count printed under each column and a ring on the tiles
+    that sit on the $100\%$ ceiling, where the contrast above is truncated
+    rather than measured. Panel b gives the step at the boundary per route under
+    two windows: round five against rounds one to four, where all thirty races
+    per route contribute, and all later rounds against rounds one to four, where
+    survivorship and unequal decision counts are in play. Seven of the nine
+    intervals cover zero and the two that do not point in opposite directions,
+    $+24.6$ points for GPT-5.4 and $-17.1$ for Gemini 3.5 Flash Lite. Panel c is
+    the placebo ladder: within-race change from one round to the next, pooled
+    over routes, with the nine route means as grey context. \textbf{This is a
+    comparison across round positions and not a discontinuity estimate.} A later
+    round also carries more accumulated history and, because private risk is the
+    fraction of a player's own completed actions that were \Unsafe{}, more
+    accumulated private risk; round position and accumulated state are collinear
+    inside a race, so no contrast between the two sides of the boundary can
+    separate the shortening horizon from what a later round otherwise brings
+    with it. The rung that crosses the boundary is $-6.5$ points beside an
+    opening move worth $39.3$, and its sign is the opposite of the one a
+    shortening shadow of the future is supposed to push.}
+    \Description{Three-panel figure. Panel a is a heatmap of unsafe play with
+    nine route rows and sixteen round columns, a heavy vertical rule drawn
+    between round four and round five, and the number of races still running
+    printed beneath each column. Panel b is a dot-and-interval plot with one row
+    per route showing the change in unsafe play at the boundary under a
+    common-horizon window and an all-rounds window. Panel c plots the pooled
+    within-race change for six consecutive round pairs, with the pair that
+    crosses the boundary highlighted and the nine individual route means shown
+    as open circles.}
+    \label{fig:horizon-discontinuity}
+\end{figure*}
+
+One route steps up at the boundary and one steps down. Comparing round five
+against rounds one to four, the window in which all thirty races per route
+contribute by construction, \path{openai/gpt-5.4-2026-03-05} plays $24.6$ points
+more \Unsafe{}, with a $95\%$ percentile interval of $16.2$ to $32.5$, and
+\path{google/gemini-3.5-flash-lite} plays $17.1$ points less, with an interval
+of $-28.8$ to $-4.6$. The other seven intervals cover zero, several of them wide
+enough to hold a twenty-point move in either direction.
+\path{anthropic/claude-opus-5@default} plays one rate in every round of the
+corpus, so its step is exactly zero and could not have been anything else.
+
+\paragraph{Why this is a comparison and not a discontinuity estimate.} Two
+confounds sit between the design and any causal reading, and the figure carries
+both on its face rather than in a footnote. The first is accumulation: a later
+round is also a round with more history behind it and with more accumulated
+private risk, and because those move together inside a race no contrast between
+``before round five'' and ``round five onward'' can separate them from the
+horizon. That is why panel b is labelled as a step across round positions, and
+why panel c exists at all. Comparing each race with itself one round later holds
+accumulation nearly fixed: every rung of that ladder is one round of extra
+history, and exactly one rung crosses the boundary. The second is survivorship.
+Races have different sampled lengths, so the races that reach round twelve are
+not the races that reached round three. Every route was run against the same ten
+horizon draws at each of the three risk levels, so no route is favoured, but the
+race set still changes along the axis. The filled estimate in panel b and the
+first four rungs of panel c stay inside rounds one to five, which every race
+reaches by construction; the last two rungs rest on the twenty-four races per
+route that get that far, and the panel says so.
+
+The ladder is where the argument lands. The rung that crosses the boundary is
+the only rung after the opening two whose interval clears zero, so it is not
+nothing: $-6.5$ points, interval $-11.1$ to $-1.9$. But it is small beside the
+opening move, $-39.3$ points from round one to round two, and beside the $+25.4$
+points from round two to round three, and it is negative, which is the direction
+opposite to the one a shortening shadow of the future is supposed to push. The
+grey context in that panel is not decoration: three of the nine route means
+point the other way, so the pooled interval is a statement these nine routes
+make together rather than one that each of them makes, and resampling routes
+rather than races widens it to cover zero.
+
+\paragraph{What it does not show.} This is not a regression discontinuity. The
+running variable is a round index that also carries history, the design has no
+observations arbitrarily close to the threshold, and nothing here is a causal
+estimate of the horizon. Nor is it a test of whether these routes can reason
+about a horizon at all; it tests whether their play moves when the stated
+horizon changes, in this game, at this prompt version. The absence of a step is
+evidence about the step and not proof that the prompt sentence went unread:
+panel a shows one route whose play is a constant, and a constant cannot move at
+a boundary. Both seats of every race are the same route, so what is measured is
+a horizon response against a copy of itself and not against a different
+opponent. Nine commercial endpoints are not a sample from a population of
+models.
+
 \subsection{The audited route against a rival it cannot influence}
 \label{app:scripted-opponent}
 
@@ -2266,6 +2674,41 @@ cell on a single deviation. All twelve cells replayed clean. This is the one
 failure that would have left the data looking perfectly healthy while answering
 a different question than the one asked.
 
+\begin{figure*}[t]
+    \centering
+    \includegraphics[width=\textwidth]{../figures/paper/scripted_opponent.pdf}
+    \caption{Three readings of the scripted-opponent campaign for the audited
+    route, \texttt{google/gemini-3-flash-preview}. (a) The twelve cells as
+    colour, the rival down and the stated risk across, so the swing down a
+    column can be compared by eye against the swing across a row; the outlined
+    cells are the ones with no room above them, and the note beneath records
+    what the \emph{Conditional Safe} rival actually played, which is not what
+    its name says. (b) The rival-stance contrast and the opening-move contrast
+    drawn on one axis at all three risk levels, so the two are compared
+    directly rather than read off separate rows. (c) The comparison the table
+    cannot make: the route's rate against a rival that stays \Safe{} beside the
+    rate the same route reaches when its rival is a second copy of itself, with
+    the distance between the two designs printed at each risk level and marked
+    as a lower bound wherever the self-play arm is against the ceiling.}
+    \Description{Three panels. Panel a is a four-by-three grid of the route's
+    unsafe play, with rows Always Safe, Conditional Safe, Conditional Unsafe
+    and Always Unsafe and columns for maximum private risk 0.1, 0.6 and 0.9.
+    The Always Safe row reads 25, 17 and 14 percent and the Always Unsafe row
+    reads 100, 89 and 88 percent, so the values change far more down a column
+    than across a row. The two cells reading 100 percent are outlined as
+    boundary cells. Panel b is a dot-and-interval chart with one row per risk
+    level and two series: the contrast between the Always Unsafe and Always
+    Safe rivals sits near 70 percentage points at every risk level, and the
+    contrast that isolates the rival's opening move sits between about 11 and
+    25 points; both series lie well to the right of the zero line. Panel c
+    plots unsafe play against risk for two designs of the same route: a lower
+    line against the Always Safe rival falling from 25 to 14 percent, and an
+    upper self-play line falling from about 99 to 60 percent, with dashed
+    connectors between them labelled at least 74, then 56, then 46 percentage
+    points.}
+    \label{fig:scripted-opponent}
+\end{figure*}
+
 \begin{table}[h]
     \caption{The audited route against each scripted rival. Ten races and 93
     route decisions per cell, zero parse failures, both seats used in every
@@ -2297,7 +2740,8 @@ a different question than the one asked.
     \end{tabular}
 \end{table}
 
-\paragraph{What it shows.} The rival's stance moves this route by about seventy
+\paragraph{What it shows.} Figure~\ref{fig:scripted-opponent} lays the
+campaign out. The rival's stance moves this route by about seventy
 points, and the stated risk barely changes that number. The rate against
 \emph{Always Unsafe} minus the rate against \emph{Always Safe} is $+73.5$,
 $+67.4$ and $+71.7$ points at the three risk levels. Read down a column instead
@@ -2326,7 +2770,8 @@ measurement of how a route treats risk. Against a fixed and safe rival this
 route's rates fall monotonically with the stated risk, $24.7\%$, $17.2\%$,
 $14.0\%$, which is the response the game is designed to elicit. The same route
 in the neutral baseline of \S\ref{app:frontier-baseline} reads $98.9\%$,
-$73.1\%$ and $60.2\%$. That is an equilibrium of two copies of one policy
+$73.1\%$ and $60.2\%$, which is the distance
+Figure~\ref{fig:scripted-opponent}c prints at each risk level. That is an equilibrium of two copies of one policy
 escalating each other, and it says more about what happens when this policy meets
 itself than about what the policy does with risk. Every self-play number in this
 paper should be read that way.
