@@ -1411,6 +1411,15 @@ fit. A feature-importance share is interpretable only where the feature
 keeps variation independent of the others, which is what a
 near-deterministic policy removes.
 
+One marginal association does agree across populations, and it is the part of
+this analysis that the main paper's diversity section points at: human winners
+play \Unsafe{} 16.0 percentage points more often than human losers, against an
+approximately 20-point pooled difference among the checkpoints. The dynamic
+structure behind that agreement does not agree. GPT-5.4-nano in particular has
+no single strong predictor, and several checkpoint estimates are weak,
+reversed in sign, or not reliably estimable because their action distributions
+sit at the floor or the ceiling.
+
 Predictive performance varies substantially across populations (AUC 0.54
 to 1.00), so SHAP shares should not be read as directly comparable measures
 of decision quality; floor and ceiling behaviour mechanically limits
@@ -2227,6 +2236,15 @@ zero parse failures. The rival is executed by the task file rather than called,
 so it costs no requests and cannot be wrong about its own strategy for any
 reason a model could be.
 
+Playing a language model against fixed strategies is established practice
+rather than something introduced here: \citet{playing_repeated_games_with_llms} run
+always-cooperate, always-defect and defect-once agents against five models, and
+\citet{payneStrategicIntelligence2025} run Tit-for-Tat and Grim Trigger against
+frontier models under a varying termination probability. Our two conditional
+rivals are theirs. What is particular to this campaign is that the rival is
+never disclosed, that its every move is replayed and checked after the fact, and
+that the route's seat is counterbalanced.
+
 Three properties of the design are load-bearing and were asserted offline before
 any of it was pushed. The prompt is byte-identical to the neutral baseline's and
 never says the rival is scripted, so a race here is comparable with a race
@@ -2312,6 +2330,15 @@ $73.1\%$ and $60.2\%$. That is an equilibrium of two copies of one policy
 escalating each other, and it says more about what happens when this policy meets
 itself than about what the policy does with risk. Every self-play number in this
 paper should be read that way.
+
+That self-play can hide behaviour is not a new observation.
+\citet{lekeasNashSuppression2026} report phenomena that are, in their words,
+invisible in self-play, including that which agent moves first decides which
+equilibrium a pair reaches. The contribution here is narrower and specific to
+this setting: what self-play hides is the \emph{risk response} itself, the one
+quantity this game exists to elicit, and it hides it by inflating a
+safety-relevant rate from $24.7\%$ to $98.9\%$ at the risk level where the
+route is in fact mostly restrained.
 
 \paragraph{What it does not show.} One route, one game, one prompt version. A
 scripted rival establishes what the route does against \emph{that} rival, and

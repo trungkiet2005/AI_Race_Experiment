@@ -24,7 +24,14 @@ Panels
      moves.  Two cells sit at exactly 100 per cent and are ringed, because a
      cell in which all 93 decisions were unsafe is a measurement with no room
      above it rather than a precise one, and every contrast through it is
-     truncated rather than complete.
+     truncated rather than complete.  A row name is the strategy the task file
+     executed and not a summary of what the rival did, and the two differ:
+     because the route opened Unsafe in every race, Conditional Safe plays Safe
+     on round one and mirrors from round two, and 55 per cent of its own moves
+     in this campaign were unsafe.  An earlier draft tinted the row labels with
+     the paper's Safe and Unsafe inks by the rival's opening move, unkeyed,
+     which put the Safe ink on that rival; the tint is gone and the fact it hid
+     is printed under the panel instead.
   b  The headline contrast, retaliation minus exploitation, differenced inside a
      repetition.  The game seed is a base plus the repetition index and names
      neither the strategy nor the risk, so one repetition is one horizon
@@ -37,6 +44,13 @@ Panels
   c  The comparison that reframes the rest of the paper.  Against Always Safe
      the route's rate falls monotonically with stated risk; the same route in
      the neutral self-play baseline sits far above that at every risk level.
+     The gap between the two designs is printed at each risk, and it is printed
+     with a ``>=`` wherever the self-play arm is against the ceiling: at risk
+     0.1 nine of that arm's ten races have every decision unsafe, so 98.9% is a
+     rate with no room above it and the 74 pp it yields is a lower bound on the
+     distance rather than a measurement of it.  The two lower panels of this
+     figure already ring and name that boundary, and a bare number in the third
+     would have been the one place the reader was not told.
 
 What this does NOT show.  One route, one game, one prompt version, ten races per
 cell.  Nothing here is a claim about models in general, and the four scripted
@@ -85,9 +99,12 @@ LABEL = {
     "CAS": "Cond. Unsafe",
     "AU": "Always Unsafe",
 }
-# The rival's opening move is the one thing all four differ in on round one, so
-# it is the honest second channel for the row labels.
-OPENS = {"AS": "SAFE", "CS": "SAFE", "CAS": "UNSAFE", "AU": "UNSAFE"}
+# The rival's opening move is the one thing the four strategies differ in on
+# round one, and panel b's second series is built from it.  It is deliberately
+# NOT a colour channel on the row labels: the two conditional rivals mirror the
+# route from round two, the route opened Unsafe in all 120 races, and a green
+# "Cond. Safe" label would announce a safe rival that played unsafe on most of
+# its own moves.  The names already carry the opening move in words.
 
 N_BOOT = 5000
 SEED = 20260910
@@ -229,14 +246,13 @@ def clustered_rate(block: pd.DataFrame, *key):
     )
 
 
-def draw_surface(fig, ax, surface, spread_col, spread_row):
+def draw_surface(fig, ax, surface, spread_col, spread_row, rival_unsafe):
     arr = 100 * surface.to_numpy(dtype=float)
     im = S.heat_tiles(
         ax, arr,
         [LABEL[s] for s in ORDER],
         [S.RISK_LABEL[r] for r in S.RISKS],
         cmap=UNSAFE_MAP, vmin=0.0, vmax=100.0, fmt="{:.0f}",
-        row_colors=[S.ACTION_C[OPENS[s]] for s in ORDER],
     )
     # Both boundary cells are the darkest tiles on the map, so the ring has to
     # be the surface colour or it vanishes into the tile it is marking.
@@ -255,9 +271,15 @@ def draw_surface(fig, ax, surface, spread_col, spread_row):
     bar.set_label("the route's unsafe play (%)", fontsize=S.FS_NOTE, labelpad=2)
     bar.ax.tick_params(labelsize=S.FS_NOTE, length=1.6)
     bar.outline.set_visible(False)
+    # The last two lines are the key the row names do not carry.  A reader who
+    # takes "Cond. Safe" for a rival that plays Safe is reading the strategy's
+    # name rather than its behaviour, and the number is what settles it.
     for line, offset, colour in (
         (f"down a column {spread_col:.0f} pp, across a row {spread_row:.0f} pp", -27, S.INK_2),
         ("ringed cells sit on the 100% boundary", -36, S.MUTED),
+        ("Cond. Safe opens Safe, then mirrors:", -47, S.MUTED),
+        (f"{100 * rival_unsafe['CS']:.0f}% of its moves were Unsafe"
+         f" (Cond. Unsafe {100 * rival_unsafe['CAS']:.0f}%)", -56, S.MUTED),
     ):
         ax.annotate(line, xy=(0.5, 0.0), xycoords="axes fraction",
                     xytext=(0, offset), textcoords="offset points",
@@ -311,7 +333,7 @@ def draw_contrasts(ax, retal, opening):
                     annotation_clip=False)
 
 
-def draw_designs(ax, scripted, selfplay):
+def draw_designs(ax, scripted, selfplay, censored):
     """Two designs, one route, so colour separates the design and not the route.
 
     Every other figure in the paper spends colour on route identity.  Here there
@@ -334,12 +356,16 @@ def draw_designs(ax, scripted, selfplay):
         S.direct_label(ax, risks[-1], y[-1], name, color=colour, dx=5,
                        va="center", weight="bold")
 
+    # A gap through an arm that is against the ceiling is a distance with no
+    # room to grow, so it is printed as the lower bound it is.  The panel rings
+    # nothing, so the mark has to live on the number itself.
     for risk in risks:
         top, bottom = 100 * selfplay[risk][0], 100 * scripted[risk][0]
         ax.annotate("", xy=(risk, top), xytext=(risk, bottom),
                     arrowprops=dict(arrowstyle="-", lw=0.6, color=S.MUTED,
                                     linestyle=(0, (2, 1.6))), zorder=2)
-        ax.annotate(f"{top - bottom:.0f} pp", xy=(risk, (top + bottom) / 2),
+        bound = "≥" if censored[risk][0] else ""
+        ax.annotate(f"{bound}{top - bottom:.0f} pp", xy=(risk, (top + bottom) / 2),
                     xytext=(3, 0), textcoords="offset points",
                     ha="left", va="center", fontsize=S.FS_NOTE, color=S.MUTED)
 
@@ -356,6 +382,23 @@ def draw_designs(ax, scripted, selfplay):
     ax.set_xlim(0.02, 1.16)
     S.strip(ax)
     S.panel(ax, "c", "a safe rival draws out far less")
+    # Which risks the mark applies to, and on what evidence, so the reader is
+    # not asked to take the boundary on trust.  Panels a and b carry their own
+    # boundary notes in the same place; this is the third.
+    pinned = [r for r in risks if censored[r][0]]
+    if pinned:
+        where = "; ".join(
+            f"{S.RISK_LABEL[r]} ({censored[r][1]} of {censored[r][2]} races)"
+            for r in pinned
+        )
+        for line, offset in (
+            ("the self-play arm is on the 100% boundary at", -24),
+            (f"{where}, so ≥ marks a lower bound", -33),
+        ):
+            ax.annotate(line, xy=(0.5, 0.0), xycoords="axes fraction",
+                        xytext=(0, offset), textcoords="offset points",
+                        ha="center", va="top", fontsize=S.FS_NOTE, color=S.MUTED,
+                        annotation_clip=False)
 
 
 def main() -> None:
@@ -414,9 +457,33 @@ def main() -> None:
         for risk, (point, lo, hi, races, decisions) in series.items():
             print(f"  {name:<15} risk {risk}: {100 * point:5.1f}% "
                   f"[{100 * lo:5.1f}, {100 * hi:5.1f}] over {races} races, {decisions} decisions")
+    # A race in which every decision was unsafe cannot go higher, so an arm
+    # holding such races is censored and every gap measured through it is a
+    # lower bound.  Counted rather than asserted, and counted on the arm that
+    # is on top: the Always Safe arm has no race at either boundary.
+    censored = {}
     for risk in S.RISKS:
+        per_race = (
+            own[own["max_private_risk"] == risk]
+            .groupby("game_id")["unsafe"].agg(["sum", "size"])
+        )
+        at_ceiling = int((per_race["sum"] == per_race["size"]).sum())
+        censored[risk] = (at_ceiling > 0, at_ceiling, int(len(per_race)))
+    for risk in S.RISKS:
+        pinned, at_ceiling, races = censored[risk]
         print(f"  design gap at risk {risk}: "
-              f"{100 * (selfplay[risk][0] - scripted_as[risk][0]):5.1f} pp")
+              f"{'>=' if pinned else '  '}"
+              f"{100 * (selfplay[risk][0] - scripted_as[risk][0]):5.1f} pp "
+              f"(self-play races with every decision unsafe: {at_ceiling}/{races})")
+
+    # What the row names in panel a do not say.  The rival is code, so this is
+    # a property of the campaign and not an estimate.
+    rival_unsafe = script.groupby("strategy")["unsafe"].mean().to_dict()
+    for strategy in ORDER:
+        first = script[(script["strategy"] == strategy) & (script["round"] == 1)]
+        print(f"  the {LABEL[strategy]:<14} rival opened Unsafe in "
+              f"{int(first['unsafe'].sum())}/{len(first)} races and played Unsafe on "
+              f"{100 * rival_unsafe[strategy]:5.1f}% of its own moves")
 
     # The route's own opening move is a constant across all twelve cells, which
     # is what licenses reading panel b's second series as the RIVAL's first move.
@@ -435,9 +502,10 @@ def main() -> None:
 
     fig = plt.figure(figsize=(S.TEXT, 2.62))
     gs = fig.add_gridspec(1, 3, width_ratios=[1.22, 1.00, 1.02], wspace=0.58)
-    draw_surface(fig, fig.add_subplot(gs[0, 0]), surface, spread_col, spread_row)
+    draw_surface(fig, fig.add_subplot(gs[0, 0]), surface, spread_col, spread_row,
+                 rival_unsafe)
     draw_contrasts(fig.add_subplot(gs[0, 1]), retal, opening)
-    draw_designs(fig.add_subplot(gs[0, 2]), scripted_as, selfplay)
+    draw_designs(fig.add_subplot(gs[0, 2]), scripted_as, selfplay, censored)
 
     S.save(fig, "scripted_opponent", width=S.TEXT)
 

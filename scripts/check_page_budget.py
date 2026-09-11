@@ -68,6 +68,21 @@ def main() -> None:
     if not args.pdf.is_file():
         raise SystemExit(f"missing PDF: {args.pdf}; compile the manuscript first")
 
+    # A page count read off a stale PDF is worse than no page count, because it
+    # is a number and reads like evidence. The submission bundle shipped an
+    # eighteen-page supplement this way while every gate reported clean, so the
+    # same guard belongs here.
+    source = args.pdf.with_suffix(".tex")
+    if not source.is_file() and args.pdf.name.startswith("ai_race_"):
+        stem = args.pdf.stem.replace("ai_race_", "").replace("paper", "main")
+        source = args.pdf.with_name(f"{stem}.tex")
+    if source.is_file() and args.pdf.stat().st_mtime < source.stat().st_mtime:
+        raise SystemExit(
+            f"{args.pdf.name} is older than {source.name}, so this page count "
+            "describes a manuscript that no longer exists. Run "
+            "scripts/build_publication.py first."
+        )
+
     total = page_count(args.pdf)
     references_page = None
     heading_starts_the_page = False

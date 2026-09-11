@@ -8,17 +8,32 @@ reason the paper is allowed to read behaviour as behaviour at all.
 
 On these nine endpoints the gate does not draw that line independently.  It
 splits the nine into five admitted and four refused, and the same split falls
-out of reading the model string: every refused route carries a size word,
-``mini``, ``nano`` or ``lite``, and no admitted route does.  Nine agreements out
-of nine.  A reader who never ran the audit, and only read the names, would have
-put the admission line in exactly the same place.
+out of reading the model string.  The rule has to be stated exactly, because a
+loose version of it is false of these nine names: a size word is ``mini``,
+``nano`` or ``lite`` appearing as a whole word of the name.  Under that rule
+every refused route carries one and no admitted route does, nine agreements out
+of nine.  Two things the rule deliberately does not do.  It does not match
+inside a word, so ``gemini`` is not ``mini``; a substring search would call all
+three Gemini routes small and turn nine agreements into eight.  And it does not
+treat ``flash`` as a size word, so the admitted ``gemini-3-flash-preview``
+carries none while the two refused ``flash-lite`` routes carry ``lite``.  That
+second choice is the arguable one, since Flash is a tier in Google's line-up
+even though it has no counterpart in the other two vendors' names, so the
+figure reports what happens under the other reading rather than resting on the
+choice: counting ``flash`` as a size word as well makes five names small
+instead of four and the agreement 8 of 9, p = 5/126 = 0.040.  Either way a
+reader who never ran the audit, and only read the names, would have put the
+admission line in almost exactly the same place.
 
 Panels
   a  The dumbbell.  Left anchor, the audit's verdict after sixty calls; right
      anchor, the tier the name announces after none.  Disagreement would read as
      a bold size word above the dashed rule or a plain ``none`` below it, and
-     there is neither.  The exact permutation p-value is enumerated rather than
-     sampled: with four size-word names among
+     there is neither.  The rule that produced the right anchor is printed under
+     the panel, together with the count under the other reading of ``flash``,
+     because a reader can check a rule against the nine names and should not
+     have to guess which one was applied.  The exact permutation p-value is
+     enumerated rather than sampled: with four size-word names among
      nine routes there are C(9,4) = 126 assignments of the tier labels and
      exactly one reproduces the verdict.
   b  Where the ordering comes from.  Accuracy per route per probe domain, with
@@ -67,6 +82,13 @@ import figdata as D  # noqa: E402
 # contains "mini", so a naive search calls every Gemini route a small model and
 # silently turns a 9-of-9 agreement into 8 of 9.
 SIZE_WORDS = ("mini", "nano", "lite")
+# Not a size word here, and the one judgement call in the rule.  "Flash" is a
+# tier in Google's line-up, so a reader may reasonably count it, and the
+# admitted google/gemini-3-flash-preview carries it.  Rather than argue the
+# point the figure computes the agreement under that reading too and prints it,
+# because the alternative is a panel asserting a rule the reader can falsify by
+# reading the nine names beside it.
+TIER_WORD = "flash"
 
 DOMAINS = [
     "rule_recall",
@@ -91,10 +113,14 @@ ADMISSION_RUNS = (
 )
 
 
+def name_words(route: str) -> set[str]:
+    """The route string as whole words, which is the unit the rule works on."""
+    return {t for t in re.split(r"[^a-z]+", route.lower()) if t}
+
+
 def name_tier(route: str) -> str | None:
     """The size word the route string announces, or None if it announces none."""
-    tokens = {t for t in re.split(r"[^a-z]+", route.lower()) if t}
-    found = [w for w in SIZE_WORDS if w in tokens]
+    found = [w for w in SIZE_WORDS if w in name_words(route)]
     if len(found) > 1:
         raise SystemExit(f"{route} carries two size words: {found}")
     return found[0] if found else None
@@ -244,6 +270,15 @@ def main() -> None:
     p_two = sum(v for h, v in null.items() if v <= null[observed]) / total
     n_calls = int(table["n_rows"].iloc[0])
 
+    # The same enumeration under the reading that counts "flash" as a size word.
+    # It is reported and not chosen: the headline rule is the three diminutives,
+    # and this says what a reader who disagrees about "flash" would get.
+    alt_small = np.array(
+        [TIER_WORD in name_words(r) for r in table["route"]]) | small
+    alt_observed, alt_total, alt_null = permutation_p(agree, alt_small)
+    alt_p = sum(v for h, v in alt_null.items() if h >= alt_observed) / alt_total
+    alt_hits = sum(v for h, v in alt_null.items() if h >= alt_observed)
+
     print(f"  {len(table)} routes, {n_calls} calls each, "
           f"{int(table['repetitions'].iloc[0])} repetitions per probe")
     print(f"  audit refuses {int(agree.sum())}, the name refuses {int(small.sum())}, "
@@ -252,6 +287,9 @@ def main() -> None:
           f"{dict(sorted(null.items()))}")
     print(f"  exact permutation p = {sum(v for h, v in null.items() if h >= observed)}"
           f"/{total} = {p_one:.5f} one-sided, {p_two:.5f} two-sided")
+    print(f"  counting {TIER_WORD!r} as a size word too: the name refuses "
+          f"{int(alt_small.sum())}, agreement {alt_observed} of {len(table)}, "
+          f"p = {alt_hits}/{alt_total} = {alt_p:.5f}")
     for _, row in table.iterrows():
         print(f"    {S.ROUTE_SHORT[row['route']]:>9}  overall {row['overall_accuracy']:.3f}  "
               f"audit {'refused' if row['refused'] else 'admitted'}  "
@@ -299,8 +337,11 @@ def main() -> None:
     # notes and the space under panel b carries a three-deep column header: a
     # single ``hspace`` cannot be right for both and splits the difference by
     # being wrong for each.
-    fig = plt.figure(figsize=(S.COL, 4.52))
-    gs = fig.add_gridspec(5, 1, height_ratios=[1.30, 0.80, 1.42, 0.44, 0.58],
+    # The spacer under panel a carries four lines now rather than two, because
+    # the rule the panel applies is printed there; at the old 0.80 the last two
+    # lines were drawn straight through panel b's own claim.
+    fig = plt.figure(figsize=(S.COL, 4.80))
+    gs = fig.add_gridspec(5, 1, height_ratios=[1.30, 1.12, 1.42, 0.44, 0.58],
                           hspace=0.0, left=0.20, right=0.995, top=0.97,
                           bottom=0.03)
     ax_a = fig.add_subplot(gs[0])
@@ -348,11 +389,19 @@ def main() -> None:
         side.set_visible(False)
     ax_a.tick_params(length=0)
     S.panel(ax_a, "a", "the name already drew this line", pad=22)
+    # The rule itself, under the panel that applies it.  Without these two lines
+    # the panel prints "none" beside a route named Flash and asks the reader to
+    # infer why, and the inference a reader actually makes is that the rule was
+    # a substring search, under which "gemini" would carry "mini".
     ax_a.annotate(
         f"{observed} of {len(table)} agree. exact permutation p = "
         f"{sum(v for h, v in null.items() if h >= observed)}/{total} = {p_one:.3f},\n"
         f"over the C({len(table)},{int(small.sum())}) = {total} ways to relabel the "
-        f"tiers. n = {len(table)} endpoints.",
+        f"tiers. n = {len(table)} endpoints.\n"
+        f"a size word is {', '.join(SIZE_WORDS[:-1])} or {SIZE_WORDS[-1]} as a whole "
+        "word of the name:\n"
+        f"gemini is not mini. counting {TIER_WORD} as one too: {alt_observed} of "
+        f"{len(table)}, p = {alt_p:.3f}.",
         xy=(0.0, 0.0), xycoords="axes fraction", xytext=(0, -13),
         textcoords="offset points", ha="left", va="top", fontsize=S.FS_NOTE,
         color=S.INK, linespacing=1.5, annotation_clip=False)
