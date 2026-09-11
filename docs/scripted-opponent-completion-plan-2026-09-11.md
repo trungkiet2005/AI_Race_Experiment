@@ -1,0 +1,296 @@
+# Scripted-opponent campaign: declared completion across the admitted set, 2026-09-11
+
+Written and committed **before** any cell below is started, for the same reason
+every other plan in this study was: once results begin to arrive, the assignment
+must not be adjustable.
+
+## What already exists, and what is still missing
+
+`docs/scripted-opponent-collection-plan-2026-09-10.md` collected the grid on
+`google/gemini-3-flash-preview`. `docs/scripted-opponent-extension-plan-2026-09-11.md`
+added `anthropic/claude-sonnet-5@default` and `openai/gpt-5.4-2026-03-05`. Thirty
+six cells are in the tree, all ingested, all replayed clean.
+
+Five endpoints passed the admission gate, not three
+(`results/frontier/admission_campaign_v6/`). The manuscript can therefore say
+that the finding replicates on three admitted endpoints, and it cannot yet say
+that it replicates across the admitted set. The two sentences are different
+claims, and the second one is only available if the last two routes are
+collected:
+
+- `openai/gpt-5.5-2026-04-23`, admitted at 90.0 per cent overall;
+- `anthropic/claude-opus-5@default`, admitted at 91.7 per cent overall.
+
+Collecting them closes the set. Nothing about a "we ran the ones we could" story
+survives afterwards, because there is nothing left to run.
+
+## Why Claude Opus 5 is the interesting one
+
+This is the scientific reason for the plan, not a coverage reason.
+
+In self-play, Claude Opus 5 does not have a policy that responds to stated risk
+in the ordinary sense. It has a step. Its neutral baseline, in
+`results/frontier/baseline_campaign_v6/`, reads **100.0 per cent unsafe at risk
+0.1 and 0.0 per cent at both 0.6 and 0.9**: every decision Unsafe at the low
+level, every decision Safe above it, with no intermediate rate anywhere. It is
+the one route in the baseline campaign whose behaviour the audit-versus-behaviour
+correlation had to be reported both with and without, because the step dominates
+the rank statistic.
+
+A step like that has two readings, and self-play cannot tell them apart.
+
+It may be an intrinsic policy shape: the route decides on the stated risk number
+alone, ignores the rival entirely, and would play the same way against anything.
+If so, then against the four scripted rivals it will read 100 per cent at risk
+0.1 whoever it is facing and 0 per cent above, four identical cells at each risk
+level, and its contrast between the unsafe rival and the safe rival will be
+exactly zero with an interval of zero width.
+
+Or the step may be an interaction outcome. Two copies of one policy can lock into
+a corner that neither would occupy against a different opponent, which is the
+whole reason this campaign exists. If Opus 5 moves off 0 per cent against a rival
+that always plays Unsafe at risk 0.6, or off 100 per cent against a rival that
+always plays Safe at risk 0.1, then the cliff was never a property of the policy.
+It was a property of the mirror.
+
+That second outcome bears directly on the manuscript's argument that mirror-match
+play hides opponent-conditioned behaviour, and it would be the cleanest example
+of it in the study, because there is no intermediate rate to argue about: the
+self-play cells are at the boundary.
+
+Both outcomes are reportable and the manuscript will report whichever occurs. A
+degenerate route is a result about that route. A zero contrast with a zero-width
+interval is an absence of variation in the sample and must be described that way,
+never as precision.
+
+`openai/gpt-5.5-2026-04-23` is the ordinary case by comparison, which is what
+makes it useful: its self-play baseline reads 93.5, 70.4 and 55.4 per cent, the
+same downward shape as Gemini 3 Flash at 98.9, 73.1 and 60.2. If the campaign's
+pattern is real, it should appear there with no special pleading.
+
+## What is being collected
+
+The same frozen design, with nothing changed. Protocol stays
+`ai-race-scripted-opponent-v1`; the four reduced strategies stay `AS`, `AU`, `CS`
+and `CAS`; the three risk levels stay 0.1, 0.6 and 0.9; ten repetitions per cell;
+the route's seat counterbalanced five and five; the prompt byte-identical to the
+neutral baseline's and still silent about the rival being scripted.
+`scripts/verify_scripted_opponent_design.py` was re-run before this plan was
+written and all fifteen of its checks pass.
+
+Both routes accept the reasoning-budget argument. Their neutral-baseline
+manifests in `results/frontier/baseline_campaign_v6/` record
+`decoding.reasoning_requested = "none"`, so neither falls under the 2026-09-09
+amendment that omits the parameter, and their outgoing requests carry the same
+decoding contract as every cell already in the tree. Neither route is on the
+SDK's seed-stripping list, so both record the seed as forwarded and its
+application unconfirmed, exactly as the Claude Sonnet 5 and GPT-5.4 cells do.
+
+The benchmark server executes the task rather than exposing it as a file, so
+`task_source_sha256()` falls back to hashing the canonical contract: prompt
+template, minimum rounds, stop probability, the collected risk level, prize,
+progress, stage payoffs and prompt version. That value depends on the risk level
+and on nothing else. Every cell collected here must therefore carry exactly the
+`source_sha256` its counterpart on the other three routes already carries:
+
+| Risk | Required `source_sha256` |
+|---|---|
+| 0.1 | `d0a4d70f78c107263557675688171835597372c2c76454a4e414f6f33594fff4` |
+| 0.6 | `4a460bac224e3f7c6e6292a531bb0b0cf3da5e6305ab684006323a67b344189a` |
+| 0.9 | `6e6b1c92eda1d32677cb49fc2f00bedeeb473ca5b8d4619bfcf377a15a059683` |
+
+A mismatch means the mechanism moved, and the cell is a failure record rather
+than a result. The three values were recomputed from the committed task before
+this plan was written and they reproduce the table above.
+
+## Cost, measured rather than estimated
+
+From the artefacts already in the tree: one cell is 10 races and **93 route
+decisions**, and one route is 12 cells, 2,232 turn rows of which **1,116 are
+route decisions**. The rival is executed by the task file rather than called, so
+it costs no requests. Parse retries add a few requests at most; all thirty six
+cells so far recorded zero parse failures and zero retries.
+
+Two routes are therefore about 2,232 requests. A Model Proxy identity carries on
+the order of 800 to 1,400 requests, so **one route is roughly one identity's
+whole budget** and this does not fit on one account. As everywhere else in this
+study, the workload is partitioned into the analysis unit itself, one (route,
+strategy, risk) cell, and each cell is collected whole on one declared identity.
+
+One extra pressure has to be named rather than discovered later. The five
+identities are not starting from zero. Each of them collected part of the
+matched group-size sweep on 2026-09-10 and part of the three-route scripted grid
+earlier today, 744 route decisions each for four of them and 372 for
+`trungkiet`. Whatever the quota window turns out to be, this plan is being run
+against accounts that have already been used hard inside it, so a refusal is more
+likely here than it was yesterday and the stopping rule below is more likely to
+bind. It is written to be obeyed, not to be worked around.
+
+## Quota probe, run before this plan was committed
+
+Every identity was probed with the one-request `connectivity-ping` task on both
+target routes, 2026-09-11, before any cell was assigned:
+
+| Identity | `claude-opus-5-default` | `gpt-5.5-2026-04-23` |
+|---|---|---|
+| `foundnotkiet` | completed | completed |
+| `kit567` | completed | completed |
+| `hunhtrungkit` | completed | completed |
+| `tnkiet` | completed | completed |
+| `trungkiet` | completed | completed |
+
+`daosyduyminh` is not probed and not used: it is the author's own identity and
+carries the historical campaigns, and mixing it into a collaborator rotation
+would make the rotation uninterpretable.
+
+A probe that completes says the route answers on that identity right now. It does
+not promise that 465 further requests will be served, and it is not treated as
+one.
+
+## Assignment
+
+Fixed now, before the first push. Twenty-four cells, five identities.
+
+Number the twelve cells of a route in a fixed order, strategy outer and risk
+inner: `AS` 0.1, `AS` 0.6, `AS` 0.9, `AU` 0.1, and so on to `CAS` 0.9, giving
+positions 0 to 11. The three routes already collected assigned position `k` to
+identity number `((k + s) mod 5) + 1` in the order `foundnotkiet`, `kit567`,
+`hunhtrungkit`, `tnkiet`, `trungkiet`, with shift `s = 0` for Claude Sonnet 5 and
+`s = 2` for GPT-5.4. The two routes here take `s = 4` and `s = 1`.
+
+### `openai/gpt-5.5-2026-04-23`, shift 4
+
+| Cell | risk 0.1 | risk 0.6 | risk 0.9 |
+|---|---|---|---|
+| Always Safe (`AS`) | `trungkiet` | `foundnotkiet` | `kit567` |
+| Always Unsafe (`AU`) | `hunhtrungkit` | `tnkiet` | `trungkiet` |
+| Conditional Safe (`CS`) | `foundnotkiet` | `kit567` | `hunhtrungkit` |
+| Conditional Unsafe (`CAS`) | `tnkiet` | `trungkiet` | `foundnotkiet` |
+
+### `anthropic/claude-opus-5@default`, shift 1
+
+| Cell | risk 0.1 | risk 0.6 | risk 0.9 |
+|---|---|---|---|
+| Always Safe (`AS`) | `kit567` | `hunhtrungkit` | `tnkiet` |
+| Always Unsafe (`AU`) | `trungkiet` | `foundnotkiet` | `kit567` |
+| Conditional Safe (`CS`) | `hunhtrungkit` | `tnkiet` | `trungkiet` |
+| Conditional Unsafe (`CAS`) | `foundnotkiet` | `kit567` | `hunhtrungkit` |
+
+That leaves five cells each on `foundnotkiet`, `kit567`, `hunhtrungkit` and
+`trungkiet`, and four on `tnkiet`: about 465 requests per identity and 372 for
+`tnkiet`.
+
+The shifts are chosen so that all four of the numbered routes use a different
+one, `0`, `2`, `4` and `1`. Because five is prime and the shifts are distinct,
+**no (strategy, risk) cell is collected on the same identity for any two of the
+four routes**. A route comparison therefore cannot be confounded with an account
+at any cell, which is the property the whole campaign now needs and which a
+single route never did. Within a route the rotation also gives every identity
+three different strategies and every strategy three different identities, so an
+account effect would show up as an inconsistency between cells rather than hide
+inside a strategy contrast.
+
+The identity remains a billing boundary and not a model boundary: route, prompt,
+parser, protocol, temperature request and seed structure are identical in every
+cell. The rotation makes that assumption checkable instead of merely asserted.
+
+Every cell records its collecting identity in a `collection_receipt.json`,
+because the benchmark server exposes neither `KAGGLE_USERNAME` nor
+`KAGGLE_KERNEL_RUN_OWNER` to task code and the run manifest's own field reads
+`unrecorded`. That field belongs in the artefact and **must never be copied into
+anything under `paper/`**: it names a real account and the submission is
+anonymous.
+
+## Order of collection
+
+By risk level, each level complete across both routes before the next begins, and
+Claude Opus 5 first within a level:
+
+1. risk 0.6, four strategies on Claude Opus 5, then four on GPT-5.5;
+2. risk 0.9, the same;
+3. risk 0.1, the same.
+
+The order is the one the previous extension used and is kept for the same reason:
+an early stop still leaves something whole, because after the first block both
+new routes have a complete four-strategy grid at the middle risk level, which is
+enough to say whether the rival's stance moves them.
+
+Claude Opus 5 goes first inside each block because its result is the one that
+does not depend on the other. At risk 0.6 its self-play cell sits at 0.0 per cent
+unsafe, so that block alone answers the question this plan was written for: a
+route pinned to the floor against itself either stays there against a rival that
+always plays Unsafe, or it does not.
+
+## Where the results go
+
+Each route gets its own directory and its own derived artefact, as the previous
+extension established. Cells land in
+`results/frontier/scripted_opponent_campaign/<STRATEGY>_risk<RISK>/<route-tag>/`
+and the derived tables in
+`results/derived/scripted_opponent_campaign/<route-tag>/`.
+
+`scripts/analyze_scripted_opponent.py` takes one route at a time and refuses to
+mix them, and with no argument it still reports the Gemini route alone and writes
+the same file with the same numbers. Each cell's bootstrap generator is derived
+from that cell alone, and the Gemini route's generator keys stay frozen exactly
+as they were, so nothing already reported can move because these two routes were
+added.
+
+Every completed cell is filed by `scripts/ingest_scripted_cell.py` with
+`--plan docs/scripted-opponent-completion-plan-2026-09-11.md`. Nothing is copied
+into the tree by hand. The ingester refuses a run that did not complete, that
+carries the wrong protocol, that has a parse failure, that collected more than
+the one declared cell, whose seat counterbalance is not five and five, or whose
+scripted rival deviated from its strategy on a single round.
+
+## Stopping rule
+
+Unchanged from the rest of this study, and it binds.
+
+- A cell refused on quota, HTTP 403, is recorded as a failure record under
+  `results/failed_runs/` and is **not** reattempted on another identity. The
+  identity that refused is retired for the rest of this collection and its
+  remaining cells are recorded as not collected.
+- A cell that fails on transport congestion, HTTP 429 or a timeout, may be
+  retried on **its own declared identity**, at most twice. That is a retry and
+  not a rotation: nothing about the assignment moves because a run failed.
+- A cell that completes but fails ingestion is a failure record and is not
+  repaired by hand.
+- A route missing any cell is reported as the cells that exist, naming the ones
+  that do not. A partial route is never presented as a grid, and the headline
+  sentence stays at "three admitted endpoints" unless both routes complete.
+
+## Results named in advance
+
+Neither can then be presented as a surprise.
+
+If both new routes reproduce the pattern, a low rate against the safe rival and a
+high one against the unsafe rival with the paired difference excluding zero, then
+the finding holds on every endpoint the admission gate passed and the manuscript
+can say so about the set rather than about a sample of it.
+
+If a new route plays at similar rates against Always Safe and Always Unsafe, its
+behaviour is not driven by the rival's stance, the pattern does not generalise
+across the admitted set, and the manuscript reports the failure to replicate as
+the finding it is.
+
+If Claude Opus 5 reproduces its self-play step against every rival, then the step
+is the policy and not the mirror, the campaign has found the one admitted route
+that does not condition on its opponent, and that is a sharper statement than a
+fourth replication would have been. It is reported as rates at the boundary with
+zero-width intervals described as an absence of variation.
+
+The easiest outcome to mishandle is agreement in direction with disagreement in
+level, which is what the three collected routes already show: about seventy
+points on Gemini 3 Flash, about fifty on GPT-5.4, and Claude Sonnet 5 falling to
+forty-five at the highest risk. That is a replication of the mechanism and not of
+the number, and any sentence written from this campaign must say which of the two
+it is claiming.
+
+## Naming
+
+The arm in which the rival always plays Safe is **not** called exploitation, here
+or in any table this plan produces. On every route collected so far it carries
+the lowest rates in the campaign, well below self-play, so it measures restraint
+kept rather than an opportunity taken. The contrast is named for what it
+compares: how far the rival's stance moves the route.

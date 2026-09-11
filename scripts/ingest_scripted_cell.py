@@ -37,6 +37,21 @@ DEFAULT_PLAN = "docs/scripted-opponent-collection-plan-2026-09-10.md"
 EXPECTED_RACES = 10
 SAFE, UNSAFE = "safe", "unsafe"
 
+# The server executes the task rather than exposing it as a file, so the task
+# hashes its own canonical contract instead: prompt template, minimum rounds,
+# stop probability, the collected risk level, prize, progress, stage payoffs and
+# prompt version. That value depends on the risk level and on nothing else, which
+# makes it a check rather than a coincidence: every cell at a given risk must
+# carry the same hash as every other cell at that risk, on every endpoint. A
+# mismatch means the mechanism moved under the campaign, and the cell answers a
+# different question than the ones beside it. All thirty six cells collected
+# before this check existed satisfy it.
+CONTRACT_SHA256 = {
+    0.1: "d0a4d70f78c107263557675688171835597372c2c76454a4e414f6f33594fff4",
+    0.6: "4a460bac224e3f7c6e6292a531bb0b0cf3da5e6305ab684006323a67b344189a",
+    0.9: "6e6b1c92eda1d32677cb49fc2f00bedeeb473ca5b8d4619bfcf377a15a059683",
+}
+
 
 def route_tag(route: str) -> str:
     """The directory a route's cells live in, derived from the route itself.
@@ -131,6 +146,17 @@ def main() -> None:
         raise SystemExit(f"expected one cell, found {strategies} x {risks}")
     strategy, risk = str(strategies[0]), float(risks[0])
 
+    expected_sha = CONTRACT_SHA256.get(risk)
+    got_sha = str(manifest.get("source_sha256") or "")
+    if expected_sha is None:
+        raise SystemExit(f"risk {risk} is not on the frozen grid")
+    if got_sha != expected_sha:
+        raise SystemExit(
+            f"this cell carries source_sha256 {got_sha!r} but every cell at risk "
+            f"{risk} carries {expected_sha!r}; the mechanism moved, so this is a "
+            "failure record rather than a result"
+        )
+
     turns_paths = list(src.rglob("turns.jsonl"))
     if len(turns_paths) != 1:
         raise SystemExit(f"expected one turns.jsonl, found {len(turns_paths)}")
@@ -202,6 +228,7 @@ def main() -> None:
         "model_route": manifest.get("model_route"),
         "declared_in": args.plan,
         "protocol_id": PROTOCOL_ID,
+        "source_sha256": got_sha,
         "n_races": len(races),
         "n_route_decisions": len(route_rows),
         "route_unsafe": unsafe,
