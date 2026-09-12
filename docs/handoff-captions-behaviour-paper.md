@@ -6,7 +6,7 @@ number below was recomputed in this session by the generator that draws it, and
 each generator prints the value it drew and refuses to draw when the value it
 finds no longer supports the sentence on the panel.
 
----
+* * *
 
 ## 1. Two placement changes the paper will not build correctly without
 
@@ -17,21 +17,14 @@ language. Same placement, full width:
 
     \includegraphics[width=\textwidth]{../figures/paper/AIRaceOverview.pdf}
 
-**b. The scripted-rival figure is now a full-width figure and must be placed as
-one.** It currently sits in a `figure` at `\columnwidth`, and the geometry gate
-fails on it: the file is 6.99 in wide, the column is 3.34 in, so the page
-rescales it to 48 per cent and its 7 pt labels print at 3.3 pt. It grew a third
-panel because that panel carries the paper's headline, the rival against the
-danger on one axis, which did not previously exist as a picture. The fix is one
-environment change:
+**b. The scripted-rival figure uses the taller full-width composition.** It
+contains three risk facets above the rival-stance contrast and the self-play
+comparison, so the labels remain readable at publication size. The canonical
+file is `scripted_opponent.pdf`:
 
-    \begin{figure*}[t]
-      \includegraphics[width=\textwidth]{../figures/paper/scripted_opponent_main.pdf}
+    \includegraphics[width=\textwidth]{../figures/paper/scripted_opponent.pdf}
 
-A full-width float is charged twice its height and nothing for its width, so
-this costs about two and a half column inches over the column version, which is
-inside the budget the claim map gives this subsection. Both gate scripts pass
-once the environment changes; until it changes, both fail on this one file.
+A full-width float keeps the five panels legible and is inside the page budget.
 
 **c. Two supplement variants exist and nothing includes them yet.**
 `human_versus_model_all_routes.pdf` draws all nine routes and
@@ -40,7 +33,7 @@ model. The main paper's versions lead with the five screened routes and humans,
 which is what the brief asks for, so the nine-route versions belong in the
 supplement. Both are full width.
 
----
+* * *
 
 ## 2. Captions
 
@@ -84,7 +77,7 @@ endpoint at one fixed setting.
 > is not a measurement of how a route treats risk. The four routes the screen
 > refused are drawn beside these five in the supplementary material.
 
-### Figure 3, rivalry, full width. `scripted_opponent_main.pdf`
+### Figure 3, rivalry, full width. `scripted_opponent.pdf`
 
 > **What the rival is doing moves a route several times further than how
 > dangerous the race is.** Three admitted routes play the same race against four
@@ -113,41 +106,23 @@ endpoint at one fixed setting.
 > version and ten races per cell; the four rivals are reduced strategies rather
 > than a sample of opponents.
 
-### Figure 4, theory, one column. `theory_versus_behaviour.pdf`
+### Figure 4, theory, full width. `theory_versus_behaviour.pdf`
 
-> **The evolutionary benchmark is a step and the screened routes are slopes.**
-> The reduced evolutionary model solved on 201 risk levels at both declared
-> selection strengths, against the five screened routes at the three levels the
-> protocol ran. Selection strength, written as beta, is how sharply an imitating
-> player prefers the better-performing strategy; both curves are the
-> vanishing-mutation limit in a population of one hundred, which is the limit
-> the model is usually reported in and not a fit to any behaviour here. At the
-> reference strength the model stays at the ceiling, falls almost its whole
-> height inside a single risk step of 0.005, and stays on the floor; a step
-> function has no gradient, so there is nothing for a route to be calibrated
-> against. Weakening selection gives the model a slope of its own, falling at
-> most five points per risk step. Four of the five routes walk a slope; Claude
-> Opus 5 has a cliff of its own, and it is in the wrong place, somewhere inside
-> the gap between the two lowest levels where the protocol ran nothing. Its two
-> saturated cells are 186 decisions on the ceiling and 372 on the floor.
-> Nothing here is fitted and no parameter is estimated from behaviour, so this
-> is not a test of the model.
+> **The evolutionary benchmark and the route profiles share a risk coordinate.**
+> Panel (a) shows the reduced model solved on 201 risk levels at both declared
+> selection strengths, beside the five admitted routes at the three tested
+> levels. The strong-selection model is step-like, the weak-selection model is
+> graded, four routes move gradually, and Claude Opus 5 changes sharply between
+> the two lowest tested levels. Panel (b) shows the corresponding finite-
+> mutation strategy composition at the reference and reported best-fit
+> settings. The dominant strategy shifts from Always Unsafe to the conditional
+> strategy that starts Unsafe and then to the conditional strategy that starts
+> Safe as risk rises. Nothing here is fitted to route behaviour.
 
-**Read this before writing the subsection.** The two curves drawn here are the
-vanishing-mutation limit. The claim that a weak selection strength brings the
-model close to the routes comes from a different object: the finite-mutation
-stationary distribution at a mutation rate of 0.05, which predicts 87.3, 63.9
-and 38.0 per cent at the three levels and does land inside the band of routes.
-The drawn curve at the same strength passes near 100, 97 and 5. If the body
-quotes the fit while the page shows the curve, a reader comparing the two finds
-a contradiction. Either write the fit as belonging to the finite-mutation
-sweep, in words that say so, or leave it in the supplement. The figure lane
-considered adding the three finite-mutation points to this panel and did not:
-at column width the panel already carries two model curves, a five-route band,
-the exception route, a cliff leader and two boundary rules, and a third model
-object labelled with the same strength as one of the curves would be read as a
-contradiction rather than as a second regime. If the body needs the fit on the
-page, say so and it can have a second column-width panel.
+The curves in panel (a) are the small-mutation limit. The strategy shares in
+panel (b) come from the archived finite-mutation chains, so the figure keeps the
+two evolutionary layers explicit rather than treating them as one object. The
+reported best-fit regime is the one used in the paper's finite-mutation sweep.
 
 ### Figure 5, humans, full width. `human_versus_model.pdf`
 
@@ -169,7 +144,7 @@ page, say so and it can have a second column-width panel.
 > count and on round structure but not on incentive, and twenty is a small
 > sample for a measure whose ceiling is twenty.
 
----
+* * *
 
 ## 3. Things the writers should know before quoting a number
 
@@ -204,7 +179,7 @@ figure standing beside it.
 reintroduce "pp" in a caption or an axis: one unit under two names costs the
 reader attention that belongs on the number.
 
----
+* * *
 
 ## 4. What changed in the figure code this session
 

@@ -717,24 +717,19 @@ fully crossed symbol-mapping experiment are reported in the supplement.
 
 \begin{figure*}[t]
   \centering
-  \includegraphics[width=\textwidth]{../figures/paper/scripted_opponent_main.pdf}
-  \caption{Three admitted routes against four scripted rivals they cannot
-  influence. (a) \Unsafe{} play rises from the rival that always plays \Safe{}
-  to the one that never does, in all nine route-by-risk cells. (b) Both
-  treatments on one scale, each differenced inside a repetition so the hidden
-  horizon cancels; bars are 95\% bootstrap intervals over ten blocks.
-  (c) Against a fixed safe rival, filled, each route plays \Unsafe{} less than
-  against a copy of itself, open.}
-  \Description{Three panels. Panel a plots unsafe play against the four scripted
-  rivals, ordered from Always Safe to Always Unsafe, with one line per route and
-  a dash pattern per risk level; every line rises from left to right. Panel b is
-  a dot-and-interval chart on one axis of percentage points, with nine rival
-  contrasts in an upper row lying between about 45 and 75 points and three risk
-  contrasts in a lower row lying near 10 to 13 points, and a shaded corridor
-  between the two families that no interval enters. Panel c plots unsafe play
-  against risk, with a filled marker for the rate against the Always Safe rival
-  and an open marker above it for the self-play rate, on all three routes at all
-  three risk levels, the open marker always higher.}
+  \includegraphics[width=\textwidth]{../figures/paper/scripted_opponent.pdf}
+  \caption{How the rival changes a route's play. The top row shows the four
+  scripted rivals at each risk level, with a rising line meaning that the route
+  responds to the rival's stance. The lower-left panel compares the
+  Always-Unsafe minus Always-Safe contrast within matched repetitions; all nine
+  intervals are positive. The lower-right panel compares each route against a
+  fixed Safe rival and against a copy of itself. Together the panels separate
+  rival-conditioned behaviour from the mirror-match rate.}
+  \Description{Five-panel figure. The top row has one panel for each of three
+  risk levels, with route Unsafe rates rising across four scripted rivals. The
+  lower-left panel shows positive rival-stance contrasts with intervals for
+  three routes at three risk levels. The lower-right panel shows self-play rates
+  above rates against a fixed Always-Safe rival for all routes and risk levels.}
   \label{fig:scripted-opponent-main}
 \end{figure*}
 
@@ -833,23 +828,28 @@ collection from the nine-route baseline reported above and
 decisions. The difference is one of shape and not of level: solved on a fine
 grid of risk values, the benchmark at $\beta=2$ loses 98 points of \Unsafe{}
     play inside a single step of risk $0.005$ wide (Figure~\ref{fig:theory-behaviour}).
-    The supplementary material extends that comparison to all five admitted routes and
-    inverts the model through their rates.
+    The supplementary material reports the full five-route fit and inverts the
+    model through the observed rates.
 
-\begin{figure}[t]
+\begin{figure*}[t]
     \centering
-    \includegraphics[width=\columnwidth]{../figures/paper/theory_versus_behaviour.pdf}
-    \caption{The evolutionary benchmark is a step at strong selection and a
-    graded curve near neutrality, while four admitted routes show graded risk
-    responses. The reference model at $\beta=2$ changes almost its entire
-    range inside one small risk interval; the weaker-selection curve is shown
-    for comparison. Claude Opus 5 is separated because it is itself a switch.}
+    \includegraphics[width=\textwidth]{../figures/paper/theory_versus_behaviour.pdf}
+    \caption{The evolutionary benchmark and the admitted route profiles in a
+    common risk coordinate. (a) The small-mutation limit is step-like at strong
+    selection and graded near neutrality, while four routes move gradually and
+    Claude Opus 5 changes sharply between the two lowest tested levels. (b) The
+    corresponding finite-mutation population composition changes its dominant
+    strategy from Always Unsafe through the conditional strategy that starts
+    Unsafe to the conditional strategy that starts Safe as risk rises. The
+    hatched bars show the reported best-fit regime; the unhatched bars show the
+    reference regime.}
     \label{fig:theory-behaviour}
-    \Description{Plot of Unsafe play against maximum private risk. A strong-
-    selection evolutionary model forms a near-step curve, a weak-selection
-    model declines gradually, four admitted routes form a band of graded lines,
-    and Claude Opus 5 forms a separate steep line.}
-\end{figure}
+    \Description{Two-panel comparison. Panel a plots Unsafe play against maximum
+    private risk for the reconstructed evolutionary model at strong and weak
+    selection and for five admitted routes. Panel b shows stacked stationary
+    shares of four strategies at risks 0.1, 0.6 and 0.9 for the reference and
+    reported best-fit finite-mutation regimes.}
+\end{figure*}
 
 The switch is a property of strong selection, not of the game. We swept
 selection strength across $\beta \in [0.001, 10]$ crossed with three mutation

@@ -646,11 +646,6 @@ def main() -> None:
     print(f"  the rival is worth {min(ratios):.1f} to {max(ratios):.1f} times the "
           f"risk across the nine route-by-risk cells")
 
-    draw_main_figure(surface, stance, risk_stance, safe_arm, selfplay, censored,
-                     strict, n_cells, ceiling_cells, rival_low, risk_high, ratios,
-                     widest)
-
-
 def draw_thesis(ax, stance, risk_stance, rival_low, risk_high, ratios, widest):
     """The rival and the danger on one axis, both differenced the same way.
 

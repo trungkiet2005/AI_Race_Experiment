@@ -75,6 +75,10 @@ THEORY_CSV = (
     Path(T.REPOSITORY_ROOT) / "results" / "derived" / "ai_race_theory"
     / "theory_expected_unsafe.csv"
 )
+STATIONARY_CSV = (
+    Path(T.REPOSITORY_ROOT) / "results" / "frontier"
+    / "egt_frontier_comparison_v2" / "egt_stationary_summary.csv"
+)
 
 # The configuration fields the payoff construction reads.  One configuration is
 # swept across the whole grid below, which is a legitimate stand-in for all
@@ -195,8 +199,41 @@ def compute() -> dict:
          for route in S.ROUTE_ORDER],
         index=S.ROUTE_ORDER, columns=obs.columns,
     )
+    stationary = load_archived_stationary_composition()
     return {"curves": curves, "obs": obs, "counts": counts, "risks": risks,
-            "implied": implied}
+            "implied": implied, "stationary": stationary}
+
+
+def load_archived_stationary_composition() -> dict[float, pd.DataFrame]:
+    """Load the two declared finite-mutation population compositions.
+
+    The response curves above are the small-mutation limit.  This panel uses
+    the archived finite-mutation chains for the two parameter regimes named in
+    the paper, so the figure shows the distinction instead of silently treating
+    the two simulation layers as one object.
+    """
+    if not STATIONARY_CSV.is_file():
+        raise FileNotFoundError(f"missing stationary summary: {STATIONARY_CSV}")
+    table = pd.read_csv(STATIONARY_CSV)
+    regimes = {
+        2.0: ("main_reference", 0.02),
+        0.01: ("reported_best_fit", 0.05),
+    }
+    result: dict[float, pd.DataFrame] = {}
+    for beta, (regime, mutation) in regimes.items():
+        sub = table[
+            table["regime"].eq(regime)
+            & np.isclose(table["beta"].astype(float), beta)
+            & np.isclose(table["mutation"].astype(float), mutation)
+        ].copy()
+        sub = sub.sort_values("max_private_risk")
+        if list(sub["max_private_risk"].astype(float)) != [0.1, 0.6, 0.9]:
+            raise ValueError(f"stationary summary is incomplete for beta={beta}")
+        shares = sub[[f"frequency_{strategy}_mean" for strategy in STRATEGY_ORDER]].to_numpy(float)
+        if not np.isfinite(shares).all() or not np.allclose(shares.sum(axis=1), 1.0, atol=1e-6):
+            raise ValueError(f"invalid strategy composition for beta={beta}")
+        result[beta] = pd.DataFrame(shares, index=[0.1, 0.6, 0.9], columns=STRATEGY_ORDER)
+    return result
 
 
 def report(res: dict) -> dict:
@@ -564,17 +601,103 @@ def panel_c(ax, res, d, letter="c") -> None:
     S.panel(ax, letter, "adjacent levels overlap, but the order survives")
 
 
+def draw_main_figure(res: dict, d: dict) -> None:
+    """Draw a wide comparison with an explicit evolutionary composition panel."""
+    from matplotlib.patches import Patch
+
+    fig = plt.figure(figsize=(S.TEXT, 3.05))
+    gs = fig.add_gridspec(1, 2, width_ratios=[1.55, 1.0], wspace=0.34)
+    fig.subplots_adjust(left=0.085, right=0.985, bottom=0.23, top=0.78)
+
+    ax = fig.add_subplot(gs[0, 0])
+    for route in S.ADMITTED:
+        ax.plot(
+            res["risks"], 100 * res["obs"].loc[route].to_numpy(),
+            color=S.ROUTE_C[route], marker=S.ROUTE_M[route], markersize=4.0,
+            linewidth=1.35, markeredgecolor=S.SURFACE, markeredgewidth=0.45,
+            label=S.ROUTE_SHORT[route], zorder=4,
+        )
+    for beta in sorted(res["curves"], reverse=True):
+        linestyle = "-" if beta == d["reference"] else (0, (4.0, 1.8))
+        ax.plot(
+            RISK_GRID, 100 * res["curves"][beta], color=S.INK_2,
+            linestyle=linestyle, linewidth=2.0 if beta == d["reference"] else 1.7,
+            zorder=3, label=rf"EGT $\beta={beta:g}$",
+        )
+    S.rate_axis(ax, label="Unsafe play (%)")
+    S.risk_axis(ax, label=r"maximum private risk $p_r^{\max}$")
+    ax.set_xlim(0.0, 1.0)
+    ax.set_ylim(0.0, 105.0)
+    S.strip(ax, grid_axis="y")
+    S.ceiling_rule(ax, 100.0, label="ceiling")
+    S.panel(ax, "a", "risk response: step-like at strong selection, graded near neutrality", gap=8.0)
+    ax.legend(
+        frameon=False, loc="upper center", bbox_to_anchor=(0.5, 1.27),
+        ncol=4, fontsize=S.FS_NOTE, handlelength=1.8, columnspacing=1.0,
+        handletextpad=0.35,
+    )
+
+    ax = fig.add_subplot(gs[0, 1])
+    strategy_colours = {
+        "AS": S.SAFE_C,
+        "AU": S.UNSAFE_C,
+        "CS": "#a6dba0",
+        "CAS": "#f4a582",
+    }
+    strategy_labels = {
+        "AS": "AS: Always Safe",
+        "AU": "AU: Always Unsafe",
+        "CS": "CS: starts Safe",
+        "CAS": "CAS: starts Unsafe",
+    }
+    x = np.arange(3, dtype=float)
+    offsets = {2.0: -0.20, 0.01: 0.20}
+    width = 0.34
+    for beta in (2.0, 0.01):
+        bottom = np.zeros(3)
+        for strategy in STRATEGY_ORDER:
+            values = 100 * res["stationary"][beta][strategy].to_numpy()
+            ax.bar(
+                x + offsets[beta], values, width=width, bottom=bottom,
+                color=strategy_colours[strategy], edgecolor=S.SURFACE,
+                linewidth=0.45, hatch="//" if beta == 0.01 else None,
+                zorder=3,
+            )
+            for xpos, base, value in zip(x + offsets[beta], bottom, values):
+                if value >= 12:
+                    ax.text(xpos, base + value / 2, strategy, ha="center", va="center",
+                            fontsize=S.FS_NOTE, color=S.SURFACE if strategy in ("AU", "CAS") else S.INK,
+                            weight="bold")
+            bottom += values
+    ax.set_xticks(x, ["0.1", "0.6", "0.9"])
+    ax.set_xlabel(r"maximum private risk $p_r^{\max}$")
+    ax.set_ylabel("stationary strategy share (%)")
+    ax.set_ylim(0.0, 100.0)
+    S.strip(ax, grid_axis="y")
+    S.panel(ax, "b", "risk changes which strategy dominates", gap=8.0)
+    for xpos in x:
+        ax.text(xpos + offsets[2.0], -0.12, r"$\beta=2$", transform=ax.get_xaxis_transform(),
+                ha="center", va="top", fontsize=S.FS_NOTE, color=S.INK_2)
+        ax.text(xpos + offsets[0.01], -0.12, r"$\beta=.01$", transform=ax.get_xaxis_transform(),
+                ha="center", va="top", fontsize=S.FS_NOTE, color=S.INK_2)
+    ax.legend(
+        handles=[Patch(facecolor=strategy_colours[s], edgecolor="none", label=strategy_labels[s])
+                 for s in STRATEGY_ORDER],
+        frameon=False, loc="upper center", bbox_to_anchor=(0.5, 1.27),
+        ncol=2, fontsize=S.FS_NOTE, columnspacing=0.8, handletextpad=0.35,
+    )
+    fig.text(
+        0.50, 0.035,
+        "Panel a shows the small-mutation limit; panel b shows the archived finite-mutation compositions "
+        "at the reference and reported best-fit settings.",
+        ha="center", va="bottom", fontsize=S.FS_NOTE, color=S.MUTED,
+    )
+    S.save(fig, "theory_versus_behaviour", width=S.TEXT)
+
+
 def draw(res: dict, d: dict) -> None:
-    """The main paper's screened five, and the supplement's all nine.
-
-    Two files out of one computation, so the supplement can never disagree with
-    the body about what the model does or about what any route played.
-    """
-    fig = plt.figure(figsize=(S.COL, 2.92))
-    panel_a(fig.add_subplot(1, 1, 1), res, d,
-            roster=S.ADMITTED, noun="screened routes")
-    S.save(fig, "theory_versus_behaviour", width=S.COL)
-
+    """Write the wide main comparison and the compact all-route supplement view."""
+    draw_main_figure(res, d)
     fig = plt.figure(figsize=(S.COL, 2.92))
     panel_a(fig.add_subplot(1, 1, 1), res, d,
             roster=S.ROUTE_ORDER, noun="routes")
