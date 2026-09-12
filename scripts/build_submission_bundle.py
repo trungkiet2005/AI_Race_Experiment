@@ -8,76 +8,30 @@ The bundle is deliberately small. It carries the supplementary document and
 nothing else: the code and the run artefacts live in a repository that is public
 under the authors' own account, so shipping or linking them would identify the
 authors to a reviewer.
+
+The anonymity pattern list used to live in this file. It now lives in
+``scripts/anonymity_scan.py`` and runs at every build of the PDFs as well as
+here, because a gate that only runs at the last step of the process is a gate
+most artefacts never meet: the leak that prompted the move went out as a PDF
+that nobody had ever bundled.
 """
 from __future__ import annotations
 
 import argparse
-import re
 import shutil
-import subprocess
 import sys
 import zipfile
 from pathlib import Path
+
+if __package__ in (None, ""):  # run as a script, so the sibling module is a plain import
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+
+import anonymity_scan
 
 ROOT = Path(__file__).resolve().parents[1]
 PAPER_DIR = ROOT / "paper"
 BUNDLE = ROOT / "results" / "artifacts" / "submission"
 LIMIT_BYTES = 25 * 1024 * 1024
-
-# Anything matching these must not appear in the bundle's text layer.
-IDENTIFYING = [
-    re.compile(r"hcmus\.edu\.vn", re.I),
-    re.compile(r"hcmut\.edu\.vn", re.I),
-    re.compile(r"\bVNU-?HCM\b", re.I),
-    re.compile(r"\bEPSRC\b", re.I),
-    re.compile(r"EP/Y00857X", re.I),
-    re.compile(r"github\.com/[A-Za-z0-9_.-]+/AI_Race", re.I),
-    re.compile(r"\bAI_Race_Experiment\b"),
-    # The compute accounts. These are the identifiers most likely to survive a
-    # rewrite, because they are written down as provenance rather than as
-    # authorship, and a reader who searches one finds a person. The scan missed
-    # exactly this once: a supplement subsection named the account the
-    # admission campaign ran on, and the bundle was reported clean.
-    re.compile(r"\bdaosyduyminh\b", re.I),
-    re.compile(r"\bfoundnotkiet\b", re.I),
-    re.compile(r"\bhunhtrungkit\b", re.I),
-    re.compile(r"\btnkiet\b", re.I),
-    re.compile(r"\bkit567\b", re.I),
-    re.compile(r"\btrungkiet\b", re.I),
-    # Author surnames are deliberately NOT listed. Two of them wrote the source
-    # study this paper builds on, and citing that work in the third person is
-    # both standard and required; a scan that flagged it would be telling the
-    # author to drop a citation in order to look anonymous.
-]
-
-
-def pdf_text(path: Path) -> str:
-    if shutil.which("pdftotext") is None:
-        return ""
-    try:
-        out = subprocess.run(
-            ["pdftotext", "-layout", str(path), "-"],
-            capture_output=True,
-            text=True,
-            encoding="utf-8",
-            errors="replace",
-            check=True,
-        )
-    except (OSError, subprocess.CalledProcessError):
-        return ""
-    return out.stdout
-
-
-def scan(path: Path) -> list[str]:
-    text = pdf_text(path)
-    if not text:
-        return ["pdftotext unavailable, could not scan " + path.name]
-    hits = []
-    for pat in IDENTIFYING:
-        for m in pat.finditer(text):
-            line = text[max(0, m.start() - 60):m.end() + 60].replace("\n", " ")
-            hits.append(f"{path.name}: {pat.pattern} -> ...{line.strip()}...")
-    return hits
 
 
 def main() -> int:
@@ -109,7 +63,30 @@ def main() -> int:
                 "scripts/build_publication.py, then build the bundle again."
             )
 
-    hits = scan(paper) + scan(supp)
+    # Two questions, and they are not the same question. "Is this PDF clean" is
+    # answered by scanning it here. "Was this PDF ever scanned when it was made"
+    # is answered by its receipt, and only by its receipt: a PDF compiled by a
+    # hand-run pdflatex, or copied in from another tree, reads exactly like one
+    # the gate has passed. A receipt keyed to the wrong digest is not a receipt.
+    hits: list[str] = []
+    for pdf in (paper, supp):
+        receipt = anonymity_scan.read_receipt(pdf)
+        if receipt is None:
+            raise SystemExit(
+                f"{pdf.name} has no anonymity receipt for these exact bytes, so it "
+                "was never scanned at the point it was made. Rebuild it with "
+                "scripts/build_publication.py, which scans and leaves the receipt."
+            )
+        if receipt.get("overridden") and not args.allow_identifying:
+            raise SystemExit(
+                f"{pdf.name} was built with --allow-identifying, so its anonymity "
+                "hits were waved through at build time. Fix the source and rebuild."
+            )
+        report = anonymity_scan.scan_pdf(pdf)
+        hits.extend(report.hits)
+        if not report.verified:
+            hits.extend(f"{pdf.name}: {note}" for note in report.notes)
+
     if hits and not args.allow_identifying:
         print("anonymity scan found identifying text:")
         for h in hits:
@@ -122,9 +99,32 @@ def main() -> int:
     # A readable copy beside the archive: the zip is what the portal takes, but
     # nobody wants to unzip a file to check what they are about to upload.
     shutil.copy2(supp, BUNDLE / "supplementary.pdf")
+    # The copies are renamed, so they no longer carry the receipts written next
+    # to their originals. Re-scan them under their bundle names: the point of a
+    # receipt is that it names the bytes in front of you.
+    for copy in (BUNDLE / "paper.pdf", BUNDLE / "supplementary.pdf"):
+        copy_report = anonymity_scan.scan_pdf(copy)
+        anonymity_scan.write_receipt(
+            copy_report, overridden=args.allow_identifying and not copy_report.clean
+        )
     zip_path = BUNDLE / "supplementary.zip"
     with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as z:
         z.write(supp, "supplementary.pdf")
+
+    # The zip is the file the portal actually takes, so it is scanned after it
+    # is written rather than trusted because its source was clean. Checking the
+    # archive rather than its inputs also checks the member names: an archive
+    # laid out under a home directory names a person before anyone opens it.
+    # A dirty archive is deleted, not left on disk beside a "refusing" message,
+    # because the next person to look in this folder would find a file that
+    # looks finished.
+    zip_report = anonymity_scan.scan_zip(zip_path)
+    if not zip_report.clean and not args.allow_identifying:
+        print("\n".join(zip_report.lines()))
+        zip_path.unlink(missing_ok=True)
+        raise SystemExit("the supplementary archive is not clean; removed it")
+    anonymity_scan.write_receipt(zip_report, overridden=args.allow_identifying and not zip_report.clean)
+    print("\n".join(zip_report.lines()))
 
     (BUNDLE / "README.txt").write_text(
         "AAMAS 2026 submission files\n"
@@ -133,9 +133,12 @@ def main() -> int:
         "  paper.pdf          the manuscript, anonymous\n"
         "  supplementary.zip  supplementary material, single zip as the portal requires\n\n"
         "Not uploaded, here for reading only:\n"
-        "  supplementary.pdf  the same document the zip contains\n\n"
+        "  supplementary.pdf  the same document the zip contains\n"
+        "  *.anonymity.json   the double-blind scan verdict for each file beside it,\n"
+        "                     keyed to that file's SHA-256. Upload neither of these.\n\n"
         "Both PDFs build from paper/main.tex and paper/supplementary.tex through\n"
-        "scripts/build_publication.py. Rebuild them before rebuilding this bundle.\n\n"
+        "scripts/build_publication.py, which runs the same anonymity scan at the\n"
+        "moment each PDF is made. Rebuild them before rebuilding this bundle.\n\n"
         "Before the camera-ready, switch main.tex back to the non-anonymous\n"
         "\\documentclass[sigconf]{aamas} and restore the acknowledgements block\n"
         "that sits commented out near the end of the same file.\n",
