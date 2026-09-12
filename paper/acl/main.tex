@@ -28,6 +28,29 @@
 
 \usepackage[review]{acl}
 
+% ---------------------------------------------------------------------
+% Line-number placement, local toolchain compatibility only.
+%
+% acl.sty asks lineno for [switch] numbering at a 1.6cm separation. Against
+% the lineno shipped here (v5.7, 2026-02-16) that places the right column's
+% numbers 1.6cm to the LEFT of that column, which lands them inside the left
+% column's text rather than in a margin. The unmodified official acl_latex.tex
+% renders the same way on this installation, so this is the local lineno and
+% not this document: the fix therefore lives here rather than in acl.sty,
+% which stays byte-identical to the distributed file.
+%
+% Numbers are pinned to the left of each column at a separation that clears
+% the gutter, in a smaller face so three digits fit it. Remove this block for
+% the camera-ready, where [review] and its numbering are dropped anyway.
+% ---------------------------------------------------------------------
+\makeatletter
+\@ifpackageloaded{lineno}{%
+  \leftlinenumbers*
+  \setlength{\linenumbersep}{4pt}%
+  \renewcommand\linenumberfont{\normalfont\tiny\sffamily\color{lightgray}}%
+}{}
+\makeatother
+
 \usepackage{times}
 \usepackage{latexsym}
 \usepackage[T1]{fontenc}
