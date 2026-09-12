@@ -13,7 +13,10 @@ import kaggle_benchmarks as kbench
 # %%
 @kbench.task(name="connectivity-ping")
 def connectivity_ping(llm) -> dict:
-    response = llm.prompt("Reply with exactly one word: PONG")
+    response = llm.prompt(
+        "Reply with exactly one word: PONG",
+        extra_api_params={"max_tokens": 16},
+    )
     kbench.assertions.assert_in(
         "PONG", response.upper(), expectation="Model must echo PONG"
     )

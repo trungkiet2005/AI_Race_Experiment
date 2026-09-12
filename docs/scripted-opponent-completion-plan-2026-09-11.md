@@ -475,3 +475,22 @@ experiencing heavy load`) and produced zero races. The longer backoff therefore
 did not recover the route. Version 18 is recorded as a non-admitted
 infrastructure failure; the GPT-5.5 `AS@0.6` cell remains closed under the
 current plan and is not rotated to another identity.
+
+## Diagnostic retry, 2026-09-12: smoke recovered, full cell remained quota-blocked
+
+A fresh one-prompt GPT-5.5 connectivity probe completed on the same
+`foundnotkiet` profile after the probe was given an explicit `max_tokens=16`
+cap. This establishes that the route can answer a minimal request at this
+moment; it does not validate the structured-output gameplay workload. The
+probe source first used an unsupported `max_output_tokens` extra in version 9,
+which failed with an SDK `TypeError`, and version 8 failed during validation
+with a quota reservation refusal. Version 10 used the backend's accepted
+`max_tokens` parameter and GPT-5.5 completed the `PONG` request.
+
+The fixed scripted-opponent source was then pushed unchanged as task version
+19. It failed on its first decision with HTTP 403 because its 1024-token
+reservation of `$0.008601` exceeded the available quota, producing zero races.
+This post-stop diagnostic retry is recorded in
+`results/failed_runs/scripted_opponent_completion_20260912.json`; it is not
+admitted and does not reopen the completed three-route grid or permit identity
+rotation.

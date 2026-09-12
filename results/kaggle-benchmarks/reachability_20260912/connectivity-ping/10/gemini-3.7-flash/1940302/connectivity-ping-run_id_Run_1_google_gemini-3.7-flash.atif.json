@@ -1,0 +1,77 @@
+{
+  "schema_version": "ATIF-v1.7",
+  "session_id": "connectivity-ping-Run #1",
+  "trajectory_id": "connectivity-ping-Run #1",
+  "agent": {
+    "name": "kaggle-benchmarks",
+    "version": "0.6.1",
+    "model_name": "google/gemini-3.7-flash"
+  },
+  "steps": [
+    {
+      "step_id": 1,
+      "source": "user",
+      "message": "Reply with exactly one word: PONG",
+      "extra": {
+        "sender_name": "User"
+      },
+      "timestamp": "2026-09-12T12:30:35.576253Z"
+    },
+    {
+      "step_id": 2,
+      "source": "agent",
+      "message": "",
+      "extra": {
+        "sender_name": "google/gemini-3.7-flash"
+      },
+      "model_name": "google/gemini-3.7-flash",
+      "metrics": {
+        "prompt_tokens": 9,
+        "completion_tokens": 13,
+        "cost_usd": 0.000111,
+        "extra": {
+          "total_backend_latency_ms": 633
+        }
+      }
+    }
+  ],
+  "notes": "Converted from kbench run.json for task 'connectivity-ping'.",
+  "final_metrics": {
+    "total_prompt_tokens": 9,
+    "total_completion_tokens": 13,
+    "total_cost_usd": 0.000111,
+    "total_steps": 2
+  },
+  "extra": {
+    "kbench": {
+      "task_version": {
+        "version_number": 1,
+        "name": "connectivity-ping",
+        "description": "",
+        "definition": "@kbench.task(name=\"connectivity-ping\")\ndef connectivity_ping(llm) -> dict:\n    response = llm.prompt(\n        \"Reply with exactly one word: PONG\",\n        extra_api_params={\"max_tokens\": 16},\n    )\n    kbench.assertions.assert_in(\n        \"PONG\", response.upper(), expectation=\"Model must echo PONG\"\n    )\n    return {\"response\": response}\n"
+      },
+      "state": "BENCHMARK_TASK_RUN_STATE_COMPLETED",
+      "end_time": "2026-09-12T12:30:36.950898Z",
+      "assertions": [
+        {
+          "expectation": "Model must echo PONG",
+          "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_FAILED",
+          "line_number": 7,
+          "definition": "kbench.assertions.assert_in(",
+          "conversation_request_ids": [
+            {
+              "conversation_id": "connectivity-ping-d9881145",
+              "request_id": "connectivity-ping-d9881145-req-1"
+            }
+          ]
+        }
+      ],
+      "conversion_warnings": [
+        {
+          "kind": "reward_leaf_unusable",
+          "detail": "response is a str"
+        }
+      ]
+    }
+  }
+}

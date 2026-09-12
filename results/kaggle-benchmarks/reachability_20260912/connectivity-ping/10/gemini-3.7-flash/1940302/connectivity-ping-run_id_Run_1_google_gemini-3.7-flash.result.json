@@ -1,0 +1,28 @@
+{
+  "task_name": "connectivity-ping",
+  "trial_name": "connectivity-ping-Run #1",
+  "trial_uri": "kbench://not-a-harbor-trial",
+  "task_id": {
+    "path": "kbench://not-a-harbor-task"
+  },
+  "task_checksum": "unknown (kbench)",
+  "config": {
+    "task": {
+      "path": "kbench://not-a-harbor-task"
+    }
+  },
+  "agent_info": {
+    "name": "kaggle-benchmarks",
+    "version": "0.6.1",
+    "model_info": {
+      "name": "google/gemini-3.7-flash"
+    }
+  },
+  "agent_result": {
+    "n_input_tokens": 9,
+    "n_output_tokens": 13,
+    "cost_usd": 0.000111
+  },
+  "started_at": "2026-09-12T12:30:35.576253Z",
+  "finished_at": "2026-09-12T12:30:36.950898Z"
+}

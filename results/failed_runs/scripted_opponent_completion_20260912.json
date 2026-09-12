@@ -284,10 +284,25 @@
       "evidence_status": "not_admitted",
       "assignment_status": "plan_assigned",
       "error": "The source was amended to use deterministic 20/40/80-second backoff for HTTP 429 or explicit heavy-load responses. Task version 18 still received HTTP 429 (model experiencing heavy load) during validation and produced zero races. This is an infrastructure failure rather than model evidence."
+    },
+    {
+      "task_version": 19,
+      "cell": {"strategy": "AS", "max_private_risk": 0.6},
+      "model_route": "openai/gpt-5.5-2026-04-23",
+      "executing_identity": "foundnotkiet",
+      "status": "Errored",
+      "stage": "task version creation validation",
+      "error_type": "PermissionDeniedError",
+      "status_code": 403,
+      "output_token_limit": 1024,
+      "n_races": 0,
+      "evidence_status": "not_admitted",
+      "assignment_status": "plan_assigned",
+      "error": "After a fresh GPT-5.5 one-prompt smoke completed, the unchanged fixed scripted-opponent source was pushed as task version 19. Validation failed on the first decision with HTTP 403 because the maximum estimated cost ($0.008601) exceeded the available quota. No race completed, so this is a quota/infrastructure failure rather than model evidence."
     }
   ],
   "not_attempted": "Fifteen further cells were never started, because every identity the plan assigned them to had already refused. They are listed as not collected in the plan's own closing section rather than counted as failures of anything.",
-  "interpretation": "Three distinct failure signatures are recorded here and they must not be merged. Four identities returned HTTP 403 with an explicit quota message: tnkiet, kit567, trungkiet and finally hunhtrungkit. foundnotkiet's earlier Opus attempts exhausted the structured-output budget with reasoning tokens, while its GPT-5.5 attempts at the amended 1024-token contract reached the proxy but returned HTTP 429 heavy-load responses. None of these attempts completed a race, so none is model evidence. The 429 is an infrastructure failure, not evidence that the GPT-5.5 route behaved in a particular way.",
+  "interpretation": "Three distinct failure signatures are recorded here and they must not be merged. Four identities returned HTTP 403 with an explicit quota message: tnkiet, kit567, trungkiet and finally hunhtrungkit. foundnotkiet's earlier Opus attempts exhausted the structured-output budget with reasoning tokens, its GPT-5.5 attempts at the amended 1024-token contract returned HTTP 429 heavy-load responses, and the later version 19 attempt returned HTTP 403 because the available quota was below the reservation. None of these attempts completed a race, so none is model evidence. The 429 and 403 are infrastructure failures, not evidence that the GPT-5.5 route behaved in a particular way.",
   "why_not_moved_to_another_identity": "The plan assigns each cell to one identity before collection and forbids moving a cell after a refusal, because rotating until something passes selects on the outcome. No cell here was retried anywhere except on the identity that owned it. The one retry that did happen, foundnotkiet's AU cell at risk 0.6, was permitted because that failure was not a quota refusal, and it is recorded above as attempt 2 of the same assignment.",
   "do_not_use": [
     "Do not read any of these as evidence about Claude Opus 5 or GPT-5.5. No race completed in any of them.",
