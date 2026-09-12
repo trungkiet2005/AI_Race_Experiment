@@ -224,15 +224,45 @@
       "evidence_status": "not_admitted",
       "assignment_status": "plan_assigned",
       "error": "The low-reasoning contract consumed the output allowance during validation and returned no parseable structured action. No race completed, so this is an infrastructure failure rather than model evidence. A separate 1024-token amendment is recorded before any further GPT-5.5 attempt."
+    },
+    {
+      "task_version": 15,
+      "cell": {"strategy": "AS", "max_private_risk": 0.6},
+      "model_route": "openai/gpt-5.5-2026-04-23",
+      "executing_identity": "foundnotkiet",
+      "status": "Errored",
+      "stage": "task version creation validation",
+      "error_type": "RateLimitError",
+      "status_code": 429,
+      "output_token_limit": 1024,
+      "n_races": 0,
+      "evidence_status": "not_admitted",
+      "assignment_status": "plan_assigned",
+      "error": "The 1024-token low-reasoning validation reached the Model Proxy, which returned HTTP 429 (model experiencing heavy load) after transport retries. No race completed, so this is an infrastructure failure rather than model evidence."
+    },
+    {
+      "task_version": 16,
+      "cell": {"strategy": "AS", "max_private_risk": 0.6},
+      "model_route": "openai/gpt-5.5-2026-04-23",
+      "executing_identity": "foundnotkiet",
+      "status": "Errored",
+      "stage": "task version creation validation",
+      "error_type": "RateLimitError",
+      "status_code": 429,
+      "output_token_limit": 1024,
+      "n_races": 0,
+      "evidence_status": "not_admitted",
+      "assignment_status": "plan_assigned",
+      "error": "After a credential refresh, the same fixed assignment was pushed as version 16. Model Proxy again returned HTTP 429 (model experiencing heavy load) during validation after transport retries. No race completed, so this is an infrastructure failure rather than model evidence."
     }
   ],
   "not_attempted": "Fifteen further cells were never started, because every identity the plan assigned them to had already refused. They are listed as not collected in the plan's own closing section rather than counted as failures of anything.",
-  "interpretation": "Two distinct failures are recorded here and they must not be merged. Four identities returned HTTP 403 with an explicit quota message: tnkiet, kit567, trungkiet and finally hunhtrungkit. That is the accounting limit this study has hit before, and it is the reason the collection stopped. foundnotkiet is different: its three attempts returned a successful API call whose whole 256 token output budget was spent on reasoning tokens, leaving no content for the structured-output parser, which the task treats as a transport failure and reports with a misleading message about authentication. foundnotkiet was therefore not out of budget when it failed, and calling its failure a quota refusal would be wrong.",
+  "interpretation": "Three distinct failure signatures are recorded here and they must not be merged. Four identities returned HTTP 403 with an explicit quota message: tnkiet, kit567, trungkiet and finally hunhtrungkit. foundnotkiet's earlier Opus attempts exhausted the structured-output budget with reasoning tokens, while its GPT-5.5 attempts at the amended 1024-token contract reached the proxy but returned HTTP 429 heavy-load responses. None of these attempts completed a race, so none is model evidence. The 429 is an infrastructure failure, not evidence that the GPT-5.5 route behaved in a particular way.",
   "why_not_moved_to_another_identity": "The plan assigns each cell to one identity before collection and forbids moving a cell after a refusal, because rotating until something passes selects on the outcome. No cell here was retried anywhere except on the identity that owned it. The one retry that did happen, foundnotkiet's AU cell at risk 0.6, was permitted because that failure was not a quota refusal, and it is recorded above as attempt 2 of the same assignment.",
   "do_not_use": [
     "Do not read any of these as evidence about Claude Opus 5 or GPT-5.5. No race completed in any of them.",
     "Do not read the one collected cell as a measurement of how Claude Opus 5 answers a rival. It is the Always Safe arm alone, and the arms that answer that question, Always Unsafe and Conditional Unsafe, were never collected.",
     "Do not describe the scripted-opponent campaign as covering the admitted set. It covers three of five admitted endpoints, exactly as before this attempt."
   ],
-  "next_safe_action": "Do not retry Claude Opus 5 AU at risk 0.6 under the current decoding contract. If budget remains, continue with the next fixed assignment that has not been retired, GPT-5.5 AS at risk 0.6 on foundnotkiet, using the amended contract and recording any route-specific failure without rotating the cell. Pushing a task version also starts a full validation run that costs a second cell's worth of requests."
+  "next_safe_action": "Do not rotate identities or keep retrying the GPT-5.5 AS cell while the Model Proxy returns repeated HTTP 429 heavy-load responses. The Opus AU cell remains stopped under the repeated-failure rule, and the GPT-5.5 AS cell is not admitted. Preserve the three complete route grids as the only scripted-opponent evidence; resume the fixed plan only after the proxy service recovers and a new explicitly recorded amendment justifies the cost."
 }

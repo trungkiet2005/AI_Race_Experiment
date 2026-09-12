@@ -447,3 +447,13 @@ seed streams, cell assignment and stopping rule are unchanged. This is a
 separate decoding contract from both earlier caps, is recorded in manifests,
 and must not be pooled with them. Claude Opus 5 remains stopped under the
 repeated-failure rule and is not reopened by this amendment.
+
+Task version 15 then failed during server-side validation with HTTP 429 from
+the Model Proxy (`The model is currently experiencing heavy load`) after the
+configured transport retries. No race completed. After refreshing the
+credential for the same plan-assigned identity, the frozen source was pushed
+again as task version 16; it received the same HTTP 429 during validation and
+also produced zero races. These are infrastructure failures, not GPT-5.5
+behavioural observations. The AS-at-risk-0.6 cell is therefore not admitted,
+and the plan does not rotate it to another identity or keep retrying while the
+proxy is in this state.
