@@ -79,8 +79,9 @@ job. It is that a quota refusal must never be laundered into evidence: a run
 that a quota stopped is a failure record, and a second identity may not be used
 to make an incomplete sample look complete. Concretely:
 
-- A run records its executing identity in the manifest, and any table that
-  pools runs from more than one identity must say so.
+- The ingestion receipt records the operator-supplied executing identity; the
+  task manifest cannot server-attest that field. Any table that pools runs
+  from more than one identity must say so.
 - A second identity receives its own task version and its own output directory.
   Artefacts from different identities are never written into the same campaign
   directory as though they were one sample.

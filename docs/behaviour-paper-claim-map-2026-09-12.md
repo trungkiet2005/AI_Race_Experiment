@@ -1,8 +1,9 @@
 # Behaviour paper: thesis and claim map
 
-Written 2026-09-12, before any prose is rewritten. The combined manuscript is
-frozen at `combined-manuscript-2026-09-12`, so nothing described here as
-"moves out" is lost.
+Written 2026-09-12 and superseded by the complete five-route scripted-opponent
+campaign completed 2026-09-13. The historical three-route values below remain
+as an audit trail, but the active manuscript claims must use the five-route
+values in the dated amendment and the derived campaign tables.
 
 Every number below was recomputed in this session from the artifact named
 beside it. `scripts/verify_manuscript_claims.py` passes 179 of 179 against the
@@ -18,10 +19,11 @@ scope statements that are missing.
 ### The thesis, one sentence
 
 **If decisions in a competitive race between AI developers were delegated to
-frontier language models, the safety of those decisions would be set far more
-by what the rival is doing than by how dangerous the race is, and the
-population of delegates would converge on a handful of near-deterministic
-policies that human participants never confine themselves to.**
+frontier language models, the safety of those decisions would depend on both
+the stated danger and what the rival is doing, with the magnitude varying by
+checkpoint, and the population of delegates would converge on a handful of
+near-deterministic policies that human participants never confine themselves
+to.**
 
 The supporting shape, which is what makes it one paper and not three findings:
 
@@ -105,13 +107,13 @@ theory predicts or what humans display.
 | B3 | Even at the highest risk, admitted routes keep playing Unsafe about a third to a half of the time in self-play. | same | Risk-0.9 self-play rates 60.2, 55.4, 46.8, 32.3 percent for Gemini 3 Flash, GPT-5.5, GPT-5.4, Claude Sonnet 5 | RQ1 |
 | B4 | The behavioural baseline is clean, so none of this is a parsing artifact. | `results/frontier/baseline_campaign_v6/**/run_manifest.json` | 30 races, 558 decisions, 0 parse failures on each of nine routes; 10 races per risk cell | RQ1 |
 | B5 | Rerunning one route under the same frozen protocol reproduces its profile, so a route's number is not a run. | `results/frontier/baseline_replication/gemini-3-flash-preview` | 100.0 / 74.2 / 59.7 against 98.9 / 73.1 / 60.2; largest per-risk difference 1.1 points; risk response 38.7 to 40.3 | RQ1 |
-| B6 | What the rival does moves play several times more than what the risk is. | `results/derived/scripted_opponent_campaign/**/scripted_opponent_rates.csv` plus the paired contrasts in the same tree | Rival stance 45.0 to 73.5 points; risk 0.1 to 0.9 against a fixed Safe rival 10.75, 10.75 and 11.83 points | RQ2 |
-| B7 | Responding to the rival is general across the screened routes tested, in direction and ordering. | `results/derived/scripted_opponent_campaign/` | Unsafe play rises Always Safe < Conditional Safe < Conditional Unsafe < Always Unsafe in all nine route-by-risk cells, strictly in eight; smallest paired lower bound +35.8 points | RQ2 |
-| B8 | How strongly a route answers its rival is a property of the checkpoint, not of the game. | same | Rival stance at risk 0.9: Gemini 3 Flash 71.7 [65.6, 77.5], GPT-5.4 49.8 [35.8, 60.5], Claude Sonnet 5 45.0 [42.0, 48.2]; GPT-5.4's interval never meets Gemini's | RQ2 |
+| B6 | What the rival does moves play substantially, but the magnitude varies by checkpoint and overlaps the risk effect in the full set. | `results/derived/scripted_opponent_campaign/**/scripted_opponent_rates.csv` plus the paired contrasts in the same tree | Rival stance 25.3 to 87.0 points; risk 0.1 to 0.9 against a fixed Safe rival 10.4 to 69.9 points | RQ2 |
+| B7 | Responding to the rival is general across the five screened routes tested, with one saturated boundary reversal. | `results/derived/scripted_opponent_campaign/` | Unsafe play follows the weak ordering in 14 of 15 route-by-risk cells, strictly in 12; all 15 paired lower bounds are positive, smallest +16.5 points | RQ2 |
+| B8 | How strongly a route answers its rival is a property of the checkpoint, not of the game. | same | Rival stance at risk 0.9: Gemini 3 Flash 71.7 [65.6, 77.5], Claude Opus 5 59.3 [51.2, 66.5], GPT-5.4 49.8 [35.8, 60.5], GPT-5.5 61.7 [53.5, 69.1], Claude Sonnet 5 45.0 [42.0, 48.2] | RQ2 |
 | B9 | Even the rival's first move alone changes the rest of the race, and most where risk is cheapest. | same | Opening-move contrast 25.1 [20.9, 29.7], 15.8 [8.3, 23.5], 11.5 [4.5, 19.7] points on Gemini 3 Flash | RQ2 |
-| B10 | A self-play rate overstates how much risk a route takes when facing restraint, so mirror-match numbers are not a measurement of risk attitude. | same, against `audit_versus_behaviour.csv` | Self-play above the fixed-safe rate in all nine cells; at risk 0.1 the gaps are 74.2, 50.5 and 66.7 points | RQ2 |
+| B10 | A self-play rate is an interaction outcome, not a stand-alone measurement of risk attitude. | same, against `audit_versus_behaviour.csv` | Self-play exceeds the fixed-safe rate in 13 of 15 cells; Claude Opus 5 reverses at risks 0.6 and 0.9 | RQ2 |
 | B11 | One route keeps taking real risk against a rival that never does. | `results/derived/scripted_opponent_campaign/gpt-5.4-2026-03-05/` | GPT-5.4 plays Unsafe 36.6, 32.3 and 25.8 percent against Always Safe, the highest of the three at every risk level | RQ2 |
-| B12 | The design cannot be confounded by the opponent, because the opponent is code. | `results/derived/scripted_opponent_campaign/`, ingestion replay | 36 of 36 cells, 360 races, 3,348 route decisions, 0 parse failures, 0 rival deviations over 6,696 recorded turns, seat counterbalanced five and five in every cell | RQ2 |
+| B12 | The design fixes the rival and audits its realised moves, so the within-design direction is not a model-response artefact. | `results/derived/scripted_opponent_campaign/`, ingestion replay | 60 of 60 cells, 600 races, 5,580 route decisions and 5,580 scripted rival moves, 0 parse failures, 0 rival deviations, seat counterbalanced five and five in every cell | RQ2 |
 | B13 | The evolutionary benchmark predicts a switch and the routes deliver a gradient, so read at its usual setting the theory does not describe them. | `scripts/reproduce_egt_model.py` outputs | At selection strength 2 the model predicts 99.2, 98.0 and 1.9 percent Unsafe; Gemini 3 Flash plays 98.9, 73.1, 60.2 and Claude Sonnet 5 89.2, 48.4, 32.3 | RQ3 |
 | B14 | That mismatch is a property of the setting, not of the game, and the setting that fits the routes is the one the source study fits to its own humans. | `scripts/analyze_egt_beta_sensitivity.py` outputs | 90 stationary cells swept; at selection strength 0.01 with mutation 0.05 the model predicts 87.3, 63.9 and 38.0 percent, within 10.3 points of Claude Sonnet 5 and 15.1 of Gemini 3 Flash in root mean square error | RQ3 |
 | B14a | The all-five analysis-only extension preserves the weak-selection reading for the four graded routes while Claude Opus 5 remains a shape exception. | `results/open_source/egt_reproduction/egt_admitted_route_summary.csv` and `.json` | The best well-mixed weak-selection cell is beta 0.01 with fixed mutation 0.05; graded-route RMSE is 5.1--15.4 points versus 32.9--36.6 at the reference cell, while Opus 5 is a near-step switch | RQ3 |

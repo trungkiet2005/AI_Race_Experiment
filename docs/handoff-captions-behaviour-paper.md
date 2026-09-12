@@ -1,6 +1,10 @@
 # Figure handoff for the behaviour paper
 
-Handoff only. Nothing here has been written into `paper/main.tex` or
+Handoff only. This document was superseded on 2026-09-13 after the scripted-
+opponent campaign completed all five admitted routes. The active caption and
+claims are now in `paper/main.tex` and `paper/supplementary.tex`; historical
+three-route wording below is retained only as a trace of the prior handoff.
+Nothing here has been written into `paper/main.tex` or
 `paper/supplementary.tex`; the figure lane does not own those files. Every
 number below was recomputed in this session by the generator that draws it, and
 each generator prints the value it drew and refuses to draw when the value it
@@ -79,30 +83,32 @@ endpoint at one fixed setting.
 
 ### Figure 3, rivalry, full width. `scripted_opponent.pdf`
 
-> **What the rival is doing moves a route several times further than how
-> dangerous the race is.** Three admitted routes play the same race against four
+> **What the rival is doing substantially changes a route's play, with magnitude
+> varying by checkpoint.** Five admitted routes play the same race against four
 > rivals that are code rather than models, executed by the task file: Always
 > Safe, Conditional Safe, Conditional Unsafe and Always Unsafe. The two
 > unconditional rivals ignore the route entirely, the two conditional ones
 > answer only the route's own last move, and no route is told its rival is
-> scripted, so a contrast across rivals is causal by construction. Thirty-six
-> cells, 360 races, 3,348 route decisions, no parse failures, and no rival
+> scripted, so a contrast across rivals is causal by construction. Sixty cells,
+> 600 races, 5,580 route decisions and 5,580 scripted rival moves, no parse
+> failures, and no rival
 > deviation in a replay of every recorded turn; seats are counterbalanced five
 > and five in every cell. (a) Unsafe play rises from the always-safe to the
-> always-unsafe rival in all nine route-by-risk cells, strictly in eight: at the
-> lowest risk one route is at one hundred per cent against both unsafe rivals,
-> and two cells with no room above them cannot be put in an order. (b) Both
+> always-unsafe rival in fourteen of fifteen route-by-risk cells, strictly in
+> twelve: GPT-5.5 reverses the order at risk 0.1 at a near-ceiling boundary.
+> (b) Both
 > families of contrast are differenced inside a repetition, so the hidden
-> stopping time is removed from each. Changing the rival is worth three and a
-> half to seven times what changing the stated danger is worth, and no interval
-> of either kind falls in the shaded corridor between them. That comparison
+> stopping time is removed from each. Rival contrasts range from 25.3 to 87.0
+> points and fixed-safe risk contrasts from 10.4 to 69.9 points; the two
+> families overlap in the full five-route grid. That comparison
 > belongs to the two unconditional rivals: against a rival that copies the
 > route's own last move the danger is worth up to 41 points, which overlaps the
 > smallest rival contrast, and the panel says so rather than leaving it to the
 > supplement. (c) Against a rival that always plays Safe, every route plays
-> Unsafe less than it does against a second copy of itself, in all nine cells.
-> A self-play rate is therefore a property of a policy meeting itself, not a
-> measurement of how a route treats risk. Three routes, one game, one prompt
+> Unsafe less than it does against a second copy of itself, in thirteen of
+> fifteen cells; Claude Opus 5 reverses this at risks 0.6 and 0.9 near the
+> floor. A self-play rate is therefore a property of a policy meeting itself,
+> not a measurement of how a route treats risk. Five routes, one game, one prompt
 > version and ten races per cell; the four rivals are reduced strategies rather
 > than a sample of opponents.
 

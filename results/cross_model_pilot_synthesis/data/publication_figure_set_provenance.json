@@ -129,6 +129,10 @@
       "figures\\paper\\frontier_many_model_risk_profiles.png",
       "figures\\paper\\frontier_many_model_risk_profiles.svg"
     ],
+    "scripted_opponent": [
+      "figures\\paper\\scripted_opponent.pdf",
+      "figures\\paper\\scripted_opponent.png"
+    ],
     "supplement_figure_1_egt_insights": [
       "figures\\paper\\egt_frontier_insights.pdf",
       "figures\\paper\\egt_frontier_insights.png",
@@ -169,6 +173,7 @@
     "figure_6_tsne": "generated",
     "figure_7_distribution": "generated",
     "fresh_frontier_risk_profiles": "generated",
+    "scripted_opponent": "generated",
     "supplement_figure_1_egt_insights": "generated",
     "supplement_figure_2_egt_invasion": "generated",
     "supplement_figure_3_own_risk": "generated",
@@ -176,7 +181,7 @@
     "supplement_figure_5_tsne_outcome": "generated",
     "supplement_figure_6_round_profiles": "generated"
   },
-  "generated_utc": "2026-09-12T12:55:17.243192+00:00",
+  "generated_utc": "2026-09-12T19:00:20.219512+00:00",
   "generator": "scripts/build_publication_figures.py",
   "manual_figure_origin": {
     "commit": "f0dde0d",
@@ -194,7 +199,9 @@
     "references\\source_study_dataset\\airace_deidentified_long.csv": "ba6009ed5a6702e9f3ec9782289226099edc2b78c63057e57967927a539f8eee",
     "results\\cross_model_pilot_synthesis\\data\\human_cluster_summary.csv": "2056314d4a1858f6ef068d033e8e8c623b69b5c8ead16c1971f33fcad8203484",
     "results\\cross_model_pilot_synthesis\\data\\llm_human_cluster_projection_unified.csv": "0a98ca17a3124c8030af5ca38ffb5a66ab2555bd350ed529f76f08f268953993",
-    "results\\frontier\\egt_frontier_comparison_v2\\theory_llm_comparison.csv": "57cf703229df95e28cb51a8db95e902de895fb0801e3efb2d0ec7785bb416d78"
+    "results\\derived\\scripted_opponent_campaign\\risk_versus_rival.json": "e6a882057c419abca2acd24d019734a0244bfb2c27baade0087ddea462e5fde1",
+    "results\\frontier\\egt_frontier_comparison_v2\\theory_llm_comparison.csv": "57cf703229df95e28cb51a8db95e902de895fb0801e3efb2d0ec7785bb416d78",
+    "scripts\\figures\\fig_scripted_opponent.py": "f312d2749bdeb159153ee0e6e3a340ad55550d45e3e03ee41b48b5ece07d238c"
   },
   "style_module": "scripts/publication_style.py"
 }

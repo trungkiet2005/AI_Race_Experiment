@@ -302,10 +302,11 @@ between slower safe development and faster unsafe development.
 Across the tested frontier routes, risk responses share a qualitative direction
 but differ in shape. Agents respond to increasing risk, with profiles ranging
 from gradual adaptation to near-deterministic switching. Behaviour is also
-strongly opponent-dependent. In a scripted-rival study of three admitted routes,
-changes in the rival's behaviour move the agents substantially more than changes
-in the stated risk itself. Thus, self-play outcomes can reflect an interaction
-between two copies of a policy rather than an intrinsic risk preference.
+strongly opponent-dependent. In a scripted-rival study of five admitted routes,
+changes in the rival's behaviour move the agents substantially, with a
+magnitude that varies by route and can overlap the effect of changing the
+stated risk itself. Thus, self-play outcomes can reflect an interaction between
+two copies of a policy rather than an intrinsic risk preference.
 
 Frontier agents also show a distinctive relationship to the theoretical and
 human benchmarks. The four graded routes' responses resemble the near-neutral regime of
@@ -722,88 +723,87 @@ although swapping the opaque action-code mapping shifts Unsafe{} play by
   \caption{How the rival changes a route's play. The top row shows the four
   scripted rivals at each risk level, with a rising line meaning that the route
   responds to the rival's stance. The lower-left panel compares the
-  Always-Unsafe minus Always-Safe contrast within matched repetitions; all nine
-  intervals are positive. The lower-right panel compares each route against a
-  fixed Safe rival and against a copy of itself. Together the panels separate
-  rival-conditioned behaviour from the mirror-match rate.}
+  Always-Unsafe minus Always-Safe contrast within matched repetitions; all
+  fifteen intervals are positive, although their magnitudes differ by route.
+  The lower-right panel compares each route against a fixed Safe rival and
+  against a copy of itself. Together the panels separate rival-conditioned
+  behaviour from the mirror-match rate.}
   \Description{Five-panel figure. The top row has one panel for each of three
-  risk levels, with route Unsafe rates rising across four scripted rivals. The
+  risk levels, with five route profiles across four scripted rivals. The
   lower-left panel shows positive rival-stance contrasts with intervals for
-  three routes at three risk levels. The lower-right panel shows self-play rates
-  above rates against a fixed Always-Safe rival for all routes and risk levels.}
+  five routes at three risk levels. The lower-right panel compares self-play
+  with play against a fixed Always-Safe rival; the two designs differ for some
+  route-by-risk cells.}
   \label{fig:scripted-opponent-main}
 \end{figure*}
 
 \subsection{The rival can matter more than the stated risk}
 \label{sec:results-scripted}
 
-In the three routes tested against scripted rivals, the observed behaviour does
+In the five routes tested against scripted rivals, the observed behaviour does
 not support a context-independent risk profile. Across these routes, changing
-who is on the other side moves play much more than changing how dangerous the
-race is told to be. Every rate reported so far is mirror-match play, in which
+who is on the other side moves play substantially, but the magnitude varies by
+route and can overlap the effect of changing how dangerous the race is told to
+be. Every rate reported so far is mirror-match play, in which
 the rival is the route. One campaign fixes the rival instead.
 
-The rival in that campaign is code, not a model. Three admitted routes each
+The rival in that campaign is code, not a model. Five admitted routes each
 played the four benchmark strategies of \S\ref{sec:theory-benchmark} at all
-three risk levels: 36 cells, ten races each, 360 races and 3{,}348 route
+three risk levels: 60 cells, ten races each, 600 races and 5{,}580 route
 decisions with no parse failure anywhere. It is never disclosed to the route,
-and every one of its 6{,}696 recorded moves was
+and every one of its 5{,}580 recorded rival moves was
 recomputed afterwards from the route's own recorded history, which no cell
 failed. The route's seat is counterbalanced five and five inside each cell, and
 each contrast is taken inside a repetition, so the hidden horizon is differenced
 out. Because the route cannot influence the rival, the direction of a difference
 between rivals is not in question.
 
-Across these three routes, changing the scripted rival produces a 45.0--73.5
-percentage-point shift in Unsafe{} play, compared with 10.4--12.7 points when
-the stated risk moves from $0.1$ to $0.9$ against a fixed safe rival. Both
-comparisons use the same ten matched blocks, so the absolute contrast is the
-load-bearing comparison. The intervals remain separated in the worst case,
-though not with room to spare. Against the two unconditional rivals, the most
-the stated risk ever buys is 31.5 points [27.2, 35.3] and the least the rival
-ever buys is 45.0 [42.0,
-48.2], two intervals that do not meet. Adding the two conditional rivals raises
-the largest risk contrast to 41.0 points [37.7, 43.8], on Claude Sonnet 5
-against the rival that opens \Unsafe{} and then copies, and that one interval
-does touch the smallest rival contrast. Two risk contrasts are lower bounds
-because their low-risk arm is at the ceiling in every block, which can only
-understate the risk side; neither is among the figures quoted here.
+Across these five routes, changing the scripted rival produces a positive
+25.3--87.0 percentage-point shift in Unsafe{} play across the fifteen
+route-by-risk cells. Holding the rival at Always Safe, changing the stated risk
+from $0.1$ to $0.9$ produces 10.4--69.9 points, depending on the route. Both
+contrasts use the same ten matched blocks, so the absolute comparison is the
+load-bearing result, but the two effect families overlap once the conditional
+rivals are included. In particular, the smallest rival-stance lower bound is
+$+16.5$ points, while the largest matched-arm risk contrast is $+69.9$
+points on Claude Opus 5. The contrast is therefore a context-sensitive
+descriptive comparison, not a universal ordering of rival effects over risk.
 
-Answering the rival is general across these three endpoints. \Unsafe{} play
+Answering the rival is general across these five endpoints. \Unsafe{} play
 rises from the rival that always plays \Safe{}, through the two conditional
-rivals, to the rival that never plays \Safe{}, in all nine route-by-risk cells,
-strictly in eight of them and weakly in the ninth only because two of its cells
-are at the ceiling (Figure~\ref{fig:scripted-opponent-main}a). The paired
+rivals, to the rival that never plays \Safe{}, in fourteen of fifteen
+route-by-risk cells, with strict ordering in twelve. The one reversal is
+GPT-5.5 at risk $0.1$, where Conditional Unsafe reaches $100.0\%$ and
+Always Unsafe is $97.8\%$, so this is a boundary case rather than a clean
+counterexample (Figure~\ref{fig:scripted-opponent-main}a). The paired
 difference between the two unconditional rivals is
-positive in every cell, with a smallest lower bound of $+35.8$ points
+positive in every cell, with a smallest lower bound of $+16.5$ points
 (Figure~\ref{fig:scripted-opponent-main}b). The response to the stated risk
 survives the change of design as well: against a fixed safe rival, no route's
 \Unsafe{} rate rises as the stated risk rises.
 
-How strongly a route answers its rival is a property of the checkpoint. Gemini 3
-Flash answers by about seventy points at every risk level, GPT-5.4 by about
-fifty with an interval that does not meet Gemini 3 Flash's at any risk level, and
-Claude Sonnet 5 gives a Gemini-sized answer at the two lower risk levels before
-falling to 45.0 points at the highest. The level differs too, and in the
-direction that matters for a safety reading: against a rival that never plays
-\Unsafe{}, GPT-5.4 still does so 36.6\%, 32.3\% and 25.8\% of the time, more than
-either of the others at every risk level. These are three separate samples, so
-intervals that fail to overlap indicate a difference conservatively rather than
-test one.
+How strongly a route answers its rival is a property of the checkpoint. The
+stance contrast is largest for Claude Opus 5 at risk $0.6$ ($+87.0$ points) and
+smallest for GPT-5.5 at risk $0.1$ ($+25.3$ points); Gemini 3 Flash remains
+near $+70$ points across risks, whereas GPT-5.4 remains near $+50$. The level
+differs as well as the swing: against a rival that never plays \Unsafe{}, GPT-5.4
+still does so 36.6\%, 32.3\% and 25.8\% of the time. These are separate
+endpoint samples, so intervals that fail to overlap are a conservative sign of
+a difference rather than a test of one.
 
 A mirror-match rate is therefore an interaction outcome of one policy meeting
-itself, rather than a stand-alone measurement of how a route treats risk. On all
-three routes and at all three risk levels the rate against a fixed safe rival
-sits below the rate the same route reaches against a second copy of itself
-(Figure~\ref{fig:scripted-opponent-main}c). On Gemini 3 Flash at the lowest risk,
-the distance is a lower bound because nine of its ten mirror-match races have
-every decision \Unsafe{}. These results motivate treating mirror-match rates as
-interaction outcomes rather than route-level risk preferences.
+itself, rather than a stand-alone measurement of how a route treats risk. The
+fixed-safe and self-play designs differ in thirteen of fifteen cells; Claude
+Opus 5 reverses the direction at risks $0.6$ and $0.9$, where both rates are at
+or near the floor. On Gemini 3 Flash at the lowest risk, the distance is a
+lower bound because nine of its ten mirror-match races have every decision
+\Unsafe{}. These results motivate treating mirror-match rates as interaction
+outcomes rather than route-level risk preferences.
 
 The bound on the finding is the design itself. Four reduced strategies are four
 points in a space of policies rather than a sample of opponents, so this
 establishes what a route does against \emph{these} rivals, on one game and one
-prompt version, and three commercial endpoints are not a sample from a
+prompt version, and five commercial endpoints are not a sample from a
 population of models.
 
 \subsection{The same incentive, a different shape}
@@ -972,9 +972,10 @@ nor GPT-5.5, so they support no claim about the admitted panel.
 
 These agents incorporate both the stated risk and the rival's stance. Every
 admitted route plays \Unsafe{} less often as the stated chance of catastrophe
-rises, while on the three routes where the opponent was replaced by scripted
-code, the rival's stance changes behaviour by much more than moving the danger
-across its whole range. In this game, the three tested routes are therefore
+rises, while on the five routes where the opponent was replaced by scripted
+code, the rival's stance changes behaviour substantially, with a magnitude that
+varies by route and can overlap the effect of changing risk. In this game, the
+five tested routes are therefore
 strongly context-sensitive: how the other side behaves can be more informative
 than the risk level alone.
 
@@ -996,7 +997,7 @@ Four limitations bound the claims directly. Nine commercial endpoints are not a
 sample from a population of models, and any two of them differ in far more than
 the one property a comparison names, so every contrast drawn between routes in
 this paper is descriptive and none of it separates a route's behaviour from its
-provider, its scale or its training. The scripted-rival campaign covers three
+provider, its scale or its training. The scripted-rival campaign covers five
 routes and four reduced strategies, which are four points in a space of
 policies rather than a sample of opponents. The human comparison rests on one
 published study of one game, 340 complete trajectories, and we do not add a

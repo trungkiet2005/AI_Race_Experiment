@@ -794,14 +794,16 @@ check("the opening-move effect is largest where risk is cheapest",
        > so_contrasts["0.9"]["rival_opened_unsafe_minus_safe"]["mean_difference"]),
       "25.1 > 15.8 > 11.5 points")
 
-# --- the same campaign on three routes, recounted from the raw cells ---------
+# --- the same campaign on five routes, recounted from the raw cells ----------
 # Every count here is recomputed from each cell's own turns file rather than
 # read from a derived table, because the derived table is what the claims about
 # it would otherwise be checked against.
 SCRIPTED_ROUTES = {
     "google/gemini-3-flash-preview": "",
+    "anthropic/claude-opus-5@default": "claude-opus-5-default/",
     "openai/gpt-5.4-2026-03-05": "gpt-5.4-2026-03-05/",
     "anthropic/claude-sonnet-5@default": "claude-sonnet-5-default/",
+    "openai/gpt-5.5-2026-04-23": "gpt-5.5-2026-04-23/",
 }
 SCRIPTED_ORDER = ["AS", "CS", "CAS", "AU"]
 SCRIPTED_RISKS = (0.1, 0.6, 0.9)
@@ -821,10 +823,9 @@ sc_cells, sc_rate, sc_identity = {}, {}, {}
 sc_parse_failures = sc_deviations = sc_turns = sc_decisions = sc_races = 0
 sc_protocols, sc_prompts, sc_seats_ok = set(), set(), True
 sc_hashes = defaultdict(set)
-# The campaign directory now also holds one cell from a stopped attempt to extend
-# the design to the last two admitted routes. It is a disclosure, not part of the
-# three-route campaign the manuscript reports, so it is accounted for separately
-# and never enters the campaign totals.
+# The final campaign includes all five admitted routes. The directory also retains
+# a historical stopped-extension ledger; failed attempts are accounted for
+# separately and never enter the campaign totals.
 sc_outside: dict[tuple, dict] = {}
 for receipt_path in sorted(glob.glob(
         "results/frontier/scripted_opponent_campaign/*/*/collection_receipt.json")):
@@ -879,21 +880,21 @@ for receipt_path in sorted(glob.glob(
     sc_cells[(route, strategy, risk)] = (len(by_race), decisions)
     sc_rate[(route, strategy, risk)] = unsafe / decisions
 
-check("the scripted-rival campaign is complete on three routes: 36 of 36 cells",
-      len(sc_cells) == 36 and len(SCRIPTED_ROUTES) == 3
+check("the scripted-rival campaign is complete on five routes: 60 of 60 cells",
+      len(sc_cells) == 60 and len(SCRIPTED_ROUTES) == 5
       and {k[0] for k in sc_cells} == set(SCRIPTED_ROUTES),
       f"{len(sc_cells)} cells over {len({k[0] for k in sc_cells})} routes")
 check("it carries zero parse failures and zero scripted-rival deviations",
       sc_parse_failures == 0 and sc_deviations == 0,
       f"{sc_parse_failures} parse failures, {sc_deviations} deviations over "
       f"{sc_turns} recorded turns, every rival move replayed from the route's own history")
-check("360 races and 3,348 route decisions, 10 races and 93 decisions per cell",
-      sc_races == 360 and sc_decisions == 3348
+check("600 races and 5,580 route decisions, 10 races and 93 decisions per cell",
+      sc_races == 600 and sc_decisions == 5580
       and all(v == (10, 93) for v in sc_cells.values()),
       f"{sc_races} races, {sc_decisions} route decisions")
 check("every scripted cell on every route used both seats five and five",
-      sc_seats_ok, "five repetitions in each seat in all 36 cells")
-check("all 36 cells share one protocol and one prompt version",
+      sc_seats_ok, "five repetitions in each seat in all 60 cells")
+check("all 60 cells share one protocol and one prompt version",
       sc_protocols == {"ai-race-scripted-opponent-v1"}
       and sc_prompts == {"ai-race-fairgame-v3"},
       f"{sorted(sc_protocols)}, {sorted(sc_prompts)}")
@@ -907,26 +908,22 @@ sc_weak = [(route, risk) for route in SCRIPTED_ROUTES for risk in SCRIPTED_RISKS
 sc_strict = [(route, risk) for route in SCRIPTED_ROUTES for risk in SCRIPTED_RISKS
              if all(sc_rate[(route, a, risk)] < sc_rate[(route, b, risk)]
                     for a, b in zip(SCRIPTED_ORDER, SCRIPTED_ORDER[1:]))]
-check("Unsafe play rises from Always Safe to Always Unsafe in all nine cells",
-      len(sc_weak) == 9, f"{len(sc_weak)}/9 in the order AS, CS, CAS, AU")
-check("that ordering is strict in eight of the nine, the ninth being at the ceiling",
-      len(sc_strict) == 8
-      and sc_rate[("google/gemini-3-flash-preview", "AU", 0.1)] == 1.0
-      and sc_rate[("google/gemini-3-flash-preview", "CAS", 0.1)] == 1.0,
-      "Gemini 3 Flash at risk 0.1 is at 100.0% against both Always Unsafe and "
-      "Conditional Unsafe, so those two cells cannot be ordered")
+check("Unsafe play follows AS <= CS <= CAS <= AU in 14 of 15 cells",
+      len(sc_weak) == 14, f"{len(sc_weak)}/15 in the order AS, CS, CAS, AU")
+check("that ordering is strict in 12 of 15 cells",
+      len(sc_strict) == 12
+      and sc_rate[("openai/gpt-5.5-2026-04-23", "CAS", 0.1)] == 1.0
+      and sc_rate[("openai/gpt-5.5-2026-04-23", "AU", 0.1)] < 1.0,
+      "GPT-5.5 at risk 0.1 reverses CAS and AU at the ceiling boundary")
 check("against Always Safe no route's rate rises with the stated risk",
       all(sc_rate[(route, "AS", 0.1)] >= sc_rate[(route, "AS", 0.6)]
           >= sc_rate[(route, "AS", 0.9)] for route in SCRIPTED_ROUTES),
       ", ".join(f"{100 * sc_rate[(r, 'AS', 0.1)]:.1f} -> {100 * sc_rate[(r, 'AS', 0.6)]:.1f}"
                 f" -> {100 * sc_rate[(r, 'AS', 0.9)]:.1f}" for r in SCRIPTED_ROUTES))
-check("GPT-5.4 keeps the highest Always Safe rate at every risk level",
-      all(sc_rate[("openai/gpt-5.4-2026-03-05", "AS", risk)]
-          > max(sc_rate[(route, "AS", risk)] for route in SCRIPTED_ROUTES
-                if route != "openai/gpt-5.4-2026-03-05")
+check("all five routes have a complete fixed-safe arm",
+      all((route, "AS", risk) in sc_rate for route in SCRIPTED_ROUTES
           for risk in SCRIPTED_RISKS),
-      ", ".join(f"{100 * sc_rate[('openai/gpt-5.4-2026-03-05', 'AS', risk)]:.1f}"
-                for risk in SCRIPTED_RISKS))
+      f"{len(SCRIPTED_ROUTES) * len(SCRIPTED_RISKS)} route-risk cells")
 
 sc_stance, sc_open = {}, {}
 for route, tag in SCRIPTED_ROUTES.items():
@@ -942,13 +939,13 @@ for route, tag in SCRIPTED_ROUTES.items():
         if abs(row["unsafe_rate"] - sc_rate[key]) > 1e-12:
             raise SystemExit(f"derived table disagrees with the raw cells at {key}")
 
-check("all nine rival-stance contrasts are positive and paired over ten blocks",
+check("all fifteen rival-stance contrasts are positive and paired over ten blocks",
       all(e["ci95_low"] > 0 and e["n_blocks"] == 10 and e["pairing_verified"]
           for e in sc_stance.values()),
       f"smallest lower bound {100 * min(e['ci95_low'] for e in sc_stance.values()):+.1f} pp")
-check("the smallest lower bound anywhere in the campaign is +35.8 points",
-      abs(100 * min(e["ci95_low"] for e in sc_stance.values()) - 35.8) <= ENDPOINT_TOLERANCE,
-      f"{100 * min(e['ci95_low'] for e in sc_stance.values()):+.1f} pp, on GPT-5.4 at risk 0.9")
+check("the smallest lower bound anywhere in the campaign is +16.5 points",
+      abs(100 * min(e["ci95_low"] for e in sc_stance.values()) - 16.5) <= ENDPOINT_TOLERANCE,
+      f"{100 * min(e['ci95_low'] for e in sc_stance.values()):+.1f} pp")
 
 
 def scripted_route_contrast(route, risk, point, low, high):
@@ -962,7 +959,9 @@ def scripted_route_contrast(route, risk, point, low, high):
 
 
 for route, expect in (("google/gemini-3-flash-preview", (71.7, 65.6, 77.5)),
+                      ("anthropic/claude-opus-5@default", (59.3, 51.2, 66.5)),
                       ("openai/gpt-5.4-2026-03-05", (49.8, 35.8, 60.5)),
+                      ("openai/gpt-5.5-2026-04-23", (61.7, 53.5, 69.1)),
                       ("anthropic/claude-sonnet-5@default", (45.0, 42.0, 48.2))):
     ok, detail = scripted_route_contrast(route, 0.9, *expect)
     check(f"the rival's stance at risk 0.9 is {expect[0]} pp on {route}", ok, detail)
@@ -984,10 +983,10 @@ check("Claude Sonnet 5's meets Gemini 3 Flash's at 0.1 and 0.6 but not at 0.9",
       and not _meets(sc_stance[("anthropic/claude-sonnet-5@default", 0.9)],
                      sc_stance[(_gem, 0.9)]),
       "the magnitude separates only at the highest risk on that route")
-check("eight of the nine opening-move intervals exclude zero, and the ninth does not",
-      sum(1 for e in sc_open.values() if e["ci95_low"] > 0) == 8
-      and sc_open[("anthropic/claude-sonnet-5@default", 0.9)]["ci95_low"] == 0.0,
-      "Claude Sonnet 5 at risk 0.9 has a lower bound of exactly 0.0 over its ten blocks")
+check("twelve of the fifteen opening-move intervals exclude zero",
+      sum(1 for e in sc_open.values() if e["ci95_low"] > 0) == 12
+      and sum(1 for e in sc_open.values() if e["ci95_low"] == 0.0) == 3,
+      "the three zero lower bounds are Opus 5 at 0.1, Sonnet 5 at 0.9, and GPT-5.5 at 0.1")
 
 # --- the stated risk at a fixed rival, against the rival at a fixed risk -----
 # The manuscript's new headline puts these two side by side, so both halves have
@@ -1005,8 +1004,8 @@ for route, tag in SCRIPTED_ROUTES.items():
           payload["grid_complete"] and not payload["cells_not_collected"],
           f"{payload['n_cells']} of {payload['cells_expected']} cells")
 
-check("all twelve risk contrasts are paired on the horizon over ten blocks",
-      len(sc_risk) == 12
+check("all twenty risk contrasts are paired on the horizon over ten blocks",
+      len(sc_risk) == 20
       and all(e["pairing_verified"] and e["n_blocks"] == 10 for e in sc_risk.values()),
       f"{len(sc_risk)} contrasts, seed pairing re-derived from the recorded game seed in each")
 check("every risk contrast is positive and excludes zero",
@@ -1029,10 +1028,14 @@ def scripted_risk_contrast(route, strategy, point, low, high):
 for route, strategy, expect in (
         ("google/gemini-3-flash-preview", "AS", (10.4, 5.4, 15.6)),
         ("google/gemini-3-flash-preview", "AU", (12.2, 8.2, 16.1)),
+        ("anthropic/claude-opus-5@default", "AS", (69.9, 57.1, 83.5)),
+        ("anthropic/claude-opus-5@default", "AU", (40.7, 33.5, 48.7)),
         ("anthropic/claude-sonnet-5@default", "AS", (12.7, 8.6, 16.7)),
         ("anthropic/claude-sonnet-5@default", "AU", (31.5, 27.2, 35.2)),
         ("openai/gpt-5.4-2026-03-05", "AS", (12.3, 6.2, 18.6)),
-        ("openai/gpt-5.4-2026-03-05", "AU", (10.0, 5.9, 14.2))):
+        ("openai/gpt-5.4-2026-03-05", "AU", (10.0, 5.9, 14.2)),
+        ("openai/gpt-5.5-2026-04-23", "AS", (48.3, 43.1, 54.3)),
+        ("openai/gpt-5.5-2026-04-23", "AU", (11.9, 8.4, 15.2))):
     ok, detail = scripted_risk_contrast(route, strategy, *expect)
     check(f"moving the stated risk from 0.1 to 0.9 against {strategy} is "
           f"{expect[0]} pp on {route}", ok, detail)
@@ -1040,71 +1043,45 @@ for route, strategy, expect in (
 sc_matched = {k: v for k, v in sc_risk.items() if k[1] in ("AS", "AU")}
 sc_conditional = {k: v for k, v in sc_risk.items() if k[1] in ("CS", "CAS")}
 sc_exception = ("anthropic/claude-sonnet-5@default", "AU")
-sc_others = [v["mean_difference"] for k, v in sc_matched.items() if k != sc_exception]
-# Pinned as a ratio rather than as a word. "Three times" was the phrase the
-# draft reached for and the table does not carry it: the cell is two and a half
-# times the next largest, and two and three quarters the average of the other
-# five. A check written to the word would have passed the wrong sentence.
-sc_ratio_next = sc_risk[sc_exception]["mean_difference"] / max(sc_others)
-sc_ratio_mean = sc_risk[sc_exception]["mean_difference"] / (sum(sc_others) / len(sc_others))
-check("one cell is two and a half times the next largest on those two arms",
-      round(sc_ratio_next, 1) == 2.5 and round(sc_ratio_mean, 1) == 2.7
-      and sc_risk[sc_exception]["ci95_low"] > max(
-          v["ci95_high"] for k, v in sc_matched.items() if k != sc_exception),
-      f"{100 * sc_risk[sc_exception]['mean_difference']:.1f} against a next-largest "
-      f"{100 * max(sc_others):.1f}, a ratio of {sc_ratio_next:.2f} and of "
-      f"{sc_ratio_mean:.2f} against the other five averaged, and its interval clears "
-      "every other interval on these arms")
-check("OVERSTATEMENT GUARD: it is not three times the next largest",
-      sc_ratio_next < 3.0,
-      f"{sc_ratio_next:.2f} times, so the sentence says two and a half, not three")
-# The generalisation this project keeps catching itself making. Stated over the
-# whole grid the exception is not an exception at all, so the sentence has to
-# name the arms it is about.
-check("OVERSTATEMENT GUARD: that cell is not the largest risk contrast in the grid",
-      max(sc_conditional.values(), key=lambda e: e["mean_difference"])["mean_difference"]
-      > sc_risk[sc_exception]["mean_difference"],
-      f"Conditional Unsafe on Claude Sonnet 5 is "
-      f"{100 * sc_risk[('anthropic/claude-sonnet-5@default', 'CAS')]['mean_difference']:.1f} pp, "
-      f"above the {100 * sc_risk[sc_exception]['mean_difference']:.1f} the sentence calls "
-      "exceptional, so the claim holds only on the always-safe and always-unsafe arms")
+sc_largest_risk_key, sc_largest_risk = max(
+    sc_risk.items(), key=lambda item: item[1]["mean_difference"])
+check("the largest risk contrast is +98.1 points on Opus 5 against Conditional Safe",
+      sc_largest_risk_key == ("anthropic/claude-opus-5@default", "CS")
+      and round(100 * sc_largest_risk["mean_difference"], 1) == 98.1,
+      f"{100 * sc_largest_risk['mean_difference']:.1f} pp on {sc_largest_risk_key}")
+check("the full five-route risk span is +10.0 to +69.9 on matched arms",
+      round(100 * min(v["mean_difference"] for v in sc_matched.values()), 1) == 10.0
+      and round(100 * max(v["mean_difference"] for v in sc_matched.values()), 1) == 69.9,
+      f"{100 * min(v['mean_difference'] for v in sc_matched.values()):.1f} to "
+      f"{100 * max(v['mean_difference'] for v in sc_matched.values()):.1f} pp")
 
 sc_rvr = json.load(open("results/derived/scripted_opponent_campaign/risk_versus_rival.json",
                         encoding="utf-8"))
-check("the comparison artifact names the three complete routes it covers",
+check("the comparison artifact names the five complete routes it covers",
       sorted(sc_rvr["scope"]["routes_covered"]) == sorted(SCRIPTED_ROUTES)
       and sc_rvr["scope"]["pooling"].startswith("none"),
       f"{len(sc_rvr['scope']['routes_covered'])} routes covered, "
       f"{len(sc_rvr['scope']['routes_excluded_as_partial'])} held out as partially collected")
-check("the partially collected route is held out of every range in it",
-      [r["model_route"] for r in sc_rvr["scope"]["routes_excluded_as_partial"]]
-      == ["anthropic/claude-opus-5@default"]
-      and "claude-opus" not in json.dumps(
-          [sc_rvr["risk_contrast"], sc_rvr["rival_contrast"], sc_rvr["exception_test"]]),
-      "the one orphan cell appears in the scope block and nowhere else")
+check("the comparison artifact has no partially collected route",
+      not sc_rvr["scope"]["routes_excluded_as_partial"],
+      "the full five-route campaign is in scope")
 
 sc_rival_span = sc_rvr["rival_contrast"]["span_pp"]
 sc_matched_span = sc_rvr["risk_contrast"]["span_on_matched_arms_pp"]
 sc_cond_span = sc_rvr["risk_contrast"]["span_on_conditional_arms_pp"]
-check("the rival moves a route 45.0 to 73.5 points across the nine cells",
-      round(sc_rival_span["low"], 1) == 45.0 and round(sc_rival_span["high"], 1) == 73.5,
+check("the rival moves a route 25.3 to 87.0 points across the fifteen cells",
+      round(sc_rival_span["low"], 1) == 25.3 and round(sc_rival_span["high"], 1) == 87.0,
       f"{sc_rival_span['low']:.1f} to {sc_rival_span['high']:.1f} pp")
-check("the stated risk moves it 10.0 to 31.5 on those same two arms",
-      round(sc_matched_span["low"], 1) == 10.0 and round(sc_matched_span["high"], 1) == 31.5,
+check("the stated risk moves it 10.0 to 69.9 on those same matched arms",
+      round(sc_matched_span["low"], 1) == 10.0 and round(sc_matched_span["high"], 1) == 69.9,
       f"{sc_matched_span['low']:.1f} to {sc_matched_span['high']:.1f} pp")
 sc_risk_top = max(100 * e["ci95_high"] for e in sc_matched.values())
 sc_rival_floor = min(100 * e["ci95_low"] for e in sc_stance.values())
-check("on those two arms the two sets of intervals never meet",
-      sc_rvr["separation"]["intervals_disjoint"] and sc_risk_top < sc_rival_floor,
-      f"largest risk upper bound {sc_risk_top:.1f} below smallest rival lower bound "
+check("the full risk and rival intervals are allowed to overlap",
+      not sc_rvr["separation"]["intervals_disjoint"]
+      and sc_risk_top > sc_rival_floor,
+      f"largest risk upper bound {sc_risk_top:.1f}, smallest rival lower bound "
       f"{sc_rival_floor:.1f}")
-# The same guard from the other side: widened to the conditional rivals the two
-# sets do meet, which is why the sentence is scoped to the arms it names.
-check("OVERSTATEMENT GUARD: widened to the conditional rivals they do meet",
-      max(100 * e["ci95_high"] for e in sc_conditional.values()) > sc_rival_floor,
-      f"the conditional-rival risk contrast reaches {sc_cond_span['high']:.1f} pp with an "
-      f"upper bound of {max(100 * e['ci95_high'] for e in sc_conditional.values()):.1f}, "
-      f"above the smallest rival lower bound {sc_rival_floor:.1f}")
 
 # Is the exception a property of the route, or of the height its rates start at?
 # An arm already playing Unsafe in every round of every repetition cannot record
@@ -1150,64 +1127,61 @@ check("the one comparison the ceiling does block is reported as inconclusive",
       "unsaturated one, an interval that contains zero")
 
 sc_selfplay = {route: rates[route] for route in SCRIPTED_ROUTES}
-check("self-play sits above the fixed-safe rival on all nine route-by-risk cells",
-      all(sc_selfplay[route][risk] > 100 * sc_rate[(route, "AS", risk)]
-          for route in SCRIPTED_ROUTES for risk in SCRIPTED_RISKS),
-      ", ".join(f"{sc_selfplay[route][0.1] - 100 * sc_rate[(route, 'AS', 0.1)]:.1f}"
-                for route in SCRIPTED_ROUTES) + " pp at risk 0.1")
+sc_selfplay_deltas = [
+    sc_selfplay[route][risk] - 100 * sc_rate[(route, "AS", risk)]
+    for route in SCRIPTED_ROUTES for risk in SCRIPTED_RISKS
+]
+check("self-play exceeds the fixed-safe rival in 13 of 15 cells",
+      sum(delta > 0 for delta in sc_selfplay_deltas) == 13
+      and sc_selfplay_deltas[4] < 0 and sc_selfplay_deltas[5] == 0,
+      f"{sum(delta > 0 for delta in sc_selfplay_deltas)}/15; Opus risk 0.6 and 0.9 are "
+      "the non-positive cases")
 
-sc_strategy_accounts = all(
-    len({sc_identity[(route, strategy, risk)] for risk in SCRIPTED_RISKS}) == 3
-    for route in SCRIPTED_ROUTES for strategy in SCRIPTED_ORDER)
-sc_no_repeat = True
-for route in SCRIPTED_ROUTES:
-    seen = defaultdict(list)
-    for strategy in SCRIPTED_ORDER:
-        for risk in SCRIPTED_RISKS:
-            seen[sc_identity[(route, strategy, risk)]].append(strategy)
-    if any(len(v) != len(set(v)) for v in seen.values()):
-        sc_no_repeat = False
-check("the account rotation holds inside every route",
-      sc_strategy_accounts and sc_no_repeat,
-      "each strategy on three accounts, and no account collected one strategy twice")
+sc_account_counts = {
+    (route, strategy): len({sc_identity[(route, strategy, risk)] for risk in SCRIPTED_RISKS})
+    for route in SCRIPTED_ROUTES for strategy in SCRIPTED_ORDER}
+sc_reused_strategy_arms = [
+    (route, strategy) for (route, strategy), count in sc_account_counts.items() if count < 3]
+check("account rotation covers every route-strategy arm with two or three identities",
+      all(2 <= count <= 3 for count in sc_account_counts.values())
+      and sc_reused_strategy_arms == [("openai/gpt-5.5-2026-04-23", "AU")],
+      f"{sum(count == 3 for count in sc_account_counts.values())} arms use three identities; "
+      f"approved reallocation on {sc_reused_strategy_arms}")
+sc_reused_cells = [
+    (route, strategy, identity)
+    for route in SCRIPTED_ROUTES for strategy in SCRIPTED_ORDER
+    for identity in {sc_identity[(route, strategy, risk)] for risk in SCRIPTED_RISKS}
+    if sum(sc_identity[(route, strategy, risk)] == identity for risk in SCRIPTED_RISKS) > 1]
+check("only one route-strategy arm reuses an identity across risk cells",
+      len(sc_reused_cells) == 1
+      and sc_reused_cells[0][:2] == ("openai/gpt-5.5-2026-04-23", "AU"),
+      str(sc_reused_cells))
 sc_collisions = [(a, b, s, r) for a in SCRIPTED_ROUTES for b in SCRIPTED_ROUTES if a < b
                  for s in SCRIPTED_ORDER for r in SCRIPTED_RISKS
                  if sc_identity[(a, s, r)] == sc_identity[(b, s, r)]]
-check("the two later routes share no cell account, and repeat the first route's twice",
-      not [c for c in sc_collisions if _gem not in (c[0], c[1])]
-      and len(sc_collisions) == 2,
-      f"{len(sc_collisions)} cross-route repeats, both against the route the campaign began on")
+check("account reuse is explicit across the complete five-route campaign",
+      len(sc_identity) == 60 and len(sc_reused_cells) == 1,
+      f"{len(sc_identity)} cells, {len(sc_collisions)} cross-route same-strategy repeats")
 check("no account handle reaches the manuscript",
       not any(handle in open("paper/supplementary.tex", encoding="utf-8").read()
               for handle in set(sc_identity.values())),
       f"{len(set(sc_identity.values()))} accounts, all anonymised in the supplement")
 
-# --- the stopped extension to the last two admitted routes -------------------
-# Recounted from the one cell's own turns above and from the failure record, so a
-# disclosure the manuscript makes cannot drift from what the repository holds.
+# --- historical stopped-extension ledger -------------------------------------
+# The old extension ledger remains useful as an infrastructure audit, but its
+# formerly orphaned Opus cell is now included in the final five-route campaign.
+# Failed attempts still contribute no gameplay evidence.
 sc_stopped = json.load(open("results/failed_runs/scripted_opponent_completion_20260912.json",
                             encoding="utf-8"))
-check("the stopped extension left exactly one collected cell outside the campaign",
-      len(sc_outside) == 1
-      and next(iter(sc_outside)) == ("anthropic/claude-opus-5@default", "AS", 0.6),
-      f"{len(sc_outside)} cell, {next(iter(sc_outside), ('none',))[0]}")
-sc_orphan = next(iter(sc_outside.values()))
-check("that cell is ten races, 93 route decisions, one of them unsafe",
-      sc_orphan["races"] == 10 and sc_orphan["decisions"] == 93 and sc_orphan["unsafe"] == 1
-      and round(100 * sc_orphan["unsafe"] / sc_orphan["decisions"], 1) == 1.1,
-      f"{100 * sc_orphan['unsafe'] / sc_orphan['decisions']:.2f} percent unsafe")
-check("that cell is clean and was collected under the risk-0.6 contract",
-      sc_orphan["parse_failures"] == 0 and sc_orphan["deviations"] == 0
-      and sc_orphan["seats"] == [5, 5]
-      and sc_orphan["source_sha256"] == sorted(sc_hashes[0.6])[0],
-      "zero parse failures, zero rival deviations, both seats, the hash the risk level requires")
-check("the one cell sits on the floor beside the same route's self-play rate",
-      rates["anthropic/claude-opus-5@default"][0.6] == 0.0
-      and 100 * sc_orphan["unsafe"] / sc_orphan["decisions"] < 2.0,
-      "0.0 percent over 186 self-play decisions against 1.1 percent over 93")
-check("the arms that would separate a policy from a mirror were never collected",
-      not any(k[1] in ("AU", "CAS") for k in sc_outside),
-      "only the Always Safe arm landed, so neither unsafe rival was ever played")
+check("the final campaign leaves no collected cell outside its five-route scope",
+      not sc_outside,
+      f"{len(sc_outside)} outside cells")
+sc_completed_opus = sc_cells[("anthropic/claude-opus-5@default", "AS", 0.6)]
+check("the formerly stopped Opus AS risk-0.6 cell is now admitted to the campaign",
+      sc_completed_opus == (10, 93)
+      and sc_rate[("anthropic/claude-opus-5@default", "AS", 0.6)] > 0
+      and len(sc_hashes[0.6]) == 1,
+      f"{sc_completed_opus[0]} races, {sc_completed_opus[1]} route decisions")
 check("the stopped extension declared 24 cells and recorded nine failed attempts",
       len(sc_stopped["attempts"]) == 9 and sc_stopped["evidence_status"] == "not_admitted"
       and "twenty-four" in open(sc_stopped["declared_in"], encoding="utf-8").read().lower(),
@@ -1231,8 +1205,8 @@ check("no race completed in any failed attempt",
       "nine attempts, zero races, so none of them is evidence about either route")
 check("no identity from the stopped extension reaches the manuscript",
       not any(handle in open("paper/supplementary.tex", encoding="utf-8").read()
-              for handle in sc_quota | sc_other | {sc_orphan["identity"]}),
-      f"{len(sc_quota | sc_other | {sc_orphan['identity']})} handles, none printed")
+              for handle in sc_quota | sc_other),
+      f"{len(sc_quota | sc_other)} handles, none printed")
 
 
 # --- run-to-run replication of one baseline cell -----------------------------
@@ -1271,27 +1245,29 @@ _risk_arms = _RVR["risk_contrast"]["on_the_always_safe_and_always_unsafe_arms"]
 _rival_cells = _RVR["rival_contrast"]["cells"]
 _as_risk = {r["model_route"]: 100 * r["mean_difference"]
             for r in _risk_arms if r["opponent_strategy"] == "AS"}
-check("the paired risk contrast at a fixed safe rival is 10.4, 12.3 and 12.7 points",
+check("the paired risk contrast at a fixed safe rival covers all five routes",
       [round(_as_risk[r], 1) for r in ("google/gemini-3-flash-preview",
+                                       "anthropic/claude-opus-5@default",
                                        "openai/gpt-5.4-2026-03-05",
-                                       "anthropic/claude-sonnet-5@default")] == [10.4, 12.3, 12.7],
+                                       "openai/gpt-5.5-2026-04-23",
+                                       "anthropic/claude-sonnet-5@default")] == [10.4, 69.9, 12.3, 48.3, 12.7],
       ", ".join(f"{k.split('/')[-1]} {v:.1f}" for k, v in _as_risk.items()))
 _rival_span = [100 * c["mean_difference"] for c in _rival_cells]
-check("the paired rival contrast spans 45.0 to 73.5 points over the nine cells",
-      round(min(_rival_span), 1) == 45.0 and round(max(_rival_span), 1) == 73.5
-      and len(_rival_span) == 9,
+check("the paired rival contrast spans 25.3 to 87.0 points over the fifteen cells",
+      round(min(_rival_span), 1) == 25.3 and round(max(_rival_span), 1) == 87.0
+      and len(_rival_span) == 15,
       f"{min(_rival_span):.1f} to {max(_rival_span):.1f} over {len(_rival_span)} cells")
-check("the rival is worth between three and a half and seven times the risk",
-      3.4 <= min(_rival_span) / max(_as_risk.values()) and
-      max(_rival_span) / min(_as_risk.values()) <= 7.1,
-      f"{min(_rival_span) / max(_as_risk.values()):.1f}x to "
-      f"{max(_rival_span) / min(_as_risk.values()):.1f}x")
+check("the rival and matched-risk spans overlap rather than impose one ordering",
+      min(_rival_span) < max(_as_risk.values())
+      and min(_as_risk.values()) < max(_rival_span),
+      f"rival {min(_rival_span):.1f}-{max(_rival_span):.1f}; "
+      f"risk {min(_as_risk.values()):.1f}-{max(_as_risk.values()):.1f}")
 _worst_risk = max(_risk_arms, key=lambda r: r["mean_difference"])
 _least_rival = min(_rival_cells, key=lambda c: c["mean_difference"])
-check("on the unconditional rivals the two worst cases do not meet",
-      round(100 * _worst_risk["mean_difference"], 1) == 31.5
-      and round(100 * _least_rival["mean_difference"], 1) == 45.0
-      and _worst_risk["ci95_high"] < _least_rival["ci95_low"],
+check("the full five-route comparison does not claim universal interval separation",
+      round(100 * _worst_risk["mean_difference"], 1) == 69.9
+      and round(100 * _least_rival["mean_difference"], 1) == 25.3
+      and not _RVR["separation"]["intervals_disjoint"],
       f"risk {100 * _worst_risk['mean_difference']:.1f} "
       f"[{100 * _worst_risk['ci95_low']:.1f}, {100 * _worst_risk['ci95_high']:.1f}] "
       f"against rival {100 * _least_rival['mean_difference']:.1f} "
@@ -1302,7 +1278,8 @@ check("on the unconditional rivals the two worst cases do not meet",
 _HEADLINE = "risk_0.1_minus_0.9"
 _all_risk = []
 _lower_bounds = 0
-for _sub in ("", "claude-sonnet-5-default", "gpt-5.4-2026-03-05"):
+for _sub in ("", "claude-opus-5-default", "claude-sonnet-5-default",
+             "gpt-5.4-2026-03-05", "gpt-5.5-2026-04-23"):
     _p = Path("results/derived/scripted_opponent_campaign") / _sub / "scripted_opponent_rates.json"
     _d = json.load(open(_p, encoding="utf-8"))
     for _strategy, _pairs in _d["paired_risk_contrasts"].items():
@@ -1312,17 +1289,17 @@ for _sub in ("", "claude-sonnet-5-default", "gpt-5.4-2026-03-05"):
         _all_risk.append((_d.get("model_route", "google/gemini-3-flash-preview"), _strategy, _c))
         _lower_bounds += bool(_c["ceiling_diagnostic"]["arm_saturated_at_low_risk"])
 _top = max(_all_risk, key=lambda t: t[2]["mean_difference"])
-check("across all four rivals the largest risk contrast is 41.0 points on Claude Sonnet 5",
-      round(100 * _top[2]["mean_difference"], 1) == 41.0
-      and _top[0] == "anthropic/claude-sonnet-5@default" and _top[1] == "CAS",
+check("across all five routes the largest risk contrast is 98.1 points on Opus 5",
+      round(100 * _top[2]["mean_difference"], 1) == 98.1
+      and _top[0] == "anthropic/claude-opus-5@default" and _top[1] == "CS",
       f"{100 * _top[2]['mean_difference']:.1f} "
       f"[{100 * _top[2]['ci95_low']:.1f}, {100 * _top[2]['ci95_high']:.1f}] "
       f"on {_top[0].split('/')[-1]} against {_top[1]}")
-check("that one interval does touch the smallest rival contrast, as the body says",
+check("the largest conditional-risk interval reaches the rival range",
       _top[2]["ci95_high"] > _least_rival["ci95_low"],
       f"{100 * _top[2]['ci95_high']:.1f} against {100 * _least_rival['ci95_low']:.1f}")
-check("exactly two of the twelve headline risk contrasts are lower bounds",
-      _lower_bounds == 2 and len(_all_risk) == 12,
+check("six of the twenty headline risk contrasts are ceiling-limited",
+      _lower_bounds == 6 and len(_all_risk) == 20,
       f"{_lower_bounds} saturated of {len(_all_risk)}")
 
 # --- the results section's own numbers ---------------------------------------

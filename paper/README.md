@@ -4,7 +4,7 @@ This directory contains the manuscript for the project’s **LLM-agent AI Race e
 
 ## Current status
 
-The manuscript reports a bounded frontier-model baseline: a per-endpoint task-validity audit, confirmatory admissions for Gemini 3 Flash and Claude Sonnet 5, 30-race behavioural runs for both admitted routes, published-human reference values, and a faithful EGT reconstruction. Gemini 3 Flash also has a completed and independently validated 120-race context and mapping run. The frontier evidence remains descriptive and endpoint-specific. The matched Claude context run, fully crossed persona and language reruns, and frontier N-player reruns are not admitted; legacy local-model pilots are excluded from headline evidence.
+The manuscript reports a bounded frontier-model baseline: a per-endpoint task-validity audit, five admitted routes, 30-race behavioural runs for each admitted route, a complete scripted-opponent campaign on all five routes, published-human reference values, and a faithful EGT reconstruction. Gemini 3 Flash also has a completed and independently validated 120-race context and mapping run. The frontier evidence remains descriptive and endpoint-specific. The matched Claude context run, fully crossed persona and language reruns, and frontier N-player reruns are not admitted; legacy local-model pilots are excluded from headline evidence.
 
 The focal prior work—Fernández Domingos and Han (2026), arXiv:2607.26034—is a study of **human participants** plus an evolutionary model. It motivates the environment and planned analyses but is not evidence about LLM behaviour. See the project’s [AI-readable source note](../references/papers/markdown/falling-behind-ai-race.md).
 
@@ -15,7 +15,7 @@ The focal prior work—Fernández Domingos and Han (2026), arXiv:2607.26034—is
 - [`main.tex`](main.tex): article source with the canonical game, validation protocol, admitted audit, analysis plan, and limitations.
 - [`supplementary.tex`](supplementary.tex): supplementary source.
 - [`references.bib`](references.bib): bibliography for both documents.
-- [`../figures/paper/`](../figures/paper/): paper and presentation figures; Figures 1 and 2 are protected author artwork, Figure 4 is table-backed, and the former position plot is retained as an archived diagnostic and is not referenced by the current manuscript.
+- [`../figures/paper/`](../figures/paper/): paper and presentation figures; Figures 1 and 2 are protected author artwork, the scripted-opponent figure is regenerated from the complete five-route campaign, Figure 4 is table-backed, and the former position plot is retained as an archived diagnostic and is not referenced by the current manuscript.
 
 ## Evidence rules
 
