@@ -426,10 +426,24 @@ contract at its task version 12. It also failed before completing a race, with
 489 reasoning tokens under the 512-token cap and no parseable action. It is
 retained as an infrastructure failure, not as evidence.
 
-Task version 13 tested that low-reasoning contract, but it was still launched
-under `kit567` by operator error rather than the plan-assigned `foundnotkiet`
-identity. It failed before completing a race, with 492 reasoning tokens under
-the 512-token cap and no parseable action. It is retained as a third
-non-admitted infrastructure attempt and is not a result. The next attempt for
-this cell must use `foundnotkiet`, with the proxy environment loaded correctly;
-no response from versions 11--13 may be pooled with a later cell.
+Task version 13 under `kit567` tested that low-reasoning contract, but it was
+launched under the wrong identity by operator error. It failed before
+completing a race, with 492 reasoning tokens under the 512-token cap and no
+parseable action. The plan-assigned `foundnotkiet` identity then tested the
+same contract in its own version 13; it failed in the same way, with 490
+reasoning tokens and no race. Both are retained as non-admitted infrastructure
+attempts and are not results. The Opus `AU@0.6` cell is now stopped under the
+repeated-failure rule; its only valid continuation would require an amended
+contract, not another retry of the same request.
+## Amendment, 2026-09-12: frontier cap 1024 trial
+
+The first GPT-5.5 resumption attempt was made on the plan-assigned cell `AS` at
+risk `0.6` on `foundnotkiet`, using the amended `reasoning="low"` contract and
+the 512-token cap. Task version 14 failed during validation after 490 reasoning
+tokens consumed 497 completion tokens and returned no parseable action; no race
+completed. Before any further GPT-5.5 cell is attempted, the source cap is
+therefore amended to 1024 tokens. The prompt, schema, parser, game mechanism,
+seed streams, cell assignment and stopping rule are unchanged. This is a
+separate decoding contract from both earlier caps, is recorded in manifests,
+and must not be pooled with them. Claude Opus 5 remains stopped under the
+repeated-failure rule and is not reopened by this amendment.

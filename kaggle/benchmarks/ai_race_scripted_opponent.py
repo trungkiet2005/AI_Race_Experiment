@@ -101,8 +101,8 @@ REASONING_OMITTED_ROUTES = ("gemma", "gemini-3.5-flash-lite")
 REASONING_LOW_ROUTES = ("claude-opus-5", "gpt-5.5")
 # Claude Opus 5 and GPT-5.5 can spend part of the completion allowance on
 # provider-side reasoning. The resumption amendments use the low mode above
-# and keep this larger cap; the manifest records the amended contract.
-MAX_OUTPUT_TOKENS = 512
+# and this larger cap; the manifest records the amended contract.
+MAX_OUTPUT_TOKENS = 1024
 MAX_PARSE_RETRIES = 3
 MAX_TRANSPORT_RETRIES = 3
 REQUEST_TIMEOUT_SECONDS = 120
