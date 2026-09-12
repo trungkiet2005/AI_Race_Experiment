@@ -457,3 +457,14 @@ also produced zero races. These are infrastructure failures, not GPT-5.5
 behavioural observations. The AS-at-risk-0.6 cell is therefore not admitted,
 and the plan does not rotate it to another identity or keep retrying while the
 proxy is in this state.
+
+The successful one-prompt GPT-5.5 smoke task on the same proxy identity
+separates route reachability from this workload-specific congestion. A third
+push, task version 17, was therefore tried after that smoke completed. It
+again failed at the first structured-output validation request with HTTP 429;
+the three transport retries were still the short 2/4/8-second policy at that
+point. The source has now been amended to use a longer deterministic
+20/40/80-second backoff for HTTP 429 or explicit heavy-load responses. This
+changes waiting behaviour only; it does not change the prompt, schema, model,
+decoding cap, seed, game, assignment, or estimand. It must be tested in a new
+task version and any zero-race failure remains infrastructure-only.

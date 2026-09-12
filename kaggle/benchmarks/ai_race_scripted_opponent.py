@@ -591,11 +591,26 @@ def prompt_with_transport_retries(
                 )
             return response, errors
         except Exception as error:
+            status_code = getattr(error, "status_code", None)
+            is_heavy_load = (
+                status_code == 429
+                or "heavy load" in str(error).lower()
+            )
+            retry_delay_seconds = (
+                min(20 * (2**transport_attempt), 80)
+                if is_heavy_load
+                else min(2**transport_attempt, 8)
+            )
             errors.append(
                 {
                     "transport_attempt": transport_attempt,
                     "error_type": type(error).__name__,
                     "error": str(error),
+                    "retry_delay_seconds": (
+                        retry_delay_seconds
+                        if transport_attempt < MAX_TRANSPORT_RETRIES
+                        else 0
+                    ),
                 }
             )
             if transport_attempt >= MAX_TRANSPORT_RETRIES:
@@ -604,7 +619,7 @@ def prompt_with_transport_retries(
                     "Benchmark authentication and resume with a new run; no fallback "
                     "action was applied."
                 ) from error
-            time.sleep(min(2**transport_attempt, 8))
+            time.sleep(retry_delay_seconds)
     raise AssertionError("unreachable")
 
 
