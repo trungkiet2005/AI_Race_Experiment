@@ -1,0 +1,57 @@
+{
+  "schema_version": "failed-run-audit-v2",
+  "campaign": "ai-race-scripted-opponent",
+  "recorded_at": "2026-09-13",
+  "protocol_id": "ai-race-scripted-opponent-v1",
+  "declared_in": "docs/scripted-opponent-final-gpt55-account-reallocation-amendment-2026-09-13.md",
+  "evidence_status": "not_admitted",
+  "attempts": [
+    {
+      "kind": "benchmark_auth",
+      "identity": "trnnguynchis",
+      "credential_source": "kaggle-api-3/acc10.txt",
+      "status": "Errored",
+      "status_code": 403,
+      "n_races": 0,
+      "error": "Benchmark auth returned HTTP 403 for missing verification or stale credentials.",
+      "interpretation": "Credential/infrastructure failure only; no model output."
+    },
+    {
+      "kind": "benchmark_auth",
+      "identity": "chiboiz",
+      "credential_source": "kaggle-api/chiboiz.txt",
+      "status": "Errored",
+      "status_code": 403,
+      "n_races": 0,
+      "error": "Benchmark auth returned HTTP 403 for missing verification or stale credentials.",
+      "interpretation": "Credential/infrastructure failure only; no model output."
+    },
+    {
+      "kind": "task_push",
+      "identity": "trnnguynchis",
+      "task": "scripted-opponent-final-gpt55-probe-20260913-v1/v2",
+      "status": "Errored",
+      "n_races": 0,
+      "error": "The server created a task shell without a source kernel and returned an entity-save error; no run was started.",
+      "interpretation": "Benchmark task-management failure only; no model output."
+    },
+    {
+      "kind": "task_push",
+      "identity": "chiboiz",
+      "task": "scripted-opponent-final-gpt55-probe-20260913-v1/v2",
+      "status": "Errored",
+      "n_races": 0,
+      "error": "The server created a task shell without a source kernel and returned an entity-save error; no run was started.",
+      "interpretation": "Benchmark task-management failure only; no model output."
+    }
+  ],
+  "successful_reallocation": {
+    "AS@0.6": "daosyduyminh",
+    "CAS@0.9": "chisboiz",
+    "CS@0.1": "chunaiu"
+  },
+  "do_not_use": [
+    "No failed attempt contains a race and none is evidence about GPT-5.5 behaviour.",
+    "The successful reallocation cells are admitted only through the receipts and manifests after the explicit amendment."
+  ]
+}
