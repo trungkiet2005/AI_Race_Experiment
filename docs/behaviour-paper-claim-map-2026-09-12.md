@@ -38,7 +38,7 @@ The supporting shape, which is what makes it one paper and not three findings:
    nine route-by-risk cells.
 4. And the delegate population is not a population. Twenty human participants
    produce effectively 18.9 to 19.7 distinct five-round action sequences out of
-   twenty; every screened route falls below every one of 20,000 matched human
+   twenty; every admitted route falls below every one of 20,000 matched human
    draws, and one produces a single sequence, repeated twenty times, at every
    risk level.
 
@@ -49,8 +49,7 @@ to language models". The game is an idealised race and models nothing else.
 
 ### Title
 
-Current: *Humans Are More Diverse: Audited Frontier LLMs Show Extreme Policies
-in Idealised AI Development Races*
+Current: *More Than the Risk: Frontier LLM Behavior in AI Development Races Depends on the Rival*
 
 What is genuinely strong and must survive: it leads with an active finding
 rather than a topic, it names the comparison population, and "AI Development
@@ -71,13 +70,12 @@ Safety Decisions in AI Development Races Were Delegated to Them**
 **C. One Policy Where Humans Use Twenty: Opponent-Driven Safety Behaviour of
 Frontier LLM Agents in AI Development Races**
 
-**Recommended: A.** It states the mechanism finding the scripted-rival design
-actually earns, which is the only causal-by-construction result in the paper,
-and it carries the compression finding in the same clause, so both RQ2 and RQ3
-are citable from the title alone. It keeps "AI Development Races" for search.
-It drops the audit entirely. B is the most faithful to the delegation framing
-but is long and its conditional mood reads as speculative in a title, which is
-the exact failure mode the framing brief warns about. C is the most vivid and
+**Selected: More Than the Risk.** It states the opponent-dependence finding
+without implying that routes ignore stated risk, which the data do not show. It
+drops the audit from the title while keeping the paper's central mechanism
+visible. The older alternatives remain below as discarded title candidates.
+B is the most faithful to the delegation framing but is long and its conditional
+mood reads as speculative in a title. C is the most vivid and
 the best for talks, but "One Policy" is true of one route and an overstatement
 of the other four, so it fails the evidence gate as a title.
 
@@ -102,9 +100,9 @@ theory predicts or what humans display.
 
 | # | Claim in plain language | Artifact | Number | RQ |
 |---|---|---|---|---|
-| B1 | Every screened route plays Unsafe less as the stated catastrophic risk rises, and the four that respond gradually do so within a narrow band. | `results/frontier/baseline_campaign_v6/derived/audit_versus_behaviour.csv` | Risk response 38.2, 38.7, 40.3 and 57.0 points for GPT-5.5, Gemini 3 Flash, GPT-5.4 and Claude Sonnet 5 | RQ1 |
-| B2 | One screened route does not trade off at all; it switches. | same | Claude Opus 5 plays Unsafe on all 186 decisions at risk 0.1 and Safe on all 372 above it, a 100.0-point step | RQ1 |
-| B3 | Even at the highest risk, screened routes keep playing Unsafe about a third to a half of the time in self-play. | same | Risk-0.9 self-play rates 60.2, 55.4, 46.8, 32.3 percent for Gemini 3 Flash, GPT-5.5, GPT-5.4, Claude Sonnet 5 | RQ1 |
+| B1 | Every admitted route plays Unsafe less as the stated catastrophic risk rises, and the four that respond gradually do so within a narrow band. | `results/frontier/baseline_campaign_v6/derived/audit_versus_behaviour.csv` | Risk response 38.2, 38.7, 40.3 and 57.0 points for GPT-5.5, Gemini 3 Flash, GPT-5.4 and Claude Sonnet 5 | RQ1 |
+| B2 | One admitted route does not trade off at all; it switches. | same | Claude Opus 5 plays Unsafe on all 186 decisions at risk 0.1 and Safe on all 372 above it, a 100.0-point step | RQ1 |
+| B3 | Even at the highest risk, admitted routes keep playing Unsafe about a third to a half of the time in self-play. | same | Risk-0.9 self-play rates 60.2, 55.4, 46.8, 32.3 percent for Gemini 3 Flash, GPT-5.5, GPT-5.4, Claude Sonnet 5 | RQ1 |
 | B4 | The behavioural baseline is clean, so none of this is a parsing artifact. | `results/frontier/baseline_campaign_v6/**/run_manifest.json` | 30 races, 558 decisions, 0 parse failures on each of nine routes; 10 races per risk cell | RQ1 |
 | B5 | Rerunning one route under the same frozen protocol reproduces its profile, so a route's number is not a run. | `results/frontier/baseline_replication/gemini-3-flash-preview` | 100.0 / 74.2 / 59.7 against 98.9 / 73.1 / 60.2; largest per-risk difference 1.1 points; risk response 38.7 to 40.3 | RQ1 |
 | B6 | What the rival does moves play several times more than what the risk is. | `results/derived/scripted_opponent_campaign/**/scripted_opponent_rates.csv` plus the paired contrasts in the same tree | Rival stance 45.0 to 73.5 points; risk 0.1 to 0.9 against a fixed Safe rival 10.75, 10.75 and 11.83 points | RQ2 |
@@ -114,13 +112,14 @@ theory predicts or what humans display.
 | B10 | A self-play rate overstates how much risk a route takes when facing restraint, so mirror-match numbers are not a measurement of risk attitude. | same, against `audit_versus_behaviour.csv` | Self-play above the fixed-safe rate in all nine cells; at risk 0.1 the gaps are 74.2, 50.5 and 66.7 points | RQ2 |
 | B11 | One route keeps taking real risk against a rival that never does. | `results/derived/scripted_opponent_campaign/gpt-5.4-2026-03-05/` | GPT-5.4 plays Unsafe 36.6, 32.3 and 25.8 percent against Always Safe, the highest of the three at every risk level | RQ2 |
 | B12 | The design cannot be confounded by the opponent, because the opponent is code. | `results/derived/scripted_opponent_campaign/`, ingestion replay | 36 of 36 cells, 360 races, 3,348 route decisions, 0 parse failures, 0 rival deviations over 6,696 recorded turns, seat counterbalanced five and five in every cell | RQ2 |
-| B13 | The evolutionary benchmark predicts a switch and the routes deliver a gradient, so read at its usual setting the theory does not describe them. | `scripts/reproduce_egt_model.py` outputs | At selection strength 2 the model predicts 99.2, 98.0 and 1.9 percent Unsafe; Gemini 3 Flash plays 98.9, 74.2, 59.1 and Claude Sonnet 5 89.2, 46.2, 37.6 | RQ3 |
+| B13 | The evolutionary benchmark predicts a switch and the routes deliver a gradient, so read at its usual setting the theory does not describe them. | `scripts/reproduce_egt_model.py` outputs | At selection strength 2 the model predicts 99.2, 98.0 and 1.9 percent Unsafe; Gemini 3 Flash plays 98.9, 73.1, 60.2 and Claude Sonnet 5 89.2, 48.4, 32.3 | RQ3 |
 | B14 | That mismatch is a property of the setting, not of the game, and the setting that fits the routes is the one the source study fits to its own humans. | `scripts/analyze_egt_beta_sensitivity.py` outputs | 90 stationary cells swept; at selection strength 0.01 with mutation 0.05 the model predicts 87.3, 63.9 and 38.0 percent, within 10.3 points of Claude Sonnet 5 and 15.1 of Gemini 3 Flash in root mean square error | RQ3 |
+| B14a | The all-five analysis-only extension preserves the weak-selection reading for the four graded routes while Claude Opus 5 remains a shape exception. | `results/open_source/egt_reproduction/egt_admitted_route_summary.csv` and `.json` | The best well-mixed weak-selection cell is beta 0.01 with fixed mutation 0.05; graded-route RMSE is 5.1--15.4 points versus 32.9--36.6 at the reference cell, while Opus 5 is a near-step switch | RQ3 |
 | B15 | Human participants use nearly the whole policy space and every screened route uses a sliver of it. | `results/derived/trajectory_diversity_confirmatory/trajectory_diversity_confirmatory.csv` | Humans reach an effective 18.9, 19.7 and 19.3 sequences out of 20 at mean pairwise distances 0.47, 0.50 and 0.50; the largest screened upper bound is 12.3 against a human lower bound of 14.8 | RQ3 |
 | B16 | The compression is severe rather than marginal, and in one case total. | same | Claude Opus 5 produces one sequence, repeated by all 20 trajectories, at every risk level; Claude Sonnet 5 uses two at risk 0.1 | RQ3 |
-| B17 | No screened route reaches the human range even once, against a matched null. | same | All 15 screened route-by-risk cells fall below every one of 20,000 matched human draws; human null minima 15, 17 and 16 distinct sequences out of 20 | RQ3 |
+| B17 | No admitted route reaches the human range even once, against a matched null. | same | All 15 admitted route-by-risk cells fall below every one of 20,000 matched human draws; human null minima 15, 17 and 16 distinct sequences out of 20 | RQ3 |
 | B18 | The result survives a stricter null matched on independence, not only on sample size. | same | 18 of 27 cells fall below a ten-dyad null, never fewer than 16 over forty redraws | RQ3 |
-| B19 | Two unscreened routes do reach the human range, which the paper discloses rather than omits. | same | GPT-5.4 mini 20, 17, 17 and GPT-5.4 nano 16, 19, 16 distinct sequences, inside the null at every risk level | RQ3, scope |
+| B19 | Two refused routes do reach the human range, which the paper discloses rather than omits. | same | GPT-5.4 mini 20, 17, 17 and GPT-5.4 nano 16, 19, 16 distinct sequences, inside the null at every risk level | RQ3, scope |
 | B20 | Matching a human mean is not matching a human population, because the response rules differ. | `results/cross_model_pilot_synthesis/data/feature_importance_results.json` | Human play is organised by the opponent's previous action, 56.0 percent of total SHAP magnitude; Claude Sonnet 5 leads with the same feature at 48.0 percent; the two Gemini Flash checkpoints lead with assigned risk at 32.5 and 36.6 percent and GPT-5-nano with relative position at 41.2 percent; human model ROC AUC 0.628 against 0.974 for Claude Sonnet 5 | RQ3 |
 | B21 | Trajectories carry recoverable population signal, but the populations overlap. | `results/cross_model_pilot_synthesis/data/population_identity_grouped.json` | Balanced accuracy 42.3 percent plus or minus 4.3 against a grouped permutation null mean of 12.4 percent, permutation p = 0.001 | RQ3 |
 | B22 | A measured human risk preference does not predict human play, while a prompted risk persona rewrites it, so a persona is a policy instruction and not a preference. | `results/cross_model_pilot_synthesis/data/elicited_risk_by_archetype.json` and `data/persona_role_gradient.csv` | Elicited risk against Unsafe play r = -0.015, p = 0.79, n = 341; the persona sweep from its lowest to its highest level moves Unsafe play by 50.5 to 98.3 points across seven checkpoints | RQ3, discussion |

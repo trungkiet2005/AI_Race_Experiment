@@ -30,7 +30,7 @@ import subprocess
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-PAPER = ROOT / "paper" / "main.pdf"
+PAPER = ROOT / "paper" / "ai_race_paper.pdf"
 DEFAULT_LIMIT = 8
 
 # The heading the ACM class emits for the bibliography.  Matched on its own
