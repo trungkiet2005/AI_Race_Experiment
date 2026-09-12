@@ -409,3 +409,14 @@ their decoding contracts were identical. The existing three complete route
 grids remain valid under their original cap; new routes are interpreted within
 their own fixed amended contract and the cap difference is disclosed with any
 cross-route comparison.
+
+The cap-only retry was then tested before any race was admitted. Task version
+12, again for `AU` at risk `0.6` on Claude Opus 5 under `kit567`, consumed 490
+reasoning tokens out of the amended 512-token cap and again returned no
+parseable action during validation. It is another infrastructure failure with
+zero races. The amended decoding contract therefore uses the Kaggle SDK's
+documented `reasoning="low"` mode for routes containing `claude-opus-5` or
+`gpt-5.5`, while retaining the 512-token cap. All game fields and the fixed
+cell assignment remain unchanged; the route-specific decoding mode is recorded
+in each manifest and is not treated as invisible equivalence with the earlier
+`reasoning="none"` runs.

@@ -96,10 +96,12 @@ TEMPERATURE = 0.7
 REASONING = "none"
 # Routes that refuse the `reasoning` argument outright; see resolve_llm_contract.
 REASONING_OMITTED_ROUTES = ("gemma", "gemini-3.5-flash-lite")
+# Routes that need the documented low reasoning mode; the normal ``none`` value
+# was observed to leave no room for a structured action on these routes.
+REASONING_LOW_ROUTES = ("claude-opus-5", "gpt-5.5")
 # Claude Opus 5 and GPT-5.5 can spend part of the completion allowance on
-# provider-side reasoning even when the task requests ``reasoning="none"``.
-# The 2026-09-12 resumption amendment raises this cap so the structured action
-# still has room to arrive; the manifest records the amended contract.
+# provider-side reasoning. The resumption amendments use the low mode above
+# and keep this larger cap; the manifest records the amended contract.
 MAX_OUTPUT_TOKENS = 512
 MAX_PARSE_RETRIES = 3
 MAX_TRANSPORT_RETRIES = 3
@@ -299,6 +301,8 @@ def resolve_llm_contract(llm):
     # difference is visible rather than silent.
     if any(prefix in normalized_route for prefix in REASONING_OMITTED_ROUTES):
         reasoning_requested = None
+    elif any(prefix in normalized_route for prefix in REASONING_LOW_ROUTES):
+        reasoning_requested = "low"
     else:
         reasoning_requested = REASONING
 
