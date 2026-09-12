@@ -1,0 +1,46 @@
+{
+  "schema_version": "failed-run-audit-v2",
+  "campaign": "ai-race-scripted-opponent",
+  "recorded_at": "2026-09-12",
+  "protocol_id": "ai-race-scripted-opponent-v1",
+  "declared_in": "docs/scripted-opponent-multi-account-resumption-amendment-2026-09-12.md",
+  "evidence_status": "not_admitted",
+  "attempts": [
+    {
+      "kind": "workload_compatible_probe",
+      "task": "scripted-opponent-resumption-probe",
+      "task_version": 1,
+      "model_route": "task-level validation route not exposed by the CLI",
+      "identity": "foundnotkiet",
+      "status": "Errored",
+      "status_code": 403,
+      "n_races": 0,
+      "error": "The max estimated cost ($0.007701) exceeded available quota based on max_output_tokens.",
+      "interpretation": "Infrastructure diagnostic only; no model evidence."
+    },
+    {
+      "kind": "full_cell",
+      "task": "ai-race-scripted-opponent",
+      "task_version": 13,
+      "cell": {"strategy": "CAS", "max_private_risk": 0.1},
+      "model_route": "anthropic/claude-opus-5@default",
+      "identity": "hunhtrungkit",
+      "status": "Errored",
+      "status_code": 403,
+      "stage": "task creation validation",
+      "n_races": 0,
+      "error": "The max estimated cost ($0.0086025) exceeded available quota based on max_output_tokens.",
+      "interpretation": "Infrastructure/quota failure only; the cell is not a behavioural result and is not rotated."
+    }
+  ],
+  "not_collected_under_this_amendment": [
+    {"cell": {"strategy": "AS", "max_private_risk": 0.9}, "route": "anthropic/claude-opus-5@default", "identity": "foundnotkiet", "reason": "profile retired after 403 probe"},
+    {"cell": {"strategy": "AU", "max_private_risk": 0.1}, "route": "anthropic/claude-opus-5@default", "identity": "foundnotkiet", "reason": "profile retired after 403 probe"},
+    {"cell": {"strategy": "CAS", "max_private_risk": 0.1}, "route": "anthropic/claude-opus-5@default", "identity": "hunhtrungkit", "reason": "profile retired after 403 full-cell attempt"}
+  ],
+  "do_not_use": [
+    "No failed attempt contains a race and none is evidence about model behaviour.",
+    "The three missing cells are not silently filled from another identity.",
+    "The token-only files in kaggle-api-3 are not benchmark credentials and are not used."
+  ]
+}
