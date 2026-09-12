@@ -348,14 +348,35 @@ def dot(ax, x, y, *, color, marker="o", size=16, filled=True, zorder=4,
                linewidths=elw if lw is None else lw)
 
 
+def tile_ink(value, *, lo=0.0, hi=100.0, cmap="viridis"):
+    """The ink that survives on the tile a value paints.
+
+    Ask the colormap for the colour it will actually draw and take the ink from
+    that colour's relative luminance.  A fixed cut in the VALUE cannot do this
+    job, because it assumes the map darkens as the value rises: viridis
+    brightens, so a fixed cut puts white type on the yellow end and dark type on
+    the purple end, which is the weakest type available at both ends of the
+    scale.  That defect reached three shipped figures and was patched three
+    separate times in three scripts before it was fixed here.
+    """
+    t = (float(value) - lo) / ((hi - lo) or 1.0)
+    r, g, b, _ = plt.get_cmap(cmap)(min(max(t, 0.0), 1.0))
+    return INK if (0.2126 * r + 0.7152 * g + 0.0722 * b) > 0.55 else SURFACE
+
+
 def heat_tiles(ax, arr, row_labels, col_labels, *, cmap="viridis", vmin=None,
                vmax=None, fmt="{:.0f}", fs=None, gutter=2.0,
-               textcolor_flip=0.62, row_colors=None):
+               textcolor_flip=None, row_colors=None):
     """imshow with a white gutter grid, so a heatmap reads as tiles.
 
     ``row_colors`` tints the row labels with the route colours, which is what
     lets a figure carry route identity without spending space on a legend.
     Returns the image so the caller can hang a colourbar on it.
+
+    The numeral on a tile takes its ink from the tile's own luminance.
+    ``textcolor_flip`` overrides that with a fixed cut in the normalised value,
+    for a caller that has measured its own crossing point on its own colormap;
+    leave it unset unless you have.
     """
     import numpy as np
 
@@ -375,10 +396,12 @@ def heat_tiles(ax, arr, row_labels, col_labels, *, cmap="viridis", vmin=None,
                 v = arr[i, j]
                 if v != v:
                     continue
-                t = (v - lo) / rng
+                if textcolor_flip is None:
+                    ink = tile_ink(v, lo=lo, hi=hi, cmap=cmap)
+                else:
+                    ink = SURFACE if (v - lo) / rng > textcolor_flip else INK
                 ax.text(j, i, fmt.format(v), ha="center", va="center",
-                        fontsize=fs or FS_NOTE,
-                        color=SURFACE if t > textcolor_flip else INK)
+                        fontsize=fs or FS_NOTE, color=ink)
     ax.set_xticks(range(len(col_labels)))
     ax.set_xticklabels(col_labels)
     ax.set_yticks(range(len(row_labels)))

@@ -965,6 +965,166 @@ check("eight of the nine opening-move intervals exclude zero, and the ninth does
       and sc_open[("anthropic/claude-sonnet-5@default", 0.9)]["ci95_low"] == 0.0,
       "Claude Sonnet 5 at risk 0.9 has a lower bound of exactly 0.0 over its ten blocks")
 
+# --- the stated risk at a fixed rival, against the rival at a fixed risk -----
+# The manuscript's new headline puts these two side by side, so both halves have
+# to be produced the same way: differenced inside a repetition, resampled over
+# repetitions, and carrying an interval. A raw difference of two cell rates
+# beside a bootstrapped contrast is the objection the sentence exists to answer.
+sc_risk = {}
+for route, tag in SCRIPTED_ROUTES.items():
+    payload = json.load(open(
+        f"results/derived/scripted_opponent_campaign/{tag}scripted_opponent_rates.json",
+        encoding="utf-8"))
+    for strategy, entries in payload["paired_risk_contrasts"].items():
+        sc_risk[(route, strategy)] = entries["risk_0.1_minus_0.9"]
+    check(f"{route} is reported as a complete grid",
+          payload["grid_complete"] and not payload["cells_not_collected"],
+          f"{payload['n_cells']} of {payload['cells_expected']} cells")
+
+check("all twelve risk contrasts are paired on the horizon over ten blocks",
+      len(sc_risk) == 12
+      and all(e["pairing_verified"] and e["n_blocks"] == 10 for e in sc_risk.values()),
+      f"{len(sc_risk)} contrasts, seed pairing re-derived from the recorded game seed in each")
+check("every risk contrast is positive and excludes zero",
+      all(e["mean_difference"] > 0 and e["ci95_low"] > 0 for e in sc_risk.values()),
+      f"smallest lower bound {100 * min(e['ci95_low'] for e in sc_risk.values()):+.1f} pp")
+
+
+def scripted_risk_contrast(route, strategy, point, low, high):
+    got = sc_risk[(route, strategy)]
+    values = (round(100 * got["mean_difference"], 1),
+              100 * got["ci95_low"], 100 * got["ci95_high"])
+    ok = (values[0] == point
+          and abs(values[1] - low) <= ENDPOINT_TOLERANCE
+          and abs(values[2] - high) <= ENDPOINT_TOLERANCE)
+    return ok, f"{values[0]} [{values[1]:.1f}, {values[2]:.1f}]"
+
+
+# One pinned interval per route on each of the two arms the rival contrast uses,
+# so the two halves of the sentence are pinned to the same pair of cells.
+for route, strategy, expect in (
+        ("google/gemini-3-flash-preview", "AS", (10.4, 5.4, 15.6)),
+        ("google/gemini-3-flash-preview", "AU", (12.2, 8.2, 16.1)),
+        ("anthropic/claude-sonnet-5@default", "AS", (12.7, 8.6, 16.7)),
+        ("anthropic/claude-sonnet-5@default", "AU", (31.5, 27.2, 35.2)),
+        ("openai/gpt-5.4-2026-03-05", "AS", (12.3, 6.2, 18.6)),
+        ("openai/gpt-5.4-2026-03-05", "AU", (10.0, 5.9, 14.2))):
+    ok, detail = scripted_risk_contrast(route, strategy, *expect)
+    check(f"moving the stated risk from 0.1 to 0.9 against {strategy} is "
+          f"{expect[0]} pp on {route}", ok, detail)
+
+sc_matched = {k: v for k, v in sc_risk.items() if k[1] in ("AS", "AU")}
+sc_conditional = {k: v for k, v in sc_risk.items() if k[1] in ("CS", "CAS")}
+sc_exception = ("anthropic/claude-sonnet-5@default", "AU")
+sc_others = [v["mean_difference"] for k, v in sc_matched.items() if k != sc_exception]
+# Pinned as a ratio rather than as a word. "Three times" was the phrase the
+# draft reached for and the table does not carry it: the cell is two and a half
+# times the next largest, and two and three quarters the average of the other
+# five. A check written to the word would have passed the wrong sentence.
+sc_ratio_next = sc_risk[sc_exception]["mean_difference"] / max(sc_others)
+sc_ratio_mean = sc_risk[sc_exception]["mean_difference"] / (sum(sc_others) / len(sc_others))
+check("one cell is two and a half times the next largest on those two arms",
+      round(sc_ratio_next, 1) == 2.5 and round(sc_ratio_mean, 1) == 2.7
+      and sc_risk[sc_exception]["ci95_low"] > max(
+          v["ci95_high"] for k, v in sc_matched.items() if k != sc_exception),
+      f"{100 * sc_risk[sc_exception]['mean_difference']:.1f} against a next-largest "
+      f"{100 * max(sc_others):.1f}, a ratio of {sc_ratio_next:.2f} and of "
+      f"{sc_ratio_mean:.2f} against the other five averaged, and its interval clears "
+      "every other interval on these arms")
+check("OVERSTATEMENT GUARD: it is not three times the next largest",
+      sc_ratio_next < 3.0,
+      f"{sc_ratio_next:.2f} times, so the sentence says two and a half, not three")
+# The generalisation this project keeps catching itself making. Stated over the
+# whole grid the exception is not an exception at all, so the sentence has to
+# name the arms it is about.
+check("OVERSTATEMENT GUARD: that cell is not the largest risk contrast in the grid",
+      max(sc_conditional.values(), key=lambda e: e["mean_difference"])["mean_difference"]
+      > sc_risk[sc_exception]["mean_difference"],
+      f"Conditional Unsafe on Claude Sonnet 5 is "
+      f"{100 * sc_risk[('anthropic/claude-sonnet-5@default', 'CAS')]['mean_difference']:.1f} pp, "
+      f"above the {100 * sc_risk[sc_exception]['mean_difference']:.1f} the sentence calls "
+      "exceptional, so the claim holds only on the always-safe and always-unsafe arms")
+
+sc_rvr = json.load(open("results/derived/scripted_opponent_campaign/risk_versus_rival.json",
+                        encoding="utf-8"))
+check("the comparison artifact names the three complete routes it covers",
+      sorted(sc_rvr["scope"]["routes_covered"]) == sorted(SCRIPTED_ROUTES)
+      and sc_rvr["scope"]["pooling"].startswith("none"),
+      f"{len(sc_rvr['scope']['routes_covered'])} routes covered, "
+      f"{len(sc_rvr['scope']['routes_excluded_as_partial'])} held out as partially collected")
+check("the partially collected route is held out of every range in it",
+      [r["model_route"] for r in sc_rvr["scope"]["routes_excluded_as_partial"]]
+      == ["anthropic/claude-opus-5@default"]
+      and "claude-opus" not in json.dumps(
+          [sc_rvr["risk_contrast"], sc_rvr["rival_contrast"], sc_rvr["exception_test"]]),
+      "the one orphan cell appears in the scope block and nowhere else")
+
+sc_rival_span = sc_rvr["rival_contrast"]["span_pp"]
+sc_matched_span = sc_rvr["risk_contrast"]["span_on_matched_arms_pp"]
+sc_cond_span = sc_rvr["risk_contrast"]["span_on_conditional_arms_pp"]
+check("the rival moves a route 45.0 to 73.5 points across the nine cells",
+      round(sc_rival_span["low"], 1) == 45.0 and round(sc_rival_span["high"], 1) == 73.5,
+      f"{sc_rival_span['low']:.1f} to {sc_rival_span['high']:.1f} pp")
+check("the stated risk moves it 10.0 to 31.5 on those same two arms",
+      round(sc_matched_span["low"], 1) == 10.0 and round(sc_matched_span["high"], 1) == 31.5,
+      f"{sc_matched_span['low']:.1f} to {sc_matched_span['high']:.1f} pp")
+sc_risk_top = max(100 * e["ci95_high"] for e in sc_matched.values())
+sc_rival_floor = min(100 * e["ci95_low"] for e in sc_stance.values())
+check("on those two arms the two sets of intervals never meet",
+      sc_rvr["separation"]["intervals_disjoint"] and sc_risk_top < sc_rival_floor,
+      f"largest risk upper bound {sc_risk_top:.1f} below smallest rival lower bound "
+      f"{sc_rival_floor:.1f}")
+# The same guard from the other side: widened to the conditional rivals the two
+# sets do meet, which is why the sentence is scoped to the arms it names.
+check("OVERSTATEMENT GUARD: widened to the conditional rivals they do meet",
+      max(100 * e["ci95_high"] for e in sc_conditional.values()) > sc_rival_floor,
+      f"the conditional-rival risk contrast reaches {sc_cond_span['high']:.1f} pp with an "
+      f"upper bound of {max(100 * e['ci95_high'] for e in sc_conditional.values()):.1f}, "
+      f"above the smallest rival lower bound {sc_rival_floor:.1f}")
+
+# Is the exception a property of the route, or of the height its rates start at?
+# An arm already playing Unsafe in every round of every repetition cannot record
+# a response, so the question is settled by comparing two arms that start level.
+sc_did = {(e["left_route"], e["right_route"]): e
+          for e in sc_rvr["exception_test"]["cross_route_difference_in_differences"]}
+sc_pair = ("anthropic/claude-sonnet-5@default", "openai/gpt-5.4-2026-03-05")
+check("against Always Unsafe, Claude Sonnet 5 and GPT-5.4 start level at risk 0.1",
+      abs(100 * sc_did[sc_pair]["low_risk_starting_gap"]) < 3.0
+      and sc_did[sc_pair]["left_blocks_at_ceiling_low_risk"] <= 1
+      and sc_did[sc_pair]["right_blocks_at_ceiling_low_risk"] == 0,
+      f"{100 * sc_did[sc_pair]['low_risk_starting_gap']:+.1f} pp apart "
+      f"[{100 * sc_did[sc_pair]['low_risk_starting_gap_ci95_low']:+.1f}, "
+      f"{100 * sc_did[sc_pair]['low_risk_starting_gap_ci95_high']:+.1f}], neither arm saturated")
+check("from level starts their risk effects still differ by 21.5 points",
+      round(100 * sc_did[sc_pair]["difference_in_differences"], 1) == 21.5
+      and sc_did[sc_pair]["ci95_low"] > 0 and sc_did[sc_pair]["pairing_verified"],
+      f"{100 * sc_did[sc_pair]['difference_in_differences']:+.1f} pp "
+      f"[{100 * sc_did[sc_pair]['ci95_low']:+.1f}, {100 * sc_did[sc_pair]['ci95_high']:+.1f}], "
+      "so the exception is the route and not the starting height")
+
+sc_gem_au = sc_risk[("google/gemini-3-flash-preview", "AU")]["ceiling_diagnostic"]
+sc_son_au = sc_risk[sc_exception]["ceiling_diagnostic"]
+sc_gpt_au = sc_risk[("openai/gpt-5.4-2026-03-05", "AU")]["ceiling_diagnostic"]
+check("Gemini 3 Flash's Always Unsafe arm is at the ceiling in all ten blocks at risk 0.1",
+      sc_gem_au["arm_saturated_at_low_risk"]
+      and sc_gem_au["blocks_at_ceiling_low_risk"] == 10
+      and sc_gem_au["low_risk_rate"] == 1.0,
+      "100.0% in every repetition, so its 12.2 points is a lower bound on the response")
+check("on a scale the ceiling does not compress, that arm moves furthest of the three",
+      sc_gem_au["log_odds_shift"] > sc_son_au["log_odds_shift"] > sc_gpt_au["log_odds_shift"]
+      and sc_gem_au["log_odds_shift_is_a_lower_bound"],
+      f"log-odds shift {sc_gem_au['log_odds_shift']:.2f} against "
+      f"{sc_son_au['log_odds_shift']:.2f} and {sc_gpt_au['log_odds_shift']:.2f}, so the small "
+      "difference of rates is not evidence of a small response")
+sc_gem_pair = ("google/gemini-3-flash-preview", "openai/gpt-5.4-2026-03-05")
+check("the one comparison the ceiling does block is reported as inconclusive",
+      sc_did[sc_gem_pair]["ci95_low"] < 0 < sc_did[sc_gem_pair]["ci95_high"]
+      and sc_did[sc_gem_pair]["left_blocks_at_ceiling_low_risk"] == 10,
+      f"{100 * sc_did[sc_gem_pair]['difference_in_differences']:+.1f} pp "
+      f"[{100 * sc_did[sc_gem_pair]['ci95_low']:+.1f}, "
+      f"{100 * sc_did[sc_gem_pair]['ci95_high']:+.1f}] between a saturated arm and an "
+      "unsaturated one, an interval that contains zero")
+
 sc_selfplay = {route: rates[route] for route in SCRIPTED_ROUTES}
 check("self-play sits above the fixed-safe rival on all nine route-by-risk cells",
       all(sc_selfplay[route][risk] > 100 * sc_rate[(route, "AS", risk)]
@@ -1076,6 +1236,261 @@ check("run-to-run movement is small beside the between-route spread",
       f"{max(resp.values()) - min(resp.values()):.1f} pp spread")
 check("the repeat is stored outside the campaign tree the analysers read",
       "baseline_campaign_v6" not in rp["repeat_run"], rp["repeat_run"])
+
+# --- risk against rival, both halves paired inside a repetition ---------------
+# The results section states the two changes on one footing, so both halves are
+# recomputed here from the same artifact rather than one of them being a raw
+# difference between two cell rates.
+_RVR = json.load(open("results/derived/scripted_opponent_campaign/risk_versus_rival.json",
+                      encoding="utf-8"))
+_risk_arms = _RVR["risk_contrast"]["on_the_always_safe_and_always_unsafe_arms"]
+_rival_cells = _RVR["rival_contrast"]["cells"]
+_as_risk = {r["model_route"]: 100 * r["mean_difference"]
+            for r in _risk_arms if r["opponent_strategy"] == "AS"}
+check("the paired risk contrast at a fixed safe rival is 10.4, 12.3 and 12.7 points",
+      [round(_as_risk[r], 1) for r in ("google/gemini-3-flash-preview",
+                                       "openai/gpt-5.4-2026-03-05",
+                                       "anthropic/claude-sonnet-5@default")] == [10.4, 12.3, 12.7],
+      ", ".join(f"{k.split('/')[-1]} {v:.1f}" for k, v in _as_risk.items()))
+_rival_span = [100 * c["mean_difference"] for c in _rival_cells]
+check("the paired rival contrast spans 45.0 to 73.5 points over the nine cells",
+      round(min(_rival_span), 1) == 45.0 and round(max(_rival_span), 1) == 73.5
+      and len(_rival_span) == 9,
+      f"{min(_rival_span):.1f} to {max(_rival_span):.1f} over {len(_rival_span)} cells")
+check("the rival is worth between three and a half and seven times the risk",
+      3.4 <= min(_rival_span) / max(_as_risk.values()) and
+      max(_rival_span) / min(_as_risk.values()) <= 7.1,
+      f"{min(_rival_span) / max(_as_risk.values()):.1f}x to "
+      f"{max(_rival_span) / min(_as_risk.values()):.1f}x")
+_worst_risk = max(_risk_arms, key=lambda r: r["mean_difference"])
+_least_rival = min(_rival_cells, key=lambda c: c["mean_difference"])
+check("on the unconditional rivals the two worst cases do not meet",
+      round(100 * _worst_risk["mean_difference"], 1) == 31.5
+      and round(100 * _least_rival["mean_difference"], 1) == 45.0
+      and _worst_risk["ci95_high"] < _least_rival["ci95_low"],
+      f"risk {100 * _worst_risk['mean_difference']:.1f} "
+      f"[{100 * _worst_risk['ci95_low']:.1f}, {100 * _worst_risk['ci95_high']:.1f}] "
+      f"against rival {100 * _least_rival['mean_difference']:.1f} "
+      f"[{100 * _least_rival['ci95_low']:.1f}, {100 * _least_rival['ci95_high']:.1f}]")
+
+# The conditional rivals are the honest exception the body reports: adding them
+# raises the largest risk contrast until its interval touches the rival's.
+_HEADLINE = "risk_0.1_minus_0.9"
+_all_risk = []
+_lower_bounds = 0
+for _sub in ("", "claude-sonnet-5-default", "gpt-5.4-2026-03-05"):
+    _p = Path("results/derived/scripted_opponent_campaign") / _sub / "scripted_opponent_rates.json"
+    _d = json.load(open(_p, encoding="utf-8"))
+    for _strategy, _pairs in _d["paired_risk_contrasts"].items():
+        _c = _pairs.get(_HEADLINE)
+        if _c is None:
+            continue
+        _all_risk.append((_d.get("model_route", "google/gemini-3-flash-preview"), _strategy, _c))
+        _lower_bounds += bool(_c["ceiling_diagnostic"]["arm_saturated_at_low_risk"])
+_top = max(_all_risk, key=lambda t: t[2]["mean_difference"])
+check("across all four rivals the largest risk contrast is 41.0 points on Claude Sonnet 5",
+      round(100 * _top[2]["mean_difference"], 1) == 41.0
+      and _top[0] == "anthropic/claude-sonnet-5@default" and _top[1] == "CAS",
+      f"{100 * _top[2]['mean_difference']:.1f} "
+      f"[{100 * _top[2]['ci95_low']:.1f}, {100 * _top[2]['ci95_high']:.1f}] "
+      f"on {_top[0].split('/')[-1]} against {_top[1]}")
+check("that one interval does touch the smallest rival contrast, as the body says",
+      _top[2]["ci95_high"] > _least_rival["ci95_low"],
+      f"{100 * _top[2]['ci95_high']:.1f} against {100 * _least_rival['ci95_low']:.1f}")
+check("exactly two of the twelve headline risk contrasts are lower bounds",
+      _lower_bounds == 2 and len(_all_risk) == 12,
+      f"{_lower_bounds} saturated of {len(_all_risk)}")
+
+# --- the results section's own numbers ---------------------------------------
+# Table tab:risk-response, the four-route band, and the two saturated routes.
+_rs_tab = {}
+for row in csv.DictReader(open("results/frontier/baseline_campaign_v6/derived/audit_versus_behaviour.csv",
+                               encoding="utf-8-sig")):
+    _rs_tab[row["short_name"]] = row
+
+# Read the printed table out of the manuscript itself, so a hand edit to either
+# side of the comparison fails the check rather than passing it silently.
+_rs_tex = open("paper/main.tex", encoding="utf-8").read()
+_rs_block = _rs_tex.split("\\label{tab:risk-response}")[1].split("\\end{tabular}")[0]
+_rs_printed = {}
+for _rs_line in _rs_block.splitlines():
+    if "&" not in _rs_line or "\\\\" not in _rs_line or "Route" in _rs_line:
+        continue
+    _rs_cells = [c.strip() for c in _rs_line.split("\\\\")[0].split("&")]
+    _rs_nums = [float(c) for c in _rs_cells[1:4]]
+    _rs_last = _rs_cells[4].replace("[", " ").replace("]", " ").replace(",", " ")
+    _rs_nums += [float(x) for x in _rs_last.replace("a switch", "").split() if x.replace(".", "").isdigit()]
+    if len(_rs_nums) == 4:                       # the switch row prints one figure, not an interval
+        _rs_nums += [_rs_nums[3], _rs_nums[3]]
+    _rs_printed[_rs_cells[0].strip()] = tuple(_rs_nums)
+check("the manuscript prints five rows in the risk-response table",
+      len(_rs_printed) == 5, ", ".join(_rs_printed))
+for _rs_name, _rs_want in _rs_printed.items():
+    _rs_row = _rs_tab[_rs_name]
+    _rs_got = (round(100 * float(_rs_row["unsafe_rate_risk_0p1"]), 1),
+               round(100 * float(_rs_row["unsafe_rate_risk_0p6"]), 1),
+               round(100 * float(_rs_row["unsafe_rate_risk_0p9"]), 1),
+               round(float(_rs_row["risk_response_pp"]), 1),
+               round(float(_rs_row["risk_response_ci_low_pp"]), 1),
+               round(float(_rs_row["risk_response_ci_high_pp"]), 1))
+    check(f"the risk-response table row reproduces: {_rs_name}", _rs_got == _rs_want,
+          f"{_rs_got} printed as {_rs_want}")
+
+_rs_graded = ["Claude Sonnet 5", "GPT-5.4", "Gemini 3 Flash", "GPT-5.5"]
+_rs_band = [float(_rs_tab[n]["risk_response_pp"]) for n in _rs_graded]
+check("the four graded routes band from 38.2 to 57.0 points, 19 points wide",
+      round(min(_rs_band), 1) == 38.2 and round(max(_rs_band), 1) == 57.0
+      and round(max(_rs_band) - min(_rs_band)) == 19,
+      f"{min(_rs_band):.1f} to {max(_rs_band):.1f}, width {max(_rs_band) - min(_rs_band):.1f}")
+_rs_vendors = {_rs_tab[n]["route"].split("/")[0] for n in _rs_graded}
+check("those four routes come from three companies",
+      len(_rs_vendors) == 3, ", ".join(sorted(_rs_vendors)))
+
+_rs_high = [100 * float(_rs_tab[n]["unsafe_rate_risk_0p9"]) for n in _rs_graded]
+check("at the highest risk the four graded routes still play Unsafe on roughly a third "
+      "to three fifths of decisions",
+      30.0 <= min(_rs_high) <= 35.0 and 58.0 <= max(_rs_high) <= 62.0,
+      f"{min(_rs_high):.1f} to {max(_rs_high):.1f}, so the prose says roughly and not exactly")
+
+# Claude Opus 5 is a switch, and no race inside a cell departs from it.
+_rs_opus_cells = defaultdict(lambda: defaultdict(lambda: [0, 0]))
+for _rs_man in glob.glob("results/frontier/baseline_campaign_v6/ai-race-baseline/*/*/*/results/ai_race_baseline/run_manifest.json"):
+    _rs_d = json.load(open(_rs_man, encoding="utf-8"))
+    if _rs_d.get("model_route") != "anthropic/claude-opus-5@default" or _rs_d.get("status") != "completed":
+        continue
+    for _rs_line in open(_rs_man.replace("run_manifest.json", "turns.jsonl"), encoding="utf-8"):
+        _rs_t = json.loads(_rs_line)
+        _rs_c = _rs_opus_cells[float(_rs_t["max_private_risk"])][_rs_t.get("game_id")]
+        _rs_c[1] += 1
+        _rs_c[0] += str(_rs_t.get("action", "")).upper().startswith("UNSAFE")
+_rs_low = _rs_opus_cells[0.1]
+_rs_hi = {**_rs_opus_cells[0.6], **_rs_opus_cells[0.9]}
+check("Claude Opus 5 plays Unsafe on all 186 low-risk decisions and Safe on all 372 above",
+      sum(v[0] for v in _rs_low.values()) == sum(v[1] for v in _rs_low.values()) == 186
+      and sum(v[0] for v in _rs_hi.values()) == 0 and sum(v[1] for v in _rs_hi.values()) == 372,
+      f"186 of 186 unsafe, 0 of {sum(v[1] for v in _rs_hi.values())} above")
+check("no Claude Opus 5 race departs from its cell's rate",
+      all(v[0] in (0, v[1]) for cell in _rs_opus_cells.values() for v in cell.values()),
+      "every race in a cell is unanimous, so the interval collapses to a point")
+
+# The mirror-match lower bound the scripted section rests on.
+_rs_gem = defaultdict(lambda: [0, 0])
+for _rs_man in glob.glob("results/frontier/baseline_campaign_v6/ai-race-baseline/*/*/*/results/ai_race_baseline/run_manifest.json"):
+    _rs_d = json.load(open(_rs_man, encoding="utf-8"))
+    if _rs_d.get("model_route") != "google/gemini-3-flash-preview" or _rs_d.get("status") != "completed":
+        continue
+    for _rs_line in open(_rs_man.replace("run_manifest.json", "turns.jsonl"), encoding="utf-8"):
+        _rs_t = json.loads(_rs_line)
+        if float(_rs_t["max_private_risk"]) != 0.1:
+            continue
+        _rs_c = _rs_gem[_rs_t.get("game_id")]
+        _rs_c[1] += 1
+        _rs_c[0] += str(_rs_t.get("action", "")).upper().startswith("UNSAFE")
+check("nine of Gemini 3 Flash's ten low-risk mirror races are entirely Unsafe",
+      sum(1 for v in _rs_gem.values() if v[0] == v[1]) == 9 and len(_rs_gem) == 10,
+      "so the distance to the fixed-safe rival is a lower bound there")
+
+# The disclosed-arithmetic diagnostic and the route it belongs to.
+_rs_da = {r["condition"]: r for r in csv.DictReader(
+    open("results/cross_model_pilot_synthesis/data/disclosed_arithmetic_race_bootstrap.csv", encoding="utf-8-sig"))}
+check("the disclosed-arithmetic figures the body prints reproduce both conditions",
+      round(100 * float(_rs_da["canonical"]["unsafe_rate"]), 1) == 52.0
+      and round(100 * float(_rs_da["calculator_decision_card"]["unsafe_rate"]), 1) == 60.8
+      and round(float(_rs_da["canonical"]["mean_final_payoff"]), 2) == 42.77
+      and round(float(_rs_da["calculator_decision_card"]["mean_final_payoff"]), 2) == 42.21,
+      "52.0 and 60.8 per cent, payoffs 42.77 and 42.21")
+_rs_da_models = set()
+_rs_da_first: dict[str, dict] = {}
+for _rs_cond in ("canonical", "calculator_decision_card"):
+    _rs_da_first[_rs_cond] = {}
+    for _rs_line in open(f"results/open_source/game_understanding_pilot/raw/behavior_lane/behavior/{_rs_cond}/turns.jsonl",
+                         encoding="utf-8"):
+        _rs_t = json.loads(_rs_line)
+        _rs_da_models.add(_rs_t["model"])
+        if _rs_t["round"] == 1:
+            _rs_da_first[_rs_cond][(_rs_t["max_private_risk"], _rs_t["rep"], _rs_t["player_index"])] = _rs_t["unsafe"]
+_rs_a, _rs_b = _rs_da_first["canonical"], _rs_da_first["calculator_decision_card"]
+_rs_moved = sum(1 for _rs_k in _rs_a if _rs_a[_rs_k] != _rs_b[_rs_k])
+check("3.3 per cent of paired first-round decisions changed, so the divergence came later",
+      set(_rs_a) == set(_rs_b) and len(_rs_a) == 60 and round(100 * _rs_moved / len(_rs_a), 1) == 3.3,
+      f"{_rs_moved} of {len(_rs_a)} paired opening decisions")
+check("SCOPE GUARD: the disclosed-arithmetic diagnostic is not one of the nine routes",
+      len(_rs_da_models) == 1 and "qwen" in next(iter(_rs_da_models)).lower(),
+      "it runs on the one route whose weights are published, which the body now says where the claim is made")
+
+# The two exploratory analyses the diversity section reports.
+_rs_pid = json.load(open("results/cross_model_pilot_synthesis/data/population_identity_grouped.json", encoding="utf-8"))
+_rs_ba = _rs_pid["metrics"]["balanced_accuracy"]
+check("the population classifier reaches 42.3 +/- 4.3 against a null mean of 12.4",
+      round(100 * _rs_ba["mean"], 1) == 42.3 and round(100 * _rs_ba["std"], 1) == 4.3
+      and round(100 * _rs_ba["null_mean"], 1) == 12.4,
+      f"{100 * _rs_ba['mean']:.1f} +/- {100 * _rs_ba['std']:.1f} vs {100 * _rs_ba['null_mean']:.1f}")
+check("its permutation p rounds to 0.001 and is not below it",
+      round(_rs_ba["permutation_p"], 3) == 0.001 and _rs_ba["permutation_p"] > 0.0005,
+      f"p = {_rs_ba['permutation_p']:.4f} over {_rs_pid['permutation_null']['n_permutations']} permutations")
+
+_rs_fi = json.load(open("results/cross_model_pilot_synthesis/data/feature_importance_results.json", encoding="utf-8"))
+_rs_roster = ["human", "gpt-5-nano", "gpt-5.4-nano", "google/gemini-3-flash-preview",
+              "google/gemini-3.1-flash-lite-preview", "google/gemini-3.5-flash-lite",
+              "claude-opus-5", "claude-sonnet-5"]
+
+
+def _rs_share(pop: str, feat: str) -> float:
+    s = _rs_fi[pop]["mean_abs_shap"]
+    return 100 * s[feat] / sum(s.values())
+
+
+def _rs_lead(pop: str) -> str:
+    return max(_rs_fi[pop]["mean_abs_shap"], key=_rs_fi[pop]["mean_abs_shap"].get)
+
+
+check("human play is organised mainly by the opponent's previous action, 56 per cent of the share",
+      _rs_lead("human") == "opponent_prev_unsafe" and round(_rs_share("human", "opponent_prev_unsafe")) == 56,
+      f"{_rs_share('human', 'opponent_prev_unsafe'):.1f} per cent")
+check("Claude Sonnet 5 leads with the same variable at 48 per cent",
+      _rs_lead("claude-sonnet-5") == "opponent_prev_unsafe"
+      and round(_rs_share("claude-sonnet-5", "opponent_prev_unsafe")) == 48,
+      f"{_rs_share('claude-sonnet-5', 'opponent_prev_unsafe'):.1f} per cent")
+_rs_first = {p: _rs_lead(p) for p in _rs_roster if p != "human"}
+check("three of the seven checkpoints put the opponent's previous action first",
+      sum(1 for v in _rs_first.values() if v == "opponent_prev_unsafe") == 3 and len(_rs_first) == 7,
+      ", ".join(p for p, v in _rs_first.items() if v == "opponent_prev_unsafe"))
+check("two of the three Gemini checkpoints lead with the assigned risk",
+      sum(1 for p, v in _rs_first.items() if "gemini" in p and v == "max_private_risk") == 2
+      and sum(1 for p in _rs_first if "gemini" in p) == 3,
+      "the third leads with the opponent's previous action")
+check("GPT-5 nano leads with relative race position",
+      _rs_first["gpt-5-nano"] == "progress_gap", "progress gap")
+check("SCOPE GUARD: that roster holds neither GPT-5.4 nor GPT-5.5 and does hold a route outside the nine",
+      not any(p.startswith(("gpt-5.4-2026", "gpt-5.5")) for p in _rs_first) and "gpt-5-nano" in _rs_first,
+      "which is why the body labels both analyses as exploratory")
+check("the human forest is the weakly fitted side, AUC 0.63 against 0.97",
+      round(_rs_fi["human"]["roc_auc"], 2) == 0.63 and round(_rs_fi["claude-sonnet-5"]["roc_auc"], 2) == 0.97,
+      f"{_rs_fi['human']['roc_auc']:.3f} against {_rs_fi['claude-sonnet-5']['roc_auc']:.3f}")
+
+# Concentration is not level: the two routes that finish close and travel differently.
+_rs_g09 = conf[("Gemini 3 Flash", "0.9")]
+_rs_p09 = conf[("GPT-5.5", "0.9")]
+check("Gemini 3 Flash and GPT-5.5 finish within five points of each other at the highest risk",
+      abs(rates["google/gemini-3-flash-preview"][0.9] - rates["openai/gpt-5.5-2026-04-23"][0.9]) < 5.0,
+      f"{rates['google/gemini-3-flash-preview'][0.9]:.1f} against {rates['openai/gpt-5.5-2026-04-23'][0.9]:.1f}")
+check("they use a similar number of distinct sequences, 12 and 13",
+      int(float(_rs_g09["q0_mean"])) == 12 and int(float(_rs_p09["q0_mean"])) == 13,
+      "12 and 13 out of 20")
+check("the Gemini sequences sit half again as far apart, 0.41 against 0.27",
+      round(float(_rs_g09["mean_pairwise_hamming"]), 2) == 0.41
+      and round(float(_rs_p09["mean_pairwise_hamming"]), 2) == 0.27
+      and 1.4 < float(_rs_g09["mean_pairwise_hamming"]) / float(_rs_p09["mean_pairwise_hamming"]) < 1.7,
+      f"{float(_rs_g09['mean_pairwise_hamming']):.3f} against {float(_rs_p09['mean_pairwise_hamming']):.3f}")
+
+# The stricter null is a finite resampling, so the body reports its range, not a floor.
+_rs_dyad_counts = []
+for _rs_s in range(40):
+    _rs_floors = FIG.dyad_null(_dyads, np.random.default_rng([FIG.SEED, 2, _rs_s])).min(axis=0)
+    _rs_dyad_counts.append(sum(1 for p in ROUTE_LABELS for i in range(3) if _counts[p][i] < _rs_floors[i]))
+check("the ten-dyad count moves between sixteen and twenty over forty redraws",
+      min(_rs_dyad_counts) == 16 and max(_rs_dyad_counts) == 20,
+      f"{min(_rs_dyad_counts)} to {max(_rs_dyad_counts)}, which is why the body reports a range and not a floor")
 
 # --- report ------------------------------------------------------------------
 width = max(len(n) for n, _, _ in results)

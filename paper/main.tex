@@ -76,8 +76,10 @@ on Autonomous Agents and Multiagent Systems (AAMAS 2027)}{May 3 -- 7, 2027}
 %%% Use this command to specify the title of your paper.
 
 %\title[]{LLM Agents Underrepresent Human Strategic Diversity in AI Development Races}
+%\title[]{Humans Are More Diverse: Audited Frontier LLMs Show Extreme Policies in Idealised AI Development Races}
 
-\title[]{Humans Are More Diverse: Audited Frontier LLMs Show Extreme Policies in Idealised AI Development Races}
+\title[]{Answering the Rival, Not the Risk: Frontier LLM Agents Collapse to a
+Few Safety Policies in AI Development Races}
 
 %%% Provide names, affiliations, and email addresses for all authors.
 % \author{Nimue}
@@ -291,37 +293,37 @@ on Autonomous Agents and Multiagent Systems (AAMAS 2027)}{May 3 -- 7, 2027}
 
 %%% Use this environment to specify a short abstract for your paper.
 \begin{abstract}
-In an AI development race a company can move slowly and safely, or faster
-while risking the loss of its final reward. We use this repeated
-game to study strategic safety behaviour in large language model (LLM)
-agents. A valid action does not show that an agent understands the game, so
-an audit gate comes before behavioural reading: it verifies the engine, then
-tests rule recall, state tracking, payoff calculation and stability under
-equivalent task wordings.
-We audit nine frontier routes on one frozen probe bank. Every route reads the
-payoff matrix perfectly, yet accuracy at rebuilding the current state ranges
-from 100\% to 20\%, and five pass. Across the 5,022 gameplay decisions of all
-nine, the action format never failed, so format compliance did not discriminate
-state tracking in this audited sample.
-State-reconstruction accuracy is descriptively associated with how sharply
-play responds to assigned risk, which spans 7.0 to 100.0 percentage points,
-though passing and failing routes overlap. Presentation matters too: swapping which opaque code denotes
-\Safe{} raises \Unsafe{} play by 8.3 and 9.5 points on the two crossed routes,
-mechanism unchanged. On raw action sequences, human participants are more
-diverse than every route that passes the gate, and the only two routes
-reaching their range both fail it.
-AI-race simulations therefore need validity checks and trajectory-level
-analysis before their outputs are called strategic,
-human-like or safety-aware. Our findings apply only to the tested routes,
-prompts and hosted decoding contract, which did not forward the requested
-temperature.
+Large language models (LLMs) are moving from producing text to taking
+decisions, including strategic decisions under competition, where speed pays and
+caution does not. A safety question follows, answerable before delegation is
+common: if the choice between developing fast and developing safely
+were handed to a frontier model, what would it choose, and would it choose like
+a person?
+We put nine frontier model endpoints into a repeated AI development race, where
+each side chooses every round between safe development and faster unsafe
+development that accumulates the chance of losing everything. A comprehension
+screen that never looks at play fixed which endpoints we read behaviourally.
+Every screened endpoint plays unsafe less often as catastrophic risk rises, most
+inside a narrow band, and one does not trade off at all but switches from always
+fast to always careful. What the rival is doing matters far more. Replacing the
+opponent by scripted code the agent cannot influence and is never told about
+moved unsafe play several times further than the whole range of stated danger,
+so a self-play rate is an equilibrium of one policy meeting itself, not a
+measurement of risk attitude.
+The game's evolutionary benchmark predicts a switch where the routes measured
+against it decline gradually, and a set of agents is not a population: twenty
+people produce almost twenty different five-round sequences; one screened
+endpoint produces one, repeated by all twenty of its agents.
+A delegate whose choices are set by the rival rather than by the danger cannot
+be predicted from the danger. Claims are scoped to the tested endpoints, one
+prompt version and one idealised game.
 \end{abstract}
 
 %%% Use this command to specify a few keywords describing your work.
 %%% Keywords should be separated by commas.
 
 % \keywords{Legends, Myths, Folktales}
-\keywords{Large language models, AI development races, multi-agent systems, repeated games, AI safety, task validity}
+\keywords{Large language models, AI development races, multi-agent systems, repeated games, AI safety, opponent-conditioned behaviour}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -350,6 +352,17 @@ temperature.
 \section{Introduction}
 \label{sec:introduction}
 
+Large language models (LLMs) are moving out of the business of producing text
+and into positions where they advise on decisions and take them, and a growing
+share of those positions are competitive. As that shift continues, an AI safety
+question follows it: if a decision about how fast and how carefully to develop a
+powerful technology were delegated to a frontier model, what would the model
+decide, and would its decision look like the ones people make? The question is
+prospective throughout, and we do not claim that any organisation today hands a
+safety decision to a language model. We claim only that the behaviour a model
+would bring to such a decision is measurable now, in a controlled game, and that
+measuring it before the practice is common is cheaper than measuring it after.
+
 Competition over advanced artificial intelligence can create a safety
 dilemma: each company may benefit from moving faster, but safety work slows it
 down when rivals do not follow the same standard
@@ -359,130 +372,121 @@ in which every player chooses each round between slower Safe development and
 faster Unsafe development
 \citep{to_regulate_or_not,artificial_intelligence_development_races}. The game
 is idealised and does not model a real AI company in full. Its value is
-control: it lets us test how choices change with competition, relative
-progress, and the earlier actions of other players.
+control: it lets us hold the stated danger, the rival's behaviour and the
+relative progress fixed one at a time, which no observation of real firms
+allows. We reproduce the two-player game studied by
+\citet{falling_behind_unsafe} and add a compatible multiplayer version based
+on \citet{to_regulate_or_not}. We call one hosted model endpoint at one fixed
+configuration a \emph{route}, because the same model name can be served under
+settings we do not control.
 
-Human experiments show why the order of actions matters. In the two-player
-study of \citet{falling_behind_unsafe}, the preregistered comparison between
-the two higher private-risk conditions found no clear difference; exploratory
-analyses instead linked later Unsafe choices to the opponent's previous
-action, to whether the player was ahead or behind, and to the player's first
-action. We call this \emph{path dependence}: an early choice or event changes
-the later path of the interaction. A useful human and LLM comparison must
-therefore examine full action sequences, which we call \emph{trajectories},
-rather than only the overall Unsafe rate.
+Human experiments show why an average is the wrong thing to compare. In the
+two-player study of \citet{falling_behind_unsafe}, the preregistered comparison
+between the two higher private-risk conditions found no clear difference;
+exploratory analyses instead linked later Unsafe choices to the opponent's
+previous action, to whether the player was ahead or behind, and to the player's
+first action, so an early choice changes the later path of the interaction. A
+useful human and LLM comparison must therefore examine full action sequences,
+which we call \emph{trajectories}, rather than only the overall Unsafe rate.
 
-Large language models (LLMs) can act as language-based players in this game,
-and are already studied as simulated participants, decision-making agents and
-game-playing systems
-\citep{using_llm_to_simulate,out_of_one,playing_repeated_games_with_llms}.
-Their use creates a measurement problem. A model may return a correctly
-formatted action without tracking the state or calculating the payoff, and in
-a repeated game one such action changes the next state and can affect every
-later round. A plausible final trajectory is therefore not, by itself,
-evidence that the model understood the game.
-
-Prompt-based evaluation is itself sensitive to presentation choices that do
-not change what the task asks. Meaning-preserving formatting, option order,
-response-token identity, output-format requests, whitespace and persona all
-shift model output
-\citep{sclarPromptFormatting2024,pezeshkpourOptionOrder2024,weiSelectionBias2024,salinasButterfly2024,zhengPersona2024}.
-The same threat appears in strategic choice specifically: reversing action
-labels or reassigning their payoffs changes choice frequencies
-\citep{herrStrategicBias2024}, decisions move with topic, actor and world
-framing across vignettes built on one underlying game
-\citep{robinsonBurdenFraming2025}, and performance falls when a familiar
-default mapping is replaced by an explicitly stated alternative
-\citep{wuCounterfactual2024}. This is why we audit wording, answer order,
-arithmetic disclosure, narrative framing and opaque response codes
-separately, and why we do not treat one familiar presentation as a neutral
-measuring instrument.
-
-Reproducible game-based frameworks approach the problem from the other side.
-FAIRGAME standardises repeated-game experiments across models, languages and
-persona conditions and compares them with game-theoretic predictions
-\citep{buscemiFAIRGAME2025}; later work adds payoff scaling, a Public Goods
-Game and supervised recognition of canonical strategies from action
-trajectories, and finds cooperation moving opposite to its evolutionary
-benchmark \citep{huynhUnderstanding2025,huynhPayoffScaling2026}. That
-motivates our use of full trajectories and theoretical benchmarks. Our audit
-asks the prior question those studies do not: whether the agent can track the
-race that produced the trajectory at all.
-
-This distinction is easy to lose. An agent can produce an aggregate
-\Unsafe{} rate close to the human one while relying on incorrect state
-computations, prompt-specific heuristics or unstable action encodings.
-Aggregate similarity is therefore not evidence that an agent understands the
-task, reproduces human decision dynamics, or holds a general safety preference
+Two problems make that comparison harder than it looks. The first is that a
+correctly formatted action is not an informed one. LLMs already play games of
+this kind as simulated participants, decision-making agents and game-playing
+systems
+\citep{using_llm_to_simulate,out_of_one,playing_repeated_games_with_llms}, yet a
+model can return a valid action without tracking the state, can predict an
+opponent's pattern without acting on it
+\citep{playing_repeated_games_with_llms}, and can distort one simulated
+experiment while reproducing three others \citep{using_llm_to_simulate}; in a
+repeated game a single such action changes the next state and every later round.
+Neither a plausible trajectory nor a verbal strategy report is therefore
+evidence here that the agent tracked the game, and an aggregate \Unsafe{} rate
+close to the human one is not evidence that it reproduces human decision
+dynamics or holds a general safety preference
 \citep{synthetic_replacement_human}.
 
-We address this problem with an \emph{audit-first evaluation}: we check that
-the game and the agent's use of its rules are valid before we interpret the
-agent's behaviour. We reproduce the two-player game studied by
-\citet{falling_behind_unsafe} and add a compatible multiplayer version based
-on \citet{to_regulate_or_not}. The game engine, not the LLM, resolves every
-simultaneous round, and we save every prompt, response, parsed action, retry,
-state change, configuration, random seed and final outcome.
+The second is that prompt-based evaluation is sensitive to presentation choices
+that do not change what the task asks. Formatting, option order, response-token
+identity, output-format requests, whitespace and persona all shift model output
+\citep{sclarPromptFormatting2024,pezeshkpourOptionOrder2024,weiSelectionBias2024,salinasButterfly2024,zhengPersona2024},
+and strategic choice is no exception: reversing action labels or reassigning
+their payoffs changes choice frequencies \citep{herrStrategicBias2024},
+decisions move with topic, actor and world framing
+\citep{robinsonBurdenFraming2025}, and performance falls when a familiar default
+mapping is replaced by a stated alternative \citep{wuCounterfactual2024}. We
+therefore test wording, answer order, arithmetic disclosure, narrative framing
+and opaque response codes separately, and do not treat one familiar presentation
+as a neutral measuring instrument.
 
-The audit has four levels. First, \emph{mechanical validity} means that the
-game engine applies the stated rules correctly. Second, \emph{task validity}
-means that an agent can recall the rules, rebuild the current state, apply a
-state change, and calculate the final result. Third, \emph{representation
-robustness} means that choices remain stable when wording or response labels
-change but the game itself does not. Fourth, we compare valid trajectories
-with published human patterns. The human data are a reference for observable
-behaviour. They are not a target that an LLM must copy, and LLM outputs are
-not treated as replacements for human participants.
+Reproducible game-based frameworks attack the same difficulty from the other
+side. FAIRGAME standardises repeated-game experiments across models, languages
+and persona conditions against game-theoretic predictions
+\citep{buscemiFAIRGAME2025}; later work adds payoff scaling, a Public Goods Game
+and supervised recognition of canonical strategies, and finds cooperation moving
+opposite to its evolutionary benchmark
+\citep{huynhUnderstanding2025,huynhPayoffScaling2026}. What those designs hold
+constant is the opponent, because the opponent in them is another copy of the
+model under test.
 
-Two lessons from LLM-based behavioural simulation shape that boundary. The
-first is that a plausible output is not a comprehended task: qualitative
-findings reproduce in three of four experiments while the fourth shows a
-hyper-accuracy distortion \citep{using_llm_to_simulate}, and a model can
-predict an opponent's pattern without acting on it
-\citep{playing_repeated_games_with_llms}. Neither a plausible trajectory nor a
-verbal strategy report is therefore treated here as evidence of comprehension.
-
-The second is that matching a mean is much weaker than matching a
-distribution. Simulated populations recover broad contrasts while showing
-less heterogeneity than the people they stand in for, in markets, cognitive
-phenotyping, large survey populations and persona-based simulation of
-perception
+One more result shapes what a delegate population should be compared against.
+Simulated populations recover broad contrasts while showing less heterogeneity
+than the people they stand in for, in markets, cognitive phenotyping, survey
+populations and persona-based simulation
 \citep{delRioChanonaMarkets2025,codaFornoCogBench2024,wangSocioBench2025,suhSurveyDistributions2025,wangHumanSubjectivity2024},
-which is why position papers frame social simulation as defensible for
-exploratory use until validated against the population of interest
+which is why position papers call social simulation defensible for exploratory
+use until validated against the population of interest
 \citep{anthisSocialSimulation2025}. Strategic-game evidence is similarly
 unsettled, with policies that shift with parameters and framing, heuristics
 applied more rigidly than people apply them, cooperation in place of the
-predicted equilibrium, and multi-turn action sequences that resist
-reproduction from prompts alone
+predicted equilibrium, and action sequences that resist reproduction from
+prompts alone
 \citep{palCooperation2026,zhengBoundedRationality2025,yaoCompetition2026,luMultiTurn2026}.
-Our human comparison therefore reports within-population diversity, not only
-aggregate \Unsafe{} rates.
+A set of delegates that agrees with itself more than people do is a different
+object from a delegate that is simply more or less cautious, so our human
+comparison reports within-population diversity and not only aggregate
+\Unsafe{} rates.
 
-We ask two questions. Can an agent track the game well enough for its choices
-to be interpreted strategically at all, and are those choices stable across
-presentations that leave the game unchanged? And given that answer, how do
-agents respond to risk, to opponent history and to relative progress, against
-the game-theory and human benchmarks?
+We therefore ask three questions about the delegate's behaviour.
+\emph{Risk:} how do frontier agents trade speed against safety as the stated
+chance of catastrophe rises? \emph{Rivalry:} are those choices a property of
+the model, or do they emerge from the opponent the model happens to meet?
+\emph{Humans and theory:} do the agents reproduce the strategic structure that
+evolutionary game theory predicts, or the one human participants display?
 
-The order matters, because the audit changes what the behaviour means. The
-tested routes express no common strategic policy: routes with similar
-aggregate \Unsafe{} rates respond differently to risk, to opponents and to
-position, rule recall coexists with incorrect state tracking, and probe
-accuracy is descriptively associated with how sharply a route responds to
-risk. Measured directly on
-action sequences, human participants are more diverse than every route that
-passes the audit, and the only two routes whose diversity reaches the human
-range are routes the audit refuses. Our contribution is the
-combination: an auditable race mechanism, a validity gate applied before any
-strategic reading, and a comparison against game-theory and human benchmarks
-made only for the routes that pass it. Exploratory multiplayer results remain
-in the supplementary material, because the available position analysis covers
-two checkpoints and cannot identify a general group-size effect.
+Each answer changes how the next should be read. The agents do respond to the
+stated danger, within a narrow band, and one route replaces the trade-off by a
+switch from always fast to always careful. But where we put the agent against
+scripted code instead of a second copy of itself, the rival's stance moves play
+several times further than the whole range of stated danger does, and neither
+external reference shows that shape: the evolutionary model predicts a switch
+where the agents deliver a gradient, and on raw action sequences human
+participants use nearly the whole policy space while every screened route uses a
+small part of it.
 
-Each reported behavioural conclusion is scoped to its tested checkpoint,
-prompt version, decoding contract, experimental configuration, and run
-period. The labels \Safe{} and \Unsafe{} denote actions within the experimental game and should not be interpreted as direct measurements of general LLM safety, subjective risk preference, or suitability for autonomous deployment.
+Three contributions follow. First, a scripted-rival design for repeated-game
+evaluation and the critique it licenses. That an LLM's self-play behaviour need
+not predict its behaviour against a different agent is known
+\citep{lekeasNashSuppression2026,palCooperation2026}, and fixed opponents are
+standard practice in this literature \citep{payneStrategicIntelligence2025};
+what we add is the version that matters for a safety reading, that self-play
+can hide the response to the treatment the study is about, measured against a
+rival the agent cannot influence and is never told about. Second, a
+population-level comparison with human participants read on raw action
+sequences rather than on aggregate rates, which is what makes the compression
+of policy visible at all. Third, an auditable race mechanism in which the engine
+and not generated text resolves every round, entered through a comprehension
+screen that scores answers to frozen questions against ground truth and never
+reads a race, so that the set of routes interpreted strategically was fixed by a
+rule that cannot see the behaviour being interpreted. Exploratory multiplayer results remain in the
+supplementary material, because the available position analysis covers two
+checkpoints and cannot identify a general group-size effect.
+
+Every behavioural conclusion is scoped to its tested route, prompt version,
+decoding contract, provider path and run period. The labels \Safe{} and
+\Unsafe{} denote actions inside the experimental game and are not measurements
+of general LLM safety, of a subjective risk preference, or of suitability for
+autonomous deployment, and nothing measured here is a harm, a real safety
+outcome, or an action taken by an organisation.
 
 \section{Preliminaries}
 \label{sec:preliminaries}
@@ -495,7 +499,7 @@ We first specify the two-player game reproduced from \citet{falling_behind_unsaf
 \begin{figure*}[t]
   \centering
   \includegraphics[width=\textwidth]{../figures/paper/AIRaceOverview.pdf}
-  \caption{The AI-race mechanism, shared by the two-player and $N$-player games. (a) Each round a company advances by choosing Safe (green, slower, pays a cost) or Unsafe (red, faster, adding private setback risk); actions are simultaneous, the stopping time is hidden, and terminal prize $B$ goes to the progress leader or is split among tied leaders. (b) The two-player stage-payoff matrix, Equation~\ref{eq:2p-matrix}. (c) The $N$-player stage-payoff rule, stated in full in the supplementary material, in which the per-round benefit $b$ is distinct from terminal prize $B$.}
+  \caption{The AI-race mechanism, shared by the two-player and $N$-player games. (a) Each round a company chooses Safe (green, slower, pays a cost) or Unsafe (red, faster, adding private risk). (b) The two-player stage-payoff matrix, Equation~\ref{eq:2p-matrix}. (c) The $N$-player rule, in which per-round benefit $b$ differs from prize $B$.}
   \label{fig:mechanism}
   \Description{Three-panel diagram of the AI-race mechanism. Panel a shows green Safe and red Unsafe action paths, with Safe advancing one step and Unsafe advancing one and a half steps while adding private risk; the bottom annotation marks simultaneous actions, a hidden stopping time, and terminal prize B. Panel b shows the two-player payoff matrix as a two-by-two grid labelled Safe and Unsafe on each axis, with values 1.0, 0.6, 2.4, and 2.0. Panel c shows the $N$-player stage-payoff rule: if $k$ of $N$ companies choose Safe, $D=k+s(N-k)$; Safe receives $b/D-c$ and Unsafe receives $s b/D$. Lowercase $b$ denotes the per-round benefit, not terminal prize $B$.}
 \end{figure*}
@@ -568,8 +572,7 @@ requested seed on the Google routes and forwarded it, application
 unconfirmed, on the OpenAI and Anthropic ones.
 
 Both seats of a race are the same endpoint, so every gameplay rate below is
-mirror-match play. \S\ref{sec:results-scripted} fixes the rival instead and
-shows that a mirror-match rate is not a measurement of how a route treats risk.
+mirror-match play, until \S\ref{sec:results-scripted} fixes the rival instead.
 
 The main behavioural outcome is whether an agent chooses Unsafe. The race,
 not the individual decision, is the main independent experimental unit,
@@ -588,16 +591,13 @@ under a plan fixed before any result is inspected, and a run enters that
 stratum only when the protocol, route identifier, prompt and configuration
 hashes, race count and exclusion rules were all fixed and recorded beforehand.
 
-Two comprehension batteries appear in this paper and should not be confused.
-An earlier open-source audit uses a 41-probe bank over the same six domains,
-varying wording, paraphrase, calculator disclosure and answer order, and
-scoring format compliance separately from semantic correctness. The
-confirmatory frontier endpoint admission of \S\ref{sec:results-validity} is a
-separate, frozen battery. A paired behavioural diagnostic compares the
-canonical prompt against a deterministic four-row decision card that discloses
-the focal agent's immediate payoff, progress and private-risk consequence for
-each action profile, while revealing neither the opponent's move nor the
-stopping horizon.
+A paired behavioural diagnostic compares the canonical prompt against a
+deterministic four-row decision card that discloses the focal agent's
+immediate payoff, progress and private-risk consequence for each action
+profile, while revealing neither the opponent's move nor the stopping horizon.
+It runs on the one route here whose weights are published, screened by its own
+battery rather than by the screen of \S\ref{sec:design-screen}, so it is read
+only as a within-route contrast between two presentations.
 
 Three further manipulations are described in full in the supplementary
 material: a persona framing with a length-matched neutral placebo, eight
@@ -611,8 +611,59 @@ next state. A comprehension check gates all of them: if it fails, a
 behavioural difference shows prompt-conditioned output rather than informed
 play.
 
+\subsection{Quality-control screen on the routes}
+\label{sec:design-screen}
+
+An action that parses is not evidence that the agent followed the race, so
+before any behavioural analysis every route was screened on a validity
+battery. The battery is a frozen bank of 20 atomic probes over six domains:
+recalling the rules, reading the stage-payoff matrix, rebuilding the current
+state from a short history, taking one state transition, scoring a terminal
+race, and computing a closed-form expected payoff. Nine routes each answered
+that same bank three times, giving 540 retained answers, all but five of which
+parsed; every unparsed answer falls in the expected-payoff domain, which is
+recorded and never gates admission.
+A route is admitted only if it clears all three conditions that were fixed and
+recorded before the campaign ran: 80\% overall accuracy, 75\% on state
+reconstruction and 75\% on terminal scoring. Expected payoff is recorded but
+never blocks admission, because the game asks an agent to choose an action
+rather than to solve for an expected value, and no route reaches 75\% on it.
+Five of the nine routes were admitted and four were refused; every strategic
+claim below stands on an admitted route. The screen reads probes and never
+reads a race, so no gameplay result can reach a verdict. Nor does the verdict
+turn on exactly where the thresholds sit: tightening any one of them by five
+points changes nothing, and only state reconstruction refuses anybody, one
+achievable step above admitting a sixth route. The four refused
+routes were not discarded. All nine played the same confirmatory baseline, and
+every refused route is reported beside the admitted five, including the two
+that are the only routes here to reach human-level trajectory diversity
+(Figure~\ref{fig:diversity}). The published-weight route named above sits
+outside this screen and was measured instead on a larger battery of 41 probes
+over the same six domains; that is a separate instrument, and its scores are
+never pooled with these.
+
+Three limits on the screen belong in the body rather than only in the
+supplement, because each one bounds what a verdict may be used for. First, the
+admitted and refused split coincides exactly with whether \texttt{lite},
+\texttt{mini} or \texttt{nano} appears as a whole word in the route name, nine
+routes out of nine, exact permutation $p=1/126$, so the line the screen draws
+cannot be separated here from model scale or from the training differences
+that travel with it. Second, the battery has been administered three times,
+and between two identical administrations individual state-reconstruction
+scores moved by two probes in fifteen while no verdict changed. Third, two
+admitted routes clear a condition with a margin of exactly zero, at the lowest
+score the fifteen-probe grid allows above the threshold, so a pass margin can
+be narrower than the movement the instrument shows between identical runs. We
+therefore treat a verdict as a declared entry condition and never as a trait
+estimate: no analysis below interpolates between probe scores, ranks admitted
+routes by probe accuracy, or reads the admitted against refused split as a
+measured contrast. The supplementary material carries the full per-route and
+per-domain results, the repeatability check across three administrations, a
+sweep of all three thresholds, the separate battery, and the association
+between measured comprehension and how strongly a route responds to risk.
+
 \begin{table}[t]
-  \caption{Evidence strata. Pilot modules are never pooled with confirmatory inference. Admission and the neutral baseline cover all nine routes, of which five are admitted; the crossed representation cell uses two of them, the scripted-rival campaign three, and the matched group-size grid one.}
+  \caption{Evidence strata. Pilot modules are never pooled with confirmatory inference. Admission and the neutral baseline cover all nine routes, of which five are admitted; every later module names its own routes where it is reported.}
   \label{tab:evidence-strata}
   \centering
   \footnotesize
@@ -637,431 +688,323 @@ play.
 \section{Results}
 \label{sec:results}
 
-We report the validity gate first, because every strategic claim below depends
-on it, and then ask how measured comprehension relates to behaviour at all.
-Three- to five-player races, full model tables, predictive diagnostics and
-robustness checks are in the supplementary material.
+These agents do answer the danger they are told about, but they answer their
+rival far more strongly, they do it in a shape the evolutionary benchmark
+produces only near neutrality, and they reuse a far smaller set of trajectories
+than people do. The four subsections take those in turn. A route the
+quality-control screen of \S\ref{sec:design-screen} refused appears below only
+where it is named as refused. Three- to five-player
+races, full model tables, predictive diagnostics and robustness checks are in
+the supplementary material.
 
-\subsection{Validity gate: can agents follow the race?}
-\label{sec:results-validity}
+\subsection{How agents trade speed against safety}
+\label{sec:results-risk}
 
-Nine routes were audited under one frozen probe bank of 20 atomic probes at
-three requested repetitions, 540 retained outputs in total, with no parse
-failure. Admission requires 80\% overall accuracy, 75\% on state
-reconstruction, which on a fifteen-probe grid means at least 12 of 15 or 80\%
-observed, and 75\% on terminal scoring. The
-closed-form expected-payoff
-probes are recorded but do not gate admission, because the game asks an agent
-to choose an action, not to solve for an expected value.
-
-Table~\ref{tab:task-audit} reports the result, and comprehension is
-distributed unevenly. Reading the payoff matrix and stating
-the rules are solved by everyone; every difference between endpoints appears
-in the harder subtasks, where accuracy at rebuilding the current state from a
-short history ranges from 100\% down to 20\%. Five routes clear the gate and
-four do not.
+There is no common frontier-agent safety policy. Every screened route does play
+\Unsafe{} less often as the stated maximum private risk rises, so all five
+answer the danger they are told about, but they do not answer it in the same
+shape: four of the five give ground gradually and the fifth switches
+(Table~\ref{tab:risk-response}). Each route played 30 races and 558 decisions
+under one frozen protocol with zero parse failures and ten races in every risk
+cell, so the difference in shape is not a difference in how much evidence each
+route supplied.
 
 \begin{table}[t]
-    \caption{Semantic accuracy on the frontier endpoint admission, one row per
-    audited route, ordered by overall accuracy. Reading the stage-payoff matrix
-    was answered perfectly by every route, and rule recall by every route
-    except GPT-5.4 nano (75.0\%), so those two subtasks are omitted here.}
-    \label{tab:task-audit}
+    \caption{Each screened route's \Unsafe{} play at the three stated maximum
+    private risks, ordered by risk response: the rate at $0.1$ minus the rate
+    at $0.9$, with a 95\% percentile bootstrap interval resampled over races.
+    Claude Opus 5 is separated because its policy is a switch rather than a
+    trade-off.}
+    \label{tab:risk-response}
     \centering
     \footnotesize
-    \setlength{\tabcolsep}{3.2pt}
-    \begin{tabular}{@{}lrrrrrc@{}}
+    \setlength{\tabcolsep}{4pt}
+    \begin{tabular}{@{}lrrrl@{}}
         \toprule
-        & State & State & Term. & Exp. pay & & \\
-        Route & recon. & trans. & score & (diag.) & Overall & Adm. \\
+        Route & $r{=}0.1$ & $r{=}0.6$ & $r{=}0.9$ & Risk response \\
         \midrule
-        Gemini 3 Flash         &  93.3 & 100.0 & 100.0 &  50.0 &  93.3 & yes \\
-        Claude Opus 5          &  93.3 & 100.0 & 100.0 &  33.3 &  91.7 & yes \\
-        GPT-5.4                & 100.0 & 100.0 & 100.0 &   0.0 &  90.0 & yes \\
-        GPT-5.5                &  80.0 & 100.0 & 100.0 &  50.0 &  90.0 & yes \\
-        Claude Sonnet 5        & 100.0 & 100.0 &  80.0 &   0.0 &  85.0 & yes \\
+        Claude Sonnet 5 &  89.2 & 48.4 & 32.3 & 57.0 [52.6, 61.0] \\
+        GPT-5.4         &  87.1 & 65.1 & 46.8 & 40.3 [35.1, 46.3] \\
+        Gemini 3 Flash  &  98.9 & 73.1 & 60.2 & 38.7 [35.3, 42.2] \\
+        GPT-5.5         &  93.5 & 70.4 & 55.4 & 38.2 [32.5, 44.8] \\
         \midrule
-        Gemini 3.1 Flash-Lite  &  73.3 & 100.0 &  80.0 &  16.7 &  80.0 & no \\
-        GPT-5.4 mini           &  66.7 &  66.7 &  86.7 &   0.0 &  75.0 & no \\
-        Gemini 3.5 Flash-Lite  &  60.0 &  50.0 &  60.0 &   0.0 &  65.0 & no \\
-        GPT-5.4 nano           &  20.0 &  50.0 &  66.7 &   0.0 &  51.7 & no \\
+        Claude Opus 5   & 100.0 &  0.0 &  0.0 & 100.0, a switch \\
         \bottomrule
     \end{tabular}
 \end{table}
 
-Two points follow. No route reaches 75\% on closed-form expected payoff and
-five score zero, so the arithmetic gap is general rather than a property of one
-weak endpoint. And format compliance did not discriminate state tracking in
-this audited sample: the parser was satisfied on all
-540 outputs while state reconstruction varied across the full range, which is
-the concrete sense in which a valid action is not a valid measurement.
-The battery has been administered three times, twice under an identical
-contract; between those two, individual state-reconstruction scores moved by
-up to 13.3 points, two calls in fifteen, while no verdict changed. That
-resolution applies to the admitted side too, which is the side every
-behavioural claim below stands on. GPT-5.5 clears state reconstruction at
-12 of 15, the lowest integer above the 11.25 the threshold asks for, and
-Claude Sonnet 5 clears terminal scoring the same way; one probe answered
-otherwise would leave GPT-5.5 at 11 of 15, or 73.3\%, the exact score on which
-Gemini 3.1 Flash-Lite is refused. An admitted route's pass margin can be
-narrower than the movement the instrument shows between identical
-administrations, which is why a verdict is used here as a declared entry
-condition rather than a trait estimate: no analysis interpolates between
-probe scores. Probe-level outputs, retained failure records, unreachable
-routes and a sweep of the three thresholds are in the supplementary material.
+The four graded routes agree with each other far more closely than their
+vendors differ. They come from three companies and their risk responses fall in
+a band 19 points wide, from 38.2 to 57.0 percentage points. We report that band
+rather than an average over all five, because averaging a switch with four
+slopes returns 54.8 points, a figure no graded route is near and which one row
+produces.
 
-\subsection{Is measured comprehension associated with the risk response?}
-\label{sec:results-audit-behaviour}
+That fifth route does not trade off at all. Claude Opus 5 plays \Unsafe{} on
+all 186 decisions at risk $0.1$ and \Safe{} on all 372 decisions above it, with
+no race inside a cell departing from that. Its 100-point
+figure is therefore the largest the scale allows rather than a strong response
+measured with room above it, and because no risk level was run between $0.1$
+and $0.6$, where it falls is not measured at all.
 
-The audit is only worth running if it tells us something about the behaviour
-it gates. All nine audited routes also completed the confirmatory two-player
-baseline under one frozen protocol: 30 races, 558 decisions and zero parse
-failures each, with 10 races in every risk cell. We summarise each route's
-strategic sensitivity by its \emph{risk response}, the \Unsafe{}-rate
-difference between the lowest and highest assigned private risk, resampled
-over races because the two seats of a race share its sampled horizon and
-setback draw.
+Answering the risk is not the same as becoming safe. At the highest risk the
+game offers, where a winner's whole payoff is zeroed with probability up to
+$0.9$ in proportion to how much \Unsafe{} it played, the four graded routes
+still play \Unsafe{} on roughly a third to three fifths of their decisions
+against a copy of themselves, in the $r{=}0.9$ column of
+Table~\ref{tab:risk-response}. Two routes
+can also reach a similar rate through very different sets of races, which
+\S\ref{sec:results-diversity} measures directly.
 
-Two routes also ran in the earlier confirmatory block, a temporal replicate of
-one frozen protocol, and agree closely: the largest per-cell difference is 1.1
-points for Gemini 3 Flash and 5.3 for Claude Sonnet 5, against risk responses
-of 38.7 and 57.0. Provider-side variation is thus small relative to the
-reported effect, which matters because no provider confirmed applying the
-requested seed.
+A route's profile is a property of the route rather than of the run that
+produced it. Repeating the whole protocol on one route under the same frozen
+contract moves no risk cell by more than 1.1 points over 186 decisions, against
+a 93.0-point spread in risk response across the nine routes, and moves its own
+risk response from 38.7 to 40.3. That bounds run-to-run variation for that route at
+this sample size and licenses no such bound for a route collected once, which
+matters here because no provider confirmed applying the requested sampling
+seed.
 
-The risk response spans almost the whole available range, from 7.0 percentage
-points for GPT-5.4 mini to 100.0 for Claude Opus 5
-(Figure~\ref{fig:audit-behaviour}a), and state-reconstruction accuracy is
-descriptively associated with it, as in a commons game with many more probes
-\citep{piattiGovSim2024}. Across
-the nine routes, the rank correlation between risk response and
-state-reconstruction accuracy is $\rho=0.87$ (exact permutation $p=0.004$,
-$n=9$), rising to $\rho=0.92$ ($p=0.003$, $n=8$) when Claude Opus 5, whose
-self-play rate is a step rather than a slope (Figure~\ref{fig:audit-behaviour}c), is
-set aside. We report the correlation with and without it,
-because a single extreme route should not carry a rank statistic computed over
-nine.
+\paragraph{Disclosed arithmetic.} How the same mechanism is presented moves
+play, so a single reported rate belongs to a presentation and not only to a
+route. Replacing the canonical prompt with a decision card that states the
+current round's payoff, progress and private-risk consequence for each action
+profile, while revealing neither the opponent's move nor the stopping horizon,
+raises \Unsafe{} play from 52.0\% to 60.8\% on the one route here whose
+weights are published, which is a
+contrast between two presentations of one route and not a rate to set beside
+the screened five. Both conditions completed 30 races and
+558 decisions with zero parse failures and matched risk-by-repetition cells had
+identical realised horizons. Only 3.3\%
+of paired first-round decisions changed, so the divergence appeared later, once
+feedback had accumulated. The two intervals resampled over races still touch,
+48.9 to 55.4\% against 55.1 to 65.3\%, so we read this as suggestive rather
+than established, and mean final payoff barely moves, 42.77 against 42.21.
 
-Three cautions belong with that number, and none is removable by more careful
-statistics. Nine commercial endpoints are not a sample from a population of
-models, so this is a descriptive association, not an estimated effect. The
-endpoints differ in far more than their probe scores, so nothing here
-separates comprehension from provider, scale or training. That confound is
-legible in the route strings alone: sorting the nine on whether
-\texttt{lite}, \texttt{mini} or \texttt{nano} appears as a whole word
-reproduces the gate's split exactly, 9 of 9, exact permutation
-$p=1/126=0.008$ (figure in the supplementary material). The agreement is to
-that one tier suffix, not to small models in general: \texttt{flash} is
-Google's own small-and-fast tier word and the admitted
-\path{google/gemini-3-flash-preview} carries it, so counting \texttt{flash}
-too gives 8 of 9, $p=5/126=0.040$. Either way the association cannot be
-separated here from scale or the training differences that travel with it.
-And the gate does
-not partition the sample cleanly: Gemini 3.1 Flash-Lite misses admission on
-state reconstruction, 73.3\% against the 75\% threshold, yet responds to risk
-as strongly as three admitted routes (Figure~\ref{fig:audit-behaviour}b), so
-the threshold is a declared entry condition, not a behavioural predictor.
-
-What the pattern does establish is the practical point. The two routes whose
-play is flattest in risk, GPT-5.4 nano at 9.7 percentage points and GPT-5.4
-mini at 7.0, score 20.0\% and 66.7\% on state reconstruction, both below the
-gate. Their \Unsafe{} rates near 60\% would sit unremarkably in a cross-model
-table and are close to the human mean, yet come from endpoints that largely
-cannot rebuild the state the risk applies to, and no aggregate rate reported
-without a comprehension gate can tell that apart from a deliberate policy of
-moderate risk-taking. Across the four refused routes the risk response
-averages 19.4 points against 54.8 for the five admitted ones. The sharpest
-version is GPT-5.4 nano. Its two company seats are symmetric by construction,
-with byte-identical opening prompts under a name swap, yet its \Unsafe{} rate
-differs by 19.4 points $[12.1, 25.9]$ between them, twice its 9.7-point
-response to the stated risk. States diverge after round one, so the clean
-label contrast is the opening, and there its gap is 30.0 points.
+\paragraph{Opaque symbolic mapping.} Even the arbitrary label attached to an
+action moves play, which is the sharpest form of the same warning: nothing in
+the mechanism differs across any of the cells below. Swapping which of two
+opaque response codes denotes \Safe{} raises \Unsafe{} play by 9.5 percentage
+points on Gemini 3 Flash (95\% interval 5.6 to 13.8) and by 8.3 on Claude
+Sonnet 5 (5.4 to 12.2), over 60 paired blocks each. Retelling the same game as
+an abstract contest rather than a technology race moves play too, but
+route-specifically, by 10.8 points on Gemini 3 Flash (6.0 to 15.6) and 3.4 on
+Claude Sonnet 5 (0.9 to 7.4). The design is fully crossed, counterbalancing two
+narrative skins against the two assignments of the response codes within
+repetition blocks, 120 races and 2{,}232 decisions on each route with zero parse
+failures, and every contrast is taken inside a repetition whose recorded draw
+hashes confirm one shared sampled horizon. A smaller uncrossed version of the
+same manipulation confounded the mapping with repetition parity and failed its
+comprehension check, so it is reported in the supplementary material and read
+nowhere here. The scope is two screened routes, not endpoints in general.
 
 \begin{figure*}[t]
   \centering
-  \includegraphics[width=\textwidth]{../figures/paper/audit_versus_behaviour_v2.pdf}
-  \caption{Measured comprehension against strategic sensitivity over the nine
-  audited routes. (a) \Unsafe{} rate per route-by-risk cell, 186 decisions
-  each, with the drop from risk 0.1 to 0.9 at the right; a ringed tile sits on
-  a boundary and a filled glyph marks an admitted route. (b)
-  State-reconstruction accuracy against that drop: $\rho=0.87$ over nine
-  routes, $0.92$ with Claude Opus 5 set aside. It is an agreement between two
-  measurements of the same nine endpoints, not an estimated effect, since these
-  routes differ in far more than one probe domain. (c) Claude Opus 5 against the
-  other eight in grey: \Unsafe{} on all 186 decisions at risk 0.1 and \Safe{} on
-  all 372 above it, a step rather than a slope.}
-  \label{fig:audit-behaviour}
-  \Description{Three panels. Panel a is a table of colour, one row per route and
-  one column per risk level, with the unsafe rate printed in each tile and a
-  drop column at the right. Panel b is a scatter of state-reconstruction
-  accuracy against that drop, with the admission threshold marked and each route
-  directly labelled. Panel c plots unsafe rate against risk with eight routes in
-  grey and Claude Opus 5 highlighted, falling from 100 per cent to zero between
-  the first and second risk level and staying there.}
+  \includegraphics[width=\textwidth]{../figures/paper/scripted_opponent_main.pdf}
+  \caption{Three screened routes against four scripted rivals they cannot
+  influence. (a) \Unsafe{} play rises from the rival that always plays \Safe{}
+  to the one that never does, in all nine route-by-risk cells. (b) Both
+  treatments on one scale, each differenced inside a repetition so the hidden
+  horizon cancels; bars are 95\% bootstrap intervals over ten blocks.
+  (c) Against a fixed safe rival, filled, each route plays \Unsafe{} less than
+  against a copy of itself, open.}
+  \Description{Three panels. Panel a plots unsafe play against the four scripted
+  rivals, ordered from Always Safe to Always Unsafe, with one line per route and
+  a dash pattern per risk level; every line rises from left to right. Panel b is
+  a dot-and-interval chart on one axis of percentage points, with nine rival
+  contrasts in an upper row lying between about 45 and 75 points and three risk
+  contrasts in a lower row lying near 10 to 13 points, and a shaded corridor
+  between the two families that no interval enters. Panel c plots unsafe play
+  against risk, with a filled marker for the rate against the Always Safe rival
+  and an open marker above it for the self-play rate, on all three routes at all
+  three risk levels, the open marker always higher.}
+  \label{fig:scripted-opponent-main}
 \end{figure*}
 
-
-\subsection{Behavioural robustness under equivalent presentations}
-\label{sec:results-sensitivity}
-
-We next ask whether sampled behaviour is stable under manipulations that
-leave the underlying game mechanics unchanged.
-
-\paragraph{Disclosed arithmetic.} The canonical and decision-card conditions
-each completed 30 races and 558 decisions with zero parse failures, and
-matched risk-by-repetition cells had identical realised horizons.
-Table~\ref{tab:disclosed-arithmetic} compares them, with intervals resampled
-over races rather than decisions because two decisions in one race share a
-state history. Only 3.3\% of paired first-round decisions changed, so the
-divergence appeared later, after feedback accumulated. Disclosing the current
-round's arithmetic shifts \Unsafe{} play upward by about nine points, but the
-two race-clustered intervals still touch, so we read it as suggestive rather
-than established.
-
-\begin{table}[t]
-    \caption{Disclosed-arithmetic diagnostic: canonical vs.\ decision-card
-    conditions, 30 races each. Intervals are 95\% percentile bootstrap
-    intervals over the 30 races.}
-    \label{tab:disclosed-arithmetic}
-    \centering
-    \small
-    \begin{tabular}{@{}lrlr@{}}
-        \toprule
-        Condition & \Unsafe{} rate & 95\% CI & Mean payoff \\
-        \midrule
-        Canonical      & 52.0\% & 48.9 to 55.4\% & 42.77 \\
-        Decision card  & 60.8\% & 55.1 to 65.3\% & 42.21 \\
-        \bottomrule
-    \end{tabular}
-\end{table}
-
-\paragraph{Opaque symbolic mapping.} The earlier local context-skin pilot
-confounded mapping with repetition parity and failed its comprehension gate,
-so it is excluded here and kept only in the audit trail. A fully crossed
-rerun, counterbalancing two narrative skins against the two assignments of the
-opaque response codes $P$ and $Q$ within repetition blocks, completed on both
-admitted routes: 120 races and 2{,}232 decisions each, zero parse failures.
-Each contrast is taken within a repetition block, and the recorded draw hashes
-confirm that paired cells share one sampled horizon, which is thereby
-differenced out.
-
-Both presentations move play, the code assignment by a similar amount on the
-two routes: swapping which code denotes \Safe{} raises \Unsafe{} play by 9.5
-percentage points on Gemini 3 Flash (95\% interval 5.6 to 13.8) and by 8.3 on
-Claude Sonnet 5 (5.4 to 12.2), over 60 paired blocks each. The narrative skin
-matters too, but route-specifically: retelling the same game as an abstract
-contest rather than a technology race raises \Unsafe{} play by 10.8 points on
-Gemini 3 Flash (6.0 to 15.6) and by 3.4 on Claude Sonnet 5 (0.9 to 7.4). No
-element of the mechanism differs across any of these cells, and the scope is
-two audited routes, not endpoints in general.
-
-
-\begin{figure}[t]
-  \centering
-  \includegraphics[width=\columnwidth]{../figures/paper/scripted_opponent_main.pdf}
-  \caption{Three admitted routes against a rival they cannot influence: Gemini 3
-  Flash, GPT-5.4 and Claude Sonnet 5. (a) The rival's stance, the \Unsafe{} rate
-  against the \emph{Always Unsafe} rival minus the rate against the
-  \emph{Always Safe} rival, differenced inside a repetition so the hidden
-  horizon is removed; bars are 95\% bootstrap resampling intervals over the ten
-  repetition blocks. Every interval lies to the right of zero, and the three
-  routes separate. (b) The same routes against a fixed safe rival, filled, and
-  against a second copy of themselves in the neutral baseline, open; the dashed
-  rule is the boundary at which every decision in a cell is \Unsafe{}. The full
-  four-rival grid, the opening-move contrast and the collection record are in
-  the supplementary material.}
-  \Description{Two panels. Panel a is a dot-and-interval chart with one row per
-  maximum private risk level and three routes in each row: Gemini 3 Flash sits
-  near 70 percentage points at every level, GPT-5.4 near 50, and Claude Sonnet 5
-  near 65 at the two lower levels and near 45 at the highest, with every
-  interval well to the right of zero. Panel b plots unsafe play against risk,
-  with a filled marker for the rate against the Always Safe rival and an open
-  marker above it for the self-play rate, on all three routes at all three risk
-  levels, the open marker always higher.}
-  \label{fig:scripted-opponent-main}
-\end{figure}
-
-\subsection{Mirror-match play hides opponent-conditioned behaviour}
+\subsection{The rival matters far more than the risk}
 \label{sec:results-scripted}
 
-Every rate reported so far is mirror-match play, and that design cannot
-separate a route answering its rival from a route running through a phase of
-its own, because the rival is the route. One campaign fixes the rival instead.
-Three admitted routes each played the four benchmark strategies of
-\S\ref{sec:theory-benchmark} as scripted rivals at all three risk levels: 36
-cells, ten races each, 360 races and 3{,}348 decisions, with no parse failure
-anywhere. The rival is executed by the task file rather than by a model, it is
-never disclosed to the route, and every one of its moves is recomputed from the
-route's own recorded moves afterwards, which no cell failed. The route's seat is
-counterbalanced five and five inside each cell, and each contrast is taken
-inside a repetition, so the hidden horizon is differenced out. Because the rival
-cannot be influenced by the route, the direction of a difference between rivals
-is not in question.
+A model does not carry a fixed attitude to risk into the race. What it plays is
+set far more by who is on the other side than by how dangerous it is told the
+race is. Every rate reported so far is mirror-match play, in which the rival is
+the route. One campaign fixes the rival instead.
 
-Responding to the rival is general across these three endpoints.
-\Unsafe{} play rises from the rival that always plays \Safe{} to the rival that
-never does, with the two conditional rivals in between, in all nine
-route-by-risk cells, and the paired difference between the two unconditional
-rivals is positive in every one of them, with a smallest lower bound of $+35.8$
-points (Figure~\ref{fig:scripted-opponent-main}a). The response to stated risk
+The rival in that campaign is code, not a model. Three screened routes each
+played the four benchmark strategies of \S\ref{sec:theory-benchmark} at all
+three risk levels: 36 cells, ten races each, 360 races and 3{,}348 route
+decisions with no parse failure anywhere. It is never disclosed to the route,
+and every one of its 6{,}696 recorded moves was
+recomputed afterwards from the route's own recorded history, which no cell
+failed. The route's seat is counterbalanced five and five inside each cell, and
+each contrast is taken inside a repetition, so the hidden horizon is differenced
+out. Because the route cannot influence the rival, the direction of a difference
+between rivals is not in question.
+
+Who the agent is playing turns out to be worth several times what it is told the
+danger is, and the two are far enough apart that their intervals do not meet.
+Both halves are measured the same way and over the same ten
+blocks, so they can be read against each other directly. Holding the rival fixed at \emph{Always
+Safe} and moving the stated maximum private risk from $0.1$ to $0.9$ moves
+\Unsafe{} play by 10.4, 12.3 and 12.7 points on Gemini 3 Flash, GPT-5.4 and
+Claude Sonnet 5. Holding the risk fixed and changing the rival from one that
+always plays \Safe{} to one that never does moves it by between 45.0 and 73.5
+points. The rival is therefore worth between three and a half and
+seven times the entire declared range of danger, on every route
+measured. The comparison survives its own worst case, though not with room to
+spare. Against the two unconditional rivals, the most the stated risk ever buys
+is 31.5 points [27.2, 35.3] and the least the rival ever buys is 45.0 [42.0,
+48.2], two intervals that do not meet. Adding the two conditional rivals raises
+the largest risk contrast to 41.0 points [37.7, 43.8], on Claude Sonnet 5
+against the rival that opens \Unsafe{} and then copies, and that one interval
+does touch the smallest rival contrast. Two risk contrasts are lower bounds
+because their low-risk arm is at the ceiling in every block, which can only
+understate the risk side; neither is among the figures quoted here.
+
+Answering the rival is general across these three endpoints. \Unsafe{} play
+rises from the rival that always plays \Safe{}, through the two conditional
+rivals, to the rival that never plays \Safe{}, in all nine route-by-risk cells,
+strictly in eight of them and weakly in the ninth only because two of its cells
+are at the ceiling (Figure~\ref{fig:scripted-opponent-main}a). The paired
+difference between the two unconditional rivals is
+positive in every cell, with a smallest lower bound of $+35.8$ points
+(Figure~\ref{fig:scripted-opponent-main}b). The response to the stated risk
 survives the change of design as well: against a fixed safe rival, no route's
 \Unsafe{} rate rises as the stated risk rises.
 
-How strongly a route responds is a property of the checkpoint, and that is the
-more informative result. Gemini 3 Flash answers its rival by about seventy
-points at every risk level, GPT-5.4 by about fifty with an interval that does
-not meet Gemini 3 Flash's at any risk level, and Claude Sonnet 5 gives a
-Gemini-sized answer at the two lower risk levels before falling away at the
-highest. The level differs too: GPT-5.4 still plays \Unsafe{} about a third of
-the time against a rival that never does, which is more than either of the
-others. These are three separate samples, so intervals that fail to overlap
-indicate a difference conservatively rather than test one.
+How strongly a route answers its rival is a property of the checkpoint. Gemini 3
+Flash answers by about seventy points at every risk level, GPT-5.4 by about
+fifty with an interval that does not meet Gemini 3 Flash's at any risk level, and
+Claude Sonnet 5 gives a Gemini-sized answer at the two lower risk levels before
+falling to 45.0 points at the highest. The level differs too, and in the
+direction that matters for a safety reading: against a rival that never plays
+\Unsafe{}, GPT-5.4 still does so 36.6\%, 32.3\% and 25.8\% of the time, more than
+either of the others at every risk level. These are three separate samples, so
+intervals that fail to overlap indicate a difference conservatively rather than
+test one.
 
 A mirror-match rate is therefore an equilibrium of one policy meeting itself
-rather than a measurement of how a route treats risk. On all three routes and at
-all three risk levels, the rate against a fixed safe rival sits below the rate
-the same route reaches against a second copy of itself
-(Figure~\ref{fig:scripted-opponent-main}b), and on Gemini 3 Flash at the lowest
-risk that distance is a lower bound, because nine of its ten mirror-match races
-have every decision \Unsafe{}. Every mirror-match number in this paper should be
-read that way. The bound on the finding is the design itself: four reduced
-strategies are four points in a space of policies rather than a sample of
-opponents, so this establishes what a route does against \emph{these} rivals,
-on one game and one prompt version, and three commercial endpoints are not a
-sample from a population of models.
+rather than a measurement of how a route treats risk, and it overstates the risk
+a route takes when it meets restraint. On all three routes and at all three risk
+levels the rate against a fixed safe rival sits below the rate the same route
+reaches against a second copy of itself (Figure~\ref{fig:scripted-opponent-main}c),
+by 74.2, 50.5 and 66.7 points at the lowest risk; on Gemini 3 Flash at that risk
+the distance is a lower bound, because nine of its ten mirror-match races have
+every decision \Unsafe{}. Every mirror-match number in this paper, and every
+self-play rate in the work it builds on, should be read that way.
 
+The bound on the finding is the design itself. Four reduced strategies are four
+points in a space of policies rather than a sample of opponents, so this
+establishes what a route does against \emph{these} rivals, on one game and one
+prompt version, and three commercial endpoints are not a sample from a
+population of models.
 
-
-\subsection{Game theory versus prompted race behaviour}
+\subsection{The same incentive, a different shape}
 \label{sec:results-theory}
 
-At the reference setting reported by \citet{falling_behind_unsafe}, selection
-strength $\beta=2$ with mutation $\mu=\beta/Z$, the reconstructed evolutionary
-model predicts a switch rather than a gradient: \Unsafe{} play of 99.2\%,
-98.0\% and 1.9\% at maximum risks 0.1, 0.6 and 0.9. The audited routes instead
-decline smoothly: in the earlier confirmatory block Gemini 3 Flash plays
-\Unsafe{} 98.9\%, 74.2\% and 59.1\% and Claude Sonnet 5 89.2\%, 46.2\% and
-37.6\%, each over 30 races and 558 decisions
-(Figure~\ref{fig:egt-frontier-comparison}).
+The agents and the theoretical population move the same way under the same
+incentive, but not in the same shape. How wide the remaining gap is turns on an
+assumption inside the theory rather than on the game. At the
+reference setting reported by \citet{falling_behind_unsafe}, selection strength
+$\beta=2$ with mutation $\mu=\beta/Z$, the reconstructed evolutionary model
+predicts a switch: \Unsafe{} play of 99.2\%, 98.0\% and 1.9\% at maximum risks
+$0.1$, $0.6$ and $0.9$. The screened routes decline smoothly instead. In the
+two-route confirmatory block on which this comparison is computed, a separate
+collection from the nine-route baseline of Table~\ref{tab:risk-response} and
+never pooled with it, Gemini 3 Flash plays \Unsafe{} 98.9\%, 74.2\% and 59.1\%
+and Claude Sonnet 5 89.2\%, 46.2\% and 37.6\%, each over 30 races and 558
+decisions. The difference is one of shape and not of level: solved on a fine
+grid of risk values, the benchmark at $\beta=2$ loses 98 points of \Unsafe{}
+play inside a single step of risk $0.005$ wide. The supplementary material draws
+that comparison over all nine routes and inverts the model through their rates.
 
-Read against that single setting the prompted routes look like a failure to
-reproduce the theory, and that reading does not survive a sensitivity check.
-We swept selection strength across $\beta \in [0.001, 10]$ crossed with
-three mutation rules, 90 stationary-distribution cells, each estimated from
-independent chains with the between-chain spread retained so a badly-mixed
-cell cannot be mistaken for a result. The sharp switch is a property of strong
-selection, not of the game: as $\beta$ falls, the predicted high-risk
-\Unsafe{} rate rises off the floor and the risk response becomes graded. At
-$\beta=0.01$ with $\mu=0.05$ the same model predicts 87.3\%, 63.9\% and
-38.0\%, the closest cell in the entire sweep to both audited routes, within
-10.3 percentage points of Claude Sonnet 5 and 15.1 of Gemini 3 Flash in
-root-mean-square error.
+The switch is a property of strong selection, not of the game. We swept
+selection strength across $\beta \in [0.001, 10]$ crossed with three mutation
+rules, 90 stationary-distribution cells, each estimated from independent chains
+with the between-chain spread retained so that a badly mixed cell cannot be
+mistaken for a result. As $\beta$ falls towards neutrality the predicted
+high-risk \Unsafe{} rate rises off the floor and the model's own risk response
+becomes graded, which is the shape the routes show. At $\beta=0.01$ with
+$\mu=0.05$ the model predicts 87.3\%, 63.9\% and 38.0\%, the closest cell in the
+entire sweep to both routes, within 10.3 percentage points of Claude Sonnet 5
+and 15.1 of Gemini 3 Flash in root-mean-square error.
 
-Two things follow. First, $\beta=0.01$ and $\mu=0.05$ are not parameters we
-chose to fit: they are the values the source study reports as its own best fit
-to human play, so the audited routes sit closer to the regime that describes
-the human participants than to the strong-selection regime usually quoted as
-the model's prediction. Second, the interpretation stays bounded. A stationary
-distribution describes strategy frequencies in a population under selection
-and mutation, while our measurements are prompted self-play decisions; the
-agreement in shape says the graded risk response is consistent with a
-near-neutral, high-exploration population, not that the routes are evolving.
-What the sweep establishes is narrower and still useful: a claim that LLM
-agents contradict the evolutionary benchmark cannot rest on one setting of the
-selection strength, because the sign of the high-risk gap depends on it.
+The agents land nearer to the regime that describes the people than to the one
+usually quoted as the theory's prediction, and that cell is not one we chose to
+fit: $\beta=0.01$ and $\mu=0.05$ are the values the source study reports as its
+own best fit to human play. The interpretation stays bounded. A stationary distribution
+describes strategy frequencies in a population under selection and mutation,
+while our measurements are prompted decisions in self-play; the agreement in
+shape says the graded risk response is consistent with a near-neutral,
+high-exploration population, not that the routes are evolving. What the sweep
+establishes is narrower and still useful: a claim that LLM agents contradict the
+evolutionary benchmark cannot rest on one setting of the selection strength,
+because the sign of the high-risk gap depends on it.
 
-\begin{figure}[t]
-  \centering
-  \includegraphics[width=\columnwidth]{../figures/paper/theory_versus_behaviour.pdf}
-  \caption{The evolutionary benchmark and the audited routes differ in shape,
-  not level. The small-mutation limit is solved on a fine grid of risk values at
-  both declared selection strengths: at $\beta=2$ the predicted \Unsafe{} rate
-  falls 98 points inside one $0.005$ step, while eight routes decline gradually.
-  Claude Opus 5, in its own colour, does have a cliff, but no risk level was run
-  inside the interval where it falls, and its two saturated cells have no room
-  beside them: it plays \Unsafe{} on all 186 decisions at risk $0.1$ and \Safe{}
-  on all 372 above it. Every curve is the small-mutation limit, which cannot
-  represent the finite mutation rate of the points it is drawn at, so this
-  bounds the regime in which the benchmark is read and is not a test of the
-  model. The supplementary material inverts that model through these rates,
-  which is a question about the model rather than about the routes.}
-  \Description{One panel plotting Unsafe rate against maximum private risk: two
-  near-vertical theory curves, a grey band containing eight route profiles drawn
-  in one grey, and one orange route, Claude Opus 5, falling from 100 to 0 per
-  cent between the first and second configured risk level, with an arrow below
-  the axis marking the interval in which no risk level was run.}
-  \label{fig:egt-frontier-comparison}
-\end{figure}
-
-
-\subsection{Two-player strategic diversity: humans and LLMs}
+\subsection{Frontier agents are behaviourally concentrated}
 \label{sec:results-diversity}
 
-We compare how much of the policy space each population uses, directly on the
-action sequences themselves rather than on summary statistics of them. Each
-player is one exact paired five-round action sequence, a ten-bit string, read
-within its own risk condition; because the progress increments are fixed, that
-string is the whole trajectory. The comparison covers all nine audited routes on
-the confirmatory baseline, 60 trajectories per route, against 340 complete human
-trajectories from the public de-identified dataset of
-\citet{falling_behind_unsafe}. A pilot roster of seven checkpoints, a projection
-onto behavioural archetypes fitted to the human sample, and a two-dimensional
-embedding of the same space are in the supplementary material; we rest no
-conclusion on the embedding, because recolouring its identical coordinates by
-outcome rather than by population separates it almost entirely by \Unsafe{}
-rate.
+Twenty people asked to run this race do not behave alike; twenty copies of a
+frontier route very nearly do. Human participants arrive at their average level
+of \Unsafe{} play through many different histories, while each screened route
+reuses a small set of them, so a route can match the human mean without
+resembling the human population at all. We measure this on the action sequences
+themselves. Each player is one exact paired
+five-round action sequence, a ten-bit string read within its own risk condition;
+because the progress increments are fixed, that string is the whole trajectory.
+The comparison covers all nine routes that faced the screen, admitted and
+refused alike, on the confirmatory baseline, 60
+trajectories per route, against 340 complete human trajectories from the public
+de-identified dataset of \citet{falling_behind_unsafe}. That single published
+study of a single game is the only human reference here, which bounds every
+human comparison below to that population and that mechanism.
 
-Figure~\ref{fig:diversity} counts how many distinct sequences each
-population uses out of twenty, against the distribution of $20{,}000$ draws of
-twenty human participants matched on sample size and risk condition; the human
-sample is five to seven times larger, so without matching a population could
-look more diverse merely for being bigger. The supplement adds two rarefied
-statistics, since either alone can mislead: Hill $q{=}1$ counts how many
-sequences a population effectively produces, the mean pairwise Hamming distance
-how far apart they are.
+The gap is not a low percentile but the absence of one.
+Figure~\ref{fig:diversity} counts how many distinct sequences each population
+uses out of twenty, against the distribution of $20{,}000$ draws of twenty human
+participants matched on sample size and risk condition; the human sample is five
+to seven times larger, so without matching a population could look more diverse
+merely for being bigger. Twenty-one of the twenty-seven route cells fall below
+every one of those draws, and the fifteen cells of the five admitted routes are
+all among them. Against
+a stricter null of ten complete dyads, which matches the routes' unit of
+independence and not only their sample size, eighteen do, a count that moves
+with the draw between sixteen and twenty over forty redraws of that softer
+null. Humans reach an effective 18.9, 19.7 and
+19.3 sequences out of 20 at risks $0.1$, $0.6$ and $0.9$, at mean pairwise
+distances of 0.47, 0.50 and 0.50. The supplement adds two rarefied statistics,
+since either alone can mislead: Hill $q{=}1$ counts how many sequences a
+population effectively produces, the mean pairwise Hamming distance how far
+apart they are. Under the first, every screened route sits entirely below the
+human interval at every risk level.
 
-The result is not a low percentile but the absence of one. Twenty-one of the
-twenty-seven route cells fall below every one of the $20{,}000$ human draws;
-against a stricter null of ten complete dyads, which matches the routes'
-unit of independence and not only their sample size, eighteen do, and never
-fewer than sixteen over forty redraws of that null. Humans reach an
-effective 18.9, 19.7 and 19.3 sequences out of 20 at risk 0.1, 0.6 and 0.9, at
-mean pairwise distances of 0.47, 0.50 and 0.50. The compression is severe
-rather than marginal: Claude Opus 5 produces a single sequence, repeated by all
-20 of its trajectories, at every risk level, and Claude Sonnet 5 uses two at
-risk 0.1. A population of twenty agents collapsing to
-one policy is not a narrower distribution of strategies; it is the absence of
-one.
+The compression is severe rather than marginal, and in one case total. Claude
+Opus 5 produces a single sequence, repeated by all 20 of its trajectories, at
+every risk level, and Claude Sonnet 5 uses two at risk $0.1$. A population of
+twenty agents collapsing to one policy is not a narrower distribution of
+strategies; it is the absence of one. Concentration is also not the same thing as
+level: Gemini 3 Flash and GPT-5.5 finish within five points of each other at the
+highest risk and use a similar number of distinct sequences, 12 and 13, yet the
+Gemini sequences sit half again as far apart from one another, 0.41 against 0.27
+in mean pairwise distance.
 
-Two checkpoints are the exception, and they are the most informative rows in
-the figure. GPT-5.4 mini uses 20, 17 and 17 distinct sequences out of 20 at
-risk 0.1, 0.6 and 0.9, and GPT-5.4 nano 16, 19 and 16; both land inside the
-human null at every risk level, and no other route reaches it once. On this
-measure they are not less diverse than people. Neither passes the gate of
-Table~\ref{tab:task-audit}: GPT-5.4 nano scores 51.7\%, the lowest of the
-nine, and GPT-5.4 mini 75.0\%. Every checkpoint that passes the gate falls
-below every human draw at every risk level, and the rarefied Hill $q{=}1$
-interval puts all five entirely below the human one too. The exception is two
-routes rather than one and the gate refuses both, which strengthens the
-argument. The audit is
-therefore not a formality placed in front of the interesting result; it is
-what separates variety observed under demonstrated task validity from variety
-produced by routes that fail that check. Reported without the gate,
-these two rows would read as the headline finding that small models
+Two checkpoints are the exception, and the screen refuses both of them.
+GPT-5.4 mini uses 20, 17 and 17 distinct sequences out of 20 at
+risks $0.1$, $0.6$ and $0.9$, and GPT-5.4 nano 16, 19 and 16; both land inside
+the human null at every risk level, and no other route reaches it once. On this
+measure they are not less diverse than people. Both are routes the
+quality-control screen of \S\ref{sec:design-screen} refused, at 75.0\% and
+51.7\% overall probe accuracy. That is why the screen is reported in the
+body: without it, these two rows would read as the finding that small models
 match human strategic diversity.
 
 \begin{figure*}[t]
     \centering
     \includegraphics[width=\textwidth]{../figures/paper/human_versus_model.pdf}
     \caption{Human participants use far more of the policy space than every
-    checkpoint the gate admits. All nine audited routes are drawn, on the
-    confirmatory baseline. Panel a places each checkpoint's count of distinct
-    paired five-round action sequences against $20{,}000$ draws of twenty human
-    participants, matched on sample size and risk condition; the shaded region
-    is the range no human draw reached. Panel b shows the mechanism, which
-    sequences each population actually uses. Marks give each checkpoint's
-    verdict under the admission gate of Table~\ref{tab:task-audit}, and the two
-    checkpoints that reach the human range are both checkpoints it refused.}
+    checkpoint the screen admits. Panel a places each admitted checkpoint's
+    count of distinct paired five-round sequences against the matched human
+    resampling null; the shaded region is the range no human draw reached.
+    Panel b shows which sequences each population uses.}
     \label{fig:diversity}
     \Description{Panel a shows three facets, one per risk condition, each with a
     histogram of a human resampling null and one marker per checkpoint placed on
@@ -1071,47 +1014,55 @@ match human strategic diversity.
     the right.}
 \end{figure*}
 
-A shallow classifier trained on the same raw sequences, with folds grouped by
-race, recovers the producing population well above a grouped permutation null
-(balanced accuracy $42.3\% \pm 4.3$ against a null mean of $12.4\%$,
-$p<0.001$), but the groups overlap: that is evidence of observable trajectory
-differences, not of a recoverable latent strategy.
+The same picture holds one level down, on the rates themselves. Raw
+player-level \Unsafe{} rates, plotted per risk condition in the supplementary
+material, spread across nearly the whole available range for humans at every
+risk level while each checkpoint occupies a narrow band of its own. Similarity
+between a checkpoint's aggregate \Unsafe{} rate and the human mean therefore
+does not imply that it reproduces the human distribution. A two-dimensional
+embedding of the same space is in the supplementary material; we rest no
+conclusion on it, because recolouring the same coordinates by outcome separates
+them almost entirely by \Unsafe{} rate.
 
-Raw player-level \Unsafe{} rates, plotted per risk condition in the
-supplementary material, show the same picture: human rates spread across
-nearly the whole available range at every risk level while each checkpoint
-occupies a narrow band of its own. Similarity between a checkpoint's
-aggregate \Unsafe{} rate and the human mean therefore does not imply that it
-reproduces the human distribution.
-
-Which pre-decision variables predict an \Unsafe{} choice is asked separately
-in the supplementary material, as association and not cause: the human data
-are organised mainly by the opponent's previous action, 56\% of total SHAP
-magnitude. One checkpoint leads with the same feature, Claude Sonnet 5 at
-48\%; the two Gemini Flash checkpoints lead with the assigned risk instead
-and GPT-5-nano with relative race position, and past that leading feature no
-checkpoint reproduces the human ordering. Two populations can therefore have
-similar \Unsafe{} rates while following different response rules. The human
-forest is the weakly fitted side of that comparison, ROC AUC $0.63$ against
-$0.97$ for Claude Sonnet 5, so the two are not identified equally well.
+Populations that look alike in rate can still be following different rules. Two
+exploratory analyses in the supplementary material point that way without
+settling it. A shallow classifier with folds grouped by race recovers the
+producing population well above a grouped permutation null, and the variables
+that associate with an \Unsafe{} choice, read as association and never as cause,
+separate the populations further: human play is organised mainly by the
+opponent's previous action, $56\%$ of the attributed importance, and Claude
+Sonnet 5 is the one checkpoint that leads with the same variable, at $48\%$.
+Neither analysis is evidence of a recoverable latent strategy, the human side is
+the weakly fitted one (ROC AUC $0.63$ against $0.97$), and both run on an
+exploratory seven-checkpoint roster containing neither GPT-5.4 nor GPT-5.5, so
+neither describes the screened panel and no claim above rests on them.
 
 \section{Discussion and conclusion}
 \label{sec:discussion}
 
-The lesson is not that an audited route ``understands the game''. Admitted
-routes recall the rules, rebuild the tested states and apply terminal
-eligibility, yet none reliably computes a closed-form expected payoff, and the
-routes that fail the gate still return a perfectly formatted action every
-time. A study that reports action rates without per-route comprehension
-accuracy and parser health cannot tell those situations apart, and they
-license opposite conclusions.
+What these agents answer is the rival, not the risk. Every screened route does
+play \Unsafe{} less often as the stated chance of catastrophe rises, so the
+danger is registered. But on the three routes where the opponent was replaced
+by scripted code, the same routes move several times further when the rival's
+stance changes than when the danger is moved across its whole range, and that
+rival is code the route can neither influence nor be told about. A delegate of
+this kind is not unpredictable in general. It is predictable from the wrong
+variable: how dangerous the situation is says much less about what it will do
+than what the other side is doing says.
+
+A mirror-match rate should therefore not be reported as an attitude to risk,
+here or in the work this paper builds on. Scripting the rival costs little, it
+is the only separation of a policy from an interaction we know how to make in
+this design, and without it the treatment a study is about can be hidden by the
+opponent the study never controlled.
 
 One contrast is worth keeping in view, because it is so often conflated. The
 human participants' incentivised pre-game risk score has almost no relation
 to their later \Unsafe{} play ($r=-0.015$, $p=0.79$, $n=341$) and does not
 even separate the behavioural archetypes, whereas sweeping a prompted risk
 persona from its lowest to its highest level moves \Unsafe{} play by 50.5 to
-98.3 percentage points. A measured preference describes a person before play;
+98.3 percentage points across a pilot roster of seven checkpoints, which is
+not the screened panel. A measured preference describes a person before play;
 a persona label rewrites the decision context during it, so a persona is a
 strong policy prompt and not evidence of a stable risk preference. The curves
 are in the supplementary material.
@@ -1120,35 +1071,46 @@ The human experiment is an external behavioural reference, not a target an
 agent should reproduce. Where a route matches a human association, the two
 populations behave similarly on that one measured aspect of this task; it
 does not follow that they share a mechanism, and a mismatch does not
-invalidate the human result. Every comparison here is scoped to its tested
-route, prompt version, decoding contract, provider path and run period.
+invalidate the human result.
 
-Three limitations bound the claims directly. The comprehension-to-behaviour
-association covers nine endpoints differing in far more than their probe
-scores, so it cannot separate comprehension from provider, scale or training.
-The representation-robustness design is crossed for two routes, enough to show
-the effect replicates but not to characterise endpoints in general. And the
-evolutionary comparison is a reconstruction audited against pinned EGTtools
-source rather than a bitwise reproduction of undisclosed author code, so it
-bounds the regime in which the benchmark is read rather than fitting the
-agents.
+Four limitations bound the claims directly. Nine commercial endpoints are not a
+sample from a population of models, and any two of them differ in far more than
+the one property a comparison names, so every contrast drawn between routes in
+this paper is descriptive and none of it separates a route's behaviour from its
+provider, its scale or its training. The scripted-rival campaign covers three
+routes and four reduced strategies, which are four points in a space of
+policies rather than a sample of opponents. The human comparison rests on one
+published study of one game, 340 complete trajectories, and we do not add a
+second human dataset, because any other dataset would change the game as well
+as the population. And the evolutionary comparison is a reconstruction audited
+against pinned EGTtools source rather than a bitwise reproduction of
+undisclosed author code, so it bounds the regime in which the benchmark is read
+rather than fitting the agents.
 
-Four further limits are worth stating. Fixed-state replay and live play
-measure different things, one decision at a saved state against dependent
-decisions along a trajectory, so their effect sizes are not
-interchangeable. A matched group-size grid now exists on one route, but adding
-a company changes the stage payoff and the prompt length too, so no pure
-group-size effect is identifiable. Seed forwarding is provider-specific: one
-route's SDK stripped the requested seed and another forwarded it unconfirmed.
-And this game models a private speed-versus-safety trade-off and nothing else,
-with no collective harm, regulation, communication or uncertainty about real
-capabilities.
+Four further limits are worth stating. Fixed-state replay and live play measure
+different things, one decision at a saved state against dependent decisions
+along a trajectory, so their effect sizes are not interchangeable. The
+representation-robustness design is crossed for two routes, enough to show the
+effect replicates but not to characterise endpoints in general. A matched
+group-size grid now exists on one route, but adding a company changes the stage
+payoff and the prompt length too, so no pure group-size effect is identifiable.
+Seed forwarding is provider-specific: one route's SDK stripped the requested
+seed and another forwarded it unconfirmed. And this game models a private
+speed-versus-safety trade-off and nothing else, with no collective harm,
+regulation, communication or uncertainty about real capabilities.
 
-Strategic safety behaviour in these races is not a fixed property of an LLM:
-across nine audited routes, rule recall does not ensure state tracking and an
-equivalent presentation can change later play. The audit is what makes those
-differences readable, since the routes that fail it include both the one
-closest to human diversity and the ones nearly flat in risk.
+The last implication belongs to the population rather than to any single agent,
+and it stays a conditional, because nothing measured here is a deployment.
+People facing this race do not agree with each other and copies of one route
+very nearly do, and which part of the policy space a route settles on differs
+from route to route, so the concentration is a property of the checkpoint rather
+than of the situation. If one model were reused as a strategic adviser across
+many organisations, the behavioural spread that exists across human decision
+makers would not be reproduced. It would be replaced by whatever that one model
+concentrates on, and disagreement is how a population of decision makers
+corrects itself. Whether that matters outside this idealised game is not
+something we can measure here. It is measurable, and the time to measure it is
+before the delegation is real.
 
 % Acknowledgements name individuals, their institutions and a grant number, so
 % they identify the authors. The class does not suppress this section in

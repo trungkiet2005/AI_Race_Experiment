@@ -2,6 +2,35 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## This repository now holds TWO papers
+
+Since 2026-09-12 the combined manuscript is being split. Read this before
+touching anything under `paper/`.
+
+| paper | lives in | venue | status |
+|---|---|---|---|
+| behaviour: how routes trade danger against rivalry | `paper/main.tex`, `paper/supplementary.tex` | AAMAS 2027 | being rewritten |
+| evaluation: what a comprehension screen measures | `paper/acl/main.tex` | ACL Rolling Review | **scaffold only, blocked on data** |
+
+The combined version is frozen at the git tag `combined-manuscript-2026-09-12`.
+
+- Which claims belong to which paper: `docs/behaviour-paper-claim-map-2026-09-12.md`.
+  Its claims A1 to A12 are the audit story and must NOT be results in the
+  behaviour paper; its claims B1 to B24 are the behaviour story and must NOT be
+  results in the ARR paper.
+- The ARR paper's plan, verified claim inventory, missing data and the ARR
+  dual-submission rules: `docs/acl-audit-paper-plan.md`. **The ARR paper is not
+  submittable today**: it needs a roster where model name and comprehension
+  score disagree, and probe banks for two further task families, neither of
+  which exists in this repository.
+- `paper/acl/` is self-contained and uses the official ACL style files. Do not
+  build it with `scripts/build_publication.py`, which builds the AAMAS paper.
+- The AAMAS sources stay in `paper/` for now. Moving them to `paper/aamas/`
+  mid-rewrite would break the build; section 9 of the ARR plan lists every file
+  and line a later move has to update.
+- Both papers must cite each other as anonymous concurrent work, and the overlap
+  between them is the thing most likely to get one of them desk rejected.
+
 ## What this is
 
 **Venue:** AAMAS 2027, Hanoi, Vietnam, 3 to 7 May 2027.

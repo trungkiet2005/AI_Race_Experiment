@@ -94,12 +94,16 @@ PROTOCOL = "ai-race-scripted-opponent-v1"
 ORIGINAL_ROUTE = "google/gemini-3-flash-preview"
 
 # The order the manuscript always lists admitted routes in, restricted to the
-# three this campaign covers.
+# three this campaign covers with a complete grid.
 ROUTES = [r for r in S.ADMITTED if r in {
     "google/gemini-3-flash-preview",
     "openai/gpt-5.4-2026-03-05",
     "anthropic/claude-sonnet-5@default",
 }]
+# Every route this campaign is allowed to hold a cell for.  A cell belonging to
+# anything else is an error rather than a route to skip: it would mean the
+# collection wrote into the wrong tree.
+FULL_ROSTER = set(S.ROUTE_ORDER)
 
 # Ascending in what the routes do to them, so a rising line IS the ordering.
 ORDER = ["AS", "CS", "CAS", "AU"]
@@ -151,6 +155,7 @@ def load_campaign() -> pd.DataFrame:
     restructured to prevent.
     """
     frames = []
+    partial: dict[str, int] = {}
     for receipt_path in sorted(CAMPAIGN.glob("*/*/collection_receipt.json")):
         manifest = json.loads(
             receipt_path.with_name("run_manifest.json").read_text(encoding="utf-8"))
@@ -160,8 +165,17 @@ def load_campaign() -> pd.DataFrame:
         if manifest.get("status") != "completed":
             raise ValueError(f"{receipt_path} did not complete")
         route = manifest.get("model_route")
+        # A route with only part of the grid is set aside rather than drawn or
+        # silently dropped.  The campaign's whole argument is a complete four
+        # rivals by three risks grid on each endpoint, and a route holding one
+        # cell of twelve cannot carry an ordering or a contrast.  It must still
+        # be reported, because a reader who finds it on disk and not in the
+        # figure is owed the reason.
         if route not in ROUTES:
-            raise ValueError(f"{receipt_path} carries unexpected route {route!r}")
+            if route not in FULL_ROSTER:
+                raise ValueError(f"{receipt_path} carries unknown route {route!r}")
+            partial[route] = partial.get(route, 0) + 1
+            continue
         paths = list(receipt_path.parent.rglob("turns.jsonl"))
         if len(paths) != 1:
             raise ValueError(f"{receipt_path}: {len(paths)} turns files")
@@ -189,6 +203,10 @@ def load_campaign() -> pd.DataFrame:
         frames.append(turns)
     if not frames:
         raise ValueError(f"no cells under {CAMPAIGN}")
+    for route, cells in sorted(partial.items()):
+        print(f"  NOT DRAWN: {S.ROUTE_SHORT[route]} has {cells} of "
+              f"{len(ORDER) * len(S.RISKS)} cells collected, so it carries neither "
+              f"an ordering nor a paired contrast; it is left out of this campaign")
     return pd.concat(frames, ignore_index=True)
 
 
@@ -227,6 +245,55 @@ def clustered_rate(block: pd.DataFrame, *key):
         int(unsafe.size),
         int(total.sum()),
     )
+
+
+def paired_risk_contrast(route_rows: pd.DataFrame, route: str, strategy: str,
+                         low: float, high: float) -> dict:
+    """How much the stated danger moves play, differenced inside a repetition.
+
+    This is the mirror image of the contrast the campaign analyser already
+    publishes.  That one holds the risk fixed and differences two rivals inside
+    a repetition; this one holds the rival fixed and differences two risk
+    levels inside a repetition.  Both are legitimate for the same reason: the
+    game seed is a base plus the repetition index and names neither the rival,
+    the risk nor the route, so one repetition index is one horizon
+    stopping-draw stream everywhere in the campaign.  The seeds are checked
+    rather than assumed, and so is the sampled horizon, because the whole value
+    of the pairing is that the horizon cancels.
+
+    Computing it here rather than reading it from the derived tables is a
+    departure from how the rival contrast is drawn, and it is flagged as one:
+    the analyser does not yet write this contrast, so the appendix table cannot
+    yet carry it.  Until it does, the two halves of the comparison come from one
+    place each, and this function is the place for the risk half.
+    """
+    block = route_rows[(route_rows["route"] == route)
+                       & (route_rows["strategy"] == strategy)]
+    per = block.groupby(["cell_risk", "rep"]).agg(
+        unsafe=("unsafe", "sum"), decisions=("unsafe", "size"),
+        seed=("game_seed", "first"), horizon=("sampled_total_rounds", "first"))
+    per["rate"] = per["unsafe"] / per["decisions"]
+    reps = sorted(set(per.loc[low].index) & set(per.loc[high].index))
+    if len(reps) != EXPECTED_RACES:
+        raise ValueError(f"{route}: {len(reps)} shared repetitions, not {EXPECTED_RACES}")
+    paired = all(per.loc[(low, r), "seed"] == per.loc[(high, r), "seed"]
+                 and per.loc[(low, r), "horizon"] == per.loc[(high, r), "horizon"]
+                 for r in reps)
+    if not paired:
+        raise ValueError(
+            f"{route}: risk {low} and {high} do not share a seed and horizon "
+            "inside a repetition, so differencing them does not remove the draw"
+        )
+    values = np.array([per.loc[(low, r), "rate"] - per.loc[(high, r), "rate"]
+                       for r in reps], dtype=float)
+    rng = cell_rng(route, "risk_contrast", strategy, low, high)
+    draws = rng.integers(0, values.size, size=(N_BOOT, values.size))
+    means = values[draws].mean(axis=1)
+    return {"mean_difference": float(values.mean()),
+            "ci95_low": float(np.percentile(means, 2.5)),
+            "ci95_high": float(np.percentile(means, 97.5)),
+            "n_blocks": int(values.size),
+            "pairing_verified": True}
 
 
 def key_entry(ax, xfrac, yfrac, route, *, label=None):
@@ -510,44 +577,205 @@ def main() -> None:
 
     S.save(fig, "scripted_opponent", width=S.TEXT)
 
-    draw_main_figure(stance, safe_arm, selfplay, censored, smallest_low,
-                     strict, n_cells, ceiling_cells)
+    risk_stance = {
+        route: paired_risk_contrast(route_rows, route, "AS", S.RISKS[0], S.RISKS[-1])
+        for route in ROUTES
+    }
+    # The analyser now publishes this contrast too, on every arm.  Reading the
+    # published value back is what keeps the panel and the appendix table from
+    # drifting: the recomputation above is the same construction, so any
+    # disagreement means one of the two is wrong rather than that the figure
+    # needs adjusting.
+    key = f"risk_{S.RISKS[0]:g}_minus_{S.RISKS[-1]:g}"
+    for route in ROUTES:
+        table = published[route].get("paired_risk_contrasts")
+        if not table:
+            raise ValueError(
+                f"{route}: the derived table carries no paired risk contrast, so "
+                "the panel's risk half cannot be checked against it"
+            )
+        off = abs(table["AS"][key]["mean_difference"]
+                  - risk_stance[route]["mean_difference"])
+        if off > 1e-12:
+            raise ValueError(
+                f"{route}: the recomputed risk contrast and the published one "
+                f"differ by {off:.3e}; the figure is not the thing to fix"
+            )
+    print("\n  the danger, differenced the same way, against a rival held at "
+          "Always Safe:")
+    for route in ROUTES:
+        entry = risk_stance[route]
+        print(f"  risk stance   {S.ROUTE_SHORT[route]:<10} {S.RISKS[0]} vs {S.RISKS[-1]}: "
+              f"{100 * entry['mean_difference']:+5.1f} pp "
+              f"[{100 * entry['ci95_low']:+5.1f}, {100 * entry['ci95_high']:+5.1f}] "
+              f"over {entry['n_blocks']} repetition blocks")
+
+    # The widest risk contrast anywhere in the grid, which is NOT on the arm the
+    # panel draws.  The panel compares the rival against the danger at a rival
+    # held Safe, and that comparison is true of the two unconditional arms only:
+    # against a rival that copies the route's own last move the danger moves
+    # play further than the smallest rival contrast does.  A panel that claims
+    # the rival always outweighs the danger would be claiming of the grid what
+    # is true of two of its four columns, so the number that refuses that
+    # reading is measured here and written on the panel.
+    widest = max(
+        ({"route": route, "strategy": strategy,
+          **published[route]["paired_risk_contrasts"][strategy][key]}
+         for route in ROUTES for strategy in ORDER),
+        key=lambda entry: entry["mean_difference"],
+    )
+    print(f"  the widest risk contrast in the grid is on {widest['strategy']} for "
+          f"{S.ROUTE_SHORT[widest['route']]}: {100 * widest['mean_difference']:+.1f} pp "
+          f"[{100 * widest['ci95_low']:+.1f}, {100 * widest['ci95_high']:+.1f}], "
+          f"against a smallest rival contrast of {100 * min(v[1] for v in stance.values()):+.1f} pp "
+          "lower bound, so the two families DO meet once the conditional rivals "
+          "are included")
+    rival_low = 100 * min(v[1] for v in stance.values())
+    risk_high = 100 * max(e["ci95_high"] for e in risk_stance.values())
+    print(f"  every rival interval starts at or above {rival_low:+.1f} pp and every "
+          f"risk interval ends at or below {risk_high:+.1f} pp, so the two families "
+          f"do not overlap: {rival_low > risk_high}")
+    if rival_low <= risk_high:
+        raise ValueError(
+            "a rival interval now reaches into the risk intervals; the panel that "
+            "draws an empty corridor between the two families would be drawing a "
+            "corridor that is not empty"
+        )
+    ratios = [stance[(route, risk)][0] / risk_stance[route]["mean_difference"]
+              for route in ROUTES for risk in S.RISKS]
+    print(f"  the rival is worth {min(ratios):.1f} to {max(ratios):.1f} times the "
+          f"risk across the nine route-by-risk cells")
+
+    draw_main_figure(surface, stance, risk_stance, safe_arm, selfplay, censored,
+                     strict, n_cells, ceiling_cells, rival_low, risk_high, ratios,
+                     widest)
 
 
-def draw_main_figure(stance, safe_arm, selfplay, censored, smallest_low,
-                     strict, n_cells, ceiling_cells):
-    """The two panels the main paper carries, at one column.
+def draw_thesis(ax, stance, risk_stance, rival_low, risk_high, ratios, widest):
+    """The rival and the danger on one axis, both differenced the same way.
 
-    The ordering panel stays in the supplement and its claim is carried by a
-    sentence, because the main paper has no room for a third panel and the
-    ordering is a statement a reader can check against the appendix grid.  What
-    cannot be carried by a sentence is the separation between the three routes,
-    which is the finding, so that panel is the one promoted.
+    This is the comparison the paper is named for and it did not previously
+    exist as a picture.  Two families of paired contrasts sit on one scale of
+    percentage points: what changing the rival does to a route's Unsafe play,
+    and what changing the stated danger does to it.  Putting them on one axis is
+    the whole argument, because the reader then does not have to hold two
+    numbers from two sections in mind to see that one is several times the
+    other.  Both families are differenced inside a repetition, so both have the
+    horizon draw removed and neither is a comparison of two separately estimated
+    rates.
     """
-    fig = plt.figure(figsize=(S.COL, 1.78))
-    gs = fig.add_gridspec(1, 2, width_ratios=[1.0, 0.94], wspace=0.60)
-    ax_a, ax_b = fig.add_subplot(gs[0, 0]), fig.add_subplot(gs[0, 1])
+    rival_y, risk_y = 2.55, 0.62
+    spread = 0.125
+    entries = [(route, risk) for route in ROUTES for risk in S.RISKS]
+    for i, (route, risk) in enumerate(entries):
+        point, low, high = stance[(route, risk)]
+        y = rival_y + (i - (len(entries) - 1) / 2) * spread
+        ax.plot([100 * low, 100 * high], [y, y], lw=1.0, color=S.ROUTE_C[route],
+                solid_capstyle="round", zorder=3)
+        S.dot(ax, 100 * point, y, color=S.ROUTE_C[route],
+              marker=S.ROUTE_M[route], size=13)
+    for i, route in enumerate(ROUTES):
+        entry = risk_stance[route]
+        y = risk_y + (i - (len(ROUTES) - 1) / 2) * spread
+        ax.plot([100 * entry["ci95_low"], 100 * entry["ci95_high"]], [y, y],
+                lw=1.0, color=S.ROUTE_C[route], solid_capstyle="round", zorder=3)
+        S.dot(ax, 100 * entry["mean_difference"], y, color=S.ROUTE_C[route],
+              marker=S.ROUTE_M[route], size=13)
 
-    ypos = {risk: y for risk, y in zip(S.RISKS, (2, 1, 0))}
-    offsets = {route: off for route, off in zip(ROUTES, (0.26, 0.0, -0.26))}
+    # The corridor between the two families.  Nothing is drawn inside it, and
+    # saying so is the panel's claim, so it is marked as empty space rather than
+    # left for the reader to measure.
+    ax.axvspan(risk_high, rival_low, color=S.BAND, zorder=0, lw=0)
+    ax.annotate("no interval of\neither kind reaches\nin here",
+                xy=(0.5 * (risk_high + rival_low), 1.60), ha="center", va="center",
+                fontsize=S.FS_NOTE, color=S.MUTED, linespacing=1.3)
+
+    ax.set_yticks([rival_y, risk_y])
+    ax.set_yticklabels(["what the rival\nis doing", "how dangerous\nthe race is"])
+    ax.tick_params(axis="y", length=0, pad=3)
+    ax.set_ylim(-0.05, 3.32)
+    ax.set_xlim(-2, 84)
+    ax.set_xticks([0, 25, 50, 75])
+    # "points" here and in the risk-response figure, rather than "pp" in one
+    # and "points" in the other: two names for one unit spends the reader on
+    # the unit instead of on the number.
+    ax.set_xlabel("change in the route's Unsafe play (points)", labelpad=2)
+    S.strip(ax, grid_axis="x")
+    ax.vlines(0.0, -0.05, 3.32, color=S.MUTED, lw=0.8, zorder=1)
+    # The claim names the arm it is true of.  Left unqualified it would assert
+    # something the campaign's own grid refuses: on the conditional-unsafe arm
+    # the danger moves play further than the smallest rival contrast does, and
+    # the third line below is that number rather than a hedge.
+    S.panel(ax, "b", "against a safe rival, the rival outweighs the danger",
+            gap=8.0)
+    ax.annotate("above: three routes at three risk levels.\n"
+                f"below: risk {S.RISK_LABEL[S.RISKS[0]]} against "
+                f"{S.RISK_LABEL[S.RISKS[-1]]}, rival held at Always Safe.\n"
+                f"against a rival that copies the route, the danger is worth "
+                f"up to {100 * widest['mean_difference']:.0f} points.",
+                xy=(0.5, 0.0), xycoords="axes fraction", xytext=(0, -22),
+                textcoords="offset points", ha="center", va="top",
+                fontsize=S.FS_NOTE, color=S.MUTED, linespacing=1.35,
+                annotation_clip=False)
+
+
+def draw_ribbon(ax, surface, ceiling_cells, n_cells, strict):
+    """Four rivals across, every route-by-risk cell as its own rising line."""
+    x = np.arange(len(ORDER))
+    dashes = {risk: style for risk, style in
+              zip(S.RISKS, ["-", (0, (3.2, 1.6)), (0, (1.2, 1.4))])}
     for route in ROUTES:
         for risk in S.RISKS:
-            point, low, high = stance[(route, risk)]
-            y = ypos[risk] + offsets[route]
-            ax_a.plot([100 * low, 100 * high], [y, y], lw=1.0,
-                      color=S.ROUTE_C[route], solid_capstyle="round", zorder=3)
-            S.dot(ax_a, 100 * point, y, color=S.ROUTE_C[route],
-                  marker=S.ROUTE_M[route], size=13)
-    ax_a.set_yticks(list(ypos.values()))
-    ax_a.set_yticklabels([S.RISK_LABEL[r] for r in ypos])
-    ax_a.set_ylim(-0.62, 2.62)
-    ax_a.set_xlim(-3, 88)
-    ax_a.set_xticks([0, 40, 80])
-    ax_a.set_xlabel("the rival's stance (pp)", labelpad=2)
-    ax_a.set_ylabel(r"$p_r^{\max}$", labelpad=1)
-    S.strip(ax_a, grid_axis="x")
-    ax_a.vlines(0.0, -0.62, 2.62, color=S.MUTED, lw=0.8, zorder=1)
-    S.panel(ax_a, "a", "all three move", gap=8.0)
+            y = [100 * surface[(route, strategy, risk)] for strategy in ORDER]
+            ax.plot(x, y, lw=1.0, color=S.ROUTE_C[route], ls=dashes[risk], zorder=3)
+            S.dot(ax, x[0], y[0], color=S.ROUTE_C[route], marker=S.ROUTE_M[route],
+                  size=12)
+            S.dot(ax, x[-1], y[-1], color=S.ROUTE_C[route], marker=S.ROUTE_M[route],
+                  size=12)
+    if ceiling_cells:
+        S.ceiling_rule(ax, 100.0, label="")
+    ax.set_xticks(x)
+    ax.set_xticklabels([LABEL[s] for s in ORDER], fontsize=S.FS_NOTE)
+    ax.set_xlim(-0.5, len(ORDER) - 0.5)
+    ax.set_xlabel("the scripted rival", labelpad=1)
+    S.rate_axis(ax, label="Unsafe play (%)")
+    ax.set_ylim(0, 126)
+    S.strip(ax)
+    S.panel(ax, "a", f"all {n_cells} cells rise, {strict} strictly", gap=8.0)
+    # The risk level is a dash pattern here rather than a third colour, because
+    # colour is already spent on the route and a reader who has learnt the
+    # routes in the figure before this one reads this panel for free.
+    for i, risk in enumerate(S.RISKS):
+        ax.plot([0.05, 0.45], [121.0 - 7.0 * i] * 2, color=S.INK_2, lw=1.0,
+                ls=dashes[risk], zorder=5)
+        S.direct_label(ax, 0.52, 121.0 - 7.0 * i,
+                       f"risk {S.RISK_LABEL[risk]}", color=S.INK_2, dx=0)
+
+
+def draw_main_figure(surface, stance, risk_stance, safe_arm, selfplay, censored,
+                     strict, n_cells, ceiling_cells, rival_low, risk_high, ratios,
+                     widest):
+    """The three panels the main paper carries, across both columns.
+
+    The campaign is the only design in this paper whose treatment is code the
+    route cannot influence and is never told about, which makes it the only
+    place a contrast here is causal by construction.  It therefore carries the
+    paper's headline and is given the width to make it: the ordering, the
+    comparison the paper is named for, and what that comparison costs every
+    self-play rate in the study.
+    """
+    # A figure spanning both columns is charged twice its height against the
+    # page budget and nothing for its width, so height here is the expensive
+    # dimension.  The panels read at 1.66 in as well as they did at 1.88, and
+    # the difference is about three lines of the manuscript.
+    fig = plt.figure(figsize=(S.TEXT, 1.66))
+    gs = fig.add_gridspec(1, 3, width_ratios=[0.95, 1.28, 0.80], wspace=0.62)
+    ax_a = fig.add_subplot(gs[0, 0])
+    ax_b = fig.add_subplot(gs[0, 1])
+    ax_c = fig.add_subplot(gs[0, 2])
+
+    draw_ribbon(ax_a, surface, ceiling_cells, n_cells, len(strict))
+    draw_thesis(ax_b, stance, risk_stance, rival_low, risk_high, ratios, widest)
 
     designs = {route: off for route, off in zip(ROUTES, (-0.24, 0.0, 0.24))}
     for i, risk in enumerate(S.RISKS):
@@ -555,43 +783,39 @@ def draw_main_figure(stance, safe_arm, selfplay, censored, smallest_low,
             x = i + designs[route]
             low_pt = safe_arm[(route, risk)][0]
             top_pt = selfplay[(route, risk)][0]
-            ax_b.plot([x, x], [100 * low_pt, 100 * top_pt], lw=0.6,
+            ax_c.plot([x, x], [100 * low_pt, 100 * top_pt], lw=0.6,
                       color=S.MUTED, linestyle=(0, (2, 1.6)), zorder=2)
-            S.dot(ax_b, x, 100 * low_pt, color=S.ROUTE_C[route],
+            S.dot(ax_c, x, 100 * low_pt, color=S.ROUTE_C[route],
                   marker=S.ROUTE_M[route], size=13)
-            S.dot(ax_b, x, 100 * top_pt, color=S.ROUTE_C[route],
+            S.dot(ax_c, x, 100 * top_pt, color=S.ROUTE_C[route],
                   marker=S.ROUTE_M[route], size=13, filled=False)
-    S.ceiling_rule(ax_b, 100.0, label="")
-    ax_b.set_xticks(range(len(S.RISKS)))
-    ax_b.set_xticklabels([S.RISK_LABEL[r] for r in S.RISKS])
-    ax_b.set_xlim(-0.60, len(S.RISKS) - 0.40)
-    ax_b.set_xlabel(r"$p_r^{\max}$", labelpad=2)
-    S.rate_axis(ax_b, label="Unsafe play (%)")
-    ax_b.set_ylim(0, 134)
-    S.strip(ax_b)
-    S.panel(ax_b, "b", "self-play sits above", gap=8.0)
-    # Colour carries the route in both panels, so here the open and filled
-    # markers carry the design instead, and the key names only that.  It sits
-    # in the band above the ceiling rule, which no measurement can reach.
-    for y, filled, text in ((124.0, False, "self-play"),
+    S.ceiling_rule(ax_c, 100.0, label="")
+    ax_c.set_xticks(range(len(S.RISKS)))
+    ax_c.set_xticklabels([S.RISK_LABEL[r] for r in S.RISKS])
+    ax_c.set_xlim(-0.60, len(S.RISKS) - 0.40)
+    ax_c.set_xlabel(r"maximum private risk $p_r^{\max}$", labelpad=2)
+    S.rate_axis(ax_c, label="Unsafe play (%)")
+    ax_c.set_ylim(0, 126)
+    S.strip(ax_c)
+    # The count belongs in the caption rather than here: at this panel width
+    # a title carrying it either runs off the figure or has to be shortened to
+    # "all 9", which names no unit.  The panel underclaims and the caption
+    # says in how many cells.
+    S.panel(ax_c, "c", "self-play sits above", gap=8.0)
+    # Colour carries the route in every panel, so here the open and filled
+    # markers carry the design instead, and the key names only that.  It sits in
+    # the band above the ceiling rule, which no measurement can reach.
+    for y, filled, text in ((121.0, False, "self-play"),
                             (110.0, True, "vs Always Safe")):
-        S.dot(ax_b, 0.15, y, color=S.INK_2, marker="o", size=13, filled=filled)
-        S.direct_label(ax_b, 0.15, y, text, color=S.INK_2, dx=4, weight="bold")
+        S.dot(ax_c, -0.42, y, color=S.INK_2, marker="o", size=13, filled=filled)
+        S.direct_label(ax_c, -0.42, y, text, color=S.INK_2, dx=4, weight="bold")
 
-    # Short route names, because three full names do not fit across one column
-    # without touching; the caption spells them out.
+    # The routes are named once, over the leftmost panel, and every later panel
+    # reuses the hue and the glyph rather than spending space on a second key.
     for i, route in enumerate(ROUTES):
-        key_entry(ax_a, 0.03 + 0.58 * i, 1.13, route, label=S.ROUTE_SHORT[route])
+        key_entry(ax_a, 0.02 + 0.40 * i, 1.26, route, label=S.ROUTE_SHORT[route])
 
-    ceiling_risk = S.RISK_LABEL[ceiling_cells[0][2]] if ceiling_cells else ""
-    note = (
-        f"Unsafe play rises from the Always Safe to the Always Unsafe rival in "
-        f"all {n_cells} route-by-risk cells, strictly in {len(strict)}: at risk "
-        f"{ceiling_risk} two {S.ROUTE_SHORT[ORIGINAL_ROUTE]} cells are both at "
-        f"100%, so they have no room above them and cannot be ordered."
-    )
-    S.caption(fig, note, y=-0.115)
-    S.save(fig, "scripted_opponent_main", width=S.COL)
+    S.save(fig, "scripted_opponent_main", width=S.TEXT)
 
 
 if __name__ == "__main__":

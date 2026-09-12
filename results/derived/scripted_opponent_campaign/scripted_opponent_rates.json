@@ -234,5 +234,270 @@
         "pairing_verified": true
       }
     }
-  }
+  },
+  "paired_risk_contrasts": {
+    "AS": {
+      "risk_0.1_minus_0.9": {
+        "mean_difference": 0.104485236985237,
+        "ci95_low": 0.053566433566433556,
+        "ci95_high": 0.15694104506604495,
+        "n_blocks": 10,
+        "pairing_verified": true,
+        "ceiling_diagnostic": {
+          "low_risk_rate": 0.26532980907980913,
+          "high_risk_rate": 0.1608445720945721,
+          "blocks_at_ceiling_low_risk": 0,
+          "n_blocks": 10,
+          "n_decisions_per_arm": [
+            93,
+            93
+          ],
+          "arm_saturated_at_low_risk": false,
+          "relative_drop": 0.3937938121148261,
+          "log_odds_shift": 0.686955210312024,
+          "log_odds_shift_is_a_lower_bound": false
+        }
+      },
+      "risk_0.1_minus_0.6": {
+        "mean_difference": 0.06116203241203242,
+        "ci95_low": 0.005039682539682541,
+        "ci95_high": 0.1064957264957265,
+        "n_blocks": 10,
+        "pairing_verified": true,
+        "ceiling_diagnostic": {
+          "low_risk_rate": 0.26532980907980913,
+          "high_risk_rate": 0.2041677766677767,
+          "blocks_at_ceiling_low_risk": 0,
+          "n_blocks": 10,
+          "n_decisions_per_arm": [
+            93,
+            93
+          ],
+          "arm_saturated_at_low_risk": false,
+          "relative_drop": 0.23051323416750125,
+          "log_odds_shift": 0.44830526678465676,
+          "log_odds_shift_is_a_lower_bound": false
+        }
+      },
+      "risk_0.6_minus_0.9": {
+        "mean_difference": 0.04332320457320457,
+        "ci95_low": -0.014583333333333332,
+        "ci95_high": 0.10087662337662337,
+        "n_blocks": 10,
+        "pairing_verified": true,
+        "ceiling_diagnostic": {
+          "low_risk_rate": 0.2041677766677767,
+          "high_risk_rate": 0.1608445720945721,
+          "blocks_at_ceiling_low_risk": 0,
+          "n_blocks": 10,
+          "n_decisions_per_arm": [
+            93,
+            93
+          ],
+          "arm_saturated_at_low_risk": false,
+          "relative_drop": 0.21219413406112775,
+          "log_odds_shift": 0.23864994352736724,
+          "log_odds_shift_is_a_lower_bound": false
+        }
+      }
+    },
+    "AU": {
+      "risk_0.1_minus_0.9": {
+        "mean_difference": 0.12224317349317348,
+        "ci95_low": 0.08203144078144078,
+        "ci95_high": 0.1613888888888889,
+        "n_blocks": 10,
+        "pairing_verified": true,
+        "ceiling_diagnostic": {
+          "low_risk_rate": 1.0,
+          "high_risk_rate": 0.8777568265068265,
+          "blocks_at_ceiling_low_risk": 10,
+          "n_blocks": 10,
+          "n_decisions_per_arm": [
+            93,
+            93
+          ],
+          "arm_saturated_at_low_risk": true,
+          "relative_drop": 0.12224317349317348,
+          "log_odds_shift": 3.260657358883149,
+          "log_odds_shift_is_a_lower_bound": true
+        }
+      },
+      "risk_0.1_minus_0.6": {
+        "mean_difference": 0.12204115329115328,
+        "ci95_low": 0.09621794871794873,
+        "ci95_high": 0.1509722222222222,
+        "n_blocks": 10,
+        "pairing_verified": true,
+        "ceiling_diagnostic": {
+          "low_risk_rate": 1.0,
+          "high_risk_rate": 0.8779588467088468,
+          "blocks_at_ceiling_low_risk": 10,
+          "n_blocks": 10,
+          "n_decisions_per_arm": [
+            93,
+            93
+          ],
+          "arm_saturated_at_low_risk": true,
+          "relative_drop": 0.12204115329115317,
+          "log_odds_shift": 3.1576372421612473,
+          "log_odds_shift_is_a_lower_bound": true
+        }
+      },
+      "risk_0.6_minus_0.9": {
+        "mean_difference": 0.0002020202020201922,
+        "ci95_low": -0.050909090909090904,
+        "ci95_high": 0.0424242424242424,
+        "n_blocks": 10,
+        "pairing_verified": true,
+        "ceiling_diagnostic": {
+          "low_risk_rate": 0.8779588467088468,
+          "high_risk_rate": 0.8777568265068265,
+          "blocks_at_ceiling_low_risk": 0,
+          "n_blocks": 10,
+          "n_decisions_per_arm": [
+            93,
+            93
+          ],
+          "arm_saturated_at_low_risk": false,
+          "relative_drop": 0.0002301021315265695,
+          "log_odds_shift": 0.10302011672190181,
+          "log_odds_shift_is_a_lower_bound": false
+        }
+      }
+    },
+    "CS": {
+      "risk_0.1_minus_0.9": {
+        "mean_difference": 0.1797868797868798,
+        "ci95_low": 0.12392107892107895,
+        "ci95_high": 0.2305988455988456,
+        "n_blocks": 10,
+        "pairing_verified": true,
+        "ceiling_diagnostic": {
+          "low_risk_rate": 0.7494656732156731,
+          "high_risk_rate": 0.5696787934287935,
+          "blocks_at_ceiling_low_risk": 0,
+          "n_blocks": 10,
+          "n_decisions_per_arm": [
+            93,
+            93
+          ],
+          "arm_saturated_at_low_risk": false,
+          "relative_drop": 0.23988674359891937,
+          "log_odds_shift": 0.8778024607001198,
+          "log_odds_shift_is_a_lower_bound": false
+        }
+      },
+      "risk_0.1_minus_0.6": {
+        "mean_difference": 0.17170898545898547,
+        "ci95_low": 0.11378510378510379,
+        "ci95_high": 0.22958139083139084,
+        "n_blocks": 10,
+        "pairing_verified": true,
+        "ceiling_diagnostic": {
+          "low_risk_rate": 0.7494656732156731,
+          "high_risk_rate": 0.5777566877566876,
+          "blocks_at_ceiling_low_risk": 0,
+          "n_blocks": 10,
+          "n_decisions_per_arm": [
+            93,
+            93
+          ],
+          "arm_saturated_at_low_risk": false,
+          "relative_drop": 0.2291085390505576,
+          "log_odds_shift": 0.8778024607001198,
+          "log_odds_shift_is_a_lower_bound": false
+        }
+      },
+      "risk_0.6_minus_0.9": {
+        "mean_difference": 0.008077894327894308,
+        "ci95_low": -0.03841783216783219,
+        "ci95_high": 0.06424242424242421,
+        "n_blocks": 10,
+        "pairing_verified": true,
+        "ceiling_diagnostic": {
+          "low_risk_rate": 0.5777566877566876,
+          "high_risk_rate": 0.5696787934287935,
+          "blocks_at_ceiling_low_risk": 0,
+          "n_blocks": 10,
+          "n_decisions_per_arm": [
+            93,
+            93
+          ],
+          "arm_saturated_at_low_risk": false,
+          "relative_drop": 0.013981481303589952,
+          "log_odds_shift": 0.0,
+          "log_odds_shift_is_a_lower_bound": false
+        }
+      }
+    },
+    "CAS": {
+      "risk_0.1_minus_0.9": {
+        "mean_difference": 0.31540667665667665,
+        "ci95_low": 0.23144300144300148,
+        "ci95_high": 0.3807890720390721,
+        "n_blocks": 10,
+        "pairing_verified": true,
+        "ceiling_diagnostic": {
+          "low_risk_rate": 1.0,
+          "high_risk_rate": 0.6845933233433233,
+          "blocks_at_ceiling_low_risk": 10,
+          "n_blocks": 10,
+          "n_decisions_per_arm": [
+            93,
+            93
+          ],
+          "arm_saturated_at_low_risk": true,
+          "relative_drop": 0.31540667665667665,
+          "log_odds_shift": 4.4977953945693,
+          "log_odds_shift_is_a_lower_bound": true
+        }
+      },
+      "risk_0.1_minus_0.6": {
+        "mean_difference": 0.26399683649683653,
+        "ci95_low": 0.21566350316350316,
+        "ci95_high": 0.31190476190476196,
+        "n_blocks": 10,
+        "pairing_verified": true,
+        "ceiling_diagnostic": {
+          "low_risk_rate": 1.0,
+          "high_risk_rate": 0.7360031635031634,
+          "blocks_at_ceiling_low_risk": 10,
+          "n_blocks": 10,
+          "n_decisions_per_arm": [
+            93,
+            93
+          ],
+          "arm_saturated_at_low_risk": true,
+          "relative_drop": 0.2639968364968366,
+          "log_odds_shift": 4.188454981834514,
+          "log_odds_shift_is_a_lower_bound": true
+        }
+      },
+      "risk_0.6_minus_0.9": {
+        "mean_difference": 0.05140984015984017,
+        "ci95_low": -0.030673926767676735,
+        "ci95_high": 0.1275419025419026,
+        "n_blocks": 10,
+        "pairing_verified": true,
+        "ceiling_diagnostic": {
+          "low_risk_rate": 0.7360031635031634,
+          "high_risk_rate": 0.6845933233433233,
+          "blocks_at_ceiling_low_risk": 0,
+          "n_blocks": 10,
+          "n_decisions_per_arm": [
+            93,
+            93
+          ],
+          "arm_saturated_at_low_risk": false,
+          "relative_drop": 0.0698500260720946,
+          "log_odds_shift": 0.30934041273478574,
+          "log_odds_shift_is_a_lower_bound": false
+        }
+      }
+    }
+  },
+  "grid_complete": true,
+  "cells_expected": 12,
+  "cells_not_collected": []
 }

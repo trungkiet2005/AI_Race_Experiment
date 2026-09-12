@@ -22,5 +22,54 @@
     }
   ],
   "paired_contrasts": {},
+  "paired_risk_contrasts": {},
+  "grid_complete": false,
+  "cells_expected": 12,
+  "cells_not_collected": [
+    [
+      "AS",
+      0.1
+    ],
+    [
+      "AS",
+      0.9
+    ],
+    [
+      "AU",
+      0.1
+    ],
+    [
+      "AU",
+      0.6
+    ],
+    [
+      "AU",
+      0.9
+    ],
+    [
+      "CS",
+      0.1
+    ],
+    [
+      "CS",
+      0.6
+    ],
+    [
+      "CS",
+      0.9
+    ],
+    [
+      "CAS",
+      0.1
+    ],
+    [
+      "CAS",
+      0.6
+    ],
+    [
+      "CAS",
+      0.9
+    ]
+  ],
   "model_route": "anthropic/claude-opus-5@default"
 }

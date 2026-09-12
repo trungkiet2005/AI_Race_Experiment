@@ -120,20 +120,39 @@ HUMAN_C = S.ROUTE_C["human"]
 NULL_FILL = "#d5dade"
 FORBIDDEN = "#f7eef0"
 
-# Geometry shared by both panels, so a row means the same height in each.  Nine
-# routes are spaced to land on the same top and bottom rows the seven used, so
-# adding two checkpoints costs the manuscript no height on the page.
-ROUTE_TOP = 6.0
+# Geometry shared by both panels, so a row means the same height in each.  The
+# pitch between two rows is fixed rather than the top and bottom being fixed,
+# because this module now draws two figures with different numbers of rows and a
+# fixed frame would print the five-route version at nearly twice the row spacing
+# of the nine-route one, which a reader would read as two different objects.
+ROW_PITCH = 0.75
 ROUTE_BOTTOM = 0.0
-HUMAN_BASE = 7.05
 HUMAN_HEIGHT = 0.95
-HUMAN_TICK = 7.45
 BAR_H = 0.55
-Y_LO, Y_HI = -1.55, 8.95
-TOP_Y = 8.28          # the human minimum, clear of the facet title above it
 RULE_LO = -0.30       # rules and tint stop here, leaving the note lane clean
 NOTE_Y = -1.05
+Y_LO = -1.55
 X_LO, X_HI = 0.30, COMPARISON_N + 0.70
+
+
+class Frame:
+    """Where every row sits, for a panel carrying ``n`` model rows."""
+
+    def __init__(self, n: int):
+        self.n = n
+        self.route_top = ROUTE_BOTTOM + ROW_PITCH * (n - 1)
+        self.human_base = self.route_top + 1.05
+        self.human_tick = self.route_top + 1.45
+        self.top_y = self.route_top + 2.28   # the human minimum, clear of the title
+        self.y_hi = self.route_top + 2.95
+
+    def rows(self, order):
+        return [(self.route_top - i * ROW_PITCH, label) for i, label in enumerate(order)]
+
+    @property
+    def height_in(self) -> float:
+        """Canvas height that keeps the row pitch the same on the page."""
+        return 1.36 + 0.222 * (self.y_hi - Y_LO)
 
 
 def identity(label):
@@ -189,9 +208,12 @@ def composition(keys) -> np.ndarray:
     return shares / shares.sum()
 
 
-def draw_facet(ax, counts, cells, rows, *, risk, show_ylabels, show_xlabel, notes):
+def draw_facet(ax, counts, cells, rows, *, risk, show_ylabels, show_xlabel, notes,
+               frame, marks):
     floor = int(counts.min())
     hist = np.bincount(counts, minlength=COMPARISON_N + 1)[: COMPARISON_N + 1]
+    Y_HI, HUMAN_BASE, HUMAN_TICK, TOP_Y = (
+        frame.y_hi, frame.human_base, frame.human_tick, frame.top_y)
 
     # Every rule and the tint stop above ``NOTE_Y``, which leaves the bottom of
     # each facet as clean paper for the notes.  A dashed rule running through a
@@ -251,7 +273,12 @@ def draw_facet(ax, counts, cells, rows, *, risk, show_ylabels, show_xlabel, note
         colours = [HUMAN_C]
         for _, label in rows:
             colour, _, short, verdict = identity(label)
-            labels.append(f"{short} {VERDICT_MARK[verdict]}")
+            # The verdict mark is drawn only where the panel holds routes with
+            # two different verdicts.  On the screened-only figure every row is
+            # admitted, so a mark on every row would carry no information and
+            # would put the screen's vocabulary back into a panel the split
+            # exists to keep free of it.
+            labels.append(f"{short} {VERDICT_MARK[verdict]}" if marks else short)
             colours.append(colour)
         ax.set_yticklabels(labels)
         for tick, colour in zip(ax.get_yticklabels(), colours):
@@ -377,13 +404,47 @@ def main() -> None:
     inverse = {v: k for k, v in vocabulary.items()}
     human_profile = composition([inverse[c] for c in pooled[chosen]])
 
-    order = sorted(model_pooled, key=lambda lab: (-model_pooled[lab], lab))
-    narrowest = order[-1]
-    gap = (ROUTE_TOP - ROUTE_BOTTOM) / (len(order) - 1)
-    rows = [(ROUTE_TOP - i * gap, label) for i, label in enumerate(order)]
-    y_of = dict((label, y) for y, label in rows)
+    order_all = sorted(model_pooled, key=lambda lab: (-model_pooled[lab], lab))
 
-    fig = plt.figure(figsize=(S.TEXT, 3.36))
+    shared = dict(
+        null_counts=null_counts, model_counts=model_counts, model_cells=model_cells,
+        model_pooled=model_pooled, human_profile=human_profile,
+        median_distinct=median_distinct, below_dyad=below_dyad,
+        inside_labels=inside_labels,
+    )
+
+    # The main paper draws the five routes the validity screen admitted, plus
+    # the human reference.  Every strategic claim the body makes stands on those
+    # five, and a figure that quietly sets four refused routes beside them
+    # invites the reader to read the refused rows as results.  The two refused
+    # routes that DO reach the human range are not hidden by that choice: they
+    # are named on the screened figure as the only ones in the study that get
+    # there, which is the honest version of the sentence and the one a reviewer
+    # has to see.  The supplement then draws all nine.
+    draw_figure("human_versus_model",
+                [label for label in order_all
+                 if LABEL_TO_ROUTE[label] in S.ADMITTED],
+                marks=False, **shared)
+    draw_figure("human_versus_model_all_routes", order_all, marks=True, **shared)
+
+
+def draw_figure(stem, order, *, marks, null_counts, model_counts, model_cells,
+                model_pooled, human_profile, median_distinct, below_dyad,
+                inside_labels):
+    """One figure over one roster.  Everything numeric was computed in ``main``."""
+    frame = Frame(len(order))
+    rows = frame.rows(order)
+    y_of = dict((label, y) for y, label in rows)
+    narrowest = order[-1]
+    drawn_inside = [label for label in order if label in inside_labels]
+    outside_inside = [label for label in inside_labels if label not in order]
+
+    floors = null_counts.min(axis=0)
+    below = [(risk, label) for i, risk in enumerate(S.RISKS)
+             for label in order if model_counts[label][i] < floors[i]]
+    n_cells = len(order) * len(S.RISKS)
+
+    fig = plt.figure(figsize=(S.TEXT, frame.height_in))
     gs = fig.add_gridspec(1, 2, width_ratios=[1.62, 1.0], wspace=0.40)
     left = gs[0, 0].subgridspec(1, 3, wspace=0.13)
     axes_a = [fig.add_subplot(left[i]) for i in range(3)]
@@ -392,27 +453,33 @@ def main() -> None:
     # --- a: where each model cell falls in the matched human null -------------
     # One name per line.  Two names on one line is wider than a facet, and an
     # annotation that overruns its facet lands on the neighbouring note.
-    inside_names = "\nand ".join(
-        f"{identity(lab)[2]} {VERDICT_MARK[identity(lab)[3]]}" for lab in inside_labels)
+    def named(label):
+        return (f"{identity(label)[2]} {VERDICT_MARK[identity(label)[3]]}"
+                if marks else identity(label)[2])
+
+    if drawn_inside:
+        inside_note = "only " + "\nand ".join(named(lab) for lab in drawn_inside) \
+                      + "\nland inside"
+    else:
+        inside_note = ("no route drawn here\nreaches the human range")
     for i, (ax, risk) in enumerate(zip(axes_a, S.RISKS)):
         notes = []
         if i == 0:
             notes.append(("1 = all 20 identical,\nthe floor of the measure",
                           0.6, NOTE_Y, S.MUTED, "left"))
         if i == 1:
-            notes.append(("no human draw\never landed here", 1.2, 6.56,
-                          S.UNSAFE_C, "left"))
+            notes.append(("no human draw\never landed here", 1.2,
+                          frame.route_top + 0.56, S.UNSAFE_C, "left"))
             notes.append(("20 = all 20 different,\n"
                           "the measure's ceiling",
                           0.6, NOTE_Y, S.MUTED, "left"))
         if i == 2:
-            notes.append((f"only {inside_names}\nland inside",
-                          COMPARISON_N + 0.4, NOTE_Y, S.INK_2, "right"))
+            notes.append((inside_note, COMPARISON_N + 0.4, NOTE_Y, S.INK_2, "right"))
         draw_facet(ax, null_counts[:, i],
                    {label: model_counts[label][i] for label in order},
                    rows, risk=risk, show_ylabels=(i == 0), show_xlabel=(i == 1),
-                   notes=notes)
-    S.direct_label(axes_a[0], 1.3, HUMAN_BASE + 0.10,
+                   notes=notes, frame=frame, marks=marks)
+    S.direct_label(axes_a[0], 1.3, frame.human_base + 0.10,
                    f"{N_NULL:,} draws\nof 20 humans", color=S.INK_2,
                    ha="left", va="bottom", dx=0, dy=0)
     S.panel(axes_a[0], "a",
@@ -420,7 +487,7 @@ def main() -> None:
             pad=16)
 
     # --- b: the mechanism, which sequences each population spends its 60 on ---
-    for y, name in [(HUMAN_TICK, "Human")] + rows:
+    for y, name in [(frame.human_tick, "Human")] + rows:
         if name == "Human":
             profile, colour, marker = human_profile, HUMAN_C, S.ROUTE_M["human"]
             count = median_distinct
@@ -445,19 +512,20 @@ def main() -> None:
     # cell its twenty trajectories are one string, which is the floor of the
     # measure and not a small reading of it.  Said inside the bar, because the
     # pooled bar is the one place where that boundary stops being visible.
-    ax_b.annotate("all 20 identical in every risk cell",
-                  xy=(0.02, y_of[narrowest]),
-                  ha="left", va="center", fontsize=S.FS_NOTE, color=S.SURFACE,
-                  zorder=6)
+    if all(count == 1 for count in model_counts[narrowest]):
+        ax_b.annotate("all 20 identical in every risk cell",
+                      xy=(0.02, y_of[narrowest]),
+                      ha="left", va="center", fontsize=S.FS_NOTE, color=S.SURFACE,
+                      zorder=6)
 
     ax_b.set_xlim(0.0, 1.0)
-    ax_b.set_ylim(Y_LO, Y_HI)
+    ax_b.set_ylim(Y_LO, frame.y_hi)
     ax_b.set_xticks([0, 0.25, 0.5, 0.75, 1.0])
     ax_b.set_xticklabels(["0", "25", "50", "75", "100"])
     ax_b.set_yticks([])
     ax_b.set_xlabel("share of the 60 matched trajectories (%)", labelpad=2)
     S.strip(ax_b, left=False, grid_axis="x")
-    ax_b.annotate("sequences\nused", xy=(1.0, TOP_Y), xytext=(4, 0),
+    ax_b.annotate("sequences\nused", xy=(1.0, frame.top_y), xytext=(4, 0),
                   textcoords="offset points", ha="left", va="center",
                   fontsize=S.FS_NOTE, color=S.MUTED, linespacing=1.15,
                   annotation_clip=False)
@@ -467,15 +535,29 @@ def main() -> None:
     # which is the model's structure exactly, the count is smaller. Both are
     # printed, because quoting only the larger one would be choosing the null
     # after seeing which number it gives.
-    ax_b.annotate(VERDICT_KEY
-                  + "\nall five admitted routes sit below every human draw, at "
-                    "every risk level;"
-                    "\nthe only cells reaching the human range belong to two "
-                    "refused routes"
-                  + f"\nthe human row is the median of the {N_NULL:,} matched draws"
-                  + f"\n{len(below)} is against a null of 20 participants; against "
-                    f"one of 10 complete\ndyads, which matches the model cells' "
-                    f"independence, it is {len(below_dyad)} of {n_cells}",
+    lines = []
+    if marks:
+        lines.append(VERDICT_KEY)
+    # Only say "every" when it is every one.  On the nine-route roster it is
+    # not, and the same sentence there would be false.
+    if len(below) == n_cells:
+        lines.append("every route drawn here sits below every human draw, "
+                     "at every risk level")
+    if outside_inside:
+        lines.append("the only cells in this study that reach the human range "
+                     "belong to\n" + " and ".join(identity(lab)[2]
+                                                  for lab in outside_inside)
+                     + ", which the validity screen refused")
+    elif drawn_inside:
+        lines.append("the cells that reach the human range belong to "
+                     + " and ".join(named(lab) for lab in drawn_inside))
+    lines.append(f"the human row is the median of the {N_NULL:,} matched draws")
+    lines.append(f"{len(below)} is against a null of 20 participants; against one "
+                 f"of 10 complete\ndyads, which matches the model cells' "
+                 f"independence, it is "
+                 f"{sum(1 for _r, lab in below_dyad if lab in order)} "
+                 f"of {n_cells}")
+    ax_b.annotate("\n".join(lines),
                   xy=(0.0, 0.0), xycoords="axes fraction", xytext=(-40, -26),
                   textcoords="offset points", ha="left", va="top",
                   fontsize=S.FS_NOTE, color=S.MUTED, linespacing=1.35,
@@ -485,7 +567,10 @@ def main() -> None:
             f"{model_pooled[narrowest]} for {S.ROUTE_SHORT[LABEL_TO_ROUTE[narrowest]]}",
             pad=4)
 
-    S.save(fig, "human_versus_model", width=S.TEXT)
+    if below and len(below) != n_cells:
+        print(f"  {stem}: {n_cells - len(below)} of {n_cells} drawn cells are NOT "
+              "below the human minimum")
+    S.save(fig, stem, width=S.TEXT)
 
 
 if __name__ == "__main__":

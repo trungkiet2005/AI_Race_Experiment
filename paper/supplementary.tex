@@ -314,11 +314,11 @@ Each section stands on its own and is named for what it measures. Section
 letters restart at A because this is supplementary matter.
 
 \begin{itemize}
-  \item \textbf{Task-validity probe battery.} Every probe, its wording family,
-    and the per-route pass rate behind the summary in the main paper.
-  \item \textbf{Nine-route endpoint-admission campaign.} The full per-domain
-    admission result for every route the main paper reports, including the two
-    domains it omits, the admission thresholds, and the retained failure.
+  \item \textbf{The quality-control screen.} What the screen asked, when its
+    rule was fixed, which of the nine routes cleared it and on which condition,
+    and the three facts that bound what a verdict may be used for. The screen
+    is treated in full as an instrument in a separate concurrent study, not
+    here.
   \item \textbf{Human-benchmark replication check.} Whether the reference
     human study's reported pattern reproduces on the released participant data
     under our own analysis code.
@@ -374,18 +374,20 @@ beside it.
 % surrounding document already defines them.
 \providecommand{\todo}[1]{\textbf{[TODO: #1]}}
 
+\begin{sloppypar}
+\noindent
 This supplement collects the material referenced from
-the results section in the main paper as supporting rather than extending the main
-claims: the full task-validity probe breakdown
-(\S\ref{app:task-validity-full}), the human-benchmark replication check
+the main paper as supporting rather than extending the main
+claims: the record of the quality-control screen and which routes it admitted
+(\S\ref{app:admission-v6}), the human-benchmark replication check
 (\S\ref{app:human-benchmark-replication}), the persona comparison
 (\S\ref{app:persona-detail}), the predictive analysis
 (\S\ref{app:predictive-structure}), and the full two-player and $N$-player
 descriptive results (\S\ref{app:twoplayer-baseline},
 \S\ref{app:nplayer-scope}). It also carries the evidence the main paper only
-summarises: the nine-route admission campaign
-(\S\ref{app:admission-v6}), the sweep of the gate's three thresholds
-(\S\ref{app:gate-threshold-sensitivity}), the selection-strength sweep of the evolutionary
+summarises: the separate and larger
+battery on the one model with published weights
+(\S\ref{app:open-weight-battery}), the selection-strength sweep of the evolutionary
 benchmark (\S\ref{app:egt-beta}), the crossed
 representation-robustness design completed on both admitted routes
 (\S\ref{app:context-mapping}), the matched
@@ -397,468 +399,228 @@ cluster-count sweep behind the human archetypes
 (\S\ref{app:diversity-pilot}), the joint outcome dynamics of a race
 (\S\ref{app:joint-dynamics}), and the designed horizon boundary at round
 five (\S\ref{app:horizon-boundary}).
-
-\subsection{Task-validity probe battery: full breakdown}
-\label{app:task-validity-full}
-
-Table~\ref{tab:task-validity-full} reports the full breakdown behind the
-first confirmatory frontier endpoint admission, protocol v5, which admitted
-two routes. It is superseded as the campaign the main paper reports by the
-nine-route v6 campaign of \S\ref{app:admission-v6}, and is retained here
-because no v6 verdict contradicts it. The confirmatory audit used
-the two exact routes listed in Table~\ref{tab:frontier-admission-registry} under
-the frozen protocol v5: 20 atomic probes spanning rule recall,
-one-stage payoffs, state reconstruction, state transition, terminal scoring,
-and expected payoff, repeated three times per route, for 60 retained outputs
-per route and 120 retained outputs in total.
-Every response was schema-valid and no transport retry was needed. Numeric
-probes used a fixed structured-output contract; categorical probes explicitly
-listed the allowed answer set.
-
-\begin{table}[h]
-    \caption{Task-validity probe accuracy by category for the two admitted
-    frontier routes, protocol v5 ($n=60$
-    retained probe outputs per route).}
-    \label{tab:task-validity-full}
-    \centering
-    \small
-        \begin{tabular}{@{}lrr@{}}
-        \toprule
-        Probe category & Gemini 3 Flash & Claude Sonnet 5 \\
-        \midrule
-        Rule recall                        & 100.0\% & 100.0\% \\
-        One-stage payoff lookup             & 100.0\% & 100.0\% \\
-        State reconstruction                & 93.3\% & 86.7\% \\
-        State transition                    & 100.0\% & 100.0\% \\
-        Terminal scoring                    & 100.0\% & 80.0\% \\
-        Expected-payoff calculation         & 50.0\% & 0.0\% \\
-        \midrule
-        \emph{Overall semantic accuracy}    & \emph{93.3\%} & \emph{81.7\%} \\
-        \emph{Schema-valid responses}      & \emph{100.0\%} & \emph{100.0\%} \\
-        \bottomrule
-    \end{tabular}
-\end{table}
-
-The largest errors were in the optional payoff check: three of six Gemini
-responses and none of the Claude responses were correct. We retain this domain
-as a diagnostic. Live gameplay asks for an action, whereas the state and
-terminal domains determine whether the action prompt is mechanically interpretable.
-The admission task therefore records both the required gate and the arithmetic
-limitation instead of silently dropping the endpoint.
-
-\subsection{Frontier endpoint registry and admission outcomes}
-\label{app:frontier-admission}
-
-Endpoint availability was checked against the active Kaggle Benchmark identity
-and recorded using the exact route string. One repetition of the 20-probe
-bank was used as a diagnostic smoke for every advertised route; the two routes
-that passed the v5 gameplay thresholds then received the three-repetition
-confirmatory admission. A route that was unavailable or failed transport was
-retained as failed infrastructure evidence, never replaced by another
-endpoint.
-
-\begin{table}[h]
-    \caption{Per-endpoint frontier admission audit. Smoke results are
-    diagnostic; only routes with a completed v5 artifact and passing gameplay
-    thresholds enter the new gameplay run.}
-    \label{tab:frontier-admission-registry}
-    \centering
-    \scriptsize
-    \begin{tabular}{@{}p{0.44\linewidth}rrrp{0.12\linewidth}@{}}
-        \toprule
-        Exact route & Overall & State & Terminal & Status \\
-        \midrule
-        \path{google/gemini-3-flash-preview} & 93.3\% & 93.3\% & 100\% & admitted \\
-        \path{anthropic/claude-sonnet-5@default} & 81.7\% & 86.7\% & 80\% & admitted \\
-        \path{google/gemini-3.1-flash-lite-preview} & 75\% & 60\% & 80\% & diagnostic \\
-        \path{openai/gpt-5.4-nano-2026-03-17} & 50\% & 20\% & 60\% & diagnostic \\
-        \path{deepseek-ai/deepseek-r1-0528} & \multicolumn{3}{c}{not admitted} & transport failed \\
-        \path{ibm/granite-4.0-h-small} & \multicolumn{3}{c}{not admitted} & transport failed \\
-        \path{openai/gpt-oss-120b} & \multicolumn{3}{c}{not admitted} & transport failed \\
-        \path{qwen/qwen3-next-80b-a3b-instruct} & \multicolumn{3}{c}{not admitted} & transport failed \\
-        \bottomrule
-    \end{tabular}
-\end{table}
-
-The required gameplay gate was overall accuracy at least 80\%, state
-reconstruction accuracy at least 75\%, and terminal-scoring accuracy at least
-75\%. Expected-payoff accuracy was reported separately because it is a
-closed-form arithmetic diagnostic rather than an action-task requirement.
-The active identity exposed no second authorised account, so no multi-account
-pooling is claimed.
-
-
-\subsection{Nine-route endpoint-admission campaign}
-\label{app:admission-v6}
-
-The main paper summarises a later and larger admission campaign,
-\texttt{ai-race-frontier-admission-v6}, which put nine routes through the same
-gate. This subsection gives it in full, including the two domains the main
-paper's table omits for space: rule recall and one-stage payoff lookup.
-Table~\ref{tab:admission-v6} is the complete per-domain result. Each route
-answered the same frozen bank of 20 probes three times, giving 60 retained
-rows per route and 540 retained rows in total, at temperature 0 with a
-256-token output cap and base seed 260726, on a single benchmark account.
-Account identifiers are redacted for double-blind review and are recorded in
-the artifact.
-
-The three admission thresholds were fixed before the campaign ran: overall
-semantic accuracy at least 80\%, state-reconstruction accuracy at least 75\%,
-and terminal-scoring accuracy at least 75\%. A route is admitted only if it
-clears all three. Expected-payoff accuracy is recorded but never blocks
-admission, because it is a closed-form arithmetic diagnostic rather than
-something the action task requires. Five of the nine routes were admitted:
-\begin{sloppypar}
-\noindent
-\path{google/gemini-3-flash-preview}, \path{anthropic/claude-opus-5@default},
-\path{openai/gpt-5.4-2026-03-05}, \path{openai/gpt-5.5-2026-04-23}, and
-\path{anthropic/claude-sonnet-5@default}. Four were refused:
-\path{google/gemini-3.1-flash-lite-preview} on state reconstruction alone,
-\path{openai/gpt-5.4-mini-2026-03-17} on overall accuracy and state
-reconstruction, and \path{google/gemini-3.5-flash-lite} and
-\path{openai/gpt-5.4-nano-2026-03-17} on all three thresholds.
 \end{sloppypar}
 
+\subsection{The quality-control screen: what it asked, and which routes passed}
+\label{app:admission-v6}
+
+This subsection records the screen as an entry condition and nothing more: what
+it asked, when its rule was fixed, which routes cleared it, and the three facts
+about it that bound what a verdict may be used for. It is deliberately short.
+The screen is also the subject of a separate study by the same authors, running
+concurrently at another venue, which treats it as a measurement instrument and
+reports the full probe tables, the threshold sweep, the repeatability analysis
+and the comparison against cheaper signals. Nothing in this paper rests on that
+study, and nothing here ranks routes by their probe scores.
+
+The screen is a frozen bank of 20 probes over six domains, asked three times
+each, giving 60 scored answers per route and 540 in all. The six domains are
+recalling the rules, reading the stage-payoff matrix, rebuilding the current
+state from a short history, taking one state transition, scoring a finished
+race, and computing a closed-form expected payoff. A route is admitted only if
+it clears all three of the conditions recorded in the caption of
+Table~\ref{tab:admission-v6}: 80\% of all its answers, 75\% within state
+reconstruction and 75\% within terminal scoring. Expected payoff is recorded
+and never blocks admission, because the game asks an agent to choose an action
+rather than to solve for an expected value.
+
+Two properties of the rule are what let it serve as an entry condition. The
+bank, the three conditions and their values were fixed and recorded before the
+campaign ran, in the collection protocol under \texttt{docs/}. And the screen
+scores probe answers against ground truth without ever reading a race, so no
+gameplay result can reach a verdict, whatever order things were run in. We do
+not call the screen pre-registered, because three of the nine routes received
+their first verdict after their own gameplay had completed; what is checkable,
+and what the defence rests on, is the fixed bank, the fixed rule and the fact
+that the instrument cannot see the outcome it selects on.
+
+Three facts make the nine rows of Table~\ref{tab:admission-v6} comparable with
+one another. All nine ran under one protocol identifier. All nine answered the
+same probe bank, whose SHA-256 hash begins \texttt{2953fb47}, and read the same
+rules context, whose hash begins \texttt{b80981a5}; the analysis script fails
+closed and refuses to tabulate a route whose hashes differ. Eight routes ran at
+benchmark task version 7 and one, \path{google/gemini-3.5-flash-lite}, at
+version 8, whose outgoing request omits the reasoning-budget argument because
+that provider returns an invalid-argument error when the argument is present at
+all. That is a difference in the transport contract rather than evidence about
+the model, it is recorded in that route's own manifest, and the amendment
+introducing per-route contracts is dated in the collection protocol. For every
+other route the outgoing request is byte-identical to the earlier runs. One
+failed run is retained rather than deleted: the same route at task version 7
+ended in exhausted transport retries and produced no scoreable answer, so it
+appears nowhere in the table and is kept as a transport failure beside the
+campaign.
+
 \begin{table*}[t]
-    \caption{Complete nine-route endpoint-admission result, protocol
-    \texttt{ai-race-frontier-admission-v6}. Every cell is the percentage of
-    that domain's probes answered correctly, out of 60 retained probe answers
-    per route (20 probes, three repetitions each). ``Task ver'' is the frozen
-    benchmark task version the route ran under. Expected payoff is a recorded
-    diagnostic and does not gate admission; the three gates are overall
-    accuracy at least 80\%, state reconstruction at least 75\%, and terminal
-    scoring at least 75\%. Rule recall, stage payoff, state transition, and
-    expected payoff each rest on six probe answers per route, so their
-    accuracy can only move in steps of one sixth, about 16.7 percentage
-    points.}
+    \caption{The nine screened routes on the three conditions that decide
+    admission, and which condition refused each route that did not enter. A
+    route is admitted only when all three clear: overall accuracy at least
+    80\%, state reconstruction at least 75\% and terminal scoring at least
+    75\%. Every cell is the percentage of that domain's probes answered
+    correctly. Overall accuracy rests on all 60 scored answers per route, state
+    reconstruction and terminal scoring on 15 each, so those two move in steps
+    of one fifteenth, about 6.7 points. Expected payoff is recorded as a
+    diagnostic and gates nothing; no route reaches 75\% on it. The per-domain
+    results in full are reported in the concurrent evaluation study.}
     \label{tab:admission-v6}
-    \centering
-    \footnotesize
-    \setlength{\tabcolsep}{4pt}
-    \begin{tabular}{@{}lrrrrrrrrl@{}}
-        \toprule
-        Exact route & Task & Rule & Stage & State & State & Terminal
-        & Exp.\ payoff & Overall & Admitted \\
-        & ver & recall & payoff & recon. & trans. & scoring
-        & (diagnostic) & & \\
-        \midrule
-        \path{google/gemini-3-flash-preview} & 7 & 100.0 & 100.0 & 93.3 & 100.0 & 100.0 & 50.0 & 93.3 & yes \\
-        \path{anthropic/claude-opus-5@default} & 7 & 100.0 & 100.0 & 93.3 & 100.0 & 100.0 & 33.3 & 91.7 & yes \\
-        \path{openai/gpt-5.4-2026-03-05} & 7 & 100.0 & 100.0 & 100.0 & 100.0 & 100.0 & 0.0 & 90.0 & yes \\
-        \path{openai/gpt-5.5-2026-04-23} & 7 & 100.0 & 100.0 & 80.0 & 100.0 & 100.0 & 50.0 & 90.0 & yes \\
-        \path{anthropic/claude-sonnet-5@default} & 7 & 100.0 & 100.0 & 100.0 & 100.0 & 80.0 & 0.0 & 85.0 & yes \\
-        \path{google/gemini-3.1-flash-lite-preview} & 7 & 100.0 & 100.0 & 73.3 & 100.0 & 80.0 & 16.7 & 80.0 & no \\
-        \path{openai/gpt-5.4-mini-2026-03-17} & 7 & 100.0 & 100.0 & 66.7 & 66.7 & 86.7 & 0.0 & 75.0 & no \\
-        \path{google/gemini-3.5-flash-lite} & 8 & 100.0 & 100.0 & 60.0 & 50.0 & 60.0 & 0.0 & 65.0 & no \\
-        \path{openai/gpt-5.4-nano-2026-03-17} & 7 & 75.0 & 100.0 & 20.0 & 50.0 & 66.7 & 0.0 & 51.7 & no \\
-        \bottomrule
-    \end{tabular}
-\end{table*}
-
-Three facts make the nine rows of Table~\ref{tab:admission-v6} directly
-comparable with one another. All nine ran under the same protocol identifier,
-\texttt{ai-race-frontier-admission-v6}. All nine answered the same probe bank,
-whose SHA-256 hash is this.
-\begin{center}\ttfamily\scriptsize
-2953fb472dcba47511de108a47d4126b\\
-0f661e79bf60c96a3ab46f581abca8bc
-\end{center}
-
-\noindent The shared hash is what licenses placing
-the routes side by side, and the analysis script fails closed, marking a route
-non-comparable and refusing to tabulate it beside the others if its hash
-differs. All nine also read the same rules context, whose hash is this.
-\begin{center}\ttfamily\scriptsize
-b80981a5e888d04649300f79b7388ca7\\
-a755b958f239f0172efd9ca35aab2ae0
-\end{center}
-
-\noindent Eight routes ran at benchmark task version 7 and one,
-\path{google/gemini-3.5-flash-lite}, at task version 8.
-
-That one route's decoding contract differs from the other eight, and the
-difference is visible in its manifest rather than inferred. The eight
-version-7 routes were sent an explicit reasoning budget of \texttt{none}. The
-version-8 route omits the reasoning-budget argument altogether, because this
-provider rejects the presence of the argument itself, returning an HTTP 400
-invalid-argument error before a single probe is sampled. That is a mismatch
-in the transport contract, not evidence about the model, and it had previously
-removed the route from the audit entirely. The amendment that introduced the
-per-route contract is dated 2026-09-09 in
-\texttt{docs/}\discretionary{}{}{}\texttt{frontier-evidence-collection-protocol.md}, which also records its
-scope: for every route whose resolved contract is still \texttt{none} the
-outgoing request is byte-identical to the earlier runs, so those artifacts
-stay poolable with them, while a route whose resolved contract omits the
-argument records that omission in its manifest, and any table that pools such
-a route must say so. This table says so.
-
-One failed run is retained rather than deleted. Run 1494041, route
-\path{google/gemini-3.5-flash-lite} at task version 7, ended in a
-\texttt{RuntimeError} from exhausted bounded transport retries. It appears
-nowhere in Table~\ref{tab:admission-v6} because it produced no scoreable
-probe answer, and it is kept in the accounting chain as a transport failure
-under \path{results/frontier/admission_campaign_v6/failed_runs/}. The
-successful rerun of that same route is the task-version-8 row.
-
-No route changed its verdict relative to the earlier v5 campaign of
-\S\ref{app:task-validity-full} and \S\ref{app:frontier-admission}, which is
-the only earlier campaign entitled to admit anything. One reason for refusal
-did change: \path{google/gemini-3.1-flash-lite-preview} rose from 76.7\% to
-80.0\% overall accuracy and now clears the overall gate, yet is still refused,
-because its state reconstruction is 73.3\%, below the 75\% threshold.
-Expected payoff is the weakest domain on every one of the nine routes,
-including the strongest, which is why it was frozen as a diagnostic before the
-campaign began: had it gated admission, no route would have been admitted at
-all.
-
-\begin{figure}[!t]
-    \centering
-    \includegraphics[width=\columnwidth]{../figures/paper/audit_reads_the_name.pdf}
-    \caption{The gate draws the same line the route string already draws.
-    \textbf{(a)} Every route twice: the gate's verdict after 60 calls, then the
-    tier its own name announces after none. The two agree on 9 of 9 routes,
-    exact permutation $p=1/126$. \textbf{(b)} Accuracy by probe domain, calls
-    behind each column, a ring on every cell below its gate. \textbf{(c)}
-    Spearman correlation between each domain's accuracy and the risk response;
-    grey marks the domain every route answered perfectly. Agreeing with a size
-    tier does not show that the audit measures nothing else, since
-    comprehension that simply tracked model size would look like this. It shows
-    that on these nine routes the audit carries no information the name does
-    not already carry. $n=9$ endpoints, which is the whole basis of every
-    $p$-value here.}
-    \Description{Three stacked panels at one column width. The top panel lists
-    the nine audited routes, each drawn as a horizontal line joining the
-    audit's verdict on the left to the tier word in its name on the right, with
-    a dashed admission line between the five admitted routes above and the four
-    refused routes below; every route below the line is labelled lite, mini or
-    nano, and every route above it is labelled none. The middle panel is a
-    heatmap of accuracy by route and probe domain, with rings drawn on the
-    cells that fall below a gate, almost all of them in the state
-    reconstruction column. The bottom panel is a lollipop chart of Spearman
-    correlation by probe domain, tallest for state reconstruction, with the
-    stage payoff column greyed out and marked as having no variation.}
-    \label{fig:audit-reads-the-name}
-\end{figure}
-
-\paragraph{What the gate adds over the route string.} A gate earns its sixty
-calls per route only if it separates endpoints that a cheaper reading would not,
-and Figure~\ref{fig:audit-reads-the-name} puts that question to this campaign.
-The answer is uncomfortable. Reading the route string alone, and calling a route
-small when \texttt{mini}, \texttt{nano} or \texttt{lite} appears as a whole word
-of its name, splits the nine endpoints into exactly the two sets the gate
-produced: all four refused routes carry a size word and none of the five
-admitted routes does. Enumerating all $C(9,4)=126$ ways of relabelling which
-four names carry a size word gives an exact permutation $p$ of $1/126$, or
-$0.008$. The rule has one judgement in it, which the figure reports rather than
-hides: \texttt{flash} is not counted as a size word, and counting it as well
-makes five names small instead of four and the agreement 8 of 9, $p=5/126$ or
-$0.040$. Either way, a reader who never ran the audit and only read the nine
-names would have put the admission line in the same place.
-
-This is not evidence that the battery measures nothing. Comprehension may simply
-track model size across these nine endpoints, which would produce this picture
-too, and nine routes cannot tell the two apart. What does follow is narrower and
-still awkward for the instrument: on these nine routes the audit carries no
-information the name does not already carry, so no claim that rests on the
-admitted-against-refused split is separable here from a claim about model size.
-The gate would show its worth on a route whose name and comprehension disagree,
-and this sample contains no such route.
-
-\subsection{What the gate does when it is asked twice}
-\label{app:gate-reliability}
-
-The admission gate is the instrument every behavioural claim in this paper rests
-on, so its own repeatability is a fair question, and the repository can answer
-it: the battery has been administered three times. All three administrations use
-the same probe bank, hash \texttt{2953fb47}, the same rules context, hash
-\texttt{b80981a5}, three repetitions per probe and a requested temperature of
-zero. The only recorded contract difference anywhere in the three is the output
-token cap, 128 in the first administration and 256 in the second and third.
-Between the second and the third there is no recorded difference at all.
-
-\paragraph{Between the two identical administrations.} Two of the four routes
-present in both moved, and both moved by the same amount in the same domain.
-Claude Sonnet 5's state-reconstruction accuracy went from $86.7\%$ to $100.0\%$
-and Gemini 3.1 Flash-Lite's from $60.0\%$ to $73.3\%$. That domain is scored
-over fifteen calls, so $13.3$ points is two calls out of fifteen answering
-differently on identical input. Overall accuracy moved $3.3$ points for both.
-Gemini 3 Flash and GPT-5.4 nano did not move at all. No verdict changed.
-
-This has a direct consequence for how a number in the main text should be read.
-The main text reports Gemini 3.1 Flash-Lite missing
-admission on state reconstruction at $73.3\%$ against the $75\%$ threshold. On
-the identical instrument that same route scored $60.0\%$, so the margin by which
-it misses is not a stable quantity, even though the verdict is: it failed both
-times.
-
-\paragraph{Across the token-cap change.} Claude Sonnet 5 is the one route whose
-verdict has ever moved. It was \emph{refused} in the first administration at
-$76.7\%$ overall, below the $80\%$ bar, and admitted in both later ones at
-$81.7\%$ and $85.0\%$. That comparison spans the change from a 128-token cap to
-256, so it is not a clean test-retest result and we do not present it as one; a
-truncated answer is scored wrong, and a low cap can truncate. It is reported
-because Claude Sonnet 5 is an admitted route that carries the crossed
-representation design of \S\ref{app:context-mapping}, and a reader is entitled
-to know that the gate refused it once.
-
-\paragraph{What follows from this.} A gate verdict is a decision, not a
-measurement with a standard error, and this study treats it as one: the
-threshold is a declared entry condition and no analysis here interpolates
-between probe scores. The repeatability above is compatible with that use, since
-no verdict moved on the identical instrument. It is not compatible with reading
-a probe score as a precise trait of a route, and nothing in this paper does.
-The honest summary is that on this battery, at temperature zero, two of fifteen
-calls in one domain can change between administrations, which is the resolution
-a reader should assume for any single probe accuracy quoted here.
-
-\subsection{Where the gate would have to sit to change its answer}
-\label{app:gate-threshold-sensitivity}
-
-The three admission thresholds were chosen by us, so a reader is entitled to
-ask what a different choice would have done. This subsection answers that by
-recomputing the nine-route verdict under alternative thresholds. Nothing was
-collected for it. The probe answers are the ones already in
-Table~\ref{tab:admission-v6}, and the only thing that moves is where the three
-entry conditions are drawn.
-
-\paragraph{What the battery can resolve.} The battery has a step size, and a
-sweep finer than that step reports differences the instrument cannot see.
-Overall accuracy is scored over all 60 retained probe answers per route, so a
-route's score can only land on a multiple of one sixtieth, about 1.7 percentage
-points. State reconstruction and terminal scoring are each scored over 15
-answers, so those two move in steps of one fifteenth, about 6.7 points. Neither
-declared 75\% threshold is itself a score a route can reach, because there is
-no way to answer 75\% of 15 questions correctly. What decides a verdict is not
-the threshold value but which achievable scores sit above it, so every sweep
-below runs on the achievable grid, and each band in
-Table~\ref{tab:threshold-bands} is the whole range of thresholds that produces
-one partition rather than a single number.
-
-\paragraph{Tightening.} The admitted set survives a five-point tightening of
-any one condition. Table~\ref{tab:threshold-bands} sweeps each condition in
-turn across its full grid while the other two stay where they were declared.
-The same five routes are admitted for any overall-accuracy threshold at or
-below 85.0\%, for any terminal-scoring threshold at or below 80.0\%, and for
-any state-reconstruction threshold above 73.3\% and at or below 80.0\%. Each
-declared value therefore carries 5.0 points of headroom. The three ranges also
-hold together rather than one at a time: the verdict was recomputed at all 676
-threshold combinations inside them, and the admitted set is the same at every
-one. Past that headroom the three conditions move different routes. Raising
-state reconstruction above 80.0\% removes GPT-5.5, raising terminal scoring
-above 80.0\% removes Claude Sonnet 5, and overall accuracy has to pass 85.0\%
-before it removes Claude Sonnet 5 as well.
-
-\paragraph{Loosening.} Two of the three conditions can be loosened without
-limit, and the third is one achievable step from changing the answer. Overall
-accuracy and terminal scoring can both be taken down to zero without admitting
-anyone new, because state reconstruction already refuses the other four routes
-on its own. State reconstruction can be loosened by only 1.7 points, from 75\%
-to 73.3\%, before Gemini 3.1 Flash-Lite enters, and 73.3\% is the next score
-the instrument can produce below the threshold rather than a fine-grained
-margin.
-
-\paragraph{Which condition binds.} One condition of the three produces the
-whole verdict. The conditions are conjunctive, so a route can be refused by a
-condition other than the one a sweep is moving, and
-Table~\ref{tab:threshold-binding} reports which condition refuses which route
-rather than the verdict alone. At the declared thresholds the answer is
-lopsided. State reconstruction refuses all four refused routes. Overall
-accuracy refuses three of them, every one of which state reconstruction refuses
-anyway, and terminal scoring refuses two, likewise already refused. Applying
-state reconstruction on its own at 75\% reproduces the admitted set exactly,
-and removing either of the other two conditions changes nothing. The overall
-and terminal conditions therefore bind on no route in this campaign. They are
-not idle by design, since a route could read the state well and fail elsewhere,
-but no audited route did, and no claim in this paper may rest on an impression
-that three conditions were needed to draw this line.
-
-\paragraph{What this settles and what it does not.} The verdict is stable in
-every direction but one, and the exception is worth stating plainly rather than
-averaging away. It is stable against tightening any single condition by 5.0
-points and against loosening two of the three without limit. It is not stable
-against loosening the third: one achievable step down on state reconstruction
-admits a sixth route. That exception compounds with the repeatability result of
-\S\ref{app:gate-reliability}, where a route's state-reconstruction score moved
-13.3 points, two calls in fifteen, between identical administrations. The band
-that holds the verdict is 6.7 points wide on that domain, so it is narrower
-than the movement the same instrument showed between two identical runs. We do
-not read that as a defect in the verdict, because it is what a declared entry
-condition is: the gate records which routes were let in under a rule fixed
-before the campaign ran, not how much comprehension each route has. It is a
-reason no analysis here interpolates between probe scores, ranks admitted
-routes by their probe accuracy, or treats the admitted-against-refused split as
-a measured contrast. One fact limits how far the exception reaches. The only
-route whose membership the threshold choice decides, Gemini 3.1 Flash-Lite, was
-refused at both administrations of the battery, at 60.0\% and at 73.3\%, so it
-never reached the admitting side under the declared rule.
-
-\begin{table}[t]
-    \caption{Every threshold band that gives a different admitted set, sweeping
-    one gate condition at a time while the other two stay at their declared
-    values. A band is the full range of thresholds producing one partition, and
-    each band excludes its lower bound and includes its upper one. Scores can
-    only fall on a grid, 1.7 points apart for overall accuracy and 6.7 points
-    apart for the other two, which is why the bands have the widths they do.
-    ``Adm.'' is the number of routes admitted.}
-    \label{tab:threshold-bands}
-    \centering
-    \footnotesize
-    \setlength{\tabcolsep}{4pt}
-    \begin{tabular}{@{}llcl@{}}
-        \toprule
-        Condition swept & Threshold band & Adm. & What changes \\
-        \midrule
-        \multicolumn{4}{@{}l}{\emph{Overall accuracy}, declared 80.0\%, scored over 60 answers} \\
-        & at most 85.0\% & 5 & declared verdict \\
-        & 85.0 to 90.0\% & 4 & Claude Sonnet 5 leaves \\
-        & 90.0 to 91.7\% & 2 & GPT-5.4 and GPT-5.5 leave \\
-        & 91.7 to 93.3\% & 1 & Claude Opus 5 leaves \\
-        & over 93.3\% & 0 & Gemini 3 Flash leaves \\
-        \midrule
-        \multicolumn{4}{@{}l}{\emph{State reconstruction}, declared 75.0\%, scored over 15 answers} \\
-        & at most 73.3\% & 6 & Gemini 3.1 Flash-Lite enters \\
-        & 73.3 to 80.0\% & 5 & declared verdict \\
-        & 80.0 to 93.3\% & 4 & GPT-5.5 leaves \\
-        & over 93.3\% & 2 & Gemini 3 Flash and Claude Opus 5 leave \\
-        \midrule
-        \multicolumn{4}{@{}l}{\emph{Terminal scoring}, declared 75.0\%, scored over 15 answers} \\
-        & at most 80.0\% & 5 & declared verdict \\
-        & over 80.0\% & 4 & Claude Sonnet 5 leaves \\
-        \bottomrule
-    \end{tabular}
-\end{table}
-
-\begin{table}[t]
-    \caption{Which of the three conjunctive conditions refuses each route at the
-    declared thresholds, with the gated accuracies repeated from
-    Table~\ref{tab:admission-v6} so the table can be read on its own. A route is
-    admitted only when all three conditions clear, so a refusal can come from a
-    condition other than the one a sweep is moving. Overall accuracy and
-    terminal scoring each refuse only routes that state reconstruction already
-    refuses, which is why state reconstruction alone reproduces the admitted
-    set.}
-    \label{tab:threshold-binding}
     \centering
     \footnotesize
     \setlength{\tabcolsep}{4pt}
     \begin{tabular}{@{}lrrrl@{}}
         \toprule
         & Overall & State & Terminal & \\
-        Route & accuracy & recon. & scoring & Refused by \\
+        Exact route & accuracy & recon. & scoring & Verdict \\
         \midrule
-        Gemini 3 Flash        &  93.3 &  93.3 & 100.0 & admitted \\
-        Claude Opus 5         &  91.7 &  93.3 & 100.0 & admitted \\
-        GPT-5.4               &  90.0 & 100.0 & 100.0 & admitted \\
-        GPT-5.5               &  90.0 &  80.0 & 100.0 & admitted \\
-        Claude Sonnet 5       &  85.0 & 100.0 &  80.0 & admitted \\
+        \path{google/gemini-3-flash-preview}        & 93.3 &  93.3 & 100.0 & admitted \\
+        \path{anthropic/claude-opus-5@default}      & 91.7 &  93.3 & 100.0 & admitted \\
+        \path{openai/gpt-5.4-2026-03-05}            & 90.0 & 100.0 & 100.0 & admitted \\
+        \path{openai/gpt-5.5-2026-04-23}            & 90.0 &  80.0 & 100.0 & admitted \\
+        \path{anthropic/claude-sonnet-5@default}    & 85.0 & 100.0 &  80.0 & admitted \\
         \midrule
-        Gemini 3.1 Flash-Lite &  80.0 &  73.3 &  80.0 & state recon. \\
-        GPT-5.4 mini          &  75.0 &  66.7 &  86.7 & overall, state recon. \\
-        Gemini 3.5 Flash-Lite &  65.0 &  60.0 &  60.0 & all three \\
-        GPT-5.4 nano          &  51.7 &  20.0 &  66.7 & all three \\
+        \path{google/gemini-3.1-flash-lite-preview} & 80.0 &  73.3 &  80.0 & refused, state recon. \\
+        \path{openai/gpt-5.4-mini-2026-03-17}       & 75.0 &  66.7 &  86.7 & refused, two conditions \\
+        \path{google/gemini-3.5-flash-lite}         & 65.0 &  60.0 &  60.0 & refused, all three \\
+        \path{openai/gpt-5.4-nano-2026-03-17}       & 51.7 &  20.0 &  66.7 & refused, all three \\
+        \bottomrule
+    \end{tabular}
+\end{table*}
+
+\paragraph{The verdict does not turn on where the thresholds sit.} Each
+declared value carries 5.0 points of headroom, and the three ranges hold
+together rather than one at a time: the admitted set is the same at all 676
+threshold combinations inside them. In the other direction two of the three
+conditions can be loosened to zero without admitting anyone new, because state
+reconstruction refuses the other four routes on its own. That domain is the one
+exception, and it is worth stating rather than averaging away: one achievable
+step down on state reconstruction, from 75\% to the 73.3\% the fifteen-answer
+grid allows below it, admits \path{google/gemini-3.1-flash-lite-preview} and
+nobody else.
+
+\paragraph{The battery has been administered three times.} All three
+administrations used the same bank and the same rules context at temperature
+zero. Between the two with no recorded contract difference, two of the four
+routes present in both moved, each by two answers in fifteen on state
+reconstruction, and the other two did not move at all. No verdict changed.
+Across the earlier change from a 128-token output cap to 256 one verdict did
+move, and it is reported because that route is admitted: Claude Sonnet 5 was
+refused under the 128-token cap and admitted under 256. A truncated answer is
+scored wrong and a low cap can truncate, so that comparison is not a clean
+repeat and we do not present it as one.
+
+\paragraph{Two admitted routes pass by nothing at all.} State reconstruction
+and terminal scoring are each scored over fifteen answers, so a 75\% threshold
+asks for 11.25 correct and the lowest score that can clear it is 12 of 15, or
+80.0\%. GPT-5.5 clears state reconstruction at exactly that score and Claude
+Sonnet 5 clears terminal scoring at exactly that score, so both are admitted
+with a margin of zero. One answer otherwise would put GPT-5.5 at 73.3\%, which
+is the score on which Gemini 3.1 Flash-Lite is refused. An admitted route's
+pass margin can therefore be narrower than the movement the same instrument
+shows between two identical administrations. That is why a verdict is used here
+as a declared entry condition and never as a trait estimate, and why no
+analysis in this paper interpolates between probe scores, ranks admitted routes
+by probe accuracy, or reads the admitted against refused split as a measured
+contrast.
+
+\paragraph{The split coincides exactly with the tier word in the route name.}
+Calling a route small when \texttt{mini}, \texttt{nano} or \texttt{lite}
+appears as a whole word of its name splits these nine endpoints into exactly
+the two sets the screen produced: all four refused routes carry such a word and
+none of the five admitted routes does, nine of nine. Enumerating all
+$C(9,4)=126$ ways of relabelling which four names carry a size word gives an
+exact one-sided permutation $p$ of $1/126$, or $0.008$. This does not show that
+the battery measures nothing, because comprehension that simply tracked model
+scale across these nine endpoints would look the same and nine routes cannot
+tell the two apart. What follows is narrower and is the reason the screen is
+used only as an entry condition here: on this roster the screen draws no line
+that the route name does not already draw, so no claim resting on the admitted
+against refused split is separable from a claim about scale. Breaking that tie
+needs endpoints whose name and whose comprehension disagree, and this roster
+contains none; the concurrent evaluation study is where that is pursued.
+
+\paragraph{Nothing was discarded.} All nine routes played the same confirmatory
+baseline with the same race counts, and every refused route's behaviour is
+reported in this supplement beside the five admitted ones. Four further
+advertised routes never produced a scoreable answer at all, because transport
+failed before any probe was sampled; they were retained as failure records and
+never replaced by a substitute endpoint.
+
+\subsection{A second, larger battery on the one model with published weights}
+\label{app:open-weight-battery}
+
+One route in this study is not a hosted endpoint and is not one of the nine.
+Its weights are published, so decoding is under our control rather than a
+provider's, and it is the route that carries the paired decision-card
+diagnostic of the main paper. It was screened by its own instrument, a battery
+of 41 probes over the same six domains, and that battery is reported here so
+that the two are never mistaken for one another. Nothing in this subsection
+enters a strategic claim, and no score here is pooled with a score from the
+nine-route screen: different probe bank, different route, different number of
+repetitions.
+
+The model is Qwen2.5 7B Instruct at half precision. Probes were put three ways
+rather than one: unaided, reworded into a paraphrase that keeps the question and
+changes the sentence, and accompanied by a disclosed calculation of the
+quantities the question needs. Each probe was answered five times in each of the
+three, at temperature zero under one fixed base seed, and the seven probes that
+list their answer options were additionally asked with those options in the
+reverse order. That gives 685 retained probe answers, every one of which the
+semantic scorer could read.
+
+What the battery shows is a gap between stating a rule and using it.
+Table~\ref{tab:open-weight-battery} reports it by domain. Recalling the rules
+and reading the stage-payoff matrix are near perfect unaided, and everything
+that requires carrying the state forward or doing the arithmetic collapses:
+unaided, this route rebuilds the current state on about a quarter of its
+answers, and takes a single state transition or computes a closed-form expected
+payoff on none of them. Disclosing the arithmetic lifts the whole battery from
+52.1\% to 75.6\%, which measures the use of a disclosed result and not unaided
+comprehension. Two further readings follow. Unaided, every one of these scores
+sits below the matching condition the nine-route screen declares, and while the
+two instruments differ enough that this is a description rather than a verdict,
+it is the reason this route supplies a presentation diagnostic and nothing else.
+With the arithmetic disclosed the route reaches the terminal-scoring condition
+exactly and still clears neither of the other two. And strict format
+compliance, 32.1\% over the whole battery, is far below the semantic parse
+rate, which was 100\%, so on this route the format a reader sees and the answer
+the model gives come apart almost two times in three.
+
+\begin{table}[t]
+    \caption{The 41-probe battery on the one model with published weights,
+    Qwen2.5 7B Instruct, by domain. ``Unaided'' pools the plain and the
+    reworded askings and both option orders; ``disclosed'' is the same probes
+    accompanied by the arithmetic they need. Every cell is the percentage of
+    answers the semantic scorer marked correct, over the number of answers
+    shown. This battery is a separate instrument from the nine-route screen and
+    its scores are never compared with those in
+    Table~\ref{tab:admission-v6}.}
+    \label{tab:open-weight-battery}
+    \centering
+    \footnotesize
+    \setlength{\tabcolsep}{4pt}
+    \begin{tabular}{@{}lrrrr@{}}
+        \toprule
+        Domain & Unaided & $n$ & Disclosed & $n$ \\
+        \midrule
+        Rule recall              &  96.4 & 140 & 100.0 & 50 \\
+        One-stage payoff lookup  & 100.0 &  40 & 100.0 & 20 \\
+        State reconstruction     &  27.8 &  90 &  55.6 & 45 \\
+        State transition         &   0.0 &  60 &  66.7 & 30 \\
+        Terminal scoring         &  45.5 & 110 &  75.0 & 40 \\
+        Expected payoff          &   0.0 &  40 &  50.0 & 20 \\
+        \midrule
+        All probes               &  52.1 & 480 &  75.6 & 205 \\
         \bottomrule
     \end{tabular}
 \end{table}
+
+The claim this battery can carry is narrow and worth stating as the analysis
+records it: probe accuracy supports rule and arithmetic performance under the
+tested prompt pool, it does not establish an internal world model, and
+accuracy with the calculation disclosed measures the use of disclosed outputs
+rather than unaided comprehension. The gameplay beside it is the paired
+diagnostic itself, 30 races and 558 decisions in each of the two presentations
+with no parse failure, and it is read only as a within-route contrast between
+two presentations of one mechanism.
 
 \subsection{Frontier neutral baseline}
 \label{app:frontier-baseline}
@@ -1239,7 +1001,7 @@ protocol \texttt{ai-race-frontier-context-mapping-v3}, each with ten
 repetitions, 120 races, 2{,}232 recorded decisions and zero parse failures:
 Gemini 3 Flash as run 1373757 and Claude Sonnet 5 as run 1504455, whose full
 route strings are given in
-Table~\ref{tab:frontier-admission-registry}. The horizon and
+Table~\ref{tab:admission-v6}. The horizon and
 setback random-number streams are held common across conditions, so two cells
 differ in their prompt and not in the environment they met.
 Table~\ref{tab:context-mapping} gives all twelve cells for the first route;
@@ -1363,7 +1125,7 @@ model of the game should ignore therefore changes the action sequence.
 What follows from this table is bounded by how many routes stand behind it.
 The design is crossed on both admitted routes, Gemini 3 Flash and Claude
 Sonnet 5, whose full route strings are in
-Table~\ref{tab:frontier-admission-registry}, each at the full twelve cells, so
+Table~\ref{tab:admission-v6}, each at the full twelve cells, so
 the mapping effect is not confined to one provider's decoder at one revision:
 it appears on both, at $+9.5$ and $+8.3$ points. Two routes are still two
 routes. They do not separate what belongs to this task from what belongs to
@@ -2934,7 +2696,15 @@ response of $9.7$ pp, and at the opening, the one place where the two prompts
 are identical and the contrast is therefore a pure label effect, its gap is
 $30.0$ pp $[+13.3,+46.7]$. States diverge after round one, so only the opening
 figure is a clean label contrast; the whole-race figure is the one that is
-comparable with the risk response. The usual bounds hold. This is nine endpoints in one
+comparable with the risk response. The opening is also where the pattern stops
+belonging to the refused routes alone, and that belongs here rather than in a
+footnote: two admitted routes carry an opening gap whose interval excludes
+zero, $+33.3$ pp $[+16.7,+50.0]$ on Claude Sonnet 5, which never once opened
+\Unsafe{} from the first seat, and $+16.7$ pp $[+3.3,+30.0]$ on GPT-5.4. Four
+of the nine routes open \Unsafe{} from both seats in every race and can show no
+gap at all. So the screen separates the routes on the whole-race asymmetry and
+does not separate them at the opening, and the design protection the paper
+actually relies on is the seat counterbalancing rather than the screen. The usual bounds hold. This is nine endpoints in one
 game at one prompt version, nothing is randomised except the chair, and a route
 whose measured gap is zero is at zero because its two seats agree, not because
 the design removed the effect.

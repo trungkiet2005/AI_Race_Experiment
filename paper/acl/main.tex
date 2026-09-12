@@ -1,0 +1,1000 @@
+% =====================================================================
+% ARR submission: the comprehension-screen evaluation paper.
+%
+% STATUS. The evidence sections below are written and every number in them
+% was recomputed from the artifact named in the comment above it. The paper
+% is NOT submittable, and the reason is data, not writing: two collections
+% named in sec:families and sec:res-transfer do not exist. Those sections
+% say so in the document itself and must keep saying so until the runs are
+% on disk.
+%
+% Each section carries a comment block in this order:
+%   EVIDENCE   what goes there
+%   ARTIFACT   the repository file that supplies it, or NONE
+%   STATUS     HAVE (an artifact on disk was read and checked)
+%              NEEDS COLLECTION (no artifact exists; new runs required)
+%              NEEDS ANALYSIS (data exists, the analysis does not)
+%
+% Do not paste prose from the concurrent manuscript into this file.
+% See sec:boundary for why that would be fatal rather than merely lazy.
+%
+% Template: official ACL style files, unmodified. Provenance and checksums
+% are recorded in docs/acl-audit-paper-plan.md.
+% Build: pdflatex main -> bibtex main -> pdflatex main -> pdflatex main
+% Keep the [review] option until the paper is accepted: ARR is anonymous.
+% =====================================================================
+
+\documentclass[11pt]{article}
+
+\usepackage[review]{acl}
+
+\usepackage{times}
+\usepackage{latexsym}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{microtype}
+\usepackage{inconsolata}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{url}
+
+\newcommand{\pending}[1]{\textbf{[to be collected: #1]}}
+
+% ---------------------------------------------------------------------
+% TITLE
+% Active finding, then the mechanism, then the scope phrase. The finding is
+% that one probe asked three times reproduces the sixty-answer verdict on
+% this roster; the mechanism is fractionation; the scope is screens that
+% admit agents to behavioural studies. The game is deliberately absent from
+% the title, because the paper's own argument is that a claim about
+% screening cannot rest on one game.
+% ---------------------------------------------------------------------
+\title{One Probe Does the Work of Sixty:\\
+       Fractionation and Discriminant Validity in the Comprehension Screens
+       that Admit Language-Model Agents to Behavioural Studies}
+
+\author{Anonymous ARR submission}
+
+\begin{document}
+\maketitle
+
+% ---------------------------------------------------------------------
+% ABSTRACT
+% ARTIFACT  results/frontier/admission_campaign_v6/**/admission.json (n=9),
+%           results/derived/screen_baselines/screen_baselines.json
+% STATUS    HAVE for every claim made here. The resolution of the name
+%           confound is NEEDS COLLECTION and the abstract says so rather
+%           than implying otherwise.
+% ---------------------------------------------------------------------
+\begin{abstract}
+Studies that read language-model behaviour as strategy increasingly admit
+models to analysis through a comprehension screen: a battery of questions
+about the task, scored against ground truth, that a model must pass before
+its choices are interpreted. A screen is a measurement instrument and a
+selection rule at once, so its validity is the validity of every behavioural
+claim downstream of it, and it is almost never treated as an instrument. We
+ask what such a screen measures. Using a frozen battery of twenty probes over
+six comprehension domains, administered three times each to nine commercial
+endpoints on a repeated economic game, we report three findings. Comprehension
+fractionates: reading the stage payoff matrix is solved perfectly by every
+endpoint, rebuilding the current state of a game in progress separates them
+across almost the whole range, and no endpoint computes a closed-form expected
+payoff, so an aggregate screen score averages a subtask that separates nothing
+with the only subtask that separates anything. Output-format compliance
+discriminates nothing, and in one battery it runs opposite to accuracy: the
+domain every answer got right is the domain whose requested format was never
+once produced. And the verdict is cheap to reproduce. One probe asked three
+times reproduces the battery's admit-or-refuse split on all nine endpoints, as
+does a regular expression over the endpoint name. We set out the criteria a
+screen must meet before its verdict may select an analysis sample, place
+discriminant validity at their centre, and name the evidence this battery
+still needs to meet it.
+\end{abstract}
+
+% =====================================================================
+\section{Introduction}
+\label{sec:intro}
+% EVIDENCE  The problem, the gap, the contributions.
+% ARTIFACT  docs/novelty-survey-2026-09-10.md holds candidate leads for the
+%           citations this section needs. STATUS for citations: NEEDS
+%           ANALYSIS. Every one must be verified at the source before use.
+% =====================================================================
+
+A behavioural study of language-model agents has to decide which models it is
+about. The decision is increasingly made by a comprehension screen: before any
+choice is interpreted as strategy, the model answers a fixed set of questions
+about the task, its answers are scored against ground truth, and only models
+above a threshold enter the analysis. The reasoning is sound. An action that
+parses is not evidence that the agent followed the game, and a study that reads
+arbitrary output as policy measures its own prompt.
+
+A screen is therefore two things at once, and only one of them gets checked. It
+is a measurement instrument, and it is a selection rule on the sample every
+later claim is made about. Whatever the screen fails to measure, the study
+inherits; whatever the screen is accidentally correlated with, the study's
+sample is selected on. Nobody reports the screen's reliability, nobody reports
+what its verdict would have been at a different threshold, and nobody reports
+what the screen buys over signals that cost nothing.
+
+This paper treats an admission screen as an instrument and puts it through the
+tests an instrument gets. We ask whether the battery measures one thing or
+several, whether the same battery administered twice returns the same verdict,
+whether the verdict survives a band of thresholds, whether the verdict is
+reproduced by a cheaper signal, and whether the score predicts anything about
+the behaviour it gates. The fourth of those is the question the paper exists to
+ask, because it is the one a screen can fail while passing all the others.
+
+Our contributions are the following.
+
+\begin{itemize}
+\item A set of criteria an admission screen must meet before its verdict may be
+      used to select an analysis sample (\S\ref{sec:construct}), with
+      discriminant validity against cheap signals as the operative one.
+\item Evidence that comprehension fractionates across subtasks sharply enough
+      that an aggregate screen score is carried by one domain
+      (\S\ref{sec:res-fractionate}), and that output-format compliance carries
+      no information about it (\S\ref{sec:res-format}).
+\item A reliability and threshold analysis of one screen
+      (\S\ref{sec:res-stability}), including two admitted endpoints that clear
+      a condition by a margin of zero, on an instrument that moves between
+      identical administrations.
+\item A discriminant-validity comparison against four cheaper screens
+      (\S\ref{sec:res-name}). One probe asked three times, and a regular
+      expression over the endpoint name, each reproduce the sixty-answer
+      verdict exactly.
+\item A statement of what a screen must be shown before it earns its cost, and
+      an account of what this battery still lacks (\S\ref{sec:families},
+      \S\ref{sec:res-transfer}).
+\end{itemize}
+
+The scope is one battery, one game and nine commercial endpoints, which is why
+the paper's claim is about what a screen must be shown rather than about
+screens in general. \S\ref{sec:boundary} states the relation to a concurrent
+submission by the same authors that uses this screen as an entry condition.
+
+% =====================================================================
+\section{Related Work}
+\label{sec:related}
+% EVIDENCE  Four strands.
+%   (a) Comprehension and manipulation checks for LLM agents in economic and
+%       strategic settings.
+%   (b) Construct and discriminant validity in NLP evaluation; the
+%       measurement-theory critique of benchmark scores.
+%   (c) Format compliance and parsing as a confound: prompt-format,
+%       option-order and output-format sensitivity.
+%   (d) Model-tier confounds: when a benchmark separates model families
+%       rather than the construct it claims to measure.
+% ARTIFACT  docs/novelty-survey-2026-09-10.md and docs/novelty-sources/ give
+%           candidate leads ONLY. paper/references.bib belongs to the
+%           concurrent submission and must not be read from here.
+% STATUS    NEEDS ANALYSIS. Not one citation for these four strands has been
+%           verified at the source in this repository, and the evidence gate
+%           forbids writing the section from memory. It is left unwritten
+%           rather than filled with unverified entries.
+% =====================================================================
+
+\pending{this section. Four strands are named in the source comment. Every
+citation must be read at the source, and none has been.}
+
+% =====================================================================
+\section{What a Screen Must Do}
+\label{sec:construct}
+% EVIDENCE  The paper's conceptual core. Argument, not measurement.
+% ARTIFACT  NONE.
+% STATUS    HAVE (writable now).
+% =====================================================================
+
+A screen earns its place only against a standard, so we state one. The six
+criteria below are what an admission battery must be shown to satisfy before
+its verdict may decide which models a behavioural study is about. They are not
+novel statistics; they are the ordinary requirements on a measuring instrument,
+applied to an object the field currently treats as a configuration setting.
+
+\paragraph{C1, construct coverage.} The battery's domains span the abilities
+the downstream task actually requires. A screen that tests recall of stated
+rules does not license reading trajectories as strategy, because playing a
+repeated game requires carrying a state forward, not repeating a sentence.
+
+\paragraph{C2, measured fractionation.} Per-domain scores are reported, not an
+aggregate alone. An aggregate can be carried entirely by one domain while
+another contributes no variance, and a reader who sees only the aggregate
+cannot tell which.
+
+\paragraph{C3, reliability.} The same battery, administered twice under an
+identical protocol, returns the same verdict. A verdict that moves between
+identical administrations is not a property of the model.
+
+\paragraph{C4, threshold insensitivity.} The verdict survives a band of
+thresholds rather than holding at one exact setting. A rule that produces its
+answer only at the value chosen is a rule chosen for its answer.
+
+\paragraph{C5, discriminant validity.} The verdict is not reproduced by a
+cheaper signal: the model name, the vendor's size tier, reported parse health,
+or a single question. This is the criterion the field is failing, it is the one
+that cannot be satisfied by running the battery more carefully, and it is the
+one the battery studied here does not meet.
+
+\paragraph{C6, non-circularity.} The screen never reads the outcome variable. A
+selection rule that can see the quantity the study reports can be tuned to it,
+whatever order things were run in, and no statement of good faith substitutes
+for the structural property.
+
+C1 to C4 and C6 are satisfiable by careful protocol design. C5 is not: it is an
+empirical question about the endpoints screened, and it can only be answered by
+screening endpoints whose cheap signal and whose measured comprehension point
+in opposite directions.
+
+% =====================================================================
+\section{The Battery}
+\label{sec:battery}
+% EVIDENCE  The instrument under study: 20 frozen probes, three repetitions,
+%           60 scored answers per endpoint, six domains, three gate
+%           conditions, nine endpoints from three vendors, one bank hash.
+% ARTIFACT  results/frontier/admission_campaign_v6/**/admission.json
+%             (thresholds, per-domain accuracy, verdict, n_rows = 60)
+%           results/frontier/admission_campaign_v6/**/raw_responses.jsonl
+%             (540 rows; probe_id, domain, repetition, semantic_valid,
+%              semantic_correct)
+%           results/frontier/admission_campaign{,_v5}/**/run_manifest.json
+%             (bank hash identical in all three administrations)
+%           docs/frontier-evidence-collection-protocol.md
+% STATUS    HAVE. Probe counts per domain recomputed from the raw rows.
+% NOTE      The battery is the OBJECT OF STUDY, not this paper's method.
+% =====================================================================
+
+The instrument is a frozen bank of twenty probes over six domains, asked three
+times each, giving sixty scored answers per endpoint.
+Table~\ref{tab:bank} gives its structure. An endpoint is admitted only if it
+answers at least 80\% of its sixty answers correctly, at least 75\% within
+state reconstruction, and at least 75\% within terminal scoring. Expected
+payoff is scored and recorded but gates nothing, and the artifact itself
+carries that decision as a field rather than leaving it to the write-up.
+
+Three properties make the nine endpoints comparable. All answered the same bank,
+whose SHA-256 hash begins \texttt{2953fb47}, and read the same task description,
+whose hash begins \texttt{b80981a5}; the scoring script fails closed and refuses
+to tabulate an endpoint whose hashes differ. The bank hash is the same in all
+three administrations reported in \S\ref{sec:res-stability}. And the screen
+scores answers against ground truth without reading a single game, which is C6.
+
+The endpoints are nine commercial routes from three vendors. We write
+\emph{endpoint} rather than \emph{model} throughout, because what was measured
+is a hosted route on a date and not a set of weights, and the Limitations
+section returns to what that costs.
+
+\begin{table}[t]
+    \centering
+    \small
+    \begin{tabular}{@{}lrrl@{}}
+        \toprule
+        Domain & Probes & Answers & Gate \\
+        \midrule
+        Rule recall          & 4 & 12 & none \\
+        Stage payoff         & 2 &  6 & none \\
+        State reconstruction & 5 & 15 & $\geq 75\%$ \\
+        State transition     & 2 &  6 & none \\
+        Terminal scoring     & 5 & 15 & $\geq 75\%$ \\
+        Expected payoff      & 2 &  6 & recorded only \\
+        \midrule
+        All                  & 20 & 60 & $\geq 80\%$ \\
+        \bottomrule
+    \end{tabular}
+    \caption{The battery under study. Each probe is asked three times, so a
+    domain's answers are three times its probes. Admission requires all three
+    gates at once. The six domains carry unequal weight, which matters for
+    \S\ref{sec:res-fractionate}: the two fifteen-answer domains move in steps
+    of one fifteenth and the three six-answer domains in steps of one sixth.}
+    \label{tab:bank}
+\end{table}
+
+% =====================================================================
+\section{Task Families}
+\label{sec:families}
+% EVIDENCE  The generalisation axis, and the largest hole in the paper.
+% ARTIFACT  F1: results/frontier/admission_campaign_v6/ (administered).
+%           F2, F3: NONE. An N-player variant of the game exists in the
+%           engine and a public-goods game appears in prior work, but NO
+%           frozen probe bank exists for either and NO endpoint has been
+%           administered one. Searched: results/frontier/, results/derived/,
+%           docs/.
+% STATUS    NEEDS COLLECTION. New runs, not new analysis.
+% DO NOT    write this section in the present tense and do not imply the
+%           material exists.
+% =====================================================================
+
+State reconstruction on one state structure is a task, not a construct, so one
+game cannot support a claim about comprehension screening. The test that
+separates the two is transfer: if an endpoint's state-reconstruction score on
+one game predicts its score on a game whose state has a different shape, the
+battery measures something that travels. If it does not, a screen has to be
+rebuilt for every environment, which is a finding a practitioner needs just as
+much.
+
+Three families would settle it, and this study has one of them. The family we
+administered has a state made of two progress counters and an accumulated
+private risk. The two that are missing would put the same six domains on a
+state of a different kind: an iterated social dilemma, where what must be
+tracked is the opponent's history, and a public-goods or common-pool game,
+where what must be tracked is an aggregate over every player. Both would use
+the same roster, the same three repetitions and the same scoring rule, with the
+bank hash recorded, so that a per-endpoint per-domain score is comparable
+across families.
+
+\pending{the two further probe banks and their administration. Neither bank
+exists and no endpoint has answered one. Until they do, every result below is
+one battery on one state structure, and \S\ref{sec:res-transfer} is empty.}
+
+% =====================================================================
+\section{Results}
+\label{sec:results}
+% Ordering note: reliability and fractionation, then the cheap-baseline
+% comparison, then transfer, then the downstream association. This is NOT
+% the order the work was done in and must not be described as one. The
+% cheap-baseline comparison comes before the downstream association on
+% purpose: a reader who sees the association first reads the refutation as
+% a caveat, and it is not a caveat, it is the paper's premise.
+% =====================================================================
+
+\subsection{Comprehension fractionates}
+\label{sec:res-fractionate}
+% EVIDENCE  Per-domain accuracy over nine endpoints.
+% ARTIFACT  results/frontier/admission_campaign_v6/**/admission.json
+% STATUS    HAVE. Every number recomputed directly from the nine artifacts.
+% FIGURE    An endpoints-by-domains accuracy matrix would carry this better
+%           than the table and does not exist in this directory yet.
+
+An aggregate screen score averages a domain that separates nothing with the
+only domain that separates anything. Table~\ref{tab:fractionate} is the
+evidence. Reading the stage payoff matrix is solved perfectly by all nine
+endpoints, so that domain contributes exactly zero variance to the aggregate
+while contributing a tenth of its weight. Recalling the stated rules is solved
+perfectly by eight of the nine. At the other end, no endpoint reaches the gate
+value on closed-form expected payoff and five score zero, so that domain
+separates the endpoints hardly at all either, in the opposite direction.
+
+What separates the endpoints is rebuilding the current state of a game in
+progress, and it separates them across almost the entire range, from every
+answer correct to one in five. The aggregate spans a much narrower band than
+that, because the domains everybody solves pull it upward. A reader given only
+the aggregate would conclude that the weakest endpoint understands half the
+task; the per-domain result is that it reconstructs the state on one answer
+in five while reciting the rules and the payoff matrix nearly perfectly.
+
+This is C2, and it is the reason C2 belongs in the list. Reporting the
+aggregate alone is not a summary of these nine rows. It is a different
+measurement, and a less informative one.
+
+\begin{table*}[t]
+    \centering
+    \small
+    \setlength{\tabcolsep}{4pt}
+    \begin{tabular}{@{}lrrrrrrrl@{}}
+        \toprule
+        & Rule & Stage & State & State & Terminal & Expected & & \\
+        Endpoint & recall & payoff & recon. & trans. & scoring & payoff & Overall & Verdict \\
+        \midrule
+        \path{google/gemini-3-flash-preview}        & 100.0 & 100.0 &  93.3 & 100.0 & 100.0 & 50.0 & 93.3 & admitted \\
+        \path{anthropic/claude-opus-5@default}      & 100.0 & 100.0 &  93.3 & 100.0 & 100.0 & 33.3 & 91.7 & admitted \\
+        \path{openai/gpt-5.4-2026-03-05}            & 100.0 & 100.0 & 100.0 & 100.0 & 100.0 &  0.0 & 90.0 & admitted \\
+        \path{openai/gpt-5.5-2026-04-23}            & 100.0 & 100.0 &  80.0 & 100.0 & 100.0 & 50.0 & 90.0 & admitted \\
+        \path{anthropic/claude-sonnet-5@default}    & 100.0 & 100.0 & 100.0 & 100.0 &  80.0 &  0.0 & 85.0 & admitted \\
+        \midrule
+        \path{google/gemini-3.1-flash-lite-preview} & 100.0 & 100.0 &  73.3 & 100.0 &  80.0 & 16.7 & 80.0 & refused \\
+        \path{openai/gpt-5.4-mini-2026-03-17}       & 100.0 & 100.0 &  66.7 &  66.7 &  86.7 &  0.0 & 75.0 & refused \\
+        \path{google/gemini-3.5-flash-lite}         & 100.0 & 100.0 &  60.0 &  50.0 &  60.0 &  0.0 & 65.0 & refused \\
+        \path{openai/gpt-5.4-nano-2026-03-17}       &  75.0 & 100.0 &  20.0 &  50.0 &  66.7 &  0.0 & 51.7 & refused \\
+        \midrule
+        \emph{Spread across endpoints} & 25.0 & \emph{0.0} & \emph{80.0} & 50.0 & 40.0 & 50.0 & 41.7 & \\
+        \bottomrule
+    \end{tabular}
+    \caption{Per-domain accuracy for the nine endpoints, as a percentage of
+    that domain's answers scored correct out of sixty scored answers per
+    endpoint. The last row is the spread, the highest score minus the lowest.
+    Stage payoff has a spread of zero and state reconstruction a spread of
+    eighty points; the aggregate spans less than either extreme because the
+    domains everybody solves pull it up. Expected payoff is recorded and gates
+    nothing; no endpoint reaches 75\% on it.}
+    \label{tab:fractionate}
+\end{table*}
+
+\subsection{Format compliance discriminates nothing}
+\label{sec:res-format}
+% EVIDENCE  A parser is satisfied across the whole comprehension range.
+% ARTIFACT  results/frontier/admission_campaign_v6/**/raw_responses.jsonl
+%             -- 540 rows, 535 with semantic_valid true
+%           results/frontier/baseline_campaign_v6/derived/
+%             audit_versus_behaviour.csv -- n_decisions_total, parse_failures
+%           results/open_source/context_skin_pilot/analysis_live_pilot_t0/
+%             comprehension_by_domain.csv -- accuracy against strict format
+% STATUS    HAVE, ON THE REAL DENOMINATOR. 535 of 540, not 540 of 540. The
+%           five that failed are all in the expected-payoff domain, one on
+%           Claude Opus 5 and four on Claude Sonnet 5, and both of those
+%           endpoints are admitted, so the failures point the wrong way.
+
+Parse health is not a screen, and on this campaign it is worse than useless: it
+points the wrong way. Of the 540 probe answers, 535 could be read by the
+semantic scorer. The five that could not are all in the expected-payoff domain,
+the domain the battery already records as gating nothing, and all five are on
+endpoints the battery admitted. In the gameplay the battery gates, the nine
+endpoints produced 5{,}022 decisions across 270 games with no parse failure at
+all, while their comprehension spanned the full range of
+Table~\ref{tab:fractionate}. A parser satisfied everywhere cannot separate
+anything.
+
+A separate battery on a separate endpoint shows the dissociation at its
+sharpest, and in the other direction. On a four-domain battery of 256 scored
+answers, administered under sixteen presentations of the same game, recalling
+the rules was answered correctly every time while the requested answer format
+was produced not once; terminal scoring produced the requested format on
+almost every answer and was correct on fewer than one in five.
+Table~\ref{tab:format} gives both. A reader who screened on format would have
+admitted the domain the endpoint could not do and refused the domain it could.
+
+\begin{table}[t]
+    \centering
+    \small
+    \begin{tabular}{@{}lrr@{}}
+        \toprule
+        Domain & Correct & Requested format \\
+        \midrule
+        Rule recall          & 100.0 &   0.0 \\
+        Stage payoff         &  98.4 &  34.4 \\
+        State update         &  12.5 &   7.8 \\
+        Terminal scoring     &  17.2 &  92.2 \\
+        \bottomrule
+    \end{tabular}
+    \caption{Accuracy against format compliance on a four-domain battery, 64
+    scored answers per domain, on one endpoint under sixteen presentations of
+    the same game. Percentages are of that domain's answers. The two columns
+    disagree in both directions, which is what makes format compliance
+    uninformative rather than merely weak. This is a separate instrument from
+    Table~\ref{tab:fractionate} and its scores are never pooled with those.}
+    \label{tab:format}
+\end{table}
+
+\subsection{Reliability and threshold sensitivity}
+\label{sec:res-stability}
+% EVIDENCE  Test-retest across three administrations; threshold sweep;
+%           which condition binds; two admitted endpoints at margin zero.
+% ARTIFACT  results/frontier/admission_campaign/ (128-token cap),
+%           results/frontier/admission_campaign_v5/,
+%           results/frontier/admission_campaign_v6/;
+%           scripts/verify_manuscript_claims.py for the sweep (re-run in
+%           this session: 239 of 239 checks pass).
+% STATUS    HAVE for all four. The sweep was re-run, not inherited.
+
+The battery has been administered three times, and the same bank and task
+description were used every time. Two administrations differ in nothing that is
+recorded; the earliest differs from them only in the output token cap, 128
+against 256. Table~\ref{tab:retest} gives the four endpoints present in all
+three.
+
+\paragraph{Between the two identical administrations the instrument moves and
+the verdict does not.} Two of the four endpoints moved, each by two answers in
+fifteen on state reconstruction, and the other two did not move at all. No
+verdict changed. Across the three administrations together, one endpoint's
+state-reconstruction score took three different values spanning 13.3 points,
+which is wider than the 6.7-point band that decides that endpoint's membership.
+That is C3 passed at the level of the verdict and failed at the level of the
+score, and it is why a screen result is a decision rather than a trait
+estimate.
+
+\paragraph{One verdict has moved.} The endpoint at the bottom of the admitted
+set was refused under the 128-token cap and admitted under 256. A truncated
+answer is scored wrong and a low cap can truncate, so this is not a clean
+repeat and we do not present it as one. It is reported because a screen verdict
+is being used elsewhere as an entry condition, and a reader is entitled to know
+that this endpoint's membership has a history.
+
+\paragraph{The verdict survives a band of thresholds.} Each declared value
+carries 5.0 points of headroom, and the three ranges hold together rather than
+one at a time: the admitted set is identical at all 676 threshold combinations
+inside them. Loosening is asymmetric. Two conditions can be taken to zero
+without admitting anyone new, and the third is one achievable step from
+changing the answer: taking state reconstruction from 75\% to 73.3\%, the next
+score the fifteen-answer grid allows, admits one further endpoint and nobody
+else. That is C4 passed, with the exception stated rather than averaged away.
+
+\paragraph{Only one condition binds, and two admitted endpoints clear by
+nothing.} State reconstruction alone at 75\% reproduces the admitted set
+exactly; overall accuracy alone admits six endpoints and terminal scoring alone
+admits seven. So two of the three gate conditions refuse nobody the first does
+not, and most of the battery is idle on this sample. Worse for the instrument,
+the margin on the condition that does bind can be zero. A fifteen-answer domain
+at a 75\% threshold asks for 11.25 correct answers, so the lowest score that
+clears is 12 of 15. One admitted endpoint clears state reconstruction at
+exactly that score and another clears terminal scoring at exactly that score.
+One answer otherwise would put the first at 73.3\%, which is the score on which
+a refused endpoint is refused. A pass margin can therefore be narrower than the
+movement the same instrument shows between two identical administrations.
+
+\begin{table}[t]
+    \centering
+    \small
+    \setlength{\tabcolsep}{3pt}
+    \begin{tabular}{@{}llrrl@{}}
+        \toprule
+        & Output & State & & \\
+        Endpoint & cap & recon. & Overall & Verdict \\
+        \midrule
+        Claude Sonnet 5 & 128 &  86.7 & 76.7 & refused \\
+                        & 256 &  86.7 & 81.7 & admitted \\
+                        & 256 & 100.0 & 85.0 & admitted \\
+        \midrule
+        Gemini 3 Flash  & 128 & 100.0 & 95.0 & admitted \\
+                        & 256 &  93.3 & 93.3 & admitted \\
+                        & 256 &  93.3 & 93.3 & admitted \\
+        \midrule
+        Gemini 3.1      & 128 &  66.7 & 81.7 & refused \\
+        Flash-Lite      & 256 &  60.0 & 76.7 & refused \\
+                        & 256 &  73.3 & 80.0 & refused \\
+        \midrule
+        GPT-5.4 nano    & 128 &  20.0 & 53.3 & refused \\
+                        & 256 &  20.0 & 51.7 & refused \\
+                        & 256 &  20.0 & 51.7 & refused \\
+        \bottomrule
+    \end{tabular}
+    \caption{The four endpoints present in all three administrations of the
+    same probe bank. The last two rows of each block differ in nothing that is
+    recorded. State reconstruction is scored over fifteen answers, so 6.7
+    points is one answer. Two endpoints move by two answers between the two
+    identical administrations and two do not move at all; one verdict moves,
+    and it moves across the output-cap change rather than between the two
+    identical runs.}
+    \label{tab:retest}
+\end{table}
+
+\subsection{What the battery buys over a cheaper screen}
+\label{sec:res-name}
+% EVIDENCE  THE PAPER'S PREMISE, not a limitation. Four baselines against the
+%           nine verdicts: the endpoint name; each domain alone at its best
+%           achievable threshold; each single probe alone; reported parse
+%           health. The name and one probe each reproduce the verdict on 9 of
+%           9, and the multiplicity of searching twenty probes is charged.
+% ARTIFACT  results/derived/screen_baselines/screen_baselines.json,
+%           generator scripts/analyze_screen_baselines.py, which reads
+%           results/frontier/admission_campaign_v6/**/raw_responses.jsonl
+% STATUS    HAVE. Computed in this session; this closes the analysis the
+%           project plan recorded as missing.
+% FRAMING   Do not bury this. A reviewer who finds it in a limitations
+%           section assumes there is more.
+
+A sixty-call battery has to be worth sixty calls, and on this roster it is not.
+Table~\ref{tab:baselines} puts four cheaper signals against the same nine
+verdicts. Three of them reproduce it exactly, and the cheapest of those costs
+nothing at all.
+
+\paragraph{The endpoint name.} Calling an endpoint small when \texttt{mini},
+\texttt{nano} or \texttt{lite} appears as a whole word of its route string
+splits these nine into exactly the two sets the battery produced. All four
+refused endpoints carry such a word and none of the five admitted ones does.
+Enumerating all $C(9,4)=126$ ways of relabelling which four names carry a size
+word gives an exact one-sided permutation probability of $1/126$, or $0.008$.
+The signal costs nothing and is available before a single call is made.
+
+\paragraph{One probe.} Two of the twenty probes reproduce the verdict on their
+own at three calls each, a twentieth of the battery. Searching twenty probes
+for the best one is a multiple comparison and we charge it: enumerating all 126
+possible five-of-nine labellings, some probe in the bank reaches perfect
+agreement on only two of them, so the exact probability of a match this good
+under an arbitrary labelling, with the search over twenty probes included, is
+$2/126$, or $0.016$.
+
+\paragraph{One domain.} Only state reconstruction reproduces the verdict as a
+domain, which is the same result as \S\ref{sec:res-stability} reached from the
+threshold side. The other five domains reach at best eight of nine.
+
+\paragraph{Parse health.} Reported parse health does no better than admitting
+everybody, five of nine, and its errors fall on admitted endpoints.
+
+None of this shows that the battery measures nothing. Comprehension that simply
+tracked vendor size tier across these nine endpoints would produce exactly this
+picture, and nine endpoints cannot tell the two apart. What follows is narrower
+and is still fatal to the instrument's cost case: on this roster the battery
+draws no line that the endpoint name already draws, and no claim resting on the
+admitted-against-refused split is separable from a claim about model scale.
+That is C5, unmet. A screen meets it the moment one endpoint breaks the tie: a
+large-tier endpoint that fails state reconstruction, or a small-tier endpoint
+that passes it. This roster contains none, and finding one is a collection
+problem rather than an analysis problem.
+
+\begin{table}[t]
+    \centering
+    \small
+    \setlength{\tabcolsep}{4pt}
+    \begin{tabular}{@{}lrrl@{}}
+        \toprule
+        Signal & Calls & Agree & Reproduces \\
+        \midrule
+        Endpoint name             &  0 & 9/9 & yes \\
+        Best single probe         &  3 & 9/9 & yes \\
+        State reconstruction      & 15 & 9/9 & yes \\
+        State transition          &  6 & 8/9 & no \\
+        Terminal scoring          & 15 & 8/9 & no \\
+        Expected payoff           &  6 & 7/9 & no \\
+        Rule recall               & 12 & 6/9 & no \\
+        Stage payoff              &  6 & 5/9 & no \\
+        Reported parse health     &  0 & 5/9 & no \\
+        \midrule
+        The battery               & 60 & 9/9 & by definition \\
+        \bottomrule
+    \end{tabular}
+    \caption{What each signal costs and how many of the nine verdicts it
+    reproduces. ``Calls'' is scored answers per endpoint. Each domain and each
+    probe is given its most favourable achievable threshold, so these are upper
+    bounds on what a cheaper screen would achieve if it were tuned against the
+    battery. Two of the twenty probes reach nine of nine; the best is shown.}
+    \label{tab:baselines}
+\end{table}
+
+\subsection{Transfer across task families}
+\label{sec:res-transfer}
+% EVIDENCE  Does state reconstruction on one game predict state reconstruction
+%           on a game whose state has a different shape? This is the test that
+%           separates a construct from a task, and it is the test that lets a
+%           battery beat the name baseline, because a name is constant across
+%           families and a construct score need not be.
+% ARTIFACT  NONE.
+% STATUS    NEEDS COLLECTION. Blocked on sec:families.
+% DO NOT    write a placeholder number here. If the runs do not happen this
+%           section is deleted, the claim narrows to one game, and the title
+%           and framing change with it.
+
+\pending{this section. It needs the two probe banks of \S\ref{sec:families}
+administered to the same roster. No number belongs here until they are.}
+
+\subsection{Does the screen predict the behaviour it gates?}
+\label{sec:res-downstream}
+% EVIDENCE  Convergent validity, descriptive, on nine points.
+% ARTIFACT  results/frontier/baseline_campaign_v6/derived/
+%             audit_versus_behaviour.json (correlations, admission_contrast)
+% STATUS    HAVE. Read off the JSON in this session.
+% WARNING   n = 9 and the predictor is monotone in vendor size tier, so this
+%           association is confounded with the name baseline by construction.
+%           That is stated in the same paragraph, not later.
+
+The battery's score is associated with the behaviour it gates, and the
+association is not independent evidence that the battery works.
+Table~\ref{tab:downstream} reports it. All nine endpoints also played the same
+game under one frozen protocol, thirty games and 558 decisions each, and each
+endpoint's behavioural sensitivity is summarised by how far its play shifts
+between the lowest and the highest stated danger. The rank correlation between
+that shift and state-reconstruction accuracy is high and its exact permutation
+probability is small. Against the aggregate battery score instead of the
+binding domain it is weaker, which is C2 showing up a second time: the
+aggregate is the worse predictor.
+
+Three cautions belong here rather than in a later section. Nine commercial
+endpoints are not a sample from a population of models, so this is an agreement
+between two measurements of the same nine things and not an estimated effect.
+The endpoints differ in far more than their probe scores, and the predictor is
+monotone in vendor size tier, so this association inherits the whole of
+\S\ref{sec:res-name}: it is exactly as confounded with the endpoint name as the
+verdict is. And the screen does not partition the behaviour. The
+highest-scoring refused endpoint shifts its play almost exactly as far as the
+lowest admitted one, 37.6 points against 38.2, so the two sets touch rather
+than separate even though their means are far apart.
+
+\begin{table}[t]
+    \centering
+    \small
+    \setlength{\tabcolsep}{4pt}
+    \begin{tabular}{@{}llrrr@{}}
+        \toprule
+        Predictor & Sample & $n$ & $\rho$ & $p$ \\
+        \midrule
+        State reconstruction & all      & 9 & 0.874 & 0.004 \\
+        State reconstruction & no step  & 8 & 0.922 & 0.003 \\
+        Aggregate score      & all      & 9 & 0.770 & 0.019 \\
+        Aggregate score      & no step  & 8 & 0.743 & 0.042 \\
+        \bottomrule
+    \end{tabular}
+    \caption{Rank correlation between a battery score and the behavioural
+    shift the battery gates, with exact permutation probabilities from
+    enumerating every relabelling of the endpoints. ``No step'' sets aside the
+    one endpoint whose play is a switch rather than a gradient, because a
+    single extreme point should not carry a rank statistic over nine. The
+    binding domain predicts better than the aggregate. Both are confounded
+    with the endpoint name by construction, see \S\ref{sec:res-name}.}
+    \label{tab:downstream}
+\end{table}
+
+\subsection{What the screen catches, and what it misses}
+\label{sec:res-seat}
+% EVIDENCE  Two symmetric seats in the same game are interchangeable by
+%           construction: at the opening move the two prompts are byte
+%           identical under a name swap. An endpoint that plays them
+%           differently has failed an invariance the task guarantees, which
+%           is a validity failure a screen ought to catch.
+%           Whole-race: one refused endpoint 19.4 pp [12.1, 25.9]; every
+%           other endpoint within 2.2 pp; pooled 2.3 [1.1, 3.6]; without that
+%           endpoint 0.2 [-0.5, 0.9]; the five admitted endpoints together
+%           -0.6 [-1.3, 0.1].
+%           Opening: the same endpoint 30.0 pp [13.3, 46.7] -- but an ADMITTED
+%           endpoint is higher at 33.3 [16.7, 50.0] and a second admitted one
+%           is at 16.7 [3.3, 30.0], while four endpoints sit at a ceiling
+%           where no gap can appear.
+% ARTIFACT  results/derived/seat_confound/seat_gap.csv (scopes "route" and
+%           "opening:route"), seat_gap_leave_one_out.csv, seat_confound.json;
+%           generator scripts/analyze_seat_confound.py
+% STATUS    HAVE, BOTH SIDES. The per-endpoint opening rows exist under the
+%           "opening:route" scope of seat_gap.csv. An earlier project note
+%           recorded them as absent because it looked only in
+%           seat_gap_opening.csv, which is pooled. They are present.
+
+A screen should catch an endpoint that fails an invariance the task guarantees,
+and this one half does. The game seats two players symmetrically: at the
+opening move the two prompts are identical byte for byte under a swap of the
+two seat names, and the regenerating script checks that on all 270 openings
+rather than assuming it. An endpoint that plays the two seats differently is
+responding to an ordinal label rather than to the state.
+
+Over a whole game the screen separates the endpoints cleanly.
+Table~\ref{tab:seat} gives it. One refused endpoint plays its two seats
+19.4 points apart; every other endpoint is within 2.2 points of symmetric; the
+pooled gap over all nine is small and excludes zero only because of that one
+endpoint, and removing it leaves an interval that straddles zero. Over the five
+admitted endpoints together the gap also straddles zero. That is the strongest
+convergent evidence in this paper that the screen selects on something real,
+and it is stronger than \S\ref{sec:res-downstream} because it is a
+within-endpoint contrast against a known invariance rather than a correlation
+over nine points.
+
+At the opening move, which is the one place where the contrast is a pure label
+effect, the separation disappears. The refused endpoint opens 30.0 points
+apart, and an admitted endpoint opens further apart than that, 33.3 points,
+having never once opened unsafely from the first seat. A second admitted
+endpoint is at 16.7 points. Four of the nine open the same way from both seats
+in every game and can show no gap at all. So the honest statement is narrower
+than it first looks: the screen separates endpoints on a seat asymmetry that
+persists through a game, and does not separate them on the cleanest measurement
+of the same failure. We report both because the second is the one a reader
+would otherwise discover.
+
+\begin{table}[t]
+    \centering
+    \small
+    \setlength{\tabcolsep}{4pt}
+    \begin{tabular}{@{}llrr@{}}
+        \toprule
+        Endpoint or group & Verdict & Whole game & Opening \\
+        \midrule
+        GPT-5.4 nano       & refused  & $+19.4$ & $+30.0$ \\
+        Claude Sonnet 5    & admitted & $\phantom{+}0.0$ & $+33.3$ \\
+        GPT-5.4            & admitted & $-2.2$  & $+16.7$ \\
+        GPT-5.4 mini       & refused  & $+2.2$  & $+3.3$ \\
+        \midrule
+        All nine pooled    &          & $+2.3$  & $+9.3$ \\
+        Without GPT-5.4 nano &        & $+0.2$  & $+6.7$ \\
+        The five admitted  &          & $-0.6$  & $+10.0$ \\
+        \bottomrule
+    \end{tabular}
+    \caption{Difference in unsafe play between two seats that the task makes
+    interchangeable, in percentage points, for the endpoints that are not
+    pinned at a ceiling. Positive means the second seat plays unsafe more
+    often. The whole-game column separates the refused endpoint from every
+    other; the opening column, which is the cleaner label contrast, does not.
+    The five endpoints not shown are within 1.5 points of symmetric over a
+    whole game and show no opening gap at all, four of them because they open
+    unsafe from both seats in every game.}
+    \label{tab:seat}
+\end{table}
+
+\subsection{A screen refuses a whole measurement set}
+\label{sec:res-refusal}
+% EVIDENCE  What a screen costs when it works. On a different endpoint and a
+%           four-domain battery, the screen refused, and a completed campaign
+%           of 768 games, 13,680 decisions and 1,536 fixed-state replay rows
+%           was demoted to diagnostic rather than reported as behaviour.
+%           On that endpoint, swapping which of two opaque response codes
+%           means safe moves play by 24.0 to 57.3 points at an identical
+%           saved state, across all eight retellings, every interval
+%           excluding zero. The screen's own aggregate barely moves under the
+%           same sixteen presentations, 50.0 to 62.5 per cent.
+% ARTIFACT  results/open_source/context_skin_pilot/analysis_live_pilot_t0/
+%             analysis_summary.json (admission_passed false, claim_status),
+%             context_mapping_diagnostic.csv, comprehension_by_cell.csv,
+%             quality_coverage.csv
+% STATUS    HAVE.
+
+A screen is only worth its cost if refusing changes what gets reported, and
+here it did. On a separate endpoint, screened by a four-domain battery, the
+screen refused on state update and terminal scoring, and a completed campaign
+of 768 games, 13{,}680 decisions and 1{,}536 fixed-state replays was recorded
+as diagnostic rather than read as behaviour. Nothing was wrong with the
+collection: every shard completed, coverage was rectangular and no response
+failed to parse.
+
+What that campaign shows is why the refusal was right. Replaying the same saved
+states while swapping which of two opaque response codes means safe moves the
+endpoint's play by between 24.0 and 57.3 percentage points, in the same
+direction under all eight retellings of the game, every interval excluding
+zero. A relabelling that a correct model of the game must ignore rewrites the
+action sequence. An analysis that had read those trajectories as policy would
+have been reading the response surface.
+
+The screen itself barely noticed. Across all sixteen presentations its
+aggregate accuracy moved only between 50.0 and 62.5 per cent, a range of two
+answers in sixteen. So the instrument is stable under re-presentation while the
+behaviour it gates is not, which is the property a screen needs, and it is the
+one piece of evidence here that this kind of battery earns anything at all.
+
+% =====================================================================
+\section{Contribution Boundary and Concurrent Submission}
+\label{sec:boundary}
+% THIS SECTION IS NOT OPTIONAL AND IT IS NOT A FORMALITY.
+%
+% The material in the results sections was collected for, and until
+% 2026-09-12 was written up inside, a single combined manuscript that is now
+% a concurrent submission to a different venue, frozen at the tag
+% combined-manuscript-2026-09-12.
+%
+% ARR asks for original unpublished work, requires concurrent related
+% submissions to be declared and to cite each other, and can desk-reject a
+% thinly sliced contribution. The boundary has to be real and visible:
+%
+%   The other paper's contribution is BEHAVIOURAL. It uses the screen only
+%   as a declared entry condition, stated in its methods with no analysis
+%   resting on screen scores.
+%
+%   This paper's contribution is about the INSTRUMENT. Its unit of analysis
+%   is the screen, not the endpoint.
+%
+%   The empirical material that makes this a separate contribution rather
+%   than a redistribution is the transfer evidence (sec:families,
+%   sec:res-transfer) and the name-breaking roster (sec:res-name), NEITHER
+%   OF WHICH EXISTS TODAY. Until they do, this paper is offcuts and must not
+%   be submitted. That is a statement of fact about the evidence.
+%
+% RULES for this directory: no author name, no institution, no account
+% handle, no repository URL anywhere under paper/. scripts/anonymity_scan.py
+% additionally refuses the project directory name.
+% =====================================================================
+
+\subsection*{Relation to concurrent work}
+
+A concurrent submission by the same authors, currently under review at another
+venue, reports the behaviour of five of these nine endpoints in the game used
+here \citep{anonymous-concurrent}. That paper asks how a language-model agent
+trades speed against stated danger and how far its choices are set by its rival
+rather than by the danger. The two papers share a roster, a game and a
+collection protocol, and they do not share a contribution. The screen appears
+there only as a declared entry condition in the methods, with no result resting
+on a screen score, no ranking of endpoints by probe accuracy and no reading of
+the admitted-against-refused split as a measured contrast; the per-domain
+results, the threshold sweep, the reliability analysis and the comparison
+against cheaper signals appear only here. Its unit of analysis is the endpoint.
+Ours is the screen.
+
+The boundary is only real once the evidence in \S\ref{sec:families} and
+\S\ref{sec:res-transfer} exists. Remove those two sections and what remains is
+a validity appendix to the other paper rather than a contribution of its own,
+which is why this submission waits on the collection rather than on the
+writing.
+
+% =====================================================================
+\section{Conclusion}
+\label{sec:conclusion}
+% Write last. The closing argument is the framework in sec:construct with C5
+% as the operative criterion, not a summary of the nine-endpoint table.
+% =====================================================================
+
+A comprehension screen decides what a behavioural study is about, so it should
+be held to what any measuring instrument is held to. We set out six criteria
+and applied them to one battery. It passes reliability at the level of the
+verdict, passes threshold insensitivity with one stated exception, and reports
+per-domain scores that show its aggregate is carried by a single subtask while
+another subtask contributes no variance at all. It fails the criterion that
+matters most. On this roster its sixty scored answers draw a line that three
+answers draw, and that no answers draw: a regular expression over the endpoint
+name reproduces the verdict exactly.
+
+That failure is not an argument against screening. It is an argument for
+reporting what a screen buys, in the same table as the screen. The cheap
+baselines cost nothing to compute, they are computable from data any screening
+study already has, and a study that reports them either earns its battery or
+learns that it could have read the model names. We recommend that any study
+gating agents on comprehension report the per-domain scores, the threshold band,
+and the comparison against the name, one probe and parse health, and that it
+say which of its gate conditions refused anybody.
+
+% =====================================================================
+\section*{Limitations}
+% ARR requires an unnumbered Limitations section; it does not count against
+% the page limit. Write it, do not pad it, and put the real ones in it.
+% ARTIFACT  L1: results/frontier/baseline_campaign_v6/**/run_manifest.json
+%           carries no language field and one fixed prompt version.
+% STATUS    HAVE.
+% =====================================================================
+
+Nine endpoints, one game, one prompt version. No language field is recorded
+anywhere in the collection, so no cross-lingual claim is available and none is
+made. Every route-level statistic here rests on $n=9$; the permutation tests are
+exact, which bounds the false-positive rate but says nothing about generality.
+
+The screen's verdict is confounded with vendor size tier by construction on this
+sample, and every association with downstream behaviour inherits that confound.
+This is the paper's own central result and it is also its largest limitation:
+we can show that the battery fails the discriminant-validity criterion here, and
+we cannot show what it would do on a roster that breaks the tie, because no such
+roster has been screened.
+
+Every result is from one battery on one state structure, so the paper measures a
+task and not a construct. The transfer evidence that would change that is named
+in \S\ref{sec:families} and has not been collected. Until it is, the criteria of
+\S\ref{sec:construct} are a standard argued for rather than a standard
+demonstrated across environments.
+
+The endpoints are commercial routes, not models. They can change under a fixed
+name, and one verdict in this study already moved when a decoding setting
+changed. A screen verdict is a statement about a route on a date, and treating
+it as a property of a model is a category error this paper is partly about.
+
+The two comparisons drawn from separate instruments, in
+\S\ref{sec:res-format} and \S\ref{sec:res-refusal}, are read only within their
+own instrument. Their scores are never pooled with the nine-endpoint battery,
+and the agreement between the fractionation patterns is a description rather
+than a replication.
+
+\bibliography{custom}
+
+\appendix
+
+\section{Probe Bank}
+\label{sec:appendix-probes}
+% EVIDENCE  The twenty probes, their domains and the scoring rule, so a
+%           reader can rebuild the battery, plus the bank hash.
+% ARTIFACT  results/frontier/admission_campaign_v6/**/raw_responses.jsonl
+%           (probe_id, domain, repetition, semantic_valid, semantic_correct)
+%           and docs/frontier-evidence-collection-protocol.md
+% STATUS    HAVE. Probe identifiers below are read from the raw rows.
+
+Every administration reported in \S\ref{sec:res-stability} used the same probe
+bank and the same task description, whose SHA-256 hashes are these.
+
+\begin{center}\ttfamily\scriptsize
+2953fb472dcba47511de108a47d4126b\\
+0f661e79bf60c96a3ab46f581abca8bc\\[2pt]
+b80981a5e888d04649300f79b7388ca7\\
+a755b958f239f0172efd9ca35aab2ae0
+\end{center}
+The twenty probes are, by domain:
+
+\begin{itemize}
+\item \emph{Rule recall}: the hidden horizon, the minimum number of rounds,
+      simultaneity of the two moves, the stopping probability.
+\item \emph{Stage payoff}: the two off-diagonal cells of the stage matrix.
+\item \emph{State reconstruction}: own progress, opponent progress, the gap
+      between them, own accumulated risk, own accumulated payoff.
+\item \emph{State transition}: progress after one move, accumulated risk after
+      one move.
+\item \emph{Terminal scoring}: who wins, the winner's payoff, the winner's
+      accumulated risk, the loser's setback, the payoff after a setback.
+\item \emph{Expected payoff}: the closed form under two action profiles.
+\end{itemize}
+
+Each is asked three times at a requested temperature of zero, scored against
+ground truth by a semantic scorer that reads a scalar or a listed option rather
+than requiring an exact output format. That choice is deliberate and it is what
+makes \S\ref{sec:res-format} measurable: format compliance is recorded
+separately from correctness instead of being folded into it.
+
+\section{Full per-domain results across three administrations}
+\label{sec:appendix-domains}
+% EVIDENCE  The nine-endpoint by six-domain matrix is Table~\ref{tab:fractionate}
+%           in the body. What belongs here is the same matrix for the two
+%           earlier administrations, for the four endpoints they cover.
+% ARTIFACT  results/frontier/admission_campaign{,_v5,_v6}/**/admission.json
+% STATUS    HAVE. Table~\ref{tab:retest} carries the two gated domains for all
+%           four endpoints; the remaining four domains moved on no endpoint
+%           between any two administrations, which is why they are not
+%           tabulated again here.
+
+Across the three administrations, all movement in the four endpoints covered by
+all three falls in two domains. State reconstruction moved on three of the four
+endpoints and terminal scoring on two; rule recall, stage payoff, state
+transition and expected payoff moved on none of them except one endpoint's
+expected payoff, which is recorded and gates nothing.
+Table~\ref{tab:retest} therefore carries the whole of the movement.
+
+\end{document}

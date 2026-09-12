@@ -119,6 +119,14 @@ paper/*.fls
 paper/*.log
 paper/*.out
 paper/main.pdf
+paper/acl/*.aux
+paper/acl/*.bbl
+paper/acl/*.blg
+paper/acl/*.fdb_latexmk
+paper/acl/*.fls
+paper/acl/*.log
+paper/acl/*.out
+paper/acl/main.pdf
 slides/**/*.aux
 slides/**/*.fdb_latexmk
 slides/**/*.fls

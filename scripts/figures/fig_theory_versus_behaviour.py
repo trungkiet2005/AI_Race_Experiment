@@ -286,9 +286,43 @@ def report(res: dict) -> dict:
             "boundary": boundary}
 
 
-def panel_a(ax, res, d) -> None:
+def panel_a(ax, res, d, roster=None, noun="screened routes") -> None:
+    """The shape comparison, over whichever roster the caller is arguing about.
+
+    The main paper draws the five routes the validity screen admitted, because
+    every strategic claim it makes stands on those five and a refused route
+    appears there only where it is named as refused.  Drawing all nine in the
+    main paper would put four unnamed refused routes inside the grey band that
+    the text then reasons about, which is the one thing the screen exists to
+    prevent.  The supplement draws all nine, where the refused four are the
+    point rather than an unlabelled background.
+    """
     curves, obs, risks = res["curves"], res["obs"], res["risks"]
-    others = [route for route in S.ROUTE_ORDER if route != OPUS]
+    roster = list(roster or S.ADMITTED)
+    if OPUS not in roster:
+        raise SystemExit(
+            f"{S.ROUTE_SHORT[OPUS]} is the exception this panel argues about and "
+            "is not in the roster it was handed"
+        )
+    others = [route for route in roster if route != OPUS]
+
+    # The title counts ramps, so count them rather than assert them.  A route
+    # walks a ramp here if no single move between two configured levels spends
+    # the whole scale; the one route that does spend it is the step this panel
+    # sets apart, and if that ever stops being true the title is wrong before
+    # anything else in the figure is.
+    obs_all = res["obs"]
+    full = 100.0 - 1e-9
+    def spends_the_scale(route):
+        row = 100 * obs_all.loc[route].to_numpy()
+        return float(np.abs(np.diff(row)).max()) >= full
+    steps = [route for route in roster if spends_the_scale(route)]
+    if steps != [OPUS]:
+        raise SystemExit(
+            f"the step policies in this roster are "
+            f"{[S.ROUTE_SHORT[r] for r in steps]}, but the panel sets "
+            f"{S.ROUTE_SHORT[OPUS]} apart and the title counts the rest as ramps"
+        )
 
     lo = 100 * obs.loc[others].min(axis=0).to_numpy()
     hi = 100 * obs.loc[others].max(axis=0).to_numpy()
@@ -374,14 +408,22 @@ def panel_a(ax, res, d) -> None:
     ends = 100 * obs.loc[others, obs.columns[-1]].to_numpy()
     ax.plot([0.945, 0.945], [ends.min(), ends.max()], color=S.MUTED, lw=0.8,
             clip_on=False, zorder=4)
-    S.direct_label(ax, 0.965, ends.mean(), "the other\neight routes", color=S.MUTED)
+    S.direct_label(ax, 0.965, ends.mean(), f"the other\n{len(others)} routes",
+                   color=S.MUTED)
     # Naming the regime on the page, not only in the docstring. Every curve here
     # is the small-mutation limit, which the theory metadata states cannot
     # represent the finite mutation rate of the parameter points it is drawn at,
     # and a reader who sees only "the model" would not know which model.  One
     # panel means no panel letter: the claim is the whole title.
-    ax.set_title("the small-mutation limit steps off a cliff;\n"
-                 "eight of the nine routes walk a ramp",
+    # The previous title read "the small-mutation limit steps off a cliff", and
+    # both drawn curves are the small-mutation limit while only one of them is a
+    # cliff: at the weak strength the model's steepest fall is under five points
+    # in a step of risk, which is a ramp.  A title that names the regime and not
+    # the strength claims of both curves what is true of one.  Name the strength.
+    ramp = min(curves)
+    ax.set_title(f"the model is a step at $\\beta$ = {d['reference']:g} and a ramp "
+                 f"at {ramp:g};\n"
+                 f"{len(others)} of the {len(roster)} {noun} walk a ramp",
                  loc="left", pad=4, x=0.0, fontsize=S.FS_CLAIM, color=S.INK_2,
                  linespacing=1.4)
 
@@ -523,10 +565,20 @@ def panel_c(ax, res, d, letter="c") -> None:
 
 
 def draw(res: dict, d: dict) -> None:
+    """The main paper's screened five, and the supplement's all nine.
+
+    Two files out of one computation, so the supplement can never disagree with
+    the body about what the model does or about what any route played.
+    """
     fig = plt.figure(figsize=(S.COL, 2.92))
-    ax = fig.add_subplot(1, 1, 1)
-    panel_a(ax, res, d)
+    panel_a(fig.add_subplot(1, 1, 1), res, d,
+            roster=S.ADMITTED, noun="screened routes")
     S.save(fig, "theory_versus_behaviour", width=S.COL)
+
+    fig = plt.figure(figsize=(S.COL, 2.92))
+    panel_a(fig.add_subplot(1, 1, 1), res, d,
+            roster=S.ROUTE_ORDER, noun="routes")
+    S.save(fig, "theory_versus_behaviour_all_routes", width=S.COL)
 
 
 def main() -> None:
