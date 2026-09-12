@@ -177,9 +177,10 @@ push/status/log commands; do not invent a kernel slug when no
   races and is retained as a failure record rather than reported as a result. The
   requested temperature was not forwarded by the SDK and the sampling seed is
   confirmed only as requested, so both are cited as unconfirmed.
-- One fully crossed context-and-mapping run is complete, on Gemini 3 Flash, with
-  120 races and 2,232 decisions and a passing independent validator. The N-player
-  frontier rerun is not admitted; its attempts are kept under
+- The fully crossed context-and-mapping design is complete on the two routes
+  selected for that study, with 120 races and 2,232 decisions per route and a
+  passing independent validator. The N-player frontier rerun is not admitted;
+  its attempts are kept under
   `results/failed_runs/`.
 - Deterministic checks and analysis run locally. Model evidence must run in a
   declared GPU environment or on the audited Kaggle Benchmark identity, with exact

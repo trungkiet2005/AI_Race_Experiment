@@ -256,7 +256,7 @@ Current campaign artifacts, all on the single configured Kaggle identity
 | `results/frontier/nplayer_matched_campaign/` | `ai-race-nplayer-matched-hosted-confirmatory-v1` | matched group sizes 2 to 5 at all three risk levels on `google/gemini-3-flash-preview`, 10 races per cell, 0 parse failures; `derived/nplayer_matched_rates.csv`, `.json`; each cell carries a `collection_receipt.json` naming the identity that collected it |
 | `results/frontier/baseline_replication/` | `ai-race-frontier-baseline-v3` | an independent repeat of the `google/gemini-3-flash-preview` baseline cell, same protocol, prompt hash, mechanism and 30 seed blocks, different day and identity; largest per-risk difference 1.1 points, risk response 38.7 to 40.3. **Kept outside `baseline_campaign_v6/` on purpose**: both campaign analysers key by `model_route`, so a second run of a represented route placed in that tree would silently displace the reported one rather than raise. Read it with `scripts/analyze_baseline_replication.py` |
 | `results/frontier/pilots/` | none | pre-protocol pilots kept as provenance; the 2026-08-01 nine-race run has no `protocol_id` at all, which is exactly why it can never be pooled with or compared against confirmatory runs. No analyser reads this directory |
-| `results/frontier/scripted_opponent_campaign/` | `ai-race-scripted-opponent-v1` | the audited route against the four reduced strategies rather than itself; 12 cells (4 strategies x 3 risks), 120 races, 1,116 route decisions, 0 parse failures; `derived/scripted_opponent_rates.csv`, `.json`. **Only rows with `is_route_decision` true are the model's own choices**; the others are the script, and pooling them would report the strategy's behaviour as the route's. Every cell carries a `collection_receipt.json` naming its identity and recording that the rival replayed clean |
+| `results/frontier/scripted_opponent_campaign/` | `ai-race-scripted-opponent-v1` | the audited routes against the four reduced strategies rather than themselves; three complete routes, 36 cells (4 strategies x 3 risks x 3 routes), 360 races, 3,348 route decisions, 0 parse failures; `derived/scripted_opponent_rates.csv`, `.json`. Two additional admitted routes are under a fixed completion plan, with one valid Opus cell and retained zero-race infrastructure failures. **Only rows with `is_route_decision` true are the model's own choices**; the others are the script, and pooling them would report the strategy's behaviour as the route's. Every cell carries a `collection_receipt.json` naming its identity and recording that the rival replayed clean |
 
 Three things about these directories are load-bearing:
 
@@ -291,4 +291,10 @@ The workstation now has a configured hosted Kaggle Benchmark path for bounded
 frontier smoke and confirmatory runs. Heavy model workloads should use Kaggle
 or the managed H100 pods. A successful request is not evidence by itself:
 retain the raw responses, completed manifest, parser-failure accounting, and
-integrity audit before promoting a run into the manuscript.
+integrity audit before promoting a run into the manuscript. The current
+scripted-opponent completion plan is `docs/scripted-opponent-completion-plan-2026-09-11.md`.
+Its declared 24-cell extension is not complete: one Claude Opus 5 cell is
+valid, while the remaining attempts have zero races or have not started. The
+2026-09-12 retry amendment uses a 512-token cap and `reasoning="low"` only for
+the frontier routes that exhausted the earlier structured-output budget; those
+responses are not poolable with the earlier `reasoning="none"` contract.

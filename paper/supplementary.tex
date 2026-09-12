@@ -328,7 +328,8 @@ letters restart at A because this is supplementary matter.
     Whether the gap between theory and the audited routes depends on one
     parameter setting.
   \item \textbf{Crossed representation-robustness design.} The narrative
-    skin by symbol mapping rerun, completed on both admitted routes, and what
+    skin by symbol mapping rerun, completed on both routes selected for the
+    crossed representation study, and what
     two routes do and do not license.
   \item \textbf{Predictive structure of unsafe choices.} The feature analysis
     behind the drivers reported in the main paper.
@@ -387,7 +388,8 @@ summarises: the separate and larger
 battery on the one model with published weights
 (\S\ref{app:open-weight-battery}), the selection-strength sweep of the evolutionary
 benchmark (\S\ref{app:egt-beta}), the crossed
-representation-robustness design completed on both admitted routes
+representation-robustness design completed on both routes selected for the
+crossed representation study
 (\S\ref{app:context-mapping}), the matched
 group-size comparison (\S\ref{app:nplayer-matched}), the scripted-opponent
 campaign (\S\ref{app:scripted-opponent}), the
@@ -1037,15 +1039,16 @@ An earlier local pilot varied the story the game is told through and the
 symbols used for the two actions, but varied them together with repetition
 parity, so the two could not be separated, and it failed its comprehension
 gate. The main paper therefore excludes it and requires a fully crossed rerun
-before any claim about representation. That rerun has now completed on both
-admitted routes, and this subsection reports it.
+before any claim about representation. That rerun has now completed on the two
+routes selected for this study, and this subsection reports it.
 
 The rerun crosses two \emph{narrative skins}, that is two stories that leave
 the rules untouched, against two \emph{symbol mappings}, that is which of the
 two opaque response codes $P$ and $Q$ stands for \Safe{} and which for
 \Unsafe{}, inside repetition blocks, at each of the mechanism's three
-maximum-private-risk levels. That is twelve cells per route. It completed on both admitted routes under
-protocol \texttt{ai-race-frontier-context-mapping-v3}, each with ten
+maximum-private-risk levels. That is twelve cells per route. It completed on
+both selected routes under protocol
+\texttt{ai-race-frontier-context-mapping-v3}, each with ten
 repetitions, 120 races, 2{,}232 recorded decisions and zero parse failures:
 Gemini 3 Flash as run 1373757 and Claude Sonnet 5 as run 1504455, whose full
 route strings are given in
@@ -1171,7 +1174,8 @@ rate at risk $0.9$ from 59.7\% to 89.2\% under the abstract story and from
 model of the game should ignore therefore changes the action sequence.
 
 What follows from this table is bounded by how many routes stand behind it.
-The design is crossed on both admitted routes, Gemini 3 Flash and Claude
+The design is crossed on both routes selected for the crossed representation
+study, Gemini 3 Flash and Claude
 Sonnet 5, whose full route strings are in
 Table~\ref{tab:admission-v6}, each at the full twelve cells, so
 the mapping effect is not confined to one provider's decoder at one revision:
@@ -2062,45 +2066,36 @@ behaving the same way.
 The main paper does not report these cells.
 Tables~\ref{tab:position-gpt5nano} and~\ref{tab:position-gpt54nano} give them
 in full for the two checkpoints that have a persona sweep and an observed
-position, so a single rate and its interval can be checked directly. Relative
-position is observed rather than assigned, so these are associations within a
-persona band, not position effects. One further caveat governs both tables and
-is stated in each caption as well: the intervals are Wilson score intervals
-computed over \emph{decisions}, whereas this paper's method statement makes
-the race the independent unit. Decisions taken inside one race are not
-independent of each other, so a decision-level interval is narrower than the
-race-level uncertainty warrants. The per-race source for these two specific
-tables could not be located in the analysis record, so we neither recompute
-the intervals nor delete the cells: they are printed as descriptive
-breakdowns, and no inference rests on them.
+position. Relative position is observed rather than assigned, so these are
+associations within a persona band, not position effects. The race is this
+paper's independent unit, but the per-race source for these two specific
+breakdowns could not be located in the analysis record. We therefore print
+only the decision count and descriptive rate, with no confidence interval or
+inferential interpretation.
 
 \begin{table}[t]
     \caption{\Unsafe{} rate by persona band and relative position,
-    GPT-5-nano. $n$ is the number of decisions in the cell. The interval is a
-    95\% Wilson score interval computed at the level of the decision.
-    Decisions within a race are not independent, and the race is this paper's
-    independent unit, so the interval is anti-conservative: it is narrower
-    than a race-clustered interval would be. These cells are descriptive only
-    and support no inference.}
+    GPT-5-nano. $n$ is the number of decisions in the cell. These cells are
+    descriptive only and support no inference.}
     \label{tab:position-gpt5nano}
     \centering
     \small
-    \begin{tabular}{@{}llrrl@{}}
+    \begin{tabular}{@{}llrr@{}}
         \toprule
-        Persona band & Position & $n$ & \Unsafe{} rate & 95\% CI \\
+        Persona band & Position & $n$ & \Unsafe{} rate \\
         \midrule
-        Baseline      & Leader  & 1460 & 19.7\% & 17.7--21.8\% \\
-        Baseline      & Middle  & 1065 & 30.4\% & 27.7--33.3\% \\
-        Baseline      & Trailer & 175  & 33.1\% & 26.6--40.4\% \\
-        Low (R1--R2)  & Leader  & 1094 & 5.9\%  & 4.6--7.4\%   \\
-        Low (R1--R2)  & Middle  & 198  & 14.6\% & 10.4--20.2\% \\
-        Low (R1--R2)  & Trailer & 58   & 12.1\% & 6.0--22.9\%  \\
-        Mid (R3--R4)  & Leader  & 649  & 40.7\% & 37.0--44.5\% \\
-        Mid (R3--R4)  & Middle  & 451  & 38.1\% & 33.8--42.7\% \\
-        Mid (R3--R4)  & Trailer & 250  & 32.8\% & 27.3--38.8\% \\
-        High (R5--R6) & Leader  & 702  & 63.2\% & 59.6--66.7\% \\
-        High (R5--R6) & Middle  & 339  & 54.3\% & 49.0--59.5\% \\
-        High (R5--R6) & Trailer & 309  & 50.2\% & 44.6--55.7\% \\
+        Baseline      & Leader  & 1460 & 19.7\% \\
+        Baseline      & Middle  & 1065 & 30.4\% \\
+        Baseline      & Trailer & 175  & 33.1\% \\
+        Low (R1--R2)  & Leader  & 1094 & 5.9\% \\
+        Low (R1--R2)  & Middle  & 198  & 14.6\% \\
+        Low (R1--R2)  & Trailer & 58   & 12.1\% \\
+        Mid (R3--R4)  & Leader  & 649  & 40.7\% \\
+        Mid (R3--R4)  & Middle  & 451  & 38.1\% \\
+        Mid (R3--R4)  & Trailer & 250  & 32.8\% \\
+        High (R5--R6) & Leader  & 702  & 63.2\% \\
+        High (R5--R6) & Middle  & 339  & 54.3\% \\
+        High (R5--R6) & Trailer & 309  & 50.2\% \\
         \bottomrule
     \end{tabular}
 \end{table}
@@ -2109,31 +2104,27 @@ breakdowns, and no inference rests on them.
 \begin{table}[t]
     \caption{\Unsafe{} rate by persona band and relative position,
     GPT-5.4-nano. $n$ is the number of decisions in the cell and cells marked
-    $^\dagger$ have $n<20$. The interval is a 95\% Wilson score interval
-    computed at the level of the decision. Decisions within a race are not
-    independent, and the race is this paper's independent unit, so the
-    interval is anti-conservative: it is narrower than a race-clustered
-    interval would be. These cells are descriptive only and support no
+    $^\dagger$ have $n<20$. These cells are descriptive only and support no
     inference.}
     \label{tab:position-gpt54nano}
     \centering
     \small
-    \begin{tabular}{@{}llrrl@{}}
+    \begin{tabular}{@{}llrr@{}}
         \toprule
-        Persona band & Position & $n$ & \Unsafe{} rate & 95\% CI \\
+        Persona band & Position & $n$ & \Unsafe{} rate \\
         \midrule
-        Baseline      & Leader  & 1649 & 83.6\%  & 81.8--85.3\%  \\
-        Baseline      & Middle  & 703  & 84.8\%  & 81.9--87.2\%  \\
-        Baseline      & Trailer & 348  & 86.5\%  & 82.5--89.7\%  \\
-        Low (R1--R2)  & Leader  & 1073 & 3.3\%   & 2.4--4.5\%    \\
-        Low (R1--R2)  & Middle  & 268  & 1.5\%   & 0.6--3.8\%    \\
-        Low (R1--R2)  & Trailer & 9$^\dagger$    & 0.0\%   & 0.0--29.9\%   \\
-        Mid (R3--R4)  & Leader  & 1164 & 95.7\%  & 94.4--96.7\%  \\
-        Mid (R3--R4)  & Middle  & 70   & 88.6\%  & 79.0--94.1\%  \\
-        Mid (R3--R4)  & Trailer & 116  & 91.4\%  & 84.9--95.3\%  \\
-        High (R5--R6) & Leader  & 1328 & 99.3\%  & 98.7--99.6\%  \\
-        High (R5--R6) & Middle  & 4$^\dagger$    & 100.0\% & 51.0--100.0\% \\
-        High (R5--R6) & Trailer & 18$^\dagger$   & 100.0\% & 82.4--100.0\% \\
+        Baseline      & Leader  & 1649 & 83.6\% \\
+        Baseline      & Middle  & 703  & 84.8\% \\
+        Baseline      & Trailer & 348  & 86.5\% \\
+        Low (R1--R2)  & Leader  & 1073 & 3.3\% \\
+        Low (R1--R2)  & Middle  & 268  & 1.5\% \\
+        Low (R1--R2)  & Trailer & 9$^\dagger$ & 0.0\% \\
+        Mid (R3--R4)  & Leader  & 1164 & 95.7\% \\
+        Mid (R3--R4)  & Middle  & 70   & 88.6\% \\
+        Mid (R3--R4)  & Trailer & 116  & 91.4\% \\
+        High (R5--R6) & Leader  & 1328 & 99.3\% \\
+        High (R5--R6) & Middle  & 4$^\dagger$ & 100.0\% \\
+        High (R5--R6) & Trailer & 18$^\dagger$ & 100.0\% \\
         \bottomrule
     \end{tabular}
 \end{table}
@@ -2602,7 +2593,8 @@ instead of assuming it, and it holds for all ten blocks in every contrast.
     cells below is a floor rather than an estimate. The column is also not
     group size alone: playing safe while everyone else does pays $+1.0$ at
     $N=2$ and $-0.2$ at $N=5$. \textbf{(b)} The crossed representation design
-    of \S\ref{app:context-mapping} on both admitted routes, drawn on a common
+    of \S\ref{app:context-mapping} on both routes selected for the crossed
+    representation study, drawn on a common
     thirty-point vertical span so that a slope in the upper panel is the same
     slope as in the lower one. The lines run close to parallel and the
     interaction spans zero on both routes, $-1.4$ pp $[-9.2,+3.5]$ on Claude

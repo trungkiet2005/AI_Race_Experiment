@@ -42,7 +42,7 @@ HEADING = re.compile(r"^\s*(references|bibliography)\s*$", re.IGNORECASE)
 def page_text(pdf: Path, page: int) -> str:
     result = subprocess.run(
         ["pdftotext", "-f", str(page), "-l", str(page), str(pdf), "-"],
-        capture_output=True, text=True,
+        capture_output=True, text=True, encoding="utf-8", errors="replace",
     )
     if result.returncode != 0:
         raise SystemExit(f"pdftotext failed on page {page} of {pdf}")
@@ -50,7 +50,10 @@ def page_text(pdf: Path, page: int) -> str:
 
 
 def page_count(pdf: Path) -> int:
-    result = subprocess.run(["pdfinfo", str(pdf)], capture_output=True, text=True)
+    result = subprocess.run(
+        ["pdfinfo", str(pdf)], capture_output=True, text=True,
+        encoding="utf-8", errors="replace",
+    )
     if result.returncode != 0:
         raise SystemExit(f"pdfinfo failed for {pdf}")
     for line in result.stdout.splitlines():

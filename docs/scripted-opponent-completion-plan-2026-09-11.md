@@ -392,13 +392,13 @@ self-play step is a policy or an interaction, is still open.
 
 ## Amendment, 2026-09-12: structured-output cap for the resumption
 
-The first resumption attempt was made on the pre-amendment source, for the
-pre-assigned cell `AU` at risk `0.6` on Claude Opus 5 under `kit567`. Task
-version 11 failed during server-side validation before any race completed. The
-provider consumed 245 reasoning tokens out of the 256-token completion cap and
-returned no parseable structured action. This is an infrastructure failure,
-not a behavioural result; it is retained as a failure record and contributes
-zero cells to the campaign.
+The first resumption attempt was made on the pre-amendment source for the cell
+`AU` at risk `0.6` on Claude Opus 5. The plan assigns that cell to
+`foundnotkiet`; the operator accidentally launched the first two resumption
+versions under `kit567`. Both versions failed during server-side validation
+before any race completed, so they contribute zero cells and no behavioural
+evidence. The assignment error is recorded here rather than silently treating
+those attempts as part of the fixed design.
 
 Before any new cell is collected, the task's output cap is amended from 256 to
 512 tokens. The prompt, structured schema, parser, temperature request, seed
@@ -411,7 +411,7 @@ their own fixed amended contract and the cap difference is disclosed with any
 cross-route comparison.
 
 The cap-only retry was then tested before any race was admitted. Task version
-12, again for `AU` at risk `0.6` on Claude Opus 5 under `kit567`, consumed 490
+12, again launched under the mistaken `kit567` identity, consumed 490
 reasoning tokens out of the amended 512-token cap and again returned no
 parseable action during validation. It is another infrastructure failure with
 zero races. The amended decoding contract therefore uses the Kaggle SDK's
@@ -420,3 +420,16 @@ documented `reasoning="low"` mode for routes containing `claude-opus-5` or
 cell assignment remain unchanged; the route-specific decoding mode is recorded
 in each manifest and is not treated as invisible equivalence with the earlier
 `reasoning="none"` runs.
+
+The plan-assigned `foundnotkiet` identity then tested the same low-reasoning
+contract at its task version 12. It also failed before completing a race, with
+489 reasoning tokens under the 512-token cap and no parseable action. It is
+retained as an infrastructure failure, not as evidence.
+
+Task version 13 tested that low-reasoning contract, but it was still launched
+under `kit567` by operator error rather than the plan-assigned `foundnotkiet`
+identity. It failed before completing a race, with 492 reasoning tokens under
+the 512-token cap and no parseable action. It is retained as a third
+non-admitted infrastructure attempt and is not a result. The next attempt for
+this cell must use `foundnotkiet`, with the proxy environment loaded correctly;
+no response from versions 11--13 may be pooled with a later cell.
