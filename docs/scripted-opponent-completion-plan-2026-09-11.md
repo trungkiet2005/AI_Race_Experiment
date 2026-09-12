@@ -326,3 +326,66 @@ cell dropped into the campaign directory would displace it rather than raise.
 And the download root for every cell is kept short, `D:/kaggle/working/dl/<tag>`,
 because on Windows a long path makes a benchmark download report success while
 writing nothing, which reads like a lost cell and is not one.
+
+## Outcome, 2026-09-12: the collection stopped on quota after one cell
+
+Written so the plan matches the disk. Nothing above is edited, because it was
+true when it was written and the assignment it fixed is what was followed.
+
+**One of twenty-four cells was collected.** Claude Opus 5 against Always Safe at
+risk 0.6, on `hunhtrungkit`, 10 races, 93 route decisions, zero parse failures,
+the rival replayed with zero deviations, and the contract hash the risk level
+requires. It reads 1.1 per cent unsafe, one decision in 93.
+
+Nine further attempts produced nothing and are recorded in
+`results/failed_runs/scripted_opponent_completion_20260912.json`. The remaining
+fifteen cells were never started, because by then every identity that owned one
+had refused. They are **not collected**, and no cell was moved to another
+account.
+
+Two different failures happened and the record keeps them apart.
+
+`tnkiet`, `kit567`, `trungkiet` and finally `hunhtrungkit` returned **HTTP 403**
+with an explicit quota message: the estimated cost of the operation exceeds the
+available quota, measured against the requested output cap. Four identities out
+of budget is what ended this. Each is retired by the stopping rule above.
+
+`foundnotkiet` failed three times for a different reason and was not out of
+budget. Its attempts returned a completed API call whose entire 256 token output
+allowance was spent on reasoning tokens, so no content came back for the
+structured-output parser. The task retries such a response to its transport
+ceiling and then raises a message about refreshing authentication, which is
+misleading: nothing was wrong with the credential. Because that is not a quota
+refusal, the plan permitted a retry on the same identity, one was taken, and it
+failed identically. No further attempt was made.
+
+Two operational facts belong with any resumption, and the second corrects
+something this plan got wrong.
+
+Pushing a task version also starts a full validation run of that version, so a
+cell costs about 186 requests rather than 93. That is already recorded in the
+amendment above.
+
+**The quota probe in this plan does not predict admission.** All ten probes
+completed, on all five identities and both routes, and four of those identities
+refused a real cell inside the hour. A `connectivity-ping` reserves almost
+nothing, while the refusal is a reservation check against the 256 token output
+cap, so a passing ping says the route answers and says nothing about whether a
+cell will be served. A future plan should probe with a request that reserves the
+same output cap a cell does, or should stop claiming the probe bounds anything.
+
+### What the manuscript may say
+
+Unchanged from before this attempt. The scripted-opponent campaign covers
+**three** admitted endpoints, `google/gemini-3-flash-preview`,
+`anthropic/claude-sonnet-5@default` and `openai/gpt-5.4-2026-03-05`, each a
+complete twelve-cell grid. It does not cover the admitted set.
+
+The single Claude Opus 5 cell is **not** a result about how that route answers a
+rival, and must not be reported as one. The arms that answer that question are
+Always Unsafe and Conditional Unsafe, and neither exists. Against a rival that
+always plays Safe the route reads 1.1 per cent unsafe where its own self-play
+baseline at the same risk reads 0.0 per cent across 186 decisions, so it is
+sitting at the floor in both, which is the one outcome from which nothing can be
+inferred either way. The question this plan was written to answer, whether the
+self-play step is a policy or an interaction, is still open.
