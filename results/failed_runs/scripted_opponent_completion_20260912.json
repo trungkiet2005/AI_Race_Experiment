@@ -124,6 +124,24 @@
       "n_races": 0
     }
   ],
+  "resumption_attempts": [
+    {
+      "task_version": 11,
+      "cell": {"strategy": "AU", "max_private_risk": 0.6},
+      "model_route": "anthropic/claude-opus-5@default",
+      "executing_identity": "kit567",
+      "status": "Errored",
+      "stage": "task version creation validation",
+      "error_type": "LengthFinishReasonError",
+      "status_code": null,
+      "output_token_limit": 256,
+      "reasoning_tokens": 245,
+      "completion_tokens": 252,
+      "n_races": 0,
+      "evidence_status": "not_admitted",
+      "error": "The provider consumed the completion allowance with reasoning tokens and returned no parseable structured action. No race completed, so this is an infrastructure failure rather than model evidence."
+    }
+  ],
   "not_attempted": "Fifteen further cells were never started, because every identity the plan assigned them to had already refused. They are listed as not collected in the plan's own closing section rather than counted as failures of anything.",
   "interpretation": "Two distinct failures are recorded here and they must not be merged. Four identities returned HTTP 403 with an explicit quota message: tnkiet, kit567, trungkiet and finally hunhtrungkit. That is the accounting limit this study has hit before, and it is the reason the collection stopped. foundnotkiet is different: its three attempts returned a successful API call whose whole 256 token output budget was spent on reasoning tokens, leaving no content for the structured-output parser, which the task treats as a transport failure and reports with a misleading message about authentication. foundnotkiet was therefore not out of budget when it failed, and calling its failure a quota refusal would be wrong.",
   "why_not_moved_to_another_identity": "The plan assigns each cell to one identity before collection and forbids moving a cell after a refusal, because rotating until something passes selects on the outcome. No cell here was retried anywhere except on the identity that owned it. The one retry that did happen, foundnotkiet's AU cell at risk 0.6, was permitted because that failure was not a quota refusal, and it is recorded above as attempt 2 of the same assignment.",

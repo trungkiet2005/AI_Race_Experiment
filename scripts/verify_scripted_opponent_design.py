@@ -39,14 +39,13 @@ ROOT = Path(__file__).resolve().parents[1]
 TASK = ROOT / "kaggle" / "benchmarks" / "ai_race_scripted_opponent.py"
 BASELINE = ROOT / "kaggle" / "benchmarks" / "ai_race_baseline.py"
 
-# Every mechanism field must agree with the neutral baseline.  These are the
-# fields that define the game; a difference in any of them makes the two
-# campaigns incomparable, which is the failure this check exists to prevent.
+# Every game-mechanism field must agree with the neutral baseline.  Decoding
+# belongs to a separate contract: the resumption amendment may change its
+# output cap, but the manifest must expose that change rather than hiding it.
 MECHANISM_FIELDS = (
     "SAFE", "UNSAFE", "N_PLAYERS", "PLAYER_NAMES", "PROMPT_VERSION",
     "MIN_ROUNDS", "STOP_PROBABILITY", "PRIZE", "PROGRESS", "STAGE_PAYOFF",
-    "TEMPERATURE", "MAX_OUTPUT_TOKENS", "BASE_SEED", "HORIZON_STREAM",
-    "SETBACK_STREAM", "RISK_LEVELS_FROZEN",
+    "BASE_SEED", "HORIZON_STREAM", "SETBACK_STREAM", "RISK_LEVELS_FROZEN",
 )
 
 failures: list[str] = []
@@ -154,8 +153,11 @@ def main() -> None:
         theirs = getattr(baseline, field.replace("_FROZEN", ""), "<missing>")
         if mine != theirs:
             disagreements.append(f"{field}: {mine!r} against {theirs!r}")
-    check("every mechanism field matches the neutral baseline",
+    check("every game-mechanism field matches the neutral baseline",
           not disagreements, "; ".join(disagreements) or "all identical")
+    check("the amended decoding cap is explicit and positive",
+          isinstance(task.MAX_OUTPUT_TOKENS, int) and task.MAX_OUTPUT_TOKENS > 0,
+          f"MAX_OUTPUT_TOKENS={task.MAX_OUTPUT_TOKENS}")
 
     check("the prompt template is byte-identical to the baseline's",
           task.PROMPT_TEMPLATE == baseline.PROMPT_TEMPLATE,

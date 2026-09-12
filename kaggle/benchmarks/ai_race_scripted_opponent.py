@@ -96,7 +96,11 @@ TEMPERATURE = 0.7
 REASONING = "none"
 # Routes that refuse the `reasoning` argument outright; see resolve_llm_contract.
 REASONING_OMITTED_ROUTES = ("gemma", "gemini-3.5-flash-lite")
-MAX_OUTPUT_TOKENS = 256
+# Claude Opus 5 and GPT-5.5 can spend part of the completion allowance on
+# provider-side reasoning even when the task requests ``reasoning="none"``.
+# The 2026-09-12 resumption amendment raises this cap so the structured action
+# still has room to arrive; the manifest records the amended contract.
+MAX_OUTPUT_TOKENS = 512
 MAX_PARSE_RETRIES = 3
 MAX_TRANSPORT_RETRIES = 3
 REQUEST_TIMEOUT_SECONDS = 120
@@ -282,7 +286,7 @@ def resolve_llm_contract(llm):
         raise RuntimeError(
             "Unknown Kaggle Benchmark LLM backend. Set "
             "AI_RACE_TOKEN_LIMIT_PARAMETER=max_tokens or max_output_tokens "
-            "explicitly so the 256-token cap cannot be silently omitted."
+            "explicitly so the output cap cannot be silently omitted."
         )
 
     request_timeout_applied = "OpenAI" in backend_names

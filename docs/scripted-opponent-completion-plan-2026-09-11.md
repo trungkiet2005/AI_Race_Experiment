@@ -389,3 +389,23 @@ baseline at the same risk reads 0.0 per cent across 186 decisions, so it is
 sitting at the floor in both, which is the one outcome from which nothing can be
 inferred either way. The question this plan was written to answer, whether the
 self-play step is a policy or an interaction, is still open.
+
+## Amendment, 2026-09-12: structured-output cap for the resumption
+
+The first resumption attempt was made on the pre-amendment source, for the
+pre-assigned cell `AU` at risk `0.6` on Claude Opus 5 under `kit567`. Task
+version 11 failed during server-side validation before any race completed. The
+provider consumed 245 reasoning tokens out of the 256-token completion cap and
+returned no parseable structured action. This is an infrastructure failure,
+not a behavioural result; it is retained as a failure record and contributes
+zero cells to the campaign.
+
+Before any new cell is collected, the task's output cap is amended from 256 to
+512 tokens. The prompt, structured schema, parser, temperature request, seed
+streams, payoff matrix, horizon law, risk grid, repetition count, protocol ID,
+cell assignment and stopping rule are unchanged. The manifest records the
+amended cap, and no pre-amendment and post-amendment responses are pooled as if
+their decoding contracts were identical. The existing three complete route
+grids remain valid under their original cap; new routes are interpreted within
+their own fixed amended contract and the cap difference is disclosed with any
+cross-route comparison.
