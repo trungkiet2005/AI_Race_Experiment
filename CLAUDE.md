@@ -297,8 +297,8 @@ Its declared 24-cell extension is not complete: one Claude Opus 5 cell is
 valid, while the remaining attempts have zero races or have not started. The
 2026-09-12 retry amendments use `reasoning="low"` with a 1024-token cap for the
 frontier routes that exhausted the earlier structured-output budget; the
-GPT-5.5 AS cell then failed twice with Model Proxy HTTP 429 heavy-load errors
-and produced zero races. Those responses are not poolable with the earlier
+GPT-5.5 AS cell then failed four times with Model Proxy HTTP 429 heavy-load
+errors and produced zero races. Those responses are not poolable with the earlier
 `reasoning="none"` contract, and no identity rotation is permitted. The task
 now uses a deterministic 20/40/80-second backoff for 429/heavy-load retries;
 this affects waiting only, not the scientific contract.

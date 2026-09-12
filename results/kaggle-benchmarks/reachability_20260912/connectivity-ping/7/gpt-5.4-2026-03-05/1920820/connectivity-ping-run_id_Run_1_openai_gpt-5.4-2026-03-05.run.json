@@ -1,0 +1,82 @@
+{
+  "taskVersion": {
+    "versionNumber": 1,
+    "name": "connectivity-ping",
+    "description": "",
+    "definition": "@kbench.task(name=\"connectivity-ping\")\ndef connectivity_ping(llm) -> dict:\n    response = llm.prompt(\"Reply with exactly one word: PONG\")\n    kbench.assertions.assert_in(\n        \"PONG\", response.upper(), expectation=\"Model must echo PONG\"\n    )\n    return {\"response\": response}\n"
+  },
+  "modelVersion": {
+    "slug": "openai/gpt-5.4-2026-03-05"
+  },
+  "state": "BENCHMARK_TASK_RUN_STATE_COMPLETED",
+  "startTime": "2026-09-12T09:43:55.838782Z",
+  "endTime": "2026-09-12T09:43:57.166616Z",
+  "conversations": [
+    {
+      "id": "connectivity-ping-1e2db85e",
+      "requests": [
+        {
+          "contents": [
+            {
+              "parts": [
+                {
+                  "text": "Reply with exactly one word: PONG"
+                }
+              ],
+              "role": "CONTENT_ROLE_USER",
+              "senderName": "User"
+            },
+            {
+              "parts": [
+                {
+                  "text": "PONG"
+                }
+              ],
+              "role": "CONTENT_ROLE_ASSISTANT",
+              "senderName": "openai/gpt-5.4-2026-03-05"
+            }
+          ],
+          "metrics": {
+            "inputTokens": 14,
+            "outputTokens": 5,
+            "inputTokensCostNanodollars": "35000",
+            "outputTokensCostNanodollars": "75000",
+            "totalBackendLatencyMs": "517"
+          },
+          "id": "connectivity-ping-1e2db85e-req-1"
+        }
+      ],
+      "metrics": {
+        "inputTokens": 14,
+        "outputTokens": 5,
+        "inputTokensCostNanodollars": "35000",
+        "outputTokensCostNanodollars": "75000",
+        "totalBackendLatencyMs": "517"
+      },
+      "modelVersionSlug": "model_version_slug for conversation is DEPRECATED"
+    }
+  ],
+  "results": [
+    {
+      "type": "AGGREGATED",
+      "dictResult": {
+        "response": "PONG"
+      }
+    }
+  ],
+  "assertions": [
+    {
+      "expectation": "Model must echo PONG",
+      "status": "BENCHMARK_TASK_RUN_ASSERTION_STATUS_PASSED",
+      "lineNumber": 4,
+      "definition": "kbench.assertions.assert_in(",
+      "conversationRequestIds": [
+        {
+          "conversationId": "connectivity-ping-1e2db85e",
+          "requestId": "connectivity-ping-1e2db85e-req-1"
+        }
+      ]
+    }
+  ],
+  "pyRunId": "connectivity-ping-Run #1"
+}

@@ -468,3 +468,10 @@ point. The source has now been amended to use a longer deterministic
 changes waiting behaviour only; it does not change the prompt, schema, model,
 decoding cap, seed, game, assignment, or estimand. It must be tested in a new
 task version and any zero-race failure remains infrastructure-only.
+
+Task version 18 tested that amendment on the same fixed `foundnotkiet` assignment.
+The validation request still returned HTTP 429 (`The model is currently
+experiencing heavy load`) and produced zero races. The longer backoff therefore
+did not recover the route. Version 18 is recorded as a non-admitted
+infrastructure failure; the GPT-5.5 `AS@0.6` cell remains closed under the
+current plan and is not rotated to another identity.

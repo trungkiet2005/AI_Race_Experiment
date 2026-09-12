@@ -1,0 +1,28 @@
+{
+  "task_name": "connectivity-ping",
+  "trial_name": "connectivity-ping-Run #1",
+  "trial_uri": "kbench://not-a-harbor-trial",
+  "task_id": {
+    "path": "kbench://not-a-harbor-task"
+  },
+  "task_checksum": "unknown (kbench)",
+  "config": {
+    "task": {
+      "path": "kbench://not-a-harbor-task"
+    }
+  },
+  "agent_info": {
+    "name": "kaggle-benchmarks",
+    "version": "0.6.1",
+    "model_info": {
+      "name": "anthropic/claude-opus-5@default"
+    }
+  },
+  "agent_result": {
+    "n_input_tokens": 19,
+    "n_output_tokens": 21,
+    "cost_usd": 0.00062
+  },
+  "started_at": "2026-09-12T09:43:57.604223Z",
+  "finished_at": "2026-09-12T09:43:59.730607Z"
+}

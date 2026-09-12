@@ -269,6 +269,21 @@
       "evidence_status": "not_admitted",
       "assignment_status": "plan_assigned",
       "error": "The frozen source was retried after a successful GPT-5.5 smoke run, but the full structured-output validation again returned HTTP 429 (model experiencing heavy load) after transport retries. No race completed, so this is an infrastructure failure rather than model evidence."
+    },
+    {
+      "task_version": 18,
+      "cell": {"strategy": "AS", "max_private_risk": 0.6},
+      "model_route": "openai/gpt-5.5-2026-04-23",
+      "executing_identity": "foundnotkiet",
+      "status": "Errored",
+      "stage": "task version creation validation",
+      "error_type": "RateLimitError",
+      "status_code": 429,
+      "output_token_limit": 1024,
+      "n_races": 0,
+      "evidence_status": "not_admitted",
+      "assignment_status": "plan_assigned",
+      "error": "The source was amended to use deterministic 20/40/80-second backoff for HTTP 429 or explicit heavy-load responses. Task version 18 still received HTTP 429 (model experiencing heavy load) during validation and produced zero races. This is an infrastructure failure rather than model evidence."
     }
   ],
   "not_attempted": "Fifteen further cells were never started, because every identity the plan assigned them to had already refused. They are listed as not collected in the plan's own closing section rather than counted as failures of anything.",

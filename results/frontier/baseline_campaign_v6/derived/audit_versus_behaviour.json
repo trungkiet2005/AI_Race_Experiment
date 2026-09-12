@@ -1,6 +1,6 @@
 {
   "schema_version": "ai-race-audit-versus-behaviour-v1",
-  "generated_utc": "2026-09-09T14:08:54+00:00",
+  "generated_utc": "2026-09-12T09:49:01+00:00",
   "date": "2026-09-09",
   "evidence_class": "exploratory",
   "estimand": "Per-endpoint decision-level Unsafe rate at each assigned maximum private risk, and its 0.1-minus-0.9 contrast in percentage points, described alongside that endpoint's frozen admission-probe accuracy; the cross-endpoint association is descriptive over eight routes and is not an estimated population effect.",
