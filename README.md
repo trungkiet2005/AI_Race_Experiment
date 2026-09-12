@@ -170,13 +170,14 @@ push/status/log commands; do not invent a kernel slug when no
   GPT-5.4 mini 75.0%, Gemini 3.5 Flash-Lite 65.0%, GPT-5.4 nano 51.7%. Expected
   payoff is recorded but never gates admission, and it is the weakest domain on
   every route. A refused route is kept as evidence about the route, not deleted.
-- **Gameplay: eight of those routes have a matched confirmatory baseline**
+- **Gameplay: all nine audited routes have a matched confirmatory baseline**
   (`results/frontier/baseline_campaign_v6/`, protocol
   `ai-race-frontier-baseline-v3`): 30 races, 558 decisions and zero parse
-  failures each. Gemini 3.5 Flash-Lite failed at the transport layer with zero
-  races and is retained as a failure record rather than reported as a result. The
-  requested temperature was not forwarded by the SDK and the sampling seed is
-  confirmed only as requested, so both are cited as unconfirmed.
+  failures each. Gemini 3.5 Flash-Lite first failed at the transport layer with
+  zero races, but its protocol-compatible rerun completed and is the row used in
+  the nine-route corpus; the failed attempt remains a separate failure record.
+  The requested temperature was not forwarded by the SDK and the sampling seed
+  is confirmed only as requested, so both are cited as unconfirmed.
 - The fully crossed context-and-mapping design is complete on the two routes
   selected for that study, with 120 races and 2,232 decisions per route and a
   passing independent validator. The N-player frontier rerun is not admitted;

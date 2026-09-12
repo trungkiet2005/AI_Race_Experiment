@@ -1,4 +1,4 @@
-"""How the screened routes trade speed against safety as the danger rises.
+"""How the admitted routes trade speed against safety as the danger rises.
 
 The claim.  Every route in the behavioural panel plays Unsafe less as the
 stated maximum private risk rises, and four of the five do it by nearly the
@@ -73,7 +73,7 @@ RERUN_ROW = "repeat"
 
 
 def build() -> tuple[pd.DataFrame, pd.Series, pd.DataFrame]:
-    """Pooled Unsafe rates and the drop, for the screened routes and the repeat."""
+    """Pooled Unsafe rates and the drop, for the admitted routes and the repeat."""
     turns = D.baseline_turns()
     rates = turns.groupby(["model_route", "max_private_risk"])["unsafe"].mean().unstack()
     counts = turns.groupby(["model_route", "max_private_risk"])["unsafe"].size().unstack()
@@ -230,7 +230,7 @@ def main() -> None:
     worst = float(max(abs(table.loc[RERUN_ROW, f"rate_{r}"] - routes.loc[REPEAT, f"rate_{r}"])
                       for r in S.RISKS))
 
-    print(f"  five screened routes, {int(counts.to_numpy().sum())} decisions, "
+    print(f"  five admitted routes, {int(counts.to_numpy().sum())} decisions, "
           f"{int(counts.to_numpy().min())} per risk cell")
     for route in graded + [STEP]:
         row = routes.loc[route]

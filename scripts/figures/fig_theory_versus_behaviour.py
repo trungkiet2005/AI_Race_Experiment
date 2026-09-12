@@ -323,7 +323,7 @@ def report(res: dict) -> dict:
             "boundary": boundary}
 
 
-def panel_a(ax, res, d, roster=None, noun="screened routes") -> None:
+def panel_a(ax, res, d, roster=None, noun="admitted routes") -> None:
     """The shape comparison, over whichever roster the caller is arguing about.
 
     The main paper draws the five routes the validity screen admitted, because

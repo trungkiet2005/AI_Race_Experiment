@@ -458,7 +458,7 @@ Each answer changes how the next should be read. The agents do respond to the
 stated danger, within a narrow band, and one route replaces the trade-off by a
 switch from always fast to always careful. But where we put the agent against
 scripted code instead of a second copy of itself, the rival's stance moves play
-several times further than the whole range of stated danger does, and neither
+by much more than the whole range of stated danger does, and neither
 external reference shows that shape: the evolutionary model predicts a switch
 where the agents deliver a gradient, and on raw action sequences human
 participants use nearly the whole policy space while every admitted route uses a
@@ -681,9 +681,8 @@ route supplied.
     repeat row is shown below.}
 \end{figure}
 
-The four graded routes agree with each other far more closely than their
-vendors differ. They come from three companies and their risk responses fall in
-a band 19 points wide, from 38.2 to 57.0 percentage points. We report that band
+The four graded routes, spanning three providers, have risk-response drops within
+a 19-point band, from 38.2 to 57.0 percentage points. We report that band
 rather than an average over all five, because averaging a switch with four
 slopes returns 54.8 points, a figure no graded route is near and which one row
 produces.
@@ -712,8 +711,10 @@ this sample size and licenses no such bound for a route collected once, which
 matters here because no provider confirmed applying the requested sampling
 seed.
 
-Representation-equivalent prompt changes also move rates; diagnostics and the
-fully crossed symbol-mapping experiment are reported in the supplement.
+Representation-equivalent prompt changes also move rates. The directional risk
+response survives a fully crossed narrative-by-symbol rerun on two routes,
+although swapping the opaque action-code mapping shifts Unsafe{} play by
+8.3--9.5 percentage points (see the supplementary material).
 
 \begin{figure*}[t]
   \centering
@@ -753,19 +754,14 @@ each contrast is taken inside a repetition, so the hidden horizon is differenced
 out. Because the route cannot influence the rival, the direction of a difference
 between rivals is not in question.
 
-Who the agent is playing turns out to be worth several times what it is told the
-danger is, and the two are far enough apart that their intervals do not meet.
-Both halves are measured the same way and over the same ten
-blocks, so they can be read against each other directly. Holding the rival fixed at \emph{Always
-Safe} and moving the stated maximum private risk from $0.1$ to $0.9$ moves
-\Unsafe{} play by 10.4, 12.3 and 12.7 points on Gemini 3 Flash, GPT-5.4 and
-Claude Sonnet 5. Holding the risk fixed and changing the rival from one that
-always plays \Safe{} to one that never does moves it by between 45.0 and 73.5
-points. The rival is therefore worth between three and a half and
-seven times the entire declared range of danger, on every route
-measured. The comparison survives its own worst case, though not with room to
-spare. Against the two unconditional rivals, the most the stated risk ever buys
-is 31.5 points [27.2, 35.3] and the least the rival ever buys is 45.0 [42.0,
+Across these three routes, changing the scripted rival produces a 45.0--73.5
+percentage-point shift in Unsafe{} play, compared with 10.4--12.7 points when
+the stated risk moves from $0.1$ to $0.9$ against a fixed safe rival. Both
+comparisons use the same ten matched blocks, so the absolute contrast is the
+load-bearing comparison. The intervals remain separated in the worst case,
+though not with room to spare. Against the two unconditional rivals, the most
+the stated risk ever buys is 31.5 points [27.2, 35.3] and the least the rival
+ever buys is 45.0 [42.0,
 48.2], two intervals that do not meet. Adding the two conditional rivals raises
 the largest risk contrast to 41.0 points [37.7, 43.8], on Claude Sonnet 5
 against the rival that opens \Unsafe{} and then copies, and that one interval
@@ -797,13 +793,12 @@ test one.
 
 A mirror-match rate is therefore an interaction outcome of one policy meeting
 itself, rather than a stand-alone measurement of how a route treats risk. On all
-three routes and at all three risk
-levels the rate against a fixed safe rival sits below the rate the same route
-reaches against a second copy of itself (Figure~\ref{fig:scripted-opponent-main}c),
-by 74.2, 50.5 and 66.7 points at the lowest risk; on Gemini 3 Flash at that risk
-the distance is a lower bound, because nine of its ten mirror-match races have
-every decision \Unsafe{}. Every mirror-match number in this paper, and every
-self-play rate in the work it builds on, should be read that way.
+three routes and at all three risk levels the rate against a fixed safe rival
+sits below the rate the same route reaches against a second copy of itself
+(Figure~\ref{fig:scripted-opponent-main}c). On Gemini 3 Flash at the lowest risk,
+the distance is a lower bound because nine of its ten mirror-match races have
+every decision \Unsafe{}. These results motivate treating mirror-match rates as
+interaction outcomes rather than route-level risk preferences.
 
 The bound on the finding is the design itself. Four reduced strategies are four
 points in a space of policies rather than a sample of opponents, so this
@@ -899,6 +894,11 @@ de-identified dataset of \citet{falling_behind_unsafe}. That single published
 study of a single game is the only human reference here, which bounds every
 human comparison below to that population and that mechanism.
 
+Before using this dataset as an external reference, we validated the
+reconstruction by refitting the source study's published dynamic specification
+on its released data: 2{,}888 participant-round observations from 338
+participants in 172 race-pair clusters (see the supplementary material).
+
 Figure~\ref{fig:diversity} counts how many distinct sequences each population
 uses out of twenty, against the distribution of $20{,}000$ draws of twenty human
 participants matched on sample size and risk condition; the human sample is five
@@ -962,18 +962,10 @@ embedding of the same space is in the supplementary material; we rest no
 conclusion on it, because recolouring the same coordinates by outcome separates
 them almost entirely by \Unsafe{} rate.
 
-Populations that look alike in rate can still be following different rules. Two
-exploratory analyses in the supplementary material point that way without
-settling it. A shallow classifier with folds grouped by race recovers the
-producing population well above a grouped permutation null, and the variables
-that associate with an \Unsafe{} choice, read as association and never as cause,
-separate the populations further: human play is organised mainly by the
-opponent's previous action, $56\%$ of the attributed importance, and Claude
-Sonnet 5 is the one checkpoint that leads with the same variable, at $48\%$.
-Neither analysis is evidence of a recoverable latent strategy, the human side is
-the weakly fitted one (ROC AUC $0.63$ against $0.97$), and both run on an
-exploratory seven-checkpoint roster containing neither GPT-5.4 nor GPT-5.5, so
-neither describes the admitted panel and no claim above rests on them.
+Populations that look alike in rate can still be following different observed
+rules. Exploratory classifier and feature analyses in the supplement suggest
+that possibility, but use a seven-checkpoint roster containing neither GPT-5.4
+nor GPT-5.5, so they support no claim about the admitted panel.
 
 \section{Discussion and conclusion}
 \label{sec:discussion}
@@ -981,10 +973,10 @@ neither describes the admitted panel and no claim above rests on them.
 These agents incorporate both the stated risk and the rival's stance. Every
 admitted route plays \Unsafe{} less often as the stated chance of catastrophe
 rises, while on the three routes where the opponent was replaced by scripted
-code, the rival's stance changes behaviour several times more than moving the
-danger across its whole range. A delegate of this kind is therefore
-context-sensitive: how the other side is behaving can be more informative than
-the risk level alone.
+code, the rival's stance changes behaviour by much more than moving the danger
+across its whole range. In this game, the three tested routes are therefore
+strongly context-sensitive: how the other side behaves can be more informative
+than the risk level alone.
 
 A mirror-match rate is best reported as an interaction outcome rather than as an
 attitude to risk, here or in the work this paper builds on. Scripting the rival
