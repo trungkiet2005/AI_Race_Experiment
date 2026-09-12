@@ -463,6 +463,30 @@ check("RMSE 10.3 pp for Claude Sonnet 5 and 15.1 for Gemini 3 Flash",
       round(claude[0], 1) == 10.3 and round(gemini[0], 1) == 15.1,
       f"{claude[0]:.2f} and {gemini[0]:.2f}")
 
+five_fit = json.load(open("results/open_source/egt_reproduction/egt_admitted_route_fits.json", encoding="utf-8"))
+five_summary = five_fit["summaries"]
+check("all-five EGT extension covers exactly five admitted routes",
+      five_fit["route_count"] == 5 and len(five_summary) == 5,
+      f"routes={len(five_summary)}")
+graded = [row for row in five_summary.values() if row["observed_shape"] == "graded decline"]
+switch = [row for row in five_summary.values() if row["observed_shape"] == "near-step switch"]
+check("all-five EGT extension identifies four graded routes and one switch",
+      len(graded) == 4 and len(switch) == 1 and switch[0]["route_label"] == "Claude Opus 5",
+      f"graded={len(graded)} switch={[row['route_label'] for row in switch]}")
+check("all-five best weak-selection cells are beta=0.01, mu=0.05",
+      all(round(float(row["best_weak_beta"]), 3) == 0.01
+          and round(float(row["best_weak_mutation"]), 3) == 0.05
+          for row in five_summary.values()),
+      str([(row["route_label"], row["best_weak_beta"], row["best_weak_mutation"])
+           for row in five_summary.values()]))
+graded_reference = [float(row["reference_rmse_percentage_points"]) for row in graded]
+graded_weak = [float(row["best_weak_rmse_percentage_points"]) for row in graded]
+check("all-five graded-route EGT RMSE ranges match the manuscript",
+      round(min(graded_reference), 1) == 32.9 and round(max(graded_reference), 1) == 36.6
+      and round(min(graded_weak), 1) == 5.1 and round(max(graded_weak), 1) == 15.4,
+      f"reference={min(graded_reference):.1f}-{max(graded_reference):.1f}, "
+      f"weak={min(graded_weak):.1f}-{max(graded_weak):.1f}")
+
 # --- disclosed arithmetic ----------------------------------------------------
 da = {r["condition"]: r for r in csv.DictReader(open("results/cross_model_pilot_synthesis/data/disclosed_arithmetic_race_bootstrap.csv", encoding="utf-8-sig"))}
 c1, c2 = da["canonical"], da["calculator_decision_card"]
@@ -1302,39 +1326,28 @@ check("exactly two of the twelve headline risk contrasts are lower bounds",
       f"{_lower_bounds} saturated of {len(_all_risk)}")
 
 # --- the results section's own numbers ---------------------------------------
-# Table tab:risk-response, the four-route band, and the two saturated routes.
+# The risk-response display is now a generated figure in the main paper.  The
+# route-level values still come from the raw campaign below; the supplementary
+# table remains the reader-facing numeric record.  Do not silently fall back to
+# parsing the old main-paper table, because that would make this verifier fail
+# whenever the paper is deliberately edited to the figure-first layout.
 _rs_tab = {}
 for row in csv.DictReader(open("results/frontier/baseline_campaign_v6/derived/audit_versus_behaviour.csv",
                                encoding="utf-8-sig")):
     _rs_tab[row["short_name"]] = row
 
-# Read the printed table out of the manuscript itself, so a hand edit to either
-# side of the comparison fails the check rather than passing it silently.
+# Check that the main manuscript points to the canonical generated figure and
+# that the detailed numeric table is still retained in the supplement.
 _rs_tex = open("paper/main.tex", encoding="utf-8").read()
-_rs_block = _rs_tex.split("\\label{tab:risk-response}")[1].split("\\end{tabular}")[0]
-_rs_printed = {}
-for _rs_line in _rs_block.splitlines():
-    if "&" not in _rs_line or "\\\\" not in _rs_line or "Route" in _rs_line:
-        continue
-    _rs_cells = [c.strip() for c in _rs_line.split("\\\\")[0].split("&")]
-    _rs_nums = [float(c) for c in _rs_cells[1:4]]
-    _rs_last = _rs_cells[4].replace("[", " ").replace("]", " ").replace(",", " ")
-    _rs_nums += [float(x) for x in _rs_last.replace("a switch", "").split() if x.replace(".", "").isdigit()]
-    if len(_rs_nums) == 4:                       # the switch row prints one figure, not an interval
-        _rs_nums += [_rs_nums[3], _rs_nums[3]]
-    _rs_printed[_rs_cells[0].strip()] = tuple(_rs_nums)
-check("the manuscript prints five rows in the risk-response table",
-      len(_rs_printed) == 5, ", ".join(_rs_printed))
-for _rs_name, _rs_want in _rs_printed.items():
-    _rs_row = _rs_tab[_rs_name]
-    _rs_got = (round(100 * float(_rs_row["unsafe_rate_risk_0p1"]), 1),
-               round(100 * float(_rs_row["unsafe_rate_risk_0p6"]), 1),
-               round(100 * float(_rs_row["unsafe_rate_risk_0p9"]), 1),
-               round(float(_rs_row["risk_response_pp"]), 1),
-               round(float(_rs_row["risk_response_ci_low_pp"]), 1),
-               round(float(_rs_row["risk_response_ci_high_pp"]), 1))
-    check(f"the risk-response table row reproduces: {_rs_name}", _rs_got == _rs_want,
-          f"{_rs_got} printed as {_rs_want}")
+_rs_sup = open("paper/supplementary.tex", encoding="utf-8").read()
+check("the main manuscript uses the canonical risk-response figure",
+      "\\includegraphics[width=\\columnwidth]{../figures/paper/risk_response.pdf}" in _rs_tex
+      and "\\label{fig:risk-response}" in _rs_tex
+      and "\\label{tab:risk-response}" not in _rs_tex,
+      "risk_response.pdf is the main-paper display")
+check("the supplementary manuscript retains the detailed rival table",
+      "\\label{tab:scripted-opponent}" in _rs_sup,
+      "the numeric route-by-risk table remains in supplementary.tex")
 
 _rs_graded = ["Claude Sonnet 5", "GPT-5.4", "Gemini 3 Flash", "GPT-5.5"]
 _rs_band = [float(_rs_tab[n]["risk_response_pp"]) for n in _rs_graded]

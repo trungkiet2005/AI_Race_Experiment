@@ -10,16 +10,12 @@ finds no longer supports the sentence on the panel.
 
 ## 1. Two placement changes the paper will not build correctly without
 
-**a. The opening figure is a different file now.** The mechanism figure
-`AIRaceOverview.pdf` is no longer part of the set. It drew the mechanism three
-times, spent a third of its width on the group-size rule that this paper now
-reports in the supplementary material, and was drawn in a second visual
-language at 19 inches wide, so on the page its lettering printed at nearly ten
-points beside the six-point lettering of every other figure. Its replacement is
-`delegation_overview.pdf`, which encodes the delegation scenario, the two
-actions, the stage payoffs and the three lenses. Same placement, full width:
+**a. The opening figure uses the protected author artwork.** Figure 1 is
+`AIRaceOverview.pdf`, the hand-drawn mechanism overview. It keeps the repeated
+race, the two-player payoff matrix and the $N$-player payoff in one visual
+language. Same placement, full width:
 
-    \includegraphics[width=\textwidth]{../figures/paper/delegation_overview.pdf}
+    \includegraphics[width=\textwidth]{../figures/paper/AIRaceOverview.pdf}
 
 **b. The scripted-rival figure is now a full-width figure and must be placed as
 one.** It currently sits in a `figure` at `\columnwidth`, and the geometry gate
@@ -52,32 +48,23 @@ House rules applied: the caption carries what the panel cannot, every term used
 on a panel is defined once here, and no value is repeated from a table. Where a
 panel deliberately underclaims, the caption carries the count.
 
-### Figure 1, opening, full width. `delegation_overview.pdf`
+### Figure 1, opening, full width. `AIRaceOverview.pdf`
 
-> **The race, and the three lenses this paper applies to it.** (a) A decision in
-> a race between two developers is handed to a language model, which is given
-> the rules, the stated danger, the rival's last move and the score, and returns
-> one of two actions. The paper is prospective throughout: it asks what a
-> delegate would choose, never who delegates today. (b) Safe advances one race
-> step and adds no risk; Unsafe advances one and a half and raises the chance of
-> a setback, which is the stated maximum multiplied by the share of the player's
-> own moves that were Unsafe, and which wipes out the whole payoff. A setback is
-> applied only to a player who wins or ties for first. (c) The stage payoffs,
-> parsed from the prompt every player was sent. Unsafe earns more than Safe
-> against either rival move and mutual Unsafe earns more than mutual Safe, so
-> the round in isolation carries no tension; the entire cost of racing is the
-> setback in (b). (d) The three lenses, in the order the results take them. Nine
-> routes played the risk grid and five entered the behavioural panel under the
-> comprehension screen described in the methods. Nothing in this figure is a
-> result. The race is an idealised game with two actions, a fixed prize and a
-> stated risk, and models no real development programme.
+> **The race and its two payoff views.** (a) A repeated development race in
+> which each round advances progress by the action-dependent amount and the
+> winning company receives the prize after the race ends. (b) The two-player
+> stage-payoff matrix, where Unsafe is attractive within a round while private
+> setback risk supplies the safety cost. (c) The $N$-player extension, where the
+> payoff is divided across the leading companies and group size changes the
+> payoff structure. Nothing in this figure is a result; the race is an idealised
+> game with two actions, a fixed prize and a stated risk.
 
 Term defined here and used by every later figure: *route*, one commercial model
 endpoint at one fixed setting.
 
 ### Figure 2, risk, one column. `risk_response.pdf`
 
-> **Every screened route plays Unsafe less as the stated danger rises, and four
+> **Every admitted route plays Unsafe less as the stated danger rises, and four
 > of the five do it by nearly the same amount.** Pooled Unsafe play for the five
 > screened routes at each stated maximum private risk, ten races and 186
 > decisions per cell, no parse failures. The right-hand column is the drop from
@@ -100,7 +87,7 @@ endpoint at one fixed setting.
 ### Figure 3, rivalry, full width. `scripted_opponent_main.pdf`
 
 > **What the rival is doing moves a route several times further than how
-> dangerous the race is.** Three screened routes play the same race against four
+> dangerous the race is.** Three admitted routes play the same race against four
 > rivals that are code rather than models, executed by the task file: Always
 > Safe, Conditional Safe, Conditional Unsafe and Always Unsafe. The two
 > unconditional rivals ignore the route entirely, the two conditional ones
@@ -186,14 +173,14 @@ page, say so and it can have a second column-width panel.
 
 ## 3. Things the writers should know before quoting a number
 
-**The claim map's Figure 4 numbers are wrong and the figures are right.** Item
-B13 of `docs/behaviour-paper-claim-map-2026-09-12.md` gives Gemini 3 Flash as
-98.9, 74.2, 59.1 and Claude Sonnet 5 as 89.2, 46.2, 37.6. Recomputed from
+**The theory comparison now uses the canonical baseline values.** An earlier
+claim-map entry copied numbers from an independent repeat and an obsolete
+comparison. Recomputed from
 `results/frontier/baseline_campaign_v6/derived/audit_versus_behaviour.csv` and
-from the decision records independently, the values are 98.9, 73.1, 60.2 and
-89.2, 48.4, 32.3. The 74.2 in that line is the independent repeat's value, not
-the route's, and 59.1, 46.2 and 37.6 appear in no artifact. Four of six numbers
-in that line are wrong. Do not copy it.
+from the decision records independently, the screened-route values are Gemini
+3 Flash at 98.9, 73.1, 60.2 and Claude Sonnet 5 at 89.2, 48.4, 32.3. The
+claim map and both manuscript sources now use these values; the independent
+repeat remains 100.0, 74.2, 59.7 in its own subsection.
 
 **"Four to seven times" is half a point generous.** The recomputed ratio of the
 rival contrast to the risk contrast across the nine cells runs from 3.6 to 7.0.

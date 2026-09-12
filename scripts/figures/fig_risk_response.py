@@ -103,7 +103,7 @@ def build() -> tuple[pd.DataFrame, pd.Series, pd.DataFrame]:
 def check(table: pd.DataFrame) -> None:
     """Refuse to draw a claim the numbers no longer carry.
 
-    Three things this panel asserts in words.  That every screened route falls
+    Three things this panel asserts in words.  That every admitted route falls
     with risk; that exactly one of them is a step, meaning saturated at both
     ends; and that the route named as that exception is the one the data picks
     out.  Each is checked rather than trusted, because each is a sentence a
@@ -259,7 +259,7 @@ def main() -> None:
     # set over two lines because at column width one line of it does not fit.
     # The band width is read off the drops rather than typed, because a typed
     # number in a title is the one number in a figure nothing recomputes.
-    ax.set_title("every screened route plays Unsafe less as the danger rises;\n"
+    ax.set_title("every admitted route plays Unsafe less as the danger rises;\n"
                  f"four of the five inside one {hi - lo:.0f}-point band, "
                  "the fifth a switch",
                  loc="left", pad=17, x=0.0, fontsize=S.FS_CLAIM, color=S.INK_2,

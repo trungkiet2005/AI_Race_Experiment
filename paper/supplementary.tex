@@ -65,7 +65,7 @@ on Autonomous Agents and Multiagent Systems (AAMAS 2027)}{May 3 -- 7, 2027}
 
 %\title[]{LLM Agents Underrepresent Human Strategic Diversity in AI Development Races}
 
-\title[]{Supplementary Material: Humans Are More Diverse: Frontier LLMs Show Extreme Policies in Idealised AI Development Races}
+\title[]{Supplementary Material: More Than the Risk: Frontier LLM Behavior in AI Development Races Depends on the Rival}
 
 %%% Provide names, affiliations, and email addresses for all authors.
 % \author{Nimue}
@@ -279,21 +279,19 @@ on Autonomous Agents and Multiagent Systems (AAMAS 2027)}{May 3 -- 7, 2027}
 
 %%% Use this environment to specify a short abstract for your paper.
 \begin{abstract}
-This document holds the material the main paper points to but has no room to
-carry: the full breakdown of every task-validity probe, the replication check
-against the human benchmark, a claim-by-claim audit of the citations, the
-persona and measured-risk comparison, the predictive analysis behind the
-reported drivers, and the complete descriptive baselines for two-player and
-$N$-player races. Nothing here is needed to follow the main argument.
-Everything here comes from the same runs, under the same admission rules, and
-is reported at the same evidence level.
+This supplement supports More Than the Risk: Frontier LLM Behavior in AI
+Development Races Depends on the Rival. It records the quality-control screen,
+the theory comparison, the scripted-rival evidence, and the human diversity
+analysis, together with prompt and game robustness checks. These materials use
+the same routes, task and evidence boundaries as the main paper and do not
+extend its claims beyond the idealised race.
 \end{abstract}
 
 %%% Use this command to specify a few keywords describing your work.
 %%% Keywords should be separated by commas.
 
 % \keywords{Legends, Myths, Folktales}
-\keywords{Large language models, AI development races, multi-agent systems, repeated games, AI safety, task validity}
+\keywords{Large language models, AI development races, multi-agent systems, repeated games, AI safety, opponent-conditioned behaviour}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -317,8 +315,8 @@ letters restart at A because this is supplementary matter.
   \item \textbf{The quality-control screen.} What the screen asked, when its
     rule was fixed, which of the nine routes cleared it and on which condition,
     and the three facts that bound what a verdict may be used for. The screen
-    is treated in full as an instrument in a separate concurrent study, not
-    here.
+    is recorded here as an entry condition; its full measurement interpretation
+    is outside the behavioural contribution.
   \item \textbf{Human-benchmark replication check.} Whether the reference
     human study's reported pattern reproduces on the released participant data
     under our own analysis code.
@@ -407,11 +405,8 @@ five (\S\ref{app:horizon-boundary}).
 This subsection records the screen as an entry condition and nothing more: what
 it asked, when its rule was fixed, which routes cleared it, and the three facts
 about it that bound what a verdict may be used for. It is deliberately short.
-The screen is also the subject of a separate study by the same authors, running
-concurrently at another venue, which treats it as a measurement instrument and
-reports the full probe tables, the threshold sweep, the repeatability analysis
-and the comparison against cheaper signals. Nothing in this paper rests on that
-study, and nothing here ranks routes by their probe scores.
+Nothing in this supplement ranks routes by their probe scores or treats the
+verdict as a measurement of capability.
 
 The screen is a frozen bank of 20 probes over six domains, asked three times
 each, giving 60 scored answers per route and 540 in all. The six domains are
@@ -461,7 +456,7 @@ campaign.
     reconstruction and terminal scoring on 15 each, so those two move in steps
     of one fifteenth, about 6.7 points. Expected payoff is recorded as a
     diagnostic and gates nothing; no route reaches 75\% on it. The per-domain
-    results in full are reported in the concurrent evaluation study.}
+    results in full are retained in this supplement.}
     \label{tab:admission-v6}
     \centering
     \footnotesize
@@ -535,7 +530,8 @@ used only as an entry condition here: on this roster the screen draws no line
 that the route name does not already draw, so no claim resting on the admitted
 against refused split is separable from a claim about scale. Breaking that tie
 needs endpoints whose name and whose comprehension disagree, and this roster
-contains none; the concurrent evaluation study is where that is pursued.
+contains none. A broader roster is required before the screen can support a
+claim that is separable from endpoint scale.
 
 \paragraph{Nothing was discarded.} All nine routes played the same confirmatory
 baseline with the same race counts, and every refused route's behaviour is
@@ -622,18 +618,18 @@ diagnostic itself, 30 races and 558 decisions in each of the two presentations
 with no parse failure, and it is read only as a within-route contrast between
 two presentations of one mechanism.
 
-\subsection{Frontier neutral baseline}
+\subsection{Earlier two-route confirmatory baseline}
 \label{app:frontier-baseline}
 
 The new neutral gameplay baseline used protocol v3, the same mechanism and
-prompt for both admitted routes, ten repetitions per risk level, and 30 races
-per route. Each
+prompt for the two routes used in the direct EGT comparison, ten repetitions
+per risk level, and 30 races per route. Each
 route produced 558 structured decisions with zero parse failures. The entries
 in Table~\ref{tab:frontier-baseline} are decision-weighted \Unsafe{} rates; they
 are not pooled across routes and do not estimate an evolutionary equilibrium.
 
 \begin{table}[h]
-    \caption{Neutral two-player frontier baseline under the admitted routes.
+    \caption{Two-route confirmatory block used for the direct EGT comparison.
     Each route has 30 races, 558 decisions, and zero parse failures.}
     \label{tab:frontier-baseline}
     \centering
@@ -642,8 +638,8 @@ are not pooled across routes and do not estimate an evolutionary equilibrium.
         \toprule
         Exact route & $r=.1$ & $r=.6$ & $r=.9$ & Races \\
         \midrule
-        \path{google/gemini-3-flash-preview} & 98.9\% & 74.2\% & 59.1\% & 30 \\
-        \path{anthropic/claude-sonnet-5@default} & 89.2\% & 46.2\% & 37.6\% & 30 \\
+        \path{google/gemini-3-flash-preview} & 98.9\% & 73.1\% & 60.2\% & 30 \\
+        \path{anthropic/claude-sonnet-5@default} & 89.2\% & 48.4\% & 32.3\% & 30 \\
         \bottomrule
     \end{tabular}
 \end{table}
@@ -690,8 +686,8 @@ stationary population composition.
 \label{fig:egt-frontier-insights}
 \end{figure*}
 
-Which strategy takes that population is a one-line result and was previously a
-full-width float, so it is stated here instead. Read off the archived EGTtools
+Which strategy takes that population is a one-line result, now shown in
+Figure~\ref{fig:egt-frontier-invasion}. Read off the archived EGTtools
 fixation probabilities in \texttt{egt\_frontier\_}\discretionary{}{}{}%
 \texttt{invasion.csv}, the strategy that dominates the independently simulated
 finite-mutation chain
@@ -703,9 +699,29 @@ risk level clear neutral drift $1/Z = 0.01$, and the smallest fixation
 probability among those nine is $0.997$, so the ordering is not marginal. Two
 boundaries travel with that sentence. The fixation probabilities are evaluated
 in the EGTtools small-mutation limit while the shares come from the
-finite-mutation chains, which are two different simulation layers; and no
-language-model route plays this population process, so none of it is a
-latent-strategy statement about any endpoint.
+ finite-mutation chains, which are two different simulation layers; and no
+ language-model route plays this population process, so none of it is a
+ latent-strategy statement about any endpoint.
+
+\begin{figure*}[t]
+    \centering
+    \includegraphics[width=\textwidth]{../figures/paper/egt_frontier_invasion.pdf}
+    \caption{Risk-conditioned invasion topology in the reconstructed evolutionary
+    game. Each panel is a standard invasion graph at one maximum private-risk
+    level. The four nodes are Always Safe (AS), Always Unsafe (AU), conditional
+    Safe (CS) and conditional Always Unsafe (CAS); node area shows the share of
+    the independently simulated finite-mutation population. An arrow points
+    from the resident strategy to an invader whose EGTtools fixation probability
+    exceeds neutral drift $1/Z=0.01$. The graph shows which strategy can replace
+    which resident, while node areas show the finite-mutation population
+    composition.}
+    \Description{Three invasion graphs for the reconstructed evolutionary game
+    at maximum private-risk levels 0.1, 0.6 and 0.9. Nodes are the four
+    strategies and their areas represent finite-mutation stationary shares.
+    Arrows point from resident strategies to invaders whose fixation probability
+    exceeds neutral drift, showing how the dominant strategy changes with risk.}
+    \label{fig:egt-frontier-invasion}
+\end{figure*}
 
 
 \subsection{The shape of a policy behind a rate}
@@ -901,14 +917,46 @@ points, between the model's three-point \Unsafe{} profile and the route's
 observed decision-weighted \Unsafe{} rates at the same three risk levels; the
 largest single-condition deviation is reported beside it so that one badly
 missed condition stays visible. For both routes the minimum-error cell is
-$\beta = 0.01$ with fixed $\mu = 0.05$, whose profile is 87.3\%, 63.9\%, and
-38.0\%. Against \path{anthropic/claude-sonnet-5@default}, observed at 89.2\%,
-46.2\%, and 37.6\%, that cell has an error of 10.28 percentage points and a
+    $\beta = 0.01$ with fixed $\mu = 0.05$, whose profile is 87.3\%, 63.9\%, and
+    38.0\%. Against \path{anthropic/claude-sonnet-5@default}, observed at 89.2\%,
+    48.4\%, and 32.3\%, that cell has an error of 10.28 percentage points and a
 largest single-condition miss of 17.70 points, at risk $0.6$. Against
-\path{google/gemini-3-flash-preview}, observed at 98.9\%, 74.2\%, and 59.1\%,
+    \path{google/gemini-3-flash-preview}, observed at 98.9\%, 73.1\%, and 60.2\%,
 the error is 15.13 points and the largest miss 21.14 points, at risk $0.9$.
 Even the best cell on the grid is therefore more than ten percentage points
 away from either route.
+
+\paragraph{All-five admitted-route extension.} The preceding block is the
+earlier two-route confirmatory comparison. To check whether its qualitative
+reading depends on that restricted roster, we fit the same existing 90-cell
+sensitivity table to the canonical neutral-baseline profiles of all five
+admitted routes. This is analysis only: no LLM requests or evolutionary chains
+were added. Distances are RMSEs in percentage points over the three matched
+risk levels, and the primary cells below are required to be well mixed. The
+best weak-selection cell is the same in every route, $\beta=0.01$ with fixed
+$\mu=0.05$; the four graded routes are substantially closer to it than to the
+reference $\beta=2$ (Table~\ref{tab:egt-five-route-fit}), while Claude Opus 5
+remains a qualitative near-step exception.
+
+\begin{table}[t]
+    \caption{Analysis-only EGT fit across all five admitted routes. ``Reference''
+    is the $\beta=2$, $\mu=\beta/Z$ cell; ``weak'' is the best well-mixed cell
+    with $\beta\leq 0.03$. Values are RMSE in percentage points.}
+    \label{tab:egt-five-route-fit}
+    \centering
+    \scriptsize
+    \begin{tabular}{@{}lrrr@{}}
+        \toprule
+        Route & Observed shape & Reference & Best weak \\
+        \midrule
+        Gemini 3 Flash  & graded decline & 36.6 & 15.4 \\
+        GPT-5.4         & graded decline & 32.9 &  5.1 \\
+        GPT-5.5         & graded decline & 34.9 & 11.3 \\
+        Claude Sonnet 5 & graded decline & 34.1 &  9.6 \\
+        Claude Opus 5   & near-step switch & 56.6 & 43.6 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
 
 One boundary is worth restating, because the reproduction lane states it
 itself. This is a repo-native reconstruction of the disclosed reduced

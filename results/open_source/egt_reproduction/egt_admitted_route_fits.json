@@ -1,0 +1,148 @@
+{
+  "analysis": "analysis-only fit of the existing EGT sensitivity sweep to all five admitted frontier routes",
+  "counts": {
+    "fit_rows": 150,
+    "routes_closer_to_weak_than_reference": 5,
+    "sweep_cells": 30
+  },
+  "environment": {
+    "numpy": "2.2.6",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.13.11 | packaged by Anaconda, Inc. | (main, Dec 10 2025, 21:21:58) [MSC v.1929 64 bit (AMD64)]"
+  },
+  "evidence_boundary": "No new LLM requests or evolutionary chains were run. Theory values are read from the existing 90-cell seeded-chain sensitivity artifact; route values are decision-weighted rates from the canonical nine-route neutral baseline, restricted to the five routes admitted by the gameplay gate.",
+  "fit_definition": {
+    "distance": "RMSE in percentage points over the three matched risk levels 0.1, 0.6 and 0.9",
+    "mixing_suspect_threshold": 0.05,
+    "primary_selection": "best well-mixed cell; ties are resolved by first sorted cell",
+    "reference_cell": {
+      "beta": 2.0,
+      "mutation": 0.02,
+      "mutation_rule": "beta_over_Z"
+    },
+    "weak_selection_definition": "beta <= 0.03 and not mixing-suspect"
+  },
+  "inputs": {
+    "admission_csv": "results\\frontier\\admission_campaign_v6\\derived\\admission_campaign_v6.csv",
+    "baseline_loader": "scripts/figdata.py::baseline_turns",
+    "egt_sensitivity_csv": {
+      "path": "results\\open_source\\egt_reproduction\\egt_beta_sensitivity.csv",
+      "sha256": "3978a40fa42ae022ce57303b1b07cb4900a5cd1c4d251b09ce79c3ebca483672"
+    }
+  },
+  "outputs": [
+    "results\\open_source\\egt_reproduction\\egt_admitted_route_fits.csv",
+    "results\\open_source\\egt_reproduction\\egt_admitted_route_summary.csv",
+    "results\\open_source\\egt_reproduction\\egt_admitted_route_fits.json"
+  ],
+  "route_count": 5,
+  "route_labels": {
+    "anthropic/claude-opus-5@default": "Claude Opus 5",
+    "anthropic/claude-sonnet-5@default": "Claude Sonnet 5",
+    "google/gemini-3-flash-preview": "Gemini 3 Flash",
+    "openai/gpt-5.4-2026-03-05": "GPT-5.4",
+    "openai/gpt-5.5-2026-04-23": "GPT-5.5"
+  },
+  "summaries": {
+    "anthropic/claude-opus-5@default": {
+      "best_weak_beta": 0.01,
+      "best_weak_max_absolute_deviation_percentage_points": 63.94079934034891,
+      "best_weak_mutation": 0.05,
+      "best_weak_rmse_percentage_points": 43.56025406232582,
+      "best_weak_rule": "fixed_0p05",
+      "best_well_mixed_beta": 0.01,
+      "best_well_mixed_mutation": 0.05,
+      "best_well_mixed_rmse_percentage_points": 43.56025406232582,
+      "best_well_mixed_rule": "fixed_0p05",
+      "observed_r0p1": 1.0,
+      "observed_r0p6": 0.0,
+      "observed_r0p9": 0.0,
+      "observed_shape": "near-step switch",
+      "reference_max_absolute_deviation_percentage_points": 97.98804194272634,
+      "reference_rmse_percentage_points": 56.58575488026384,
+      "route": "anthropic/claude-opus-5@default",
+      "route_label": "Claude Opus 5",
+      "weak_closer_than_reference": true
+    },
+    "anthropic/claude-sonnet-5@default": {
+      "best_weak_beta": 0.01,
+      "best_weak_max_absolute_deviation_percentage_points": 15.553702566155359,
+      "best_weak_mutation": 0.05,
+      "best_weak_rmse_percentage_points": 9.634883464968308,
+      "best_weak_rule": "fixed_0p05",
+      "best_well_mixed_beta": 0.01,
+      "best_well_mixed_mutation": 0.05,
+      "best_well_mixed_rmse_percentage_points": 9.634883464968308,
+      "best_well_mixed_rule": "fixed_0p05",
+      "observed_r0p1": 0.8924731182795699,
+      "observed_r0p6": 0.4838709677419355,
+      "observed_r0p9": 0.3225806451612903,
+      "observed_shape": "graded decline",
+      "reference_max_absolute_deviation_percentage_points": 49.600945168532796,
+      "reference_rmse_percentage_points": 34.06918808147612,
+      "route": "anthropic/claude-sonnet-5@default",
+      "route_label": "Claude Sonnet 5",
+      "weak_closer_than_reference": true
+    },
+    "google/gemini-3-flash-preview": {
+      "best_weak_beta": 0.01,
+      "best_weak_max_absolute_deviation_percentage_points": 22.219855964721784,
+      "best_weak_mutation": 0.05,
+      "best_weak_rmse_percentage_points": 15.408786087981133,
+      "best_weak_rule": "fixed_0p05",
+      "best_well_mixed_beta": 0.01,
+      "best_well_mixed_mutation": 0.05,
+      "best_well_mixed_rmse_percentage_points": 15.408786087981133,
+      "best_well_mixed_rule": "fixed_0p05",
+      "observed_r0p1": 0.989247311827957,
+      "observed_r0p6": 0.7311827956989247,
+      "observed_r0p9": 0.6021505376344086,
+      "observed_shape": "graded decline",
+      "reference_max_absolute_deviation_percentage_points": 58.34445241836962,
+      "reference_rmse_percentage_points": 36.618031959995875,
+      "route": "google/gemini-3-flash-preview",
+      "route_label": "Gemini 3 Flash",
+      "weak_closer_than_reference": true
+    },
+    "openai/gpt-5.4-2026-03-05": {
+      "best_weak_beta": 0.01,
+      "best_weak_max_absolute_deviation_percentage_points": 8.778995749668017,
+      "best_weak_mutation": 0.05,
+      "best_weak_rmse_percentage_points": 5.110960594211996,
+      "best_weak_rule": "fixed_0p05",
+      "best_well_mixed_beta": 0.01,
+      "best_well_mixed_mutation": 0.05,
+      "best_well_mixed_rmse_percentage_points": 5.110960594211996,
+      "best_well_mixed_rule": "fixed_0p05",
+      "observed_r0p1": 0.8709677419354839,
+      "observed_r0p6": 0.6505376344086021,
+      "observed_r0p9": 0.46774193548387094,
+      "observed_shape": "graded decline",
+      "reference_max_absolute_deviation_percentage_points": 44.903592203315846,
+      "reference_rmse_percentage_points": 32.897736169953106,
+      "route": "openai/gpt-5.4-2026-03-05",
+      "route_label": "GPT-5.4",
+      "weak_closer_than_reference": true
+    },
+    "openai/gpt-5.5-2026-04-23": {
+      "best_weak_beta": 0.01,
+      "best_weak_max_absolute_deviation_percentage_points": 17.381146287302425,
+      "best_weak_mutation": 0.05,
+      "best_weak_rmse_percentage_points": 11.296509349472327,
+      "best_weak_rule": "fixed_0p05",
+      "best_well_mixed_beta": 0.01,
+      "best_well_mixed_mutation": 0.05,
+      "best_well_mixed_rmse_percentage_points": 11.296509349472327,
+      "best_well_mixed_rule": "fixed_0p05",
+      "observed_r0p1": 0.9354838709677419,
+      "observed_r0p6": 0.7043010752688172,
+      "observed_r0p9": 0.553763440860215,
+      "observed_shape": "graded decline",
+      "reference_max_absolute_deviation_percentage_points": 53.505742740950254,
+      "reference_rmse_percentage_points": 34.89945841991662,
+      "route": "openai/gpt-5.5-2026-04-23",
+      "route_label": "GPT-5.5",
+      "weak_closer_than_reference": true
+    }
+  }
+}

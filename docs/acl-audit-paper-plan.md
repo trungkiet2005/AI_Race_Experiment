@@ -343,10 +343,10 @@ bibliography is now too large for a single file and is served as shards from
 under its upstream name so that nobody points `\bibliography` at it. Fetch the
 shards only if the paper actually needs Anthology keys.
 
-`paper/acl/main.tex` builds clean with MiKTeX pdflatex, two pages in `[review]`
+`paper/acl/main.tex` builds clean with MiKTeX pdflatex, eight pages in `[review]`
 mode with line numbers, and `python scripts/anonymity_scan.py paper/acl/main.pdf`
-reports clean. The `\nocite{*}` in the scaffold is there only so the file
-compiles while it has no real citations; it must be deleted with the first one.
+reports clean. The scaffold's `\nocite{*}` has been removed; the document now
+contains only the one citation whose entry is in `paper/acl/custom.bib`.
 
 ---
 
