@@ -17,8 +17,9 @@ been assigned one of the three missing cells in the preceding amendment.
 | Credential source | Benchmark identity | Fresh auth/list status |
 |---|---|---|
 | `kaggle-api-2/acc5.md` | `daosyduyminh` | eligible |
-| `kaggle-api-3/acc10.txt` | `trnnguynchis` | eligible on 2026-09-13 re-check; the earlier 2026-09-12 exclusion remains historical |
-| `kaggle-api/chiboiz.txt` | `chiboiz` | eligible |
+| `kaggle-api-3/acc10.txt` | `trnnguynchis` | excluded: fresh Benchmark auth still returned HTTP 403 |
+| `kaggle-api/chisboiz.txt` | `chisboiz` | eligible |
+| `kaggle-api/chunaiu.txt` | `chunaiu` | eligible |
 
 Raw tokens, generated Benchmark environments, proxy keys, and expiry values
 remain outside the repository. No token, key, or secret may enter a receipt,
@@ -44,11 +45,10 @@ retried twice on the same assigned identity only.
 | Missing GPT-5.5 cell | Assigned identity |
 |---|---|
 | `AS@0.6` | `daosyduyminh` |
-| `CAS@0.9` | `trnnguynchis` |
-| `CS@0.1` | `chiboiz` |
+| `CAS@0.9` | `chisboiz` |
+| `CS@0.1` | `chunaiu` |
 
 The GPT-5.5 route is upgraded to a complete grid only if all twelve cells
 pass the existing fail-closed ingest audit. A quota, credential, transport,
 or task-creation error produces no behavioural evidence and is recorded only
 in the failure ledger.
-
