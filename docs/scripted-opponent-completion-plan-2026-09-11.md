@@ -294,3 +294,35 @@ or in any table this plan produces. On every route collected so far it carries
 the lowest rates in the campaign, well below self-play, so it measures restraint
 kept rather than an opportunity taken. The contrast is named for what it
 compares: how far the rival's stance moves the route.
+
+## Amendment, 2026-09-12: the push itself costs a run
+
+Recorded here rather than applied silently, and it changes no assignment.
+
+The cost section above counts 93 route decisions per cell and about 465 requests
+per identity. Collecting the first cell showed that the count is right and the
+total is not. `kaggle b t push` does not only upload a version: it also starts one
+validation run of the new version on `gemini-3-flash-preview`, which executes the
+same baked cell in full. The first push of this plan therefore produced two
+completed runs, the Claude Opus 5 cell that was asked for and a Gemini repeat of
+the same cell that was not, 93 route decisions each.
+
+So a cell costs about 186 requests rather than 93, and an identity holding five
+cells spends about 930 rather than 465. That is the upper half of the 800 to
+1,400 band on accounts that were already used hard inside the same window, so a
+quota refusal is a likely ending here and the stopping rule stands exactly as
+written above: the identity that refuses stops, its remaining cells are recorded
+as not collected, and nothing moves to another account.
+
+The same charge was paid by the three routes already collected, since they were
+pushed the same way, which is the only evidence available that five cells on one
+identity is survivable. It is evidence, not a guarantee.
+
+Two things follow for the artefacts. The validation runs are genuine completed
+runs of cells this campaign already reports on `google/gemini-3-flash-preview`,
+and they are **never downloaded into the tree**: the Gemini grid stays the twelve
+cells collected under the 2026-09-10 plan, because a second run of a reported
+cell dropped into the campaign directory would displace it rather than raise.
+And the download root for every cell is kept short, `D:/kaggle/working/dl/<tag>`,
+because on Windows a long path makes a benchmark download report success while
+writing nothing, which reads like a lost cell and is not one.
