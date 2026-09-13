@@ -72,7 +72,6 @@ from pathlib import Path
 import matplotlib.colors as mcolors
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
-from matplotlib.patches import Rectangle
 import numpy as np
 import pandas as pd
 
@@ -125,20 +124,12 @@ SEED = 20260910
 EXPECTED_RACES = 10
 EXPECTED_DECISIONS = 93
 
-# The EGT figures use colour for the four named strategies.  Figure 3 keeps
-# that categorical language in the column headers, while the cells use a
-# separate sequential scale for the measured outcome.  Separating the two
-# meanings is important: a red cell means high Unsafe play, not that the rival
-# was Always Unsafe.
-STRATEGY_C = {
-    "AS": S.SAFE_C,
-    "CS": "#a6dba0",
-    "CAS": "#f4a582",
-    "AU": S.UNSAFE_C,
-}
-RATE_CMAP = mcolors.LinearSegmentedColormap.from_list(
-    "unsafe_rate",
-    ["#F4F7FA", "#B7CEE0", "#4A7EA2", "#143B59"],
+# A game-theory response matrix benefits from an action palette rather than a
+# rainbow.  The low end is a Safe tint, the high end is the paper's Unsafe ink,
+# and every cell carries its measured value so the scale survives greyscale.
+RESPONSE_CMAP = mcolors.LinearSegmentedColormap.from_list(
+    "safe_to_unsafe",
+    ["#EAF5EF", "#F7F3E8", "#FAEEEE", "#B2182B"],
     N=256,
 )
 RISK_MARKERS = {0.1: "o", 0.6: "s", 0.9: "^"}
@@ -350,7 +341,7 @@ def draw_ordering(ax, surface, risk, *, first, middle, ceiling_cells):
     S.strip(ax)
     ax.set_xlabel("the scripted rival" if middle else None, labelpad=1)
     if first:
-        S.panel(ax, "a", "shared rival response")
+        S.panel(ax, "a", "one ordering, five routes")
     else:
         ax.set_title("", loc="left")
     ax.annotate(rf"$p_r^{{\max}} = {S.RISK_LABEL[risk]}$",
@@ -449,73 +440,42 @@ def _relative_luminance(rgba):
             + 0.0722 * linear(rgba[2]))
 
 
-def draw_response_grid(ax, risk_ax, surface):
-    """Draw one strategy-by-route matrix with explicit risk bands.
-
-    The column colours are the EGT strategy palette; the tile colour is only
-    the measured Unsafe rate.  The separation keeps the game-theory treatment
-    legible even when a high-rate cell happens to be under a Safe rival.
-    """
-    rows = [(risk, route) for risk in S.RISKS for route in ROUTES]
+def draw_response_matrix(ax, surface, risk, *, first=False):
+    """Show the route's response as a strategy matrix, not a line tangle."""
     values = np.asarray([
         [100 * surface[(route, strategy, risk)] for strategy in ORDER]
-        for risk, route in rows
+        for route in ROUTES
     ])
-    image = ax.imshow(values, cmap=RATE_CMAP, vmin=0, vmax=100,
+    image = ax.imshow(values, cmap=RESPONSE_CMAP, vmin=0, vmax=100,
                       aspect="auto", interpolation="nearest")
     for row in range(values.shape[0]):
         for col in range(values.shape[1]):
             rgba = image.cmap(image.norm(values[row, col]))
-            ink = S.SURFACE if _relative_luminance(rgba) < 0.46 else S.INK
+            ink = S.SURFACE if _relative_luminance(rgba) < 0.48 else S.INK
             ax.text(col, row, f"{values[row, col]:.1f}", ha="center", va="center",
                     fontsize=6.5, color=ink, fontweight="bold")
-
     ax.set_xticks(np.arange(len(ORDER)), [LABEL[s] for s in ORDER],
                   fontsize=S.FS_NOTE)
-    for tick, strategy in zip(ax.get_xticklabels(), ORDER):
-        tick.set_color(STRATEGY_C[strategy])
-        tick.set_fontweight("bold")
-    ax.tick_params(axis="x", top=True, labeltop=True, bottom=False,
-                   labelbottom=False, length=0, pad=4)
-    # A small colour bar under each header makes the EGT strategy key visible
-    # without spending a second legend on four names already printed above.
-    for col, strategy in enumerate(ORDER):
-        ax.add_patch(Rectangle((col - 0.36, -0.83), 0.72, 0.12,
-                               facecolor=STRATEGY_C[strategy], edgecolor="none",
-                               clip_on=False, zorder=6))
-
-    ax.set_yticks(np.arange(len(rows)), [S.ROUTE_SHORT[route] for _, route in rows],
+    ax.set_yticks(np.arange(len(ROUTES)),
+                  [S.ROUTE_SHORT[route] if first else "" for route in ROUTES],
                   fontsize=S.FS_NOTE)
-    for tick, (_, route) in zip(ax.get_yticklabels(), rows):
-        tick.set_color(S.ROUTE_C[route])
-        tick.set_fontweight("bold")
-    ax.set_ylabel("route", labelpad=2)
-    ax.set_xlabel("scripted rival strategy", labelpad=3)
+    if first:
+        for tick, route in zip(ax.get_yticklabels(), ROUTES):
+            tick.set_color(S.ROUTE_C[route])
+            tick.set_fontweight("bold")
+        ax.set_ylabel("route", labelpad=2)
+    else:
+        ax.tick_params(axis="y", length=0)
+    ax.set_xlabel("scripted rival", labelpad=2)
     ax.set_xlim(-0.5, len(ORDER) - 0.5)
-    ax.set_ylim(len(rows) - 0.5, -0.5)
+    ax.set_ylim(len(ROUTES) - 0.5, -0.5)
     ax.set_xticks(np.arange(len(ORDER) + 1) - 0.5, minor=True)
-    ax.set_yticks(np.arange(len(rows) + 1) - 0.5, minor=True)
-    ax.grid(which="minor", color=S.SURFACE, linewidth=1.35)
+    ax.set_yticks(np.arange(len(ROUTES) + 1) - 0.5, minor=True)
+    ax.grid(which="minor", color=S.SURFACE, linewidth=1.5)
     ax.tick_params(which="minor", bottom=False, left=False)
-    ax.tick_params(axis="y", length=0, pad=3)
+    ax.tick_params(axis="both", length=0)
     for spine in ax.spines.values():
         spine.set_visible(False)
-    # Dark separators make the three risk bands readable without repeating a
-    # large title in every facet.
-    for boundary in (len(ROUTES) - 0.5, 2 * len(ROUTES) - 0.5):
-        ax.axhline(boundary, color=S.INK_2, linewidth=1.0, zorder=5)
-
-    risk_ax.set_xlim(0, 1)
-    risk_ax.set_ylim(len(rows) - 0.5, -0.5)
-    risk_ax.set_xticks([])
-    risk_ax.set_yticks([])
-    for spine in risk_ax.spines.values():
-        spine.set_visible(False)
-    for idx, risk in enumerate(S.RISKS):
-        center = idx * len(ROUTES) + (len(ROUTES) - 1) / 2
-        risk_ax.text(0.25, center, f"risk\n{S.RISK_LABEL[risk]}",
-                     ha="right", va="center", fontsize=S.FS_NOTE,
-                     color=S.INK_2, fontweight="bold", linespacing=1.1)
     return image
 
 
@@ -704,39 +664,53 @@ def main() -> None:
         print(f"  {S.ROUTE_SHORT[route]:<10} opened Unsafe in "
               f"{int(own['unsafe'].sum())}/{len(own)} races")
 
-    # A single matrix lets the reader trace the same route down three risk
-    # bands, while the forest plot below expands the headline AU-minus-AS
-    # comparison.  The old three-panel version repeated the same information
-    # in several encodings and made the central game-theory relation harder to
-    # see at publication scale.
-    fig = plt.figure(figsize=(S.TEXT, 3.85))
-    gs = fig.add_gridspec(2, 1, height_ratios=[2.12, 1.0],
-                          left=0.12, right=0.90, top=0.88, bottom=0.22,
-                          hspace=0.94)
-    matrix_slot = gs[0, 0].subgridspec(1, 2, width_ratios=[0.22, 1.0], wspace=0.02)
-    risk_ax = fig.add_subplot(matrix_slot[0, 0])
-    matrix_ax = fig.add_subplot(matrix_slot[0, 1])
-    image = draw_response_grid(matrix_ax, risk_ax, surface)
-    matrix_ax.text(-0.12, 1.17, "a", transform=matrix_ax.transAxes,
+    # The first version made the reader decode fifteen long lines, a second
+    # legend, and two prose blocks before seeing the comparison.  A response
+    # matrix is the standard game-theory shorthand for this object: rows are
+    # routes, columns are rival strategies, and the tile value is the observed
+    # action frequency.  The two lower panels then reserve one common x-scale
+    # for the two paired contrasts that give the matrix its interpretation.
+    fig = plt.figure(figsize=(S.TEXT, 4.30))
+    gs = fig.add_gridspec(2, 2, height_ratios=[1.18, 1.0],
+                          left=0.085, right=0.925, top=0.84, bottom=0.17,
+                          wspace=0.62, hspace=0.82)
+    top = gs[0, :].subgridspec(1, len(S.RISKS), wspace=0.30)
+    facets = [fig.add_subplot(top[0, i]) for i in range(len(S.RISKS))]
+    images = [draw_response_matrix(ax, surface, risk, first=(i == 0))
+              for i, (ax, risk) in enumerate(zip(facets, S.RISKS))]
+    for ax, risk in zip(facets, S.RISKS):
+        ax.set_title(f"risk {S.RISK_LABEL[risk]}", fontsize=S.FS_CLAIM,
+                     color=S.INK, fontweight="bold", pad=5)
+    facets[0].text(-0.34, 1.22, "a", transform=facets[0].transAxes,
                    fontsize=S.FS_PANEL, color=S.INK, fontweight="bold",
                    ha="left", va="bottom")
-    matrix_ax.text(-0.03, 1.17, "the rival's strategy changes observed play",
-                   transform=matrix_ax.transAxes, fontsize=S.FS_CLAIM,
+    facets[0].text(-0.25, 1.22, "response matrix: rival stance changes play",
+                   transform=facets[0].transAxes, fontsize=S.FS_CLAIM,
                    color=S.INK_2, ha="left", va="bottom")
-    cax = fig.add_axes([0.925, 0.535, 0.014, 0.285])
-    colourbar = fig.colorbar(image, cax=cax, ticks=[0, 50, 100])
+    cax = fig.add_axes([0.942, 0.565, 0.014, 0.225])
+    colourbar = fig.colorbar(images[-1], cax=cax, ticks=[0, 50, 100])
     colourbar.ax.set_ylabel("Unsafe play (%)", fontsize=S.FS_NOTE, labelpad=4)
     colourbar.ax.tick_params(labelsize=S.FS_NOTE, length=2)
     colourbar.outline.set_linewidth(0.5)
 
     ax_b = fig.add_subplot(gs[1, 0])
     draw_contrast_ranges(ax_b, stance)
-    ax_b.text(-0.15, 1.20, "b", transform=ax_b.transAxes,
+    ax_b.text(-0.17, 1.13, "b", transform=ax_b.transAxes,
               fontsize=S.FS_PANEL, color=S.INK, fontweight="bold",
               ha="left", va="bottom")
-    ax_b.text(-0.07, 1.20, "the AU-to-AS contrast is positive, but not uniform",
-              transform=ax_b.transAxes, fontsize=S.FS_CLAIM,
-              color=S.INK_2, ha="left", va="bottom")
+    ax_b.text(-0.08, 1.13, "rival stance effect", transform=ax_b.transAxes,
+              fontsize=S.FS_CLAIM, color=S.INK_2, ha="left", va="bottom")
+
+    ax_c = fig.add_subplot(gs[1, 1])
+    draw_context_dumbbells(ax_c, safe_arm, selfplay)
+    ax_c.text(-0.17, 1.13, "c", transform=ax_c.transAxes,
+              fontsize=S.FS_PANEL, color=S.INK, fontweight="bold",
+              ha="left", va="bottom")
+    ax_c.text(-0.08, 1.13, "interaction context matters", transform=ax_c.transAxes,
+              fontsize=S.FS_CLAIM, color=S.INK_2, ha="left", va="bottom")
+    ax_c.text(0.02, 1.035, "filled: fixed Safe   open: self-play",
+              transform=ax_c.transAxes, fontsize=S.FS_NOTE, color=S.MUTED,
+              ha="left", va="bottom")
 
     risk_handles = [
         Line2D([0], [0], marker=RISK_MARKERS[risk], color=S.INK_2,
@@ -745,9 +719,13 @@ def main() -> None:
         for risk in S.RISKS
     ]
     fig.legend(handles=risk_handles, ncol=3, loc="lower center",
-               bbox_to_anchor=(0.50, 0.060), frameon=False,
+               bbox_to_anchor=(0.50, 0.075), frameon=False,
                handletextpad=0.35, columnspacing=1.0,
                fontsize=S.FS_NOTE, borderaxespad=0.0)
+    fig.text(0.50, 0.035,
+             "Tiles show measured rates; interval bars are 95% race-clustered intervals.",
+             ha="center", va="bottom", fontsize=S.FS_NOTE, color=S.MUTED)
+
     S.save(fig, "scripted_opponent", width=S.TEXT)
 
     risk_stance = {

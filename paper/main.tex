@@ -721,19 +721,19 @@ although swapping the opaque action-code mapping shifts Unsafe{} play by
   \centering
   \includegraphics[width=\textwidth]{../figures/paper/scripted_opponent.pdf}
   \caption{How the rival changes a route's play. Panel (a) is a response matrix:
-  each row is one of five admitted routes, each risk band contains one route
-  ordering, and the four columns are scripted rival strategies. Darker cells
-  indicate more Unsafe play and the printed values preserve the measured rate.
-  The strategy headers use the EGT palette, while tile shade encodes the
-  measured Unsafe rate. Panel (b) shows the paired Always-Unsafe minus
-  Always-Safe effect with 95\% race-clustered intervals; all fifteen effects are
-  positive, although their magnitudes differ by route and risk.}
-  \Description{Two-panel figure. Panel a is one response matrix with fifteen
-  route-by-risk rows grouped into three risk bands and four scripted-rival
-  strategy columns; each tile contains the measured Unsafe-play percentage.
-  Panel b is a horizontal interval plot of the Always-Unsafe minus Always-Safe
-  effect for five routes at three risk levels, with all intervals to the right
-  of zero.}
+  each row is one of five admitted routes, each column is a scripted rival
+  strategy, and each facet is a maximum-risk condition. Darker cells indicate
+  more Unsafe play and the printed values preserve the measured rate. Panel (b)
+  shows the paired Always-Unsafe minus Always-Safe effect with 95\% race-clustered
+  intervals; all fifteen effects are positive, although their magnitudes differ
+  by route and risk. Panel (c) contrasts a fixed Always-Safe rival with self-play,
+  separating rival-conditioned behaviour from the mirror-match outcome.}
+  \Description{Three-panel figure. Panel a contains three response matrices, one
+  per risk level, with five route rows and four scripted-rival columns; each tile
+  contains the Unsafe-play percentage. Panel b is a horizontal interval plot of
+  the Always-Unsafe minus Always-Safe effect for five routes at three risk levels.
+  Panel c is a paired horizontal plot comparing fixed Always-Safe and self-play
+  Unsafe rates for the same routes and risk levels.}
   \label{fig:scripted-opponent-main}
 \end{figure*}
 
@@ -962,26 +962,10 @@ player-level \Unsafe{} rates, plotted per risk condition in the supplementary
 material, spread across nearly the whole available range for humans at every
 risk level while each checkpoint occupies a narrow band of its own. Similarity
 between a checkpoint's aggregate \Unsafe{} rate and the human mean therefore
-does not imply that it reproduces the human distribution. Recolouring the same
-trajectory coordinates by outcome exposes why the embedding is easy to
-overread: the visible structure follows the trajectory's own \Unsafe{} rate
-(Figure~\ref{fig:human-tsne-outcome-main}).
-
-\begin{figure}[!b]
-    \centering
-    \includegraphics[width=0.92\columnwidth]{../figures/paper/tsne_outcome_diagnostic.pdf}
-    \caption{Outcome structure, not population identity, explains apparent
-    regions in the pooled t-SNE. Colour and point area encode each of 760
-    trajectories' own Unsafe rate on fixed coordinates. This diagnostic is not
-    a classifier, causal test or global distance measure; Figure~\ref{fig:diversity}
-    quantifies diversity.}
-    \label{fig:human-tsne-outcome-main}
-    \Description{A pooled two-dimensional t-SNE scatter of 760 complete
-    first-five-round trajectories. Points are coloured and sized by their own
-    Unsafe rate, from low to high on a viridis scale. The plot is a diagnostic
-    showing outcome structure in the same coordinates used for the
-    supplementary population comparison, not a population classifier.}
-\end{figure}
+does not imply that it reproduces the human distribution. A two-dimensional
+embedding of the same space is in the supplementary material; we rest no
+conclusion on it, because recolouring the same coordinates by outcome separates
+them almost entirely by \Unsafe{} rate.
 
 Populations that look alike in rate can still be following different observed
 rules. Exploratory classifier and feature analyses in the supplement suggest

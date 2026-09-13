@@ -23,7 +23,6 @@ import matplotlib
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-from matplotlib.cm import ScalarMappable
 from matplotlib.colors import TwoSlopeNorm
 from matplotlib.patches import FancyBboxPatch, Rectangle
 import numpy as np
@@ -72,7 +71,6 @@ from scripts.publication_style import (  # noqa: E402
 PAPER = ROOT / "figures" / "paper"
 CLUSTER = PAPER / "llm_human_clustering"
 DATA = ROOT / "results" / "cross_model_pilot_synthesis" / "data"
-TSNE_TABLE = DATA / "tsne_coordinates.csv"
 EGT_TABLE = ROOT / "results" / "frontier" / "egt_frontier_comparison_v2" / "theory_llm_comparison.csv"
 POSITION_TABLE = DATA / "nplayer_position_effect_by_persona.csv"
 ARCHETYPE_TABLE = DATA / "human_cluster_summary.csv"
@@ -494,78 +492,6 @@ def build_tsne(frame: pd.DataFrame) -> list[Path]:
     return save_publication_figure(fig, CLUSTER / "01_tsne_hero_human_left", formats=("pdf", "png", "svg"))
 
 
-def build_tsne_outcome_diagnostic(frame: pd.DataFrame) -> list[Path]:
-    """Promote a readable pooled redraw of Supplementary Figure 9.
-
-    The supplementary figure uses the same coordinates but adds seven small
-    population panels.  Those panels become unreadable at one-column width,
-    while the pooled view is the useful diagnostic for the main story: outcome
-    colour can make a population embedding look more structured than it is.
-    """
-    required = {"population", "player_id", "unsafe_rate", "tsne_x", "tsne_y"}
-    if not TSNE_TABLE.is_file():
-        raise FileNotFoundError(f"canonical t-SNE table is missing: {TSNE_TABLE}")
-    coordinates = pd.read_csv(TSNE_TABLE)
-    if len(frame) != 760 or len(coordinates) != len(frame):
-        raise RuntimeError(
-            f"outcome diagnostic expects 760 aligned trajectories, got "
-            f"frame={len(frame)}, coordinates={len(coordinates)}"
-        )
-    if not required.issubset(coordinates.columns):
-        raise RuntimeError(f"t-SNE table is missing {sorted(required - set(coordinates.columns))}")
-    if coordinates["player_id"].astype(str).tolist() != frame["player_id"].astype(str).tolist():
-        raise RuntimeError("t-SNE coordinates are not aligned with the canonical trajectory table")
-    if coordinates[["unsafe_rate", "tsne_x", "tsne_y"]].isna().any().any():
-        raise RuntimeError("t-SNE outcome diagnostic contains missing coordinates or rates")
-
-    x = coordinates["tsne_x"].to_numpy(float)
-    y = coordinates["tsne_y"].to_numpy(float)
-    rates = coordinates["unsafe_rate"].to_numpy(float)
-    if ((rates < 0) | (rates > 1)).any():
-        raise RuntimeError("t-SNE outcome rates fall outside [0, 1]")
-    xpad = max(0.1, np.ptp(x) * 0.04)
-    ypad = max(0.1, np.ptp(y) * 0.04)
-    norm = matplotlib.colors.Normalize(0, 1)
-    cmap = matplotlib.colormaps.get_cmap("viridis")
-
-    # The colourbar and the title are included in the tight bounding box.  A
-    # slightly narrower canvas keeps the exported asset at one-column width
-    # after those artists are included, so LaTeX does not shrink the labels.
-    fig, ax = plt.subplots(figsize=(3.68, 2.85))
-    fig.subplots_adjust(left=0.16, right=0.84, top=0.84, bottom=0.18)
-    sizes = 8.0 + 25.0 * rates
-    ax.scatter(x, y, c=rates, cmap=cmap, norm=norm, s=sizes,
-               edgecolor=WHITE, linewidth=0.22, alpha=0.88, rasterized=True)
-    ax.set_xlim(x.min() - xpad, x.max() + xpad)
-    ax.set_ylim(y.min() - ypad, y.max() + ypad)
-    ax.set_xticks([])
-    ax.set_yticks([])
-    style_axis(ax, grid_axis=None)
-    for spine in ax.spines.values():
-        spine.set_visible(False)
-    ax.text(0.0, 1.045, "A  outcome gradient",
-            transform=ax.transAxes, fontsize=9.2, weight="bold",
-            ha="left", va="bottom", color=INK)
-    ax.text(0.0, 1.005, "same coordinates; colour = Unsafe rate",
-            transform=ax.transAxes, fontsize=8.0, color=MUTED,
-            ha="left", va="bottom")
-
-    sm = ScalarMappable(norm=norm, cmap=cmap)
-    sm.set_array([])
-    cbar = fig.colorbar(sm, ax=ax, fraction=0.055, pad=0.045, aspect=24,
-                        ticks=[0, 0.5, 1.0])
-    cbar.set_label("Own Unsafe rate", fontsize=8.0, labelpad=4)
-    cbar.ax.tick_params(labelsize=8.0, length=2)
-    cbar.ax.yaxis.set_major_formatter(matplotlib.ticker.PercentFormatter(1.0, decimals=0))
-    cbar.outline.set_linewidth(0.5)
-    fig.text(0.50, 0.035,
-             "Diagnostic, not a population classifier.",
-             ha="center", va="bottom", fontsize=8.0, color=MUTED)
-    return save_publication_figure(
-        fig, PAPER / "tsne_outcome_diagnostic", formats=("pdf", "png", "svg")
-    )
-
-
 def build_distribution() -> list[Path]:
     from results.cross_model_pilot_synthesis import build_human_vs_llm_distribution_v3 as source
 
@@ -700,7 +626,6 @@ def main() -> None:
         "scripted_opponent": build_scripted_opponent(),
         "figure_5_archetypes": build_archetype_figure(),
         "figure_6_tsne": build_tsne(frame),
-        "main_figure_6_outcome_diagnostic": build_tsne_outcome_diagnostic(frame),
         "figure_7_distribution": build_distribution(),
     }
     from scripts.build_supplementary_figures import build_supplementary_figures
@@ -708,7 +633,7 @@ def main() -> None:
     outputs.update(build_supplementary_figures(frame))
     source_paths = [EGT_TABLE, ARCHETYPE_TABLE, PROJECTION_TABLE]
     source_paths += [ROOT / "references" / "source_study_dataset" / "airace_deidentified_long.csv"]
-    source_paths += [SCRIPTED_FIGURE_SCRIPT, SCRIPTED_DERIVED, TSNE_TABLE]
+    source_paths += [SCRIPTED_FIGURE_SCRIPT, SCRIPTED_DERIVED]
     provenance = {
         "generator": "scripts/build_publication_figures.py",
         "style_module": "scripts/publication_style.py",
