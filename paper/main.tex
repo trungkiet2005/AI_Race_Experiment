@@ -459,11 +459,11 @@ Each answer changes how the next should be read. The agents do respond to the
 stated danger, within a narrow band, and one route replaces the trade-off by a
 switch from always fast to always careful. But where we put the agent against
 scripted code instead of a second copy of itself, the rival's stance moves play
-by much more than the whole range of stated danger does, and neither
-external reference shows that shape: the evolutionary model predicts a switch
-where the agents deliver a gradient, and on raw action sequences human
-participants use nearly the whole policy space while every admitted route uses a
-small part of it.
+substantially, but its magnitude varies by route and overlaps the effect of
+changing the stated danger. Neither external reference shows that shape: the
+evolutionary model predicts a switch where the agents deliver a gradient, and
+on raw action sequences human participants use nearly the whole observed
+trajectory space while every admitted route uses a small part of it.
 
 Three contributions follow. First, a scripted-rival design for repeated-game
 evaluation and the critique it licenses. That an LLM's self-play behaviour need
@@ -475,7 +475,7 @@ can hide the response to the treatment the study is about, measured against a
 rival the agent cannot influence and is never told about. Second, a
 population-level comparison with human participants read on raw action
 sequences rather than on aggregate rates, which is what makes the compression
-of policy visible at all. Third, an auditable race mechanism in which the engine
+of observed trajectories visible at all. Third, an auditable race mechanism in which the engine
 and not generated text resolves every round, entered through a comprehension
 screen that scores answers to frozen questions against ground truth and never
 reads a race, so that the set of routes interpreted strategically was fixed by a
@@ -721,19 +721,19 @@ although swapping the opaque action-code mapping shifts Unsafe{} play by
   \centering
   \includegraphics[width=\textwidth]{../figures/paper/scripted_opponent.pdf}
   \caption{How the rival changes a route's play. Panel (a) is a response matrix:
-  each row is one of five admitted routes, each column is a scripted rival
-  strategy, and each facet is a maximum-risk condition. Darker cells indicate
-  more Unsafe play and the printed values preserve the measured rate. Panel (b)
-  shows the paired Always-Unsafe minus Always-Safe effect with 95\% race-clustered
-  intervals; all fifteen effects are positive, although their magnitudes differ
-  by route and risk. Panel (c) contrasts a fixed Always-Safe rival with self-play,
-  separating rival-conditioned behaviour from the mirror-match outcome.}
-  \Description{Three-panel figure. Panel a contains three response matrices, one
-  per risk level, with five route rows and four scripted-rival columns; each tile
-  contains the Unsafe-play percentage. Panel b is a horizontal interval plot of
-  the Always-Unsafe minus Always-Safe effect for five routes at three risk levels.
-  Panel c is a paired horizontal plot comparing fixed Always-Safe and self-play
-  Unsafe rates for the same routes and risk levels.}
+  each row is one of five admitted routes, each risk band contains one route
+  ordering, and the four columns are scripted rival strategies. Darker cells
+  indicate more Unsafe play and the printed values preserve the measured rate.
+  The strategy headers use the EGT palette, while tile shade encodes the
+  measured Unsafe rate. Panel (b) shows the paired Always-Unsafe minus
+  Always-Safe effect with 95\% race-clustered intervals; all fifteen effects are
+  positive, although their magnitudes differ by route and risk.}
+  \Description{Two-panel figure. Panel a is one response matrix with fifteen
+  route-by-risk rows grouped into three risk bands and four scripted-rival
+  strategy columns; each tile contains the measured Unsafe-play percentage.
+  Panel b is a horizontal interval plot of the Always-Unsafe minus Always-Safe
+  effect for five routes at three risk levels, with all intervals to the right
+  of zero.}
   \label{fig:scripted-opponent-main}
 \end{figure*}
 
@@ -757,6 +757,11 @@ failed. The route's seat is counterbalanced five and five inside each cell, and
 each contrast is taken inside a repetition, so the hidden horizon is differenced
 out. Because the route cannot influence the rival, the direction of a difference
 between rivals is not in question.
+
+Coverage is complete across the five routes, but decoding contracts are not
+homogeneous across endpoints. Cross-route differences in effect magnitude are
+therefore descriptive rather than controlled model comparisons; the full
+contract provenance is reported in the supplement.
 
 Across these five routes, changing the scripted rival produces a positive
 25.3--87.0 percentage-point shift in Unsafe{} play across the fifteen
@@ -938,7 +943,7 @@ match human strategic diversity.
 \begin{figure*}[t]
     \centering
     \includegraphics[width=\textwidth]{../figures/paper/human_versus_model.pdf}
-    \caption{Human participants use far more of the policy space than every
+    \caption{Human participants use far more of the observed trajectory space than every
     checkpoint the screen admits. Panel a places each admitted checkpoint's
     count of distinct paired five-round sequences against the matched human
     resampling null; the shaded region is the range no human draw reached.
@@ -957,10 +962,26 @@ player-level \Unsafe{} rates, plotted per risk condition in the supplementary
 material, spread across nearly the whole available range for humans at every
 risk level while each checkpoint occupies a narrow band of its own. Similarity
 between a checkpoint's aggregate \Unsafe{} rate and the human mean therefore
-does not imply that it reproduces the human distribution. A two-dimensional
-embedding of the same space is in the supplementary material; we rest no
-conclusion on it, because recolouring the same coordinates by outcome separates
-them almost entirely by \Unsafe{} rate.
+does not imply that it reproduces the human distribution. Recolouring the same
+trajectory coordinates by outcome exposes why the embedding is easy to
+overread: the visible structure follows the trajectory's own \Unsafe{} rate
+(Figure~\ref{fig:human-tsne-outcome-main}).
+
+\begin{figure}[!b]
+    \centering
+    \includegraphics[width=0.92\columnwidth]{../figures/paper/tsne_outcome_diagnostic.pdf}
+    \caption{Outcome structure, not population identity, explains apparent
+    regions in the pooled t-SNE. Colour and point area encode each of 760
+    trajectories' own Unsafe rate on fixed coordinates. This diagnostic is not
+    a classifier, causal test or global distance measure; Figure~\ref{fig:diversity}
+    quantifies diversity.}
+    \label{fig:human-tsne-outcome-main}
+    \Description{A pooled two-dimensional t-SNE scatter of 760 complete
+    first-five-round trajectories. Points are coloured and sized by their own
+    Unsafe rate, from low to high on a viridis scale. The plot is a diagnostic
+    showing outcome structure in the same coordinates used for the
+    supplementary population comparison, not a population classifier.}
+\end{figure}
 
 Populations that look alike in rate can still be following different observed
 rules. Exploratory classifier and feature analyses in the supplement suggest
@@ -1022,7 +1043,7 @@ regulation, communication or uncertainty about real capabilities.
 The last implication belongs to the population rather than to any single agent,
 and it stays conditional, because nothing measured here is a deployment. People
 bring substantial behavioural variety to this race, while copies of one route
-provide a more consistent profile; which part of the policy space a route settles
+provide a more consistent profile; which part of the observed trajectory space a route settles
 on differs from route to route. If one model were reused as a strategic adviser
 across many organisations, its concentrated profile would be one component of
 the resulting decision environment, alongside the diversity of human decision

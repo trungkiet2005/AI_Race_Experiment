@@ -6,7 +6,7 @@ as an audit trail, but the active manuscript claims must use the five-route
 values in the dated amendment and the derived campaign tables.
 
 Every number below was recomputed in this session from the artifact named
-beside it. `scripts/verify_manuscript_claims.py` passes 179 of 179 against the
+beside it. `scripts/verify_manuscript_claims.py` passes 243 of 243 against the
 current manuscript. The handful of main-paper numbers that verifier does not
 cover were recomputed separately and are marked. Two disagreements with the
 current text are reported in section 6; neither is a wrong number, both are
@@ -28,16 +28,16 @@ to.**
 The supporting shape, which is what makes it one paper and not three findings:
 
 1. Screened routes do respond to catastrophic risk, and they respond in a
-   narrow band. Moving the stated maximum private risk from 0.1 to 0.9 against
-   a rival that always plays Safe changes Unsafe play by 10.8 to 11.8 points
-   on all three routes measured that way.
-2. Changing the rival at fixed risk changes it by 45.0 to 73.5 points. The
-   rival is worth roughly four to seven times what the risk is worth, and that
-   contrast is causal by construction because the rival is code the route
-   cannot influence and is never told about.
-3. Because the rival dominates, a self-play rate is not a measurement of how a
-   route treats risk. Self-play sits above the fixed-safe-rival rate in all
-   nine route-by-risk cells.
+   route-dependent band. Moving the stated maximum private risk from 0.1 to
+   0.9 against a rival that always plays Safe changes Unsafe play by 10.4 to
+   69.9 points across the five-route campaign.
+2. Changing the rival at fixed risk changes play by 25.3 to 87.0 points. The
+   rival effect is substantial but overlaps the risk effect once the
+   conditional rivals are included; the contrast is causal by construction
+   because the rival is code the route cannot influence and is never told about.
+3. Because the rival changes the interaction outcome, a self-play rate is not a
+   measurement of how a route treats risk. Self-play sits above the fixed-safe-
+   rival rate in 13 of 15 route-by-risk cells.
 4. And the delegate population is not a population. Twenty human participants
    produce effectively 18.9 to 19.7 distinct five-round action sequences out of
    twenty; every admitted route falls below every one of 20,000 matched human
@@ -117,7 +117,7 @@ theory predicts or what humans display.
 | B13 | The evolutionary benchmark predicts a switch and the routes deliver a gradient, so read at its usual setting the theory does not describe them. | `scripts/reproduce_egt_model.py` outputs | At selection strength 2 the model predicts 99.2, 98.0 and 1.9 percent Unsafe; Gemini 3 Flash plays 98.9, 73.1, 60.2 and Claude Sonnet 5 89.2, 48.4, 32.3 | RQ3 |
 | B14 | That mismatch is a property of the setting, not of the game, and the setting that fits the routes is the one the source study fits to its own humans. | `scripts/analyze_egt_beta_sensitivity.py` outputs | 90 stationary cells swept; at selection strength 0.01 with mutation 0.05 the model predicts 87.3, 63.9 and 38.0 percent, within 10.3 points of Claude Sonnet 5 and 15.1 of Gemini 3 Flash in root mean square error | RQ3 |
 | B14a | The all-five analysis-only extension preserves the weak-selection reading for the four graded routes while Claude Opus 5 remains a shape exception. | `results/open_source/egt_reproduction/egt_admitted_route_summary.csv` and `.json` | The best well-mixed weak-selection cell is beta 0.01 with fixed mutation 0.05; graded-route RMSE is 5.1--15.4 points versus 32.9--36.6 at the reference cell, while Opus 5 is a near-step switch | RQ3 |
-| B15 | Human participants use nearly the whole policy space and every screened route uses a sliver of it. | `results/derived/trajectory_diversity_confirmatory/trajectory_diversity_confirmatory.csv` | Humans reach an effective 18.9, 19.7 and 19.3 sequences out of 20 at mean pairwise distances 0.47, 0.50 and 0.50; the largest screened upper bound is 12.3 against a human lower bound of 14.8 | RQ3 |
+| B15 | Human participants use nearly the whole observed trajectory space and every screened route uses a sliver of it. | `results/derived/trajectory_diversity_confirmatory/trajectory_diversity_confirmatory.csv` | Humans reach an effective 18.9, 19.7 and 19.3 sequences out of 20 at mean pairwise distances 0.47, 0.50 and 0.50; the largest screened upper bound is 12.3 against a human lower bound of 14.8 | RQ3 |
 | B16 | The compression is severe rather than marginal, and in one case total. | same | Claude Opus 5 produces one sequence, repeated by all 20 trajectories, at every risk level; Claude Sonnet 5 uses two at risk 0.1 | RQ3 |
 | B17 | No admitted route reaches the human range even once, against a matched null. | same | All 15 admitted route-by-risk cells fall below every one of 20,000 matched human draws; human null minima 15, 17 and 16 distinct sequences out of 20 | RQ3 |
 | B18 | The result survives a stricter null matched on independence, not only on sample size. | same | 18 of 27 cells fall below a ten-dyad null, never fewer than 16 over forty redraws | RQ3 |
