@@ -896,7 +896,7 @@ reuses a small set of them, so a route can match the human mean without
 resembling the human population at all. We measure this on first-five-round
 trajectories. Each player contributes one exact paired trajectory, a ten-bit
 string read within its own risk condition; because the progress increments are
-fixed, that string is the whole trajectory.
+fixed, that string fully specifies the first-five-round joint-action trajectory.
 The comparison covers all nine routes that faced the screen, admitted and
 refused alike, on the confirmatory baseline, 60
 trajectories per route, against 340 complete human trajectories from the public
@@ -916,10 +916,11 @@ diversity. Twenty-one of 27 route cells, including all 15 admitted cells, fall
 below every human draw. Under a stricter ten-dyad null, 18 do; that count moves
 between 16 and 20 over forty redraws. Humans reach an effective 18.9, 19.7 and
 19.3 trajectories out of 20 at risks $0.1$, $0.6$ and $0.9$, at mean pairwise
-distances of 0.47, 0.50 and 0.50. Panels b and c add two complementary
-sample-size-matched statistics: Hill $q{=}1$ counts how many trajectories a
-population effectively produces, while mean pairwise Hamming distance measures
-how far apart they are. Under Hill $q{=}1$, every admitted route sits entirely
+distances of 0.47, 0.50 and 0.50. Panel b sorts the observed paths by frequency
+and panel c displays the modal five-round joint-action sequence. The same cells
+support two numerical checks reported in the supplement: Hill $q{=}1$ counts
+effective trajectories and mean pairwise Hamming distance measures separation
+of their ten action bits. Under Hill $q{=}1$, every admitted route sits entirely
 below the human interval at every risk level.
 
 The concentration is strongest for Claude Opus 5, which produces a single
@@ -1035,9 +1036,8 @@ provide a more consistent profile; which part of the observed trajectory space a
 on differs from route to route. If one model were reused as a strategic adviser
 across many organisations, its concentrated profile would be one component of
 the resulting decision environment, alongside the diversity of human decision
-makers. Whether that balance matters outside this idealised game is not
-something we can measure here, but it can be measured before delegation is
-introduced.
+makers. Whether that balance matters beyond this game must be measured before
+delegation.
 
 % Acknowledgements name individuals, their institutions and a grant number, so
 % they identify the authors. The class does not suppress this section in

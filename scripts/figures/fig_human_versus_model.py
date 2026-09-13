@@ -27,9 +27,10 @@ nine-route baseline campaign every other figure reads through ``figdata`` and
 reuses the pilot analyser's own trajectory encoding, statistic for statistic and
 seed for seed.  The encoding is therefore still not invented here: a trajectory
 is the focal player's first five actions followed by its opponent's first five,
-ten bits, and because the progress increments are fixed that string is the whole
-trajectory.  The comparison size of twenty is the pilot analyser's, and the
-human file is its de-identified source study.
+ten bits, and because the progress increments are fixed that string fully
+specifies the first-five-round joint-action trajectory.  The comparison size of
+twenty is the pilot analyser's, and the human file is its de-identified source
+study.
 
 Panels
   a  The matched null, one facet per risk condition, rows shared with panel b.

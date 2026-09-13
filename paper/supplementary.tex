@@ -1601,8 +1601,8 @@ only in level.
 \subsection{Population identity in first-five-round trajectories}
 \label{app:population-identity}
 
-Table~\ref{tab:population-identity} is the diagnostic the main paper
-summarises: it asks how well a simple classifier can name the population that
+Table~\ref{tab:population-identity} is a supplementary diagnostic: it asks how
+well a simple classifier can name the population that
 produced a trajectory, using the same 15 raw features as the trajectory
 embedding of \S\ref{app:tsne-outcome}. We fit a shallow decision tree with
 class-balanced loss under stratified five-fold grouped cross-validation. The
@@ -1840,7 +1840,8 @@ imply matching the human reciprocity-dominated association profile.
 \label{app:twoplayer-baseline}
 
 The five-checkpoint two-player descriptive baseline referenced throughout
-the two-player strategic diversity results in the main paper and the observable drivers of unsafe play in the main paper completed 150
+the two-player strategic diversity results in the main paper and the
+exploratory observable-driver analysis in this supplement completed 150
 races and 2{,}790 decisions, crossing five checkpoints (GPT-5-nano,
 GPT-5.4-nano, Gemini-3-Flash-preview, Gemini-3.1-Flash-Lite,
 Gemini-3.5-Flash-Lite) with the mechanism's three assigned private-risk
@@ -2031,9 +2032,10 @@ Table~\ref{tab:population-identity} instead.
 \subsection{Mean round-by-round profile per population}
 \label{app:human-radar}
 
-The embedding in the main paper shows that human trajectories spread more
-widely than any single checkpoint's. Figure~\ref{fig:human-radar} is the same
-comparison read one feature at a time: population means over the fourteen
+The trajectory-diversity comparison in the main paper shows that human
+trajectories spread more widely than any single checkpoint's.
+Figure~\ref{fig:human-radar} is the same comparison read one feature at a time:
+population means over the fourteen
 features every trajectory shares, with action probabilities and absolute
 progress gaps separated so that neither scale obscures the other.
 
@@ -2101,10 +2103,10 @@ Tables~\ref{tab:position-gpt5nano} and~\ref{tab:position-gpt54nano} give them
 in full for the two checkpoints that have a persona sweep and an observed
 position. Relative position is observed rather than assigned, so these are
 associations within a persona band, not position effects. The race is this
-paper's independent unit, but the per-race source for these two specific
-breakdowns could not be located in the analysis record. We therefore print
-only the decision count and descriptive rate, with no confidence interval or
-inferential interpretation.
+paper's independent unit. Race-level identifiers were not retained in the
+archived derivative used for this breakdown; we therefore report these cells
+descriptively and make no inferential claim from them. We print only the
+decision count and descriptive rate, with no confidence interval.
 
 \begin{table}[t]
     \caption{\Unsafe{} rate by persona band and relative position,
@@ -2169,8 +2171,8 @@ inferential interpretation.
 \subsection{Cluster-count sensitivity and stability of the human archetypes}
 \label{app:k-sensitivity}
 
-The behavioural archetypes used in this supplement and in the main paper are
-$k$-means groups: the 341 human participants are described by five
+The behavioural archetypes used in this supplement are $k$-means groups: the
+341 human participants are described by five
 standardised summary numbers each, and $k$-means partitions them into $k$
 groups so that each participant is near the average of its own group. The
 number of groups is a choice, not a measurement, so this subsection reports
@@ -2230,14 +2232,14 @@ interval runs from 0.39 to 0.98, which is wide. The groups are therefore
 useful descriptions of where the human sample sits in this five-number space,
 not evidence that four discrete human strategies exist.
 
-The conclusion the main paper draws from these groups does not depend on $k$.
-That conclusion is about coverage: the human sample spreads across the whole
-set of archetypes while almost every single checkpoint concentrates on a few.
+The supplementary coverage result does not depend on $k$. It concerns how the
+human sample spreads across the whole set of archetypes while almost every
+single checkpoint concentrates on a few.
 Table~\ref{tab:k-occupancy} counts, for each population and each $k$, how many
 of the $k$ archetypes that population actually occupies, where a population
 counts as occupying an archetype when at least 5\% of its entities project to
 it. The human row occupies all $k$ archetypes at every $k$ from two to six.
-No checkpoint matches that. The closest is the exception the main paper names,
+No checkpoint matches that. The closest is the exception this supplement names,
 GPT-5.4 nano, which occupies all $k$ archetypes at $k = 2$, $3$, $5$ and $6$
 and three of four at $k = 4$. Every other checkpoint falls short from $k = 4$
 upward, and GPT-5 nano is the extreme case, occupying exactly one archetype at
@@ -2477,7 +2479,7 @@ over the whole admitted set, which the pilot export could not do.
 \subsection{Behavioural-archetype coverage by population}
 \label{app:archetype-coverage}
 
-The main paper reports that human trajectories spread more evenly across the
+This supplement reports that human trajectories spread more evenly across the
 archetypes than most single checkpoints do, with GPT-5.4-nano the exception.
 Table~\ref{tab:archetype-coverage} is the per-population breakdown behind
 that statement at the four archetypes used throughout, so a single share can
@@ -3050,7 +3052,7 @@ about behaviour, and failed quota or authentication attempts contributed no
 races to the admitted set. The complete receipt and assignment audit is
 retained with the artifact. The full route-by-risk record is in
 Table~\ref{tab:scripted-opponent}; Figure~\ref{fig:scripted-opponent} shows the
-same contrasts as intervals and paired trajectories.
+same response and context contrasts as categorical tiles.
 
 \paragraph{Coverage and decoding contracts.} The final campaign is complete:
 all five admitted routes have all 12 route-by-strategy-by-risk cells. Every
@@ -3071,23 +3073,21 @@ metadata limitation rather than a gameplay failure.
     \centering
     \includegraphics[width=\textwidth]{../figures/paper/scripted_opponent.pdf}
     \caption{The scripted-opponent campaign on five gate-admitted routes.
-    (a) A response surface: each tile is an admitted route's Unsafe rate under
-    one scripted rival, with columns ordered from Always Safe to Always Unsafe
-    and one facet per stated risk. (b) The rival-stance contrast, the rate
-    against \emph{Always Unsafe} minus the rate against \emph{Always Safe},
-    differenced inside a repetition so that the horizon stopping draw is
-    removed. All fifteen 95\% paired-block bootstrap intervals over ten matched
-    blocks lie to the right of zero, with magnitudes that differ by route and
-    risk. (c) The comparison the tables cannot make: each route's rate against
-    a rival that stays \Safe{}, as a filled marker, beside the rate the same
-    route reaches when its rival is a second copy of itself, as an open marker.}
+    (a) Response surfaces across scripted rivals and stated-risk levels.
+    (b) Paired effect magnitudes: the Always-Unsafe minus Always-Safe rival
+    effect at each risk, with the fixed-safe risk effect shown on the same
+    percentage-point scale. (c) Always-Safe rates, self-play rates and their
+    signed differences; a $\geq$ label marks a ceiling-censored gap.
+    Confidence intervals for the rival contrast are reported in
+    Table~\ref{tab:scripted-opponent}.}
     \Description{Three-panel scripted-opponent figure. Panel a contains three
     response matrices, one per maximum private-risk level, with five route rows
     and four ordered scripted-rival columns; every tile prints the measured
-    Unsafe rate. Panel b is a horizontal interval plot of the Always-Unsafe
-    minus Always-Safe effect for five routes at three risk levels. Panel c is a
-    horizontal dumbbell plot comparing fixed Always-Safe and self-play Unsafe
-    rates for the same routes and risk levels.}
+    Unsafe rate. Panel b is a categorical tile matrix of paired rival-effect
+    magnitudes for the five routes at three risk levels, with a zero reference
+    and the fixed-safe risk effect shown for comparison. Panel c is a
+    categorical tile matrix showing Always-Safe rate, self-play rate and their
+    signed gap for the same routes and risk levels.}
     \label{fig:scripted-opponent}
 \end{figure*}
 
@@ -3219,6 +3219,18 @@ metadata limitation rather than a gameplay failure.
         \bottomrule
     \end{tabular}
 \end{table*}
+
+\paragraph{One-cell contract sensitivity.} The one Claude Opus 5 cell collected
+under the legacy decoding contract is \emph{Always Safe} at risk $0.6$. A
+predeclared harmonisation attempt under the active contract returned a quota
+403 before any race or model output was produced, so it is retained as an
+infrastructure failure and the existing cell is not replaced. Excluding it as a
+read-only scope check removes one $\text{Always Unsafe} - \text{Always Safe}$
+contrast and one four-strategy ordering cell. The remaining evidence still has
+positive rival contrasts in $14/14$ cells and the weak ordering in $13/14$
+cells (strict ordering in $11/14$). This is a scope sensitivity, not a
+harmonised replication; full-grid values remain reported under their recorded
+contracts.
 
 \paragraph{Finding one: the shape is largely shared, with one boundary
 reversal.} Every route generally plays \Unsafe{} more often as the scripted

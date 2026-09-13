@@ -501,7 +501,10 @@ def draw_context_matrix(ax, safe_arm, selfplay, censored):
                                     else S.INK), linewidth=1.0, width=0.86)
             gap_label = _effect_text(gap_value)
             if censored[(route, risk)][0]:
-                gap_label = ">=" + gap_label
+                # The censoring marker already communicates a positive lower
+                # bound; omit the redundant plus sign so the label stays
+                # inside the compact delta tile.
+                gap_label = f">={100 * gap_value:.1f}"
             _draw_tile(ax, base + 2, row, gap_value,
                        face=_effect_fill(100 * gap_value, colour=S.UNSAFE_C,
                                          negative_colour=S.SAFE_C,
@@ -516,7 +519,8 @@ def draw_context_matrix(ax, safe_arm, selfplay, censored):
     ax.set_xlim(-0.82, 8.48)
     ax.set_ylim(len(ROUTES) - 0.48, -1.18)
     ax.set_xticks(x_positions)
-    ax.set_xticklabels(["AS", "SP", "Δ"] * len(S.RISKS), fontsize=S.FS_NOTE)
+    ax.set_xticklabels(["AS", "SP", r"$\Delta$"] * len(S.RISKS),
+                       fontsize=S.FS_NOTE)
     ax.set_yticks(y_positions)
     ax.set_yticklabels([])
     ax.set_xlabel("Unsafe play (%)", labelpad=8)
