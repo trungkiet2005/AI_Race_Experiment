@@ -729,18 +729,18 @@ although swapping the opaque action-code mapping shifts Unsafe{} play by
   \caption{A shared rival response changes a route's play. Panel (a) is a response
   surface: each tile is an admitted route's Unsafe rate under one scripted
   rival, with columns ordered from Always Safe to Always Unsafe and facets for
-  the three maximum-risk conditions. Panel (b) shows the paired Always-Unsafe
-  minus Always-Safe effect with 95\% paired-block bootstrap intervals over ten
-  matched blocks; all fifteen effects are positive, although their magnitudes
-  differ by route and risk. Panel (c) contrasts a fixed
-  Always-Safe rival with self-play, separating rival-conditioned behaviour from
-  the mirror-match outcome.}
+  the three maximum-risk conditions. Panel (b) shows paired effect magnitudes
+  as categorical tiles: the red block changes the rival from Always Safe to
+  Always Unsafe, while the graphite tile changes stated risk with the rival
+  held at Always Safe. Panel (c) shows the fixed-rival rate, self-play rate and
+  their signed gap for each risk condition. These point estimates use the same
+  matched blocks reported in the supplementary material.}
   \Description{Three-panel figure. Panel a contains three response matrices,
   one per risk level, with five route rows and four ordered scripted-rival
-  columns; every tile prints the measured Unsafe rate. Panel b is a horizontal
-  interval plot of the Always-Unsafe minus Always-Safe effect for five routes at
-  three risk levels. Panel c is a horizontal dumbbell plot comparing fixed
-  Always-Safe and self-play Unsafe rates for the same routes and risk levels.}
+  columns; every tile prints the measured Unsafe rate. Panel b is a categorical
+  effect matrix with a zero baseline, three rival-effect tiles and one stated-
+  risk tile per route. Panel c is a categorical rate matrix with fixed-rival,
+  self-play and signed-gap tiles for each of the three risk levels.}
   \label{fig:scripted-opponent-main}
 \end{figure*}
 
@@ -947,16 +947,18 @@ match human strategic diversity.
     checkpoint the screen admits. Panel a places each admitted checkpoint's
     count of distinct paired first-five-round trajectories against the matched human
     resampling null; the shaded region is the range no human draw reached.
-    Panel b reports the effective number of trajectories (Hill $q{=}1$) with
-    95\% resampling intervals; panel c reports mean pairwise Hamming distance
-    over the ten action bits. Route colour identifies the endpoint and marker
-    shape identifies stated risk; the human row is the matched reference.}
+    Panel b sorts the 60 matched trajectories within each population by
+    frequency, with one segment per distinct path and its count at the right.
+    Panel c shows the modal pooled first-five-round joint-action path for each
+    displayed population (the human row is the median matched draw); each tile
+    is the focal route's action followed by its opponent's action.}
     \label{fig:diversity}
     \Description{Panel a shows three facets, one per risk condition, each with a
     histogram of a human resampling null and one marker per checkpoint placed on
     the same axis, with the shaded region marking counts no human draw reached.
-    Panels b and c show Hill $q{=}1$ effective diversity and mean
-    pairwise Hamming distance, respectively, for the same populations and risks.}
+    Panel b shows frequency-sorted composition bars for the 60 matched
+    trajectories. Panel c shows the modal five-round joint-action path for each
+    population as one tile per round.}
 \end{figure*}
 
 The same picture holds one level down, on the rates themselves. Raw

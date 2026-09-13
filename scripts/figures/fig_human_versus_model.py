@@ -41,16 +41,10 @@ Panels
      that rule in all three facets.  The only cells that land inside the null
      belong to GPT-5.4 mini and GPT-5.4 nano, and the comprehension gate
      rejected both.
-  b  Hill q=1 effective diversity, with a horizontal interval for each route and
-     risk condition.  The human row is the matched reference interval, while
-     route colours identify the endpoint and marker shapes identify risk.
-  c  Mean pairwise Hamming distance over the ten action bits.  This second
-     measure separates how many trajectories are used from how far apart they
-     are, so the two diversity panels do not repeat the same statistic.
-
-The all-route supplemental output preserves the former composition barcode and
-modal-path fingerprint.  It is generated from the same trajectory keys, but it
-is not the main paper's diversity comparison.
+  b  The mechanism, on the same rows.  Every segment is one distinct paired
+     five-round sequence and its width is that sequence's share of the sixty
+     matched trajectories.  The human row is a comb of thin slivers; Claude
+     Opus 5 spends all sixty on two sequences, and inside each risk cell on one.
 
 What this figure does not show.  It is descriptive.  It measures observed
 diversity in these samples, not latent policy entropy, and a cell below the
@@ -97,7 +91,6 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-from matplotlib.lines import Line2D
 from matplotlib.patches import Patch, Rectangle
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
@@ -110,11 +103,6 @@ N_NULL = 20_000
 SEED = 20260910
 COMPARISON_N = 20
 DYAD_N = 10
-ROOT = Path(__file__).resolve().parents[2]
-DIVERSITY_CSV = (ROOT / "results" / "derived" / "trajectory_diversity_confirmatory"
-                  / "trajectory_diversity_confirmatory.csv")
-RISK_MARKERS = {0.1: "o", 0.6: "s", 0.9: "^"}
-RISK_OFFSETS = {0.1: 0.16, 0.6: 0.0, 0.9: -0.16}
 
 # The diversity analyser names checkpoints by display label; the rest of the
 # paper names them by model route, which is what carries colour, marker and
@@ -183,61 +171,6 @@ def identity(label):
     route = LABEL_TO_ROUTE[label]
     verdict = route in S.ADMITTED
     return S.ROUTE_C[route], S.ROUTE_M[route], S.ROUTE_SHORT[route], verdict
-
-
-def load_diversity_artifact() -> pd.DataFrame:
-    """Load the already-derived q=1 and Hamming values without recomputing them.
-
-    The q=0 panel above is deliberately tied to the trajectory keys used by
-    this script because it also builds the matched human null.  Panels b and c
-    read the confirmatory analysis export directly, so a presentation edit
-    cannot change a diversity estimate or its cluster-bootstrap interval.
-    """
-    if not DIVERSITY_CSV.is_file():
-        raise SystemExit(f"missing verified diversity artifact: {DIVERSITY_CSV}")
-
-    table = pd.read_csv(DIVERSITY_CSV, encoding="utf-8-sig")
-    required = {
-        "risk_cap", "population", "source_n", "comparison_n", "q1_mean",
-        "q1_ci_low", "q1_ci_high", "mean_pairwise_hamming",
-        "hamming_ci_low", "hamming_ci_high",
-    }
-    missing = sorted(required - set(table.columns))
-    if missing:
-        raise SystemExit(f"diversity artifact lacks required columns: {missing}")
-
-    table = table.copy()
-    table["risk_cap"] = pd.to_numeric(table["risk_cap"], errors="raise")
-    numeric = [
-        "source_n", "comparison_n", "q1_mean", "q1_ci_low", "q1_ci_high",
-        "mean_pairwise_hamming", "hamming_ci_low", "hamming_ci_high",
-    ]
-    for column in numeric:
-        table[column] = pd.to_numeric(table[column], errors="raise")
-        if not np.isfinite(table[column].to_numpy(float)).all():
-            raise SystemExit(f"non-finite values in diversity artifact column {column!r}")
-
-    expected_populations = {"Human"} | {
-        S.ROUTE_LABEL[route] for route in S.ROUTE_ORDER
-    }
-    expected_keys = {
-        (population, risk) for population in expected_populations
-        for risk in S.RISKS
-    }
-    observed_keys = set(zip(table["population"], table["risk_cap"]))
-    if len(observed_keys) != len(table) or observed_keys != expected_keys:
-        raise SystemExit(
-            "diversity artifact does not have exactly one row for every audited "
-            f"population and risk cell: observed {len(observed_keys)}, "
-            f"expected {len(expected_keys)}"
-        )
-
-    model_rows = table[table["population"] != "Human"]
-    if not (model_rows["comparison_n"] == COMPARISON_N).all():
-        raise SystemExit("model diversity cells are not matched to 20 trajectories")
-    if not (model_rows["source_n"] == COMPARISON_N).all():
-        raise SystemExit("model diversity cells do not have 20 source trajectories")
-    return table
 
 
 def distinct_per_row(codes: np.ndarray) -> np.ndarray:
@@ -382,7 +315,10 @@ def draw_facet(ax, counts, cells, rows, *, risk, show_ylabels, show_xlabel, note
         ax.spines[side].set_visible(False)
     ax.spines["bottom"].set_color(S.HAIRLINE)
     if show_xlabel:
-        ax.set_xlabel("distinct paired first-five-round trajectories among 20", labelpad=2)
+        ax.set_xlabel(
+            f"distinct paired first-five-round trajectories among {COMPARISON_N}",
+            labelpad=2,
+        )
 
 
 def main() -> None:
@@ -500,16 +436,13 @@ def main() -> None:
         label: [k for cell in cells for k in cell]
         for label, cells in model_cells.items()
     }
-    diversity_table = load_diversity_artifact()
 
     order_all = sorted(model_pooled, key=lambda lab: (-model_pooled[lab], lab))
 
     shared = dict(
-        null_counts=null_counts, model_counts=model_counts, model_cells=model_cells,
+        null_counts=null_counts, model_counts=model_counts,
         model_pooled=model_pooled, human_profile=human_profile,
-        median_distinct=median_distinct, below_dyad=below_dyad,
-        inside_labels=inside_labels, human_keys=human_keys, model_keys=model_keys,
-        diversity_table=diversity_table,
+        median_distinct=median_distinct, human_keys=human_keys, model_keys=model_keys,
     )
 
     # The main paper draws the five routes the validity screen admitted, plus
@@ -524,22 +457,7 @@ def main() -> None:
                 [label for label in order_all
                  if LABEL_TO_ROUTE[label] in S.ADMITTED],
                 marks=False, **shared)
-    # Keep the previous composition barcode and modal-path fingerprint in the
-    # all-route output for the supplement.  The main output now uses both
-    # verified diversity measures instead of repeating the same occupancy view.
-    draw_path_figure("human_versus_model_all_routes", order_all, marks=True, **shared)
-
-
-def diversity_cell(table: pd.DataFrame, population: str, risk: float) -> pd.Series:
-    """Return one verified route-by-risk row from the diversity artifact."""
-    cell = table[(table["population"] == population)
-                 & np.isclose(table["risk_cap"], risk)]
-    if len(cell) != 1:
-        raise RuntimeError(
-            f"expected one diversity row for {population!r} at risk {risk}, "
-            f"found {len(cell)}"
-        )
-    return cell.iloc[0]
+    draw_figure("human_versus_model_all_routes", order_all, marks=True, **shared)
 
 
 def population_label(label: str, *, marks: bool) -> str:
@@ -549,168 +467,72 @@ def population_label(label: str, *, marks: bool) -> str:
     return f"{short} {VERDICT_MARK[identity(label)[3]]}" if marks else short
 
 
-def draw_metric_panel(ax, table, order, rows, frame, *, value_key, low_key,
-                      high_key, xlim, xticks, xlabel, claim, letter, marks):
-    """Draw one metric with risk as marker shape and route as colour."""
-    entries = [(frame.human_tick, "Human")] + rows
-    human_y = frame.human_tick
-
-    for risk in S.RISKS:
-        offset = RISK_OFFSETS[risk]
-        human = diversity_cell(table, "Human", risk)
-        human_mean = float(human[value_key])
-        human_low = float(human[low_key])
-        human_high = float(human[high_key])
-        y = human_y + offset
-        # The human reference is a heavier interval with an open marker. It is
-        # the comparison band for every coloured route on the same risk row.
-        ax.plot([human_low, human_high], [y, y], color=HUMAN_C, lw=2.4,
-                solid_capstyle="round", zorder=2)
-        ax.plot([human_low, human_low], [y - 0.07, y + 0.07], color=HUMAN_C,
-                lw=0.8, zorder=2)
-        ax.plot([human_high, human_high], [y - 0.07, y + 0.07], color=HUMAN_C,
-                lw=0.8, zorder=2)
-        S.dot(ax, human_mean, y, color=HUMAN_C, marker=RISK_MARKERS[risk],
-              size=22, filled=False, ring=False, lw=1.0, zorder=4)
-
-        for route_y, population in rows:
-            row = diversity_cell(table, population, risk)
-            mean = float(row[value_key])
-            low = float(row[low_key])
-            high = float(row[high_key])
-            colour = identity(population)[0]
-            if high > low:
-                ax.errorbar(
-                    mean, route_y + offset,
-                    xerr=np.array([[max(0.0, mean - low)],
-                                   [max(0.0, high - mean)]]),
-                    fmt="none", ecolor=colour, elinewidth=1.0, capsize=2.2,
-                    zorder=2,
-                )
-            S.dot(ax, mean, route_y + offset, color=colour,
-                  marker=RISK_MARKERS[risk], size=18, zorder=4)
-
-    y_ticks = [y for y, _ in entries]
-    ax.set_yticks(y_ticks, [population_label(name, marks=marks)
-                            for _, name in entries])
-    for tick, (_, name) in zip(ax.get_yticklabels(), entries):
-        tick.set_color(HUMAN_C if name == "Human" else identity(name)[0])
-        tick.set_fontweight("bold")
-    ax.tick_params(axis="y", length=0, pad=3)
-    ax.set_xlim(*xlim)
-    ax.set_ylim(Y_LO, frame.y_hi)
-    ax.set_xticks(xticks)
-    ax.set_xlabel(xlabel, labelpad=2)
-    S.strip(ax, left=False, grid_axis="x")
-    S.panel(ax, letter, claim, pad=5)
-
-
-def risk_handles():
-    return [
-        Line2D([], [], marker=RISK_MARKERS[risk], color=HUMAN_C,
-               markerfacecolor=S.SURFACE, markeredgecolor=HUMAN_C,
-               markeredgewidth=0.8, lw=0, ms=4.0,
-               label=fr"$p_r^{{\max}}={S.RISK_LABEL[risk]}$")
-        for risk in S.RISKS
-    ]
-
-
-def draw_figure(stem, order, *, marks, null_counts, model_counts, model_cells,
-                model_pooled, human_profile, median_distinct, below_dyad,
-                inside_labels, human_keys, model_keys, diversity_table):
-    """Main diversity figure: q=0 null, q=1, and Hamming distance."""
-    del model_cells, model_pooled, human_profile, median_distinct, below_dyad
-    del inside_labels, human_keys, model_keys
+def draw_figure(stem, order, *, marks, null_counts, model_counts, model_pooled,
+                human_profile, median_distinct, human_keys, model_keys):
+    """Render the former barcode and modal-path composition over real keys."""
+    if not human_keys:
+        raise RuntimeError("the representative human draw has no trajectories")
+    if len(set(human_keys)) != median_distinct:
+        raise RuntimeError(
+            "representative human draw count disagrees with its selected null draw"
+        )
 
     frame = Frame(len(order))
     rows = frame.rows(order)
+    narrowest = order[-1]
     floors = null_counts.min(axis=0)
     below = [(risk, label) for i, risk in enumerate(S.RISKS)
              for label in order if model_counts[label][i] < floors[i]]
     n_cells = len(order) * len(S.RISKS)
+    # The left triptych is the matched-human reference from the former main
+    # figure. It stays tied to the same real trajectory keys as the rows on the
+    # right, so restoring the visual language does not change the estimand.
 
     fig = plt.figure(figsize=(S.TEXT, frame.height_in))
     gs = fig.add_gridspec(1, 2, width_ratios=[1.52, 1.18], wspace=0.42)
     left = gs[0, 0].subgridspec(1, 3, wspace=0.13)
     axes_a = [fig.add_subplot(left[i]) for i in range(3)]
-    right = gs[0, 1].subgridspec(2, 1, height_ratios=[1.0, 1.0], hspace=0.90)
+    right = gs[0, 1].subgridspec(2, 1, height_ratios=[1.30, 0.82], hspace=0.90)
     ax_b = fig.add_subplot(right[0, 0])
     ax_c = fig.add_subplot(right[1, 0])
 
-    # --- a: q=0 distinct first-five-round trajectories ----------------------
     for i, (ax, risk) in enumerate(zip(axes_a, S.RISKS)):
-        draw_facet(ax, null_counts[:, i],
-                   {label: model_counts[label][i] for label in order},
-                   rows, risk=risk, show_ylabels=(i == 0), show_xlabel=(i == 1),
-                   notes=[], frame=frame, marks=marks)
+        draw_facet(
+            ax, null_counts[:, i],
+            {label: model_counts[label][i] for label in order}, rows,
+            risk=risk, show_ylabels=(i == 0), show_xlabel=(i == 1),
+            notes=[], frame=frame, marks=marks,
+        )
     S.direct_label(axes_a[0], 1.3, frame.human_base + 0.10,
-                   f"{N_NULL:,} draws\nof 20 humans", color=S.INK_2,
+                   f"{N_NULL:,} draws\nof {COMPARISON_N} humans", color=S.INK_2,
                    ha="left", va="bottom", dx=0, dy=0)
-    S.panel(axes_a[0], "a",
-            f"{len(below)} of {n_cells} model cells sit below every human draw",
-            pad=16)
-
-    # --- b/c: verified diversity statistics on the same population rows -----
-    draw_metric_panel(
-        ax_b, diversity_table, order, rows, frame,
-        value_key="q1_mean", low_key="q1_ci_low", high_key="q1_ci_high",
-        xlim=(0.0, 21.0), xticks=[0, 5, 10, 15, 20],
-        xlabel="effective trajectories (Hill $q{=}1$)",
-        claim="effective diversity contracts", letter="b", marks=marks,
+    S.panel(
+        axes_a[0], "a",
+        f"{len(below)} of {n_cells} model cells sit below every human draw",
+        pad=16,
     )
-    draw_metric_panel(
-        ax_c, diversity_table, order, rows, frame,
-        value_key="mean_pairwise_hamming", low_key="hamming_ci_low",
-        high_key="hamming_ci_high", xlim=(0.0, 0.60),
-        xticks=[0.0, 0.2, 0.4, 0.6],
-        xlabel="mean pairwise Hamming distance (10 bits)",
-        claim="the same compression spans action distance", letter="c", marks=marks,
-    )
-    # The inter-panel gap is a dedicated legend lane. Keeping the key outside
-    # both axes makes the human interval and every route marker unobstructed.
-    fig.legend(handles=risk_handles(), loc="center",
-               bbox_to_anchor=(0.82, 0.535), ncol=3, frameon=False,
-               fontsize=S.FS_NOTE, handletextpad=0.35,
-               columnspacing=0.8, borderaxespad=0.0)
-
-    if marks:
-        fig.text(0.105, 0.025, VERDICT_KEY, ha="left", va="bottom",
-                 fontsize=S.FS_NOTE, color=S.MUTED)
-
-    if below and len(below) != n_cells:
-        print(f"  {stem}: {n_cells - len(below)} of {n_cells} drawn cells are NOT "
-              "below the human minimum")
-    S.save(fig, stem, width=S.TEXT)
-
-
-def draw_path_figure(stem, order, *, marks, model_cells, model_pooled,
-                     human_profile, median_distinct, human_keys, model_keys,
-                     **_):
-    """Preserve the former composition and modal-path view for the supplement."""
-    frame = Frame(len(order))
-    rows = frame.rows(order)
-    narrowest = order[-1]
-
-    fig = plt.figure(figsize=(S.TEXT, frame.height_in))
-    gs = fig.add_gridspec(1, 2, width_ratios=[1.18, 1.0], wspace=0.42)
-    ax_b, ax_c = [fig.add_subplot(gs[0, i]) for i in range(2)]
 
     # --- b: composition barcode of the observed trajectory space -------------
     for y, name in [(frame.human_tick, "Human")] + rows:
         if name == "Human":
-            profile, colour = human_profile, HUMAN_C
+            keys, profile, colour = human_keys, human_profile, HUMAN_C
             count = median_distinct
         else:
             colour = identity(name)[0]
-            profile = composition([k for cell in model_cells[name] for k in cell])
+            keys = model_keys[name]
+            if not keys:
+                raise RuntimeError(f"{name} has no trajectories to draw")
+            profile = composition(keys)
             count = model_pooled[name]
+        if count != len(set(keys)):
+            raise RuntimeError(f"{name} barcode count is not derived from its keys")
         offset = 0.0
         for j, share in enumerate(profile):
             ax_b.barh(y, share, left=offset, height=BAR_H, color=colour,
                       alpha=1.0 if j % 2 == 0 else 0.62, edgecolor=S.SURFACE,
                       linewidth=0.45, zorder=3)
             offset += share
-        S.direct_label(ax_b, 1.0, y, f"{count}/60", color=colour, dx=4,
+        S.direct_label(ax_b, 1.0, y, f"{count}/{len(keys)}", color=colour, dx=4,
                        weight="bold" if name in ("Human", narrowest) else "normal")
 
     ax_b.set_xlim(0.0, 1.0)
@@ -725,17 +547,24 @@ def draw_path_figure(stem, order, *, marks, model_cells, model_pooled,
         tick.set_color(HUMAN_C if name == "Human" else identity(name)[0])
         tick.set_fontweight("bold")
     ax_b.tick_params(axis="y", length=0, pad=3)
-    ax_b.set_xlabel("share of 60 matched trajectories (%)", labelpad=2)
+    ax_b.set_xlabel(f"share of {len(human_keys)} matched trajectories (%)", labelpad=2)
     S.strip(ax_b, grid_axis="x")
     S.panel(ax_b, "b", "routes reuse a small set of paths", pad=5)
 
     # --- c: compact game-theoretic fingerprint of the modal path -------------
     path_rows = [(frame.human_tick, "Human")] + rows
     population_names = ["Human"] + [name for _, name in rows]
+    reference_path, _ = modal_path(human_keys)
+    round_count = len(paired_states(reference_path))
     for y, name in path_rows:
         keys = human_keys if name == "Human" else model_keys[name]
         path, n_mode = modal_path(keys)
-        for round_idx, pair in enumerate(paired_states(path)):
+        pairs = paired_states(path)
+        if len(pairs) != round_count:
+            raise RuntimeError(
+                f"{name} modal path has {len(pairs)} rounds, expected {round_count}"
+            )
+        for round_idx, pair in enumerate(pairs):
             face = PAIR_C[pair]
             ink = S.SURFACE if pair == "11" else S.INK
             ax_c.add_patch(Rectangle((round_idx - 0.46, y - 0.25), 0.92, 0.50,
@@ -744,7 +573,7 @@ def draw_path_figure(stem, order, *, marks, model_cells, model_pooled,
             ax_c.text(round_idx, y, PAIR_LABEL[pair], ha="center", va="center",
                       fontsize=6.1, color=ink, fontweight="bold", zorder=4)
         colour = HUMAN_C if name == "Human" else identity(name)[0]
-        ax_c.text(5.03, y, f"{n_mode}/60", ha="left", va="center",
+        ax_c.text(round_count + 0.03, y, f"{n_mode}/{len(keys)}", ha="left", va="center",
                   fontsize=S.FS_NOTE, color=colour, fontweight="bold")
 
     ax_c.set_yticks([frame.human_tick] + [y for y, _ in rows],
@@ -752,9 +581,9 @@ def draw_path_figure(stem, order, *, marks, model_cells, model_pooled,
     for tick, name in zip(ax_c.get_yticklabels(), population_names):
         tick.set_color(HUMAN_C if name == "Human" else identity(name)[0])
         tick.set_fontweight("bold")
-    ax_c.set_xlim(-0.50, 5.72)
+    ax_c.set_xlim(-0.50, round_count + 0.72)
     ax_c.set_ylim(-0.42, frame.human_tick + 0.42)
-    ax_c.set_xticks(range(5), ["1", "2", "3", "4", "5"])
+    ax_c.set_xticks(range(round_count), [str(i + 1) for i in range(round_count)])
     ax_c.set_xlabel("round", labelpad=2)
     ax_c.tick_params(axis="y", length=0, pad=3)
     ax_c.tick_params(axis="x", length=2)
@@ -771,6 +600,9 @@ def draw_path_figure(stem, order, *, marks, model_cells, model_pooled,
     if marks:
         fig.text(0.105, 0.025, VERDICT_KEY, ha="left", va="bottom",
                  fontsize=S.FS_NOTE, color=S.MUTED)
+    if below and len(below) != n_cells:
+        print(f"  {stem}: {n_cells - len(below)} of {n_cells} drawn cells are NOT "
+              "below the human minimum")
     S.save(fig, stem, width=S.TEXT)
 
 
