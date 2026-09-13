@@ -69,6 +69,7 @@ import re
 import sys
 from pathlib import Path
 
+import matplotlib.colors as mcolors
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 import numpy as np
@@ -122,6 +123,17 @@ SEED = 20260910
 
 EXPECTED_RACES = 10
 EXPECTED_DECISIONS = 93
+
+# A game-theory response matrix benefits from an action palette rather than a
+# rainbow.  The low end is a Safe tint, the high end is the paper's Unsafe ink,
+# and every cell carries its measured value so the scale survives greyscale.
+RESPONSE_CMAP = mcolors.LinearSegmentedColormap.from_list(
+    "safe_to_unsafe",
+    ["#EAF5EF", "#F7F3E8", "#FAEEEE", "#B2182B"],
+    N=256,
+)
+RISK_MARKERS = {0.1: "o", 0.6: "s", 0.9: "^"}
+RISK_LABELS = {0.1: "risk 0.1", 0.6: "risk 0.6", 0.9: "risk 0.9"}
 
 
 def cell_rng(*key) -> np.random.Generator:
@@ -418,6 +430,114 @@ def draw_designs(ax, safe_arm, selfplay, censored):
             annotation_clip=False)
 
 
+def _relative_luminance(rgba):
+    """WCAG luminance for choosing readable text inside a response tile."""
+    def linear(value):
+        return value / 12.92 if value <= 0.04045 else ((value + 0.055) / 1.055) ** 2.4
+
+    return (0.2126 * linear(rgba[0])
+            + 0.7152 * linear(rgba[1])
+            + 0.0722 * linear(rgba[2]))
+
+
+def draw_response_matrix(ax, surface, risk, *, first=False):
+    """Show the route's response as a strategy matrix, not a line tangle."""
+    values = np.asarray([
+        [100 * surface[(route, strategy, risk)] for strategy in ORDER]
+        for route in ROUTES
+    ])
+    image = ax.imshow(values, cmap=RESPONSE_CMAP, vmin=0, vmax=100,
+                      aspect="auto", interpolation="nearest")
+    for row in range(values.shape[0]):
+        for col in range(values.shape[1]):
+            rgba = image.cmap(image.norm(values[row, col]))
+            ink = S.SURFACE if _relative_luminance(rgba) < 0.48 else S.INK
+            ax.text(col, row, f"{values[row, col]:.1f}", ha="center", va="center",
+                    fontsize=6.5, color=ink, fontweight="bold")
+    ax.set_xticks(np.arange(len(ORDER)), [LABEL[s] for s in ORDER],
+                  fontsize=S.FS_NOTE)
+    ax.set_yticks(np.arange(len(ROUTES)),
+                  [S.ROUTE_SHORT[route] if first else "" for route in ROUTES],
+                  fontsize=S.FS_NOTE)
+    if first:
+        for tick, route in zip(ax.get_yticklabels(), ROUTES):
+            tick.set_color(S.ROUTE_C[route])
+            tick.set_fontweight("bold")
+        ax.set_ylabel("route", labelpad=2)
+    else:
+        ax.tick_params(axis="y", length=0)
+    ax.set_xlabel("scripted rival", labelpad=2)
+    ax.set_xlim(-0.5, len(ORDER) - 0.5)
+    ax.set_ylim(len(ROUTES) - 0.5, -0.5)
+    ax.set_xticks(np.arange(len(ORDER) + 1) - 0.5, minor=True)
+    ax.set_yticks(np.arange(len(ROUTES) + 1) - 0.5, minor=True)
+    ax.grid(which="minor", color=S.SURFACE, linewidth=1.5)
+    ax.tick_params(which="minor", bottom=False, left=False)
+    ax.tick_params(axis="both", length=0)
+    for spine in ax.spines.values():
+        spine.set_visible(False)
+    return image
+
+
+def draw_contrast_ranges(ax, stance):
+    """Compare unconditional rivals on one horizontal, paired-effect scale."""
+    offsets = {risk: offset for risk, offset in zip(S.RISKS, (-0.17, 0.0, 0.17))}
+    for row, route in enumerate(ROUTES):
+        for risk in S.RISKS:
+            point, low, high = stance[(route, risk)]
+            y = row + offsets[risk]
+            ax.plot([100 * low, 100 * high], [y, y], lw=1.6,
+                    color=S.ROUTE_C[route], solid_capstyle="round", zorder=3)
+            S.dot(ax, 100 * point, y, color=S.ROUTE_C[route],
+                  marker=RISK_MARKERS[risk], size=24, lw=0.8)
+    ax.axvline(0.0, color=S.MUTED, lw=0.8, zorder=1)
+    ax.set_xlim(-2, 90)
+    ax.set_xticks([0, 25, 50, 75])
+    ax.set_ylim(len(ROUTES) - 0.5, -0.5)
+    ax.set_yticks(np.arange(len(ROUTES)), [S.ROUTE_SHORT[route] for route in ROUTES])
+    for tick, route in zip(ax.get_yticklabels(), ROUTES):
+        tick.set_color(S.ROUTE_C[route])
+        tick.set_fontweight("bold")
+    ax.set_xlabel("Always Unsafe minus Always Safe (points)", labelpad=2)
+    ax.set_ylabel("route", labelpad=2)
+    S.strip(ax, grid_axis="x")
+
+
+def draw_context_dumbbells(ax, safe_arm, selfplay):
+    """Show fixed-safe and self-play as paired estimates for each route."""
+    offsets = {risk: offset for risk, offset in zip(S.RISKS, (-0.17, 0.0, 0.17))}
+    for row, route in enumerate(ROUTES):
+        for risk in S.RISKS:
+            safe_pt, safe_lo, safe_hi, _, _ = safe_arm[(route, risk)]
+            self_pt, self_lo, self_hi, _, _ = selfplay[(route, risk)]
+            y = row + offsets[risk]
+            colour = S.ROUTE_C[route]
+            ax.plot([100 * safe_pt, 100 * self_pt], [y, y], color=S.MUTED,
+                    linestyle=(0, (2, 1.4)), lw=0.9, zorder=2)
+            ax.plot([100 * safe_lo, 100 * safe_hi], [y, y], color=colour,
+                    lw=1.2, solid_capstyle="round", zorder=3)
+            ax.plot([100 * self_lo, 100 * self_hi], [y, y], color=colour,
+                    lw=1.2, solid_capstyle="round", zorder=3)
+            S.dot(ax, 100 * safe_pt, y, color=colour, marker=RISK_MARKERS[risk],
+                  size=23, lw=0.7)
+            S.dot(ax, 100 * self_pt, y, color=colour, marker=RISK_MARKERS[risk],
+                  size=23, filled=False, lw=1.2)
+    ax.set_xlim(0, 105)
+    ax.set_xticks([0, 25, 50, 75, 100])
+    ax.set_ylim(len(ROUTES) - 0.5, -0.5)
+    ax.set_yticks(np.arange(len(ROUTES)), [S.ROUTE_SHORT[route] for route in ROUTES])
+    for tick, route in zip(ax.get_yticklabels(), ROUTES):
+        tick.set_color(S.ROUTE_C[route])
+        tick.set_fontweight("bold")
+    ax.set_xlabel("Unsafe play (%)", labelpad=2)
+    ax.set_ylabel("route", labelpad=2)
+    S.strip(ax, grid_axis="x")
+    # The design key is placed once below the two lower panels in ``main``.
+    # Keeping it out of the data rectangle prevents it from covering the
+    # lowest route, which is exactly where the fixed-safe and self-play arms
+    # can be close to zero.
+
+
 def main() -> None:
     turns = load_campaign()
     route_rows = turns[turns["is_route_decision"]].copy()
@@ -544,52 +664,67 @@ def main() -> None:
         print(f"  {S.ROUTE_SHORT[route]:<10} opened Unsafe in "
               f"{int(own['unsafe'].sum())}/{len(own)} races")
 
-    fig = plt.figure(figsize=(S.TEXT, 5.15))
-    gs = fig.add_gridspec(2, 6, height_ratios=[1.0, 1.04],
-                          left=0.07, right=0.985, top=0.84, bottom=0.20,
-                          wspace=0.62, hspace=1.08)
-    facets = [fig.add_subplot(gs[0, 2 * i:2 * i + 2]) for i in range(len(S.RISKS))]
-    for i, (ax, risk) in enumerate(zip(facets, S.RISKS)):
-        draw_ordering(ax, surface, risk, first=(i == 0), middle=(i == 1),
-                      ceiling_cells=ceiling_cells)
-    legend_handles = [
-        Line2D([0], [0], marker=S.ROUTE_M[route], color=S.ROUTE_C[route],
-               markerfacecolor=S.ROUTE_C[route], markeredgecolor=S.SURFACE,
-               markeredgewidth=0.7, linewidth=0, markersize=4.2,
-               label=S.ROUTE_LABEL[route])
-        for route in ROUTES
+    # The first version made the reader decode fifteen long lines, a second
+    # legend, and two prose blocks before seeing the comparison.  A response
+    # matrix is the standard game-theory shorthand for this object: rows are
+    # routes, columns are rival strategies, and the tile value is the observed
+    # action frequency.  The two lower panels then reserve one common x-scale
+    # for the two paired contrasts that give the matrix its interpretation.
+    fig = plt.figure(figsize=(S.TEXT, 4.30))
+    gs = fig.add_gridspec(2, 2, height_ratios=[1.18, 1.0],
+                          left=0.085, right=0.925, top=0.84, bottom=0.17,
+                          wspace=0.62, hspace=0.82)
+    top = gs[0, :].subgridspec(1, len(S.RISKS), wspace=0.30)
+    facets = [fig.add_subplot(top[0, i]) for i in range(len(S.RISKS))]
+    images = [draw_response_matrix(ax, surface, risk, first=(i == 0))
+              for i, (ax, risk) in enumerate(zip(facets, S.RISKS))]
+    for ax, risk in zip(facets, S.RISKS):
+        ax.set_title(f"risk {S.RISK_LABEL[risk]}", fontsize=S.FS_CLAIM,
+                     color=S.INK, fontweight="bold", pad=5)
+    facets[0].text(-0.34, 1.22, "a", transform=facets[0].transAxes,
+                   fontsize=S.FS_PANEL, color=S.INK, fontweight="bold",
+                   ha="left", va="bottom")
+    facets[0].text(-0.25, 1.22, "response matrix: rival stance changes play",
+                   transform=facets[0].transAxes, fontsize=S.FS_CLAIM,
+                   color=S.INK_2, ha="left", va="bottom")
+    cax = fig.add_axes([0.942, 0.565, 0.014, 0.225])
+    colourbar = fig.colorbar(images[-1], cax=cax, ticks=[0, 50, 100])
+    colourbar.ax.set_ylabel("Unsafe play (%)", fontsize=S.FS_NOTE, labelpad=4)
+    colourbar.ax.tick_params(labelsize=S.FS_NOTE, length=2)
+    colourbar.outline.set_linewidth(0.5)
+
+    ax_b = fig.add_subplot(gs[1, 0])
+    draw_contrast_ranges(ax_b, stance)
+    ax_b.text(-0.17, 1.13, "b", transform=ax_b.transAxes,
+              fontsize=S.FS_PANEL, color=S.INK, fontweight="bold",
+              ha="left", va="bottom")
+    ax_b.text(-0.08, 1.13, "rival stance effect", transform=ax_b.transAxes,
+              fontsize=S.FS_CLAIM, color=S.INK_2, ha="left", va="bottom")
+
+    ax_c = fig.add_subplot(gs[1, 1])
+    draw_context_dumbbells(ax_c, safe_arm, selfplay)
+    ax_c.text(-0.17, 1.13, "c", transform=ax_c.transAxes,
+              fontsize=S.FS_PANEL, color=S.INK, fontweight="bold",
+              ha="left", va="bottom")
+    ax_c.text(-0.08, 1.13, "interaction context matters", transform=ax_c.transAxes,
+              fontsize=S.FS_CLAIM, color=S.INK_2, ha="left", va="bottom")
+    ax_c.text(0.02, 1.035, "filled: fixed Safe   open: self-play",
+              transform=ax_c.transAxes, fontsize=S.FS_NOTE, color=S.MUTED,
+              ha="left", va="bottom")
+
+    risk_handles = [
+        Line2D([0], [0], marker=RISK_MARKERS[risk], color=S.INK_2,
+               markerfacecolor=S.SURFACE, markeredgecolor=S.INK_2,
+               markersize=4.2, linewidth=0, label=RISK_LABELS[risk])
+        for risk in S.RISKS
     ]
-    fig.legend(handles=legend_handles, ncol=len(ROUTES), loc="upper center",
-               bbox_to_anchor=(0.53, 0.985), frameon=False,
-               handletextpad=0.35, columnspacing=1.05,
+    fig.legend(handles=risk_handles, ncol=3, loc="lower center",
+               bbox_to_anchor=(0.50, 0.075), frameon=False,
+               handletextpad=0.35, columnspacing=1.0,
                fontsize=S.FS_NOTE, borderaxespad=0.0)
-
-    ceiling_risk = S.RISK_LABEL[ceiling_cells[0][2]] if ceiling_cells else ""
-    if violations:
-        route, risk = violations[0]
-        reversal = (
-            f"the one reversal is {S.ROUTE_SHORT[route]} at {S.RISK_LABEL[risk]}: "
-            f"Cond. Unsafe {100 * surface[(route, 'CAS', risk)]:.1f}% exceeds "
-            f"Always Unsafe {100 * surface[(route, 'AU', risk)]:.1f}% at a ceiling."
-        )
-    else:
-        reversal = "no cell reverses the weak ordering."
-    if violations:
-        reversal_note = reversal.replace(" at ", "\nat ", 1)
-    else:
-        reversal_note = reversal
-    fig.text(
-        0.53, 0.565,
-        f"ordering strict in {len(strict)}/{n_cells} cells and weak in {len(weak)}; "
-        f"{reversal_note}\n"
-        "Conditional Safe opens Safe and then mirrors; its own Unsafe play is "
-        + ", ".join(f"{100 * rival_unsafe[(route, 'CS')]:.0f}% "
-                     f"({S.ROUTE_SHORT[route]})" for route in ROUTES) + ".",
-        ha="center", va="top", fontsize=S.FS_NOTE, color=S.MUTED,
-        linespacing=1.35)
-
-    draw_stance(fig.add_subplot(gs[1, 0:3]), stance, smallest_low)
-    draw_designs(fig.add_subplot(gs[1, 3:6]), safe_arm, selfplay, censored)
+    fig.text(0.50, 0.035,
+             "Tiles show measured rates; interval bars are 95% race-clustered intervals.",
+             ha="center", va="bottom", fontsize=S.FS_NOTE, color=S.MUTED)
 
     S.save(fig, "scripted_opponent", width=S.TEXT)
 

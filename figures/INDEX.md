@@ -109,8 +109,8 @@ Total unique visual files: **576**
 | [paper/policy_shape.png](paper/policy_shape.png) | paper-ready | `2dd6e136e5cc` |
 | [paper/risk_response.pdf](paper/risk_response.pdf) | paper-ready | `3f599d3c0504` |
 | [paper/risk_response.png](paper/risk_response.png) | paper-ready | `a95f98e40f39` |
-| [paper/scripted_opponent.pdf](paper/scripted_opponent.pdf) | paper-ready | `90e23095e1d9` |
-| [paper/scripted_opponent.png](paper/scripted_opponent.png) | paper-ready | `434eadb5ef59` |
+| [paper/scripted_opponent.pdf](paper/scripted_opponent.pdf) | paper-ready | `dfdfcb1dc5d8` |
+| [paper/scripted_opponent.png](paper/scripted_opponent.png) | paper-ready | `e343a2b33a1f` |
 | [paper/theory_inversion.pdf](paper/theory_inversion.pdf) | paper-ready | `19041407fb92` |
 | [paper/theory_inversion.png](paper/theory_inversion.png) | paper-ready | `b7c702581550` |
 | [paper/theory_versus_behaviour.pdf](paper/theory_versus_behaviour.pdf) | paper-ready | `acaffabc08e0` |
