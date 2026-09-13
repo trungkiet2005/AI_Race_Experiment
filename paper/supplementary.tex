@@ -65,7 +65,7 @@ on Autonomous Agents and Multiagent Systems (AAMAS 2027)}{May 3 -- 7, 2027}
 
 %\title[]{LLM Agents Underrepresent Human Strategic Diversity in AI Development Races}
 
-\title[]{Supplementary Material: More Than the Risk: Frontier LLM Behavior in AI Development Races Depends on the Rival}
+\title[]{Supplementary Material: More Than the Risk: Frontier LLM Behaviour in AI Development Races Depends on the Rival}
 
 %%% Provide names, affiliations, and email addresses for all authors.
 % \author{Nimue}
@@ -279,7 +279,7 @@ on Autonomous Agents and Multiagent Systems (AAMAS 2027)}{May 3 -- 7, 2027}
 
 %%% Use this environment to specify a short abstract for your paper.
 \begin{abstract}
-This supplement supports More Than the Risk: Frontier LLM Behavior in AI
+This supplement supports More Than the Risk: Frontier LLM Behaviour in AI
 Development Races Depends on the Rival. It records the quality-control screen,
 the theory comparison, the scripted-rival evidence, and the human diversity
 analysis, together with prompt and game robustness checks. These materials use
@@ -3036,29 +3036,22 @@ metadata limitation rather than a gameplay failure.
     \centering
     \includegraphics[width=\textwidth]{../figures/paper/scripted_opponent.pdf}
     \caption{The scripted-opponent campaign on five gate-admitted routes.
-    (a) The ordering, one facet per stated risk: four rivals across, the
-    route's own \Unsafe{} play up. A rising line is the ordering, and the
-    vertical distance between the five lines is how far the routes differ in
-    level. (b) The rival-stance contrast, the rate against \emph{Always Unsafe}
-    minus the rate against \emph{Always Safe}, differenced inside a repetition
-    so that the horizon stopping draw is removed. All fifteen intervals lie to
-    the right of zero, with magnitudes that differ by route. (c) The comparison
-    the tables cannot make: each route's rate against a rival that stays \Safe{},
-    as a filled marker, beside the rate the same route reaches when its rival is
-    a second copy of itself, as an open marker.}
-    \Description{Five plots in two rows. The top row has three panels, one for
-    each maximum private risk level of 0.1, 0.6 and 0.9. In each, the
-    horizontal axis lists the four scripted rivals in the order Always Safe,
-    Conditional Safe, Conditional Unsafe and Always Unsafe, and the vertical
-    axis is the route's own unsafe play from 0 to 100 per cent. Five lines
-    generally rise from left to right; GPT-5.5 at risk 0.1 has a boundary
-    reversal because Conditional Unsafe reaches 100.0 per cent while Always
-    Unsafe reaches 97.8 per cent. The bottom left panel is a dot-and-interval
-    chart with one row per risk level and five routes in each row. Every
-    interval lies to the right of the zero line. The bottom right panel plots
-    unsafe play against risk, with a filled marker for the rate against the
-    Always Safe rival and an open marker for self-play; the designs differ in
-    thirteen of fifteen cells.}
+    (a) Three response profiles, one per stated risk: each coloured path is an
+    admitted route and the horizontal axis orders the scripted rival from
+    Always Safe to Always Unsafe. (b) The rival-stance contrast, the rate
+    against \emph{Always Unsafe} minus the rate against \emph{Always Safe},
+    differenced inside a repetition so that the horizon stopping draw is
+    removed. All fifteen 95\% paired-block bootstrap intervals over ten matched
+    blocks lie to the right of zero, with magnitudes that differ by route and
+    risk. (c) The comparison the tables cannot make: each route's rate against
+    a rival that stays \Safe{}, as a filled marker, beside the rate the same
+    route reaches when its rival is a second copy of itself, as an open marker.}
+    \Description{Three-panel scripted-opponent figure. Panel a contains three
+    line plots, one per maximum private-risk level, with five coloured route
+    profiles across four ordered scripted rivals. Panel b is a horizontal
+    interval plot of the Always-Unsafe minus Always-Safe effect for five routes
+    at three risk levels. Panel c compares fixed Always-Safe and self-play
+    Unsafe rates for the same routes and risk levels.}
     \label{fig:scripted-opponent}
 \end{figure*}
 

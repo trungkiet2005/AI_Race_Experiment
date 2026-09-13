@@ -94,7 +94,8 @@
   "figure_5_change": "replaced unrecoverable HDBSCAN artwork with the maintained four-archetype human-reference projection",
   "figure_outputs": {
     "figure_1_mechanism": [
-      "figures\\paper\\AIRaceOverview.pdf"
+      "figures\\paper\\delegation_overview.pdf",
+      "figures\\paper\\delegation_overview.png"
     ],
     "figure_2_persona": [
       "figures\\paper\\ExpOverview.pdf"
@@ -169,7 +170,7 @@
     ]
   },
   "figure_status": {
-    "figure_1_mechanism": "manual",
+    "figure_1_mechanism": "generated",
     "figure_2_persona": "manual",
     "figure_3_egt": "generated",
     "figure_4_rate": "generated",
@@ -186,16 +187,13 @@
     "supplement_figure_5_tsne_outcome": "generated",
     "supplement_figure_6_round_profiles": "generated"
   },
-  "generated_utc": "2026-09-13T07:57:29.064590+00:00",
+  "generated_utc": "2026-09-13T08:24:08.688171+00:00",
   "generator": "scripts/build_publication_figures.py",
   "manual_figure_origin": {
     "commit": "f0dde0d",
-    "note": "Restored author-supplied artwork; protected from automated writers."
+    "note": "Figure 2 remains author-supplied artwork; Figure 1 is generated from checked-in records."
   },
   "manual_figure_sha256": {
-    "figure_1_mechanism": {
-      "figures\\paper\\AIRaceOverview.pdf": "920fa113b51bf5ea50b83f23e49bf726c59216a7395129751801629b78f5364d"
-    },
     "figure_2_persona": {
       "figures\\paper\\ExpOverview.pdf": "b0d34a750c1f21fedaca0df2689213729b426be054e3b042ce30f5a0c4e01b40"
     }
@@ -207,7 +205,8 @@
     "results\\derived\\scripted_opponent_campaign\\risk_versus_rival.json": "e6a882057c419abca2acd24d019734a0244bfb2c27baade0087ddea462e5fde1",
     "results\\frontier\\egt_frontier_comparison_v2\\theory_llm_comparison.csv": "57cf703229df95e28cb51a8db95e902de895fb0801e3efb2d0ec7785bb416d78",
     "scripts\\figures\\fig_human_versus_model.py": "18f4f321e31603f2fe7bf0908a003ef092a85623dfd5851e601cc75f6b5809e0",
-    "scripts\\figures\\fig_scripted_opponent.py": "18d281a1ab6f076cc0f7a6fe747d3e3238175ee19f2c3dd63b9533dfa634685a"
+    "scripts\\figures\\fig_overview.py": "05c46c9ed1177a8a8224e8b2434bc68c97bb9cb47cef7f3bf9bd60ce5144c28f",
+    "scripts\\figures\\fig_scripted_opponent.py": "c8e5fed33ed6d97b0d407bd4011f578672786cbeb3c7621e20220756cb134cfb"
   },
   "style_module": "scripts/publication_style.py"
 }

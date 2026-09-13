@@ -1,7 +1,7 @@
 """How the admitted routes trade speed against safety as the danger rises.
 
-The claim.  Every route in the behavioural panel plays Unsafe less as the
-stated maximum private risk rises, and four of the five do it by nearly the
+The claim.  Every route in the behavioural panel has non-increasing Unsafe play
+as the stated maximum private risk rises, and four of the five do it by nearly the
 same amount: the drop from risk 0.1 to risk 0.9 is 38.2, 38.7, 40.3 and 57.0
 points, a spread of nineteen points across four checkpoints from three
 vendors.  The fifth does not trade off at all.  Claude Opus 5 plays Unsafe on
@@ -110,9 +110,14 @@ def check(table: pd.DataFrame) -> None:
     reader will take from the drawing without reading the caption.
     """
     routes = table.drop(index=RERUN_ROW)
-    falling = routes[f"rate_{S.RISKS[0]}"] > routes[f"rate_{S.RISKS[-1]}"]
-    if not falling.all():
-        raise SystemExit(f"these routes do not fall with risk: {sorted(routes.index[~falling])}")
+    rate_cols = [f"rate_{risk}" for risk in S.RISKS]
+    deltas = routes[rate_cols].diff(axis=1).iloc[:, 1:]
+    non_increasing = (deltas <= 1e-9).all(axis=1)
+    if not non_increasing.all():
+        raise SystemExit(
+            "these routes increase at some stated-risk step: "
+            f"{sorted(routes.index[~non_increasing])}"
+        )
     saturated = (routes[f"rate_{S.RISKS[0]}"] >= 100.0 - 1e-9) & (
         routes[f"rate_{S.RISKS[-1]}"] <= 1e-9)
     found = sorted(routes.index[saturated])
@@ -259,9 +264,8 @@ def main() -> None:
     # set over two lines because at column width one line of it does not fit.
     # The band width is read off the drops rather than typed, because a typed
     # number in a title is the one number in a figure nothing recomputes.
-    ax.set_title("every admitted route plays Unsafe less as the danger rises;\n"
-                 f"four of the five inside one {hi - lo:.0f}-point band, "
-                 "the fifth a switch",
+    ax.set_title("Unsafe play never increases with stated risk;\n"
+                 f"four routes decline gradually, one switches",
                  loc="left", pad=17, x=0.0, fontsize=S.FS_CLAIM, color=S.INK_2,
                  linespacing=1.4)
     S.save(fig, "risk_response", width=S.COL)

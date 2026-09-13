@@ -78,7 +78,7 @@ on Autonomous Agents and Multiagent Systems (AAMAS 2027)}{May 3 -- 7, 2027}
 %\title[]{LLM Agents Underrepresent Human Strategic Diversity in AI Development Races}
 %\title[]{Humans Are More Diverse: Audited Frontier LLMs Show Extreme Policies in Idealised AI Development Races}
 
-\title[]{More Than the Risk: Frontier LLM Behavior in AI Development Races Depends on the Rival}
+\title[]{More Than the Risk: Frontier LLM Behaviour in AI Development Races Depends on the Rival}
 
 %%% Provide names, affiliations, and email addresses for all authors.
 % \author{Nimue}
@@ -493,27 +493,31 @@ outcome, or an action taken by an organisation.
 \section{Preliminaries}
 \label{sec:preliminaries}
 
-We first specify the two-player game reproduced from \citet{falling_behind_unsafe} (\S\ref{sec:prelim-2p}), then its generalisation to $N>2$ companies (\S\ref{sec:prelim-np}), where only the stage payoff changes shape (Figure~\ref{fig:mechanism}).
+We first specify the two-player game reproduced from \citet{falling_behind_unsafe} (\S\ref{sec:prelim-2p}), then its generalisation to $N>2$ companies (\S\ref{sec:prelim-np}). Figure~\ref{fig:mechanism} summarises the two-player instrument and the three empirical lenses used in the main results.
 
 % This overview keeps the game mechanism visible while putting the delegation
 % question and the three behavioural lenses first.
 
 \begin{figure*}[t]
   \centering
-  \includegraphics[width=\textwidth]{../figures/paper/AIRaceOverview.pdf}
-  \caption{The race and its two payoff views. (a) A repeated development race:
-  each round advances progress by the action-dependent amount, and the winning
-  company receives the prize after the race ends. (b) In the two-player game,
-  the stage-payoff matrix makes \Unsafe{} attractive within a round, while the
-  private setback risk supplies the safety cost. (c) In the $N$-player
-  extension, the payoff is divided across the leading companies, so group size
-  changes the payoff structure.}
+  \includegraphics[width=\textwidth]{../figures/paper/delegation_overview.pdf}
+  \caption{The game and the questions it lets us ask. (a) The model receives
+  the rules, stated danger, rival's last move and current score, then returns
+  either \Safe{} or \Unsafe{}. (b) \Safe{} advances one step without added
+  risk; \Unsafe{} advances faster but raises the chance that the winner's
+  payoff is wiped out. (c) The two-player stage-payoff matrix makes \Unsafe{}
+  attractive against either rival move, so the delayed terminal risk supplies
+  the safety tension. (d) The main results examine stated-risk response,
+  scripted-rival response, and comparison with human trajectories and the
+  evolutionary benchmark.}
   \label{fig:mechanism}
-  \Description{Three-panel hand-drawn overview of the AI development race.
-  Panel a shows repeated race progress and the action-dependent speed and risk
-  trade-off. Panel b shows the two-by-two stage-payoff matrix for the two-player
-  game. Panel c shows the safe and unsafe stage payoffs in the $N$-player
-  extension, where the denominator depends on group composition.}
+  \Description{Four-panel overview of the AI development race. Panel a shows
+  the information given to a language model and its Safe or Unsafe decision.
+  Panel b shows the speed gained by Unsafe and the delayed private setback
+  risk, together with the hidden horizon and terminal prize. Panel c shows the
+  two-by-two stage-payoff matrix with own action as rows and rival action as
+  columns. Panel d lists the three empirical lenses: stated danger, scripted
+  rival, and the human and evolutionary references.}
 \end{figure*}
 
 
@@ -656,9 +660,9 @@ the supplementary material.
 \subsection{How agents trade speed against safety}
 \label{sec:results-risk}
 
-There is a shared directional response across the frontier routes. Every
-admitted route plays \Unsafe{} less often as the stated maximum private risk
-rises, while the shape varies: four of the five give ground gradually and the
+There is a shared directional response across the frontier routes. \Unsafe{}
+play is non-increasing with the stated maximum private risk on every admitted
+route, while the shape varies: four of the five give ground gradually and the
 fifth switches (Figure~\ref{fig:risk-response}). Each route played 30 races and
 558 decisions
 under one frozen protocol with zero parse failures and ten races in every risk
@@ -668,9 +672,9 @@ route supplied.
 \begin{figure}[t]
     \centering
     \includegraphics[width=\columnwidth]{../figures/paper/risk_response.pdf}
-    \caption{Every admitted route plays \Unsafe{} less as the stated danger
-    rises. Four of the five graded routes fall within a 19-point band; Claude
-    Opus 5 switches from the ceiling to the floor. The outlined cells are at a
+    \caption{\Unsafe{} play is non-increasing with stated risk. The four graded
+    routes fall within a 19-point band; Claude Opus 5 switches from the ceiling
+    to the floor. The outlined cells are at a
     boundary and therefore leave no room for a larger or smaller observed
     rate. The repeat row is the same Gemini 3 Flash route collected under an
     independent administration.}
@@ -724,8 +728,8 @@ although swapping the opaque action-code mapping shifts Unsafe{} play by
   profiles, one per maximum-risk condition: each coloured path is an admitted
   route and the x-axis orders the scripted rival from Always Safe to Always
   Unsafe. Panel (b) shows the paired Always-Unsafe minus Always-Safe effect with
-  95\% race-clustered intervals; all fifteen effects are positive, although
-  their magnitudes differ by route and risk. Panel (c) contrasts a fixed
+  95\% paired-block bootstrap intervals over ten matched blocks; all fifteen effects are positive,
+  although their magnitudes differ by route and risk. Panel (c) contrasts a fixed
   Always-Safe rival with self-play, separating rival-conditioned behaviour from
   the mirror-match outcome.}
   \Description{Three-panel figure. Panel a contains three line plots, one per
@@ -737,7 +741,7 @@ although swapping the opaque action-code mapping shifts Unsafe{} play by
   \label{fig:scripted-opponent-main}
 \end{figure*}
 
-\subsection{The rival can matter more than the stated risk}
+\subsection{The rival substantially reshapes play}
 \label{sec:results-scripted}
 
 In the five routes tested against scripted rivals, the observed behaviour does
@@ -980,9 +984,9 @@ nor GPT-5.5, so they support no claim about the admitted panel.
 \section{Discussion and conclusion}
 \label{sec:discussion}
 
-These agents incorporate both the stated risk and the rival's stance. Every
-admitted route plays \Unsafe{} less often as the stated chance of catastrophe
-rises, while on the five routes where the opponent was replaced by scripted
+These agents incorporate both the stated risk and the rival's stance. \Unsafe{}
+play is non-increasing as the stated chance of catastrophe rises on every
+admitted route, while on the five routes where the opponent was replaced by scripted
 code, the rival's stance changes behaviour substantially, with a magnitude that
 varies by route and can overlap the effect of changing risk. In this game, the
 five tested routes are therefore

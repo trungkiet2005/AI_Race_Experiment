@@ -342,7 +342,7 @@ def draw_ordering(ax, surface, risk, *, first, middle, ceiling_cells):
     S.strip(ax)
     ax.set_xlabel("scripted rival" if middle else None, labelpad=1)
     if first:
-        S.panel(ax, "a", "rival response")
+        S.panel(ax, "a", "response")
     else:
         ax.set_title("", loc="left")
     ax.annotate(rf"$p_r^{{\max}} = {S.RISK_LABEL[risk]}$",
@@ -724,7 +724,8 @@ def main() -> None:
                handletextpad=0.35, columnspacing=1.0,
                fontsize=S.FS_NOTE, borderaxespad=0.0)
     fig.text(0.50, 0.035,
-             "Lines show measured rates; intervals are 95% race-clustered.",
+             "Lines show measured rates; stance intervals are 95% paired-block "
+             "bootstrap intervals.",
              ha="center", va="bottom", fontsize=S.FS_NOTE, color=S.MUTED)
 
     S.save(fig, "scripted_opponent", width=S.TEXT)

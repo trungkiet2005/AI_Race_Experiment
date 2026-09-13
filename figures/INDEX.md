@@ -38,7 +38,7 @@ Total unique visual files: **576**
 | [paper/context_mapping_gate.pdf](paper/context_mapping_gate.pdf) | paper-ready | `0f795cc7ef4f` |
 | [paper/cross_model_risk_response.pdf](paper/cross_model_risk_response.pdf) | paper-ready | `7fd6a9c2f056` |
 | [paper/cross_model_risk_response_neutral.pdf](paper/cross_model_risk_response_neutral.pdf) | paper-ready | `20b213b4b7e7` |
-| [paper/delegation_overview.pdf](paper/delegation_overview.pdf) | paper-ready | `ff5b25aabcdb` |
+| [paper/delegation_overview.pdf](paper/delegation_overview.pdf) | paper-ready | `7b463d372761` |
 | [paper/delegation_overview.png](paper/delegation_overview.png) | paper-ready | `4976e6281550` |
 | [paper/egt_frontier_insights.pdf](paper/egt_frontier_insights.pdf) | paper-ready | `91aaee87a33b` |
 | [paper/egt_frontier_insights.png](paper/egt_frontier_insights.png) | paper-ready | `9676c82e3294` |
@@ -107,10 +107,10 @@ Total unique visual files: **576**
 | [paper/nplayer_position_effect_sign_flip_paper.pdf](paper/nplayer_position_effect_sign_flip_paper.pdf) | paper-ready | `7a42ee633719` |
 | [paper/policy_shape.pdf](paper/policy_shape.pdf) | paper-ready | `cda56869c3b1` |
 | [paper/policy_shape.png](paper/policy_shape.png) | paper-ready | `2dd6e136e5cc` |
-| [paper/risk_response.pdf](paper/risk_response.pdf) | paper-ready | `3f599d3c0504` |
-| [paper/risk_response.png](paper/risk_response.png) | paper-ready | `a95f98e40f39` |
-| [paper/scripted_opponent.pdf](paper/scripted_opponent.pdf) | paper-ready | `06dc79eea322` |
-| [paper/scripted_opponent.png](paper/scripted_opponent.png) | paper-ready | `8efa6d3897bd` |
+| [paper/risk_response.pdf](paper/risk_response.pdf) | paper-ready | `183f83f76d79` |
+| [paper/risk_response.png](paper/risk_response.png) | paper-ready | `410ff60ba4fa` |
+| [paper/scripted_opponent.pdf](paper/scripted_opponent.pdf) | paper-ready | `7b902122113f` |
+| [paper/scripted_opponent.png](paper/scripted_opponent.png) | paper-ready | `88314c576524` |
 | [paper/theory_inversion.pdf](paper/theory_inversion.pdf) | paper-ready | `19041407fb92` |
 | [paper/theory_inversion.png](paper/theory_inversion.png) | paper-ready | `b7c702581550` |
 | [paper/theory_versus_behaviour.pdf](paper/theory_versus_behaviour.pdf) | paper-ready | `acaffabc08e0` |

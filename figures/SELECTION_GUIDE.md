@@ -12,7 +12,7 @@ archived diagnostic and is not referenced by the current manuscript.
 
 | Main figure | Canonical asset | What a reader should learn | Evidence boundary |
 |---|---|---|---|
-| 1 | `paper/AIRaceOverview.pdf` | The repeated race, two-player payoff, and N-player payoff are related but distinct objects. | Author-supplied mechanism schematic, not an empirical result. |
+| 1 | `paper/delegation_overview.pdf` | The delegated race decision, delayed risk, stage incentives, and the three empirical lenses form one coherent instrument. | Generated from the frozen prompts and checked-in campaign records; it is a design schematic, not an empirical result. |
 | 2 | `paper/ExpOverview.pdf` | Baseline, risk-aware, and social framing are prompt conditions. | Author-supplied prompt schematic; a prompt condition is not a measured model trait. |
 | 3 | `paper/egt_theory_vs_llm_unsafe.pdf` | Prompted frontier self-play does not reproduce the reconstructed EGT risk transition. | Descriptive juxtaposition of different behavioural units. |
 | 4 | `paper/llm_human_clustering/05b_unsafe_rate_by_group.png` | Aggregate Unsafe rates differ sharply across the tested populations. | Table-backed player-race trajectory bootstrap intervals; historical descriptive pilot. |

@@ -44,7 +44,7 @@ TEXT_IN = 506.295 * PT
 # A figure the manuscript ships as author artwork rather than as a generated
 # plot.  A schematic has no tick labels to shrink, so the ratio rule does not
 # apply to it in the same way; it is reported and not enforced.
-ARTWORK = {"AIRaceOverview.pdf", "ExpOverview.pdf"}
+ARTWORK = {"ExpOverview.pdf"}
 
 INCLUDE = re.compile(
     r"\\includegraphics\s*(?:\[(?P<opts>[^\]]*)\])?\s*\{(?P<path>[^}]+)\}"

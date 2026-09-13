@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 """Build the generated portion of the manuscript figure set.
 
-Figures 1 and 2 are author-supplied artwork and are deliberately not
-regenerated. Figure 4 is generated from the checked-in first-five-trajectory
-table with the same publication style as the other quantitative figures. The
-former Figure 8 artwork is retained as an archived diagnostic but is not part
-of the current manuscript figure set. All other exported figures read a
-checked-in result table or an admitted raw run. New analyses that expand model
-coverage must use a new output stem rather than changing a protected manuscript
-figure.
+Figure 1 is generated from the frozen prompts and checked-in result records;
+Figure 2 remains author-supplied artwork. Figure 4 is generated from the
+checked-in first-five-trajectory table with the same publication style as the
+other quantitative figures. The former Figure 8 artwork is retained as an
+archived diagnostic but is not part of the current manuscript figure set. All
+other exported figures read a checked-in result table or an admitted raw run.
+New analyses that expand model coverage must use a new output stem rather than
+changing a protected manuscript figure.
 """
 
 from __future__ import annotations
@@ -78,10 +78,10 @@ PROJECTION_TABLE = DATA / "llm_human_cluster_projection_unified.csv"
 FRESH_FRONTIER_INPUT = ROOT / "results/kaggle-benchmarks/frontier_full_20260908/derived/ai_race_analysis/player_metrics.csv"
 SCRIPTED_FIGURE_SCRIPT = ROOT / "scripts" / "figures" / "fig_scripted_opponent.py"
 HUMAN_DIVERSITY_SCRIPT = ROOT / "scripts" / "figures" / "fig_human_versus_model.py"
+OVERVIEW_FIGURE_SCRIPT = ROOT / "scripts" / "figures" / "fig_overview.py"
 SCRIPTED_DERIVED = ROOT / "results" / "derived" / "scripted_opponent_campaign" / "risk_versus_rival.json"
 
 MANUAL_FIGURE_FILES = {
-    "figure_1_mechanism": [PAPER / "AIRaceOverview.pdf"],
     "figure_2_persona": [PAPER / "ExpOverview.pdf"],
 }
 
@@ -129,60 +129,6 @@ def _agent(ax: plt.Axes, x: float, y: float, *, colour: str, scale: float = 1.0)
     ax.plot([x - 0.018 * scale, x + 0.018 * scale],
             [y - 0.012 * scale, y - 0.012 * scale], color=colour,
             linewidth=1.2, zorder=4)
-
-
-def build_mechanism() -> list[Path]:
-    fig, axes = plt.subplots(1, 3, figsize=(FULL_WIDTH_IN, 2.38),
-                             gridspec_kw={"width_ratios": [1.42, 1.0, 1.22], "wspace": 0.28})
-    ax = axes[0]
-    ax.set_xlim(0, 1); ax.set_ylim(0, 1); ax.axis("off")
-    panel_label(ax, "A", "Repeated race")
-    for y, label, colour, step, fill in [
-        (0.68, "Safe", GREEN, "1.0 step", GREEN_LIGHT),
-        (0.34, "Unsafe", RED, "1.5 steps + private risk", RED_LIGHT),
-    ]:
-        ax.plot([0.08, 0.84], [y, y], color=GRID, linewidth=2.0, zorder=0)
-        ax.annotate("", xy=(0.84, y), xytext=(0.12, y),
-                    arrowprops={"arrowstyle": "-|>", "color": colour, "lw": 1.6})
-        _agent(ax, 0.14, y + 0.02, colour=colour, scale=0.72)
-        ax.text(0.08, y + 0.095, label, color=colour, weight="bold", fontsize=8.5)
-        ax.text(0.42, y + 0.095, step, color=MUTED, fontsize=8.0)
-    ax.text(0.50, 0.14, "Simultaneous actions", ha="center", fontsize=8.0, color=INK)
-    ax.text(0.50, 0.07, "hidden stopping time  |  prize B",
-            ha="center", fontsize=8.0, color=INK)
-
-    ax = axes[1]
-    ax.set_xlim(-0.2, 2.2); ax.set_ylim(-0.2, 2.2); ax.axis("off")
-    panel_label(ax, "B", "Two-player payoff")
-    for i in range(2):
-        for j in range(2):
-            face = GREEN_LIGHT if i == 0 else RED_LIGHT
-            ax.add_patch(Rectangle((j, 1 - i), 1, 1, facecolor=face,
-                                   edgecolor=INK, linewidth=0.8))
-    values = [["1.0", "0.6"], ["2.4", "2.0"]]
-    for i in range(2):
-        for j in range(2):
-            ax.text(j + 0.5, 1.5 - i, values[i][j], ha="center", va="center",
-                    fontsize=10.5, weight="bold")
-    ax.text(0.5, 2.08, "Opponent", ha="center", fontsize=8.0, color=MUTED)
-    ax.text(-0.14, 1.0, "Own", rotation=90, ha="center", va="center", fontsize=8.0, color=MUTED)
-    ax.text(0.5, -0.05, "Safe", ha="center", fontsize=8.0, color=GREEN)
-    ax.text(1.5, -0.05, "Unsafe", ha="center", fontsize=8.0, color=RED)
-    ax.text(-0.05, 1.5, "Safe", ha="right", va="center", fontsize=8.0, color=GREEN)
-    ax.text(-0.05, 0.5, "Unsafe", ha="right", va="center", fontsize=8.0, color=RED)
-
-    ax = axes[2]
-    ax.set_xlim(0, 1); ax.set_ylim(0, 1); ax.axis("off")
-    panel_label(ax, "C", "N-player stage payoff")
-    ax.text(0.50, 0.79, r"$D = k+s(N-k)$", ha="center", fontsize=10.0, weight="bold")
-    _rounded_box(ax, 0.04, 0.25, 0.42, 0.35, face=GREEN_LIGHT, edge=GREEN)
-    _rounded_box(ax, 0.54, 0.25, 0.42, 0.35, face=RED_LIGHT, edge=RED)
-    ax.text(0.25, 0.49, "Safe", ha="center", color=GREEN, weight="bold", fontsize=8.5)
-    ax.text(0.25, 0.36, r"$b/D-c$", ha="center", fontsize=11.0)
-    ax.text(0.75, 0.49, "Unsafe", ha="center", color=RED, weight="bold", fontsize=8.5)
-    ax.text(0.75, 0.36, r"$s\,b/D$", ha="center", fontsize=11.0)
-    ax.text(0.50, 0.10, r"$b=4,\ c=1,\ s=1.5$; terminal prize is $B$", ha="center", fontsize=8.0, color=MUTED)
-    return save_publication_figure(fig, PAPER / "AIRaceOverview", formats=("pdf", "png", "svg"))
 
 
 def build_persona() -> list[Path]:
@@ -614,6 +560,14 @@ def build_scripted_opponent() -> list[Path]:
     return [PAPER / "scripted_opponent.pdf", PAPER / "scripted_opponent.png"]
 
 
+def build_overview() -> list[Path]:
+    """Regenerate the mechanism and design overview from checked-in records."""
+
+    subprocess.run([sys.executable, str(OVERVIEW_FIGURE_SCRIPT)],
+                   cwd=ROOT, check=True)
+    return [PAPER / "delegation_overview.pdf", PAPER / "delegation_overview.png"]
+
+
 def build_human_diversity() -> list[Path]:
     """Regenerate the main diversity figure and its all-route supplement view."""
 
@@ -630,6 +584,7 @@ def main() -> None:
     outputs = {
         **_manual_figure_outputs(),
         **_fresh_frontier_outputs(),
+        "figure_1_mechanism": build_overview(),
         "figure_3_egt": build_egt(),
         "figure_4_rate": build_rate_figure(frame),
         "scripted_opponent": build_scripted_opponent(),
@@ -643,7 +598,8 @@ def main() -> None:
     outputs.update(build_supplementary_figures(frame))
     source_paths = [EGT_TABLE, ARCHETYPE_TABLE, PROJECTION_TABLE]
     source_paths += [ROOT / "references" / "source_study_dataset" / "airace_deidentified_long.csv"]
-    source_paths += [SCRIPTED_FIGURE_SCRIPT, HUMAN_DIVERSITY_SCRIPT, SCRIPTED_DERIVED]
+    source_paths += [OVERVIEW_FIGURE_SCRIPT, SCRIPTED_FIGURE_SCRIPT,
+                     HUMAN_DIVERSITY_SCRIPT, SCRIPTED_DERIVED]
     provenance = {
         "generator": "scripts/build_publication_figures.py",
         "style_module": "scripts/publication_style.py",
@@ -662,7 +618,7 @@ def main() -> None:
         },
         "manual_figure_origin": {
             "commit": "f0dde0d",
-            "note": "Restored author-supplied artwork; protected from automated writers.",
+            "note": "Figure 2 remains author-supplied artwork; Figure 1 is generated from checked-in records.",
         },
         "counts": {
             "first_five_trajectories": int(len(frame)),
