@@ -3036,9 +3036,9 @@ metadata limitation rather than a gameplay failure.
     \centering
     \includegraphics[width=\textwidth]{../figures/paper/scripted_opponent.pdf}
     \caption{The scripted-opponent campaign on five gate-admitted routes.
-    (a) Three response profiles, one per stated risk: each coloured path is an
-    admitted route and the horizontal axis orders the scripted rival from
-    Always Safe to Always Unsafe. (b) The rival-stance contrast, the rate
+    (a) A response surface: each tile is an admitted route's Unsafe rate under
+    one scripted rival, with columns ordered from Always Safe to Always Unsafe
+    and one facet per stated risk. (b) The rival-stance contrast, the rate
     against \emph{Always Unsafe} minus the rate against \emph{Always Safe},
     differenced inside a repetition so that the horizon stopping draw is
     removed. All fifteen 95\% paired-block bootstrap intervals over ten matched
@@ -3047,11 +3047,12 @@ metadata limitation rather than a gameplay failure.
     a rival that stays \Safe{}, as a filled marker, beside the rate the same
     route reaches when its rival is a second copy of itself, as an open marker.}
     \Description{Three-panel scripted-opponent figure. Panel a contains three
-    line plots, one per maximum private-risk level, with five coloured route
-    profiles across four ordered scripted rivals. Panel b is a horizontal
-    interval plot of the Always-Unsafe minus Always-Safe effect for five routes
-    at three risk levels. Panel c compares fixed Always-Safe and self-play
-    Unsafe rates for the same routes and risk levels.}
+    response matrices, one per maximum private-risk level, with five route rows
+    and four ordered scripted-rival columns; every tile prints the measured
+    Unsafe rate. Panel b is a horizontal interval plot of the Always-Unsafe
+    minus Always-Safe effect for five routes at three risk levels. Panel c is a
+    horizontal dumbbell plot comparing fixed Always-Safe and self-play Unsafe
+    rates for the same routes and risk levels.}
     \label{fig:scripted-opponent}
 \end{figure*}
 

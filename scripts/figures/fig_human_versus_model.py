@@ -512,10 +512,10 @@ def draw_figure(stem, order, *, marks, null_counts, model_counts, model_cells,
     # --- b: occupancy of the observed trajectory space ---------------------
     for y, name in [(frame.human_tick, "Human")] + rows:
         if name == "Human":
-            profile, colour, marker = human_profile, HUMAN_C, S.ROUTE_M["human"]
+            profile, colour = human_profile, HUMAN_C
             count = median_distinct
         else:
-            colour, marker, _, _ = identity(name)
+            colour, _, _, _ = identity(name)
             profile = composition([k for cell in model_cells[name] for k in cell])
             count = model_pooled[name]
         offset = 0.0
@@ -524,10 +524,9 @@ def draw_figure(stem, order, *, marks, null_counts, model_counts, model_cells,
                       alpha=1.0 if j % 2 == 0 else 0.62, edgecolor=S.SURFACE,
                       linewidth=0.45, zorder=3)
             offset += share
-        ax_b.plot([-0.035], [y], marker=marker,
-                  ms=4.6 if marker == "*" else 3.4, color=colour,
-                  markeredgecolor=S.SURFACE, markeredgewidth=0.5,
-                  clip_on=False, zorder=5)
+        # The row label already carries the route identity. A marker outside
+        # the data rectangle looks like a stray glyph and collides with the
+        # model name at the left edge, especially for the purple GPT rows.
         S.direct_label(ax_b, 1.0, y, f"{count}/60", color=colour, dx=4,
                        weight="bold" if name in ("Human", narrowest) else "normal")
 
