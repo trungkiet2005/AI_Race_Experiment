@@ -77,6 +77,7 @@ ARCHETYPE_TABLE = DATA / "human_cluster_summary.csv"
 PROJECTION_TABLE = DATA / "llm_human_cluster_projection_unified.csv"
 FRESH_FRONTIER_INPUT = ROOT / "results/kaggle-benchmarks/frontier_full_20260908/derived/ai_race_analysis/player_metrics.csv"
 SCRIPTED_FIGURE_SCRIPT = ROOT / "scripts" / "figures" / "fig_scripted_opponent.py"
+HUMAN_DIVERSITY_SCRIPT = ROOT / "scripts" / "figures" / "fig_human_versus_model.py"
 SCRIPTED_DERIVED = ROOT / "results" / "derived" / "scripted_opponent_campaign" / "risk_versus_rival.json"
 
 MANUAL_FIGURE_FILES = {
@@ -613,6 +614,14 @@ def build_scripted_opponent() -> list[Path]:
     return [PAPER / "scripted_opponent.pdf", PAPER / "scripted_opponent.png"]
 
 
+def build_human_diversity() -> list[Path]:
+    """Regenerate the main diversity figure and its all-route supplement view."""
+
+    subprocess.run([sys.executable, str(HUMAN_DIVERSITY_SCRIPT)],
+                   cwd=ROOT, check=True)
+    return [PAPER / "human_versus_model.pdf", PAPER / "human_versus_model.png"]
+
+
 def main() -> None:
     configure_publication_style()
     PAPER.mkdir(parents=True, exist_ok=True)
@@ -624,6 +633,7 @@ def main() -> None:
         "figure_3_egt": build_egt(),
         "figure_4_rate": build_rate_figure(frame),
         "scripted_opponent": build_scripted_opponent(),
+        "figure_5_diversity": build_human_diversity(),
         "figure_5_archetypes": build_archetype_figure(),
         "figure_6_tsne": build_tsne(frame),
         "figure_7_distribution": build_distribution(),
@@ -633,7 +643,7 @@ def main() -> None:
     outputs.update(build_supplementary_figures(frame))
     source_paths = [EGT_TABLE, ARCHETYPE_TABLE, PROJECTION_TABLE]
     source_paths += [ROOT / "references" / "source_study_dataset" / "airace_deidentified_long.csv"]
-    source_paths += [SCRIPTED_FIGURE_SCRIPT, SCRIPTED_DERIVED]
+    source_paths += [SCRIPTED_FIGURE_SCRIPT, HUMAN_DIVERSITY_SCRIPT, SCRIPTED_DERIVED]
     provenance = {
         "generator": "scripts/build_publication_figures.py",
         "style_module": "scripts/publication_style.py",

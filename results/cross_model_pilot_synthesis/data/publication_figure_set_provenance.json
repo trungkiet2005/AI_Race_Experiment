@@ -114,6 +114,10 @@
       "figures\\paper\\llm_human_clustering\\02_archetype_signatures_and_coverage.png",
       "figures\\paper\\llm_human_clustering\\02_archetype_signatures_and_coverage.svg"
     ],
+    "figure_5_diversity": [
+      "figures\\paper\\human_versus_model.pdf",
+      "figures\\paper\\human_versus_model.png"
+    ],
     "figure_6_tsne": [
       "figures\\paper\\llm_human_clustering\\01_tsne_hero_human_left.pdf",
       "figures\\paper\\llm_human_clustering\\01_tsne_hero_human_left.png",
@@ -170,6 +174,7 @@
     "figure_3_egt": "generated",
     "figure_4_rate": "generated",
     "figure_5_archetypes": "generated",
+    "figure_5_diversity": "generated",
     "figure_6_tsne": "generated",
     "figure_7_distribution": "generated",
     "fresh_frontier_risk_profiles": "generated",
@@ -181,7 +186,7 @@
     "supplement_figure_5_tsne_outcome": "generated",
     "supplement_figure_6_round_profiles": "generated"
   },
-  "generated_utc": "2026-09-13T06:55:10.927425+00:00",
+  "generated_utc": "2026-09-13T07:57:29.064590+00:00",
   "generator": "scripts/build_publication_figures.py",
   "manual_figure_origin": {
     "commit": "f0dde0d",
@@ -201,7 +206,8 @@
     "results\\cross_model_pilot_synthesis\\data\\llm_human_cluster_projection_unified.csv": "0a98ca17a3124c8030af5ca38ffb5a66ab2555bd350ed529f76f08f268953993",
     "results\\derived\\scripted_opponent_campaign\\risk_versus_rival.json": "e6a882057c419abca2acd24d019734a0244bfb2c27baade0087ddea462e5fde1",
     "results\\frontier\\egt_frontier_comparison_v2\\theory_llm_comparison.csv": "57cf703229df95e28cb51a8db95e902de895fb0801e3efb2d0ec7785bb416d78",
-    "scripts\\figures\\fig_scripted_opponent.py": "56b654fde6bae29129ea7dcb534d6dfbe216ce580414d7f3cd24b92dfc867e95"
+    "scripts\\figures\\fig_human_versus_model.py": "18f4f321e31603f2fe7bf0908a003ef092a85623dfd5851e601cc75f6b5809e0",
+    "scripts\\figures\\fig_scripted_opponent.py": "18d281a1ab6f076cc0f7a6fe747d3e3238175ee19f2c3dd63b9533dfa634685a"
   },
   "style_module": "scripts/publication_style.py"
 }

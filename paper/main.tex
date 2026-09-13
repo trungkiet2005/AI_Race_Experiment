@@ -720,20 +720,20 @@ although swapping the opaque action-code mapping shifts Unsafe{} play by
 \begin{figure*}[t]
   \centering
   \includegraphics[width=\textwidth]{../figures/paper/scripted_opponent.pdf}
-  \caption{How the rival changes a route's play. Panel (a) is a response matrix:
-  each row is one of five admitted routes, each column is a scripted rival
-  strategy, and each facet is a maximum-risk condition. Darker cells indicate
-  more Unsafe play and the printed values preserve the measured rate. Panel (b)
-  shows the paired Always-Unsafe minus Always-Safe effect with 95\% race-clustered
-  intervals; all fifteen effects are positive, although their magnitudes differ
-  by route and risk. Panel (c) contrasts a fixed Always-Safe rival with self-play,
-  separating rival-conditioned behaviour from the mirror-match outcome.}
-  \Description{Three-panel figure. Panel a contains three response matrices, one
-  per risk level, with five route rows and four scripted-rival columns; each tile
-  contains the Unsafe-play percentage. Panel b is a horizontal interval plot of
-  the Always-Unsafe minus Always-Safe effect for five routes at three risk levels.
-  Panel c is a paired horizontal plot comparing fixed Always-Safe and self-play
-  Unsafe rates for the same routes and risk levels.}
+  \caption{How the rival changes a route's play. Panel (a) shows three response
+  profiles, one per maximum-risk condition: each coloured path is an admitted
+  route and the x-axis orders the scripted rival from Always Safe to Always
+  Unsafe. Panel (b) shows the paired Always-Unsafe minus Always-Safe effect with
+  95\% race-clustered intervals; all fifteen effects are positive, although
+  their magnitudes differ by route and risk. Panel (c) contrasts a fixed
+  Always-Safe rival with self-play, separating rival-conditioned behaviour from
+  the mirror-match outcome.}
+  \Description{Three-panel figure. Panel a contains three line plots, one per
+  risk level, with five coloured route profiles across four ordered scripted
+  rivals. Panel b is a horizontal interval plot of the Always-Unsafe minus
+  Always-Safe effect for five routes at three risk levels. Panel c is a paired
+  horizontal plot comparing fixed Always-Safe and self-play Unsafe rates for the
+  same routes and risk levels.}
   \label{fig:scripted-opponent-main}
 \end{figure*}
 
@@ -947,14 +947,19 @@ match human strategic diversity.
     checkpoint the screen admits. Panel a places each admitted checkpoint's
     count of distinct paired five-round sequences against the matched human
     resampling null; the shaded region is the range no human draw reached.
-    Panel b shows which sequences each population uses.}
+    Panel b sorts the 60 matched trajectories within each population by
+    frequency, with one segment per distinct path and its count at the right.
+    Panel c shows the modal pooled five-round joint-action path for each
+    displayed population (the human row is the median matched draw); each tile
+    is the focal route's action followed by its opponent's action.}
     \label{fig:diversity}
     \Description{Panel a shows three facets, one per risk condition, each with a
     histogram of a human resampling null and one marker per checkpoint placed on
     the same axis, nearly all inside a shaded region the human draws never
-    entered. Panel b shows one horizontal bar per population divided into
-    segments, one per distinct action sequence used, with the count printed at
-    the right.}
+    entered. Panel b shows one horizontal occupancy bar per population divided
+    into segments for distinct paths. Panel c shows five coloured joint-action
+    tiles for the modal pooled path of each population, with its frequency
+    printed at the right.}
 \end{figure*}
 
 The same picture holds one level down, on the rates themselves. Raw

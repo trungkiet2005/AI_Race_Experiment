@@ -58,10 +58,10 @@ Total unique visual files: **576**
 | [paper/game_understanding_accuracy.png](paper/game_understanding_accuracy.png) | paper-ready | `7cbfd357b60f` |
 | [paper/horizon_discontinuity.pdf](paper/horizon_discontinuity.pdf) | paper-ready | `6f12b40aac26` |
 | [paper/horizon_discontinuity.png](paper/horizon_discontinuity.png) | paper-ready | `bcfd1ac6e325` |
-| [paper/human_versus_model.pdf](paper/human_versus_model.pdf) | paper-ready | `ac47e6e3233b` |
-| [paper/human_versus_model.png](paper/human_versus_model.png) | paper-ready | `c31cf58911f0` |
-| [paper/human_versus_model_all_routes.pdf](paper/human_versus_model_all_routes.pdf) | paper-ready | `b824c9e8d958` |
-| [paper/human_versus_model_all_routes.png](paper/human_versus_model_all_routes.png) | paper-ready | `973d0ee7d642` |
+| [paper/human_versus_model.pdf](paper/human_versus_model.pdf) | paper-ready | `162a5fa5dc75` |
+| [paper/human_versus_model.png](paper/human_versus_model.png) | paper-ready | `98224cac42d5` |
+| [paper/human_versus_model_all_routes.pdf](paper/human_versus_model_all_routes.pdf) | paper-ready | `5a21cce55a3e` |
+| [paper/human_versus_model_all_routes.png](paper/human_versus_model_all_routes.png) | paper-ready | `cc605e767323` |
 | [paper/human_vs_llm_distribution.pdf](paper/human_vs_llm_distribution.pdf) | paper-ready | `1ad8d6a8dbfa` |
 | [paper/human_vs_llm_distribution.png](paper/human_vs_llm_distribution.png) | paper-ready | `40baf128403f` |
 | [paper/human_vs_llm_distribution.svg](paper/human_vs_llm_distribution.svg) | paper-ready | `c303b6fc2485` |
@@ -109,8 +109,8 @@ Total unique visual files: **576**
 | [paper/policy_shape.png](paper/policy_shape.png) | paper-ready | `2dd6e136e5cc` |
 | [paper/risk_response.pdf](paper/risk_response.pdf) | paper-ready | `3f599d3c0504` |
 | [paper/risk_response.png](paper/risk_response.png) | paper-ready | `a95f98e40f39` |
-| [paper/scripted_opponent.pdf](paper/scripted_opponent.pdf) | paper-ready | `c0bd37f9ad1b` |
-| [paper/scripted_opponent.png](paper/scripted_opponent.png) | paper-ready | `e343a2b33a1f` |
+| [paper/scripted_opponent.pdf](paper/scripted_opponent.pdf) | paper-ready | `06dc79eea322` |
+| [paper/scripted_opponent.png](paper/scripted_opponent.png) | paper-ready | `8efa6d3897bd` |
 | [paper/theory_inversion.pdf](paper/theory_inversion.pdf) | paper-ready | `19041407fb92` |
 | [paper/theory_inversion.png](paper/theory_inversion.png) | paper-ready | `b7c702581550` |
 | [paper/theory_versus_behaviour.pdf](paper/theory_versus_behaviour.pdf) | paper-ready | `acaffabc08e0` |

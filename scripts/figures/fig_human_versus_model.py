@@ -91,6 +91,7 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+from matplotlib.patches import Patch, Rectangle
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import figstyle as S  # noqa: E402
@@ -119,6 +120,16 @@ VERDICT_KEY = "[A] admitted    [F] failed the comprehension gate"
 HUMAN_C = S.ROUTE_C["human"]
 NULL_FILL = "#d5dade"
 FORBIDDEN = "#f7eef0"
+# Joint-action colours for the compact game-theoretic path fingerprint.  The
+# cells are outcomes of one round, not inferred strategies: the two bits are
+# the focal route's action followed by its opponent's action.
+PAIR_C = {
+    "00": "#dcefe4",  # Safe / Safe
+    "01": "#f2dfb2",  # Safe / Unsafe
+    "10": "#e9b38f",  # Unsafe / Safe
+    "11": S.UNSAFE_C,  # Unsafe / Unsafe
+}
+PAIR_LABEL = {"00": "S/S", "01": "S/U", "10": "U/S", "11": "U/U"}
 
 # Geometry shared by both panels, so a row means the same height in each.  The
 # pitch between two rows is fixed rather than the top and bottom being fixed,
@@ -152,7 +163,7 @@ class Frame:
     @property
     def height_in(self) -> float:
         """Canvas height that keeps the row pitch the same on the page."""
-        return 1.36 + 0.222 * (self.y_hi - Y_LO)
+        return 1.80 + 0.28 * (self.y_hi - Y_LO)
 
 
 def identity(label):
@@ -206,6 +217,20 @@ def dyad_null(dyads: list[np.ndarray], rng) -> np.ndarray:
 def composition(keys) -> np.ndarray:
     shares = np.array(sorted(Counter(keys).values(), reverse=True), dtype=float)
     return shares / shares.sum()
+
+
+def modal_path(keys) -> tuple[str, int]:
+    """The most frequent five-round joint-action path in one pooled sample."""
+    counts = Counter(keys)
+    return min(counts, key=lambda key: (-counts[key], key)), max(counts.values())
+
+
+def paired_states(key: str) -> list[str]:
+    """Decode the analyser's focal|opponent ten-bit trajectory encoding."""
+    focal, opponent = key.split("|")
+    if len(focal) != 5 or len(opponent) != 5:
+        raise ValueError(f"not a complete five-round trajectory: {key!r}")
+    return [a + b for a, b in zip(focal, opponent)]
 
 
 def draw_facet(ax, counts, cells, rows, *, risk, show_ylabels, show_xlabel, notes,
@@ -402,7 +427,12 @@ def main() -> None:
     median_distinct = int(np.median(pooled_distinct))
     chosen = int(np.flatnonzero(pooled_distinct == median_distinct)[0])
     inverse = {v: k for k, v in vocabulary.items()}
-    human_profile = composition([inverse[c] for c in pooled[chosen]])
+    human_keys = [inverse[c] for c in pooled[chosen]]
+    human_profile = composition(human_keys)
+    model_keys = {
+        label: [k for cell in cells for k in cell]
+        for label, cells in model_cells.items()
+    }
 
     order_all = sorted(model_pooled, key=lambda lab: (-model_pooled[lab], lab))
 
@@ -410,7 +440,7 @@ def main() -> None:
         null_counts=null_counts, model_counts=model_counts, model_cells=model_cells,
         model_pooled=model_pooled, human_profile=human_profile,
         median_distinct=median_distinct, below_dyad=below_dyad,
-        inside_labels=inside_labels,
+        inside_labels=inside_labels, human_keys=human_keys, model_keys=model_keys,
     )
 
     # The main paper draws the five routes the validity screen admitted, plus
@@ -430,7 +460,7 @@ def main() -> None:
 
 def draw_figure(stem, order, *, marks, null_counts, model_counts, model_cells,
                 model_pooled, human_profile, median_distinct, below_dyad,
-                inside_labels):
+                inside_labels, human_keys, model_keys):
     """One figure over one roster.  Everything numeric was computed in ``main``."""
     frame = Frame(len(order))
     rows = frame.rows(order)
@@ -445,10 +475,12 @@ def draw_figure(stem, order, *, marks, null_counts, model_counts, model_cells,
     n_cells = len(order) * len(S.RISKS)
 
     fig = plt.figure(figsize=(S.TEXT, frame.height_in))
-    gs = fig.add_gridspec(1, 2, width_ratios=[1.62, 1.0], wspace=0.40)
+    gs = fig.add_gridspec(1, 2, width_ratios=[1.52, 1.18], wspace=0.42)
     left = gs[0, 0].subgridspec(1, 3, wspace=0.13)
     axes_a = [fig.add_subplot(left[i]) for i in range(3)]
-    ax_b = fig.add_subplot(gs[0, 1])
+    right = gs[0, 1].subgridspec(2, 1, height_ratios=[1.30, 0.82], hspace=0.90)
+    ax_b = fig.add_subplot(right[0, 0])
+    ax_c = fig.add_subplot(right[1, 0])
 
     # --- a: where each model cell falls in the matched human null -------------
     # One name per line.  Two names on one line is wider than a facet, and an
@@ -463,18 +495,9 @@ def draw_figure(stem, order, *, marks, null_counts, model_counts, model_cells,
     else:
         inside_note = ("no route drawn here\nreaches the human range")
     for i, (ax, risk) in enumerate(zip(axes_a, S.RISKS)):
+        # The null floor and the shaded no-human region are self-explanatory in
+        # the marks; long prose belongs in the caption, not in a narrow facet.
         notes = []
-        if i == 0:
-            notes.append(("1 = all 20 identical,\nthe floor of the measure",
-                          0.6, NOTE_Y, S.MUTED, "left"))
-        if i == 1:
-            notes.append(("no human draw\never landed here", 1.2,
-                          frame.route_top + 0.56, S.UNSAFE_C, "left"))
-            notes.append(("20 = all 20 different,\n"
-                          "the measure's ceiling",
-                          0.6, NOTE_Y, S.MUTED, "left"))
-        if i == 2:
-            notes.append((inside_note, COMPARISON_N + 0.4, NOTE_Y, S.INK_2, "right"))
         draw_facet(ax, null_counts[:, i],
                    {label: model_counts[label][i] for label in order},
                    rows, risk=risk, show_ylabels=(i == 0), show_xlabel=(i == 1),
@@ -486,7 +509,7 @@ def draw_figure(stem, order, *, marks, null_counts, model_counts, model_cells,
             f"{len(below)} of {n_cells} model cells sit below every human draw",
             pad=16)
 
-    # --- b: the mechanism, which sequences each population spends its 60 on ---
+    # --- b: occupancy of the observed trajectory space ---------------------
     for y, name in [(frame.human_tick, "Human")] + rows:
         if name == "Human":
             profile, colour, marker = human_profile, HUMAN_C, S.ROUTE_M["human"]
@@ -498,74 +521,77 @@ def draw_figure(stem, order, *, marks, null_counts, model_counts, model_cells,
         offset = 0.0
         for j, share in enumerate(profile):
             ax_b.barh(y, share, left=offset, height=BAR_H, color=colour,
-                      alpha=1.0 if j % 2 == 0 else 0.55, edgecolor=S.SURFACE,
-                      linewidth=0.3, zorder=3)
+                      alpha=1.0 if j % 2 == 0 else 0.62, edgecolor=S.SURFACE,
+                      linewidth=0.45, zorder=3)
             offset += share
         ax_b.plot([-0.035], [y], marker=marker,
                   ms=4.6 if marker == "*" else 3.4, color=colour,
                   markeredgecolor=S.SURFACE, markeredgewidth=0.5,
                   clip_on=False, zorder=5)
-        S.direct_label(ax_b, 1.0, y, f"{count}", color=colour, dx=4,
+        S.direct_label(ax_b, 1.0, y, f"{count}/60", color=colour, dx=4,
                        weight="bold" if name in ("Human", narrowest) else "normal")
 
-    # The narrowest route is the boundary case of the whole figure: inside a risk
-    # cell its twenty trajectories are one string, which is the floor of the
-    # measure and not a small reading of it.  Said inside the bar, because the
-    # pooled bar is the one place where that boundary stops being visible.
-    if all(count == 1 for count in model_counts[narrowest]):
-        ax_b.annotate("all 20 identical in every risk cell",
-                      xy=(0.02, y_of[narrowest]),
-                      ha="left", va="center", fontsize=S.FS_NOTE, color=S.SURFACE,
-                      zorder=6)
-
     ax_b.set_xlim(0.0, 1.0)
-    ax_b.set_ylim(Y_LO, frame.y_hi)
+    ax_b.set_ylim(-0.42, frame.human_tick + 0.42)
     ax_b.set_xticks([0, 0.25, 0.5, 0.75, 1.0])
     ax_b.set_xticklabels(["0", "25", "50", "75", "100"])
-    ax_b.set_yticks([])
-    ax_b.set_xlabel("share of the 60 matched trajectories (%)", labelpad=2)
-    S.strip(ax_b, left=False, grid_axis="x")
-    ax_b.annotate("sequences\nused", xy=(1.0, frame.top_y), xytext=(4, 0),
-                  textcoords="offset points", ha="left", va="center",
-                  fontsize=S.FS_NOTE, color=S.MUTED, linespacing=1.15,
-                  annotation_clip=False)
-    # The headline count is against a null of twenty participants, which matches
-    # the model cells in size but not in independence: a model cell is ten races
-    # replayed once per seat. Against a null built from ten complete human dyads,
-    # which is the model's structure exactly, the count is smaller. Both are
-    # printed, because quoting only the larger one would be choosing the null
-    # after seeing which number it gives.
-    lines = []
-    if marks:
-        lines.append(VERDICT_KEY)
-    # Only say "every" when it is every one.  On the nine-route roster it is
-    # not, and the same sentence there would be false.
-    if len(below) == n_cells:
-        lines.append("every route drawn here sits below every human draw, "
-                     "at every risk level")
-    if outside_inside:
-        lines.append("the only cells in this study that reach the human range "
-                     "belong to\n" + " and ".join(identity(lab)[2]
-                                                  for lab in outside_inside)
-                     + ", which the validity screen refused")
-    elif drawn_inside:
-        lines.append("the cells that reach the human range belong to "
-                     + " and ".join(named(lab) for lab in drawn_inside))
-    lines.append(f"the human row is the median of the {N_NULL:,} matched draws")
-    lines.append(f"{len(below)} is against a null of 20 participants; against one "
-                 f"of 10 complete\ndyads, which matches the model cells' "
-                 f"independence, it is "
-                 f"{sum(1 for _r, lab in below_dyad if lab in order)} "
-                 f"of {n_cells}")
-    ax_b.annotate("\n".join(lines),
-                  xy=(0.0, 0.0), xycoords="axes fraction", xytext=(-40, -26),
-                  textcoords="offset points", ha="left", va="top",
-                  fontsize=S.FS_NOTE, color=S.MUTED, linespacing=1.35,
-                  annotation_clip=False)
+    labels_b = ["Human"] + [S.ROUTE_SHORT[LABEL_TO_ROUTE[name]] for _, name in rows]
+    ax_b.set_yticks([frame.human_tick] + [y for y, _ in rows], labels_b)
+    for tick, name in zip(ax_b.get_yticklabels(), ["Human"] + [name for _, name in rows]):
+        tick.set_color(HUMAN_C if name == "Human" else identity(name)[0])
+        tick.set_fontweight("bold")
+    ax_b.tick_params(axis="y", length=0, pad=3)
+    ax_b.set_xlabel("share of 60 matched trajectories (%)", labelpad=2)
+    S.strip(ax_b, grid_axis="x")
     S.panel(ax_b, "b",
-            f"{median_distinct} sequences for 60 humans, "
-            f"{model_pooled[narrowest]} for {S.ROUTE_SHORT[LABEL_TO_ROUTE[narrowest]]}",
-            pad=4)
+            "routes reuse a small set of paths", pad=5)
+
+    # --- c: a compact game-theoretic fingerprint of the modal path ----------
+    # This is a descriptive projection of the same realised trajectory strings,
+    # not a strategy classifier.  Each tile is one round's joint action and the
+    # row-end count says how often the modal five-round path occurred.
+    path_rows = [(frame.human_tick, "Human")] + rows
+    population_names = ["Human"] + [name for _, name in rows]
+    for y, name in path_rows:
+        keys = human_keys if name == "Human" else model_keys[name]
+        path, n_mode = modal_path(keys)
+        for round_idx, pair in enumerate(paired_states(path)):
+            face = PAIR_C[pair]
+            ink = S.SURFACE if pair == "11" else S.INK
+            ax_c.add_patch(Rectangle((round_idx - 0.46, y - 0.25), 0.92, 0.50,
+                                     facecolor=face, edgecolor=S.SURFACE,
+                                     linewidth=0.8, zorder=3))
+            ax_c.text(round_idx, y, PAIR_LABEL[pair], ha="center", va="center",
+                      fontsize=6.1, color=ink, fontweight="bold", zorder=4)
+        colour = HUMAN_C if name == "Human" else identity(name)[0]
+        ax_c.text(5.03, y, f"{n_mode}/60", ha="left", va="center",
+                  fontsize=S.FS_NOTE, color=colour, fontweight="bold")
+
+    ax_c.set_yticks([frame.human_tick] + [y for y, _ in rows],
+                    [S.ROUTE_SHORT[LABEL_TO_ROUTE[name]] if name != "Human" else "Human"
+                     for name in population_names])
+    for tick, name in zip(ax_c.get_yticklabels(), population_names):
+        tick.set_color(HUMAN_C if name == "Human" else identity(name)[0])
+        tick.set_fontweight("bold")
+    ax_c.set_xlim(-0.50, 5.72)
+    ax_c.set_ylim(-0.42, frame.human_tick + 0.42)
+    ax_c.set_xticks(range(5), ["1", "2", "3", "4", "5"])
+    ax_c.set_xlabel("round", labelpad=2)
+    ax_c.tick_params(axis="y", length=0, pad=3)
+    ax_c.tick_params(axis="x", length=2)
+    for side in ("top", "right", "left"):
+        ax_c.spines[side].set_visible(False)
+    ax_c.spines["bottom"].set_color(S.HAIRLINE)
+    S.panel(ax_c, "c", "the modal path is a joint-action sequence", pad=5)
+    handles = [Patch(facecolor=PAIR_C[pair], edgecolor=S.HAIRLINE,
+                     label=PAIR_LABEL[pair]) for pair in ("00", "01", "10", "11")]
+    ax_c.legend(handles=handles, loc="upper left", bbox_to_anchor=(0.0, -0.34),
+               ncol=4, frameon=False, fontsize=6.1,
+               handlelength=0.8, handleheight=0.8, columnspacing=0.55,
+               handletextpad=0.22, borderaxespad=0.0)
+    if marks:
+        fig.text(0.105, 0.025, VERDICT_KEY, ha="left", va="bottom",
+                 fontsize=S.FS_NOTE, color=S.MUTED)
 
     if below and len(below) != n_cells:
         print(f"  {stem}: {n_cells - len(below)} of {n_cells} drawn cells are NOT "
