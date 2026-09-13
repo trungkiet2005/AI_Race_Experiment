@@ -306,50 +306,64 @@ extend its claims beyond the idealised race.
 \begin{document}
 \maketitle
 
-\section*{How to read this document}
+\section*{Supplementary roadmap}
 
-Each section stands on its own and is named for what it measures. Section
-letters restart at A because this is supplementary matter.
+Each detailed section stands on its own and keeps the appendix letters used by
+the paper. The roadmap groups those sections by role without changing their
+order or removing any evidence.
 
-\begin{itemize}
-  \item \textbf{The quality-control screen.} What the screen asked, when its
-    rule was fixed, which of the nine routes cleared it and on which condition,
-    and the three facts that bound what a verdict may be used for. The screen
-    is recorded here as an entry condition; its full measurement interpretation
-    is outside the behavioural contribution.
-  \item \textbf{Human-benchmark replication check.} Whether the reference
-    human study's reported pattern reproduces on the released participant data
-    under our own analysis code.
-  \item \textbf{Claim-scoped citation audit.} For each cited work, the claim it
-    is used to support and the claim it does not support.
-  \item \textbf{Risk preference and assigned personas.} The persona families,
-    and how a prompted persona compares with measured human risk preference.
-  \item \textbf{Selection-strength sweep of the evolutionary benchmark.}
-    Whether the gap between theory and the audited routes depends on one
-    parameter setting.
-  \item \textbf{Crossed representation-robustness design.} The narrative
-    skin by symbol mapping rerun, completed on both routes selected for the
-    crossed representation study, and what
-    two routes do and do not license.
-  \item \textbf{Predictive structure of unsafe choices.} The feature analysis
-    behind the drivers reported in the main paper.
-  \item \textbf{Two-player descriptive baseline, full scope.} Every checkpoint
-    and condition, including those the main paper does not plot.
-  \item \textbf{$N$-player self-play scope.} Group sizes three to five.
-  \item \textbf{Trajectory embedding, by population and by outcome.} The
-    same embedding twice, coloured by population and then by \Unsafe{} rate.
-  \item \textbf{Cluster-count sensitivity and trajectory diversity.} How the
-    human archetypes and the diversity comparison behave as the analysis
-    choices move.
-  \item \textbf{\Unsafe{} rate by persona band and relative position.} Cells
-    reported only here, with observed rather than assigned position.
-  \item \textbf{Joint outcome dynamics.} The race read as a walk on the three
-    joint states, one transition matrix per route, and the two roads back to
-    mutual restraint.
-  \item \textbf{The designed boundary at round five.} Whether play moves where
-    the stated continuation probability drops, and why that contrast is across
-    round positions rather than a discontinuity estimate.
-\end{itemize}
+\begin{table*}[t]
+  \caption{Roadmap to the supplementary evidence. The section labels point to
+  the detailed analyses below; the main paper's claims remain scoped to the
+  designs and populations stated there.}
+  \centering
+  \small
+  \begin{tabular}{@{}p{0.18\textwidth}p{0.39\textwidth}p{0.31\textwidth}@{}}
+    \toprule
+    Family & Supporting sections & What the family adds \\
+    \midrule
+    Validity and provenance &
+      Quality-control screen (\S\ref{app:admission-v6}); human-benchmark
+      replication (\S\ref{app:human-benchmark-replication}); claim-scoped
+      citation audit (\S\ref{app:citation-audit}) &
+      Entry conditions, source checks and the boundaries of each citation. \\
+    Mechanism and theory &
+      Two-route baseline (\S\ref{app:frontier-baseline}); policy shape
+      (\S\ref{app:policy-shape}); selection-strength sweep
+      (\S\ref{app:egt-beta}); scripted opponents
+      (\S\ref{app:scripted-opponent}) &
+      The baseline, evolutionary comparison and the complete fixed-rival
+      intervention. \\
+    Prompt and model robustness &
+      Open-weight battery (\S\ref{app:open-weight-battery}); baseline
+      replication (\S\ref{app:baseline-replication}); crossed context mapping
+      (\S\ref{app:context-mapping}); assigned personas
+      (\S\ref{app:persona-detail}); predictive structure
+      (\S\ref{app:predictive-structure}) &
+      Tests of representation, instruction, persona and observable choice
+      structure. \\
+    Trajectories and diversity &
+      Full two-player scope (\S\ref{app:twoplayer-baseline}); diversity
+      (\S\ref{app:diversity}); pilot roster (\S\ref{app:diversity-pilot});
+      population identity (\S\ref{app:population-identity}); embedding and
+      outcomes (\S\ref{app:tsne-outcome}); cluster sensitivity
+      (\S\ref{app:k-sensitivity}); archetype coverage
+      (\S\ref{app:archetype-coverage}); human radar
+      (\S\ref{app:human-radar}) &
+      Sequence-level comparison, exploratory projections and their analysis
+      sensitivities. \\
+    Interaction scope &
+      $N$-player scope (\S\ref{app:nplayer-scope}); matched group size
+      (\S\ref{app:nplayer-matched}); rate by group
+      (\S\ref{app:unsafe-rate-by-group}); position cells
+      (\S\ref{app:position-cells}); joint dynamics
+      (\S\ref{app:joint-dynamics}); round-five boundary
+      (\S\ref{app:horizon-boundary}) &
+      Group size, position, state transitions and the designed horizon boundary,
+      all treated as scoped or exploratory comparisons. \\
+    \bottomrule
+  \end{tabular}
+\end{table*}
 
 Four terms are used with fixed meanings throughout. A \emph{route} is the
 exact provider string a request is addressed to, for example
@@ -642,6 +656,35 @@ are not pooled across routes and do not estimate an evolutionary equilibrium.
         \midrule
         \path{google/gemini-3-flash-preview} & 98.9\% & 73.1\% & 60.2\% & 30 \\
         \path{anthropic/claude-sonnet-5@default} & 89.2\% & 48.4\% & 32.3\% & 30 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\paragraph{Race-weighted sensitivity.} The headline entries above weight each
+decision equally, matching the run summaries. Because both seats in a race share
+the same horizon draw, we also report the race as the independent unit. Table~\ref{tab:baseline-race-sensitivity}
+repeats the risk-response contrast for the five admitted routes using equal
+weight per race and a percentile bootstrap over race clusters. The point
+estimates preserve the same route ordering and the intervals are a sensitivity
+check on weighting, not an additional model run.
+
+\begin{table}[h]
+    \caption{Risk-response sensitivity to the weighting unit. The contrast is
+    the decision-weighted or race-weighted \Unsafe{} rate at maximum private
+    risk $0.1$ minus the rate at $0.9$. Race-weighted brackets are 95\%
+    percentile bootstrap intervals over ten race clusters per risk cell.}
+    \label{tab:baseline-race-sensitivity}
+    \centering
+    \scriptsize
+    \begin{tabular}{@{}lrr@{}}
+        \toprule
+        Admitted route & Decision-weighted & Race-weighted [95\% RI] \\
+        \midrule
+        Gemini 3 Flash & 38.7 & 39.1 [35.8, 42.2] \\
+        Claude Opus 5 & 100.0 & 100.0 [100.0, 100.0] \\
+        GPT-5.4 & 40.3 & 40.7 [34.1, 47.4] \\
+        GPT-5.5 & 38.2 & 39.7 [33.1, 46.9] \\
+        Claude Sonnet 5 & 57.0 & 55.0 [50.4, 59.8] \\
         \bottomrule
     \end{tabular}
 \end{table}
@@ -1396,17 +1439,6 @@ becomes 0.476 after correction; every other corrected $p$ is above 0.88. The
 same conclusion follows from Dunn's test on mean ranks and from pairwise
 Mann--Whitney tests, which the artifact reports side by side.
 
-\emph{Correction.} An earlier version of this supplement reported
-$H=21.95$, $p=0.001$, $n=286$ for this comparison and read it as a weaker,
-second-order association surviving the null above. That value has no source
-anywhere in the analysis record, and no subset of 286 participants arises at
-any documented step of this pipeline: the elicitation is non-missing for all
-341 participants and the clustering drops nobody. It is superseded by the
-artifact
-\texttt{elicited\_risk\_}\discretionary{}{}{}\texttt{by\_archetype.json},
-whose numbers are the ones
-reported above.
-
 The null is not a weakness in the comparison; it sharpens it. A measured
 human risk preference predicts neither the level of \Unsafe{} play nor the
 pattern of it, whereas a prompted risk persona moves a checkpoint's \Unsafe{}
@@ -1446,7 +1478,7 @@ Figure~\ref{fig:own-risk-dependence} aligns them for visual comparison only.
 Figure~\ref{fig:own-risk-dependence} (left) shows how little that null
 leaves. Human mean \Unsafe{} play stays inside a 49--62\% band across the
 entire elicitation range, never approaching the low-\Unsafe{} checkpoints of
-the low-\Unsafe{} checkpoints of the pilot roster of
+the pilot roster of
 \S\ref{app:diversity-pilot} or its high-\Unsafe{} Gemini checkpoints.
 Elicited risk preference does not move a participant far enough to resemble
 a different checkpoint's policy.
@@ -1474,8 +1506,8 @@ risk treatment.
     (a logistic fit that additionally controls for the mechanism's actual
     private-risk treatment) has been run only for the first three; ``not
     estimated'' marks checkpoints for which only the descriptive change and
-    slope are available. Starred rows sit outside the seven-checkpoint
-    roster.}
+    slope are available. Starred rows are outside the nine-route confirmatory
+    baseline and are retained only for exploratory persona analyses.}
     \label{tab:persona-effect}
     \centering
     \small
@@ -1505,17 +1537,19 @@ disposition. Because the LLM estimates come from a separate risk-matrix
 experiment, available for five of the seven tested checkpoints and with the
 private-risk-controlled logistic fit run for only three of those five,
 this comparison remains exploratory and cross-experimental rather than a
-like-for-like measurement.
+like-for-like measurement. The starred rows are outside the nine-route
+confirmatory baseline and are retained only for exploratory persona analyses.
 
 \subsection{The pilot roster behind the projections}
 \label{app:diversity-pilot}
 
 The diversity comparison in the main paper reads all nine audited routes on the
 confirmatory baseline. The projections in this appendix, the behavioural
-archetypes and the two-dimensional embedding, are built on an earlier export of
-the same two-player game covering seven checkpoints, and that roster is
-described here so those projections can be read without it occupying main-paper
-space. It pools 420 trajectories, 60 per checkpoint, with 340 complete human
+archetypes, the classifier features and the two-dimensional embedding, are
+built on an earlier export of the same two-player game covering seven
+checkpoints. That seven-checkpoint roster is used only for these exploratory
+analyses; it does not redefine the nine-route human-diversity roster in the
+main paper. It pools 420 trajectories, 60 per checkpoint, with 340 complete human
 trajectories from the public de-identified dataset of
 \citet{falling_behind_unsafe}, one incomplete human record excluded, $N=760$.
 Six of the seven checkpoints carry an endpoint-admission verdict from
@@ -2458,8 +2492,9 @@ cluster count from two to six.
   projects that checkpoint's own no-persona player-races
   ($n{=}60$ to $120$) into the same
   space. This table draws on the full nine-checkpoint cross-model pilot and
-  therefore includes GPT-5.6 Luna and Terra, which are not part of the
-  seven-checkpoint trajectory comparison in the main paper.}
+  therefore includes GPT-5.6 Luna and Terra. Those starred rows are retained
+  only for exploratory archetype and classifier analyses and are not part of
+  the nine-route confirmatory baseline.}
   \label{tab:archetype-coverage}
   \centering
   \footnotesize
@@ -3138,17 +3173,21 @@ metadata limitation rather than a gameplay failure.
 \end{comment}
 
 \begin{table*}[t]
-    \caption{Full five-route scripted-opponent campaign. Each row groups four
-    route-by-risk-by-strategy cells; each strategy-cell contains ten races and
-    93 route decisions, with both seats used and zero parse failures or rival
-    replay deviations. Rates are percentages of the route's own decisions.
+    \caption{Full five-route scripted-opponent campaign. Each AS/CS/CAS/AU
+    entry is one route-by-strategy-by-risk cell with ten races and 93 route
+    decisions; each route-by-risk row therefore aggregates four such cells,
+    40 races and 372 route decisions, with both seats used and zero parse
+    failures or rival replay deviations. Rates are percentages of the route's
+    own decisions.
     ``Rival stance'' is Always Unsafe minus Always Safe, differenced inside a
     repetition; the bracketed values are its 95\% percentile interval over ten
     blocks. ``Risk at Safe'' is the paired risk-0.1 minus risk-0.9 contrast with
     the rival held at Always Safe, and contrast columns are percentage-point
     differences.
-    Claude Opus 5 has one legacy decoding cell, so the five-route table is
-    complete in coverage but not homogeneous in decoding contract.}
+    Claude Opus 5 has one legacy decoding cell. Coverage is complete across
+    the five routes, but decoding contracts are heterogeneous across endpoints,
+    so this cross-route comparison is descriptive rather than a controlled
+    comparison under one common decoding configuration.}
     \label{tab:scripted-opponent}
     \centering
     \scriptsize

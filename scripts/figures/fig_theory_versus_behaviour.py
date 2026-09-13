@@ -97,6 +97,19 @@ MECHANISM_FIELDS = (
 INVERSION_BETA = 0.01
 
 OPUS = "anthropic/claude-opus-5@default"
+# Evidence strata for the route-profile panel.  These are deliberately explicit
+# here because the panel combines the direct two-route comparison with the
+# analysis-only five-route extension.  The guard in draw_main_figure prevents a
+# roster change from silently changing the visual meaning of the panel.
+CONFIRMATORY_ROUTES = (
+    "google/gemini-3-flash-preview",
+    "anthropic/claude-sonnet-5@default",
+)
+ANALYSIS_ONLY_ROUTES = (
+    "anthropic/claude-opus-5@default",
+    "openai/gpt-5.4-2026-03-05",
+    "openai/gpt-5.5-2026-04-23",
+)
 BETA_C = {2.0: S.INK, 0.01: S.INK_2}
 BETA_LS = {2.0: "-", 0.01: (0, (4.0, 1.6))}
 
@@ -604,18 +617,34 @@ def panel_c(ax, res, d, letter="c") -> None:
 def draw_main_figure(res: dict, d: dict) -> None:
     """Draw a wide comparison with an explicit evolutionary composition panel."""
     from matplotlib.patches import Patch
+    from matplotlib.lines import Line2D
+
+    expected_routes = set(CONFIRMATORY_ROUTES) | set(ANALYSIS_ONLY_ROUTES)
+    if set(S.ADMITTED) != expected_routes:
+        raise SystemExit(
+            "Figure 4 evidence strata no longer cover exactly the admitted "
+            f"routes: expected {sorted(expected_routes)}, found {sorted(S.ADMITTED)}"
+        )
 
     fig = plt.figure(figsize=(S.TEXT, 3.05))
     gs = fig.add_gridspec(1, 2, width_ratios=[1.55, 1.0], wspace=0.34)
-    fig.subplots_adjust(left=0.085, right=0.985, bottom=0.23, top=0.78)
+    fig.subplots_adjust(left=0.085, right=0.985, bottom=0.28, top=0.78)
 
     ax = fig.add_subplot(gs[0, 0])
-    for route in S.ADMITTED:
+    # Draw the extension first so the directly confirmatory profiles remain
+    # legible when two route profiles pass through the same measured cell.
+    for route in ANALYSIS_ONLY_ROUTES + CONFIRMATORY_ROUTES:
+        confirmatory = route in CONFIRMATORY_ROUTES
+        colour = S.ROUTE_C[route]
         ax.plot(
             res["risks"], 100 * res["obs"].loc[route].to_numpy(),
-            color=S.ROUTE_C[route], marker=S.ROUTE_M[route], markersize=4.0,
-            linewidth=1.35, markeredgecolor=S.SURFACE, markeredgewidth=0.45,
-            label=S.ROUTE_SHORT[route], zorder=4,
+            color=colour, alpha=1.0 if confirmatory else 0.52,
+            marker=S.ROUTE_M[route], markersize=4.1 if confirmatory else 3.7,
+            linewidth=1.45 if confirmatory else 0.95,
+            markerfacecolor=colour if confirmatory else S.SURFACE,
+            markeredgecolor=S.SURFACE if confirmatory else colour,
+            markeredgewidth=0.55 if confirmatory else 0.9,
+            label=S.ROUTE_SHORT[route], zorder=5 if confirmatory else 4,
         )
     for beta in sorted(res["curves"], reverse=True):
         linestyle = "-" if beta == d["reference"] else (0, (4.0, 1.8))
@@ -630,11 +659,41 @@ def draw_main_figure(res: dict, d: dict) -> None:
     ax.set_ylim(0.0, 105.0)
     S.strip(ax, grid_axis="y")
     S.ceiling_rule(ax, 100.0, label="ceiling")
-    S.panel(ax, "a", "risk response: step-like at strong selection, graded near neutrality", gap=8.0)
+    S.panel(ax, "a", "risk response: confirmatory routes vs five-route extension", gap=8.0)
+
+    route_handles = [
+        Line2D(
+            [], [], color=S.ROUTE_C[route], marker=S.ROUTE_M[route],
+            markersize=4.1, linewidth=1.35,
+            markerfacecolor=S.ROUTE_C[route] if route in CONFIRMATORY_ROUTES else S.SURFACE,
+            markeredgecolor=S.SURFACE if route in CONFIRMATORY_ROUTES else S.ROUTE_C[route],
+            markeredgewidth=0.55 if route in CONFIRMATORY_ROUTES else 0.9,
+            label=S.ROUTE_SHORT[route],
+        )
+        for route in S.ADMITTED
+    ]
+    theory_handles = [
+        Line2D(
+            [], [], color=S.INK, linestyle="-", linewidth=2.0,
+            label=rf"EGT $\beta={d['reference']:g}$",
+        ),
+        Line2D(
+            [], [], color=S.INK_2, linestyle=(0, (4.0, 1.8)), linewidth=1.7,
+            label=rf"EGT $\beta={min(res['curves']):g}$",
+        ),
+    ]
     ax.legend(
-        frameon=False, loc="upper center", bbox_to_anchor=(0.5, 1.27),
-        ncol=4, fontsize=S.FS_NOTE, handlelength=1.8, columnspacing=1.0,
-        handletextpad=0.35,
+        handles=route_handles + theory_handles,
+        frameon=False, loc="upper center", bbox_to_anchor=(0.5, 1.29),
+        ncol=5, fontsize=S.FS_NOTE, handlelength=1.55, columnspacing=0.85,
+        handletextpad=0.30, borderaxespad=0.0,
+    )
+    ax.text(
+        0.5, 1.10,
+        "filled/saturated = confirmatory (G3 Flash, Sonnet 5)  |  "
+        "hollow/faded = analysis-only extension",
+        transform=ax.transAxes, ha="center", va="bottom",
+        fontsize=S.FS_NOTE, color=S.INK_2, clip_on=False,
     )
 
     ax = fig.add_subplot(gs[0, 1])
@@ -670,7 +729,7 @@ def draw_main_figure(res: dict, d: dict) -> None:
                             weight="bold")
             bottom += values
     ax.set_xticks(x, ["0.1", "0.6", "0.9"])
-    ax.set_xlabel(r"maximum private risk $p_r^{\max}$")
+    ax.set_xlabel(r"maximum private risk $p_r^{\max}$", labelpad=17)
     ax.set_ylabel("stationary strategy share (%)")
     ax.set_ylim(0.0, 100.0)
     S.strip(ax, grid_axis="y")

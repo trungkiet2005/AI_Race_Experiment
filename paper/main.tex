@@ -309,9 +309,10 @@ stated risk itself. Thus, self-play outcomes can reflect an interaction between
 two copies of a policy rather than an intrinsic risk preference.
 
 Frontier agents also show a distinctive relationship to the theoretical and
-human benchmarks. The four graded routes' responses resemble the near-neutral regime of
-the evolutionary model more closely than its strong-selection prediction, while
-their action trajectories occupy a more concentrated behavioural space than
+human benchmarks. An analysis extending the evolutionary comparison across the
+admitted panel places the four graded profiles closer to the near-neutral regime
+than to its strong-selection prediction, while
+their action trajectories occupy a more concentrated observed trajectory space than
 those of human participants. These results suggest that AI-mediated competitive
 decisions may be model-specific, opponent-dependent and behaviourally
 concentrated, motivating evaluation at the level of interactions and trajectories
@@ -388,8 +389,8 @@ between the two higher private-risk conditions found no clear difference;
 exploratory analyses instead linked later Unsafe choices to the opponent's
 previous action, to whether the player was ahead or behind, and to the player's
 first action, so an early choice changes the later path of the interaction. A
-useful human and LLM comparison must therefore examine full action sequences,
-which we call \emph{trajectories}, rather than only the overall Unsafe rate.
+useful human and LLM comparison must therefore examine round-by-round
+trajectories over the first five rounds, rather than only the overall Unsafe rate.
 
 Two problems make that comparison harder than it looks. The first is that a
 correctly formatted action is not an informed one. LLMs already play games of
@@ -458,11 +459,11 @@ evolutionary game theory predicts, or the one human participants display?
 Each answer changes how the next should be read. The agents do respond to the
 stated danger, within a narrow band, and one route replaces the trade-off by a
 switch from always fast to always careful. But where we put the agent against
-scripted code instead of a second copy of itself, the rival's stance moves play
-substantially, but its magnitude varies by route and overlaps the effect of
-changing the stated danger. Neither external reference shows that shape: the
+scripted code instead of a second copy of itself, the rival's stance shifts play
+on every route; its magnitude is checkpoint-specific and can overlap the effect
+of changing the stated danger. Neither external reference shows that shape: the
 evolutionary model predicts a switch where the agents deliver a gradient, and
-on raw action sequences human participants use nearly the whole observed
+on raw first-five-round trajectories human participants use nearly the whole observed
 trajectory space while every admitted route uses a small part of it.
 
 Three contributions follow. First, a scripted-rival design for repeated-game
@@ -473,8 +474,8 @@ standard practice in this literature \citep{payneStrategicIntelligence2025};
 what we add is the version that matters for a safety reading, that self-play
 can hide the response to the treatment the study is about, measured against a
 rival the agent cannot influence and is never told about. Second, a
-population-level comparison with human participants read on raw action
-sequences rather than on aggregate rates, which is what makes the compression
+population-level comparison with human participants read on first-five-round
+trajectories rather than on aggregate rates, which is what makes the compression
 of observed trajectories visible at all. Third, an auditable race mechanism in which the engine
 and not generated text resolves every round, entered through a comprehension
 screen that scores answers to frozen questions against ground truth and never
@@ -639,8 +640,10 @@ the trajectory-diversity comparison below, because two refused routes are the
 only ones here that reach the human reference range.
 
 The screen reads probes and never reads a race, so gameplay cannot change its
-verdict. We use that verdict only as a declared inclusion condition, not as a
-measure of capability or a contrast between admitted and refused routes. The
+verdict. Two admitted routes pass one screening domain at the minimum attainable
+score, and on this nine-route roster the admitted/refused split coincides with
+endpoint tier naming. We therefore use the screen only as a task-validity
+inclusion rule, never as a capability axis or a behavioural contrast. The
 published-weight route used in the arithmetic diagnostic was assessed with a
 different battery and is not pooled with this screen. Full screening results
 and robustness checks are retained in the supplementary material.
@@ -707,14 +710,13 @@ remains contingent on route and interaction context. Two routes
 can also reach a similar rate through very different sets of races, which
 \S\ref{sec:results-diversity} measures directly.
 
-A route's profile is a property of the route rather than of the run that
-produced it. Repeating the whole protocol on one route under the same frozen
-contract moves no risk cell by more than 1.1 points over 186 decisions, against
-a 93.0-point spread in risk response across the nine routes, and moves its own
-risk response from 38.7 to 40.3. That bounds run-to-run variation for that route at
-this sample size and licenses no such bound for a route collected once, which
-matters here because no provider confirmed applying the requested sampling
-seed.
+For the repeated Gemini 3 Flash route, the profile was stable across two
+administrations. Repeating the whole protocol on that route under the same frozen
+contract moved no risk cell by more than 1.1 points over 186 decisions, against
+a 93.0-point spread in risk response across the nine routes, and moved its own
+risk response from 38.7 to 40.3. This bounds run-to-run variation for that route
+at this sample size; it licenses no such bound for a route collected once, which
+matters here because no provider confirmed applying the requested sampling seed.
 
 Representation-equivalent prompt changes also move rates. The directional risk
 response survives a fully crossed narrative-by-symbol rerun on two routes,
@@ -724,7 +726,7 @@ although swapping the opaque action-code mapping shifts Unsafe{} play by
 \begin{figure*}[t]
   \centering
   \includegraphics[width=\textwidth]{../figures/paper/scripted_opponent.pdf}
-  \caption{How the rival changes a route's play. Panel (a) is a response
+  \caption{A shared rival response changes a route's play. Panel (a) is a response
   surface: each tile is an admitted route's Unsafe rate under one scripted
   rival, with columns ordered from Always Safe to Always Unsafe and facets for
   the three maximum-risk conditions. Panel (b) shows the paired Always-Unsafe
@@ -820,30 +822,27 @@ population of models.
 \label{sec:results-theory}
 
 The agents and the theoretical population move in the same direction under the
-same incentive, while their response shapes differ. The width of that
-difference turns on an assumption inside the theory rather than on the game. At the
-reference setting reported by \citet{falling_behind_unsafe}, selection strength
-$\beta=2$ with mutation $\mu=\beta/Z$, the reconstructed evolutionary model
-predicts a switch: \Unsafe{} play of 99.2\%, 98.0\% and 1.9\% at maximum risks
-$0.1$, $0.6$ and $0.9$. The four graded admitted routes decline smoothly, while
-Claude Opus 5 switches. In the
-two-route confirmatory block on which this comparison is computed, a separate
-collection from the nine-route baseline reported above and
-    never pooled with it, Gemini 3 Flash plays \Unsafe{} 98.9\%, 73.1\% and 60.2\%
-    and Claude Sonnet 5 89.2\%, 48.4\% and 32.3\%, each over 30 races and 558
-decisions. The difference is one of shape and not of level: solved on a fine
-grid of risk values, the benchmark at $\beta=2$ loses 98 points of \Unsafe{}
-    play inside a single step of risk $0.005$ wide (Figure~\ref{fig:theory-behaviour}).
-    The supplementary material reports the full five-route fit and inverts the
-    model through the observed rates.
+same incentive, but their response shapes differ because of an assumption inside
+the theory. At the reference setting of \citet{falling_behind_unsafe},
+$\beta=2$ and $\mu=\beta/Z$ predict \Unsafe{} play of 99.2\%, 98.0\% and
+1.9\% at risks $0.1$, $0.6$ and $0.9$. The direct confirmatory comparison is a
+separate two-route block: Gemini 3 Flash gives 98.9\%, 73.1\% and 60.2\%, and
+Claude Sonnet 5 gives 89.2\%, 48.4\% and 32.3\%, over 30 races each. The other
+three profiles are an analysis-only extension; GPT-5.4 and GPT-5.5 decline
+smoothly, while Claude Opus 5 switches. Thus the difference is one of shape, not
+level: the $\beta=2$ benchmark loses 98 points inside a risk step of $0.005$
+(Figure~\ref{fig:theory-behaviour}); the supplement reports the full fit.
 
 \begin{figure*}[t]
     \centering
     \includegraphics[width=\textwidth]{../figures/paper/theory_versus_behaviour.pdf}
     \caption{The evolutionary benchmark and the admitted route profiles in a
-    common risk coordinate. (a) The small-mutation limit is step-like at strong
-    selection and graded near neutrality, while four routes move gradually and
-    Claude Opus 5 changes sharply between the two lowest tested levels. (b) The
+    common risk coordinate. (a) The direct confirmatory comparison is the
+    separate two-route block for Gemini 3 Flash and Claude Sonnet 5; the other
+    three admitted profiles are shown only as an analysis-only extension. The
+    small-mutation limit is step-like at strong selection and graded near
+    neutrality, while the graded profiles move gradually and Claude Opus 5
+    changes sharply between the two lowest tested levels. (b) The
     corresponding finite-mutation population composition changes its dominant
     strategy from Always Unsafe through the conditional strategy that starts
     Unsafe to the conditional strategy that starts Safe as risk rises. The
@@ -852,7 +851,8 @@ grid of risk values, the benchmark at $\beta=2$ loses 98 points of \Unsafe{}
     \label{fig:theory-behaviour}
     \Description{Two-panel comparison. Panel a plots Unsafe play against maximum
     private risk for the reconstructed evolutionary model at strong and weak
-    selection and for five admitted routes. Panel b shows stacked stationary
+    selection, the two-route confirmatory comparison for Gemini 3 Flash and
+    Claude Sonnet 5, and the three-route analysis-only extension. Panel b shows stacked stationary
     shares of four strategies at risks 0.1, 0.6 and 0.9 for the reference and
     reported best-fit finite-mutation regimes.}
 \end{figure*}
@@ -893,10 +893,10 @@ Twenty people asked to run this race do not behave alike; twenty copies of a
 frontier route very nearly do. Human participants arrive at their average level
 of \Unsafe{} play through many different histories, while each admitted route
 reuses a small set of them, so a route can match the human mean without
-resembling the human population at all. We measure this on the action sequences
-themselves. Each player is one exact paired
-five-round action sequence, a ten-bit string read within its own risk condition;
-because the progress increments are fixed, that string is the whole trajectory.
+resembling the human population at all. We measure this on first-five-round
+trajectories. Each player contributes one exact paired trajectory, a ten-bit
+string read within its own risk condition; because the progress increments are
+fixed, that string is the whole trajectory.
 The comparison covers all nine routes that faced the screen, admitted and
 refused alike, on the confirmatory baseline, 60
 trajectories per route, against 340 complete human trajectories from the public
@@ -909,34 +909,29 @@ reconstruction by refitting the source study's published dynamic specification
 on its released data: 2{,}888 participant-round observations from 338
 participants in 172 race-pair clusters (see the supplementary material).
 
-Figure~\ref{fig:diversity} counts how many distinct sequences each population
-uses out of twenty, against the distribution of $20{,}000$ draws of twenty human
-participants matched on sample size and risk condition; the human sample is five
-to seven times larger, so without matching a population could look more diverse
-merely for being bigger. Twenty-one of the twenty-seven route cells fall below
-every one of those draws, and the fifteen cells of the five admitted routes are
-all among them. Against
-a stricter null of ten complete dyads, which matches the routes' unit of
-independence and not only their sample size, eighteen do, a count that moves
-with the draw between sixteen and twenty over forty redraws of that softer
-null. Humans reach an effective 18.9, 19.7 and
-19.3 sequences out of 20 at risks $0.1$, $0.6$ and $0.9$, at mean pairwise
-distances of 0.47, 0.50 and 0.50. The supplement adds two rarefied statistics,
-since either alone can mislead: Hill $q{=}1$ counts how many sequences a
-population effectively produces, the mean pairwise Hamming distance how far
-apart they are. Under the first, every admitted route sits entirely below the
-human interval at every risk level.
+Figure~\ref{fig:diversity} counts distinct first-five-round trajectories in
+matched samples of twenty, against $20{,}000$ human resamples at each risk. The
+human sample is larger, so matching prevents sample size from inflating its
+diversity. Twenty-one of 27 route cells, including all 15 admitted cells, fall
+below every human draw. Under a stricter ten-dyad null, 18 do; that count moves
+between 16 and 20 over forty redraws. Humans reach an effective 18.9, 19.7 and
+19.3 trajectories out of 20 at risks $0.1$, $0.6$ and $0.9$, at mean pairwise
+distances of 0.47, 0.50 and 0.50. Panels b and c add two complementary
+sample-size-matched statistics: Hill $q{=}1$ counts how many trajectories a
+population effectively produces, while mean pairwise Hamming distance measures
+how far apart they are. Under Hill $q{=}1$, every admitted route sits entirely
+below the human interval at every risk level.
 
 The concentration is strongest for Claude Opus 5, which produces a single
-sequence, repeated by all 20 of its trajectories, at every risk level, while
+trajectory, repeated by all 20 of its trajectories, at every risk level, while
 Claude Sonnet 5 uses two at risk $0.1$. Concentration is also distinct from
 level: Gemini 3 Flash and GPT-5.5 finish within five points of each other at the
-highest risk and use a similar number of distinct sequences, 12 and 13, yet the
-Gemini sequences sit half again as far apart from one another, 0.41 against 0.27
+highest risk and use a similar number of distinct trajectories, 12 and 13, yet the
+Gemini trajectories sit half again as far apart from one another, 0.41 against 0.27
 in mean pairwise distance.
 
 Two checkpoints are the exception, and the screen refuses both of them.
-GPT-5.4 mini uses 20, 17 and 17 distinct sequences out of 20 at
+GPT-5.4 mini uses 20, 17 and 17 distinct trajectories out of 20 at
 risks $0.1$, $0.6$ and $0.9$, and GPT-5.4 nano 16, 19 and 16; both land inside
 the human null at every risk level, and no other route reaches it once. On this
 measure they are not less diverse than people. Both are routes the
@@ -950,21 +945,18 @@ match human strategic diversity.
     \includegraphics[width=\textwidth]{../figures/paper/human_versus_model.pdf}
     \caption{Human participants use far more of the observed trajectory space than every
     checkpoint the screen admits. Panel a places each admitted checkpoint's
-    count of distinct paired five-round sequences against the matched human
+    count of distinct paired first-five-round trajectories against the matched human
     resampling null; the shaded region is the range no human draw reached.
-    Panel b sorts the 60 matched trajectories within each population by
-    frequency, with one segment per distinct path and its count at the right.
-    Panel c shows the modal pooled five-round joint-action path for each
-    displayed population (the human row is the median matched draw); each tile
-    is the focal route's action followed by its opponent's action.}
+    Panel b reports the effective number of trajectories (Hill $q{=}1$) with
+    95\% resampling intervals; panel c reports mean pairwise Hamming distance
+    over the ten action bits. Route colour identifies the endpoint and marker
+    shape identifies stated risk; the human row is the matched reference.}
     \label{fig:diversity}
     \Description{Panel a shows three facets, one per risk condition, each with a
     histogram of a human resampling null and one marker per checkpoint placed on
-    the same axis, nearly all inside a shaded region the human draws never
-    entered. Panel b shows one horizontal occupancy bar per population divided
-    into segments for distinct paths. Panel c shows five coloured joint-action
-    tiles for the modal pooled path of each population, with its frequency
-    printed at the right.}
+    the same axis, with the shaded region marking counts no human draw reached.
+    Panels b and c show Hill $q{=}1$ effective diversity and mean
+    pairwise Hamming distance, respectively, for the same populations and risks.}
 \end{figure*}
 
 The same picture holds one level down, on the rates themselves. Raw

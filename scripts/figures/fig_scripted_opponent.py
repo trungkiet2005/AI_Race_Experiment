@@ -477,9 +477,9 @@ def draw_response_matrix(ax, surface, risk, *, first=False):
     return image
 
 
-def draw_contrast_ranges(ax, stance):
-    """Compare unconditional rivals on one horizontal, paired-effect scale."""
-    offsets = {risk: offset for risk, offset in zip(S.RISKS, (-0.20, 0.0, 0.20))}
+def draw_effect_comparison(ax, stance, risk_stance):
+    """Put rival and stated-risk effects on one readable route-level scale."""
+    offsets = {risk: offset for risk, offset in zip(S.RISKS, (-0.18, 0.0, 0.18))}
     for row, route in enumerate(ROUTES):
         for risk in S.RISKS:
             point, low, high = stance[(route, risk)]
@@ -488,15 +488,25 @@ def draw_contrast_ranges(ax, stance):
                     color=S.ROUTE_C[route], solid_capstyle="round", zorder=3)
             S.dot(ax, 100 * point, y, color=S.ROUTE_C[route],
                   marker=RISK_MARKERS[risk], size=25, lw=0.8)
+        # This is the same risk contrast used by the paper's risk-response
+        # result: risk 0.1 minus risk 0.9 with the rival held at Always Safe.
+        # A neutral diamond makes it visually distinct from the three rival
+        # contrasts while keeping the estimands on exactly one axis.
+        entry = risk_stance[route]
+        y = row + 0.34
+        ax.plot([100 * entry["ci95_low"], 100 * entry["ci95_high"]], [y, y],
+                lw=1.1, color=S.INK_2, solid_capstyle="round", zorder=2)
+        S.dot(ax, 100 * entry["mean_difference"], y, color=S.INK_2,
+              marker="D", size=23, lw=0.8)
     ax.axvline(0.0, color=S.MUTED, lw=0.8, zorder=1)
-    ax.set_xlim(-2, 90)
-    ax.set_xticks([0, 25, 50, 75])
+    ax.set_xlim(-2, 105)
+    ax.set_xticks([0, 25, 50, 75, 100])
     ax.set_ylim(len(ROUTES) - 0.5, -0.5)
     ax.set_yticks(np.arange(len(ROUTES)), [S.ROUTE_SHORT[route] for route in ROUTES])
     for tick, route in zip(ax.get_yticklabels(), ROUTES):
         tick.set_color(S.ROUTE_C[route])
         tick.set_fontweight("bold")
-    ax.set_xlabel("AU minus AS (percentage points)", labelpad=2)
+    ax.set_xlabel("change in Unsafe play (percentage points)", labelpad=2)
     ax.set_ylabel("")
     S.strip(ax, grid_axis="x")
 
@@ -662,6 +672,11 @@ def main() -> None:
         print(f"  {S.ROUTE_SHORT[route]:<10} opened Unsafe in "
               f"{int(own['unsafe'].sum())}/{len(own)} races")
 
+    risk_stance = {
+        route: paired_risk_contrast(route_rows, route, "AS", S.RISKS[0], S.RISKS[-1])
+        for route in ROUTES
+    }
+
     # The response surface makes the game-theory object explicit: columns are
     # ordered rival strategies and each tile is one measured route response.
     # The lower panels then put the rival contrast and the interaction-context
@@ -681,8 +696,8 @@ def main() -> None:
                      fontsize=S.FS_CLAIM, color=S.INK, fontweight="bold", pad=26)
 
     ax_b = fig.add_subplot(gs[1, 0])
-    draw_contrast_ranges(ax_b, stance)
-    S.panel(ax_b, "b", "the rival moves every route", pad=5, gap=8.5)
+    draw_effect_comparison(ax_b, stance, risk_stance)
+    S.panel(ax_b, "b", "rival effect versus risk effect", pad=5, gap=8.5)
 
     ax_c = fig.add_subplot(gs[1, 1])
     draw_context_dumbbells(ax_c, safe_arm, selfplay)
@@ -697,7 +712,13 @@ def main() -> None:
                markersize=4.2, linewidth=0, label=RISK_LABELS[risk])
         for risk in S.RISKS
     ]
-    fig.legend(handles=risk_handles, ncol=3, loc="lower center",
+    risk_handles.append(
+        Line2D([0], [0], marker="D", color=S.INK_2,
+               markerfacecolor=S.INK_2, markeredgecolor=S.INK_2,
+               markersize=4.0, linewidth=0,
+               label="risk effect: AS at 0.1 minus 0.9")
+    )
+    fig.legend(handles=risk_handles, ncol=4, loc="lower center",
                bbox_to_anchor=(0.50, 0.073), frameon=False,
                handletextpad=0.35, columnspacing=1.0,
                fontsize=S.FS_NOTE, borderaxespad=0.0)
@@ -708,10 +729,6 @@ def main() -> None:
 
     S.save(fig, "scripted_opponent", width=S.TEXT)
 
-    risk_stance = {
-        route: paired_risk_contrast(route_rows, route, "AS", S.RISKS[0], S.RISKS[-1])
-        for route in ROUTES
-    }
     # The analyser now publishes this contrast too, on every arm.  Reading the
     # published value back is what keeps the panel and the appendix table from
     # drifting: the recomputation above is the same construction, so any

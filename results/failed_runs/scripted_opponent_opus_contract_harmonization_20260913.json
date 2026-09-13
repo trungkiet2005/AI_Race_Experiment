@@ -1,0 +1,32 @@
+{
+  "schema_version": "failed-run-audit-v2",
+  "campaign": "ai-race-scripted-opponent",
+  "recorded_at": "2026-09-13",
+  "protocol_id": "ai-race-scripted-opponent-v1",
+  "declared_in": "docs/scripted-opponent-opus-contract-harmonization-amendment-2026-09-13.md",
+  "evidence_status": "not_admitted",
+  "attempts": [
+    {
+      "kind": "task_push_validation",
+      "identity": "trungkiet",
+      "task": "ai-race-scripted-opponent",
+      "task_version": 10,
+      "route": "anthropic/claude-opus-5@default",
+      "strategy": "AS",
+      "max_private_risk": 0.6,
+      "decoding": {
+        "reasoning_requested": "low",
+        "output_token_limit": 1024
+      },
+      "status": "Errored",
+      "status_code": 403,
+      "n_races": 0,
+      "error": "The max estimated cost of operation ($0.0085935) exceeded the available quota based on max_output_tokens; no race was completed.",
+      "interpretation": "Quota reservation/infrastructure failure only; no model output and no cell evidence."
+    }
+  ],
+  "do_not_use": [
+    "The existing legacy AS@0.6 cell remains unchanged.",
+    "No model output or race was produced by this harmonization attempt."
+  ]
+}
