@@ -310,8 +310,8 @@ two copies of a policy rather than an intrinsic risk preference.
 
 Frontier agents also show a distinctive relationship to the theoretical and
 human benchmarks. An analysis extending the evolutionary comparison across the
-admitted panel places the four graded profiles closer to the near-neutral regime
-than to its strong-selection prediction, while
+admitted panel places the four graded profiles closer in response shape to the
+near-neutral regime than to its strong-selection prediction, while
 their action trajectories occupy a more concentrated observed trajectory space than
 those of human participants. These results suggest that AI-mediated competitive
 decisions may be model-specific, opponent-dependent and behaviourally
@@ -456,8 +456,8 @@ the model, or do they emerge from the opponent the model happens to meet?
 \emph{Humans and theory:} do the agents reproduce the strategic structure that
 evolutionary game theory predicts, or the one human participants display?
 
-Each answer changes how the next should be read. The agents do respond to the
-stated danger, within a narrow band, and one route replaces the trade-off by a
+Each answer changes how the next should be read. The four graded routes respond
+gradually to the stated danger, while one route replaces that trade-off with a
 switch from always fast to always careful. But where we put the agent against
 scripted code instead of a second copy of itself, the rival's stance shifts play
 on every route; its magnitude is checkpoint-specific and can overlap the effect
@@ -652,9 +652,10 @@ and robustness checks are retained in the supplementary material.
 \label{sec:results}
 
 These agents respond to the danger they are told about, and their behaviour is
-especially sensitive to the rival, takes a shape that the evolutionary benchmark
-produces near neutrality, and uses a more concentrated set of trajectories than
-people do. The four subsections take those in turn. A route the
+especially sensitive to the rival. Four routes have profiles closer in response
+shape to the near-neutral evolutionary benchmark; Claude Opus 5 is the step-like
+exception. All admitted routes use a more concentrated set of trajectories than
+people do. The four subsections take those results in turn. A route the
 quality-control screen of \S\ref{sec:design-screen} refused appears below only
 where it is named as refused. Three- to five-player
 races, full model tables, predictive diagnostics and robustness checks are in
@@ -666,11 +667,11 @@ the supplementary material.
 There is a shared directional response across the frontier routes. \Unsafe{}
 play is non-increasing with the stated maximum private risk on every admitted
 route, while the shape varies: four of the five give ground gradually and the
-fifth switches (Figure~\ref{fig:risk-response}). Each route played 30 races and
-558 decisions
-under one frozen protocol with zero parse failures and ten races in every risk
-cell, so the difference in shape is not a difference in how much evidence each
-route supplied.
+fifth switches (Figure~\ref{fig:risk-response}). Each route supplied 30 races
+and 558 dependent within-race decisions under one frozen protocol, with zero
+parse failures and ten races per risk cell. Risk contrasts use matched repetition
+blocks, and race-weighted reanalysis preserves the non-increasing response on
+every admitted route (supplementary material).
 
 \begin{figure}[t]
     \centering
@@ -735,7 +736,8 @@ although swapping the opaque action-code mapping shifts Unsafe{} play by
   held at Always Safe. Panel (c) shows the fixed-rival rate, self-play rate and
   their signed gap for each risk condition. These point estimates use the same
   matched blocks reported in the supplementary material; the corresponding
-  paired 95\% intervals are reported there as well.}
+  paired 95\% intervals are reported there as well. Within-route contrasts are
+  estimands; cross-route magnitudes are descriptive under heterogeneous contracts.}
   \Description{Three-panel figure. Panel a contains three response matrices,
   one per risk level, with five route rows and four ordered scripted-rival
   columns; every tile prints the measured Unsafe rate. Panel b is a categorical
@@ -949,15 +951,12 @@ match human strategic diversity.
 \begin{figure*}[t]
     \centering
     \includegraphics[width=\textwidth]{../figures/paper/human_versus_model.pdf}
-    \caption{Human participants use far more of the observed trajectory space than every
-    checkpoint the screen admits. Panel a places each admitted checkpoint's
-    count of distinct paired first-five-round trajectories against the matched human
-    resampling null; the shaded region is the range no human draw reached.
-    Panel b sorts the 60 matched trajectories within each population by
-    frequency, with one segment per distinct path and its count at the right.
-    Panel c shows the modal pooled first-five-round joint-action path for each
-    displayed population (the human row is the median matched draw); each tile
-    is the focal route's action followed by its opponent's action.}
+    \caption{Human participants use more of the observed trajectory space than every
+    admitted checkpoint. Panel a compares distinct paired first-five-round
+    trajectories with a matched human-resampling null; panel b sorts the 60
+    matched trajectories by path frequency; panel c shows the modal pooled
+    joint-action path. Each tile is the focal route's action followed by its
+    opponent's.}
     \label{fig:diversity}
     \Description{Panel a shows three facets, one per risk condition, each with a
     histogram of a human resampling null and one marker per checkpoint placed on
@@ -993,14 +992,6 @@ varies by route and can overlap the effect of changing risk. In this game, the
 five tested routes are therefore
 strongly context-sensitive: how the other side behaves can be more informative
 than the risk level alone.
-
-A mirror-match rate is best reported as an interaction outcome rather than as an
-attitude to risk, here or in the work this paper builds on. Scripting the rival
-costs little and separates a policy from an interaction in this design, making
-the treatment easier to interpret.
-
-Prompted personas can shift behaviour strongly, reinforcing that instructed
-context should not be interpreted as a stable latent preference.
 
 The human experiment is an external behavioural reference, not a target an
 agent should reproduce. Where a route matches a human association, the two

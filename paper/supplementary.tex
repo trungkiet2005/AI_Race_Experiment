@@ -308,8 +308,9 @@ extend its claims beyond the idealised race.
 
 \section*{Supplementary roadmap}
 
-Each detailed subsection stands on its own. The five unnumbered dividers below
-group them by role without changing their order, labels or evidence.
+The table is a thematic reading map, not a second numbering scheme. The five
+unnumbered dividers group the evidence by role, while the physical order and
+the stable A.1 through A.26 labels remain unchanged for reliable cross-reference.
 
 \begin{table*}[t]
   \caption{Roadmap to the supplementary evidence. The section labels point to
@@ -319,7 +320,7 @@ group them by role without changing their order, labels or evidence.
   \small
   \begin{tabular}{@{}p{0.18\textwidth}p{0.39\textwidth}p{0.31\textwidth}@{}}
     \toprule
-    Family & Supporting sections & What the family adds \\
+    Reading path & Supporting sections & What the path adds \\
     \midrule
     Validity and provenance &
       Quality-control screen (\S\ref{app:admission-v6}); human-benchmark
@@ -327,10 +328,10 @@ group them by role without changing their order, labels or evidence.
       citation audit (\S\ref{app:citation-audit}) &
       Entry conditions, source checks and the boundaries of each citation. \\
     Mechanism and theory &
-      Two-route baseline (\S\ref{app:frontier-baseline}); policy shape
+      Scripted opponents (\S\ref{app:scripted-opponent}); two-route baseline
+      (\S\ref{app:frontier-baseline}); policy shape
       (\S\ref{app:policy-shape}); selection-strength sweep
-      (\S\ref{app:egt-beta}); scripted opponents
-      (\S\ref{app:scripted-opponent}) &
+      (\S\ref{app:egt-beta}) &
       The baseline, evolutionary comparison and the complete fixed-rival
       intervention. \\
     Prompt and model robustness &
@@ -363,6 +364,14 @@ group them by role without changing their order, labels or evidence.
     \bottomrule
   \end{tabular}
 \end{table*}
+
+For the headline claims, start with the validity and provenance path, then read
+the mechanism and theory path for the risk, rival and evolutionary comparisons,
+and the trajectories and diversity path for the human reference. The interaction
+scope path is exploratory. The scripted-rival evidence is fully retained in
+\S\ref{app:scripted-opponent}; listing it first in the mechanism path makes the
+main intervention easy to find without relocating its numbered subsection or
+its audited floats.
 
 Four terms are used with fixed meanings throughout. A \emph{route} is the
 exact provider string a request is addressed to, for example
@@ -642,14 +651,15 @@ two presentations of one mechanism.
 
 The new neutral gameplay baseline used protocol v3, the same mechanism and
 prompt for the two routes used in the direct EGT comparison, ten repetitions
-per risk level, and 30 races per route. Each
-route produced 558 structured decisions with zero parse failures. The entries
+per risk level, and 30 races per route. Each route produced 558
+dependent within-race decisions with zero parse failures. The entries
 in Table~\ref{tab:frontier-baseline} are decision-weighted \Unsafe{} rates; they
 are not pooled across routes and do not estimate an evolutionary equilibrium.
 
 \begin{table}[h]
     \caption{Two-route confirmatory block used for the direct EGT comparison.
-    Each route has 30 races, 558 decisions, and zero parse failures.}
+    Each route has 30 races, 558 dependent within-race decisions,
+    and zero parse failures.}
     \label{tab:frontier-baseline}
     \centering
     \scriptsize
