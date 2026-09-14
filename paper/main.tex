@@ -734,7 +734,8 @@ although swapping the opaque action-code mapping shifts Unsafe{} play by
   Always Unsafe, while the graphite tile changes stated risk with the rival
   held at Always Safe. Panel (c) shows the fixed-rival rate, self-play rate and
   their signed gap for each risk condition. These point estimates use the same
-  matched blocks reported in the supplementary material.}
+  matched blocks reported in the supplementary material; the corresponding
+  paired 95\% intervals are reported there as well.}
   \Description{Three-panel figure. Panel a contains three response matrices,
   one per risk level, with five route rows and four ordered scripted-rival
   columns; every tile prints the measured Unsafe rate. Panel b is a categorical
@@ -789,13 +790,15 @@ GPT-5.5 at risk $0.1$, where Conditional Unsafe reaches $100.0\%$ and
 Always Unsafe is $97.8\%$, so this is a boundary case rather than a clean
 counterexample (Figure~\ref{fig:scripted-opponent-main}a). The paired
 difference between the two unconditional rivals is
-positive in every cell, with a smallest lower bound of $+16.5$ points
+positive in every cell. All fifteen paired-block 95\% intervals have positive
+lower bounds, with the smallest at $+16.5$ points
 (Figure~\ref{fig:scripted-opponent-main}b). The response to the stated risk
 survives the change of design as well: against a fixed safe rival, no route's
 \Unsafe{} rate rises as the stated risk rises.
 
-How strongly a route answers its rival is a property of the checkpoint. The
-stance contrast is largest for Claude Opus 5 at risk $0.6$ ($+87.0$ points) and
+The magnitude of the rival response varies markedly across checkpoints under
+their observed endpoint contracts: the stance contrast is largest for Claude
+Opus 5 at risk $0.6$ ($+87.0$ points) and
 smallest for GPT-5.5 at risk $0.1$ ($+25.3$ points); Gemini 3 Flash remains
 near $+70$ points across risks, whereas GPT-5.4 remains near $+50$. The level
 differs as well as the swing: against a rival that never plays \Unsafe{}, GPT-5.4
@@ -904,10 +907,12 @@ de-identified dataset of \citet{falling_behind_unsafe}. That single published
 study of a single game is the only human reference here, which bounds every
 human comparison below to that population and that mechanism.
 
-Before using this dataset as an external reference, we validated the
-reconstruction by refitting the source study's published dynamic specification
-on its released data: 2{,}888 participant-round observations from 338
-participants in 172 race-pair clusters (see the supplementary material).
+Of 341 released participants, 340 provide complete first-five-round trajectories
+and 338 provide complete dynamic-model records. Before using this dataset as an
+external reference, we validated the reconstruction by refitting the source
+study's published dynamic specification on its released data: 2{,}888
+participant-round observations from 338 participants in 172 race-pair clusters
+(see the supplementary material).
 
 Figure~\ref{fig:diversity} counts distinct first-five-round trajectories in
 matched samples of twenty, against $20{,}000$ human resamples at each risk. The

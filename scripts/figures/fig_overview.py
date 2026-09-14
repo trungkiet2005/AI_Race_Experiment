@@ -166,6 +166,11 @@ def lens_facts() -> dict[str, object]:
     if partial:
         print(f"  {partial} route(s) hold part of the scripted grid and are counted "
               f"neither here nor in the campaign figure")
+    if scripted_routes != 5:
+        raise SystemExit(
+            f"the overview expects five complete admitted scripted-rival routes, "
+            f"but found {scripted_routes}"
+        )
 
     raw = pd.read_csv(HUMAN_CSV, usecols=["participant_id", "round_number"])
     complete = (
@@ -324,10 +329,12 @@ def panel_lenses(ax, facts):
     rows = [
         ("how far does the stated danger move it?",
          f"the maximum is set to {levels},\n"
-         f"against a copy of the same model, {facts['routes']} of them"),
+         f"against a copy of the same model, {facts['routes']} routes\n"
+         f"({facts['rival_routes']} admitted to the main panel)"),
         ("how far does the rival move it?",
          "the rival becomes fixed code it can neither\n"
-         f"influence nor be told about, {len(RIVALS)} of them"),
+         f"influence nor be told about, {len(RIVALS)} strategies\n"
+         f"across {facts['rival_routes']} admitted routes"),
         ("do people or theory show either shape?",
          f"the same race played by {facts['humans']} people, and the\n"
          "evolutionary benchmark built for it"),

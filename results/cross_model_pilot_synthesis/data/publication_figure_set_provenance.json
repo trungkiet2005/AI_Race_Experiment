@@ -187,7 +187,7 @@
     "supplement_figure_5_tsne_outcome": "generated",
     "supplement_figure_6_round_profiles": "generated"
   },
-  "generated_utc": "2026-09-13T16:37:43.582448+00:00",
+  "generated_utc": "2026-09-14T04:29:38.293885+00:00",
   "generator": "scripts/build_publication_figures.py",
   "manual_figure_origin": {
     "commit": "f0dde0d",
@@ -205,7 +205,7 @@
     "results\\derived\\scripted_opponent_campaign\\risk_versus_rival.json": "e6a882057c419abca2acd24d019734a0244bfb2c27baade0087ddea462e5fde1",
     "results\\frontier\\egt_frontier_comparison_v2\\theory_llm_comparison.csv": "57cf703229df95e28cb51a8db95e902de895fb0801e3efb2d0ec7785bb416d78",
     "scripts\\figures\\fig_human_versus_model.py": "0c048182f58735007e52a9cd0f27dbf35c8029273f44abd2cdcfb2f031cd3d9d",
-    "scripts\\figures\\fig_overview.py": "05c46c9ed1177a8a8224e8b2434bc68c97bb9cb47cef7f3bf9bd60ce5144c28f",
+    "scripts\\figures\\fig_overview.py": "3ee84f94413812e4c9141a72138e09e6775d3623fa628484def79017f2781020",
     "scripts\\figures\\fig_scripted_opponent.py": "d9223c9458333e60ffdc9b28dbc21d775eaf664d5532e7ba398ba8f8ec3fa152"
   },
   "style_module": "scripts/publication_style.py"
