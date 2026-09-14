@@ -1440,8 +1440,8 @@ check("SCOPE GUARD: the disclosed-arithmetic diagnostic is not one of the nine r
 # The two exploratory analyses the diversity section reports.
 _rs_pid = json.load(open("results/cross_model_pilot_synthesis/data/population_identity_grouped.json", encoding="utf-8"))
 _rs_ba = _rs_pid["metrics"]["balanced_accuracy"]
-check("the population classifier reaches 42.3 +/- 4.3 against a null mean of 12.4",
-      round(100 * _rs_ba["mean"], 1) == 42.3 and round(100 * _rs_ba["std"], 1) == 4.3
+check("the population classifier reaches 38.4 +/- 5.7 against a null mean of 12.4",
+      round(100 * _rs_ba["mean"], 1) == 38.4 and round(100 * _rs_ba["std"], 1) == 5.7
       and round(100 * _rs_ba["null_mean"], 1) == 12.4,
       f"{100 * _rs_ba['mean']:.1f} +/- {100 * _rs_ba['std']:.1f} vs {100 * _rs_ba['null_mean']:.1f}")
 check("its permutation p rounds to 0.001 and is not below it",
@@ -1451,7 +1451,7 @@ check("its permutation p rounds to 0.001 and is not below it",
 _rs_fi = json.load(open("results/cross_model_pilot_synthesis/data/feature_importance_results.json", encoding="utf-8"))
 _rs_roster = ["human", "gpt-5-nano", "gpt-5.4-nano", "google/gemini-3-flash-preview",
               "google/gemini-3.1-flash-lite-preview", "google/gemini-3.5-flash-lite",
-              "claude-opus-5", "claude-sonnet-5"]
+              "gpt-5.6-luna", "gpt-5.6-terra", "claude-opus-5", "claude-sonnet-5"]
 
 
 def _rs_share(pop: str, feat: str) -> float:
@@ -1471,8 +1471,8 @@ check("Claude Sonnet 5 leads with the same variable at 48 per cent",
       and round(_rs_share("claude-sonnet-5", "opponent_prev_unsafe")) == 48,
       f"{_rs_share('claude-sonnet-5', 'opponent_prev_unsafe'):.1f} per cent")
 _rs_first = {p: _rs_lead(p) for p in _rs_roster if p != "human"}
-check("three of the seven checkpoints put the opponent's previous action first",
-      sum(1 for v in _rs_first.values() if v == "opponent_prev_unsafe") == 3 and len(_rs_first) == 7,
+check("three of the nine checkpoints put the opponent's previous action first",
+      sum(1 for v in _rs_first.values() if v == "opponent_prev_unsafe") == 3 and len(_rs_first) == 9,
       ", ".join(p for p, v in _rs_first.items() if v == "opponent_prev_unsafe"))
 check("two of the three Gemini checkpoints lead with the assigned risk",
       sum(1 for p, v in _rs_first.items() if "gemini" in p and v == "max_private_risk") == 2
@@ -1483,8 +1483,8 @@ check("GPT-5 nano leads with relative race position",
 check("SCOPE GUARD: that roster holds neither GPT-5.4 nor GPT-5.5 and does hold a route outside the nine",
       not any(p.startswith(("gpt-5.4-2026", "gpt-5.5")) for p in _rs_first) and "gpt-5-nano" in _rs_first,
       "which is why the body labels both analyses as exploratory")
-check("the human forest is the weakly fitted side, AUC 0.63 against 0.97",
-      round(_rs_fi["human"]["roc_auc"], 2) == 0.63 and round(_rs_fi["claude-sonnet-5"]["roc_auc"], 2) == 0.97,
+check("the human forest is the weakly fitted side, AUC 0.62 against 0.97",
+      round(_rs_fi["human"]["roc_auc"], 2) == 0.62 and round(_rs_fi["claude-sonnet-5"]["roc_auc"], 2) == 0.97,
       f"{_rs_fi['human']['roc_auc']:.3f} against {_rs_fi['claude-sonnet-5']['roc_auc']:.3f}")
 
 # Concentration is not level: the two routes that finish close and travel differently.

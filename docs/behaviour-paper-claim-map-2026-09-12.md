@@ -34,7 +34,8 @@ The supporting shape, which is what makes it one paper and not three findings:
 2. Changing the rival at fixed risk changes play by 25.3 to 87.0 points. The
    rival effect is substantial but overlaps the risk effect once the
    conditional rivals are included; the contrast is causal by construction
-   because the rival is code the route cannot influence and is never told about.
+   because rival-policy assignment is fixed and exogenous within matched blocks,
+   while the route is not told which policy is present.
 3. Because the rival changes the interaction outcome, a self-play rate is not a
    measurement of how a route treats risk. Self-play sits above the fixed-safe-
    rival rate in 13 of 15 route-by-risk cells.

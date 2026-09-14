@@ -1,4 +1,4 @@
-"""Five audited routes against a rival none of them can influence.
+"""Five audited routes against an undisclosed fixed rival policy.
 
 Every gameplay result elsewhere in this study is self-play: both companies in a
 race are the same endpoint, so "the route went unsafe after its rival did" and
@@ -18,8 +18,8 @@ The two claims, and they are deliberately separate.
       fifteen route-by-risk cells follow the weak ordering.  The one reversal
       occurs at a ceiling, where a conditional rival reaches 100 per cent.
 
-  2.  The MAGNITUDE does not.  How far the rival's stance moves a route is a
-      property of the checkpoint.  The figure puts all five routes on one scale
+  2.  The MAGNITUDE does not.  How far the rival's stance moves a route varies
+      across checkpoints under their observed endpoint contracts.  The figure puts all five routes on one scale
       so a reader can see both the common direction and the different sizes.
 
 Panels
@@ -464,6 +464,71 @@ def draw_effect_matrix(ax, stance, risk_stance):
         spine.set_visible(False)
 
 
+def draw_effect_forest(ax, stance):
+    """Show the fifteen paired rival effects with their measured intervals."""
+    from matplotlib.lines import Line2D
+
+    risk_markers = {0.1: "o", 0.6: "s", 0.9: "^"}
+    group_gap = 1.0
+    y_positions = []
+    route_centres = []
+    for route_index, route in enumerate(ROUTES):
+        base = (len(ROUTES) - 1 - route_index) * (len(S.RISKS) + group_gap)
+        local = []
+        for risk_index, risk in enumerate(S.RISKS):
+            y = base + (len(S.RISKS) - 1 - risk_index)
+            local.append(y)
+            point, low, high = stance[(route, risk)]
+            if not (np.isfinite(point) and np.isfinite(low) and np.isfinite(high)):
+                raise RuntimeError(f"non-finite rival interval for {route} at risk {risk}")
+            ax.errorbar(
+                100 * point,
+                y,
+                xerr=[[100 * (point - low)], [100 * (high - point)]],
+                fmt=risk_markers[risk],
+                color=S.ROUTE_C[route],
+                ecolor=S.ROUTE_C[route],
+                markersize=4.2,
+                markeredgecolor=S.INK,
+                markeredgewidth=0.35,
+                linewidth=1.35,
+                elinewidth=1.25,
+                capsize=2.0,
+                zorder=4,
+            )
+        y_positions.extend(local)
+        route_centres.append(float(np.mean(local)))
+
+    for route_index in range(1, len(ROUTES)):
+        boundary = (route_centres[route_index - 1] + route_centres[route_index]) / 2
+        ax.axhline(boundary, color=S.GRID, linewidth=0.65, zorder=0)
+
+    ax.axvline(0, color=S.INK, linewidth=0.9, zorder=1)
+    ax.set_xlim(-2, 100)
+    ax.set_xticks([0, 25, 50, 75, 100])
+    ax.set_xlabel("Always Unsafe minus Always Safe (percentage points)", labelpad=4)
+    # Reserve visible headroom for the top route's marker and interval cap;
+    # the forest must not let a boundary estimate touch the panel title.
+    ax.set_ylim(-0.85, route_centres[0] + 2.6)
+    ax.set_yticks(route_centres)
+    ax.set_yticklabels([S.ROUTE_SHORT[route] for route in ROUTES])
+    for tick, route in zip(ax.get_yticklabels(), ROUTES):
+        tick.set_color(S.ROUTE_C[route])
+        tick.set_fontweight("bold")
+    ax.tick_params(axis="y", length=0, pad=3)
+    ax.grid(True, axis="x", color=S.GRID, linewidth=0.5, zorder=0)
+    for spine in ax.spines.values():
+        spine.set_visible(False)
+    handles = [
+        Line2D([0], [0], marker=risk_markers[risk], linestyle="none",
+               markerfacecolor=S.INK_2, markeredgecolor=S.INK,
+               markersize=4.3, label=f"risk {S.RISK_LABEL[risk]}")
+        for risk in S.RISKS
+    ]
+    ax.legend(handles=handles, loc="lower right", ncol=3, borderaxespad=0.0,
+              handletextpad=0.35, columnspacing=0.9, bbox_to_anchor=(1.0, 1.01))
+
+
 def draw_context_matrix(ax, safe_arm, selfplay, censored):
     """Aligned rate tiles: baseline design, self-play, and their gap."""
     from matplotlib.patches import Rectangle
@@ -724,38 +789,61 @@ def main() -> None:
     print(f"  the rival is worth {min(ratios):.1f} to {max(ratios):.1f} times the "
           f"risk across the fifteen route-by-risk cells")
 
-    # The response surface makes the game-theory object explicit: columns are
-    # ordered rival strategies and each tile is one measured route response.
-    # The lower panels are categorical tables.  They intentionally show point
-    # effects and rates as tiles, with zero/baseline references, rather than
-    # adding interval strokes that make the estimands look like trajectories.
-    fig = plt.figure(figsize=(S.TEXT, 4.08))
-    gs = fig.add_gridspec(2, 2, height_ratios=[1.28, 1.0],
-                          left=0.105, right=0.975, top=0.855, bottom=0.18,
-                          width_ratios=[1.0, 1.24], wspace=0.72, hspace=0.98)
-    top = gs[0, :].subgridspec(1, len(S.RISKS), wspace=0.34)
-    facets = [fig.add_subplot(top[0, i]) for i in range(len(S.RISKS))]
-    for i, (ax, risk) in enumerate(zip(facets, S.RISKS)):
-        draw_response_matrix(ax, surface, risk, first=(i == 0))
-    S.panel(facets[0], "a", "rival stance orders play", pad=5, gap=8.5)
-    for i, (ax, risk) in enumerate(zip(facets, S.RISKS)):
-        ax.set_title(f"risk {S.RISK_LABEL[risk]}", loc="right" if i == 0 else "center",
-                     fontsize=S.FS_CLAIM, color=S.INK, fontweight="bold", pad=26)
+    def response_facets(fig, slot):
+        top = slot.subgridspec(1, len(S.RISKS), wspace=0.34)
+        facets = [fig.add_subplot(top[0, i]) for i in range(len(S.RISKS))]
+        for i, (ax, risk) in enumerate(zip(facets, S.RISKS)):
+            draw_response_matrix(ax, surface, risk, first=(i == 0))
+            ax.set_title(f"risk {S.RISK_LABEL[risk]}",
+                         loc="right" if i == 0 else "center",
+                         fontsize=S.FS_CLAIM, color=S.INK, fontweight="bold",
+                         pad=26)
+        S.panel(facets[0], "a", "rival stance orders play", pad=5, gap=8.5)
+        return facets
 
-    ax_b = fig.add_subplot(gs[1, 0])
+    # The supplement retains the complete three-panel audit view, including
+    # the fixed-safe versus self-play context comparison.  The main paper uses
+    # a deliberately smaller two-panel view so the uncertainty on the headline
+    # rival contrast is visible at a glance.
+    full = plt.figure(figsize=(S.TEXT, 4.08))
+    full_gs = full.add_gridspec(
+        2, 2, height_ratios=[1.28, 1.0],
+        left=0.105, right=0.975, top=0.855, bottom=0.18,
+        width_ratios=[1.0, 1.24], wspace=0.72, hspace=0.98,
+    )
+    response_facets(full, full_gs[0, :])
+    ax_b = full.add_subplot(full_gs[1, 0])
     draw_effect_matrix(ax_b, stance, risk_stance)
     S.panel(ax_b, "b", "paired effect magnitudes", pad=5, gap=8.5)
-
-    ax_c = fig.add_subplot(gs[1, 1])
+    ax_c = full.add_subplot(full_gs[1, 1])
     draw_context_matrix(ax_c, safe_arm, selfplay, censored)
     S.panel(ax_c, "c", "baseline versus self-play", pad=5, gap=8.5)
+    full.text(
+        0.50, 0.045,
+        "B: 0 is no effect; red tiles change the rival from AS to AU, "
+        "graphite tiles change risk at AS. C: Delta is self-play minus AS; "
+        ">= marks a ceiling-censored gap.",
+        ha="center", va="bottom", fontsize=S.FS_NOTE, color=S.MUTED,
+    )
+    S.save(full, "scripted_opponent", width=S.TEXT)
 
-    fig.text(0.50, 0.045,
-             "B: 0 is no effect; red tiles change the rival from AS to AU, "
-             "graphite tiles change risk at AS. C: Delta is self-play minus AS; "
-             ">= marks a ceiling-censored gap.",
-             ha="center", va="bottom", fontsize=S.FS_NOTE, color=S.MUTED)
-    S.save(fig, "scripted_opponent", width=S.TEXT)
+    main_fig = plt.figure(figsize=(S.TEXT, 3.42))
+    main_gs = main_fig.add_gridspec(
+        2, 1, height_ratios=[1.10, 1.34],
+        left=0.105, right=0.975, top=0.86, bottom=0.20,
+        hspace=0.72,
+    )
+    response_facets(main_fig, main_gs[0, 0])
+    forest = main_fig.add_subplot(main_gs[1, 0])
+    draw_effect_forest(forest, stance)
+    S.panel(forest, "b", "every rival effect stays above zero", pad=5, gap=8.5)
+    main_fig.text(
+        0.50, 0.045,
+        "Markers identify the stated risk; whiskers are paired 95% intervals "
+        "over ten repetition blocks.",
+        ha="center", va="bottom", fontsize=S.FS_NOTE, color=S.MUTED,
+    )
+    S.save(main_fig, "scripted_opponent_main", width=S.TEXT)
 
 if __name__ == "__main__":
     main()

@@ -8,7 +8,7 @@
     "base_seed": 20260908,
     "ci_method": "percentile cluster bootstrap over independent experimental units",
     "cluster_unit": {
-      "human_population": "participant_id (one independent subject per participant)",
+      "human_population": "group_id (source dyad; singleton complete trajectories retained as singleton clusters)",
       "llm_populations": "game_id (race); both seats of a race share the sampled horizon and setback draw under the common-random-number design"
     },
     "point_estimate_unchanged": true,
@@ -77,10 +77,10 @@
         "seed": 20260909
       },
       "human": {
-        "ci_high": 0.5852941176470589,
-        "ci_low": 0.5347058823529413,
-        "cluster_unit": "participant_id",
-        "n_clusters": 340,
+        "ci_high": 0.5888896987366377,
+        "ci_low": 0.5315634218289087,
+        "cluster_unit": "group_id (source dyad; singleton complete trajectories retained as singleton clusters)",
+        "n_clusters": 172,
         "n_trajectories": 340,
         "point_estimate": 0.56,
         "seed": 20260915
@@ -135,6 +135,8 @@
       "figures\\paper\\frontier_many_model_risk_profiles.svg"
     ],
     "scripted_opponent": [
+      "figures\\paper\\scripted_opponent_main.pdf",
+      "figures\\paper\\scripted_opponent_main.png",
       "figures\\paper\\scripted_opponent.pdf",
       "figures\\paper\\scripted_opponent.png"
     ],
@@ -187,7 +189,7 @@
     "supplement_figure_5_tsne_outcome": "generated",
     "supplement_figure_6_round_profiles": "generated"
   },
-  "generated_utc": "2026-09-14T08:00:25.508565+00:00",
+  "generated_utc": "2026-09-14T09:38:23.216798+00:00",
   "generator": "scripts/build_publication_figures.py",
   "manual_figure_origin": {
     "commit": "f0dde0d",
@@ -207,8 +209,8 @@
     "results\\frontier\\egt_frontier_comparison_v2\\theory_llm_comparison.csv": "57cf703229df95e28cb51a8db95e902de895fb0801e3efb2d0ec7785bb416d78",
     "scripts\\analyze_trajectory_diversity_dyad.py": "f52a67c4f693c5162ea606eaae2dd87e12bd1064c911d92a95b733ec79b59022",
     "scripts\\figures\\fig_human_versus_model.py": "8632e5682bac46c002a0771efdc15ea1cd165948438ddbfaa1512e2e427fa02f",
-    "scripts\\figures\\fig_overview.py": "3ee84f94413812e4c9141a72138e09e6775d3623fa628484def79017f2781020",
-    "scripts\\figures\\fig_scripted_opponent.py": "d9223c9458333e60ffdc9b28dbc21d775eaf664d5532e7ba398ba8f8ec3fa152"
+    "scripts\\figures\\fig_overview.py": "12b0087cf378036ec7dd8979bde0747234e93e210c4f563aeacdb1b88149c07a",
+    "scripts\\figures\\fig_scripted_opponent.py": "c834f173c5a4111826f16c4b64097f6ec96e4dc9b45a4a6f26e151bca7f5afda"
   },
   "style_module": "scripts/publication_style.py"
 }

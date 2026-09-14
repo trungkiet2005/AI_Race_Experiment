@@ -1,4 +1,4 @@
-"""What the audited route does against a rival it cannot influence.
+"""What the audited route does against an undisclosed fixed rival policy.
 
 Written before any of this campaign's data existed, so the estimand is fixed in
 advance rather than chosen once the numbers are visible.

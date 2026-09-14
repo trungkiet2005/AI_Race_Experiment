@@ -6,7 +6,7 @@ This directory contains the manuscript for the project’s **LLM-agent AI Race e
 
 The manuscript reports a bounded frontier-model baseline: a per-endpoint task-validity audit, five admitted routes, 30-race behavioural runs for each admitted route, a complete scripted-opponent campaign on all five routes, published-human reference values, and a faithful EGT reconstruction. Gemini 3 Flash also has a completed and independently validated 120-race context and mapping run. The frontier evidence remains descriptive and endpoint-specific. The matched Claude context run, fully crossed persona and language reruns, and frontier N-player reruns are not admitted; legacy local-model pilots are excluded from headline evidence.
 
-The focal prior work—Fernández Domingos and Han (2026), arXiv:2607.26034—is a study of **human participants** plus an evolutionary model. It motivates the environment and planned analyses but is not evidence about LLM behaviour. See the project’s [AI-readable source note](../references/papers/markdown/falling-behind-ai-race.md).
+The focal prior work, Fernández Domingos and Han (2026), arXiv:2607.26034, is a study of **human participants** plus an evolutionary model. It motivates the environment and planned analyses but is not evidence about LLM behaviour. See the project’s [AI-readable source note](../references/papers/markdown/falling-behind-ai-race.md).
 
 ## Files
 

@@ -71,6 +71,7 @@ from scripts.publication_style import (  # noqa: E402
 PAPER = ROOT / "figures" / "paper"
 CLUSTER = PAPER / "llm_human_clustering"
 DATA = ROOT / "results" / "cross_model_pilot_synthesis" / "data"
+HUMAN_CSV = ROOT / "references" / "source_study_dataset" / "airace_deidentified_long.csv"
 EGT_TABLE = ROOT / "results" / "frontier" / "egt_frontier_comparison_v2" / "theory_llm_comparison.csv"
 POSITION_TABLE = DATA / "nplayer_position_effect_by_persona.csv"
 ARCHETYPE_TABLE = DATA / "human_cluster_summary.csv"
@@ -90,6 +91,7 @@ BASELINE_ORDER = list(BASELINE_INPUTS) + ["human"]
 # Filled by build_rate_figure so the provenance record can state the interval
 # method and the cluster count actually used for each population.
 RATE_FIGURE_CLUSTERS: dict[str, dict[str, object]] = {}
+_HUMAN_GROUPS: dict[str, str] | None = None
 CLUSTER_NAMES = {
     0: "Persister",
     1: "Aggressive starter / reciprocator",
@@ -237,13 +239,26 @@ def _cluster_labels(population: str, player_ids: np.ndarray) -> np.ndarray:
     For a model population the unit is the race: both seats of a race share the
     sampled horizon and the private-setback draw under the common-random-number
     design, so they are not separate random samples. For the human population
-    the unit is the participant, because each participant is one independent
-    subject in the source study.
+    the source study's dyad is the interaction unit; complete trajectories
+    without a complete partner remain singleton clusters.
     """
 
     identifiers = np.asarray([str(value) for value in player_ids])
     if population == "human":
-        return identifiers
+        global _HUMAN_GROUPS
+        if _HUMAN_GROUPS is None:
+            source = pd.read_csv(HUMAN_CSV, usecols=["participant_id", "group_id"])
+            mapping = source.drop_duplicates("participant_id").set_index("participant_id")["group_id"]
+            _HUMAN_GROUPS = {
+                str(participant): str(group)
+                for participant, group in mapping.items()
+            }
+        unknown = sorted(set(identifiers) - set(_HUMAN_GROUPS))
+        if unknown:
+            raise RuntimeError(
+                f"Human trajectory IDs missing from the dyad map: {unknown[:4]}"
+            )
+        return np.asarray([_HUMAN_GROUPS[value] for value in identifiers])
     return np.asarray([value.split("::")[0] for value in identifiers])
 
 
@@ -292,7 +307,10 @@ def build_rate_figure(frame: pd.DataFrame) -> list[Path]:
         )
         rows.append((population, point, low, high))
         cluster_report[population] = {
-            "cluster_unit": "participant_id" if population == "human" else "game_id",
+            "cluster_unit": (
+                "group_id (source dyad; singleton complete trajectories retained as singleton clusters)"
+                if population == "human" else "game_id"
+            ),
             "n_clusters": n_clusters,
             "n_trajectories": int(values.size),
             "point_estimate": point,
@@ -336,7 +354,7 @@ def build_rate_figure(frame: pd.DataFrame) -> list[Path]:
     fig.text(0.50, 0.012,
              "Points are mean Unsafe rates over player-race trajectories;\n"
              "whiskers are 95% race-clustered bootstrap intervals\n"
-             f"({race_text} per model, {human_clusters} participants for humans; "
+             f"({race_text} per model, {human_clusters} human dyad groups; "
              f"{BOOTSTRAP_RESAMPLES} resamples).",
              ha="center", va="bottom", fontsize=8.0, color=MUTED, linespacing=1.25)
     return save_publication_figure(fig, CLUSTER / "05b_unsafe_rate_by_group", formats=("pdf", "png", "svg"))
@@ -554,11 +572,16 @@ def _fresh_frontier_outputs() -> dict[str, list[Path]]:
 
 
 def build_scripted_opponent() -> list[Path]:
-    """Regenerate the full five-route rival-conditioned figure."""
+    """Regenerate the main and full audit views of the rival figure."""
 
     subprocess.run([sys.executable, str(SCRIPTED_FIGURE_SCRIPT)],
                    cwd=ROOT, check=True)
-    return [PAPER / "scripted_opponent.pdf", PAPER / "scripted_opponent.png"]
+    return [
+        PAPER / "scripted_opponent_main.pdf",
+        PAPER / "scripted_opponent_main.png",
+        PAPER / "scripted_opponent.pdf",
+        PAPER / "scripted_opponent.png",
+    ]
 
 
 def build_overview() -> list[Path]:
@@ -644,7 +667,7 @@ def main() -> None:
             "seed_rule": "base_seed + population index in BASELINE_ORDER",
             "cluster_unit": {
                 "llm_populations": "game_id (race); both seats of a race share the sampled horizon and setback draw under the common-random-number design",
-                "human_population": "participant_id (one independent subject per participant)",
+                "human_population": "group_id (source dyad; singleton complete trajectories retained as singleton clusters)",
             },
             "populations": RATE_FIGURE_CLUSTERS,
             "supersedes": "row-level bootstrap over player-race trajectories, which treated the two seats of a race as independent samples",

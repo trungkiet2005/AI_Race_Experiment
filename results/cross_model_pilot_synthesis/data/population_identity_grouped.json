@@ -1,9 +1,9 @@
 {
   "schema_version": "ai-race-population-identity-grouped-v1",
   "evidence_class": "diagnostic",
-  "estimand": "first-five-round population classification under race-grouped CV",
+  "estimand": "first-five-round population classification under dyad/race-grouped CV",
   "n_trajectories": 760,
-  "n_groups": 550,
+  "n_groups": 382,
   "class_counts": {
     "claude-opus-5": 60,
     "claude-sonnet-5": 60,
@@ -27,7 +27,7 @@
   "split": {
     "method": "StratifiedGroupKFold",
     "n_splits": 5,
-    "group_definition": "race for LLM; participant for human",
+    "group_definition": "race for LLM; source dyad for human",
     "seed": 20260909
   },
   "permutation_null": {
@@ -36,72 +36,72 @@
   },
   "metrics": {
     "accuracy": {
-      "mean": 0.29210526315789476,
-      "std": 0.05254927775714699,
-      "null_mean": 0.08578947368421053,
-      "null_std": 0.03473052939815565,
+      "mean": 0.28157894736842104,
+      "std": 0.07317138270210148,
+      "null_mean": 0.08489473684210526,
+      "null_std": 0.03220779488248872,
       "null_95": [
-        0.039473684210526314,
-        0.1777960526315788
+        0.046052631578947366,
+        0.17121710526315775
       ],
-      "permutation_p": 0.005994005994005994
+      "permutation_p": 0.003996003996003996
     },
     "balanced_accuracy": {
-      "mean": 0.4230392156862745,
-      "std": 0.042641071813247694,
-      "null_mean": 0.1242590292105352,
-      "null_std": 0.02900914239318546,
+      "mean": 0.3840686274509804,
+      "std": 0.057069895559240656,
+      "null_mean": 0.12428567135603416,
+      "null_std": 0.028568359495517916,
       "null_95": [
-        0.0697065239448052,
-        0.18235930735930736
+        0.07206168831168831,
+        0.18020881028693528
       ],
       "permutation_p": 0.000999000999000999
     },
     "macro_f1": {
-      "mean": 0.2520281515190208,
-      "std": 0.0472346451021996,
-      "null_mean": 0.06290367301400127,
-      "null_std": 0.022341773922382464,
+      "mean": 0.23735442073294966,
+      "std": 0.05134486061005699,
+      "null_mean": 0.06142565561291932,
+      "null_std": 0.021591967010809187,
       "null_95": [
-        0.02478210598691719,
-        0.11161013479008204
+        0.026366662789461526,
+        0.10827858492834017
       ],
       "permutation_p": 0.000999000999000999
     }
   },
   "fold_metrics": [
     {
-      "accuracy": 0.27631578947368424,
-      "balanced_accuracy": 0.4375,
-      "macro_f1": 0.2480840847915726,
+      "accuracy": 0.3092105263157895,
+      "balanced_accuracy": 0.3952205882352941,
+      "macro_f1": 0.2469598765432099,
       "n_test": 152,
       "fold": 0
     },
     {
-      "accuracy": 0.3092105263157895,
-      "balanced_accuracy": 0.3952205882352941,
-      "macro_f1": 0.2477360884557761,
+      "accuracy": 0.3026315789473684,
+      "balanced_accuracy": 0.41911764705882354,
+      "macro_f1": 0.2689146160268484,
       "n_test": 152,
       "fold": 1
     },
     {
-      "accuracy": 0.375,
-      "balanced_accuracy": 0.4908088235294118,
-      "macro_f1": 0.3294638329469719,
+      "accuracy": 0.18421052631578946,
+      "balanced_accuracy": 0.2916666666666667,
+      "macro_f1": 0.17276316693609928,
       "n_test": 152,
       "fold": 2
     },
     {
-      "accuracy": 0.24342105263157895,
-      "balanced_accuracy": 0.38541666666666663,
-      "macro_f1": 0.2016186383144695,
+      "accuracy": 0.23684210526315788,
+      "balanced_accuracy": 0.375,
+      "macro_f1": 0.19901495620578183,
       "n_test": 152,
       "fold": 3
     },
     {
-      "accuracy": 0.2565789473684211,
-      "balanced_accuracy": 0.40625,
-      "macro_f1": 0.23323811308631398,
+      "accuracy": 0.375,
+      "balanced_accuracy": 0.43933823529411764,
+      "macro_f1": 0.29911948795280896,
       "n_test": 152,
       "fold": 4
     }

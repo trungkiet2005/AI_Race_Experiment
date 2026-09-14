@@ -2,7 +2,7 @@
   "schema_version": "ai-race-feature-importance-grouped-v1",
   "evidence_class": "diagnostic",
   "estimand": "association structure of round-greater-than-one decisions",
-  "split": "five-fold GroupKFold; human grouped by participant_id and LLM grouped by game_id",
+  "split": "five-fold GroupKFold; human grouped by source group_id dyad and LLM grouped by game_id",
   "importance_fit": "full-source descriptive fit; predictive metrics are out-of-fold",
   "seed": 0,
   "source_hashes": {

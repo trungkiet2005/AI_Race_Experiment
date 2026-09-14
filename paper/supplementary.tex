@@ -308,70 +308,59 @@ extend its claims beyond the idealised race.
 
 \section*{Supplementary roadmap}
 
-The table is a thematic reading map, not a second numbering scheme. The five
-unnumbered dividers group the evidence by role, while the physical order and
-the stable A.1 through A.26 labels remain unchanged for reliable cross-reference.
+The supplement is organised as a short evidence package rather than a lab
+notebook. The unnumbered dividers identify the reader's path; the subsection
+labels remain attached to their original analyses so that existing
+cross-references stay stable.
 
 \begin{table*}[t]
-  \caption{Roadmap to the supplementary evidence. The section labels point to
-  the detailed analyses below; the main paper's claims remain scoped to the
+  \caption{Roadmap to the supplementary evidence. Sections A--C support the
+  headline claims most directly; Sections D--E contain the human diagnostics
+  and exploratory extensions. The main paper's claims remain scoped to the
   designs and populations stated there.}
   \centering
   \small
   \begin{tabular}{@{}p{0.18\textwidth}p{0.39\textwidth}p{0.31\textwidth}@{}}
     \toprule
-    Reading path & Supporting sections & What the path adds \\
+    Section & Supporting analyses & What the section adds \\
     \midrule
-    Validity and provenance &
-      Quality-control screen (\S\ref{app:admission-v6}); human-benchmark
-      replication (\S\ref{app:human-benchmark-replication}); claim-scoped
-      citation audit (\S\ref{app:citation-audit}) &
-      Entry conditions, source checks and the boundaries of each citation. \\
-    Mechanism and theory &
-      Scripted opponents (\S\ref{app:scripted-opponent}); two-route baseline
-      (\S\ref{app:frontier-baseline}); policy shape
-      (\S\ref{app:policy-shape}); selection-strength sweep
-      (\S\ref{app:egt-beta}) &
-      The baseline, evolutionary comparison and the complete fixed-rival
-      intervention. \\
-    Prompt and model robustness &
-      Open-weight battery (\S\ref{app:open-weight-battery}); baseline
-      replication (\S\ref{app:baseline-replication}); crossed context mapping
-      (\S\ref{app:context-mapping}); assigned personas
-      (\S\ref{app:persona-detail}); predictive structure
-      (\S\ref{app:predictive-structure}) &
-      Tests of representation, instruction, persona and observable choice
-      structure. \\
-    Trajectories and diversity &
-      Full two-player scope (\S\ref{app:twoplayer-baseline}); diversity
-      (\S\ref{app:diversity}); pilot roster (\S\ref{app:diversity-pilot});
-      population identity (\S\ref{app:population-identity}); embedding and
-      outcomes (\S\ref{app:tsne-outcome}); cluster sensitivity
-      (\S\ref{app:k-sensitivity}); archetype coverage
-      (\S\ref{app:archetype-coverage}); human radar
-      (\S\ref{app:human-radar}) &
-      Sequence-level comparison, exploratory projections and their analysis
-      sensitivities. \\
-    Interaction scope &
-      $N$-player scope (\S\ref{app:nplayer-scope}); matched group size
-      (\S\ref{app:nplayer-matched}); rate by group
-      (\S\ref{app:unsafe-rate-by-group}); position cells
-      (\S\ref{app:position-cells}); joint dynamics
-      (\S\ref{app:joint-dynamics}); round-five boundary
-      (\S\ref{app:horizon-boundary}) &
-      Group size, position, state transitions and the designed horizon boundary,
-      all treated as scoped or exploratory comparisons. \\
+    A. Validity and provenance &
+      Quality-control screen (\S\ref{app:admission-v6}); open-weight battery
+      (\S\ref{app:open-weight-battery}); human-source reconstruction
+      (\S\ref{app:human-benchmark-replication}) &
+      Entry conditions, source checks and the boundaries of the evidence. \\
+    B. Core risk, theory and robustness &
+      Baseline and policy shape (\S\ref{app:frontier-baseline},
+      \S\ref{app:policy-shape}); replication (\S\ref{app:baseline-replication});
+      selection-strength sweep (\S\ref{app:egt-beta}); crossed representation
+      design (\S\ref{app:context-mapping}) &
+      The risk response, evolutionary comparison and representation checks. \\
+    C. Scripted-rival intervention &
+      Full five-route campaign (\S\ref{app:scripted-opponent}) &
+      The complete fixed-policy intervention, replay audit and paired effects. \\
+    D. Human comparison and diversity &
+      Two-player scope (\S\ref{app:twoplayer-baseline}); diversity
+      (\S\ref{app:diversity}); population identity
+      (\S\ref{app:population-identity}); predictive structure
+      (\S\ref{app:predictive-structure}); archetype and embedding diagnostics
+      (\S\ref{app:archetype-coverage}, \S\ref{app:tsne-outcome}) &
+      Sequence-level comparison and diagnostics of observable trajectory
+      diversity. \\
+    E. Exploratory interaction scope &
+      Personas (\S\ref{app:persona-detail}); group size
+      (\S\ref{app:nplayer-scope}, \S\ref{app:nplayer-matched}); position,
+      dynamics and horizon (\S\ref{app:position-cells},
+      \S\ref{app:joint-dynamics}, \S\ref{app:horizon-boundary}); citation
+      record (\S\ref{app:citation-audit}) &
+      Scoped extensions and the remaining reproducibility record. \\
     \bottomrule
   \end{tabular}
 \end{table*}
 
-For the headline claims, start with the validity and provenance path, then read
-the mechanism and theory path for the risk, rival and evolutionary comparisons,
-and the trajectories and diversity path for the human reference. The interaction
-scope path is exploratory. The scripted-rival evidence is fully retained in
-\S\ref{app:scripted-opponent}; listing it first in the mechanism path makes the
-main intervention easy to find without relocating its numbered subsection or
-its audited floats.
+For the headline claims, read Sections A--C first. Section D supplies the
+cluster-aware human comparison and its diagnostics; Section E is exploratory.
+The scripted-rival block is physically placed in Section C so its complete
+evidence follows the main paper's rival result directly.
 
 Four terms are used with fixed meanings throughout. A \emph{route} is the
 exact provider string a request is addressed to, for example
@@ -1352,7 +1341,348 @@ comparisons in the two-player strategic diversity results in the main paper and
 the persona and measured risk results in the main paper as resting on a correctly processed benchmark
 rather than on a reimplementation error.
 
-\subsubsection*{C. Human comparison and trajectory diversity}
+\subsubsection*{C. Scripted-rival intervention}
+
+\subsection{Five audited routes against a fixed and undisclosed rival policy}
+\label{app:scripted-opponent}
+
+Every gameplay result reported elsewhere in this paper is self-play: both
+companies in a race are the same endpoint. That design cannot separate a route
+responding to its rival from a route running through a phase of its own, because
+the rival is the route. It also leaves this paper's two lanes disconnected. The
+evolutionary lane is built on four reduced strategies, \emph{Always Safe},
+\emph{Always Unsafe}, \emph{Conditional Safe} and \emph{Conditional Unsafe}, and
+until this campaign the empirical lane had never played against any of them.
+
+\paragraph{What was collected.} Five gate-admitted routes, Gemini 3 Flash,
+Claude Opus 5, GPT-5.4, GPT-5.5 and Claude Sonnet 5, whose full route
+identifiers are in
+Table~\ref{tab:admission-v6}, each played the same game against each of those
+four strategies at each of the
+three private-risk levels. That is 60 cells, ten repetitions each, 600 races and
+5{,}580 route decisions, 93 route decisions per cell, with zero parse failures
+and zero deviations by any scripted rival. The rival is executed by the task
+file rather than called, so it costs no requests and cannot be wrong about its
+own strategy for any reason a model could be.
+
+Playing a language model against fixed strategies is established practice
+rather than something introduced here: \citet{playing_repeated_games_with_llms} run
+always-cooperate, always-defect and defect-once agents against five models, and
+\citet{payneStrategicIntelligence2025} run Tit-for-Tat and Grim Trigger against
+frontier models under a varying termination probability. Our two conditional
+rivals are theirs. What is particular to this campaign is that the rival is
+never disclosed, that its every move is replayed and checked after the fact,
+that the route's seat is counterbalanced, and that the same frozen design is run
+on more than one endpoint.
+
+Three properties of the design are load-bearing and were asserted offline before
+any of it was pushed. The prompt is byte-identical to the neutral baseline's and
+never says the rival is scripted, so a race here is comparable with a race
+there; the rival is a strategy, not a disclosure. The route's seat is
+counterbalanced, five repetitions in each seat per cell, because this study has
+measured a seat effect in the neutral baseline, on prompts that differ only in
+which of two names is whose, and a fixed seat would fold that effect into every
+number. And a conditional strategy answers the \emph{route}'s previous move
+rather than its own, which is the property that separates a rival from a mirror:
+a strategy answering its own history would be a constant, and the whole
+conditional arm would measure nothing.
+
+\paragraph{How the rival was audited.} A scripted rival is code, so it cannot be
+audited by reading a response. It was audited by replay:
+\texttt{scripts/\discretionary{}{}{}ingest\_\discretionary{}{}{}scripted\_\discretionary{}{}{}cell.py}
+recomputes every rival move from the route's own recorded moves and refuses the
+cell on a single deviation. All 60 cells replayed clean. This is the one failure
+that would have left the data looking perfectly healthy while answering a
+different question than the one asked.
+
+\paragraph{The collection record.} The workload was partitioned into the
+analysis unit itself, one route by rival by risk cell, and each cell was
+collected whole on one declared account. The assignment was fixed before the
+final extension began and is recorded in anonymised receipts. All 60 cells
+carry the same scripted-opponent protocol and prompt version; the three task
+hashes are one per risk level and are identical across routes. This keeps the
+game mechanism fixed while
+allowing account rotation across cells. The account is a billing boundary,
+not a model boundary: the analysis never treats account identity as evidence
+about behaviour, and failed quota or authentication attempts contributed no
+races to the admitted set. The complete receipt and assignment audit is
+retained with the artifact. The full route-by-risk record is in
+Table~\ref{tab:scripted-opponent}; Figure~\ref{fig:scripted-opponent} shows the
+same response and context contrasts as categorical tiles.
+
+\paragraph{Coverage and decoding contracts.} The final campaign is complete:
+all five admitted routes have all 12 route-by-strategy-by-risk cells. Every
+cell has ten races, 93 route decisions, zero parse failures, zero rival replay
+deviations and five races in each route seat. The routes are not homogeneous
+in decoding contract. Gemini 3 Flash, GPT-5.4 and Claude Sonnet 5 use the
+legacy 256-token, no-reasoning contract; GPT-5.5 uses a 1024-token,
+low-reasoning contract; Claude Opus 5 uses the latter contract in eleven cells
+and the legacy contract in one. Coverage
+therefore supports the five-route descriptive comparison, but not a claim
+that all endpoints were sampled under one identical decoding configuration.
+The 36 legacy collection receipts also omit a copied source hash field; their
+run manifests carry the correct risk-specific hashes, so this is a provenance
+metadata limitation rather than a gameplay failure.
+
+
+\begin{figure*}[t]
+    \centering
+    \includegraphics[width=0.99\textwidth]{../figures/paper/scripted_opponent.pdf}
+    \caption{The scripted-opponent campaign on five gate-admitted routes.
+    (a) Response surfaces across scripted rivals and stated-risk levels.
+    (b) Paired effect magnitudes: the Always-Unsafe minus Always-Safe rival
+    effect at each risk, with the fixed-safe risk effect shown on the same
+    percentage-point scale. (c) Always-Safe rates, self-play rates and their
+    signed differences; a $\geq$ label marks a ceiling-censored gap.
+    Confidence intervals for the rival contrast are reported in
+    Table~\ref{tab:scripted-opponent}.}
+    \Description{Three-panel scripted-opponent figure. Panel a contains three
+    response matrices, one per maximum private-risk level, with five route rows
+    and four ordered scripted-rival columns; every tile prints the measured
+    Unsafe rate. Panel b is a categorical tile matrix of paired rival-effect
+    magnitudes for the five routes at three risk levels, with a zero reference
+    and the fixed-safe risk effect shown for comparison. Panel c is a
+    categorical tile matrix showing Always-Safe rate, self-play rate and their
+    signed gap for the same routes and risk levels.}
+    \label{fig:scripted-opponent}
+\end{figure*}
+
+\begin{comment}
+\begin{table*}[t]
+    \caption{Initial three-route subset, retained for audit trace and not used
+    for the full-campaign claim. Each route against each scripted rival. Ten
+    races and 93 route
+    decisions per cell, both seats used in every cell, zero parse failures and
+    zero rival deviations anywhere. Rates are per cent of the route's own
+    decisions. Contrasts are differenced inside a repetition, so the horizon
+    stopping draw is removed from the comparison, with the 95\% percentile
+    interval taken over the ten blocks; the seed pairing was verified for all
+    ten in every one of the eighteen contrasts in this initial subset. Ten
+    blocks make the resampling
+    distribution coarse, so an interval endpoint carries a few tenths of a
+    point of Monte Carlo movement and is quoted to one decimal for consistency
+    rather than because it is resolved that finely. The two cells at
+    $100.0\%$ sit on a boundary, and every contrast through them is truncated
+    rather than complete. The self-play rate is the same route in the neutral
+    baseline of \S\ref{app:frontier-baseline}, 10 races and 186 decisions per
+    cell, and it is a different design rather than another rival: at risk $0.1$
+    nine of Gemini 3 Flash's ten self-play races have every decision
+    \Unsafe{}, so the $74.2$ below it is a lower bound on that distance.}
+    \centering
+    \footnotesize
+    \setlength{\tabcolsep}{3.2pt}
+    \begin{tabular}{@{}lrrrrrrrrr@{}}
+        \toprule
+        & \multicolumn{3}{c}{Gemini 3 Flash} & \multicolumn{3}{c}{GPT-5.4}
+        & \multicolumn{3}{c}{Claude Sonnet 5} \\
+        \cmidrule(lr){2-4} \cmidrule(lr){5-7} \cmidrule(lr){8-10}
+        $p_r^{\max}$ & $0.1$ & $0.6$ & $0.9$ & $0.1$ & $0.6$ & $0.9$
+        & $0.1$ & $0.6$ & $0.9$ \\
+        \midrule
+        Always Safe & 24.7 & 17.2 & 14.0 & 36.6 & 32.3 & 25.8 & 22.6 & 10.8 & 10.8 \\
+        Conditional Safe & 76.3 & 57.0 & 57.0 & 72.0 & 55.9 & 50.5 & 63.4 & 43.0 & 44.1 \\
+        Conditional Unsafe & 100.0 & 74.2 & 67.7 & 86.0 & 69.9 & 62.4 & 89.2 & 62.4 & 47.3 \\
+        Always Unsafe & 100.0 & 89.2 & 88.2 & 89.2 & 83.9 & 80.6 & 90.3 & 77.4 & 57.0 \\
+        \midrule
+        Rival's stance & $+73.5$ & $+67.4$ & $+71.7$ & $+47.5$ & $+48.0$ & $+49.8$ & $+63.8$ & $+65.7$ & $+45.0$ \\
+        \quad 95\% CI & (67.8, 78.7) & (57.1, 76.6) & (65.6, 77.5) & (37.0, 57.2) & (40.0, 55.0) & (35.8, 60.5) & (54.8, 72.1) & (62.2, 68.9) & (42.0, 48.2) \\
+        Opening move alone & $+25.1$ & $+15.8$ & $+11.5$ & $+14.1$ & $+13.9$ & $+11.0$ & $+25.0$ & $+19.6$ & $+3.4$ \\
+        \quad 95\% CI & (20.9, 29.7) & (8.3, 23.5) & (4.5, 19.7) & (6.0, 22.7) & (8.9, 18.1) & (6.6, 15.5) & (20.9, 29.3) & (17.7, 21.5) & (0.0, 7.1) \\
+        \midrule
+        Self-play rate & 98.9 & 73.1 & 60.2 & 87.1 & 65.1 & 46.8 & 89.2 & 48.4 & 32.3 \\
+        \quad minus Always Safe & 74.2 & 55.9 & 46.2 & 50.5 & 32.8 & 21.0 & 66.7 & 37.6 & 21.5 \\
+        \bottomrule
+    \end{tabular}
+\end{table*}
+
+\begin{table*}[t]
+    \caption{Initial three-route collection record, retained for audit trace
+    and not used for the full-campaign claim. Which account collected which
+    cell. The
+    assignment was fixed in a collection plan committed before the first cell
+    of the extension was started, and this table is read back from each cell's
+    own receipt rather than from the plan. The five accounts are anonymised for
+    double-blind review and appear here as A to E, labelled in order of first
+    appearance in this table; the mapping is retained privately and is restored
+    in the camera-ready artifact. An account is a billing boundary and not a
+    model boundary: route, prompt, parser, protocol, temperature request and
+    seed structure are identical in every cell. The rotation is what makes that
+    assumption checkable instead of merely asserted.}
+    \centering
+    \small
+    \setlength{\tabcolsep}{3.2pt}
+    \begin{tabular}{@{}lccccccccc@{}}
+        \toprule
+        & \multicolumn{3}{c}{Gemini 3 Flash} & \multicolumn{3}{c}{GPT-5.4}
+        & \multicolumn{3}{c}{Claude Sonnet 5} \\
+        \cmidrule(lr){2-4} \cmidrule(lr){5-7} \cmidrule(lr){8-10}
+        $p_r^{\max}$ & $0.1$ & $0.6$ & $0.9$ & $0.1$ & $0.6$ & $0.9$
+        & $0.1$ & $0.6$ & $0.9$ \\
+        \midrule
+        Always Safe & A & B & C & B & C & D & E & A & B \\
+        Conditional Safe & C & E & A & C & D & E & A & B & C \\
+        Conditional Unsafe & E & A & B & A & B & C & D & E & A \\
+        Always Unsafe & B & C & E & E & A & B & C & D & E \\
+        \bottomrule
+    \end{tabular}
+\end{table*}
+\end{comment}
+
+\begin{table*}[t]
+    \caption{Full five-route scripted-opponent campaign. Each AS/CS/CAS/AU
+    entry is one route-by-strategy-by-risk cell with ten races and 93 route
+    decisions; each route-by-risk row therefore aggregates four such cells,
+    40 races and 372 route decisions, with both seats used and zero parse
+    failures or rival replay deviations. Rates are percentages of the route's
+    own decisions.
+    ``Rival stance'' is Always Unsafe minus Always Safe, differenced inside a
+    repetition; the bracketed values are its 95\% percentile interval over ten
+    blocks. ``Risk at Safe'' is the paired risk-0.1 minus risk-0.9 contrast with
+    the rival held at Always Safe, and contrast columns are percentage-point
+    differences.
+    Claude Opus 5 has one legacy decoding cell. Coverage is complete across
+    the five routes, but decoding contracts are heterogeneous across endpoints,
+    so this cross-route comparison is descriptive rather than a controlled
+    comparison under one common decoding configuration.}
+    \label{tab:scripted-opponent}
+    \centering
+    \scriptsize
+    \setlength{\tabcolsep}{3.2pt}
+    \begin{tabular}{@{}lcrrrr r lrr@{}}
+        \toprule
+        Route & $p_r^{\max}$ & AS & CS & CAS & AU & Rival stance
+        & 95\% CI & Risk at Safe & Self-play \\
+        \midrule
+        Gemini 3 Flash & 0.1 & 24.7 & 76.3 & 100.0 & 100.0 & +73.5 & [67.8, 78.7] & +10.4 & 98.9 \\
+        & 0.6 & 17.2 & 57.0 & 74.2 & 89.2 & +67.4 & [57.1, 76.6] & & 73.1 \\
+        & 0.9 & 14.0 & 57.0 & 67.7 & 88.2 & +71.7 & [65.6, 77.5] & & 60.2 \\
+        \addlinespace
+        Claude Opus 5 & 0.1 & 63.4 & 100.0 & 100.0 & 100.0 & +30.1 & [16.5, 42.8] & +69.9 & 100.0 \\
+        & 0.6 & 1.1 & 2.2 & 53.8 & 89.2 & +87.0 & [84.3, 89.6] & & 0.0 \\
+        & 0.9 & 0.0 & 3.2 & 35.5 & 62.4 & +59.3 & [51.2, 66.5] & & 0.0 \\
+        \addlinespace
+        GPT-5.4 & 0.1 & 36.6 & 72.0 & 86.0 & 89.2 & +47.5 & [37.0, 57.2] & +12.3 & 87.1 \\
+        & 0.6 & 32.3 & 55.9 & 69.9 & 83.9 & +48.0 & [40.0, 55.0] & & 65.1 \\
+        & 0.9 & 25.8 & 50.5 & 62.4 & 80.6 & +49.8 & [35.8, 60.5] & & 46.8 \\
+        \addlinespace
+        GPT-5.5 & 0.1 & 72.0 & 98.9 & 100.0 & 97.8 & +25.3 & [20.3, 30.6] & +48.3 & 93.5 \\
+        & 0.6 & 23.7 & 82.8 & 87.1 & 91.4 & +66.1 & [62.5, 69.9] & & 70.4 \\
+        & 0.9 & 21.5 & 66.7 & 75.3 & 87.1 & +61.7 & [53.5, 69.1] & & 55.4 \\
+        \addlinespace
+        Claude Sonnet 5 & 0.1 & 22.6 & 63.4 & 89.2 & 90.3 & +63.8 & [54.8, 72.1] & +12.7 & 89.2 \\
+        & 0.6 & 10.8 & 43.0 & 62.4 & 77.4 & +65.7 & [62.2, 68.9] & & 48.4 \\
+        & 0.9 & 10.8 & 44.1 & 47.3 & 57.0 & +45.0 & [42.0, 48.2] & & 32.3 \\
+        \bottomrule
+    \end{tabular}
+\end{table*}
+
+\paragraph{One-cell contract sensitivity.} The one Claude Opus 5 cell collected
+under the legacy decoding contract is \emph{Always Safe} at risk $0.6$. A
+predeclared harmonisation attempt under the active contract returned a quota
+403 before any race or model output was produced, so it is retained as an
+infrastructure failure and the existing cell is not replaced. Excluding it as a
+read-only scope check removes one $\text{Always Unsafe} - \text{Always Safe}$
+contrast and one four-strategy ordering cell. The remaining evidence still has
+positive rival contrasts in $14/14$ cells and the weak ordering in $13/14$
+cells (strict ordering in $11/14$). This is a scope sensitivity, not a
+harmonised replication; full-grid values remain reported under their recorded
+contracts.
+
+\paragraph{Finding one: the shape is largely shared, with one boundary
+reversal.} Every route generally plays \Unsafe{} more often as the scripted
+rival becomes more \Unsafe{}, and the Always-Unsafe minus Always-Safe contrast
+is positive in all fifteen route-by-risk cells. The smallest interval lower
+bound is $+16.5$ points on Claude Opus 5 at risk $0.1$. The weak ordering
+\emph{Always Safe} $\leq$ \emph{Conditional Safe} $\leq$
+\emph{Conditional Unsafe} $\leq$ \emph{Always Unsafe} holds in fourteen of
+fifteen cells and is strict in twelve. The one reversal is GPT-5.5 at risk
+$0.1$, where Conditional Unsafe reaches $100.0\%$ and Always Unsafe reaches
+$97.8\%$. Both values are close to the ceiling, so the reversal is a
+saturated boundary observation rather than evidence against the broader
+direction.
+
+The response to stated risk survives once the rival is held fixed. Against
+\emph{Always Safe}, the rate never rises with risk on any of the five routes.
+The paired risk contrast ranges from $+10.4$ to $+69.9$ points, with Claude
+Opus 5 providing the largest change and the other four routes showing more
+graded changes. This contrast is not interchangeable with the rival contrast:
+both are paired within repetitions, but they change different parts of the
+interaction.
+
+\paragraph{Finding two: the magnitude is checkpoint-specific.} The rival
+contrast ranges from $+25.3$ points for GPT-5.5 at risk $0.1$ to $+87.0$
+points for Claude Opus 5 at risk $0.6$. Gemini 3 Flash remains near $+70$
+points across risks, GPT-5.4 remains near $+50$, GPT-5.5 grows from $+25.3$
+to about $+66$, and Claude Sonnet 5 falls from about $+66$ to $+45$ at the
+highest risk. The route's level also differs: GPT-5.4 has the highest
+\emph{Always Safe} rates, $36.6\%$, $32.3\%$ and $25.8\%$, while Claude Opus 5
+falls to the floor at the two higher risks. These are separate endpoint
+samples, so non-overlapping intervals are a conservative sign of a difference
+rather than a test of one.
+
+\paragraph{We name the contrast for what it compares.} Calling the safe-rival
+arm exploitation would assert that the route takes the opportunity a
+non-punishing rival offers, and the measured rates say the opposite: on every
+route that arm carries the lowest rates anywhere in the campaign, below what the
+same route plays against itself. What the routes do is match the rival, keeping
+most of their restraint against a rival that keeps its own and abandoning much
+of it against one that never had any. A strategy name is not a summary of what
+the rival played either. \emph{Conditional Safe} opens \Safe{} and then mirrors;
+its own Unsafe rate varies with the route because it follows the route's
+previous move. Across the five routes it played \Unsafe{} on approximately
+$31\%$ to $73\%$ of its own moves, so the strategy label should not be read as
+a claim about its realised average action.
+
+\paragraph{The rival's opening move.} \emph{Conditional Safe} and
+\emph{Conditional Unsafe} are the same strategy from round two onward, both
+repeating the route's previous move, so their difference isolates the rival's
+first move and nothing else. The full opening-move contrast is retained in the
+derived route tables. It is not used as the headline result because its
+interpretation is conditional on the route's own first move, which varies
+substantially across the five routes.
+
+The route's own opening move is not a constant across the campaign: Gemini 3
+Flash opened \Unsafe{} in all 120 races, Claude Opus 5 in 41, GPT-5.4 in 116,
+GPT-5.5 in 115, and Claude Sonnet 5 in 23. The opening-move contrast is about
+the rival's first move, which the task file fixes, and not about the route's.
+
+\paragraph{What it means for the rest of this paper.} A self-play rate is not a
+measurement of how a route treats risk. The fixed-safe and self-play designs
+differ in thirteen of fifteen cells. Self-play is higher in thirteen cells,
+but Claude Opus 5 is lower at risks $0.6$ and $0.9$, where both designs are at
+or near the floor. The risk-0.1 Gemini self-play distance is a lower bound,
+because nine of its ten mirror-match races have every decision \Unsafe{} and
+that arm has no room above it. A self-play rate is an interaction outcome of
+one policy meeting a copy of itself, and every self-play number in this paper
+should be read that way.
+
+That self-play can hide behaviour is not a new observation.
+\citet{lekeasNashSuppression2026} report phenomena that are, in their words,
+invisible in self-play, including that which agent moves first decides which
+equilibrium a pair reaches. The contribution here is narrower and specific to
+this setting: what self-play hides is the \emph{risk response} itself, the one
+quantity this game exists to elicit, and it hides it on every route we have run
+this design on.
+
+\paragraph{What it does not show.} Five routes, one game, one prompt version,
+ten races per cell. Five commercial endpoints are not a sample of a population
+of models, and four strategies are four points in a space of policies rather
+than a sample of opponents, so a scripted rival establishes what a route does
+against \emph{these} rivals. The within-block policy contrast is identified
+because rival-policy assignment is fixed and exogenous. Conditional rivals can
+still respond mechanically to the route's previous action, as specified by
+their fixed policies. This is not causal about anything outside this game.
+Nothing here licenses a claim about strategy, intent, or
+reasoning: these are conditional frequencies. It is regenerated by
+\texttt{scripts/\discretionary{}{}{}analyze\_\discretionary{}{}{}scripted\_\discretionary{}{}{}opponent.py}
+with \texttt{-\discretionary{}{}{}-all-\discretionary{}{}{}routes}, which takes
+one endpoint at a time, writes one derived table per endpoint rather than
+pooling them, and refuses a cell that did not complete, that carries a parse
+failure, that is the wrong protocol, that has the wrong number of races, whose
+seat counterbalance is not five and five, or whose rival deviated from the
+strategy its directory claims.
+
+\subsubsection*{D. Human comparison and trajectory diversity}
 
 \subsection{Risk preference and assigned personas}
 \label{app:persona-detail}
@@ -1619,17 +1949,17 @@ well a simple classifier can name the population that
 produced a trajectory, using the same 15 raw features as the trajectory
 embedding of \S\ref{app:tsne-outcome}. We fit a shallow decision tree with
 class-balanced loss under stratified five-fold grouped cross-validation. The
-two seats of an LLM race remain in the same fold; human observations are
-grouped by participant. Since the pooled classes are unequal, balanced
-accuracy and macro-F1 are the primary measures. A 200-repetition permutation
-null preserves the observed class counts and the same folds.
+two seats of an LLM race remain in the same fold, and human trajectories are
+grouped by source dyad. Since the pooled classes are unequal, balanced accuracy
+and macro-F1 are the primary measures. A 200-repetition permutation null
+preserves the observed class counts and the same grouped folds.
 
 \begin{table}[t]
-    \caption{Race-grouped population-identity diagnostic on 760 complete
-    first-five-round trajectories. The eight populations are imbalanced
-    (340 human and 60 per checkpoint), so balanced accuracy and macro-F1 are
-    primary. The null interval is the 2.5--97.5 percentile range over grouped
-    label permutations.}
+    \caption{Dyad/race-grouped population-identity diagnostic on 760 complete
+    first-five-round trajectories. The human population has 340 trajectories
+    and each of the seven listed checkpoints has 60; the classes are therefore
+    imbalanced, so balanced accuracy and macro-F1 are primary. The null interval
+    is the 2.5--97.5 percentile range over grouped label permutations.}
     \label{tab:population-identity}
     \centering
     \scriptsize
@@ -1639,17 +1969,17 @@ null preserves the observed class counts and the same folds.
         \toprule
         Metric & Observed & Permutation null mean & Null 95\% interval \\
         \midrule
-        Raw accuracy & 0.292 $\pm$ 0.053 & 0.086 & 0.039--0.178 \\
-        Balanced accuracy & \textbf{0.423 $\pm$ 0.043} & 0.124 & 0.070--0.182 \\
-        Macro-F1 & \textbf{0.252 $\pm$ 0.047} & 0.063 & 0.025--0.112 \\
+        Raw accuracy & 0.282 $\pm$ 0.073 & 0.085 & 0.046--0.171 \\
+        Balanced accuracy & \textbf{0.384 $\pm$ 0.057} & 0.124 & 0.072--0.180 \\
+        Macro-F1 & \textbf{0.237 $\pm$ 0.051} & 0.061 & 0.026--0.108 \\
         \bottomrule
     \end{tabular}
     }
 \end{table}
 
-The balanced accuracy exceeds the class-balanced chance level of $1/8$ and
-the grouped permutation null ($p<0.001$); raw accuracy is shown only for
-completeness because it is affected by the large human class. This result
+Both primary scores exceed chance ($1/8$) and the grouped permutation null
+(both $p<0.001$). Raw accuracy is also above its grouped null ($p=0.004$),
+but we report it descriptively because the human class is larger. The result
 supports observable differences in the first-five-round trajectories, while
 the overlap and the shallow classifier do not support a claim that a latent
 strategy or model identity is cleanly recoverable. The machine-readable
@@ -1666,7 +1996,7 @@ reasoning. For each population, we fit a random forest, a model that combines
 many decision trees. Table~\ref{tab:feature-importance} reports the result
 and Figure~\ref{fig:feature-importance} shows the same shares as a heatmap.
 Predictive scores use five-fold grouped cross-validation,
-with all decisions from one participant or race kept in one fold. The forest
+with all decisions from one source dyad or race kept in one fold. The forest
 predicts decisions after round one from five values
 known before the choice: the player's previous action, the opponent's previous
 action, the progress gap, the assigned maximum private risk, and the round
@@ -1688,7 +2018,7 @@ on that feature. It does not mean that the feature caused the decision.
     whiskers are the cross-validated standard deviation and an open marker
     flags a forest at chance. Read the two panels together, because they are
     not on the same footing. The human forest discriminates weakly, ROC AUC
-    $0.63$ and balanced accuracy $0.58$, only $3.0$ points of accuracy above
+    $0.62$ and balanced accuracy $0.57$, about $2.0$ points of accuracy above
     guessing the majority class, while the two Claude forests reach $1.00$ and
     $0.97$. A share from a weakly fitted forest says mostly where that forest
     found the little signal there was, so it is a much looser proxy for the
@@ -1696,17 +2026,17 @@ on that feature. It does not mean that the feature caused the decision.
     \label{fig:feature-importance}
     \Description{Two panels. The left panel is a heatmap of the share of mean
     absolute SHAP value that a random forest assigns to each of five
-    pre-decision features, with one
-    row per population and one column per feature: own previous action,
-    opponent's previous action, progress gap, assigned risk treatment, and
-    round number. The human row is dominated by the opponent's previous
-    action at 56 percent. GPT-5-nano is dominated instead by progress gap
-    and round number at 41 and 38 percent, the two Gemini Flash checkpoints by
-    the risk treatment at 33 and 37 percent, and Claude Sonnet 5 by the
-    opponent's previous action at 48 percent. The right panel plots each
-    population's out-of-fold ROC AUC against a chance line at 0.5, with the
-    human forest just above 0.6, the two nano checkpoints marked as having no
-    skill, and the two Claude forests near 1.0.}
+    pre-decision features, with one row per human population or listed LLM
+    checkpoint. The features are own previous action, opponent's previous
+    action, progress gap, assigned risk treatment, and round number. The human
+    row is dominated by the opponent's previous action at 56 percent. GPT-5
+    nano is dominated by progress gap and round number at 41 and 38 percent;
+    Gemini 3 Flash and Gemini 3.1 Flash Lite by risk treatment at 33 and 37
+    percent; GPT-5.6 Terra by own previous action and risk treatment; and
+    Claude Sonnet 5 by the opponent's previous action at 48 percent. The right
+    panel plots each population's out-of-fold ROC AUC against a chance line at
+    0.5. The human forest is just above 0.6, GPT-5.4 nano is near chance, and
+    the two Claude forests are near 1.0.}
 \end{figure*}
 
 \begin{table*}[t]
@@ -1714,7 +2044,7 @@ on that feature. It does not mean that the feature caused the decision.
     play. Feature columns report shares of total mean absolute SHAP
     magnitude (rows sum to 100\%, up to rounding); AUC and balanced
     accuracy are mean out-of-fold values from the population-specific
-    race/participant-grouped five-fold split.}
+    race/dyad-grouped five-fold split.}
     \label{tab:feature-importance}
     \centering
     \footnotesize
@@ -1730,12 +2060,14 @@ on that feature. It does not mean that the feature caused the decision.
         & OOF AUC
         & Balanced accuracy \\
         \midrule
-        Human                   & 5\%  & \textbf{56\%} & 12\% & 12\%          & 15\% & 0.63 & 0.58 \\
+        Human                   & 5\%  & \textbf{56\%} & 12\% & 12\%          & 15\% & 0.62 & 0.57 \\
         GPT-5-nano              & 3\%  & 7\%           & \textbf{41\%} & 10\% & 38\% & 0.80 & 0.50 \\
         GPT-5.4-nano            & 16\% & 10\%          & \textbf{37\%} & 19\% & 19\% & 0.54 & 0.52 \\
         Gemini-3-Flash          & 4\%  & 17\%          & 22\% & \textbf{33\%} & 25\% & 0.92 & 0.77 \\
         Gemini-3.1-Flash-Lite   & 13\% & 4\%           & 23\% & \textbf{37\%} & 23\% & 0.95 & 0.75 \\
         Gemini-3.5-Flash-Lite   & 12\% & \textbf{33\%} & 30\% & 17\%          & 8\%  & 0.83 & 0.71 \\
+        GPT-5.6-Luna            & 15\% & 3\%           & 27\% & 13\%          & \textbf{41\%} & 0.91 & 0.78 \\
+        GPT-5.6-Terra           & \textbf{31\%} & 5\% & 18\% & 32\% & 13\% & 0.92 & 0.85 \\
         Claude Opus 5           & 24\% & 42\%$^\dagger$ & 0\% & 34\%         & 0\%  & 1.00 & 1.00 \\
         Claude Sonnet 5         & 23\% & \textbf{48\%} & 5\%  & 15\%          & 10\% & 0.97 & 0.93 \\
         \bottomrule
@@ -1753,10 +2085,10 @@ profile that independently recovers the pattern found in the human
 logistic analysis. One caveat has to travel with that reference profile
 everywhere it is used below, because it is the yardstick the checkpoints are
 held against and it is the least well identified row in the table. The human
-forest barely discriminates: ROC AUC $0.63$, balanced accuracy $0.58$, and a
-test accuracy of $0.618$ against a majority-class baseline of $0.588$, so it
-is $3.0$ points of accuracy above predicting the more common action and
-nothing else. Adding the demographic covariates does not help, AUC $0.62$.
+forest barely discriminates: ROC AUC $0.62$, balanced accuracy $0.57$, and a
+test accuracy of $0.608$ against a majority-class baseline of $0.588$, so it
+is about $2.0$ points of accuracy above predicting the more common action and
+nothing else. Adding the demographic covariates does not help, AUC $0.61$.
 The model-side forests are far better fitted, up to AUC $1.00$ for Claude
 Opus 5 and $0.97$ for Claude Sonnet 5, so every comparison in this subsection
 is between shares extracted from very differently identified models. That is
@@ -1893,7 +2225,7 @@ per-risk-level rates underlying the qualitative curve descriptions above.
     \end{tabular}
 \end{table}
 
-\subsubsection*{D. Exploratory interaction scope}
+\subsubsection*{E. Exploratory interaction scope}
 
 \subsection{$N$-player self-play scope ($N=3,4,5$)}
 \label{app:nplayer-scope}
@@ -2095,12 +2427,12 @@ behaving the same way.
     resamples \emph{clusters}, not single trajectories, because the two seats
     of a race are not independent of each other: they share the sampled
     stopping horizon and the setback draws. The cluster is therefore the race
-    for every checkpoint row, 30 races each, and the participant for the human
-    row, 340 participants; the interval uses 4{,}000 resamples. The point
-    estimates are unchanged from a trajectory-level calculation; only the
-    interval changed, and it supersedes an earlier interval that resampled
-    player-race trajectories and so treated the two seats of a race as
-    independent.}
+    for every checkpoint row and the source dyad for the human row, with
+    singleton complete trajectories retained as singleton clusters; the
+    interval uses 4{,}000 resamples. The point estimates are unchanged from a
+    trajectory-level calculation; only the interval changed, and it supersedes
+    an earlier interval that resampled player-race trajectories and so treated
+    the two seats of a race as independent.}
     \label{fig:unsafe-rate-by-group}
     \Description{A horizontal dot-and-whisker chart with one row per
     population, showing the mean Unsafe rate over rounds one to five on a
@@ -2343,9 +2675,10 @@ cell, or the exact cell value where the cell already holds exactly 20. The
 interval is a two-stage cluster bootstrap: clusters are resampled with
 replacement first, and only then is the draw rarefied to 20 inside each
 resample, over 2{,}000 resamples. The cluster is the independent unit of the
-design: a participant for the human rows, one per trajectory, and a race for
-the checkpoint rows, because the two seats of a race share the same sampled
-horizon and setback draws and so are not independent of each other. The
+design: a source dyad for the human rows, with singleton complete trajectories
+retained, and a race for the checkpoint rows, because the two seats of a race
+share the same sampled horizon and setback draws and so are not independent of
+each other. The
 $n_{\rm cluster}$ column is that count. The human-side q=0 comparison used for
 the main figure is instead cluster-aware at the dyad level: it samples ten
 complete human dyads, retaining twenty trajectories but ten interaction units.
@@ -3030,346 +3363,6 @@ a horizon response against a copy of itself and not against a different
 opponent. Nine commercial endpoints are not a sample from a population of
 models.
 
-\subsubsection*{E. Reproducibility and scripted-rival evidence}
-
-\subsection{Five audited routes against a fixed and undisclosed rival policy}
-\label{app:scripted-opponent}
-
-Every gameplay result reported elsewhere in this paper is self-play: both
-companies in a race are the same endpoint. That design cannot separate a route
-responding to its rival from a route running through a phase of its own, because
-the rival is the route. It also leaves this paper's two lanes disconnected. The
-evolutionary lane is built on four reduced strategies, \emph{Always Safe},
-\emph{Always Unsafe}, \emph{Conditional Safe} and \emph{Conditional Unsafe}, and
-until this campaign the empirical lane had never played against any of them.
-
-\paragraph{What was collected.} Five gate-admitted routes, Gemini 3 Flash,
-Claude Opus 5, GPT-5.4, GPT-5.5 and Claude Sonnet 5, whose full route
-identifiers are in
-Table~\ref{tab:admission-v6}, each played the same game against each of those
-four strategies at each of the
-three private-risk levels. That is 60 cells, ten repetitions each, 600 races and
-5{,}580 route decisions, 93 route decisions per cell, with zero parse failures
-and zero deviations by any scripted rival. The rival is executed by the task
-file rather than called, so it costs no requests and cannot be wrong about its
-own strategy for any reason a model could be.
-
-Playing a language model against fixed strategies is established practice
-rather than something introduced here: \citet{playing_repeated_games_with_llms} run
-always-cooperate, always-defect and defect-once agents against five models, and
-\citet{payneStrategicIntelligence2025} run Tit-for-Tat and Grim Trigger against
-frontier models under a varying termination probability. Our two conditional
-rivals are theirs. What is particular to this campaign is that the rival is
-never disclosed, that its every move is replayed and checked after the fact,
-that the route's seat is counterbalanced, and that the same frozen design is run
-on more than one endpoint.
-
-Three properties of the design are load-bearing and were asserted offline before
-any of it was pushed. The prompt is byte-identical to the neutral baseline's and
-never says the rival is scripted, so a race here is comparable with a race
-there; the rival is a strategy, not a disclosure. The route's seat is
-counterbalanced, five repetitions in each seat per cell, because this study has
-measured a seat effect in the neutral baseline, on prompts that differ only in
-which of two names is whose, and a fixed seat would fold that effect into every
-number. And a conditional strategy answers the \emph{route}'s previous move
-rather than its own, which is the property that separates a rival from a mirror:
-a strategy answering its own history would be a constant, and the whole
-conditional arm would measure nothing.
-
-\paragraph{How the rival was audited.} A scripted rival is code, so it cannot be
-audited by reading a response. It was audited by replay:
-\texttt{scripts/\discretionary{}{}{}ingest\_\discretionary{}{}{}scripted\_\discretionary{}{}{}cell.py}
-recomputes every rival move from the route's own recorded moves and refuses the
-cell on a single deviation. All 60 cells replayed clean. This is the one failure
-that would have left the data looking perfectly healthy while answering a
-different question than the one asked.
-
-\paragraph{The collection record.} The workload was partitioned into the
-analysis unit itself, one route by rival by risk cell, and each cell was
-collected whole on one declared account. The assignment was fixed before the
-final extension began and is recorded in anonymised receipts. All 60 cells
-carry the same scripted-opponent protocol and prompt version; the three task
-hashes are one per risk level and are identical across routes. This keeps the
-game mechanism fixed while
-allowing account rotation across cells. The account is a billing boundary,
-not a model boundary: the analysis never treats account identity as evidence
-about behaviour, and failed quota or authentication attempts contributed no
-races to the admitted set. The complete receipt and assignment audit is
-retained with the artifact. The full route-by-risk record is in
-Table~\ref{tab:scripted-opponent}; Figure~\ref{fig:scripted-opponent} shows the
-same response and context contrasts as categorical tiles.
-
-\paragraph{Coverage and decoding contracts.} The final campaign is complete:
-all five admitted routes have all 12 route-by-strategy-by-risk cells. Every
-cell has ten races, 93 route decisions, zero parse failures, zero rival replay
-deviations and five races in each route seat. The routes are not homogeneous
-in decoding contract. Gemini 3 Flash, GPT-5.4 and Claude Sonnet 5 use the
-legacy 256-token, no-reasoning contract; GPT-5.5 uses a 1024-token,
-low-reasoning contract; Claude Opus 5 uses the latter contract in eleven cells
-and the legacy contract in one. Coverage
-therefore supports the five-route descriptive comparison, but not a claim
-that all endpoints were sampled under one identical decoding configuration.
-The 36 legacy collection receipts also omit a copied source hash field; their
-run manifests carry the correct risk-specific hashes, so this is a provenance
-metadata limitation rather than a gameplay failure.
-
-
-\begin{figure*}[t]
-    \centering
-    \includegraphics[width=0.99\textwidth]{../figures/paper/scripted_opponent.pdf}
-    \caption{The scripted-opponent campaign on five gate-admitted routes.
-    (a) Response surfaces across scripted rivals and stated-risk levels.
-    (b) Paired effect magnitudes: the Always-Unsafe minus Always-Safe rival
-    effect at each risk, with the fixed-safe risk effect shown on the same
-    percentage-point scale. (c) Always-Safe rates, self-play rates and their
-    signed differences; a $\geq$ label marks a ceiling-censored gap.
-    Confidence intervals for the rival contrast are reported in
-    Table~\ref{tab:scripted-opponent}.}
-    \Description{Three-panel scripted-opponent figure. Panel a contains three
-    response matrices, one per maximum private-risk level, with five route rows
-    and four ordered scripted-rival columns; every tile prints the measured
-    Unsafe rate. Panel b is a categorical tile matrix of paired rival-effect
-    magnitudes for the five routes at three risk levels, with a zero reference
-    and the fixed-safe risk effect shown for comparison. Panel c is a
-    categorical tile matrix showing Always-Safe rate, self-play rate and their
-    signed gap for the same routes and risk levels.}
-    \label{fig:scripted-opponent}
-\end{figure*}
-
-\begin{comment}
-\begin{table*}[t]
-    \caption{Initial three-route subset, retained for audit trace and not used
-    for the full-campaign claim. Each route against each scripted rival. Ten
-    races and 93 route
-    decisions per cell, both seats used in every cell, zero parse failures and
-    zero rival deviations anywhere. Rates are per cent of the route's own
-    decisions. Contrasts are differenced inside a repetition, so the horizon
-    stopping draw is removed from the comparison, with the 95\% percentile
-    interval taken over the ten blocks; the seed pairing was verified for all
-    ten in every one of the eighteen contrasts in this initial subset. Ten
-    blocks make the resampling
-    distribution coarse, so an interval endpoint carries a few tenths of a
-    point of Monte Carlo movement and is quoted to one decimal for consistency
-    rather than because it is resolved that finely. The two cells at
-    $100.0\%$ sit on a boundary, and every contrast through them is truncated
-    rather than complete. The self-play rate is the same route in the neutral
-    baseline of \S\ref{app:frontier-baseline}, 10 races and 186 decisions per
-    cell, and it is a different design rather than another rival: at risk $0.1$
-    nine of Gemini 3 Flash's ten self-play races have every decision
-    \Unsafe{}, so the $74.2$ below it is a lower bound on that distance.}
-    \centering
-    \footnotesize
-    \setlength{\tabcolsep}{3.2pt}
-    \begin{tabular}{@{}lrrrrrrrrr@{}}
-        \toprule
-        & \multicolumn{3}{c}{Gemini 3 Flash} & \multicolumn{3}{c}{GPT-5.4}
-        & \multicolumn{3}{c}{Claude Sonnet 5} \\
-        \cmidrule(lr){2-4} \cmidrule(lr){5-7} \cmidrule(lr){8-10}
-        $p_r^{\max}$ & $0.1$ & $0.6$ & $0.9$ & $0.1$ & $0.6$ & $0.9$
-        & $0.1$ & $0.6$ & $0.9$ \\
-        \midrule
-        Always Safe & 24.7 & 17.2 & 14.0 & 36.6 & 32.3 & 25.8 & 22.6 & 10.8 & 10.8 \\
-        Conditional Safe & 76.3 & 57.0 & 57.0 & 72.0 & 55.9 & 50.5 & 63.4 & 43.0 & 44.1 \\
-        Conditional Unsafe & 100.0 & 74.2 & 67.7 & 86.0 & 69.9 & 62.4 & 89.2 & 62.4 & 47.3 \\
-        Always Unsafe & 100.0 & 89.2 & 88.2 & 89.2 & 83.9 & 80.6 & 90.3 & 77.4 & 57.0 \\
-        \midrule
-        Rival's stance & $+73.5$ & $+67.4$ & $+71.7$ & $+47.5$ & $+48.0$ & $+49.8$ & $+63.8$ & $+65.7$ & $+45.0$ \\
-        \quad 95\% CI & (67.8, 78.7) & (57.1, 76.6) & (65.6, 77.5) & (37.0, 57.2) & (40.0, 55.0) & (35.8, 60.5) & (54.8, 72.1) & (62.2, 68.9) & (42.0, 48.2) \\
-        Opening move alone & $+25.1$ & $+15.8$ & $+11.5$ & $+14.1$ & $+13.9$ & $+11.0$ & $+25.0$ & $+19.6$ & $+3.4$ \\
-        \quad 95\% CI & (20.9, 29.7) & (8.3, 23.5) & (4.5, 19.7) & (6.0, 22.7) & (8.9, 18.1) & (6.6, 15.5) & (20.9, 29.3) & (17.7, 21.5) & (0.0, 7.1) \\
-        \midrule
-        Self-play rate & 98.9 & 73.1 & 60.2 & 87.1 & 65.1 & 46.8 & 89.2 & 48.4 & 32.3 \\
-        \quad minus Always Safe & 74.2 & 55.9 & 46.2 & 50.5 & 32.8 & 21.0 & 66.7 & 37.6 & 21.5 \\
-        \bottomrule
-    \end{tabular}
-\end{table*}
-
-\begin{table*}[t]
-    \caption{Initial three-route collection record, retained for audit trace
-    and not used for the full-campaign claim. Which account collected which
-    cell. The
-    assignment was fixed in a collection plan committed before the first cell
-    of the extension was started, and this table is read back from each cell's
-    own receipt rather than from the plan. The five accounts are anonymised for
-    double-blind review and appear here as A to E, labelled in order of first
-    appearance in this table; the mapping is retained privately and is restored
-    in the camera-ready artifact. An account is a billing boundary and not a
-    model boundary: route, prompt, parser, protocol, temperature request and
-    seed structure are identical in every cell. The rotation is what makes that
-    assumption checkable instead of merely asserted.}
-    \centering
-    \small
-    \setlength{\tabcolsep}{3.2pt}
-    \begin{tabular}{@{}lccccccccc@{}}
-        \toprule
-        & \multicolumn{3}{c}{Gemini 3 Flash} & \multicolumn{3}{c}{GPT-5.4}
-        & \multicolumn{3}{c}{Claude Sonnet 5} \\
-        \cmidrule(lr){2-4} \cmidrule(lr){5-7} \cmidrule(lr){8-10}
-        $p_r^{\max}$ & $0.1$ & $0.6$ & $0.9$ & $0.1$ & $0.6$ & $0.9$
-        & $0.1$ & $0.6$ & $0.9$ \\
-        \midrule
-        Always Safe & A & B & C & B & C & D & E & A & B \\
-        Conditional Safe & C & E & A & C & D & E & A & B & C \\
-        Conditional Unsafe & E & A & B & A & B & C & D & E & A \\
-        Always Unsafe & B & C & E & E & A & B & C & D & E \\
-        \bottomrule
-    \end{tabular}
-\end{table*}
-\end{comment}
-
-\begin{table*}[t]
-    \caption{Full five-route scripted-opponent campaign. Each AS/CS/CAS/AU
-    entry is one route-by-strategy-by-risk cell with ten races and 93 route
-    decisions; each route-by-risk row therefore aggregates four such cells,
-    40 races and 372 route decisions, with both seats used and zero parse
-    failures or rival replay deviations. Rates are percentages of the route's
-    own decisions.
-    ``Rival stance'' is Always Unsafe minus Always Safe, differenced inside a
-    repetition; the bracketed values are its 95\% percentile interval over ten
-    blocks. ``Risk at Safe'' is the paired risk-0.1 minus risk-0.9 contrast with
-    the rival held at Always Safe, and contrast columns are percentage-point
-    differences.
-    Claude Opus 5 has one legacy decoding cell. Coverage is complete across
-    the five routes, but decoding contracts are heterogeneous across endpoints,
-    so this cross-route comparison is descriptive rather than a controlled
-    comparison under one common decoding configuration.}
-    \label{tab:scripted-opponent}
-    \centering
-    \scriptsize
-    \setlength{\tabcolsep}{3.2pt}
-    \begin{tabular}{@{}lcrrrr r lrr@{}}
-        \toprule
-        Route & $p_r^{\max}$ & AS & CS & CAS & AU & Rival stance
-        & 95\% CI & Risk at Safe & Self-play \\
-        \midrule
-        Gemini 3 Flash & 0.1 & 24.7 & 76.3 & 100.0 & 100.0 & +73.5 & [67.8, 78.7] & +10.4 & 98.9 \\
-        & 0.6 & 17.2 & 57.0 & 74.2 & 89.2 & +67.4 & [57.1, 76.6] & & 73.1 \\
-        & 0.9 & 14.0 & 57.0 & 67.7 & 88.2 & +71.7 & [65.6, 77.5] & & 60.2 \\
-        \addlinespace
-        Claude Opus 5 & 0.1 & 63.4 & 100.0 & 100.0 & 100.0 & +30.1 & [16.5, 42.8] & +69.9 & 100.0 \\
-        & 0.6 & 1.1 & 2.2 & 53.8 & 89.2 & +87.0 & [84.3, 89.6] & & 0.0 \\
-        & 0.9 & 0.0 & 3.2 & 35.5 & 62.4 & +59.3 & [51.2, 66.5] & & 0.0 \\
-        \addlinespace
-        GPT-5.4 & 0.1 & 36.6 & 72.0 & 86.0 & 89.2 & +47.5 & [37.0, 57.2] & +12.3 & 87.1 \\
-        & 0.6 & 32.3 & 55.9 & 69.9 & 83.9 & +48.0 & [40.0, 55.0] & & 65.1 \\
-        & 0.9 & 25.8 & 50.5 & 62.4 & 80.6 & +49.8 & [35.8, 60.5] & & 46.8 \\
-        \addlinespace
-        GPT-5.5 & 0.1 & 72.0 & 98.9 & 100.0 & 97.8 & +25.3 & [20.3, 30.6] & +48.3 & 93.5 \\
-        & 0.6 & 23.7 & 82.8 & 87.1 & 91.4 & +66.1 & [62.5, 69.9] & & 70.4 \\
-        & 0.9 & 21.5 & 66.7 & 75.3 & 87.1 & +61.7 & [53.5, 69.1] & & 55.4 \\
-        \addlinespace
-        Claude Sonnet 5 & 0.1 & 22.6 & 63.4 & 89.2 & 90.3 & +63.8 & [54.8, 72.1] & +12.7 & 89.2 \\
-        & 0.6 & 10.8 & 43.0 & 62.4 & 77.4 & +65.7 & [62.2, 68.9] & & 48.4 \\
-        & 0.9 & 10.8 & 44.1 & 47.3 & 57.0 & +45.0 & [42.0, 48.2] & & 32.3 \\
-        \bottomrule
-    \end{tabular}
-\end{table*}
-
-\paragraph{One-cell contract sensitivity.} The one Claude Opus 5 cell collected
-under the legacy decoding contract is \emph{Always Safe} at risk $0.6$. A
-predeclared harmonisation attempt under the active contract returned a quota
-403 before any race or model output was produced, so it is retained as an
-infrastructure failure and the existing cell is not replaced. Excluding it as a
-read-only scope check removes one $\text{Always Unsafe} - \text{Always Safe}$
-contrast and one four-strategy ordering cell. The remaining evidence still has
-positive rival contrasts in $14/14$ cells and the weak ordering in $13/14$
-cells (strict ordering in $11/14$). This is a scope sensitivity, not a
-harmonised replication; full-grid values remain reported under their recorded
-contracts.
-
-\paragraph{Finding one: the shape is largely shared, with one boundary
-reversal.} Every route generally plays \Unsafe{} more often as the scripted
-rival becomes more \Unsafe{}, and the Always-Unsafe minus Always-Safe contrast
-is positive in all fifteen route-by-risk cells. The smallest interval lower
-bound is $+16.5$ points on Claude Opus 5 at risk $0.1$. The weak ordering
-\emph{Always Safe} $\leq$ \emph{Conditional Safe} $\leq$
-\emph{Conditional Unsafe} $\leq$ \emph{Always Unsafe} holds in fourteen of
-fifteen cells and is strict in twelve. The one reversal is GPT-5.5 at risk
-$0.1$, where Conditional Unsafe reaches $100.0\%$ and Always Unsafe reaches
-$97.8\%$. Both values are close to the ceiling, so the reversal is a
-saturated boundary observation rather than evidence against the broader
-direction.
-
-The response to stated risk survives once the rival is held fixed. Against
-\emph{Always Safe}, the rate never rises with risk on any of the five routes.
-The paired risk contrast ranges from $+10.4$ to $+69.9$ points, with Claude
-Opus 5 providing the largest change and the other four routes showing more
-graded changes. This contrast is not interchangeable with the rival contrast:
-both are paired within repetitions, but they change different parts of the
-interaction.
-
-\paragraph{Finding two: the magnitude is checkpoint-specific.} The rival
-contrast ranges from $+25.3$ points for GPT-5.5 at risk $0.1$ to $+87.0$
-points for Claude Opus 5 at risk $0.6$. Gemini 3 Flash remains near $+70$
-points across risks, GPT-5.4 remains near $+50$, GPT-5.5 grows from $+25.3$
-to about $+66$, and Claude Sonnet 5 falls from about $+66$ to $+45$ at the
-highest risk. The route's level also differs: GPT-5.4 has the highest
-\emph{Always Safe} rates, $36.6\%$, $32.3\%$ and $25.8\%$, while Claude Opus 5
-falls to the floor at the two higher risks. These are separate endpoint
-samples, so non-overlapping intervals are a conservative sign of a difference
-rather than a test of one.
-
-\paragraph{We name the contrast for what it compares.} Calling the safe-rival
-arm exploitation would assert that the route takes the opportunity a
-non-punishing rival offers, and the measured rates say the opposite: on every
-route that arm carries the lowest rates anywhere in the campaign, below what the
-same route plays against itself. What the routes do is match the rival, keeping
-most of their restraint against a rival that keeps its own and abandoning much
-of it against one that never had any. A strategy name is not a summary of what
-the rival played either. \emph{Conditional Safe} opens \Safe{} and then mirrors;
-its own Unsafe rate varies with the route because it follows the route's
-previous move. Across the five routes it played \Unsafe{} on approximately
-$31\%$ to $73\%$ of its own moves, so the strategy label should not be read as
-a claim about its realised average action.
-
-\paragraph{The rival's opening move.} \emph{Conditional Safe} and
-\emph{Conditional Unsafe} are the same strategy from round two onward, both
-repeating the route's previous move, so their difference isolates the rival's
-first move and nothing else. The full opening-move contrast is retained in the
-derived route tables. It is not used as the headline result because its
-interpretation is conditional on the route's own first move, which varies
-substantially across the five routes.
-
-The route's own opening move is not a constant across the campaign: Gemini 3
-Flash opened \Unsafe{} in all 120 races, Claude Opus 5 in 41, GPT-5.4 in 116,
-GPT-5.5 in 115, and Claude Sonnet 5 in 23. The opening-move contrast is about
-the rival's first move, which the task file fixes, and not about the route's.
-
-\paragraph{What it means for the rest of this paper.} A self-play rate is not a
-measurement of how a route treats risk. The fixed-safe and self-play designs
-differ in thirteen of fifteen cells. Self-play is higher in thirteen cells,
-but Claude Opus 5 is lower at risks $0.6$ and $0.9$, where both designs are at
-or near the floor. The risk-0.1 Gemini self-play distance is a lower bound,
-because nine of its ten mirror-match races have every decision \Unsafe{} and
-that arm has no room above it. A self-play rate is an interaction outcome of
-one policy meeting a copy of itself, and every self-play number in this paper
-should be read that way.
-
-That self-play can hide behaviour is not a new observation.
-\citet{lekeasNashSuppression2026} report phenomena that are, in their words,
-invisible in self-play, including that which agent moves first decides which
-equilibrium a pair reaches. The contribution here is narrower and specific to
-this setting: what self-play hides is the \emph{risk response} itself, the one
-quantity this game exists to elicit, and it hides it on every route we have run
-this design on.
-
-\paragraph{What it does not show.} Five routes, one game, one prompt version,
-ten races per cell. Five commercial endpoints are not a sample of a population
-of models, and four strategies are four points in a space of policies rather
-than a sample of opponents, so a scripted rival establishes what a route does
-against \emph{these} rivals. The within-block policy contrast is identified
-because rival-policy assignment is fixed and exogenous. Conditional rivals can
-still respond mechanically to the route's previous action, as specified by
-their fixed policies. This is not causal about anything outside this game.
-Nothing here licenses a claim about strategy, intent, or
-reasoning: these are conditional frequencies. It is regenerated by
-\texttt{scripts/\discretionary{}{}{}analyze\_\discretionary{}{}{}scripted\_\discretionary{}{}{}opponent.py}
-with \texttt{-\discretionary{}{}{}-all-\discretionary{}{}{}routes}, which takes
-one endpoint at a time, writes one derived table per endpoint rather than
-pooling them, and refuses a cell that did not complete, that carries a parse
-failure, that is the wrong protocol, that has the wrong number of races, whose
-seat counterbalance is not five and five, or whose rival deviated from the
-strategy its directory claims.
 
 \clearpage
 \bibliographystyle{ACM-Reference-Format}

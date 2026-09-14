@@ -332,9 +332,8 @@ def panel_lenses(ax, facts):
          f"against a copy of the same model, {facts['routes']} routes\n"
          f"({facts['rival_routes']} admitted to the main panel)"),
         ("how far does the rival move it?",
-         "the rival becomes fixed code it can neither\n"
-         f"influence nor be told about, {len(RIVALS)} strategies\n"
-         f"across {facts['rival_routes']} admitted routes"),
+         "the rival policy is fixed by code and undisclosed,\n"
+         f"{len(RIVALS)} strategies across {facts['rival_routes']} admitted routes"),
         ("do people or theory show either shape?",
          f"the same race played by {facts['humans']} people, and the\n"
          "evolutionary benchmark built for it"),

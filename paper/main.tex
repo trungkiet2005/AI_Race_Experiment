@@ -637,9 +637,9 @@ behavioural analysis, each route therefore answered the same frozen bank of 20
 probes over six task-validity domains, three times. A route entered the study
 only if it cleared the fixed thresholds of 80\% overall accuracy, 75\% state
 reconstruction and 75\% terminal scoring. Five of nine routes passed; the
-other four still played the same confirmatory baseline and remain visible in
-the trajectory-diversity comparison below, because two refused routes are the
-only ones here that reach the human reference range.
+other four still played the same confirmatory baseline and remain visible
+throughout the trajectory-diversity analyses for transparency and sensitivity
+checks.
 
 The screen reads probes and never reads a race, so gameplay cannot change its
 verdict. Two admitted routes pass one screening domain at the minimum attainable
@@ -656,8 +656,10 @@ and robustness checks are retained in the supplementary material.
 These agents respond to the danger they are told about, and their behaviour is
 especially sensitive to the rival. Four routes have profiles closer in response
 shape to the near-neutral evolutionary benchmark; Claude Opus 5 is the step-like
-exception. All admitted routes use a more concentrated set of trajectories than
-people do. The four subsections take those results in turn. A route the
+exception. Admitted routes generally occupy a more concentrated observed
+trajectory space than human participants do: 13 of 15 route-risk cells fall
+below every draw of the primary dyad-matched human null. The four subsections
+take those results in turn. A route the
 quality-control screen of \S\ref{sec:design-screen} refused appears below only
 where it is named as refused. Three- to five-player
 races, full model tables, predictive diagnostics and robustness checks are in
@@ -728,24 +730,20 @@ although swapping the opaque action-code mapping shifts Unsafe{} play by
 
 \begin{figure*}[t]
   \centering
-  \includegraphics[width=\textwidth]{../figures/paper/scripted_opponent.pdf}
+  \includegraphics[width=\textwidth]{../figures/paper/scripted_opponent_main.pdf}
   \caption{A shared rival response changes a route's play. Panel (a) is a response
   surface: each tile is an admitted route's Unsafe rate under one scripted
   rival, with columns ordered from Always Safe to Always Unsafe and facets for
-  the three maximum-risk conditions. Panel (b) shows paired effect magnitudes
-  as categorical tiles: the red block changes the rival from Always Safe to
-  Always Unsafe, while the graphite tile changes stated risk with the rival
-  held at Always Safe. Panel (c) shows the fixed-rival rate, self-play rate and
-  their signed gap for each risk condition. These point estimates use the same
-  matched blocks reported in the supplementary material; the corresponding
-  paired 95\% intervals are reported there as well. Within-route contrasts are
-  estimands; cross-route magnitudes are descriptive under heterogeneous contracts.}
-  \Description{Three-panel figure. Panel a contains three response matrices,
+  the three maximum-risk conditions. Panel (b) is a forest plot of the paired
+  Always-Unsafe minus Always-Safe effect at each risk, with 95\% intervals over
+  the ten matched repetition blocks. All fifteen lower bounds are positive.
+  Within-route contrasts are the estimands; cross-route magnitudes are
+  descriptive under heterogeneous contracts.}
+  \Description{Two-panel figure. Panel a contains three response matrices,
   one per risk level, with five route rows and four ordered scripted-rival
-  columns; every tile prints the measured Unsafe rate. Panel b is a categorical
-  effect matrix with a zero baseline, three rival-effect tiles and one stated-
-  risk tile per route. Panel c is a categorical rate matrix with fixed-rival,
-  self-play and signed-gap tiles for each of the three risk levels.}
+  columns; every tile prints the measured Unsafe rate. Panel b is a forest plot
+  with one coloured route group and three risk markers per route, horizontal
+  paired 95 percent intervals, and a vertical zero reference.}
   \label{fig:scripted-opponent-main}
 \end{figure*}
 

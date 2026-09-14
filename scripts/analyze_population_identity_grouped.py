@@ -2,9 +2,10 @@
 """Audit whether first-five-round trajectories identify their source population.
 
 This is a descriptive diagnostic, not a claim that the trajectory embedding
-recovers an intrinsic model identity.  The split keeps both players from an
-LLM race together and uses class-balanced metrics because the pooled source
-has 340 human trajectories and 60 trajectories for each of seven checkpoints.
+recovers an intrinsic model identity. The split keeps both players from an LLM
+race together and keeps members of a human dyad together. It uses class-balanced
+metrics because the pooled source has 340 human trajectories and 60 trajectories
+for each of seven checkpoints.
 """
 
 from __future__ import annotations
@@ -23,6 +24,7 @@ from build_manuscript_clustering_figures import BASELINE_INPUTS, flatten_feature
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "results" / "cross_model_pilot_synthesis" / "data"
+HUMAN_CSV = ROOT / "references" / "source_study_dataset" / "airace_deidentified_long.csv"
 SEED = 20260909
 N_SPLITS = 5
 N_PERMUTATIONS = 200
@@ -37,12 +39,25 @@ def sha256(path: Path) -> str:
 
 
 def groups_for(frame: pd.DataFrame) -> np.ndarray:
-    # Human player_id is the participant id.  LLM player_id is game_id::seat;
-    # collapse the two seats so a race cannot straddle train and test.
-    return np.asarray([
-        str(pid).split("::", 1)[0] if pop != "human" else str(pid)
-        for pid, pop in zip(frame["player_id"], frame["population"])
-    ])
+    # LLM player_id is game_id::seat; collapse the two seats so a race cannot
+    # straddle train and test. The human source records both members of each
+    # dyad under one group_id, which is the corresponding interaction unit.
+    source = pd.read_csv(HUMAN_CSV, usecols=["participant_id", "group_id"])
+    human_groups = {
+        str(participant): str(group)
+        for participant, group in source.drop_duplicates("participant_id")
+        .set_index("participant_id")["group_id"].items()
+    }
+    groups = []
+    for pid, pop in zip(frame["player_id"], frame["population"]):
+        if pop != "human":
+            groups.append(str(pid).split("::", 1)[0])
+        else:
+            participant = str(pid)
+            if participant not in human_groups:
+                raise RuntimeError(f"No dyad group for human participant {participant}")
+            groups.append(human_groups[participant])
+    return np.asarray(groups)
 
 
 def fit_metrics(X: np.ndarray, y: np.ndarray, train: np.ndarray, test: np.ndarray, seed: int) -> dict:
@@ -112,7 +127,7 @@ def main() -> None:
     payload = {
         "schema_version": "ai-race-population-identity-grouped-v1",
         "evidence_class": "diagnostic",
-        "estimand": "first-five-round population classification under race-grouped CV",
+        "estimand": "first-five-round population classification under dyad/race-grouped CV",
         "n_trajectories": int(len(frame)),
         "n_groups": int(len(np.unique(groups))),
         "class_counts": {label: int((frame["population"] == label).sum()) for label in labels},
@@ -120,7 +135,7 @@ def main() -> None:
         "llm_trajectories_per_checkpoint": sorted(set(model_n.values())),
         "feature_count": int(X.shape[1]),
         "tree": {"max_depth": 3, "min_samples_leaf": 8, "class_weight": "balanced"},
-        "split": {"method": "StratifiedGroupKFold", "n_splits": N_SPLITS, "group_definition": "race for LLM; participant for human", "seed": SEED},
+        "split": {"method": "StratifiedGroupKFold", "n_splits": N_SPLITS, "group_definition": "race for LLM; source dyad for human", "seed": SEED},
         "permutation_null": {"n_permutations": N_PERMUTATIONS, "seed": SEED},
         "metrics": summary,
         "fold_metrics": rows,

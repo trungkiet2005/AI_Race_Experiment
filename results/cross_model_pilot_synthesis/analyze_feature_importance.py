@@ -2,7 +2,7 @@
 """What predicts an Unsafe choice, for humans versus each LLM checkpoint?
 
 Fits a Random Forest classifier separately on the human raw dataset and on each
-of the five 2-player neutral-lane LLM pilots, using the same core mechanical
+listed 2-player neutral-lane LLM pilot, using the same core mechanical
 feature set on both sides (own previous action, opponent's previous action,
 progress gap, risk treatment, round number). Reports impurity-based importance,
 permutation importance, and mean |SHAP value| for each population, plus a
@@ -109,12 +109,12 @@ def fit_and_explain(
     groups: pd.Series,
     seed: int = 0,
 ) -> dict:
-    """Fit descriptive forests with race/participant-grouped five-fold CV.
+    """Fit descriptive forests with race/dyad-grouped five-fold CV.
 
     Decisions within one race are state-dependent.  Keeping a race wholly in
     one fold prevents the model from learning race-specific trajectories from
-    the training rows and then being evaluated on the same race.  Human rows
-    use participant_id as the race-level unit; LLM rows use game_id.
+    the training rows and then being evaluated on the same race. Human rows
+    use the source dyad as the interaction-level unit; LLM rows use game_id.
     """
     n_groups = int(groups.nunique())
     n_splits = min(5, n_groups)
@@ -170,7 +170,7 @@ def fit_and_explain(
     mean_abs_shap = dict(zip(feature_names, np.abs(sv_pos).mean(axis=0).tolist()))
 
     return {
-        "n_groups": n_groups, "cv_folds": n_splits, "split_unit": "race/participant grouped",
+        "n_groups": n_groups, "cv_folds": n_splits, "split_unit": "race/dyad grouped",
         "n_train": int(sum(r["n_train"] for r in fold_rows) / len(fold_rows)),
         "n_test": int(sum(r["n_test"] for r in fold_rows) / len(fold_rows)),
         "test_accuracy": test_acc,
@@ -194,7 +194,7 @@ def human_core_frame() -> tuple[pd.DataFrame, pd.Series, pd.Series]:
         "round_number": d["round_number"].astype(float),
     })
     y = d["decision"].astype(int)
-    return X, y, d["participant_id"].astype(str)
+    return X, y, d["group_id"].astype(str)
 
 
 def human_demographics_frame() -> tuple[pd.DataFrame, pd.Series, pd.Series]:
@@ -217,7 +217,7 @@ def human_demographics_frame() -> tuple[pd.DataFrame, pd.Series, pd.Series]:
         "risk_gamble_choice": d["risk_gamble_choice"].astype(float),
     })
     y = d["decision"].astype(int)
-    return X, y, d["participant_id"].astype(str)
+    return X, y, d["group_id"].astype(str)
 
 
 def llm_core_frame(model: str) -> tuple[pd.DataFrame, pd.Series, pd.Series]:
@@ -320,7 +320,7 @@ def main() -> None:
         "schema_version": "ai-race-feature-importance-grouped-v1",
         "evidence_class": "diagnostic",
         "estimand": "association structure of round-greater-than-one decisions",
-        "split": "five-fold GroupKFold; human grouped by participant_id and LLM grouped by game_id",
+        "split": "five-fold GroupKFold; human grouped by source group_id dyad and LLM grouped by game_id",
         "importance_fit": "full-source descriptive fit; predictive metrics are out-of-fold",
         "seed": 0,
         "source_hashes": source_hashes,

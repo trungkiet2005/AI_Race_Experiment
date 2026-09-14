@@ -1,17 +1,17 @@
 {
   "human": {
-    "n_groups": 341,
+    "n_groups": 173,
     "cv_folds": 5,
-    "split_unit": "race/participant grouped",
+    "split_unit": "race/dyad grouped",
     "n_train": 2323,
     "n_test": 580,
-    "test_accuracy": 0.6181284666842511,
-    "test_accuracy_std": 0.01713647410839933,
+    "test_accuracy": 0.6077531938671622,
+    "test_accuracy_std": 0.01601258863726715,
     "majority_baseline_accuracy": 0.5884986225895317,
-    "roc_auc": 0.6281423149884725,
-    "balanced_accuracy": 0.5812572038480877,
-    "roc_auc_std": 0.015357168011408202,
-    "balanced_accuracy_std": 0.006784101931312395,
+    "roc_auc": 0.6155217813104802,
+    "balanced_accuracy": 0.5691929528825082,
+    "roc_auc_std": 0.012247579163713156,
+    "balanced_accuracy_std": 0.0160396379272903,
     "base_rate": 0.5884986225895317,
     "impurity_importance": {
       "own_prev_unsafe": 0.03918751572051689,
@@ -38,7 +38,7 @@
   "gpt-5-nano": {
     "n_groups": 60,
     "cv_folds": 5,
-    "split_unit": "race/participant grouped",
+    "split_unit": "race/dyad grouped",
     "n_train": 796,
     "n_test": 199,
     "test_accuracy": 0.9225858585858585,
@@ -74,7 +74,7 @@
   "gpt-5.4-nano": {
     "n_groups": 60,
     "cv_folds": 5,
-    "split_unit": "race/participant grouped",
+    "split_unit": "race/dyad grouped",
     "n_train": 796,
     "n_test": 199,
     "test_accuracy": 0.5321111111111112,
@@ -110,7 +110,7 @@
   "google/gemini-3-flash-preview": {
     "n_groups": 60,
     "cv_folds": 5,
-    "split_unit": "race/participant grouped",
+    "split_unit": "race/dyad grouped",
     "n_train": 796,
     "n_test": 199,
     "test_accuracy": 0.8784545454545455,
@@ -146,7 +146,7 @@
   "google/gemini-3.1-flash-lite-preview": {
     "n_groups": 30,
     "cv_folds": 5,
-    "split_unit": "race/participant grouped",
+    "split_unit": "race/dyad grouped",
     "n_train": 398,
     "n_test": 99,
     "test_accuracy": 0.9035510204081634,
@@ -182,7 +182,7 @@
   "google/gemini-3.5-flash-lite": {
     "n_groups": 30,
     "cv_folds": 5,
-    "split_unit": "race/participant grouped",
+    "split_unit": "race/dyad grouped",
     "n_train": 398,
     "n_test": 99,
     "test_accuracy": 0.7971428571428572,
@@ -218,7 +218,7 @@
   "gpt-5.6-luna": {
     "n_groups": 60,
     "cv_folds": 5,
-    "split_unit": "race/participant grouped",
+    "split_unit": "race/dyad grouped",
     "n_train": 796,
     "n_test": 199,
     "test_accuracy": 0.8604444444444445,
@@ -254,7 +254,7 @@
   "gpt-5.6-terra": {
     "n_groups": 60,
     "cv_folds": 5,
-    "split_unit": "race/participant grouped",
+    "split_unit": "race/dyad grouped",
     "n_train": 796,
     "n_test": 199,
     "test_accuracy": 0.8544242424242425,
@@ -290,7 +290,7 @@
   "claude-opus-5": {
     "n_groups": 60,
     "cv_folds": 5,
-    "split_unit": "race/participant grouped",
+    "split_unit": "race/dyad grouped",
     "n_train": 796,
     "n_test": 199,
     "test_accuracy": 0.998,
@@ -326,7 +326,7 @@
   "claude-sonnet-5": {
     "n_groups": 60,
     "cv_folds": 5,
-    "split_unit": "race/participant grouped",
+    "split_unit": "race/dyad grouped",
     "n_train": 796,
     "n_test": 199,
     "test_accuracy": 0.9327272727272728,
@@ -360,18 +360,18 @@
     }
   },
   "human_with_demographics": {
-    "n_groups": 338,
+    "n_groups": 172,
     "cv_folds": 5,
-    "split_unit": "race/participant grouped",
+    "split_unit": "race/dyad grouped",
     "n_train": 2310,
     "n_test": 577,
-    "test_accuracy": 0.6014865060369367,
-    "test_accuracy_std": 0.028031071670775454,
+    "test_accuracy": 0.6018161935058055,
+    "test_accuracy_std": 0.01572507335335228,
     "majority_baseline_accuracy": 0.5886426592797784,
-    "roc_auc": 0.6205725293418474,
-    "balanced_accuracy": 0.5556603115004661,
-    "roc_auc_std": 0.014381128739585816,
-    "balanced_accuracy_std": 0.03001634825336012,
+    "roc_auc": 0.6099167868985222,
+    "balanced_accuracy": 0.5530139522203328,
+    "roc_auc_std": 0.04423174368385495,
+    "balanced_accuracy_std": 0.017931182174654527,
     "base_rate": 0.5886426592797784,
     "impurity_importance": {
       "own_prev_unsafe": 0.03385200708972347,
