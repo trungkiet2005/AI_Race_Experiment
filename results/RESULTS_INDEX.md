@@ -34,6 +34,7 @@ Derived artifacts for those campaigns:
 - [`cross_model_pilot_synthesis/data/cross_model_heterogeneity_test.json`](<cross_model_pilot_synthesis/data/cross_model_heterogeneity_test.json>) — nested-logit heterogeneity under the five, seven, and nine checkpoint rosters
 - [`cross_model_pilot_synthesis/data/human_archetype_k_sensitivity.json`](<cross_model_pilot_synthesis/data/human_archetype_k_sensitivity.json>), [`.csv`](<cross_model_pilot_synthesis/data/human_archetype_k_sensitivity.csv>), [`human_archetype_k_projection.csv`](<cross_model_pilot_synthesis/data/human_archetype_k_projection.csv>) — k-sweep indices and bootstrap stability
 - [`cross_model_pilot_synthesis/data/elicited_risk_by_archetype.json`](<cross_model_pilot_synthesis/data/elicited_risk_by_archetype.json>) — elicited-risk-by-archetype test, a null
+- [`derived/trajectory_diversity_dyad_primary/trajectory_diversity_dyad_primary.csv`](<derived/trajectory_diversity_dyad_primary/trajectory_diversity_dyad_primary.csv>) and [`.json`](<derived/trajectory_diversity_dyad_primary/trajectory_diversity_dyad_primary.json>) — primary dyad-clustered human null: 20,000 draws of ten complete dyads per risk; participant-level resampling remains a sensitivity
 - [`open_source/egt_reproduction/egt_beta_sensitivity.csv`](<open_source/egt_reproduction/egt_beta_sensitivity.csv>), [`.json`](<open_source/egt_reproduction/egt_beta_sensitivity.json>), [`egt_beta_fit_to_routes.csv`](<open_source/egt_reproduction/egt_beta_fit_to_routes.csv>) — selection-strength sweep and its fit to the routes
 
 ## Canonical layout

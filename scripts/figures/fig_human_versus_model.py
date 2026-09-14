@@ -1,17 +1,17 @@
-"""Humans are more diverse, and the gap is a floor rather than a percentile.
+"""Humans are more diverse, and the primary null respects their dyads.
 
 "More diverse" is the weakest possible statement of what the trajectory data
 says, and it invites the obvious reply: more diverse by how much, and could a
 human sample this small have landed down where the models are by luck?  So build
-the null that reply deserves.  Twenty thousand times, redraw twenty participants
-inside each risk condition, so every human draw is matched to a model cell in
-sample size, in risk condition, and in the statistic computed on it.  Then ask
-where each model cell falls in that null.  For twenty-one of the twenty-seven
-model route-by-risk cells there is no percentile to report, because the null
-never once reached down to where the cell sits.  That is a different kind of
-claim from a small p-value and the figure is built to make the difference
-visible: the region left of the human minimum is tinted, and it is empty of
-human draws by construction, not by rounding.
+the null that reply deserves.  Twenty thousand times, redraw ten complete human
+dyads inside each risk condition, so every human draw is matched to a model cell
+in sample size and in the number of interaction units.  Then ask where each
+model cell falls in that null.  For eighteen of the twenty-seven model
+route-by-risk cells there is no percentile to report, because the null never
+once reached down to where the cell sits.  The participant-level null remains
+as a sensitivity analysis.  The figure is built to make the difference visible:
+the region left of the human minimum is tinted, and it is empty of human dyad
+draws by construction, not by rounding.
 
 Which nine routes, and why not the seven that were here before.  This figure
 used to read ``MODEL_INPUTS`` from
@@ -38,10 +38,9 @@ Panels
      smallest value and the tinted strip left of it is territory no human draw
      ever entered.  Each route sits on its own row at its own distinct count,
      with a hairline back to the rule so the distance below the floor is a
-     length and not a memory.  Every one of the five admitted routes is left of
-     that rule in all three facets.  The only cells that land inside the null
-     belong to GPT-5.4 mini and GPT-5.4 nano, and the comprehension gate
-     rejected both.
+     length and not a memory.  Thirteen of the fifteen admitted route-risk
+     cells are left of that rule; the two boundary cells are GPT-5.4 and GPT-5.5
+     at risk 0.9.
   b  The mechanism, on the same rows.  Every segment is one distinct paired
      five-round sequence and its width is that sequence's share of the sixty
      matched trajectories.  The human row is a comb of thin slivers; Claude
@@ -57,15 +56,13 @@ another prompt, temperature or horizon".  Diversity is also not competence: the
 two checkpoints that reach the human range are both checkpoints that failed the
 gate, and that is marked.
 
-The match is on sample size and not on the unit of independence, and that is
-the load-bearing caveat.  A model cell is ten races drawn twice, once per seat,
-and the two seats of a race carry the same ten bits in mirror order, so a cell
-has ten independent units wearing twenty rows.  A human draw of twenty is
-twenty participants, of whom one or two are typically a dyad.  Drawing ten
-complete human dyads instead, which is the model's structure exactly, is the
-second null this module builds, and both counts are printed, because quoting
-only the larger one would be choosing the null after seeing which number it
-gives.
+The match is on sample size and on the unit of independence.  A model cell is
+ten races drawn twice, once per seat, and the two seats of a race carry the
+same ten bits in mirror order, so a cell has ten independent units wearing
+twenty rows.  The primary human draw therefore takes ten complete human dyads.
+The original participant-level draw remains available as a sensitivity check,
+because the source file contains four complete trajectories whose partner is
+not available after de-identification.
 
 The comparison is also human dyads against a model in self-play.  Twenty humans
 are twenty people; twenty model rows are one policy replayed, so between-person
@@ -73,14 +70,12 @@ variation exists on one side of this figure by construction.  That is a reason
 the human side is higher and it is not measured here.
 
 Finally each human minimum is the minimum of a finite resampling, so the count
-that rests on it has to be shown to survive the seed.  Across forty independent
-participant nulls the minimum ranges 13 to 15 at risk 0.1, 16 to 17 at 0.6 and
-15 to 16 at 0.9, and the headline count is twenty-one of twenty-seven under
-every one of the forty, with the same two routes inside the null every time.
-The dyad null is the softer of the two: its minimum ranges 11 to 13, 14 to 15
-and 12 to 14 over forty draws and its count moves between sixteen and twenty,
-which is why the dyad number is reported as the weaker companion and never on
-its own.
+that rests on it has to be shown to survive the seed.  The fixed primary draw
+has floors 12, 15 and 13 at risks 0.1, 0.6 and 0.9, respectively, and places
+18 of 27 route cells below every dyad draw, including 13 of 15 admitted cells.
+Across forty independent redraws the all-route count ranges from 16 to 20.
+The participant-level sensitivity places 21 of 27 cells below every draw,
+including all 15 admitted cells.
 """
 
 from __future__ import annotations
@@ -104,6 +99,11 @@ N_NULL = 20_000
 SEED = 20260910
 COMPARISON_N = 20
 DYAD_N = 10
+DYAD_PRIMARY_CSV = (
+    Path(__file__).resolve().parents[2]
+    / "results" / "derived" / "trajectory_diversity_dyad_primary"
+    / "trajectory_diversity_dyad_primary.csv"
+)
 
 # The diversity analyser names checkpoints by display label; the rest of the
 # paper names them by model route, which is what carries colour, marker and
@@ -200,19 +200,26 @@ def human_null(cells: list[np.ndarray], rng):
     return np.column_stack([distinct_per_row(c) for c in per_cell]), np.hstack(per_cell)
 
 
-def dyad_null(dyads: list[np.ndarray], rng) -> np.ndarray:
-    """The stricter null: ten complete human dyads, which is twenty rows again.
+def dyad_null(dyads: list[np.ndarray], rng, *, return_samples=False):
+    """The primary null: ten complete human dyads, which is twenty rows again.
 
     A model cell is ten races replayed once per seat, so its twenty rows carry
     ten independent units.  Drawing ten whole dyads gives the human side exactly
     that structure, and it is drawn on its own RNG stream so that adding it here
-    cannot move a single number in the participant null above.
+    ``return_samples`` is used only to select a real representative draw for the
+    composition panels; it does not change the count distribution.
     """
     floors = []
+    samples = []
     for mat in dyads:
         picks = np.argsort(rng.random((N_NULL, len(mat))), axis=1)[:, :DYAD_N]
-        floors.append(distinct_per_row(mat[picks].reshape(N_NULL, 2 * DYAD_N)))
-    return np.column_stack(floors)
+        selected = mat[picks].reshape(N_NULL, 2 * DYAD_N)
+        floors.append(distinct_per_row(selected))
+        samples.append(selected)
+    counts = np.column_stack(floors)
+    if return_samples:
+        return counts, np.hstack(samples)
+    return counts
 
 
 def composition(keys) -> np.ndarray:
@@ -370,22 +377,52 @@ def main() -> None:
         if sizes != [COMPARISON_N] * len(S.RISKS):
             raise SystemExit(f"{label} cells are {sizes}, not the matched size {COMPARISON_N}")
 
-    rng = np.random.default_rng(SEED)
-    null_counts, pooled = human_null(human_cells, rng)
+    # Keep the participant-level null in memory as a sensitivity check.  The
+    # primary figure uses the dyad-aware null, whose draws are also used for the
+    # representative human composition in panels b and c.
+    participant_null_counts, _ = human_null(
+        human_cells, np.random.default_rng(SEED)
+    )
+    dyad_counts, pooled = dyad_null(
+        dyad_cells, np.random.default_rng([SEED, 2]), return_samples=True
+    )
     pooled_distinct = distinct_per_row(pooled)
-    dyad_counts = dyad_null(dyad_cells, np.random.default_rng([SEED, 2]))
 
     model_counts = {label: [len(set(cell)) for cell in cells]
                     for label, cells in model_cells.items()}
     model_pooled = {label: len({k for cell in cells for k in cell})
                     for label, cells in model_cells.items()}
-
+    null_counts = dyad_counts
     floors = null_counts.min(axis=0)
-    dyad_floors = dyad_counts.min(axis=0)
+    participant_floors = participant_null_counts.min(axis=0)
+
+    # The analysis script is the source of the published dyad-null record.  The
+    # renderer recomputes the same deterministic draws to obtain one real
+    # representative sample for panels b and c, then refuses to draw if the
+    # stored result disagrees with that computation.
+    if not DYAD_PRIMARY_CSV.is_file():
+        raise SystemExit(f"missing dyad-primary artifact: {DYAD_PRIMARY_CSV}")
+    artifact = pd.read_csv(DYAD_PRIMARY_CSV)
+    if len(artifact) != len(model_counts) * len(S.RISKS):
+        raise SystemExit("dyad-primary artifact does not cover all route-risk cells")
+    for row in artifact.itertuples(index=False):
+        risk_index = S.RISKS.index(float(row.risk_cap))
+        label = str(row.population)
+        if label not in model_counts:
+            raise SystemExit(f"dyad-primary artifact has unknown route {label}")
+        if int(row.model_distinct) != model_counts[label][risk_index]:
+            raise SystemExit(f"dyad-primary model count disagrees for {label} at {row.risk_cap}")
+        artifact_verdict = str(row.below_every_human_draw).strip().lower() == "true"
+        if artifact_verdict != (
+            model_counts[label][risk_index] < floors[risk_index]
+        ):
+            raise SystemExit(f"dyad-primary verdict disagrees for {label} at {row.risk_cap}")
+
     below = [(risk, label) for i, risk in enumerate(S.RISKS)
              for label in model_counts if model_counts[label][i] < floors[i]]
-    below_dyad = [(risk, label) for i, risk in enumerate(S.RISKS)
-                  for label in model_counts if model_counts[label][i] < dyad_floors[i]]
+    participant_below = [(risk, label) for i, risk in enumerate(S.RISKS)
+                         for label in model_counts
+                         if model_counts[label][i] < participant_floors[i]]
     inside = [(risk, label, model_counts[label][i],
                float((null_counts[:, i] <= model_counts[label][i]).mean()))
               for i, risk in enumerate(S.RISKS)
@@ -395,9 +432,10 @@ def main() -> None:
                  for label in model_counts if model_counts[label][i] == 1]
 
     admitted = [S.ROUTE_LABEL[route] for route in S.ADMITTED]
-    admitted_below = {label for _, label in below} >= set(admitted)
+    admitted_below = sum(
+        1 for risk, label in below if label in admitted
+    )
     inside_labels = sorted({label for _, label, _, _ in inside})
-    inside_all_refused = all(not identity(label)[3] for label in inside_labels)
 
     print(f"  human sample {len(human)} complete trajectories, cells "
           f"{[c.size for c in human_cells]} at risk {list(S.RISKS)}")
@@ -406,7 +444,7 @@ def main() -> None:
         col = null_counts[:, i]
         print(f"    risk {risk}: distinct mean {col.mean():.2f}, min {col.min()}, "
               f"max {col.max()}; {len(dyad_cells[i])} complete dyads, "
-              f"dyad-null min {dyad_floors[i]}")
+              f"dyad-null min {floors[i]}; participant-null min {participant_floors[i]}")
     print(f"  human pooled 60: mean {pooled_distinct.mean():.2f}, "
           f"median {int(np.median(pooled_distinct))}, min {pooled_distinct.min()}, "
           f"max {pooled_distinct.max()}")
@@ -415,15 +453,16 @@ def main() -> None:
         mark = "admitted" if route in S.ADMITTED else "refused "
         print(f"    {mark}  {label:>22}: per cell {model_counts[label]}, "
               f"pooled 60 {model_pooled[label]}")
-    print(f"  {len(below)} of {n_cells} model cells below the human minimum; "
-          f"{len(below_dyad)} of {n_cells} below the stricter dyad minimum; "
+    print(f"  {len(below)} of {n_cells} model cells below the primary dyad null; "
+          f"{len(participant_below)} of {n_cells} below the participant sensitivity; "
           f"{len(saturated)} cells at the measure's floor of 1")
     print(f"  {len(inside)} cells inside the null: "
           + ", ".join(f"{lab} at risk {r} (distinct {q}, {100 * p:.1f}th pct)"
                       for r, lab, q, p in inside))
-    print(f"  every admitted route below the human minimum at every risk: {admitted_below}")
-    print(f"  every route reaching the human range is refused: {inside_all_refused} "
-          f"({', '.join(inside_labels)})")
+    print(f"  admitted cells below the primary dyad null: {admitted_below} of "
+          f"{len(admitted) * len(S.RISKS)}")
+    print(f"  routes with at least one cell inside the primary null: "
+          f"{', '.join(inside_labels)}")
 
     # One draw rather than a summary of draws, so panel b shows a composition
     # that actually occurred.  The median draw is the representative one and its
@@ -505,11 +544,11 @@ def draw_figure(stem, order, *, marks, null_counts, model_counts, model_pooled,
             notes=[], frame=frame, marks=marks,
         )
     S.direct_label(axes_a[0], 1.3, frame.human_base + 0.10,
-                   f"{N_NULL:,} draws\nof {COMPARISON_N} humans", color=S.INK_2,
+                   f"{N_NULL:,} draws\nof {DYAD_N} human dyads", color=S.INK_2,
                    ha="left", va="bottom", dx=0, dy=0)
     S.panel(
         axes_a[0], "a",
-        f"{len(below)} of {n_cells} model cells sit below every human draw",
+        f"{len(below)} of {n_cells} model cells sit below every human dyad draw",
         pad=16,
     )
 
@@ -603,7 +642,7 @@ def draw_figure(stem, order, *, marks, null_counts, model_counts, model_pooled,
                  fontsize=S.FS_NOTE, color=S.MUTED)
     if below and len(below) != n_cells:
         print(f"  {stem}: {n_cells - len(below)} of {n_cells} drawn cells are NOT "
-              "below the human minimum")
+              "below the human dyad minimum")
     S.save(fig, stem, width=S.TEXT)
 
 

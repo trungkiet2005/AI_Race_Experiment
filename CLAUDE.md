@@ -143,7 +143,8 @@ python scripts/analyze_audit_versus_behaviour.py           # joins admission acc
 python scripts/analyze_egt_beta_sensitivity.py             # sweeps EGT selection strength beta x mutation rule x risk against the routes
 python scripts/analyze_human_archetype_k_sensitivity.py    # k-sweep validity indices plus a bootstrap ARI stability curve for the human archetypes
 python scripts/analyze_elicited_risk_by_archetype.py       # Kruskal-Wallis on elicited Eckel-Grossman risk across the four published archetypes
-python scripts/build_diversity_figure.py                   # draws the main-paper trajectory-diversity panel from the rarefaction table
+python scripts/build_diversity_figure.py                   # legacy diagnostic panel from the participant-level rarefaction table
+python scripts/analyze_trajectory_diversity_dyad.py        # primary cluster-aware human null: ten complete dyads per draw
 python scripts/analyze_frontier_context_mapping_cross.py   # repetition-paired presentation effects on both crossed routes, fail-closed on an unbalanced design
 python scripts/analyze_nplayer_matched.py                  # matched group-size comparison, refuses a risk level missing any group size
 python scripts/verify_matched_nplayer_design.py            # offline design check; run before pushing any matched cell

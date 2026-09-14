@@ -382,6 +382,35 @@ check("21 of the 27 route cells fall below every one of the 20,000 human draws",
       len(_below) == 21 and len(ROUTE_LABELS) * 3 == 27, f"{len(_below)} of 27")
 check("18 of the 27 fall below the stricter ten-dyad null",
       len(_below_dyad) == 18, f"{len(_below_dyad)} of 27, dyad minima {list(_dyad_floors)}")
+_dyad_primary = {}
+for row in csv.DictReader(open(
+        "results/derived/trajectory_diversity_dyad_primary/trajectory_diversity_dyad_primary.csv",
+        encoding="utf-8-sig")):
+    _dyad_primary[(row["population"], f"{float(row['risk_cap']):.1f}")] = row
+check("the dyad-primary artifact covers all nine routes and three risks",
+      len(_dyad_primary) == 27 and set(p for p, _ in _dyad_primary) == set(ROUTE_LABELS),
+      f"{len(_dyad_primary)} route-risk rows")
+_dyad_primary_floors = [
+    int(_dyad_primary[("Gemini 3 Flash", r)]["human_draw_min"])
+    for r in RISKS
+]
+check("dyad-primary floors are 12, 15 and 13",
+      _dyad_primary_floors == [12, 15, 13],
+      f"{_dyad_primary_floors}")
+_dyad_primary_below = [
+    key for key, row in _dyad_primary.items()
+    if row["below_every_human_draw"].strip().lower() == "true"
+]
+_dyad_primary_admitted_below = [
+    key for key in _dyad_primary_below if key[0] in ADMITTED_LABELS
+]
+check("13 of the 15 admitted cells fall below every dyad draw",
+      len(_dyad_primary_admitted_below) == 13,
+      f"{len(_dyad_primary_admitted_below)} of 15")
+check("the dyad-primary exceptions include GPT-5.4 and GPT-5.5 at risk 0.9",
+      ("GPT-5.4", "0.9") not in _dyad_primary_below
+      and ("GPT-5.5", "0.9") not in _dyad_primary_below,
+      "boundary cells preserved")
 check("every admitted route is below the human minimum at every risk level",
       all((p, i) in _below for p in ADMITTED_LABELS for i in range(3)),
       "5 routes, 15 cells, all below")

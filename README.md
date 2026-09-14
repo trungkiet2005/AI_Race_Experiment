@@ -184,6 +184,12 @@ push/status/log commands; do not invent a kernel slug when no
   contracts and paired contrasts are reported in the manuscript and its
   supplementary material; cross-route magnitudes remain descriptive because
   endpoint decoding contracts are not homogeneous.
+- **Trajectory diversity: the primary human null is now dyad-clustered.** The
+  reproducible analysis samples ten complete human dyads, matching the ten-race
+  model cells at twenty trajectories while preserving the interaction unit.
+  The original participant-level null remains as a sensitivity analysis. The
+  current primary artifact is under
+  `results/derived/trajectory_diversity_dyad_primary/`.
 - The fully crossed context-and-mapping design is complete on the two routes
   selected for that study, with 120 races and 2,232 decisions per route and a
   passing independent validator. The N-player frontier rerun is not admitted;

@@ -187,7 +187,7 @@
     "supplement_figure_5_tsne_outcome": "generated",
     "supplement_figure_6_round_profiles": "generated"
   },
-  "generated_utc": "2026-09-14T06:56:48.801419+00:00",
+  "generated_utc": "2026-09-14T08:00:25.508565+00:00",
   "generator": "scripts/build_publication_figures.py",
   "manual_figure_origin": {
     "commit": "f0dde0d",
@@ -203,8 +203,10 @@
     "results\\cross_model_pilot_synthesis\\data\\human_cluster_summary.csv": "2056314d4a1858f6ef068d033e8e8c623b69b5c8ead16c1971f33fcad8203484",
     "results\\cross_model_pilot_synthesis\\data\\llm_human_cluster_projection_unified.csv": "0a98ca17a3124c8030af5ca38ffb5a66ab2555bd350ed529f76f08f268953993",
     "results\\derived\\scripted_opponent_campaign\\risk_versus_rival.json": "e6a882057c419abca2acd24d019734a0244bfb2c27baade0087ddea462e5fde1",
+    "results\\derived\\trajectory_diversity_dyad_primary\\trajectory_diversity_dyad_primary.json": "bd73b26b2273186dc3c3e0cfc4425c400c90d45e71b4ea82ebf77c8a8de3e55b",
     "results\\frontier\\egt_frontier_comparison_v2\\theory_llm_comparison.csv": "57cf703229df95e28cb51a8db95e902de895fb0801e3efb2d0ec7785bb416d78",
-    "scripts\\figures\\fig_human_versus_model.py": "0c048182f58735007e52a9cd0f27dbf35c8029273f44abd2cdcfb2f031cd3d9d",
+    "scripts\\analyze_trajectory_diversity_dyad.py": "f52a67c4f693c5162ea606eaae2dd87e12bd1064c911d92a95b733ec79b59022",
+    "scripts\\figures\\fig_human_versus_model.py": "8632e5682bac46c002a0771efdc15ea1cd165948438ddbfaa1512e2e427fa02f",
     "scripts\\figures\\fig_overview.py": "3ee84f94413812e4c9141a72138e09e6775d3623fa628484def79017f2781020",
     "scripts\\figures\\fig_scripted_opponent.py": "d9223c9458333e60ffdc9b28dbc21d775eaf664d5532e7ba398ba8f8ec3fa152"
   },

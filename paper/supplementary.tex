@@ -2312,12 +2312,12 @@ step: all 341 receive a cluster label.
 \label{app:diversity}
 
 The main paper reports that human first-five-round trajectories are more
-varied than those of every route the gate admits. Two tables give the numbers
-behind that, one row per population per risk level, so a single value can be
-checked against its population, its risk condition, and the number of
-independent units it rests on.
-Table~\ref{tab:diversity-confirmatory} is the one the main paper's claim rests
-on: all nine audited routes, on the confirmatory baseline.
+varied than most admitted route-risk cells under a cluster-aware null. The
+primary dyad-clustered summary is in Table~\ref{tab:diversity-dyad-primary}.
+Table~\ref{tab:diversity-confirmatory} retains the full nine-route table, with
+participant-level human resampling and the companion Hill and Hamming
+statistics. Together they make each value checkable against its population,
+its risk condition, and the independent unit it rests on.
 Table~\ref{tab:diversity-rarefaction} is the earlier seven-checkpoint pilot
 export, kept because it carries GPT-5 nano, an endpoint no longer offered on
 the audited identity and therefore holding no admission verdict. That export
@@ -2346,10 +2346,37 @@ resample, over 2{,}000 resamples. The cluster is the independent unit of the
 design: a participant for the human rows, one per trajectory, and a race for
 the checkpoint rows, because the two seats of a race share the same sampled
 horizon and setback draws and so are not independent of each other. The
-$n_{\rm cluster}$ column is that count.
+$n_{\rm cluster}$ column is that count. The human-side q=0 comparison used for
+the main figure is instead cluster-aware at the dyad level: it samples ten
+complete human dyads, retaining twenty trajectories but ten interaction units.
+Four complete human trajectories have no complete partner in the de-identified
+file and are omitted from that primary dyad null.
+
+\begin{table}[t]
+    \caption{Primary dyad-clustered human null for distinct paired
+    first-five-round trajectories. Each draw samples ten complete dyads,
+    contributing twenty trajectories, without replacement from the risk pool.
+    The mean and 95\% RI are over 20{,}000 draws; the minimum is the finite-draw
+    floor used for the strict below-null comparison. ``Admitted below'' counts
+    the five screened routes whose confirmatory $q{=}0$ value is below every
+    draw; ``all routes below'' uses all nine audited routes.}
+    \label{tab:diversity-dyad-primary}
+    \centering
+    \small
+    \setlength{\tabcolsep}{4pt}
+    \begin{tabular}{@{}lrrrrrr@{}}
+        \toprule
+        Risk & Dyads & Mean & 95\% RI & Min & Admitted & All routes \\
+        \midrule
+        0.1 & 48 & 18.6 & 16--20 & 12 & 5/5 & 7/9 \\
+        0.6 & 52 & 19.6 & 18--20 & 15 & 5/5 & 7/9 \\
+        0.9 & 68 & 19.2 & 17--20 & 13 & 3/5 & 4/9 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
 
 \begin{table*}[t]
-    \caption{Sample-size-matched diversity of paired first-five-round
+    \caption{Participant-level sensitivity for sample-size-matched diversity of paired first-five-round
     trajectories, by maximum-private-risk level and population. A trajectory
     is the two players' ten actions over rounds 1 to 5. Hill $q{=}0$ is the
     number of distinct trajectories, Hill $q{=}1$ the effective number after
@@ -2423,16 +2450,17 @@ can match a human aggregate action rate while producing a small handful of
 distinct action sequences, or only one.
 
 \begin{table*}[t]
-    \caption{The same comparison on the confirmatory baseline, which holds all
+    \caption{Participant-level sensitivity on the confirmatory baseline, which holds all
     nine audited routes at ten races per risk level and so at the same matched
     size of 20. Columns, statistics, rarefaction and the 95\% resampling
     interval (RI), which is not a confidence interval, are exactly those
     of Table~\ref{tab:diversity-rarefaction}; only the source of the
     trajectories differs, and the main paper's admission verdict is printed
-    beside each route. Every admitted
-    route sits entirely below the human Hill $q{=}1$ interval at all three risk
-    levels. The two routes that do not, GPT-5.4 mini and GPT-5.4 nano, are both
-    routes the gate refused.}
+    beside each route. This table is the participant-level sensitivity for the
+    primary dyad-clustered q{=}0 comparison. Every admitted route sits entirely
+    below the human Hill $q{=}1$ interval at all three risk levels. The two
+    routes that do not, GPT-5.4 mini and GPT-5.4 nano, are both routes the gate
+    refused.}
     \label{tab:diversity-confirmatory}
     \centering
     \footnotesize
@@ -2478,18 +2506,18 @@ distinct action sequences, or only one.
     \end{tabular}
 \end{table*}
 
-Table~\ref{tab:diversity-confirmatory} is the version of that comparison that
+Table~\ref{tab:diversity-confirmatory} is the version of that sensitivity that
 can be read against the admission gate, because it has a row for every route
-the gate ruled on. Each of the five admitted routes sits entirely below the
-human Hill $q{=}1$ interval at all three risk levels; the largest admitted
-upper bound anywhere in the table is 12.3, at risk $0.9$, where the human lower
-bound is 14.8. Two routes do not sit entirely below, GPT-5.4 mini and GPT-5.4
-nano, and neither passed the gate: they score 75.0\% and 51.7\%, the latter the
-lowest of the nine. Claude Opus 5 again returns exactly one distinct trajectory
-at all three risk levels, with Hamming 0. The direction of the finding
-therefore does not depend on which of the two tables is read. What the
-confirmatory table adds is that the claim about the admitted set can be checked
-over the whole admitted set, which the pilot export could not do.
+the gate ruled on. The primary q{=}0 model entries in the table, read against
+the dyad floors in Table~\ref{tab:diversity-dyad-primary}, put 13 of 15 admitted
+cells below every dyad draw. The two admitted boundary cells are GPT-5.4 and
+GPT-5.5 at risk $0.9$; both have 13 or 14 distinct trajectories against a dyad
+floor of 13. The participant-level Hill $q{=}1$ sensitivity places every
+admitted route below the human interval at all three risk levels. GPT-5.4 mini
+and GPT-5.4 nano remain the two refused routes that reach the participant-level
+human range at every risk. Claude Opus 5 again returns exactly one distinct
+trajectory at all three risk levels, with Hamming 0. The dyad correction changes
+the scope of the q{=}0 claim, not the concentration result itself.
 
 \subsection{Behavioural-archetype coverage by population}
 \label{app:archetype-coverage}
@@ -3004,7 +3032,7 @@ models.
 
 \subsubsection*{E. Reproducibility and scripted-rival evidence}
 
-\subsection{Five audited routes against a rival they cannot influence}
+\subsection{Five audited routes against a fixed and undisclosed rival policy}
 \label{app:scripted-opponent}
 
 Every gameplay result reported elsewhere in this paper is self-play: both
@@ -3329,10 +3357,11 @@ this design on.
 ten races per cell. Five commercial endpoints are not a sample of a population
 of models, and four strategies are four points in a space of policies rather
 than a sample of opponents, so a scripted rival establishes what a route does
-against \emph{these} rivals. The design is causal in the narrow and precise
-sense that the rival cannot be influenced by the route, so the direction of a
-within-design contrast is not in question; it is not causal about anything
-outside this game. Nothing here licenses a claim about strategy, intent, or
+against \emph{these} rivals. The within-block policy contrast is identified
+because rival-policy assignment is fixed and exogenous. Conditional rivals can
+still respond mechanically to the route's previous action, as specified by
+their fixed policies. This is not causal about anything outside this game.
+Nothing here licenses a claim about strategy, intent, or
 reasoning: these are conditional frequencies. It is regenerated by
 \texttt{scripts/\discretionary{}{}{}analyze\_\discretionary{}{}{}scripted\_\discretionary{}{}{}opponent.py}
 with \texttt{-\discretionary{}{}{}-all-\discretionary{}{}{}routes}, which takes

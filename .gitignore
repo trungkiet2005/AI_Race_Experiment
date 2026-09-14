@@ -82,6 +82,10 @@ kaggle.json
 !/results/derived/nplayer_matched_campaign/**
 !/results/derived/scripted_opponent_campaign/
 !/results/derived/scripted_opponent_campaign/**
+!/results/derived/trajectory_diversity_dyad_primary/
+!/results/derived/trajectory_diversity_dyad_primary/trajectory_diversity_dyad_primary.csv
+!/results/derived/trajectory_diversity_dyad_primary/trajectory_diversity_dyad_primary.json
+/results/derived/trajectory_diversity_dyad_primary/human_dyad_null_draws.csv
 !/results/derived/baseline_replication.json
 !/results/capacity_family/
 !/results/capacity_family/**

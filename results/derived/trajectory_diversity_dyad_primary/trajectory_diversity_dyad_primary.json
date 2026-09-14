@@ -1,0 +1,128 @@
+{
+  "schema_version": "ai-race-trajectory-diversity-dyad-primary-v1",
+  "analysis_role": "cluster-aware primary human null for the trajectory-diversity result; the original participant-level null is retained as sensitivity",
+  "methodological_status": "explicit clustering correction added after audit; no original artifact overwritten",
+  "estimand": "distinct paired first-five-round trajectories in a sample of twenty trajectories",
+  "human_cluster_unit": "complete group_id dyad with two participants",
+  "model_cluster_unit": "game_id race with two seats",
+  "draw_method": "sample ten complete dyads without replacement within each human risk pool",
+  "n_draws": 20000,
+  "seed": [
+    20260910,
+    2
+  ],
+  "comparison_n": 20,
+  "risk_caps": [
+    0.1,
+    0.6,
+    0.9
+  ],
+  "coverage": {
+    "complete_human_trajectories": 340,
+    "complete_dyads_total": 168,
+    "singleton_groups_excluded": 4,
+    "complete_dyads_by_risk": {
+      "0.1": 48,
+      "0.6": 52,
+      "0.9": 68
+    },
+    "complete_trajectories_by_risk": {
+      "0.1": 96,
+      "0.6": 104,
+      "0.9": 136
+    }
+  },
+  "routes": [
+    "Gemini 3 Flash",
+    "Claude Opus 5",
+    "GPT-5.4",
+    "GPT-5.5",
+    "Claude Sonnet 5",
+    "Gemini 3.1 Flash Lite",
+    "GPT-5.4 mini",
+    "Gemini 3.5 Flash Lite",
+    "GPT-5.4 nano"
+  ],
+  "admitted_routes": [
+    "Gemini 3 Flash",
+    "Claude Opus 5",
+    "GPT-5.4",
+    "GPT-5.5",
+    "Claude Sonnet 5"
+  ],
+  "below_every_human_draw": 18,
+  "admitted_below_every_human_draw": 13,
+  "admitted_cell_count": 15,
+  "exceptions": [
+    {
+      "population": "GPT-5.4 mini",
+      "risk_cap": 0.1,
+      "model_distinct": 20,
+      "human_draw_min": 12
+    },
+    {
+      "population": "GPT-5.4 nano",
+      "risk_cap": 0.1,
+      "model_distinct": 16,
+      "human_draw_min": 12
+    },
+    {
+      "population": "GPT-5.4 mini",
+      "risk_cap": 0.6,
+      "model_distinct": 17,
+      "human_draw_min": 15
+    },
+    {
+      "population": "GPT-5.4 nano",
+      "risk_cap": 0.6,
+      "model_distinct": 19,
+      "human_draw_min": 15
+    },
+    {
+      "population": "GPT-5.4",
+      "risk_cap": 0.9,
+      "model_distinct": 14,
+      "human_draw_min": 13
+    },
+    {
+      "population": "GPT-5.5",
+      "risk_cap": 0.9,
+      "model_distinct": 13,
+      "human_draw_min": 13
+    },
+    {
+      "population": "GPT-5.4 mini",
+      "risk_cap": 0.9,
+      "model_distinct": 17,
+      "human_draw_min": 13
+    },
+    {
+      "population": "Gemini 3.5 Flash Lite",
+      "risk_cap": 0.9,
+      "model_distinct": 13,
+      "human_draw_min": 13
+    },
+    {
+      "population": "GPT-5.4 nano",
+      "risk_cap": 0.9,
+      "model_distinct": 16,
+      "human_draw_min": 13
+    }
+  ],
+  "source_hashes": {
+    "references/source_study_dataset/airace_deidentified_long.csv": "ba6009ed5a6702e9f3ec9782289226099edc2b78c63057e57967927a539f8eee",
+    "results/frontier/baseline_campaign_v6/ai-race-baseline/3/claude-opus-5-default/1494093/results/ai_race_baseline/turns.jsonl": "5e24d4a4d0b6b24a211ca6d10b1f2854ea386089623afc634232ca19df04d91d",
+    "results/frontier/baseline_campaign_v6/ai-race-baseline/3/claude-sonnet-5-default/1494092/results/ai_race_baseline/turns.jsonl": "3b60429dd7302f3e50340a5d2e286fd2016d9774d637590ca4a321207115fa46",
+    "results/frontier/baseline_campaign_v6/ai-race-baseline/3/gemini-3-flash-preview/1395291/results/ai_race_baseline/turns.jsonl": "97b88465111d6d54cc7dfeb4ae1207aeee3a2124dfbd4a567bf50500c7a6610e",
+    "results/frontier/baseline_campaign_v6/ai-race-baseline/3/gemini-3.1-flash-lite-preview/1494094/results/ai_race_baseline/turns.jsonl": "b63ae0f6041e9d6950371ed50d91d72b56e4042e877d084ad3aaf22dde0ee5af",
+    "results/frontier/baseline_campaign_v6/ai-race-baseline/3/gpt-5.4-2026-03-05/1460634/results/ai_race_baseline/turns.jsonl": "b12be7356c81cbaa21f0decf16e2848cdeccc505e84487c3a192b9c82cf62998",
+    "results/frontier/baseline_campaign_v6/ai-race-baseline/3/gpt-5.4-mini-2026-03-17/1460633/results/ai_race_baseline/turns.jsonl": "c1c268719be29f12b2bf59a23482267d478d2c8ff266cca1979919b19717c3d7",
+    "results/frontier/baseline_campaign_v6/ai-race-baseline/3/gpt-5.4-nano-2026-03-17/1460632/results/ai_race_baseline/turns.jsonl": "ec68311d9eed0076ae38c4dc3a54ffb70df78cb601acbb1a6c45a0c50ae6f828",
+    "results/frontier/baseline_campaign_v6/ai-race-baseline/3/gpt-5.5-2026-04-23/1460635/results/ai_race_baseline/turns.jsonl": "287472d3296b1015d0820d890fe8c09fe724a6a3004215a064f2e84b670cdb35",
+    "results/frontier/baseline_campaign_v6/ai-race-baseline/4/gemini-3.5-flash-lite/1494638/results/ai_race_baseline/turns.jsonl": "25ed42acda8d3ea39be74f9e5f6f88d79320387ce40b90691e05d5f37fcab219"
+  },
+  "outputs": {
+    "summary": "trajectory_diversity_dyad_primary.csv",
+    "draws": "human_dyad_null_draws.csv"
+  }
+}

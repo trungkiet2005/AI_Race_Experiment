@@ -302,7 +302,8 @@ between slower safe development and faster unsafe development.
 Across the tested frontier routes, risk responses share a qualitative direction
 but differ in shape. Agents respond to increasing risk, with profiles ranging
 from gradual adaptation to near-deterministic switching. Behaviour is also
-strongly opponent-dependent. In a scripted-rival study of five admitted routes,
+strongly opponent-dependent. In a scripted-rival study of five frontier-model
+endpoints that passed a frozen task-validity screen,
 changes in the rival's behaviour move the agents substantially, with a
 magnitude that varies by route and can overlap the effect of changing the
 stated risk itself. Thus, self-play outcomes can reflect an interaction between
@@ -312,8 +313,9 @@ Frontier agents also show a distinctive relationship to the theoretical and
 human benchmarks. An analysis extending the evolutionary comparison across the
 admitted panel places the four graded profiles closer in response shape to the
 near-neutral regime than to its strong-selection prediction, while
-their action trajectories occupy a more concentrated observed trajectory space than
-those of human participants. These results suggest that AI-mediated competitive
+their action trajectories generally occupy a more concentrated observed
+trajectory space than those of human participants: 13 of 15 admitted cells fall
+below every draw of a dyad-matched human null. These results suggest that AI-mediated competitive
 decisions may be model-specific, opponent-dependent and behaviourally
 concentrated, motivating evaluation at the level of interactions and trajectories
 rather than aggregate action rates alone. Claims are scoped to the tested routes,
@@ -464,7 +466,7 @@ on every route; its magnitude is checkpoint-specific and can overlap the effect
 of changing the stated danger. Neither external reference shows that shape: the
 evolutionary model predicts a switch where the agents deliver a gradient, and
 on raw first-five-round trajectories human participants use nearly the whole observed
-trajectory space while every admitted route uses a small part of it.
+trajectory space while admitted routes generally use a small part of it.
 
 Three contributions follow. First, a scripted-rival design for repeated-game
 evaluation and the critique it licenses. That an LLM's self-play behaviour need
@@ -472,8 +474,8 @@ not predict its behaviour against a different agent is known
 \citep{lekeasNashSuppression2026,palCooperation2026}, and fixed opponents are
 standard practice in this literature \citep{payneStrategicIntelligence2025};
 what we add is the version that matters for a safety reading, that self-play
-can hide the response to the treatment the study is about, measured against a
-rival the agent cannot influence and is never told about. Second, a
+can hide the response to the treatment the study is about, measured against an
+undisclosed rival whose policy is fixed by code. Second, a
 population-level comparison with human participants read on first-five-round
 trajectories rather than on aggregate rates, which is what makes the compression
 of observed trajectories visible at all. Third, an auditable race mechanism in which the engine
@@ -765,8 +767,10 @@ and every one of its 5{,}580 recorded rival moves was
 recomputed afterwards from the route's own recorded history, which no cell
 failed. The route's seat is counterbalanced five and five inside each cell, and
 each contrast is taken inside a repetition, so the hidden horizon is differenced
-out. Because the route cannot influence the rival, the direction of a difference
-between rivals is not in question.
+out. Because rival-policy assignment is fixed and exogenous within matched
+blocks, the direction of a difference between rival policies is identified.
+Conditional policies can still respond mechanically to the route's previous
+move, as specified by the fixed policy.
 
 Coverage is complete across the five routes, but decoding contracts are not
 homogeneous across endpoints. Cross-route differences in effect magnitude are
@@ -910,25 +914,31 @@ study of a single game is the only human reference here, which bounds every
 human comparison below to that population and that mechanism.
 
 Of 341 released participants, 340 provide complete first-five-round trajectories
-and 338 provide complete dynamic-model records. Before using this dataset as an
-external reference, we validated the reconstruction by refitting the source
+and 338 provide complete dynamic-model records. Among the complete trajectories,
+168 source dyads contribute 336 trajectories; four complete trajectories have no
+complete partner after de-identification and are not used in the dyad null.
+Before using this dataset as an external reference, we validated the
+reconstruction by refitting the source
 study's published dynamic specification on its released data: 2{,}888
 participant-round observations from 338 participants in 172 race-pair clusters
 (see the supplementary material).
 
 Figure~\ref{fig:diversity} counts distinct first-five-round trajectories in
-matched samples of twenty, against $20{,}000$ human resamples at each risk. The
-human sample is larger, so matching prevents sample size from inflating its
-diversity. Twenty-one of 27 route cells, including all 15 admitted cells, fall
-below every human draw. Under a stricter ten-dyad null, 18 do; that count moves
-between 16 and 20 over forty redraws. Humans reach an effective 18.9, 19.7 and
-19.3 trajectories out of 20 at risks $0.1$, $0.6$ and $0.9$, at mean pairwise
-distances of 0.47, 0.50 and 0.50. Panel b sorts the observed paths by frequency
-and panel c displays the modal five-round joint-action sequence. The same cells
-support two numerical checks reported in the supplement: Hill $q{=}1$ counts
-effective trajectories and mean pairwise Hamming distance measures separation
-of their ten action bits. Under Hill $q{=}1$, every admitted route sits entirely
-below the human interval at every risk level.
+matched samples of twenty, against $20{,}000$ human resamples of ten complete
+dyads at each risk. The human sample is larger, so matching prevents sample
+size from inflating its diversity, while dyad sampling preserves the unit of
+interaction. Eighteen of 27 route cells, including 13 of the 15 admitted cells,
+fall below every dyad draw. The participant-level sensitivity gives 21 of 27,
+including all 15 admitted cells; the primary dyad-null floors are 12, 15 and 13
+distinct trajectories at risks $0.1$, $0.6$ and $0.9$. The complementary
+participant-level table records effective counts of 18.9, 19.7 and 19.3 and
+mean pairwise distances of 0.47, 0.50 and 0.50. Panel b sorts the observed paths
+by frequency and panel c displays the modal five-round joint-action sequence.
+The same cells support two numerical checks reported in the supplement: Hill
+$q{=}1$ counts effective trajectories and mean pairwise Hamming distance measures
+separation of their ten action bits. Under that complementary Hill $q{=}1$
+analysis, every admitted route sits entirely below the human interval at every
+risk level.
 
 The concentration is strongest for Claude Opus 5, which produces a single
 trajectory, repeated by all 20 of its trajectories, at every risk level, while
@@ -938,11 +948,15 @@ highest risk and use a similar number of distinct trajectories, 12 and 13, yet t
 Gemini trajectories sit half again as far apart from one another, 0.41 against 0.27
 in mean pairwise distance.
 
-Two checkpoints are the exception, and the screen refuses both of them.
+Under the participant-level sensitivity, two checkpoints are the only
+exceptions, and the screen refuses both of them.
 GPT-5.4 mini uses 20, 17 and 17 distinct trajectories out of 20 at
 risks $0.1$, $0.6$ and $0.9$, and GPT-5.4 nano 16, 19 and 16; both land inside
-the human null at every risk level, and no other route reaches it once. On this
-measure they are not less diverse than people. Both are routes the
+the participant-level human null at every risk level, and no other route reaches
+it once under that sensitivity. On this measure they are not less diverse than
+people. Under the primary dyad null, GPT-5.4 and GPT-5.5 also meet the finite-draw
+floor at risk $0.9$, so the cluster-aware headline is 13 of 15 admitted cells
+rather than all 15. Both refused routes are routes the
 quality-control screen of \S\ref{sec:design-screen} refused, at 75.0\% and
 51.7\% overall probe accuracy. That is why the screen is reported in the
 body: without it, these two rows would read as the finding that small models
@@ -951,16 +965,19 @@ match human strategic diversity.
 \begin{figure*}[t]
     \centering
     \includegraphics[width=\textwidth]{../figures/paper/human_versus_model.pdf}
-    \caption{Human participants use more of the observed trajectory space than every
-    admitted checkpoint. Panel a compares distinct paired first-five-round
-    trajectories with a matched human-resampling null; panel b sorts the 60
+    \caption{Human participants occupy a broader observed trajectory space than
+    most admitted route-risk cells under a dyad-clustered null. Panel a compares
+    distinct paired first-five-round trajectories with $20{,}000$ draws of ten
+    complete human dyads; 13 of 15 admitted cells fall below every dyad draw.
+    The participant-level null is a sensitivity analysis and places all 15 below
+    every draw. Panel b sorts the 60
     matched trajectories by path frequency; panel c shows the modal pooled
     joint-action path. Each tile is the focal route's action followed by its
     opponent's.}
     \label{fig:diversity}
     \Description{Panel a shows three facets, one per risk condition, each with a
-    histogram of a human resampling null and one marker per checkpoint placed on
-    the same axis, with the shaded region marking counts no human draw reached.
+    histogram of a human dyad-resampling null and one marker per checkpoint placed
+    on the same axis, with the shaded region marking counts no human dyad draw reached.
     Panel b shows frequency-sorted composition bars for the 60 matched
     trajectories. Panel c shows the modal five-round joint-action path for each
     population as one tile per round.}
@@ -1024,16 +1041,6 @@ Seed forwarding is provider-specific: one route's SDK stripped the requested
 seed and another forwarded it unconfirmed. And this game models a private
 speed-versus-safety trade-off and nothing else, with no collective harm,
 regulation, communication or uncertainty about real capabilities.
-
-The last implication belongs to the population rather than to any single agent,
-and it stays conditional, because nothing measured here is a deployment. People
-bring substantial behavioural variety to this race, while copies of one route
-provide a more consistent profile; which part of the observed trajectory space a route settles
-on differs from route to route. If one model were reused as a strategic adviser
-across many organisations, its concentrated profile would be one component of
-the resulting decision environment, alongside the diversity of human decision
-makers. Whether that balance matters beyond this game must be measured before
-delegation.
 
 % Acknowledgements name individuals, their institutions and a grant number, so
 % they identify the authors. The class does not suppress this section in
