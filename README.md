@@ -178,6 +178,12 @@ push/status/log commands; do not invent a kernel slug when no
   the nine-route corpus; the failed attempt remains a separate failure record.
   The requested temperature was not forwarded by the SDK and the sampling seed
   is confirmed only as requested, so both are cited as unconfirmed.
+- **Scripted-rival campaign: complete across all five admitted routes.** The
+  campaign covers 60 route-by-strategy-by-risk cells and 600 races, with zero
+  parse failures or scripted-rival replay deviations. The exact endpoint
+  contracts and paired contrasts are reported in the manuscript and its
+  supplementary material; cross-route magnitudes remain descriptive because
+  endpoint decoding contracts are not homogeneous.
 - The fully crossed context-and-mapping design is complete on the two routes
   selected for that study, with 120 races and 2,232 decisions per route and a
   passing independent validator. The N-player frontier rerun is not admitted;

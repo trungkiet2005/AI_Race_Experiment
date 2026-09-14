@@ -51,7 +51,7 @@ to language models". The game is an idealised race and models nothing else.
 
 ### Title
 
-Current: *More Than the Risk: Frontier LLM Behavior in AI Development Races Depends on the Rival*
+Current: *More Than the Risk: Frontier LLM Behaviour in AI Development Races Depends on the Rival*
 
 What is genuinely strong and must survive: it leads with an active finding
 rather than a topic, it names the comparison population, and "AI Development
@@ -102,14 +102,14 @@ theory predicts or what humans display.
 
 | # | Claim in plain language | Artifact | Number | RQ |
 |---|---|---|---|---|
-| B1 | Every admitted route plays Unsafe less as the stated catastrophic risk rises, and the four that respond gradually do so within a narrow band. | `results/frontier/baseline_campaign_v6/derived/audit_versus_behaviour.csv` | Risk response 38.2, 38.7, 40.3 and 57.0 points for GPT-5.5, Gemini 3 Flash, GPT-5.4 and Claude Sonnet 5 | RQ1 |
+| B1 | Every admitted route plays Unsafe less as the stated catastrophic risk rises, and the four graded routes span a 19-point response band. | `results/frontier/baseline_campaign_v6/derived/audit_versus_behaviour.csv` | Risk response 38.2, 38.7, 40.3 and 57.0 points for GPT-5.5, Gemini 3 Flash, GPT-5.4 and Claude Sonnet 5 | RQ1 |
 | B2 | One admitted route does not trade off at all; it switches. | same | Claude Opus 5 plays Unsafe on all 186 decisions at risk 0.1 and Safe on all 372 above it, a 100.0-point step | RQ1 |
 | B3 | Even at the highest risk, admitted routes keep playing Unsafe about a third to a half of the time in self-play. | same | Risk-0.9 self-play rates 60.2, 55.4, 46.8, 32.3 percent for Gemini 3 Flash, GPT-5.5, GPT-5.4, Claude Sonnet 5 | RQ1 |
 | B4 | The behavioural baseline is clean, so none of this is a parsing artifact. | `results/frontier/baseline_campaign_v6/**/run_manifest.json` | 30 races, 558 decisions, 0 parse failures on each of nine routes; 10 races per risk cell | RQ1 |
 | B5 | Rerunning one route under the same frozen protocol reproduces its profile, so a route's number is not a run. | `results/frontier/baseline_replication/gemini-3-flash-preview` | 100.0 / 74.2 / 59.7 against 98.9 / 73.1 / 60.2; largest per-risk difference 1.1 points; risk response 38.7 to 40.3 | RQ1 |
 | B6 | What the rival does moves play substantially, but the magnitude varies by checkpoint and overlaps the risk effect in the full set. | `results/derived/scripted_opponent_campaign/**/scripted_opponent_rates.csv` plus the paired contrasts in the same tree | Rival stance 25.3 to 87.0 points; risk 0.1 to 0.9 against a fixed Safe rival 10.4 to 69.9 points | RQ2 |
 | B7 | Responding to the rival is general across the five screened routes tested, with one saturated boundary reversal. | `results/derived/scripted_opponent_campaign/` | Unsafe play follows the weak ordering in 14 of 15 route-by-risk cells, strictly in 12; all 15 paired lower bounds are positive, smallest +16.5 points | RQ2 |
-| B8 | How strongly a route answers its rival is a property of the checkpoint, not of the game. | same | Rival stance at risk 0.9: Gemini 3 Flash 71.7 [65.6, 77.5], Claude Opus 5 59.3 [51.2, 66.5], GPT-5.4 49.8 [35.8, 60.5], GPT-5.5 61.7 [53.5, 69.1], Claude Sonnet 5 45.0 [42.0, 48.2] | RQ2 |
+| B8 | Rival-response magnitude varies across endpoints under their observed contracts, so route-to-route differences are descriptive rather than intrinsic checkpoint effects. | same | Rival stance at risk 0.9: Gemini 3 Flash 71.7 [65.6, 77.5], Claude Opus 5 59.3 [51.2, 66.5], GPT-5.4 49.8 [35.8, 60.5], GPT-5.5 61.7 [53.5, 69.1], Claude Sonnet 5 45.0 [42.0, 48.2] | RQ2 |
 | B9 | Even the rival's first move alone changes the rest of the race, and most where risk is cheapest. | same | Opening-move contrast 25.1 [20.9, 29.7], 15.8 [8.3, 23.5], 11.5 [4.5, 19.7] points on Gemini 3 Flash | RQ2 |
 | B10 | A self-play rate is an interaction outcome, not a stand-alone measurement of risk attitude. | same, against `audit_versus_behaviour.csv` | Self-play exceeds the fixed-safe rate in 13 of 15 cells; Claude Opus 5 reverses at risks 0.6 and 0.9 | RQ2 |
 | B11 | One route keeps taking real risk against a rival that never does. | `results/derived/scripted_opponent_campaign/gpt-5.4-2026-03-05/` | GPT-5.4 plays Unsafe 36.6, 32.3 and 25.8 percent against Always Safe, the highest of the three at every risk level | RQ2 |

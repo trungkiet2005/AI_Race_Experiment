@@ -127,7 +127,7 @@ def main() -> int:
     print("\n".join(zip_report.lines()))
 
     (BUNDLE / "README.txt").write_text(
-        "AAMAS 2026 submission files\n"
+        "AAMAS 2027 submission files\n"
         "===========================\n\n"
         "Upload to the portal:\n"
         "  paper.pdf          the manuscript, anonymous\n"

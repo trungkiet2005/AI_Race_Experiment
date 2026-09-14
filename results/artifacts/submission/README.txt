@@ -1,4 +1,4 @@
-AAMAS 2026 submission files
+AAMAS 2027 submission files
 ===========================
 
 Upload to the portal:
