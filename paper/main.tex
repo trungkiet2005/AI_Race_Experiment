@@ -13,7 +13,7 @@
 %%% Use the second variant below to anonymize your submission (no author information shown).
 %%% For further information on anonymity and double-blind reviewing, 
 %%% please consult the call for paper information
-%%% https://cyprusconferences.org/aamas2026/submission-instructions/
+%%% https://warwick.ac.uk/fac/sci/dcs/aamas2027/calls/
 
 %%%% For anonymized submission, use this
 \documentclass[sigconf,anonymous]{aamas}
@@ -27,31 +27,30 @@
 
 \usepackage{balance} % for balancing columns on the final page
 
-% This paper is float heavy, and LaTeX's defaults reserve so much of a page for
-% text that a wide float can strand most of a column. Relaxing the fractions
-% lets text sit beside a float instead, which is a layout change only: no
-% content is removed and no figure is resized.
-\renewcommand{\textfraction}{0.06}
-\renewcommand{\topfraction}{0.94}
-\renewcommand{\bottomfraction}{0.94}
-\renewcommand{\floatpagefraction}{0.88}
-\setcounter{topnumber}{3}
-\setcounter{bottomnumber}{2}
-\setcounter{totalnumber}{4}
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%%% AAMAS-2027 copyright block
+%%% AAMAS-2027 copyright block (do not change!)
+
+\makeatletter
+\gdef\@copyrightpermission{
+  \begin{minipage}{0.2\columnwidth}
+   \href{https://creativecommons.org/licenses/by/4.0/}{\includegraphics[width=0.90\textwidth]{by}}
+  \end{minipage}\hfill
+  \begin{minipage}{0.8\columnwidth}
+   \href{https://creativecommons.org/licenses/by/4.0/}{This work is licensed under a Creative Commons Attribution International 4.0 License.}
+  \end{minipage}
+  \vspace{5pt}
+}
+\makeatother
 
 \setcopyright{ifaamas}
-\acmConference[AAMAS '27]{Proc.\@ of the 26th International Conference
-on Autonomous Agents and Multiagent Systems (AAMAS 2027)}{May 3 -- 7, 2027}
-{Hanoi, Vietnam}{AAMAS 2027 editors}
+\acmConference[AAMAS 2027]{Proc.\@ of the 26th International Conference
+on Autonomous Agents and Multiagent Systems (AAMAS 2027)}{3--7 May 2027}{Hanoi, Vietnam}{M.~Baldoni, F.~Fang, W.~Yeoh, N.~Yorke-Smith (eds.)}
 \copyrightyear{2027}
 \acmYear{2027}
-% \acmDOI{}
-% \acmPrice{}
-% \acmISBN{}
+\acmDOI{}
+%\acmPrice{}
+\acmISBN{}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -72,6 +71,8 @@ on Autonomous Agents and Multiagent Systems (AAMAS 2027)}{May 3 -- 7, 2027}
 
 \input{submission_id.tex}
 \acmSubmissionID{\SubmissionID}
+
+\submissionType{Research Paper Track}
 
 %%% Use this command to specify the title of your paper.
 
@@ -223,48 +224,48 @@ on Autonomous Agents and Multiagent Systems (AAMAS 2027)}{May 3 -- 7, 2027}
 % Equal-contribution authors, listed alphabetically
 % =========================================================
 \author{Phu-Hoa Pham}
-\authornotemark[1]
+%\authornotemark[1]
 \HCMUSaffiliation
 \email{23122030@student.hcmus.edu.vn}
 
 \author{Duy-Minh Dao-Sy}
-\authornote{These authors contributed equally to this work.}
+%\authornote{These authors contributed equally to this work.}
 \HCMUSaffiliation
 \email{23122041@student.hcmus.edu.vn}
 
 \author{Trung-Kiet Huynh}
-\authornotemark[1]
+%\authornotemark[1]
 \HCMUSaffiliation
 \email{23122039@student.hcmus.edu.vn}
 
 \author{Phu-Quy Nguyen-Lam}
-\authornotemark[1]
+%\authornotemark[1]
 \HCMUSaffiliation
 \email{23122048@student.hcmus.edu.vn}
 
 
 
 \author{Chi-Nguyen Tran}
-\authornotemark[1]
+%\authornotemark[1]
 \HCMUSaffiliation
 \email{23122044@student.hcmus.edu.vn}
 \author{Minh-Trung Le}
-\authornotemark[1]
+%\authornotemark[1]
 \HCMUTaffiliation
 \email{trung.leminh@hcmut.edu.vn}
 
 \author{Phong-Hao Le}
-\authornotemark[1]
+%\authornotemark[1]
 \HCMUTaffiliation
 \email{hao.lephong@hcmut.edu.vn}
 
 \author{Dinh-Nam Nguyen}
-\authornotemark[1]
+%\authornotemark[1]
 \HCMUTaffiliation
 \email{nam.nguyenkhmt@hcmut.edu.vn}
 
 \author{Thien-Ky Nguyen-Dong}
-\authornotemark[1]
+%\authornotemark[1]
 \HCMUTaffiliation
 \email{ky.nguyendongthien@hcmut.edu.vn}
 
@@ -280,13 +281,13 @@ on Autonomous Agents and Multiagent Systems (AAMAS 2027)}{May 3 -- 7, 2027}
 \email{elias.fernandez.domingos@vub.be}
 
 \author{Le Hong Trang}
-\authornote{Corresponding authors.}
+%\authornote{Corresponding authors.}
 %\authornotemark[2]
 \HCMUTaffiliation
 \email{lhtrang@hcmut.edu.vn}
 
 \author{The Anh Han}
-\authornotemark[2]
+%\authornotemark[2]
 \TeessideAffiliation
 \email{T.Han@tees.ac.uk}
 
@@ -335,16 +336,13 @@ one prompt version and one idealised game.
 % \newcommand{\BibTeX}{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em\TeX}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\settopmatter{printacmref=false}
-\renewcommand\footnotetextcopyrightpermission[1]{}
-%\linespread{0.9}
 \begin{document}
 
-%%% The following commands remove the headers in your paper. For final 
+%%% The following commands remove the headers in your paper. For final
 %%% papers, these will be inserted during the pagination process.
 
-\pagestyle{fancy}
-\fancyhead{}
+%\pagestyle{fancy}
+%\fancyhead{}
 
 %%% The next command prints the information defined in the preamble.
 
@@ -435,9 +433,9 @@ model under test.
 
 One more result shapes what a delegate population should be compared against.
 Simulated populations recover broad contrasts while showing less heterogeneity
-than the people they stand in for, in markets, cognitive phenotyping, survey
-populations and persona-based simulation
-\citep{delRioChanonaMarkets2025,codaFornoCogBench2024,wangSocioBench2025,suhSurveyDistributions2025,wangHumanSubjectivity2024},
+than the people they stand in for, in markets, survey populations and
+persona-based simulation
+\citep{delRioChanonaMarkets2025,synthetic_replacement_human,suhSurveyDistributions2025,wangHumanSubjectivity2024},
 which is why position papers call social simulation defensible for exploratory
 use until validated against the population of interest
 \citep{anthisSocialSimulation2025}. Strategic-game evidence is similarly
@@ -463,15 +461,16 @@ gradually to the stated danger, while one route replaces that trade-off with a
 switch from always fast to always careful. But where we put the agent against
 scripted code instead of a second copy of itself, the rival's stance shifts play
 on every route; its magnitude is checkpoint-specific and can overlap the effect
-of changing the stated danger. Neither external reference shows that shape: the
-evolutionary model predicts a switch where the agents deliver a gradient, and
+of changing the stated danger. Neither external reference shows that shape: at
+its usual strong-selection setting the evolutionary model predicts a switch
+where the agents deliver a gradient, and
 on raw first-five-round trajectories human participants use nearly the whole observed
 trajectory space while admitted routes generally use a small part of it.
 
 Three contributions follow. First, a scripted-rival design for repeated-game
 evaluation and the critique it licenses. That an LLM's self-play behaviour need
 not predict its behaviour against a different agent is known
-\citep{lekeasNashSuppression2026,palCooperation2026}, and fixed opponents are
+\citep{lekeasNashSuppression2026}, and fixed opponents are
 standard practice in this literature \citep{payneStrategicIntelligence2025};
 what we add is the version that matters for a safety reading, that self-play
 can hide the response to the treatment the study is about, measured against an
@@ -566,9 +565,9 @@ for a winner or tied winner, so the best action can depend on the risk
 condition, earlier actions, and the expected response of other players.
 
 We use four simple strategies as a theory benchmark: Always Safe (AS), Always
-Unsafe (AU), Conditional Safe (CS), which starts Safe and then copies the
-opponent, and Conditional Unsafe (CAS), which starts Unsafe and then copies
-the opponent. In the reconstructed finite-population evolutionary model of
+Unsafe (AU), Conditionally Safe (CS), which starts Safe and then copies the
+opponent, and Conditionally Antisocial Safe (CAS), which starts Unsafe and then
+copies the opponent. In the reconstructed finite-population evolutionary model of
 \citet{falling_behind_unsafe}, the most common strategy changes from AU at
 $p_r^{\max}=0.10$, to CAS at $0.60$, and to CS at $0.90$: the theory predicts
 not one fixed amount of Unsafe play but a risk-dependent shift between
@@ -597,7 +596,10 @@ The main behavioural outcome is whether an agent chooses Unsafe. The race,
 not the individual decision, is the main independent experimental unit,
 because decisions from one race depend on earlier states and are not
 separate random samples; uncertainty is grouped by race or matched repetition
-wherever possible. A \emph{parse failure} is a response that does not follow
+wherever possible. A cell's rate pools its decisions, while a paired contrast
+is the mean over matched repetitions of the within-repetition difference in
+race-level rates, so each repetition counts once however long its race ran;
+the two therefore need not differ by exactly the printed contrast. A \emph{parse failure} is a response that does not follow
 the required action format, and because the fallback action changes later
 states, one marks the whole race as contaminated.
 \subsection{Evidence strata and admission}
@@ -609,25 +611,13 @@ question under a plan fixed before any result is inspected, with its protocol,
 route, prompt, configuration, race count and exclusion rules recorded in the
 run manifest. We never pool the two strata.
 
-A paired behavioural diagnostic compares the canonical prompt against a
-deterministic four-row decision card that discloses the focal agent's
-immediate payoff, progress and private-risk consequence for each action
-profile, while revealing neither the opponent's move nor the stopping horizon.
-It runs on the one route here whose weights are published, screened by its own
-battery rather than by the screen of \S\ref{sec:design-screen}, so it is read
-only as a within-route contrast between two presentations.
-
-Three further manipulations are described in full in the supplementary
-material: a persona framing with a length-matched neutral placebo, eight
-narrative skins that retell the same game as different stories, and a
-substitution of the opaque response codes $P$ and $Q$ for \Safe{} and
-\Unsafe{}. The last two are read three ways: a paired first-round comparison
-at an identical state, a \emph{fixed-state replay} that asks for one action
-at a previously recorded state without letting the answer change later
-states, and a \emph{live trajectory} in which each answer does change the
-next state. A task-validity screen gates which routes enter the behavioural
-comparison. It is an inclusion rule, not a behavioural outcome, and all
-gameplay results below are analysed without ranking routes by its scores.
+One presentation check is confirmatory and is described in the supplementary
+material: on two routes, a fully crossed rerun retells the same game under a
+race story or as an abstract contest, and substitutes the opaque response
+codes $P$ and $Q$ for \Safe{} and \Unsafe{} under both code mappings. A
+task-validity screen gates which routes enter the behavioural comparison. It
+is an inclusion rule, not a behavioural outcome, and all gameplay results
+below are analysed without ranking routes by its scores.
 
 \subsection{Quality-control screen on the routes}
 \label{sec:design-screen}
@@ -645,16 +635,17 @@ The screen reads probes and never reads a race, so gameplay cannot change its
 verdict. Two admitted routes pass one screening domain at the minimum attainable
 score, and on this nine-route roster the admitted/refused split coincides with
 endpoint tier naming. We therefore use the screen only as a task-validity
-inclusion rule, never as a capability axis or a behavioural contrast. The
-published-weight route used in the arithmetic diagnostic was assessed with a
-different battery and is not pooled with this screen. Full screening results
-and robustness checks are retained in the supplementary material.
+inclusion rule, never as a capability axis or a behavioural contrast. Full
+screening results are retained in the supplementary material, and whether such
+a screen measures comprehension at all is the subject of a concurrent
+submission \citep{anonConcurrentScreen2026}; no result below rests on a
+screen score.
 
 \section{Results}
 \label{sec:results}
 
-These agents respond to the danger they are told about, and their behaviour is
-especially sensitive to the rival. Four routes have profiles closer in response
+These agents respond to the danger they are told about, and their behaviour
+also depends strongly on the rival. Four routes have profiles closer in response
 shape to the near-neutral evolutionary benchmark; Claude Opus 5 is the step-like
 exception. Admitted routes generally occupy a more concentrated observed
 trajectory space than human participants do: 13 of 15 route-risk cells fall
@@ -725,7 +716,7 @@ matters here because no provider confirmed applying the requested sampling seed.
 
 Representation-equivalent prompt changes also move rates. The directional risk
 response survives a fully crossed narrative-by-symbol rerun on two routes,
-although swapping the opaque action-code mapping shifts Unsafe{} play by
+although swapping the opaque action-code mapping shifts \Unsafe{} play by
 8.3--9.5 percentage points (see the supplementary material).
 
 \begin{figure*}[t]
@@ -775,22 +766,21 @@ homogeneous across endpoints. Cross-route differences in effect magnitude are
 therefore descriptive rather than controlled model comparisons; the full
 contract provenance is reported in the supplement.
 
-Across these five routes, changing the scripted rival produces a positive
-25.3--87.0 percentage-point shift in Unsafe{} play across the fifteen
+Across these five routes, moving the scripted rival from Always Safe to Always
+Unsafe shifts \Unsafe{} play by 25.3--87.0 percentage points across the fifteen
 route-by-risk cells. Holding the rival at Always Safe, changing the stated risk
-from $0.1$ to $0.9$ produces 10.4--69.9 points, depending on the route. Both
-contrasts use the same ten matched blocks, so the absolute comparison is the
-load-bearing result, but the two effect families overlap once the conditional
-rivals are included. In particular, the smallest rival-stance lower bound is
-$+16.5$ points, while the largest matched-arm risk contrast is $+69.9$
-points on Claude Opus 5. The contrast is therefore a context-sensitive
-descriptive comparison, not a universal ordering of rival effects over risk.
+from $0.1$ to $0.9$ moves it by 10.4--69.9 points, depending on the route. Both
+contrasts use the same ten matched blocks, and the two ranges overlap: the
+smallest rival-stance lower bound is $+16.5$ points, while the largest
+matched-arm risk contrast is $+69.9$ points on Claude Opus 5. The comparison is
+therefore context-sensitive and descriptive, not a universal ordering of rival
+effects over risk.
 
 Answering the rival is general across these five endpoints. \Unsafe{} play
 rises from the rival that always plays \Safe{}, through the two conditional
 rivals, to the rival that never plays \Safe{}, in fourteen of fifteen
 route-by-risk cells, with strict ordering in twelve. The one reversal is
-GPT-5.5 at risk $0.1$, where Conditional Unsafe reaches $100.0\%$ and
+GPT-5.5 at risk $0.1$, where the CAS rival draws $100.0\%$ and
 Always Unsafe is $97.8\%$, so this is a boundary case rather than a clean
 counterexample (Figure~\ref{fig:scripted-opponent-main}a). The paired
 difference between the two unconditional rivals is
@@ -811,10 +801,10 @@ endpoint samples, so intervals that fail to overlap are a conservative sign of
 a difference rather than a test of one.
 
 A mirror-match rate is therefore an interaction outcome of one policy meeting
-itself, rather than a stand-alone measurement of how a route treats risk. The
-fixed-safe and self-play designs differ in thirteen of fifteen cells; Claude
-Opus 5 reverses the direction at risks $0.6$ and $0.9$, where both rates are at
-or near the floor. On Gemini 3 Flash at the lowest risk, the distance is a
+itself, rather than a stand-alone measurement of how a route treats risk.
+Self-play exceeds the fixed-safe rate in thirteen of fifteen cells; the two
+exceptions are Claude Opus 5 at the floor, lower at risk $0.6$ ($0.0\%$ against
+$1.1\%$) and tied at $0.0\%$ at risk $0.9$. On Gemini 3 Flash at the lowest risk, the distance is a
 lower bound because nine of its ten mirror-match races have every decision
 \Unsafe{}. These results motivate treating mirror-match rates as interaction
 outcomes rather than route-level risk preferences.
@@ -872,8 +862,8 @@ mistaken for a result. As $\beta$ falls towards neutrality the predicted
 high-risk \Unsafe{} rate rises off the floor and the model's own risk response
 becomes graded, which is the shape the routes show. At $\beta=0.01$ with
 $\mu=0.05$ the model predicts 87.3\%, 63.9\% and 38.0\%, the closest cell in the
-entire sweep to both routes, within 10.3 percentage points of Claude Sonnet 5
-and 15.1 of Gemini 3 Flash in root-mean-square error.
+entire sweep to both routes, within 9.6 percentage points of Claude Sonnet 5
+and 15.4 of Gemini 3 Flash in root-mean-square error.
 
 The agents land nearer to the regime that describes the people than to the one
 usually quoted as the theory's prediction, and that cell is not one we chose to
@@ -906,7 +896,7 @@ string read within its own risk condition; because the progress increments are
 fixed, that string fully specifies the first-five-round joint-action trajectory.
 The comparison covers all nine routes that faced the screen, admitted and
 refused alike, on the confirmatory baseline, 60
-trajectories per route, against 340 complete human trajectories from the public
+trajectories per route, against 340 complete human trajectories from the
 de-identified dataset of \citet{falling_behind_unsafe}. That single published
 study of a single game is the only human reference here, which bounds every
 human comparison below to that population and that mechanism.
@@ -954,11 +944,9 @@ the participant-level human null at every risk level, and no other route reaches
 it once under that sensitivity. On this measure they are not less diverse than
 people. Under the primary dyad null, GPT-5.4 and GPT-5.5 also meet the finite-draw
 floor at risk $0.9$, so the cluster-aware headline is 13 of 15 admitted cells
-rather than all 15. Both refused routes are routes the
-quality-control screen of \S\ref{sec:design-screen} refused, at 75.0\% and
-51.7\% overall probe accuracy. That is why the screen is reported in the
-body: without it, these two rows would read as the finding that small models
-match human strategic diversity.
+rather than all 15. Because the two exceptions are outside the admitted set
+fixed by the inclusion rule of \S\ref{sec:design-screen} before any race was
+read, they are reported, not interpreted as strategic diversity.
 
 \begin{figure*}[t]
     \centering
@@ -993,7 +981,7 @@ them almost entirely by \Unsafe{} rate.
 
 Populations that look alike in rate can still be following different observed
 rules. Exploratory classifier and feature analyses in the supplement suggest
-that possibility, but use a seven-checkpoint roster containing neither GPT-5.4
+that possibility, but use earlier pilot rosters containing neither GPT-5.4
 nor GPT-5.5, so they support no claim about the admitted panel.
 
 \section{Discussion and conclusion}
@@ -1024,21 +1012,25 @@ policies rather than a sample of opponents. The human comparison rests on one
 published study of one game, 340 complete trajectories, and we do not add a
 second human dataset, because any other dataset would change the game as well
 as the population. And the evolutionary comparison is a reconstruction audited
-against pinned EGTtools source rather than a bitwise reproduction of
+against pinned EGTtools source \citep{fernandezDomingos2020Egttools} rather
+than a bitwise reproduction of
 undisclosed author code, so it bounds the regime in which the benchmark is read
 rather than fitting the agents.
 
-Four further limits are worth stating. Fixed-state replay and live play measure
-different things, one decision at a saved state against dependent decisions
-along a trajectory, so their effect sizes are not interchangeable. The
-representation-robustness design is crossed for two routes, enough to show the
-effect replicates but not to characterise endpoints in general. A matched
-group-size grid now exists on one route, but adding a company changes the stage
-payoff and the prompt length too, so no pure group-size effect is identifiable.
-Seed forwarding is provider-specific: one route's SDK stripped the requested
-seed and another forwarded it unconfirmed. And this game models a private
-speed-versus-safety trade-off and nothing else, with no collective harm,
-regulation, communication or uncertainty about real capabilities.
+Four further limits are worth stating. The crossed presentation design covers
+two routes, enough to show the effect replicates but not to characterise
+endpoints in general. A matched group-size grid exists on one
+route, but adding a company changes the stage payoff and the prompt length too,
+so no pure group-size effect is identifiable. Sampling was not under our
+control: no provider confirmed the requested temperature, and the seed was
+stripped on the Google routes and forwarded unconfirmed on the others. And this
+game models a private speed-versus-safety trade-off and nothing else, with no
+collective harm, regulation, communication or uncertainty about real
+capabilities.
+
+Code, the de-identified run records and a checker that recomputes every
+reported quantity from them are provided with the supplementary material and
+will be released publicly with the final version.
 
 % Acknowledgements name individuals, their institutions and a grant number, so
 % they identify the authors. The class does not suppress this section in

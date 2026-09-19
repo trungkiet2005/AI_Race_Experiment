@@ -169,3 +169,6 @@ Thumbs.db
 # Keep Python bytecode ignored even inside selectively unignored results trees.
 **/__pycache__/
 **/*.py[cod]
+
+# ARR campaign launch logs name collection accounts
+/arr/campaign/logs/

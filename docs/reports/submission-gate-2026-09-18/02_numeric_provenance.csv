@@ -1,0 +1,200 @@
+id,file,line,quoted_text,value,covered_by_verifier,artifact_path,artifact_value,status,note
+N001,paper/main.tex,305,"a scripted-rival study of five frontier-model endpoints that passed a frozen task-validity screen",5,yes,results/frontier/scripted_opponent_campaign/ + results/frontier/admission_campaign_v6/,5 routes; 60 of 60 cells,MATCH,verifier checks 'five routes are admitted' and 'complete on five routes: 60 of 60 cells'
+N002,paper/main.tex,314,"places the four graded profiles closer in response shape to the near-neutral regime",4,yes,results/open_source/egt_reproduction/egt_admitted_route_fits.json,graded=4; best weak RMSE 5.1-15.4 vs reference 32.9-36.6,MATCH,
+N003,paper/main.tex,317,"13 of 15 admitted cells fall below every draw of a dyad-matched human null",13 of 15,yes,results/derived/trajectory_diversity_dyad_primary/trajectory_diversity_dyad_primary.csv,13 of 15,MATCH,abstract agrees with results L660 and L928
+N004,paper/main.tex,395,"trajectories over the first five rounds",5,no,ai_race/configs/game/ai_race_risk_60.json,minRounds=5,NOT_A_RESULT,design window
+N005,paper/main.tex,405,"distort one simulated experiment while reproducing three others",3,no,n/a (cited literature),,NOT_A_RESULT,claim about Aher et al.; agrees with supplementary citation audit (three of four reproduced)
+N006,paper/main.tex,454,"We therefore ask three questions",3,no,paper/main.tex L455-459,3 enumerated (Risk; Rivalry; Humans and theory),NOT_A_RESULT,internal count consistent
+N007,paper/main.tex,461,"The four graded routes respond gradually to the stated danger",4,yes,results/frontier/baseline_campaign_v6/derived/audit_versus_behaviour.csv,4 graded routes (risk response 38.2-57.0 pp),MATCH,
+N008,paper/main.tex,462,"one route replaces that trade-off with a switch",1,yes,results/frontier/baseline_campaign_v6/ai-race-baseline/3/claude-opus-5-default/1494093/results/ai_race_baseline/turns.jsonl,Opus 5: 186/186 unsafe at 0.1; 0/372 above,MATCH,
+N009,paper/main.tex,471,"Three contributions follow",3,no,paper/main.tex L471-485,3 enumerated (First; Second; Third),NOT_A_RESULT,internal count consistent
+N010,paper/main.tex,486,"the available position analysis covers two checkpoints",2,no,results/cross_model_pilot_synthesis/data/nplayer_position_effect_by_persona.csv,models = gpt-5-nano; gpt-5.4-nano,MATCH,agrees with supplementary L2233-2234
+N011,paper/main.tex,522,"Panel d lists the three empirical lenses",3,no,figure caption,3 lenses listed,NOT_A_RESULT,
+N012,paper/main.tex,530,"sigma(S)=1.0 and sigma(U)=1.5",1.0; 1.5,no,ai_race/configs/game/ai_race_risk_*.json,safeProgress=1.0; unsafeProgress=1.5,NOT_A_RESULT,design parameter; matches config
+N013,paper/main.tex,532,"pi = (1.0 0.6 / 2.4 2.0)",1.0; 0.6; 2.4; 2.0,no,ai_race/configs/game/ai_race_risk_*.json,stagePayoffs 1.0/0.6/2.4/2.0,NOT_A_RESULT,design parameter; matches config and supplementary L2913
+N014,paper/main.tex,537,"The race lasts a minimum of 5 rounds",5,no,ai_race/configs/game/ai_race_risk_*.json,minRounds=5,NOT_A_RESULT,design parameter
+N015,paper/main.tex,537,"terminates with probability 0.2",0.2,no,ai_race/configs/game/ai_race_risk_*.json,stopProbability=0.2,NOT_A_RESULT,design parameter
+N016,paper/main.tex,537,"giving an expected horizon E[T]=9",9,no,derived from config,5 + 0.8/0.2 = 9,NOT_A_RESULT,derivation correct (maxRoundsSafetyCap=100 truncation negligible)
+N017,paper/main.tex,537,"wins a prize B=100",100,no,ai_race/configs/game/ai_race_risk_*.json,racePrize=100,NOT_A_RESULT,design parameter
+N018,paper/main.tex,537,"split 50/50 on an exact tie",50/50,no,ai_race/engine/scoring.py,prize = race_prize/2.0 on tie,NOT_A_RESULT,design parameter
+N019,paper/main.tex,539,"p_r^max in {0.10,0.60,0.90}",0.10; 0.60; 0.90,no,ai_race/configs/game/ai_race_risk_{10;60;90}.json,maxPrivateRisk 0.1/0.6/0.9,NOT_A_RESULT,design parameter
+N020,paper/main.tex,548,"the hidden minimum-five-round horizon, the terminal prize B=100",5; 100,no,ai_race/configs/game/ai_race_risk_*.json,minRounds=5; racePrize=100,NOT_A_RESULT,repeat of N014/N017
+N021,paper/main.tex,556,"The engine supports N in {2,3,4,5}",2-5,no,ai_race/engine_nplayer/state.py; results/frontier/nplayer_matched_campaign/,engine accepts n_players>=2; matched grid ran N=2..5,NOT_A_RESULT,true as stated (engine is more general)
+N022,paper/main.tex,568,"We use four simple strategies",4,no,ai_race/engine/strategies.py,AS/AU/CS/CAS,NOT_A_RESULT,design
+N023,paper/main.tex,572,"the most common strategy changes from AU at 0.10, to CAS at 0.60, and to CS at 0.90",AU/CAS/CS,no,results/open_source/egt_reproduction/egt_stationary_summary.csv (regime main_reference),AU 92.4% at 0.1; CAS 96.5% at 0.6; CS 94.2% at 0.9,MATCH,results/frontier/egt_frontier_comparison_v2/egt_stationary_summary.csv gives 91.9/96.3/93.9 (the numbers the supplement quotes); modal strategy identical in both
+N024,paper/main.tex,587,"The run manifests record a requested temperature of 0.7",0.7,no,results/frontier/baseline_campaign_v6/ai-race-baseline/*/*/*/results/ai_race_baseline/run_manifest.json,decoding.temperature_requested=0.7 on 9/9 routes,MATCH,
+N025,paper/main.tex,588,"that the hosted SDK forwarded on no baseline route",0 routes,no,same manifests,decoding.temperature_forwarded_by_sdk=False on 9/9,MATCH,
+N026,paper/main.tex,613,"deterministic four-row decision card",4,no,n/a,one row per 2x2 action profile,NOT_A_RESULT,design
+N027,paper/main.tex,621,"eight narrative skins that retell the same game as different stories",8,no,ai_race/prompts/context_skins.py (SKINS),8 skins defined,MATCH,main says these are 'described in full in the supplementary material' but supplementary.tex never mentions eight skins (only the two-skin crossed rerun)
+N028,paper/main.tex,636,"the same frozen bank of 20 probes",20,no,results/frontier/admission_campaign_v6/**/admission.json,n_rows=60 per route = 20 probes x 3; domain rows 12/6/15/6/15/6,MATCH,verifier asserts 60 rows and 540 total but not 20/6/3 directly
+N029,paper/main.tex,637,"over six task-validity domains",6,no,results/frontier/admission_campaign_v6/**/admission.json,6 by_domain keys,MATCH,
+N030,paper/main.tex,637,"three times",3,no,results/frontier/admission_campaign_v6/**/admission.json,60 rows / 20 probes = 3,MATCH,
+N031,paper/main.tex,638,"80% overall accuracy",80%,yes,results/frontier/admission_campaign_v6/**/admission.json,overall_accuracy_min=0.80,MATCH,
+N032,paper/main.tex,638,"75% state reconstruction",75%,yes,results/frontier/admission_campaign_v6/**/admission.json,state_reconstruction_accuracy_min=0.75,MATCH,
+N033,paper/main.tex,639,"75% terminal scoring",75%,yes,results/frontier/admission_campaign_v6/**/admission.json,terminal_scoring_accuracy_min=0.75,MATCH,
+N034,paper/main.tex,639,"Five of nine routes passed",5 of 9,yes,results/frontier/admission_campaign_v6/**/admission.json,5 admitted of 9,MATCH,
+N035,paper/main.tex,640,"the other four still played the same confirmatory baseline",4,yes,results/frontier/baseline_campaign_v6/,9 routes with completed gameplay,MATCH,
+N036,paper/main.tex,645,"Two admitted routes pass one screening domain at the minimum attainable score",2,yes,results/frontier/admission_campaign_v6/**/admission.json,GPT-5.5 state recon 12/15; Claude Sonnet 5 terminal 12/15; no other admitted domain at 12/15,MATCH,
+N037,paper/main.tex,646,"on this nine-route roster",9,yes,results/frontier/admission_campaign_v6/,9 verdicts,MATCH,
+N038,paper/main.tex,657,"Four routes have profiles closer in response shape to the near-neutral evolutionary benchmark",4,yes,results/open_source/egt_reproduction/egt_admitted_route_fits.json,graded=4; switch=Claude Opus 5,MATCH,
+N039,paper/main.tex,660,"13 of 15 route-risk cells fall below every draw of the primary dyad-matched human null",13 of 15,yes,results/derived/trajectory_diversity_dyad_primary/trajectory_diversity_dyad_primary.csv,13 of 15 admitted,MATCH,
+N040,paper/main.tex,661,"The four subsections take those results in turn",4,no,paper/main.tex sections 4.1-4.4,4,NOT_A_RESULT,internal count consistent
+N041,paper/main.tex,664,"Three- to five-player races",3-5,no,n/a,,NOT_A_RESULT,scope pointer
+N042,paper/main.tex,673,"four of the five give ground gradually and the fifth switches",4 of 5,yes,results/frontier/baseline_campaign_v6/ turns.jsonl,4 graded; Opus step,MATCH,
+N043,paper/main.tex,674,"Each route supplied 30 races",30,yes,results/frontier/baseline_campaign_v6/*/run_manifest.json,n_races=30 on 9/9,MATCH,
+N044,paper/main.tex,675,"558 dependent within-race decisions",558,yes,results/frontier/baseline_campaign_v6/*/turns.jsonl,558 on 9/9,MATCH,
+N045,paper/main.tex,675,"with zero parse failures",0,yes,results/frontier/baseline_campaign_v6/*/turns.jsonl,0 parse_failed,MATCH,
+N046,paper/main.tex,676,"ten races per risk cell",10,yes,results/frontier/baseline_campaign_v6/*/turns.jsonl,10 game_ids per risk,MATCH,
+N047,paper/main.tex,684,"The four graded routes fall within a 19-point band",19,yes,results/frontier/baseline_campaign_v6/derived/audit_versus_behaviour.csv,38.17 to 56.99 = 18.8,ROUNDING,18.8 rounds to 19; verifier asserts round(width)=19
+N048,paper/main.tex,697,"The four graded routes, spanning three providers",3,yes,results/frontier/baseline_campaign_v6/derived/audit_versus_behaviour.csv,anthropic; google; openai,MATCH,
+N049,paper/main.tex,698,"a 19-point band",19,yes,results/frontier/baseline_campaign_v6/derived/audit_versus_behaviour.csv,18.8,ROUNDING,
+N050,paper/main.tex,698,"from 38.2",38.2,yes,results/frontier/baseline_campaign_v6/derived/audit_versus_behaviour.csv; turns.jsonl,38.17 (GPT-5.5),MATCH,
+N051,paper/main.tex,698,"to 57.0 percentage points",57.0,yes,results/frontier/baseline_campaign_v6/derived/audit_versus_behaviour.csv; turns.jsonl,56.99 (Claude Sonnet 5),MATCH,
+N052,paper/main.tex,700,"averaging a switch with four slopes returns 54.8 points",54.8,yes,results/frontier/baseline_campaign_v6/*/turns.jsonl,54.84,MATCH,
+N053,paper/main.tex,704,"on all 186 decisions at risk 0.1",186,yes,results/frontier/baseline_campaign_v6/ai-race-baseline/3/claude-opus-5-default/1494093/.../turns.jsonl,186/186 unsafe,MATCH,
+N054,paper/main.tex,704,"Safe on all 372 decisions above it",372,yes,same,0/372 unsafe,MATCH,
+N055,paper/main.tex,705,"Its 100-point figure",100,yes,same,risk response 100.0,MATCH,
+N056,paper/main.tex,711,"roughly a third to three fifths of their decisions",~33%-60%,yes,results/frontier/baseline_campaign_v6/derived/audit_versus_behaviour.csv,32.3 to 60.2,MATCH,
+N057,paper/main.tex,718,"the profile was stable across two administrations",2,yes,results/derived/baseline_replication.json,reference run + repeat run,MATCH,
+N058,paper/main.tex,720,"moved no risk cell by more than 1.1 points",1.1,yes,results/derived/baseline_replication.json,largest_absolute_difference_pp=1.1,MATCH,
+N059,paper/main.tex,720,"over 186 decisions",186,yes,results/derived/baseline_replication.json,decisions=186 per risk,MATCH,
+N060,paper/main.tex,721,"a 93.0-point spread in risk response across the nine routes",93.0,yes,results/frontier/baseline_campaign_v6/*/turns.jsonl,100.0 - 6.99 = 93.01,MATCH,
+N061,paper/main.tex,722,"moved its own risk response from 38.7",38.7,yes,results/derived/baseline_replication.json,38.71,MATCH,
+N062,paper/main.tex,722,"to 40.3",40.3,yes,results/derived/baseline_replication.json,40.3,MATCH,
+N063,paper/main.tex,727,"a fully crossed narrative-by-symbol rerun on two routes",2,yes,results/derived/frontier_context_mapping_campaign_v3/context_mapping_cross_marginals.json,routes_complete = 2,MATCH,
+N064,paper/main.tex,729,"8.3--9.5 percentage points (lower end)",8.3,yes,results/derived/frontier_context_mapping_campaign_v3/context_mapping_cross_marginals.json,8.3 [5.4; 12.2] Claude Sonnet 5,MATCH,
+N065,paper/main.tex,729,"8.3--9.5 percentage points (upper end)",9.5,yes,results/derived/frontier_context_mapping_campaign_v3/context_mapping_cross_marginals.json,9.5 [5.6; 13.8] Gemini 3 Flash,MATCH,
+N066,paper/main.tex,739,"95% intervals over the ten matched repetition blocks",10,yes,results/derived/scripted_opponent_campaign/*/scripted_opponent_rates.json,n_blocks=10 pairing_verified on all 15,MATCH,
+N067,paper/main.tex,739,"All fifteen lower bounds are positive",15,yes,results/derived/scripted_opponent_campaign/*/scripted_opponent_rates.json,15/15 ci95_low>0; min 16.5,MATCH,
+N068,paper/main.tex,753,"In the five routes tested against scripted rivals",5,yes,results/frontier/scripted_opponent_campaign/,5 routes,MATCH,
+N069,paper/main.tex,760,"Five admitted routes each played the four benchmark strategies",5; 4,yes,results/frontier/scripted_opponent_campaign/*/*/collection_receipt.json,5 routes x 4 strategies x 3 risks,MATCH,
+N070,paper/main.tex,762,"60 cells",60,yes,results/frontier/scripted_opponent_campaign/,60 cells,MATCH,
+N071,paper/main.tex,762,"ten races each",10,yes,results/frontier/scripted_opponent_campaign/*/*/turns.jsonl,10 races per cell,MATCH,
+N072,paper/main.tex,762,"600 races",600,yes,results/frontier/scripted_opponent_campaign/*/*/turns.jsonl,600,MATCH,
+N073,paper/main.tex,762,"5,580 route decisions",5580,yes,results/frontier/scripted_opponent_campaign/*/*/turns.jsonl,5580,MATCH,
+N074,paper/main.tex,763,"with no parse failure anywhere",0,yes,results/frontier/scripted_opponent_campaign/*/*/turns.jsonl,0 parse failures,MATCH,
+N075,paper/main.tex,764,"every one of its 5,580 recorded rival moves was recomputed afterwards",5580,yes,results/frontier/scripted_opponent_campaign/*/*/turns.jsonl,11160 turns - 5580 route decisions = 5580 rival moves; 0 deviations,MATCH,verifier asserts 0 deviations over 11160 turns; 5580 derived
+N076,paper/main.tex,766,"counterbalanced five and five inside each cell",5/5,yes,results/frontier/scripted_opponent_campaign/*/*/turns.jsonl,5 and 5 seats in 60/60 cells,MATCH,
+N077,paper/main.tex,779,"a positive 25.3--87.0 percentage-point shift (lower end)",25.3,yes,results/derived/scripted_opponent_campaign/risk_versus_rival.json,25.27,MATCH,
+N078,paper/main.tex,779,"a positive 25.3--87.0 percentage-point shift (upper end)",87.0,yes,results/derived/scripted_opponent_campaign/risk_versus_rival.json,87.03,MATCH,
+N079,paper/main.tex,779,"across the fifteen route-by-risk cells",15,yes,results/derived/scripted_opponent_campaign/risk_versus_rival.json,15 rival cells,MATCH,
+N080,paper/main.tex,781,"changing the stated risk from 0.1 to 0.9 produces 10.4--69.9 points (lower end)",10.4,yes,results/derived/scripted_opponent_campaign/scripted_opponent_rates.json (Gemini; AS arm),10.4 [5.4; 15.7],MATCH,
+N081,paper/main.tex,781,"10.4--69.9 points (upper end)",69.9,yes,results/derived/scripted_opponent_campaign/claude-opus-5-default/scripted_opponent_rates.json (AS arm),69.9 [57.1; 83.5],MATCH,
+N082,paper/main.tex,782,"Both contrasts use the same ten matched blocks",10,yes,results/derived/scripted_opponent_campaign/*/scripted_opponent_rates.json,n_blocks=10,MATCH,
+N083,paper/main.tex,785,"the smallest rival-stance lower bound is +16.5 points",16.5,yes,results/derived/scripted_opponent_campaign/claude-opus-5-default/scripted_opponent_rates.json,16.50 (Opus 5 at 0.1),MATCH,surrounding sentence says the families overlap 'once the conditional rivals are included' but both quoted numbers are matched-arm/stance values and already overlap without them (verifier check 219)
+N084,paper/main.tex,785,"the largest matched-arm risk contrast is +69.9 points on Claude Opus 5",69.9,yes,results/derived/scripted_opponent_campaign/risk_versus_rival.json,69.9 [57.1; 83.5],MATCH,see N083 wording note
+N085,paper/main.tex,791,"in fourteen of fifteen route-by-risk cells",14 of 15,yes,results/frontier/scripted_opponent_campaign/*/*/turns.jsonl,14/15 weak ordering,MATCH,
+N086,paper/main.tex,792,"with strict ordering in twelve",12,yes,same,12/15 strict,MATCH,
+N087,paper/main.tex,793,"Conditional Unsafe reaches 100.0%",100.0,yes,results/derived/scripted_opponent_campaign/gpt-5.5-2026-04-23/scripted_opponent_rates.json,93/93 = 100.0,MATCH,
+N088,paper/main.tex,794,"Always Unsafe is 97.8%",97.8,no,results/derived/scripted_opponent_campaign/gpt-5.5-2026-04-23/scripted_opponent_rates.json,91/93 = 97.85,MATCH,verifier only asserts AU < 1.0
+N089,paper/main.tex,797,"All fifteen paired-block 95% intervals have positive lower bounds",15,yes,results/derived/scripted_opponent_campaign/*/scripted_opponent_rates.json,15/15,MATCH,
+N090,paper/main.tex,798,"with the smallest at +16.5 points",16.5,yes,results/derived/scripted_opponent_campaign/claude-opus-5-default/scripted_opponent_rates.json,16.50,MATCH,
+N091,paper/main.tex,805,"largest for Claude Opus 5 at risk 0.6 (+87.0 points)",87.0,no,results/derived/scripted_opponent_campaign/claude-opus-5-default/scripted_opponent_rates.json,87.03 [84.31; 89.59] at 0.6,MATCH,verifier asserts the span maximum 87.0 but not which cell carries it
+N092,paper/main.tex,806,"smallest for GPT-5.5 at risk 0.1 (+25.3 points)",25.3,no,results/derived/scripted_opponent_campaign/gpt-5.5-2026-04-23/scripted_opponent_rates.json,25.27 [20.33; 30.57] at 0.1,MATCH,attribution not asserted by verifier
+N093,paper/main.tex,806,"Gemini 3 Flash remains near +70 points across risks",~70,yes,results/derived/scripted_opponent_campaign/scripted_opponent_rates.json,73.5 / 67.4 / 71.7,MATCH,
+N094,paper/main.tex,807,"GPT-5.4 remains near +50",~50,no,results/derived/scripted_opponent_campaign/gpt-5.4-2026-03-05/scripted_opponent_rates.json,47.5 / 48.0 / 49.8,MATCH,verifier asserts only the 0.9 value (49.8)
+N095,paper/main.tex,809,"GPT-5.4 still does so 36.6%",36.6,no,results/derived/scripted_opponent_campaign/gpt-5.4-2026-03-05/scripted_opponent_rates.json,36.56 (AS; 0.1),MATCH,verifier prints but does not assert this value
+N096,paper/main.tex,809,"32.3%",32.3,no,same,32.26 (AS; 0.6),MATCH,
+N097,paper/main.tex,809,"and 25.8% of the time",25.8,no,same,25.81 (AS; 0.9),MATCH,
+N098,paper/main.tex,815,"The fixed-safe and self-play designs differ in thirteen of fifteen cells",13 of 15,yes,results/derived/scripted_opponent_campaign/*/scripted_opponent_rates.json + results/frontier/baseline_campaign_v6/*/turns.jsonl,differ in 14 of 15: self-play higher in 13; lower in 1 (Opus 0.6: 0.0 vs 1.1); equal in 1 (Opus 0.9: 0.0 vs 0.0),MISMATCH,verifier asserts 'self-play exceeds the fixed-safe rival in 13 of 15' which is a different proposition; supplementary L1650-1651 repeats the same wording
+N099,paper/main.tex,816,"Claude Opus 5 reverses the direction at risks 0.6 and 0.9",0.6; 0.9,yes,same,0.6: self-play 0.0 < AS 1.1 (reversal); 0.9: 0.0 = 0.0 (tie; no reversal),MISMATCH,only 0.6 is a reversal; supplementary L1652 ('lower at risks 0.6 and 0.9') has the same error
+N100,paper/main.tex,818,"nine of its ten mirror-match races have every decision Unsafe",9 of 10,yes,results/frontier/baseline_campaign_v6/ai-race-baseline/3/gemini-3-flash-preview/1395291/.../turns.jsonl,9 of 10,MATCH,
+N101,paper/main.tex,822,"Four reduced strategies are four points in a space of policies",4,no,n/a,,NOT_A_RESULT,design
+N102,paper/main.tex,825,"five commercial endpoints are not a sample",5,yes,results/frontier/scripted_opponent_campaign/,5,MATCH,
+N103,paper/main.tex,834,"beta=2 and mu=beta/Z",2,no,results/open_source/egt_reproduction/egt_beta_sensitivity.csv,mutation_rule=beta_over_Z; beta=2,NOT_A_RESULT,parameter point
+N104,paper/main.tex,834,"predict Unsafe play of 99.2%",99.2,yes,results/open_source/egt_reproduction/egt_beta_sensitivity.csv,99.17,MATCH,
+N105,paper/main.tex,834,"98.0%",98.0,yes,same,97.99,MATCH,
+N106,paper/main.tex,835,"and 1.9%",1.9,yes,same,1.87,MATCH,
+N107,paper/main.tex,836,"Gemini 3 Flash gives 98.9%",98.9,yes,results/frontier/baseline_campaign_v6/ai-race-baseline/3/gemini-3-flash-preview/1395291/results/ai_race_baseline/turns.jsonl,184/186 = 98.92,MATCH,asserted via baseline_replication.json reference_pct
+N108,paper/main.tex,836,"73.1%",73.1,yes,same,136/186 = 73.12,MATCH,
+N109,paper/main.tex,836,"and 60.2%",60.2,yes,same,112/186 = 60.22,MATCH,
+N110,paper/main.tex,837,"Claude Sonnet 5 gives 89.2%",89.2,no,results/frontier/baseline_campaign_v6/ai-race-baseline/3/claude-sonnet-5-default/1494092/results/ai_race_baseline/turns.jsonl,166/186 = 89.25 (89.247),MATCH,
+N111,paper/main.tex,837,"48.4%",48.4,no,same,90/186 = 48.39,MATCH,
+N112,paper/main.tex,837,"and 32.3%",32.3,no,same,60/186 = 32.26,MATCH,verifier prints 32.3 as the graded minimum but asserts only a 30-35 range
+N113,paper/main.tex,837,"over 30 races each",30,yes,results/frontier/baseline_campaign_v6/*/run_manifest.json,n_races=30,MATCH,
+N114,paper/main.tex,837,"The other three profiles are an analysis-only extension",3,yes,results/open_source/egt_reproduction/egt_admitted_route_fits.json,5 routes minus the 2 confirmatory = 3,MATCH,
+N115,paper/main.tex,840,"the beta=2 benchmark loses 98 points",98,no,recomputed in memory with scripts/figures/fig_theory_versus_behaviour.py compute()+report() (no stored artifact),97.90 points between risk 0.635 and 0.640,ROUNDING,97.9 rounds to 98; the value exists only inside the figure generator; small-mutation limit on a 201-point risk grid
+N116,paper/main.tex,840,"inside a risk step of 0.005",0.005,no,same,step width 0.005 (= grid spacing 1/200),MATCH,the cliff width is bounded by the grid resolution; the true width could be narrower; agrees with supplementary L1038
+N117,paper/main.tex,868,"selection strength across beta in [0.001, 10]",0.001-10,no,results/open_source/egt_reproduction/egt_beta_sensitivity.csv,10 betas from 0.001 to 10,MATCH,
+N118,paper/main.tex,868,"crossed with three mutation rules",3,no,same,beta_over_Z; fixed_0p05; one_over_Z,MATCH,
+N119,paper/main.tex,869,"90 stationary-distribution cells",90,no,same,90 rows,MATCH,
+N120,paper/main.tex,873,"At beta=0.01 with mu=0.05",0.01; 0.05,yes,results/open_source/egt_reproduction/egt_beta_fit_to_routes.csv,best fit beta=0.01 fixed mu=0.05 for both routes,MATCH,
+N121,paper/main.tex,874,"the model predicts 87.3%",87.3,yes,results/open_source/egt_reproduction/egt_beta_sensitivity.csv,87.3,MATCH,
+N122,paper/main.tex,874,"63.9%",63.9,yes,same,63.9,MATCH,
+N123,paper/main.tex,874,"and 38.0%",38.0,yes,same,38.0,MATCH,
+N124,paper/main.tex,875,"within 10.3 percentage points of Claude Sonnet 5",10.3,yes,results/open_source/egt_reproduction/egt_beta_fit_to_routes.csv,10.28,MATCH,
+N125,paper/main.tex,876,"and 15.1 of Gemini 3 Flash",15.1,yes,same,15.13,MATCH,
+N126,paper/main.tex,880,"beta=0.01 and mu=0.05 are the values the source study reports as its own best fit to human play",0.01; 0.05,no,n/a (claim about the cited paper),repo labels this regime 'reported_best_fit' in egt_stationary_summary.csv,NOT_A_RESULT,external citation claim; not checkable from results/; verify against the source paper
+N127,paper/main.tex,882,"fits the same existing sweep to all five admitted routes",5,yes,results/open_source/egt_reproduction/egt_admitted_route_fits.json,route_count=5,MATCH,
+N128,paper/main.tex,883,"RMSEs of 5.1",5.1,yes,results/open_source/egt_reproduction/egt_admitted_route_fits.json,5.1 (GPT-5.4),MATCH,
+N129,paper/main.tex,883,"--15.4 percentage points",15.4,yes,same,15.4 (Gemini 3 Flash),MATCH,
+N130,paper/main.tex,884,"compared with 32.9",32.9,yes,same,32.9 (GPT-5.4),MATCH,
+N131,paper/main.tex,884,"--36.6 points at the reference cell",36.6,yes,same,36.6 (Gemini 3 Flash),MATCH,
+N132,paper/main.tex,886,"a near-step switch (100%,0%,0%)",100; 0; 0,yes,results/frontier/baseline_campaign_v6/ai-race-baseline/3/claude-opus-5-default/1494093/.../turns.jsonl,186/186; 0/186; 0/186,MATCH,
+N133,paper/main.tex,899,"Twenty people ... twenty copies of a frontier route",20,yes,results/derived/trajectory_diversity_confirmatory/trajectory_diversity_confirmatory.csv,comparison_n=20,MATCH,
+N134,paper/main.tex,904,"one exact paired trajectory, a ten-bit string",10,no,n/a,2 seats x 5 rounds,NOT_A_RESULT,
+N135,paper/main.tex,907,"The comparison covers all nine routes that faced the screen",9,yes,results/derived/trajectory_diversity_confirmatory/trajectory_diversity_confirmatory.csv,9 routes + Human,MATCH,
+N136,paper/main.tex,908,"60 trajectories per route",60,yes,results/derived/trajectory_diversity_confirmatory/trajectory_diversity_confirmatory.csv,source_n 20 x 3 risks = 60 for each route,MATCH,
+N137,paper/main.tex,909,"against 340 complete human trajectories",340,no,references/source_study_dataset/airace_deidentified_long.csv (via scripts/analyze_trajectory_diversity_rarefaction.py load_human); results/derived/trajectory_diversity_confirmatory/trajectory_diversity_confirmatory.csv,340 (98 + 104 + 138),MATCH,human source lives under references/ not results/ or data/
+N138,paper/main.tex,914,"Of 341 released participants",341,no,references/source_study_dataset/airace_deidentified_long.csv,341 unique participant_id,MATCH,
+N139,paper/main.tex,914,"340 provide complete first-five-round trajectories",340,no,same,340,MATCH,
+N140,paper/main.tex,915,"338 provide complete dynamic-model records",338,no,results/cross_model_pilot_synthesis/data/human_vs_llm_validation.json,table1_analysed_sample.n_participants=338,MATCH,
+N141,paper/main.tex,916,"168 source dyads",168,no,references/source_study_dataset/airace_deidentified_long.csv; results/derived/trajectory_diversity_dyad_primary/trajectory_diversity_dyad_primary.csv,48 + 52 + 68 = 168,MATCH,
+N142,paper/main.tex,916,"contribute 336 trajectories",336,no,same,2 x 168 = 336,MATCH,
+N143,paper/main.tex,916,"four complete trajectories have no complete partner",4,no,same,2 + 0 + 2 = 4 singletons,MATCH,
+N144,paper/main.tex,920,"2,888 participant-round observations",2888,no,results/cross_model_pilot_synthesis/data/human_vs_llm_validation.json,n_obs=2888,MATCH,
+N145,paper/main.tex,921,"from 338 participants",338,no,same,n_participants=338,MATCH,
+N146,paper/main.tex,921,"in 172 race-pair clusters",172,no,same,n_clusters=172,MATCH,
+N147,paper/main.tex,925,"matched samples of twenty",20,yes,scripts/figures/fig_human_versus_model.py,COMPARISON_N=20,MATCH,
+N148,paper/main.tex,925,"against 20,000 human resamples",20000,no,results/derived/trajectory_diversity_dyad_primary/trajectory_diversity_dyad_primary.json,n_draws=20000 (fig N_NULL=20_000),MATCH,
+N149,paper/main.tex,925,"of ten complete dyads",10,no,scripts/figures/fig_human_versus_model.py,DYAD_N=10,MATCH,
+N150,paper/main.tex,928,"Eighteen of 27 route cells",18 of 27,yes,results/derived/trajectory_diversity_dyad_primary/trajectory_diversity_dyad_primary.csv,18 of 27 below_every_human_draw,MATCH,one draw of a finite null: verifier check 247 shows 16-20 over 40 redraws; the body prints the point without that range
+N151,paper/main.tex,928,"including 13 of the 15 admitted cells",13 of 15,yes,same,13 of 15,MATCH,
+N152,paper/main.tex,929,"The participant-level sensitivity gives 21 of 27",21 of 27,yes,recomputed by verifier from fig_human_versus_model.human_null,21 of 27,MATCH,
+N153,paper/main.tex,930,"including all 15 admitted cells",15,yes,same,15 of 15,MATCH,
+N154,paper/main.tex,930,"the primary dyad-null floors are 12",12,yes,results/derived/trajectory_diversity_dyad_primary/trajectory_diversity_dyad_primary.csv,human_draw_min=12 at 0.1,MATCH,
+N155,paper/main.tex,930,"15",15,yes,same,15 at 0.6,MATCH,
+N156,paper/main.tex,930,"and 13",13,yes,same,13 at 0.9,MATCH,
+N157,paper/main.tex,932,"effective counts of 18.9",18.9,yes,results/derived/trajectory_diversity_confirmatory/trajectory_diversity_confirmatory.csv,18.9,MATCH,
+N158,paper/main.tex,932,"19.7",19.7,yes,same,19.7,MATCH,
+N159,paper/main.tex,932,"and 19.3",19.3,yes,same,19.3,MATCH,
+N160,paper/main.tex,933,"mean pairwise distances of 0.47",0.47,yes,same,0.467,MATCH,
+N161,paper/main.tex,933,"0.50",0.50,yes,same,0.4952,MATCH,supplement table prints the same value as 0.495
+N162,paper/main.tex,933,"and 0.50",0.50,yes,same,0.497,MATCH,
+N163,paper/main.tex,935,"Hill q=1 counts effective trajectories",1,no,n/a,Hill order,NOT_A_RESULT,
+N164,paper/main.tex,937,"separation of their ten action bits",10,no,n/a,,NOT_A_RESULT,
+N165,paper/main.tex,942,"repeated by all 20 of its trajectories, at every risk level",20,yes,results/derived/trajectory_diversity_confirmatory/trajectory_diversity_confirmatory.csv,Opus q0=1 with n=20 at all risks,MATCH,
+N166,paper/main.tex,943,"Claude Sonnet 5 uses two at risk 0.1",2,yes,same,q0=2,MATCH,
+N167,paper/main.tex,944,"finish within five points of each other at the highest risk",<5,yes,results/frontier/baseline_campaign_v6/*/turns.jsonl,60.2 vs 55.4 (4.8),MATCH,
+N168,paper/main.tex,945,"12",12,yes,results/derived/trajectory_diversity_confirmatory/trajectory_diversity_confirmatory.csv,Gemini 3 Flash q0=12 at 0.9,MATCH,
+N169,paper/main.tex,945,"and 13",13,yes,same,GPT-5.5 q0=13 at 0.9,MATCH,
+N170,paper/main.tex,946,"half again as far apart",~1.5x,yes,same,0.414/0.269 = 1.54,MATCH,
+N171,paper/main.tex,946,"0.41",0.41,yes,same,0.414,MATCH,
+N172,paper/main.tex,946,"against 0.27",0.27,yes,same,0.269,MATCH,
+N173,paper/main.tex,949,"two checkpoints are the only exceptions",2,yes,recomputed by verifier (participant-level null),GPT-5.4 mini; GPT-5.4 nano,MATCH,
+N174,paper/main.tex,951,"GPT-5.4 mini uses 20",20,yes,results/derived/trajectory_diversity_confirmatory/trajectory_diversity_confirmatory.csv,20 at 0.1,MATCH,
+N175,paper/main.tex,951,"17",17,yes,same,17 at 0.6,MATCH,
+N176,paper/main.tex,951,"and 17 distinct trajectories out of 20",17,yes,same,17 at 0.9,MATCH,
+N177,paper/main.tex,952,"GPT-5.4 nano 16",16,yes,same,16 at 0.1,MATCH,
+N178,paper/main.tex,952,"19",19,yes,same,19 at 0.6,MATCH,
+N179,paper/main.tex,952,"and 16",16,yes,same,16 at 0.9,MATCH,
+N180,paper/main.tex,955,"GPT-5.4 and GPT-5.5 also meet the finite-draw floor at risk 0.9",14; 13 vs 13,yes,results/derived/trajectory_diversity_dyad_primary/trajectory_diversity_dyad_primary.csv,below_every_human_draw=False for both at 0.9 (14 and 13 vs floor 13),MATCH,
+N181,paper/main.tex,956,"the cluster-aware headline is 13 of 15 admitted cells rather than all 15",13 of 15,yes,same,13 of 15,MATCH,
+N182,paper/main.tex,958,"at 75.0%",75.0,yes,results/frontier/admission_campaign_v6/**/admission.json,GPT-5.4 mini 45/60 = 75.0,MATCH,
+N183,paper/main.tex,959,"and 51.7% overall probe accuracy",51.7,yes,same,GPT-5.4 nano 31/60 = 51.7,MATCH,
+N184,paper/main.tex,968,"with 20,000 draws of ten complete human dyads (count of draws)",20000,no,results/derived/trajectory_diversity_dyad_primary/trajectory_diversity_dyad_primary.json,n_draws=20000,MATCH,
+N185,paper/main.tex,968,"draws of ten complete human dyads",10,no,scripts/figures/fig_human_versus_model.py,DYAD_N=10,MATCH,
+N186,paper/main.tex,969,"13 of 15 admitted cells fall below every dyad draw",13 of 15,yes,results/derived/trajectory_diversity_dyad_primary/trajectory_diversity_dyad_primary.csv,13 of 15,MATCH,
+N187,paper/main.tex,970,"places all 15 below every draw",15,yes,recomputed by verifier (participant-level null),15 of 15,MATCH,
+N188,paper/main.tex,971,"Panel b sorts the 60 matched trajectories",60,yes,results/derived/trajectory_diversity_confirmatory/trajectory_diversity_confirmatory.csv,60 per route,MATCH,
+N189,paper/main.tex,996,"use a seven-checkpoint roster containing neither GPT-5.4 nor GPT-5.5",7,no,results/cross_model_pilot_synthesis/data/population_identity_grouped.json; results/cross_model_pilot_synthesis/data/feature_importance_results.json,classifier: 7 checkpoints + human; feature analysis: 9 checkpoints + human (adds gpt-5.6-luna and gpt-5.6-terra),MISMATCH,true for the classifier; false for the feature analysis (supplementary Table tab:feature-importance has 9 checkpoint rows; verifier check 239 says 'three of the nine checkpoints'); the no-GPT-5.4/5.5 part is correct for both
+N190,paper/main.tex,1004,"on the five routes where the opponent was replaced by scripted code",5,yes,results/frontier/scripted_opponent_campaign/,5,MATCH,
+N191,paper/main.tex,1007,"the five tested routes are therefore strongly context-sensitive",5,yes,same,5,MATCH,
+N192,paper/main.tex,1017,"Four limitations bound the claims directly",4,no,paper/main.tex L1017-1029,4 enumerated (roster; scripted design; human reference; EGT reconstruction),NOT_A_RESULT,internal count consistent
+N193,paper/main.tex,1017,"Nine commercial endpoints are not a sample",9,yes,results/frontier/admission_campaign_v6/,9,MATCH,
+N194,paper/main.tex,1021,"covers five routes and four reduced strategies",5; 4,yes,results/frontier/scripted_opponent_campaign/,5 x 4,MATCH,
+N195,paper/main.tex,1024,"340 complete trajectories",340,no,references/source_study_dataset/airace_deidentified_long.csv,340,MATCH,agrees with L909 and L914
+N196,paper/main.tex,1031,"Four further limits are worth stating",4,no,paper/main.tex L1031-1041,5 enumerated (replay vs live; two crossed routes; one-route group-size grid; seed forwarding; private trade-off only),MISMATCH,internal count: five limits follow
+N197,paper/main.tex,1034,"crossed for two routes",2,yes,results/derived/frontier_context_mapping_campaign_v3/context_mapping_cross_marginals.json,2,MATCH,
+N198,paper/main.tex,1036,"A matched group-size grid now exists on one route",1,yes,results/derived/nplayer_matched_campaign/nplayer_matched_rates.json,google/gemini-3-flash-preview only,MATCH,
+N199,paper/main.tex,1038,"one route's SDK stripped the requested seed and another forwarded it unconfirmed",1; 1,no,results/frontier/baseline_campaign_v6/ai-race-baseline/*/*/*/results/ai_race_baseline/run_manifest.json (sampling_seed_provenance.status),stripped on 3 Google routes; forwarded_to_provider_application_unconfirmed on 6 OpenAI/Anthropic routes,MISMATCH,stale two-route wording; contradicts main L589-591 which states the nine-route fact correctly

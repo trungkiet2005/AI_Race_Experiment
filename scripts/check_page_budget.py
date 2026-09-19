@@ -38,6 +38,14 @@ DEFAULT_LIMIT = 8
 # while the word appearing inside a sentence is not.
 HEADING = re.compile(r"^\s*(references|bibliography)\s*$", re.IGNORECASE)
 
+# The 2027 class prints a running head ("Research Paper Track  AAMAS 2027, ...")
+# above the text block of every page. It is not content, so a reference heading
+# directly below it still starts the page.
+RUNNING_HEAD = re.compile(
+    r"^\s*((\S.*\s)?AAMAS 20\d\d,.*|[A-Za-z ]+ Track|Doctoral Consortium)\s*$",
+    re.IGNORECASE,
+)
+
 
 def page_text(pdf: Path, page: int) -> str:
     result = subprocess.run(
@@ -90,7 +98,10 @@ def main() -> None:
     references_page = None
     heading_starts_the_page = False
     for page in range(1, total + 1):
-        lines = [line for line in page_text(args.pdf, page).splitlines() if line.strip()]
+        lines = [
+            line for line in page_text(args.pdf, page).splitlines()
+            if line.strip() and not RUNNING_HEAD.match(line)
+        ]
         for index, line in enumerate(lines):
             if HEADING.match(line):
                 references_page = page

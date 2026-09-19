@@ -1,11 +1,14 @@
 {
   "artefact": "supplementary.zip",
-  "sha256": "49470c93fba1906cb33df9057d37e7ba27b0b361acec62f6d95b5688efee794f",
-  "scanner_version": 3,
-  "scanned_at": "2026-09-14T09:43:17+00:00",
+  "sha256": "c1437dc9041ad557a94f4a76e14a09c910dcf794e737b8da051ef2a18ade30d1",
+  "scanner_version": 4,
+  "scanned_at": "2026-09-19T02:47:43+00:00",
   "verified": true,
   "clean": true,
   "overridden": false,
-  "notes": [],
+  "notes": [
+    "identities loaded from: account inventory (20 handles); manuscript author block (25 names, 24 emails, 1 grants); git metadata",
+    "957 members scanned"
+  ],
   "hits": []
 }

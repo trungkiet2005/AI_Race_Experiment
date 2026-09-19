@@ -12,8 +12,10 @@ relative to the repository root. Each is compiled from its own directory with
 TEXINPUTS extended to the repository root, so the paper and deck share one
 canonical figure hub.
 
-Every manuscript PDF this script publishes is put through the double-blind
-anonymity scan before the script returns, and each one gets a scan receipt
+Every manuscript PDF this script publishes has its Info and XMP metadata, and
+that of every embedded figure, stripped (``strip_metadata``), and is then put
+through the double-blind anonymity scan before the script returns, and each one
+gets a scan receipt
 written beside it. See ``scripts/anonymity_scan.py`` for why the gate moved here
 and ``check_anonymity`` below for why a hit does not abort the build.
 """
@@ -103,6 +105,86 @@ def build_deck() -> Path:
 
 MANUSCRIPTS = {"ai_race_paper.pdf", "ai_race_supplementary.pdf"}
 
+# Everything in these is a statement about who made the file, on what machine
+# and when, and none of it is part of the paper. The title stays: it is on the
+# first page anyway, and a viewer shows it in the tab.
+_INFO_KEYS = ("/Author", "/Keywords", "/Subject", "/Creator", "/Producer",
+              "/CreationDate", "/ModDate", "/Trapped", "/PTEX.Fullbanner")
+_PRIVATE_KEYS = ("/PTEX.InfoDict", "/Metadata", "/PieceInfo")
+
+
+def strip_metadata(pdf: Path) -> int:
+    """Remove Info and XMP metadata from a final PDF and its embedded figures.
+
+    ``\\includegraphics`` copies each figure's own information dictionary into
+    the output as ``/PTEX.InfoDict``. One protected artwork was exported from a
+    design tool that writes its design and team identifiers into ``/Keywords``,
+    and those travelled into the supplement. The artwork itself is protected and
+    is never rewritten, so the metadata is removed here, from the compiled PDF,
+    after compilation and before the anonymity scan reads it. The build still
+    validates the protected sources exactly as before.
+
+    Returns the number of embedded dictionaries removed.
+    """
+    try:
+        from pypdf import PdfReader, PdfWriter
+        from pypdf.generic import IndirectObject
+    except ImportError as exc:
+        raise SystemExit("pypdf is required to strip PDF metadata: pip install pypdf") from exc
+
+    reader = PdfReader(str(pdf))
+    writer = PdfWriter(clone_from=reader)
+    writer.pdf_header = reader.pdf_header
+    title = (reader.metadata or {}).get("/Title")
+    writer.metadata = None
+    if title:
+        writer.add_metadata({"/Title": title})
+    for key in ("/Metadata", "/PieceInfo"):
+        if key in writer.root_object:
+            del writer.root_object[key]
+
+    seen: set[int] = set()
+    removed = 0
+
+    def walk(resources) -> None:
+        nonlocal removed
+        if resources is None:
+            return
+        xobjects = resources.get_object().get("/XObject")
+        if xobjects is None:
+            return
+        for ref in xobjects.get_object().values():
+            if isinstance(ref, IndirectObject):
+                if ref.idnum in seen:
+                    continue
+                seen.add(ref.idnum)
+            obj = ref.get_object()
+            if obj.get("/Subtype") != "/Form":
+                continue
+            for key in _PRIVATE_KEYS:
+                if key in obj:
+                    del obj[key]
+                    removed += 1
+            walk(obj.get("/Resources"))
+
+    for page in writer.pages:
+        for key in ("/Metadata", "/PieceInfo"):
+            if key in page:
+                del page[key]
+        walk(page.get("/Resources"))
+    # Deleting a reference leaves the dictionary it pointed to in the object
+    # table; without this the Canva identifiers would still be in the bytes.
+    writer.compress_identical_objects(remove_duplicates=False, remove_unreferenced=True)
+    tmp = pdf.with_suffix(".stripped.pdf")
+    with tmp.open("wb") as handle:
+        writer.write(handle)
+    os.replace(tmp, pdf)
+
+    leftover = PdfReader(str(pdf)).metadata or {}
+    if any(key in leftover for key in _INFO_KEYS) or "/Metadata" in PdfReader(str(pdf)).trailer["/Root"]:
+        raise SystemExit(f"metadata survived stripping in {pdf.name}")
+    return removed
+
 
 def check_anonymity(pdfs: list[Path], *, allow: bool) -> bool:
     """Scan every published manuscript PDF and leave a receipt beside each.
@@ -191,7 +273,9 @@ def main() -> int:
         if product.name in MANUSCRIPTS:
             target = PAPER_DIR / product.name
             shutil.copy2(product, target)
-            print(f"published {target.relative_to(ROOT)}", flush=True)
+            removed = strip_metadata(target)
+            print(f"published {target.relative_to(ROOT)} "
+                  f"(document metadata and {removed} embedded metadata entries stripped)", flush=True)
             mirror = PUBLICATION_DIR / product.name
             shutil.copy2(target, mirror)
             print(f"synced {mirror.relative_to(ROOT)}", flush=True)

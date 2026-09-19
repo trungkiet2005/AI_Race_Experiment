@@ -4,10 +4,14 @@ AAMAS takes supplementary material as a single zip of at most 25 MB, and the
 review is double-blind, so nothing in the bundle may name an author, an
 institution, a grant, or the public repository this work lives in.
 
-The bundle is deliberately small. It carries the supplementary document and
-nothing else: the code and the run artefacts live in a repository that is public
-under the authors' own account, so shipping or linking them would identify the
-authors to a reviewer.
+The paper promises that the code, the de-identified run records and a checker
+that recomputes every reported quantity come with the supplementary material.
+The public repository cannot be linked, because it lives under the authors' own
+account, so the zip carries an anonymous snapshot instead: ``supplementary.pdf``
+plus ``code/``, built by ``scripts/build_code_snapshot.py``. The snapshot is
+rebuilt here on every run (``--reuse-snapshot`` skips that), every text file in
+it is scanned before it is zipped, and the finished zip is scanned member by
+member. A zip above 24 MB is refused, one megabyte inside the portal's 25 MB.
 
 The anonymity pattern list used to live in this file. It now lives in
 ``scripts/anonymity_scan.py`` and runs at every build of the PDFs as well as
@@ -18,7 +22,9 @@ that nobody had ever bundled.
 from __future__ import annotations
 
 import argparse
+import os
 import shutil
+import subprocess
 import sys
 import zipfile
 from pathlib import Path
@@ -31,7 +37,9 @@ import anonymity_scan
 ROOT = Path(__file__).resolve().parents[1]
 PAPER_DIR = ROOT / "paper"
 BUNDLE = ROOT / "results" / "artifacts" / "submission"
-LIMIT_BYTES = 25 * 1024 * 1024
+LIMIT_BYTES = 24 * 1000 * 1000
+SNAPSHOT = ROOT / "results" / "_build" / "code_snapshot"
+MAX_MEMBER_PATH = 150
 
 
 def main() -> int:
@@ -40,6 +48,11 @@ def main() -> int:
         "--allow-identifying",
         action="store_true",
         help="build even if the anonymity scan finds something (never for a blind submission)",
+    )
+    parser.add_argument(
+        "--reuse-snapshot",
+        action="store_true",
+        help="zip the existing results/_build/code_snapshot instead of rebuilding it",
     )
     args = parser.parse_args()
 
@@ -94,6 +107,25 @@ def main() -> int:
         raise SystemExit("refusing to build the bundle")
     print("anonymity scan: clean" if not hits else "anonymity scan: OVERRIDDEN")
 
+    if not args.reuse_snapshot:
+        print("building the code snapshot ...", flush=True)
+        built = subprocess.run([sys.executable, str(ROOT / "scripts" / "build_code_snapshot.py")],
+                               cwd=ROOT, env=dict(os.environ, PYTHONDONTWRITEBYTECODE="1"))
+        if built.returncode != 0:
+            raise SystemExit("the code snapshot did not build; see above")
+    if not (SNAPSHOT / "README.md").is_file():
+        raise SystemExit(f"no code snapshot at {SNAPSHOT.relative_to(ROOT)}; "
+                         "run scripts/build_code_snapshot.py")
+    # Scanned here as well as inside its own build: this is the copy that is
+    # about to be zipped, and --reuse-snapshot means it may be older than that
+    # build's verdict. Every file is read, text or not.
+    tree_report = anonymity_scan.scan_tree(SNAPSHOT)
+    print("\n".join(tree_report.lines()), flush=True)
+    if not tree_report.clean and not args.allow_identifying:
+        raise SystemExit("the code snapshot is not clean; refusing to build the bundle")
+    members = sorted(p for p in SNAPSHOT.rglob("*")
+                     if p.is_file() and "__pycache__" not in p.parts and p.suffix != ".pyc")
+
     BUNDLE.mkdir(parents=True, exist_ok=True)
     shutil.copy2(paper, BUNDLE / "paper.pdf")
     # A readable copy beside the archive: the zip is what the portal takes, but
@@ -108,8 +140,20 @@ def main() -> int:
             copy_report, overridden=args.allow_identifying and not copy_report.clean
         )
     zip_path = BUNDLE / "supplementary.zip"
-    with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as z:
+    with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED, compresslevel=9) as z:
         z.write(supp, "supplementary.pdf")
+        for member in members:
+            name = "code/" + member.relative_to(SNAPSHOT).as_posix()
+            if len(name) > MAX_MEMBER_PATH:
+                z.close()
+                zip_path.unlink(missing_ok=True)
+                raise SystemExit(f"archive path longer than {MAX_MEMBER_PATH} characters: {name}")
+            z.write(member, name)
+    size = zip_path.stat().st_size
+    if size > LIMIT_BYTES:
+        zip_path.unlink(missing_ok=True)
+        raise SystemExit(f"the supplementary zip is {size / 1e6:.2f} MB, above the "
+                         f"{LIMIT_BYTES / 1e6:.0f} MB this build allows (portal limit 25 MB); removed it")
 
     # The zip is the file the portal actually takes, so it is scanned after it
     # is written rather than trusted because its source was clean. Checking the
@@ -131,25 +175,26 @@ def main() -> int:
         "===========================\n\n"
         "Upload to the portal:\n"
         "  paper.pdf          the manuscript, anonymous\n"
-        "  supplementary.zip  supplementary material, single zip as the portal requires\n\n"
+        "  supplementary.zip  supplementary material, single zip as the portal requires:\n"
+        "                     supplementary.pdf plus code/, the anonymous code snapshot\n"
+        "                     (code/README.md says how to run the claim checker)\n\n"
         "Not uploaded, here for reading only:\n"
         "  supplementary.pdf  the same document the zip contains\n"
         "  *.anonymity.json   the double-blind scan verdict for each file beside it,\n"
         "                     keyed to that file's SHA-256. Upload neither of these.\n\n"
         "Both PDFs build from paper/main.tex and paper/supplementary.tex through\n"
         "scripts/build_publication.py, which runs the same anonymity scan at the\n"
-        "moment each PDF is made. Rebuild them before rebuilding this bundle.\n\n"
+        "moment each PDF is made. Rebuild them before rebuilding this bundle.\n"
+        "code/ is results/_build/code_snapshot, built by scripts/build_code_snapshot.py.\n\n"
         "Before the camera-ready, switch main.tex back to the non-anonymous\n"
         "\\documentclass[sigconf]{aamas} and restore the acknowledgements block\n"
         "that sits commented out near the end of the same file.\n",
         encoding="utf-8",
     )
 
-    size = zip_path.stat().st_size
-    print(f"paper           : {(BUNDLE / 'paper.pdf').stat().st_size / 1048576:.2f} MB")
-    print(f"supplementary   : {size / 1048576:.2f} MB  (limit 25 MB)")
-    if size > LIMIT_BYTES:
-        raise SystemExit("supplementary zip exceeds the 25 MB limit")
+    print(f"paper           : {(BUNDLE / 'paper.pdf').stat().st_size / 1e6:.2f} MB")
+    print(f"supplementary   : {size / 1e6:.2f} MB, {len(members) + 1} members "
+          f"(refused above {LIMIT_BYTES / 1e6:.0f} MB; portal limit 25 MB)")
     print(f"bundle written to {BUNDLE.relative_to(ROOT)}")
     return 0
 
