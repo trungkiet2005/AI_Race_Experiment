@@ -96,6 +96,26 @@ def model_tag(route: str) -> str:
     return re.sub(r"[^A-Za-z0-9._-]+", "-", route).strip("-").lower() or "model"
 
 
+# Routes preregistered in docs/arr-transfer-campaign-prereg-2026-09-19.md. A
+# push starts a validation run on the platform's default route, which is not in
+# this list and is never evidence; it returns without sending any probe.
+ROSTER_SLUGS = (
+    "gemini-3-flash-preview", "claude-opus-5-default", "gpt-5.4-2026-03-05",
+    "gpt-5.5-2026-04-23", "claude-sonnet-5-default", "gemini-3.1-flash-lite-preview",
+    "gpt-5.4-mini-2026-03-17", "gemini-3.5-flash-lite", "gpt-5.4-nano-2026-03-17",
+    "claude-haiku-4-5-20251001", "claude-sonnet-4-20250514", "claude-sonnet-4-5-20250929",
+    "claude-opus-4-1-20250805", "gemini-2.5-flash", "gemini-3.5-flash",
+    "gemma-4-26b-a4b", "gemma-4-31b", "gpt-oss-20b", "gpt-oss-120b",
+    "gpt-5.6-terra", "qwen3-235b-a22b-instruct-2507", "glm-5",
+    "grok-4.20-0309-non-reasoning",
+)
+
+
+def in_roster(route: str) -> bool:
+    tag = model_tag(route)
+    return any(tag == slug or tag.endswith("-" + slug) for slug in ROSTER_SLUGS)
+
+
 def package_versions() -> dict[str, str | None]:
     result: dict[str, str | None] = {}
     for package in ("kaggle-benchmarks", "kaggle", "pydantic"):
@@ -178,6 +198,14 @@ def llm_contract(llm) -> dict[str, object]:
     elif "deepseek" in route_lower:
         # DeepSeek rejects the literal `none` but accepts an explicit low budget.
         reasoning_requested = "low"
+    elif "gpt-oss" in route_lower:
+        # Resolved by the 2026-09-19 route-contract smoke: `none` is rejected
+        # with HTTP 400, `low` is accepted.
+        reasoning_requested = "low"
+    elif "grok" in route_lower:
+        # Resolved by the 2026-09-19 route-contract smoke: both `none` and
+        # `low` are rejected; the call succeeds only with the argument omitted.
+        reasoning_requested = None
     else:
         # Keep the no-trace setting used by the original protocol for routes
         # that accept it. This prevents Gemini from spending the output cap on
@@ -240,6 +268,8 @@ def call_one(
 def ai_race_frontier_admission(llm) -> dict:
     contract = llm_contract(llm)
     route = str(contract["model_route"])
+    if not in_roster(route):
+        return {"status": "skipped", "model_route": route, "reason": "route outside the preregistered roster"}
     output_dir = OUTPUT_ROOT / model_tag(route)
     output_dir.mkdir(parents=True, exist_ok=True)
     raw_path = output_dir / "raw_responses.jsonl"

@@ -1,0 +1,31 @@
+{
+  "task_name": "strategic-state-probe-f2",
+  "trial_name": "strategic-state-probe-f2-Run #1",
+  "trial_uri": "kbench://not-a-harbor-trial",
+  "task_id": {
+    "path": "kbench://not-a-harbor-task"
+  },
+  "task_checksum": "unknown (kbench)",
+  "config": {
+    "task": {
+      "path": "kbench://not-a-harbor-task"
+    }
+  },
+  "agent_info": {
+    "name": "kaggle-benchmarks",
+    "version": "0.6.1",
+    "model_info": {
+      "name": "google/gemini-3.5-flash-lite"
+    }
+  },
+  "verifier_result": {
+    "rewards": {
+      "admitted_for_gameplay": 0.0,
+      "expected_payoff_is_diagnostic_only": 1.0,
+      "n_rows": 60.0,
+      "overall_accuracy": 0.6166666666666667
+    }
+  },
+  "started_at": "2026-09-18T22:48:46.996470Z",
+  "finished_at": "2026-09-18T22:49:20.897532Z"
+}

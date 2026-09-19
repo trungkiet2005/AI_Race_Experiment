@@ -1,0 +1,31 @@
+{
+  "task_name": "strategic-state-probe-f3",
+  "trial_name": "strategic-state-probe-f3-Run #1",
+  "trial_uri": "kbench://not-a-harbor-trial",
+  "task_id": {
+    "path": "kbench://not-a-harbor-task"
+  },
+  "task_checksum": "unknown (kbench)",
+  "config": {
+    "task": {
+      "path": "kbench://not-a-harbor-task"
+    }
+  },
+  "agent_info": {
+    "name": "kaggle-benchmarks",
+    "version": "0.6.1",
+    "model_info": {
+      "name": "openai/gpt-5.4-nano-2026-03-17"
+    }
+  },
+  "verifier_result": {
+    "rewards": {
+      "admitted_for_gameplay": 0.0,
+      "expected_payoff_is_diagnostic_only": 1.0,
+      "n_rows": 60.0,
+      "overall_accuracy": 0.35
+    }
+  },
+  "started_at": "2026-09-18T22:48:24.074454Z",
+  "finished_at": "2026-09-18T22:49:18.205252Z"
+}

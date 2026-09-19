@@ -1,19 +1,495 @@
 % Bibliography for the ARR evaluation paper.
-%
-% The ACL example entries that shipped with the template have been removed.
-% Every entry added here must be verified at the source before use: title,
-% author list and order, venue, year and DOI, read from the publisher, the
-% repository or the official proceedings. An entry that cannot be verified is
-% marked PENDING-AUDIT and no distributable PDF is built until it is resolved.
-%
-% Related work is not written yet. It needs the four strands named in the
-% Related Work section of main.tex, and none of their citations has been
-% verified in this repository.
+% Every entry below was verified at a primary source on 2026-09-19; the reading
+% record for each key is in related_work_sources.md. The two entries at the top
+% are the concurrent submission (anonymous) and the published description of
+% the game the first task family is built on.
 
 @misc{anonymous-concurrent,
     author = {Anonymous},
-    title  = {More Than the Risk: Frontier LLM Safety Policies Depend on the
-              Rival},
+    title  = {More Than the Risk: Frontier {LLM} Behaviour in {AI} Development Races Depends on the Rival},
     year   = {2026},
-    note   = {Under review. Concurrent submission by the same authors.}
+    note   = {Under review}
+}
+
+@misc{falling_behind_unsafe,
+    title  = {Falling Behind Drives Unsafe Development in an Idealised {AI} Race Experiment},
+    author = {Fern{\'a}ndez Domingos, Elias and Han, The Anh},
+    year   = {2026},
+    eprint = {2607.26034},
+    archivePrefix = {arXiv},
+    primaryClass  = {cs.AI},
+    url    = {https://arxiv.org/abs/2607.26034}
+}
+
+% Candidate bibliography for the ARR evaluation paper (related work).
+%
+% Built 2026-09-19. Every entry below was checked at a primary source
+% (publisher record via Crossref, ACL Anthology, NeurIPS/ICLR/PMLR
+% proceedings pages, arXiv abstract page) and its text was read at least at
+% the abstract level. What was read, and where, is recorded per key in
+% related_work_sources.md next to this file.
+%
+% This file is NOT wired into main.tex. Move an entry into custom.bib only
+% when the sentence that cites it is written.
+%
+% One exception is flagged inline: campbell1959convergent has verified
+% metadata but its text could not be opened (paywalled, no abstract in any
+% index). Read it before citing it for anything beyond the definition of
+% convergent and discriminant validity.
+
+% =====================================================================
+% Strand A. Comprehension, manipulation and attention checks; LLMs as
+% simulated subjects; LLM game-theory evaluation
+% =====================================================================
+
+@article{oppenheimer2009instructional,
+    title     = {Instructional manipulation checks: Detecting satisficing to increase statistical power},
+    author    = {Oppenheimer, Daniel M. and Meyvis, Tom and Davidenko, Nicolas},
+    journal   = {Journal of Experimental Social Psychology},
+    volume    = {45},
+    number    = {4},
+    pages     = {867--872},
+    year      = {2009},
+    doi       = {10.1016/j.jesp.2009.03.009},
+    url       = {https://doi.org/10.1016/j.jesp.2009.03.009}
+}
+
+@article{berinsky2014separating,
+    title     = {Separating the Shirkers from the Workers? Making Sure Respondents Pay Attention on Self-Administered Surveys},
+    author    = {Berinsky, Adam J. and Margolis, Michele F. and Sances, Michael W.},
+    journal   = {American Journal of Political Science},
+    volume    = {58},
+    number    = {3},
+    pages     = {739--753},
+    year      = {2014},
+    doi       = {10.1111/ajps.12081},
+    url       = {https://doi.org/10.1111/ajps.12081}
+}
+
+@article{aronow2019note,
+    title     = {A Note on Dropping Experimental Subjects who Fail a Manipulation Check},
+    author    = {Aronow, Peter M. and Baron, Jonathon and Pinson, Lauren},
+    journal   = {Political Analysis},
+    volume    = {27},
+    number    = {4},
+    pages     = {572--589},
+    year      = {2019},
+    doi       = {10.1017/pan.2019.5},
+    url       = {https://doi.org/10.1017/pan.2019.5}
+}
+
+@article{chou2009control,
+    title     = {The control of game form recognition in experiments: understanding dominant strategy failures in a simple two person ``guessing'' game},
+    author    = {Chou, Eileen and McConnell, Margaret and Nagel, Rosemarie and Plott, Charles R.},
+    journal   = {Experimental Economics},
+    volume    = {12},
+    number    = {2},
+    pages     = {159--179},
+    year      = {2009},
+    doi       = {10.1007/s10683-008-9206-4},
+    url       = {https://doi.org/10.1007/s10683-008-9206-4}
+}
+
+@article{burtonchellew2016conditional,
+    title     = {Conditional cooperation and confusion in public-goods experiments},
+    author    = {Burton-Chellew, Maxwell N. and El Mouden, Claire and West, Stuart A.},
+    journal   = {Proceedings of the National Academy of Sciences},
+    volume    = {113},
+    number    = {5},
+    pages     = {1291--1296},
+    year      = {2016},
+    doi       = {10.1073/pnas.1509740113},
+    url       = {https://doi.org/10.1073/pnas.1509740113}
+}
+
+@inproceedings{aher2023using,
+    title     = {Using Large Language Models to Simulate Multiple Humans and Replicate Human Subject Studies},
+    author    = {Aher, Gati V. and Arriaga, Rosa I. and Kalai, Adam Tauman},
+    booktitle = {Proceedings of the 40th International Conference on Machine Learning},
+    series    = {Proceedings of Machine Learning Research},
+    volume    = {202},
+    pages     = {337--371},
+    publisher = {PMLR},
+    year      = {2023},
+    url       = {https://proceedings.mlr.press/v202/aher23a.html}
+}
+
+@article{argyle2023out,
+    title     = {Out of One, Many: Using Language Models to Simulate Human Samples},
+    author    = {Argyle, Lisa P. and Busby, Ethan C. and Fulda, Nancy and Gubler, Joshua R. and Rytting, Christopher and Wingate, David},
+    journal   = {Political Analysis},
+    volume    = {31},
+    number    = {3},
+    pages     = {337--351},
+    year      = {2023},
+    doi       = {10.1017/pan.2023.2},
+    url       = {https://doi.org/10.1017/pan.2023.2}
+}
+
+@inproceedings{filippas2024large,
+    title     = {Large Language Models as Simulated Economic Agents: What Can We Learn from Homo Silicus?},
+    author    = {Filippas, Apostolos and Horton, John J. and Manning, Benjamin S.},
+    booktitle = {Proceedings of the 25th ACM Conference on Economics and Computation},
+    pages     = {614--615},
+    publisher = {Association for Computing Machinery},
+    year      = {2024},
+    doi       = {10.1145/3670865.3673513},
+    url       = {https://doi.org/10.1145/3670865.3673513}
+}
+
+@article{dillion2023can,
+    title     = {Can {AI} language models replace human participants?},
+    author    = {Dillion, Danica and Tandon, Niket and Gu, Yuling and Gray, Kurt},
+    journal   = {Trends in Cognitive Sciences},
+    volume    = {27},
+    number    = {7},
+    pages     = {597--600},
+    year      = {2023},
+    doi       = {10.1016/j.tics.2023.04.008},
+    url       = {https://doi.org/10.1016/j.tics.2023.04.008}
+}
+
+@article{akata2025playing,
+    title     = {Playing repeated games with large language models},
+    author    = {Akata, Elif and Schulz, Lion and Coda-Forno, Julian and Oh, Seong Joon and Bethge, Matthias and Schulz, Eric},
+    journal   = {Nature Human Behaviour},
+    volume    = {9},
+    number    = {7},
+    pages     = {1380--1390},
+    year      = {2025},
+    doi       = {10.1038/s41562-025-02172-y},
+    url       = {https://doi.org/10.1038/s41562-025-02172-y}
+}
+
+@inproceedings{duan2024gtbench,
+    title     = {{GTB}ench: Uncovering the Strategic Reasoning Capabilities of {LLM}s via Game-Theoretic Evaluations},
+    author    = {Duan, Jinhao and Zhang, Renming and Diffenderfer, James and Kailkhura, Bhavya and Sun, Lichao and Stengel-Eskin, Elias and Bansal, Mohit and Chen, Tianlong and Xu, Kaidi},
+    booktitle = {Advances in Neural Information Processing Systems},
+    volume    = {37},
+    year      = {2024},
+    url       = {https://proceedings.neurips.cc/paper_files/paper/2024/hash/3191170938b6102e5c203b036b7c16dd-Abstract-Conference.html}
+}
+
+@inproceedings{huang2025competing,
+    title     = {Competing Large Language Models in Multi-Agent Gaming Environments},
+    author    = {Huang, Jen-tse and Li, Eric John and Lam, Man Ho and Liang, Tian and Wang, Wenxuan and Yuan, Youliang and Jiao, Wenxiang and Wang, Xing and Tu, Zhaopeng and Lyu, Michael R.},
+    booktitle = {The Thirteenth International Conference on Learning Representations},
+    year      = {2025},
+    url       = {https://proceedings.iclr.cc/paper_files/paper/2025/hash/a46adbe2f0ca0e16ef8857e188991ad7-Abstract-Conference.html}
+}
+
+@article{fan2024can,
+    title     = {Can Large Language Models Serve as Rational Players in Game Theory? A Systematic Analysis},
+    author    = {Fan, Caoyun and Chen, Jindou and Jin, Yaohui and He, Hao},
+    journal   = {Proceedings of the AAAI Conference on Artificial Intelligence},
+    volume    = {38},
+    number    = {16},
+    pages     = {17960--17967},
+    year      = {2024},
+    doi       = {10.1609/aaai.v38i16.29751},
+    url       = {https://doi.org/10.1609/aaai.v38i16.29751}
+}
+
+@article{lore2024strategic,
+    title     = {Strategic behavior of large language models and the role of game structure versus contextual framing},
+    author    = {Lor{\`e}, Nunzio and Heydari, Babak},
+    journal   = {Scientific Reports},
+    volume    = {14},
+    pages     = {18490},
+    year      = {2024},
+    doi       = {10.1038/s41598-024-69032-z},
+    url       = {https://doi.org/10.1038/s41598-024-69032-z}
+}
+
+@misc{herr2024are,
+    title         = {Are Large Language Models Strategic Decision Makers? A Study of Performance and Bias in Two-Player Non-Zero-Sum Games},
+    author        = {Herr, Nathan and Acero, Fernando and Raileanu, Roberta and P{\'e}rez-Ortiz, Mar{\'i}a and Li, Zhibin},
+    year          = {2024},
+    eprint        = {2407.04467},
+    archivePrefix = {arXiv},
+    primaryClass  = {cs.AI},
+    howpublished  = {arXiv:2407.04467},
+    url           = {https://arxiv.org/abs/2407.04467}
+}
+
+@inproceedings{piatti2024cooperate,
+    title     = {Cooperate or Collapse: Emergence of Sustainable Cooperation in a Society of {LLM} Agents},
+    author    = {Piatti, Giorgio and Jin, Zhijing and Kleiman-Weiner, Max and Sch{\"o}lkopf, Bernhard and Sachan, Mrinmaya and Mihalcea, Rada},
+    booktitle = {Advances in Neural Information Processing Systems},
+    volume    = {37},
+    year      = {2024},
+    url       = {https://proceedings.neurips.cc/paper_files/paper/2024/hash/ca9567d8ef6b2ea2da0d7eed57b933ee-Abstract-Conference.html}
+}
+
+@misc{huang2026probing,
+    title         = {Probing Outcome-Level Resemblance and Mechanism-Level Alignment in {LLM} Risk Decisions: Evidence from the {S}t. {P}etersburg Game},
+    author        = {Huang, Chensong and Chen, Changyu and Lin, Chenwei and Lyu, Hanjia and Xu, Xian and Luo, Jiebo},
+    year          = {2026},
+    eprint        = {2606.04978},
+    archivePrefix = {arXiv},
+    howpublished  = {arXiv:2606.04978},
+    url           = {https://arxiv.org/abs/2606.04978}
+}
+
+@misc{cacioli2026screen,
+    title         = {Screen Before You Interpret: A Portable Validity Protocol for Benchmark-Based {LLM} Confidence Signals},
+    author        = {Cacioli, Jon-Paul},
+    year          = {2026},
+    eprint        = {2604.17714},
+    archivePrefix = {arXiv},
+    howpublished  = {arXiv:2604.17714},
+    url           = {https://arxiv.org/abs/2604.17714}
+}
+
+% =====================================================================
+% Strand B. Construct validity and measurement theory for AI evaluation
+% =====================================================================
+
+@inproceedings{raji2021ai,
+    title     = {{AI} and the Everything in the Whole Wide World Benchmark},
+    author    = {Raji, Inioluwa Deborah and Denton, Emily and Bender, Emily M. and Hanna, Alex and Paullada, Amandalynne},
+    booktitle = {Proceedings of the Neural Information Processing Systems Track on Datasets and Benchmarks},
+    volume    = {1},
+    year      = {2021},
+    url       = {https://datasets-benchmarks-proceedings.neurips.cc/paper/2021/hash/084b6fbb10729ed4da8c3d3f5a3ae7c9-Abstract-round2.html}
+}
+
+@inproceedings{bean2025measuring,
+    title     = {Measuring what Matters: Construct Validity in Large Language Model Benchmarks},
+    author    = {Bean, Andrew M. and Kearns, Ryan Othniel and Romanou, Angelika and Hafner, Franziska Sofia and Mayne, Harry and Batzner, Jan and Foroutan Eghlidi, Negar and Schmitz, Chris and Korgul, Karolina and Batra, Hunar and Deb, Oishi and Beharry, Emma and Emde, Cornelius and Foster, Thomas and Gausen, Anna and Grandury, Mar{\'i}a and Han, Sophia and Hofmann, Valentin and Ibrahim, Lujain and Kim, Hazel and Kirk, Hannah Rose and Lin, Fangru and Liu, Gabrielle and Luettgau, Lennart and Magomere, Jabez and Rystr{\o}m, Jonathan and Sotnikova, Anna and Yang, Yushi and Zhao, Yilun and Bibi, Adel and Bosselut, Antoine and Clark, Ronald and Cohan, Arman and Foerster, Jakob and Gal, Yarin and Hale, Scott A. and Raji, Deborah and Summerfield, Christopher and Torr, Philip H. S. and Ududec, Cozmin and Rocher, Luc and Mahdi, Adam},
+    booktitle = {Advances in Neural Information Processing Systems (Datasets and Benchmarks Track)},
+    volume    = {38},
+    year      = {2025},
+    url       = {https://proceedings.neurips.cc/paper_files/paper/2025/hash/1967e0fc3aa6cbbace562f5cb8e3954e-Abstract-Datasets_and_Benchmarks_Track.html}
+}
+
+@misc{liao2023rethinking,
+    title         = {Rethinking Model Evaluation as Narrowing the Socio-Technical Gap},
+    author        = {Liao, Q. Vera and Xiao, Ziang},
+    year          = {2023},
+    eprint        = {2306.03100},
+    archivePrefix = {arXiv},
+    primaryClass  = {cs.HC},
+    howpublished  = {arXiv:2306.03100},
+    url           = {https://arxiv.org/abs/2306.03100}
+}
+
+@inproceedings{wallach2025position,
+    title     = {Position: Evaluating Generative {AI} Systems Is a Social Science Measurement Challenge},
+    author    = {Wallach, Hanna and Desai, Meera and Cooper, A. Feder and Wang, Angelina and Atalla, Chad and Barocas, Solon and Blodgett, Su Lin and Chouldechova, Alexandra and Corvi, Emily and Dow, P. Alex and Garcia-Gathright, Jean and Olteanu, Alexandra and Pangakis, Nicholas J. and Reed, Stefanie and Sheng, Emily and Vann, Dan and Vaughan, Jennifer Wortman and Vogel, Matthew and Washington, Hannah and Jacobs, Abigail Z.},
+    booktitle = {Proceedings of the 42nd International Conference on Machine Learning},
+    series    = {Proceedings of Machine Learning Research},
+    volume    = {267},
+    pages     = {82232--82251},
+    publisher = {PMLR},
+    year      = {2025},
+    url       = {https://proceedings.mlr.press/v267/wallach25a.html}
+}
+
+@misc{salaudeen2025measurement,
+    title         = {Measurement to Meaning: A Validity-Centered Framework for {AI} Evaluation},
+    author        = {Salaudeen, Olawale and Reuel, Anka and Ahmed, Ahmed and Bedi, Suhana and Robertson, Zachary and Sundar, Sudharsan and Domingue, Ben and Wang, Angelina and Koyejo, Sanmi},
+    year          = {2025},
+    eprint        = {2505.10573},
+    archivePrefix = {arXiv},
+    primaryClass  = {cs.CY},
+    howpublished  = {arXiv:2505.10573},
+    url           = {https://arxiv.org/abs/2505.10573}
+}
+
+@inproceedings{jacobs2021measurement,
+    title     = {Measurement and Fairness},
+    author    = {Jacobs, Abigail Z. and Wallach, Hanna},
+    booktitle = {Proceedings of the 2021 ACM Conference on Fairness, Accountability, and Transparency},
+    pages     = {375--385},
+    publisher = {Association for Computing Machinery},
+    year      = {2021},
+    doi       = {10.1145/3442188.3445901},
+    url       = {https://doi.org/10.1145/3442188.3445901}
+}
+
+% FLAG: metadata verified (Crossref, PubMed 13634291); text not read.
+@article{campbell1959convergent,
+    title     = {Convergent and discriminant validation by the multitrait-multimethod matrix},
+    author    = {Campbell, Donald T. and Fiske, Donald W.},
+    journal   = {Psychological Bulletin},
+    volume    = {56},
+    number    = {2},
+    pages     = {81--105},
+    year      = {1959},
+    doi       = {10.1037/h0046016},
+    url       = {https://doi.org/10.1037/h0046016}
+}
+
+% =====================================================================
+% Strand C. State tracking and world-state reasoning in language models
+% =====================================================================
+
+@inproceedings{kim2023entity,
+    title     = {Entity Tracking in Language Models},
+    author    = {Kim, Najoung and Schuster, Sebastian},
+    booktitle = {Proceedings of the 61st Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)},
+    month     = jul,
+    year      = {2023},
+    address   = {Toronto, Canada},
+    publisher = {Association for Computational Linguistics},
+    pages     = {3835--3855},
+    doi       = {10.18653/v1/2023.acl-long.213},
+    url       = {https://aclanthology.org/2023.acl-long.213/}
+}
+
+@inproceedings{li2021implicit,
+    title     = {Implicit Representations of Meaning in Neural Language Models},
+    author    = {Li, Belinda Z. and Nye, Maxwell and Andreas, Jacob},
+    booktitle = {Proceedings of the 59th Annual Meeting of the Association for Computational Linguistics and the 11th International Joint Conference on Natural Language Processing (Volume 1: Long Papers)},
+    month     = aug,
+    year      = {2021},
+    address   = {Online},
+    publisher = {Association for Computational Linguistics},
+    pages     = {1813--1827},
+    doi       = {10.18653/v1/2021.acl-long.143},
+    url       = {https://aclanthology.org/2021.acl-long.143/}
+}
+
+@article{toshniwal2022chess,
+    title     = {Chess as a Testbed for Language Model State Tracking},
+    author    = {Toshniwal, Shubham and Wiseman, Sam and Livescu, Karen and Gimpel, Kevin},
+    journal   = {Proceedings of the AAAI Conference on Artificial Intelligence},
+    volume    = {36},
+    number    = {10},
+    pages     = {11385--11393},
+    year      = {2022},
+    doi       = {10.1609/aaai.v36i10.21390},
+    url       = {https://doi.org/10.1609/aaai.v36i10.21390}
+}
+
+@inproceedings{merrill2024illusion,
+    title     = {The Illusion of State in State-Space Models},
+    author    = {Merrill, William and Petty, Jackson and Sabharwal, Ashish},
+    booktitle = {Proceedings of the 41st International Conference on Machine Learning},
+    series    = {Proceedings of Machine Learning Research},
+    volume    = {235},
+    pages     = {35492--35506},
+    publisher = {PMLR},
+    year      = {2024},
+    url       = {https://proceedings.mlr.press/v235/merrill24a.html}
+}
+
+@inproceedings{laban2026llms,
+    title     = {{LLM}s Get Lost In Multi-Turn Conversation},
+    author    = {Laban, Philippe and Hayashi, Hiroaki and Zhou, Yingbo and Neville, Jennifer},
+    booktitle = {The Fourteenth International Conference on Learning Representations},
+    year      = {2026},
+    url       = {https://proceedings.iclr.cc/paper_files/paper/2026/hash/59f6421e64707225fdf5b28840679a07-Abstract-Conference.html}
+}
+
+% =====================================================================
+% Strand D. Scale and tier confounds; general-capability baselines
+% =====================================================================
+
+@inproceedings{ruan2024observational,
+    title     = {Observational Scaling Laws and the Predictability of Language Model Performance},
+    author    = {Ruan, Yangjun and Maddison, Chris J. and Hashimoto, Tatsunori},
+    booktitle = {Advances in Neural Information Processing Systems},
+    volume    = {37},
+    year      = {2024},
+    url       = {https://proceedings.neurips.cc/paper_files/paper/2024/hash/1cded4f97cf5f01a284c574110b7e3b9-Abstract-Conference.html}
+}
+
+@inproceedings{ren2024safetywashing,
+    title     = {Safetywashing: Do {AI} Safety Benchmarks Actually Measure Safety Progress?},
+    author    = {Ren, Richard and Basart, Steven and Khoja, Adam and Pan, Alexander and Gatti, Alice and Phan, Long and Yin, Xuwang and Mazeika, Mantas and Mukobi, Gabriel and Kim, Ryan Hwang and Fitz, Stephen and Hendrycks, Dan},
+    booktitle = {Advances in Neural Information Processing Systems (Datasets and Benchmarks Track)},
+    volume    = {37},
+    year      = {2024},
+    url       = {https://proceedings.neurips.cc/paper_files/paper/2024/hash/7ebcdd0de471c027e67a11959c666d74-Abstract-Datasets_and_Benchmarks_Track.html}
+}
+
+@article{ilic2024evidence,
+    title     = {Evidence of interrelated cognitive-like capabilities in large language models: Indications of artificial general intelligence or achievement?},
+    author    = {Ili{\'c}, David and Gignac, Gilles E.},
+    journal   = {Intelligence},
+    volume    = {106},
+    pages     = {101858},
+    year      = {2024},
+    doi       = {10.1016/j.intell.2024.101858},
+    url       = {https://doi.org/10.1016/j.intell.2024.101858}
+}
+
+@misc{burnell2023revealing,
+    title         = {Revealing the structure of language model capabilities},
+    author        = {Burnell, Ryan and Hao, Han and Conway, Andrew R. A. and Hernandez Orallo, Jose},
+    year          = {2023},
+    eprint        = {2306.10062},
+    archivePrefix = {arXiv},
+    primaryClass  = {cs.CL},
+    howpublished  = {arXiv:2306.10062},
+    url           = {https://arxiv.org/abs/2306.10062}
+}
+
+% =====================================================================
+% Strand E. Reliability, nondeterminism and prompt/format sensitivity
+% =====================================================================
+
+@inproceedings{atil2025nondeterminism,
+    title     = {Non-Determinism of ``Deterministic'' {LLM} System Settings in Hosted Environments},
+    author    = {At{\i}l, Berk and Aykent, Sarp and Chittams, Alexa and Fu, Lisheng and Passonneau, Rebecca J. and Radcliffe, Evan and Rajagopal, Guru Rajan and Sloan, Adam and Tudrej, Tomasz and Ture, Ferhan and Wu, Zhe and Xu, Lixinyu and Baldwin, Breck},
+    editor    = {Akter, Mousumi and Chowdhury, Tahiya and Eger, Steffen and Leiter, Christoph and Opitz, Juri and {\c{C}}ano, Erion},
+    booktitle = {Proceedings of the 5th Workshop on Evaluation and Comparison of NLP Systems},
+    month     = dec,
+    year      = {2025},
+    address   = {Mumbai, India},
+    publisher = {Association for Computational Linguistics},
+    pages     = {135--148},
+    doi       = {10.18653/v1/2025.eval4nlp-1.12},
+    url       = {https://aclanthology.org/2025.eval4nlp-1.12/}
+}
+
+@article{ouyang2025empirical,
+    title     = {An Empirical Study of the Non-Determinism of {ChatGPT} in Code Generation},
+    author    = {Ouyang, Shuyin and Zhang, Jie M. and Harman, Mark and Wang, Meng},
+    journal   = {ACM Transactions on Software Engineering and Methodology},
+    volume    = {34},
+    number    = {2},
+    pages     = {1--28},
+    year      = {2025},
+    doi       = {10.1145/3697010},
+    url       = {https://doi.org/10.1145/3697010}
+}
+
+@inproceedings{sclar2024quantifying,
+    title     = {Quantifying Language Models' Sensitivity to Spurious Features in Prompt Design or: How {I} learned to start worrying about prompt formatting},
+    author    = {Sclar, Melanie and Choi, Yejin and Tsvetkov, Yulia and Suhr, Alane},
+    booktitle = {The Twelfth International Conference on Learning Representations},
+    year      = {2024},
+    url       = {https://proceedings.iclr.cc/paper_files/paper/2024/hash/6c0e99d736da621403018ca7b32b1a4d-Abstract-Conference.html}
+}
+
+@article{mizrahi2024state,
+    title     = {State of What Art? A Call for Multi-Prompt {LLM} Evaluation},
+    author    = {Mizrahi, Moran and Kaplan, Guy and Malkin, Dan and Dror, Rotem and Shahaf, Dafna and Stanovsky, Gabriel},
+    journal   = {Transactions of the Association for Computational Linguistics},
+    volume    = {12},
+    pages     = {933--949},
+    year      = {2024},
+    doi       = {10.1162/tacl_a_00681},
+    url       = {https://aclanthology.org/2024.tacl-1.52/}
+}
+
+@inproceedings{zheng2024large,
+    title     = {Large Language Models Are Not Robust Multiple Choice Selectors},
+    author    = {Zheng, Chujie and Zhou, Hao and Meng, Fandong and Zhou, Jie and Huang, Minlie},
+    booktitle = {The Twelfth International Conference on Learning Representations},
+    year      = {2024},
+    url       = {https://openreview.net/forum?id=shr9PXz7T0}
+}
+
+@misc{zhu2026clean,
+    title         = {Clean Engineering, Unstable Measurement: A Preregistered Reliability Failure of Black-Box {LLM} Observers on Shared Endpoints},
+    author        = {Zhu, Haoyuan and Zhang, Jie},
+    year          = {2026},
+    eprint        = {2609.04198},
+    archivePrefix = {arXiv},
+    howpublished  = {arXiv:2609.04198},
+    url           = {https://arxiv.org/abs/2609.04198}
 }

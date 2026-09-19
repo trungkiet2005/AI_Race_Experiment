@@ -1,0 +1,31 @@
+{
+  "task_name": "strategic-state-probe-f2",
+  "trial_name": "strategic-state-probe-f2-Run #1",
+  "trial_uri": "kbench://not-a-harbor-trial",
+  "task_id": {
+    "path": "kbench://not-a-harbor-task"
+  },
+  "task_checksum": "unknown (kbench)",
+  "config": {
+    "task": {
+      "path": "kbench://not-a-harbor-task"
+    }
+  },
+  "agent_info": {
+    "name": "kaggle-benchmarks",
+    "version": "0.6.1",
+    "model_info": {
+      "name": "openai/gpt-oss-20b"
+    }
+  },
+  "verifier_result": {
+    "rewards": {
+      "admitted_for_gameplay": 1.0,
+      "expected_payoff_is_diagnostic_only": 1.0,
+      "n_rows": 60.0,
+      "overall_accuracy": 0.85
+    }
+  },
+  "started_at": "2026-09-18T22:48:52.844706Z",
+  "finished_at": "2026-09-18T22:50:07.749135Z"
+}
