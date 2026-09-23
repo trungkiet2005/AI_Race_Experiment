@@ -17,21 +17,21 @@ import matplotlib.pyplot as plt
 
 WHITE = "#FFFFFF"
 INK = "#17212B"
-MUTED = "#4B5865"
-LINE = "#778492"
-GRID = "#D9DEE8"
+MUTED = "#475569"
+LINE = "#94A3B8"
+GRID = "#CBD5E1"
 GREY_LIGHT = "#F4F6F8"
 
-# Semantic pairs. Use the saturated colour for marks and the light tint for a
-# panel/card fill. GOLD is a fill/mark colour, never a text colour.
-BLUE, BLUE_LIGHT = "#2F6283", "#EAF2F7"
-GOLD, GOLD_LIGHT = "#B9842C", "#FBF4E6"
-GREEN, GREEN_LIGHT = "#39745A", "#EAF5EF"
-RED, RED_LIGHT = "#A14D4B", "#FAEEEE"
+# Dark publication marks and quiet pastel fills, matching the approved
+# reference figure. GOLD remains a fill/mark colour, never a text colour.
+BLUE, BLUE_LIGHT = "#1F77B4", "#EAF2F7"
+GOLD, GOLD_LIGHT = "#D68E2C", "#FBF4E6"
+GREEN, GREEN_LIGHT = "#2C8C62", "#E3F5EE"
+RED, RED_LIGHT = "#B23A48", "#FDE7EC"
 
 # Categorical series use a second channel as well as colour. These are muted
 # enough to sit beside the semantic pairs and remain legible on a white page.
-CATEGORICAL = ["#2F6283", "#C27A35", "#3A8064", "#8A5E91", "#A14D55", "#647889"]
+CATEGORICAL = ["#1F77B4", "#D68E2C", "#2C8C62", "#7878C8", "#B23A48", "#647889"]
 EXTENDED_CATEGORICAL = CATEGORICAL + ["#4477AA", "#AA3377", "#CC6677"]
 MARKERS = ["o", "s", "^", "D", "P", "X", "v", "<", ">"]
 HATCHES = ["", "//", "xx", "\\\\", "..", "++"]

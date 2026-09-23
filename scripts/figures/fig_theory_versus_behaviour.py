@@ -212,9 +212,16 @@ def compute() -> dict:
          for route in S.ROUTE_ORDER],
         index=S.ROUTE_ORDER, columns=obs.columns,
     )
+    raw_rates = (
+        turns.groupby(["model_route", "max_private_risk", "game_id"])["unsafe"]
+        .mean()
+        .rename("rate")
+        .reset_index()
+    )
     stationary = load_archived_stationary_composition()
     return {"curves": curves, "obs": obs, "counts": counts, "risks": risks,
-            "implied": implied, "stationary": stationary}
+            "implied": implied, "raw_rates": raw_rates,
+            "stationary": stationary}
 
 
 def load_archived_stationary_composition() -> dict[float, pd.DataFrame]:
@@ -614,10 +621,53 @@ def panel_c(ax, res, d, letter="c") -> None:
     S.panel(ax, letter, "adjacent levels overlap, but the order survives")
 
 
+def panel_confirmatory(ax, res, d) -> None:
+    """Draw only the two pre-declared confirmatory routes with raw race dots."""
+    obs, raw, risks = res["obs"], res["raw_rates"], res["risks"]
+    for route in CONFIRMATORY_ROUTES:
+        route_raw = raw[raw["model_route"].eq(route)]
+        for risk in risks:
+            values = route_raw[route_raw["max_private_risk"].eq(risk)]["rate"]
+            jitter = np.linspace(-0.018, 0.018, len(values))
+            ax.scatter(float(risk) + jitter, 100 * values.to_numpy(),
+                       s=10, facecolors=S.SURFACE, edgecolors=S.ROUTE_C[route],
+                       linewidths=0.65, alpha=0.72, zorder=4)
+        ax.plot(risks, 100 * obs.loc[route].to_numpy(), color=S.ROUTE_C[route],
+                linewidth=1.55, marker=S.ROUTE_M[route], markersize=4.3,
+                markerfacecolor=S.ROUTE_C[route], markeredgecolor=S.SURFACE,
+                markeredgewidth=0.65, zorder=5)
+
+    for beta in sorted(res["curves"], reverse=True):
+        ax.plot(RISK_GRID, 100 * res["curves"][beta], color=BETA_C[beta],
+                linestyle=BETA_LS[beta], linewidth=2.0 if beta == d["reference"] else 1.7,
+                zorder=3)
+
+    S.rate_axis(ax, label="Unsafe play (%)")
+    S.risk_axis(ax, label=r"maximum private risk $p_r^{\max}$")
+    ax.set_xlim(0.0, 1.0)
+    ax.set_ylim(0.0, 108.0)
+    S.strip(ax, grid_axis="y")
+    S.ceiling_rule(ax, 100.0, label="ceiling")
+
+    for route, y, dy in (
+        (CONFIRMATORY_ROUTES[0], float(obs.loc[CONFIRMATORY_ROUTES[0]].iloc[-1]), 4.0),
+        (CONFIRMATORY_ROUTES[1], float(obs.loc[CONFIRMATORY_ROUTES[1]].iloc[-1]), -4.0),
+    ):
+        S.direct_label(ax, 0.90, 100 * y, S.ROUTE_SHORT[route],
+                       color=S.ROUTE_C[route], dx=4, dy=dy, weight="bold")
+    S.direct_label(ax, 0.66, 7.0,
+                   rf"EGT $\beta={d['reference']:g}$", color=BETA_C[d["reference"]],
+                   dx=3, dy=0, weight="bold")
+    weak = min(res["curves"])
+    weak_index = int(round(0.78 * (len(RISK_GRID) - 1)))
+    S.direct_label(ax, RISK_GRID[weak_index], 100 * res["curves"][weak][weak_index],
+                   rf"EGT $\beta={weak:g}$", color=BETA_C[weak], dx=3, dy=5,
+                   weight="bold")
+    S.panel(ax, "a", "two confirmatory routes follow a graded response", gap=8.0)
+
+
 def draw_main_figure(res: dict, d: dict) -> None:
-    """Draw a wide comparison with an explicit evolutionary composition panel."""
-    from matplotlib.patches import Patch
-    from matplotlib.lines import Line2D
+    """Draw the confirmatory route comparison and the strategy composition."""
 
     expected_routes = set(CONFIRMATORY_ROUTES) | set(ANALYSIS_ONLY_ROUTES)
     if set(S.ADMITTED) != expected_routes:
@@ -626,82 +676,19 @@ def draw_main_figure(res: dict, d: dict) -> None:
             f"routes: expected {sorted(expected_routes)}, found {sorted(S.ADMITTED)}"
         )
 
-    fig = plt.figure(figsize=(S.TEXT, 3.05))
+    fig = plt.figure(figsize=(S.TEXT, 3.12))
     gs = fig.add_gridspec(1, 2, width_ratios=[1.55, 1.0], wspace=0.34)
     fig.subplots_adjust(left=0.085, right=0.985, bottom=0.28, top=0.78)
 
     ax = fig.add_subplot(gs[0, 0])
-    # Draw the extension first so the directly confirmatory profiles remain
-    # legible when two route profiles pass through the same measured cell.
-    for route in ANALYSIS_ONLY_ROUTES + CONFIRMATORY_ROUTES:
-        confirmatory = route in CONFIRMATORY_ROUTES
-        colour = S.ROUTE_C[route]
-        ax.plot(
-            res["risks"], 100 * res["obs"].loc[route].to_numpy(),
-            color=colour, alpha=1.0 if confirmatory else 0.52,
-            marker=S.ROUTE_M[route], markersize=4.1 if confirmatory else 3.7,
-            linewidth=1.45 if confirmatory else 0.95,
-            markerfacecolor=colour if confirmatory else S.SURFACE,
-            markeredgecolor=S.SURFACE if confirmatory else colour,
-            markeredgewidth=0.55 if confirmatory else 0.9,
-            label=S.ROUTE_SHORT[route], zorder=5 if confirmatory else 4,
-        )
-    for beta in sorted(res["curves"], reverse=True):
-        linestyle = "-" if beta == d["reference"] else (0, (4.0, 1.8))
-        ax.plot(
-            RISK_GRID, 100 * res["curves"][beta], color=S.INK_2,
-            linestyle=linestyle, linewidth=2.0 if beta == d["reference"] else 1.7,
-            zorder=3, label=rf"EGT $\beta={beta:g}$",
-        )
-    S.rate_axis(ax, label="Unsafe play (%)")
-    S.risk_axis(ax, label=r"maximum private risk $p_r^{\max}$")
-    ax.set_xlim(0.0, 1.0)
-    ax.set_ylim(0.0, 105.0)
-    S.strip(ax, grid_axis="y")
-    S.ceiling_rule(ax, 100.0, label="ceiling")
-    S.panel(ax, "a", "risk response: confirmatory routes vs five-route extension", gap=8.0)
-
-    route_handles = [
-        Line2D(
-            [], [], color=S.ROUTE_C[route], marker=S.ROUTE_M[route],
-            markersize=4.1, linewidth=1.35,
-            markerfacecolor=S.ROUTE_C[route] if route in CONFIRMATORY_ROUTES else S.SURFACE,
-            markeredgecolor=S.SURFACE if route in CONFIRMATORY_ROUTES else S.ROUTE_C[route],
-            markeredgewidth=0.55 if route in CONFIRMATORY_ROUTES else 0.9,
-            label=S.ROUTE_SHORT[route],
-        )
-        for route in S.ADMITTED
-    ]
-    theory_handles = [
-        Line2D(
-            [], [], color=S.INK, linestyle="-", linewidth=2.0,
-            label=rf"EGT $\beta={d['reference']:g}$",
-        ),
-        Line2D(
-            [], [], color=S.INK_2, linestyle=(0, (4.0, 1.8)), linewidth=1.7,
-            label=rf"EGT $\beta={min(res['curves']):g}$",
-        ),
-    ]
-    ax.legend(
-        handles=route_handles + theory_handles,
-        frameon=False, loc="upper center", bbox_to_anchor=(0.5, 1.29),
-        ncol=5, fontsize=S.FS_NOTE, handlelength=1.55, columnspacing=0.85,
-        handletextpad=0.30, borderaxespad=0.0,
-    )
-    ax.text(
-        0.5, 1.10,
-        "filled/saturated = confirmatory (G3 Flash, Sonnet 5)  |  "
-        "hollow/faded = analysis-only extension",
-        transform=ax.transAxes, ha="center", va="bottom",
-        fontsize=S.FS_NOTE, color=S.INK_2, clip_on=False,
-    )
+    panel_confirmatory(ax, res, d)
 
     ax = fig.add_subplot(gs[0, 1])
     strategy_colours = {
         "AS": S.SAFE_C,
         "AU": S.UNSAFE_C,
-        "CS": "#a6dba0",
-        "CAS": "#f4a582",
+        "CS": "#86b980",
+        "CAS": "#d58b72",
     }
     strategy_labels = {
         "AS": "AS: Always Safe",
@@ -718,14 +705,16 @@ def draw_main_figure(res: dict, d: dict) -> None:
             values = 100 * res["stationary"][beta][strategy].to_numpy()
             ax.bar(
                 x + offsets[beta], values, width=width, bottom=bottom,
-                color=strategy_colours[strategy], edgecolor=S.SURFACE,
-                linewidth=0.45, hatch="//" if beta == 0.01 else None,
+                color=strategy_colours[strategy],
+                edgecolor=S.SURFACE if beta == 2.0 else S.INK_2,
+                linewidth=0.55,
                 zorder=3,
             )
             for xpos, base, value in zip(x + offsets[beta], bottom, values):
                 if value >= 12:
                     ax.text(xpos, base + value / 2, strategy, ha="center", va="center",
-                            fontsize=S.FS_NOTE, color=S.SURFACE if strategy in ("AU", "CAS") else S.INK,
+                            fontsize=S.FS_NOTE,
+                            color=S.SURFACE if strategy in ("AS", "AU", "CAS") else S.INK,
                             weight="bold")
             bottom += values
     ax.set_xticks(x, ["0.1", "0.6", "0.9"])
@@ -739,16 +728,10 @@ def draw_main_figure(res: dict, d: dict) -> None:
                 ha="center", va="top", fontsize=S.FS_NOTE, color=S.INK_2)
         ax.text(xpos + offsets[0.01], -0.12, r"$\beta=.01$", transform=ax.get_xaxis_transform(),
                 ha="center", va="top", fontsize=S.FS_NOTE, color=S.INK_2)
-    ax.legend(
-        handles=[Patch(facecolor=strategy_colours[s], edgecolor="none", label=strategy_labels[s])
-                 for s in STRATEGY_ORDER],
-        frameon=False, loc="upper center", bbox_to_anchor=(0.5, 1.27),
-        ncol=2, fontsize=S.FS_NOTE, columnspacing=0.8, handletextpad=0.35,
-    )
     fig.text(
         0.50, 0.035,
-        "Panel a shows the small-mutation limit; panel b shows the archived finite-mutation compositions "
-        "at the reference and reported best-fit settings.",
+        "Dots are individual confirmatory race rates; lines are route means. "
+        "The three analysis-only profiles remain in the supplement.",
         ha="center", va="bottom", fontsize=S.FS_NOTE, color=S.MUTED,
     )
     S.save(fig, "theory_versus_behaviour", width=S.TEXT)

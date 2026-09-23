@@ -529,6 +529,105 @@ def draw_effect_forest(ax, stance):
               handletextpad=0.35, columnspacing=0.9, bbox_to_anchor=(1.0, 1.01))
 
 
+def paired_policy_rows(route_rows: pd.DataFrame) -> dict:
+    """Return matched AS/AU route rates and block bootstrap intervals.
+
+    The two unconditional arms share the repetition seed and sampled horizon.
+    The check is kept here, next to the dumbbell estimand, so a visual change
+    cannot silently turn a paired intervention into two unrelated means.
+    """
+    result = {}
+    for route in ROUTES:
+        for risk in S.RISKS:
+            block = route_rows[
+                route_rows["route"].eq(route)
+                & route_rows["cell_risk"].eq(risk)
+                & route_rows["strategy"].isin(["AS", "AU"])
+            ]
+            per = block.groupby(["strategy", "rep"]).agg(
+                unsafe=("unsafe", "sum"), decisions=("unsafe", "size"),
+                seed=("game_seed", "first"),
+                horizon=("sampled_total_rounds", "first"),
+            )
+            safe = per.loc["AS"].sort_index()
+            unsafe = per.loc["AU"].sort_index()
+            if list(safe.index) != list(unsafe.index):
+                raise ValueError(f"{route} risk {risk}: AS/AU repetitions are not matched")
+            if not (safe["seed"].eq(unsafe["seed"]).all()
+                    and safe["horizon"].eq(unsafe["horizon"]).all()):
+                raise ValueError(f"{route} risk {risk}: AS/AU seeds or horizons differ")
+            safe_rate = safe["unsafe"] / safe["decisions"]
+            unsafe_rate = unsafe["unsafe"] / unsafe["decisions"]
+            delta = unsafe_rate.to_numpy(float) - safe_rate.to_numpy(float)
+            rng = cell_rng(route, "policy_dumbbell", risk)
+            draws = rng.integers(0, delta.size, size=(N_BOOT, delta.size))
+            boot = delta[draws].mean(axis=1)
+            result[(route, risk)] = {
+                "safe": float(safe_rate.mean()),
+                "unsafe": float(unsafe_rate.mean()),
+                "delta": float(delta.mean()),
+                "low": float(np.percentile(boot, 2.5)),
+                "high": float(np.percentile(boot, 97.5)),
+                "safe_blocks": safe_rate.to_numpy(float),
+                "unsafe_blocks": unsafe_rate.to_numpy(float),
+            }
+    return result
+
+
+def draw_policy_dumbbell(ax, policy, risk, *, show_routes=False):
+    """Show the empirical response to changing only the opponent policy."""
+    y_positions = np.arange(len(ROUTES) - 1, -1, -1, dtype=float)
+    for y, route in zip(y_positions, ROUTES):
+        entry = policy[(route, risk)]
+        safe_blocks = 100 * entry["safe_blocks"]
+        unsafe_blocks = 100 * entry["unsafe_blocks"]
+        offsets = np.linspace(-0.18, 0.18, len(safe_blocks))
+        for offset, safe_value, unsafe_value in zip(offsets, safe_blocks, unsafe_blocks):
+            ax.plot([safe_value, unsafe_value], [y + offset, y + offset],
+                    color=S.HAIRLINE, linewidth=0.55, alpha=0.72, zorder=1)
+            ax.plot(safe_value, y + offset, marker="o", markersize=2.0,
+                    markerfacecolor=S.SURFACE, markeredgecolor=S.SAFE_C,
+                    markeredgewidth=0.55, alpha=0.72, zorder=2)
+            ax.plot(unsafe_value, y + offset, marker="o", markersize=2.0,
+                    markerfacecolor=S.UNSAFE_C, markeredgecolor=S.UNSAFE_C,
+                    alpha=0.72, zorder=2)
+
+        safe_value = 100 * entry["safe"]
+        unsafe_value = 100 * entry["unsafe"]
+        ax.plot([safe_value, unsafe_value], [y, y], color=S.INK_2,
+                linewidth=1.5, solid_capstyle="round", zorder=3)
+        ax.plot(safe_value, y, marker="o", markersize=5.0,
+                markerfacecolor=S.SURFACE, markeredgecolor=S.SAFE_C,
+                markeredgewidth=1.35, zorder=4)
+        ax.plot(unsafe_value, y, marker="o", markersize=5.0,
+                markerfacecolor=S.UNSAFE_C, markeredgecolor=S.SURFACE,
+                markeredgewidth=0.65, zorder=4)
+        ax.text(103, y, f"Δ {100 * entry['delta']:+.1f}"
+                f" [{100 * entry['low']:+.1f}, {100 * entry['high']:+.1f}]",
+                ha="left", va="center", fontsize=S.FS_NOTE,
+                color=S.INK_2, clip_on=False)
+
+    ax.set_xlim(0, 145)
+    ax.set_ylim(-0.65, len(ROUTES) - 0.35)
+    ax.set_xticks([0, 25, 50, 75, 100])
+    ax.set_xlabel("Unsafe play (%)", labelpad=3)
+    ax.set_yticks(y_positions)
+    ax.set_yticklabels([S.ROUTE_SHORT[route] if show_routes else ""
+                        for route in ROUTES])
+    if show_routes:
+        for tick, route in zip(ax.get_yticklabels(), ROUTES):
+            tick.set_color(S.ROUTE_C[route])
+            tick.set_fontweight("bold")
+    ax.tick_params(axis="y", length=0, pad=3)
+    ax.grid(True, axis="x", color=S.GRID, linewidth=0.5, zorder=0)
+    for spine in ax.spines.values():
+        spine.set_visible(False)
+    ax.set_title(f"risk {S.RISK_LABEL[risk]}", loc="right" if show_routes else "center",
+                 fontsize=S.FS_CLAIM, color=S.INK, fontweight="bold", pad=5)
+    if show_routes:
+        ax.set_ylabel("route", labelpad=2)
+
+
 def draw_context_matrix(ax, safe_arm, selfplay, censored):
     """Aligned rate tiles: baseline design, self-play, and their gap."""
     from matplotlib.patches import Rectangle
@@ -725,6 +824,7 @@ def main() -> None:
         route: paired_risk_contrast(route_rows, route, "AS", S.RISKS[0], S.RISKS[-1])
         for route in ROUTES
     }
+    policy = paired_policy_rows(route_rows)
 
     # The figure is rendered only after every source-data and paired-contrast
     # guard below passes.  That makes the redesign fail closed: no plausible
@@ -827,20 +927,24 @@ def main() -> None:
     )
     S.save(full, "scripted_opponent", width=S.TEXT)
 
-    main_fig = plt.figure(figsize=(S.TEXT, 3.42))
+    main_fig = plt.figure(figsize=(S.TEXT, 3.96))
     main_gs = main_fig.add_gridspec(
-        2, 1, height_ratios=[1.10, 1.34],
-        left=0.105, right=0.975, top=0.86, bottom=0.20,
-        hspace=0.72,
+        2, 1, height_ratios=[1.02, 1.58],
+        left=0.105, right=0.975, top=0.86, bottom=0.16,
+        hspace=0.88,
     )
     response_facets(main_fig, main_gs[0, 0])
-    forest = main_fig.add_subplot(main_gs[1, 0])
-    draw_effect_forest(forest, stance)
-    S.panel(forest, "b", "every rival effect stays above zero", pad=5, gap=8.5)
+    dumbbells = main_gs[1, 0].subgridspec(1, len(S.RISKS), wspace=0.40)
+    dumbbell_axes = [main_fig.add_subplot(dumbbells[0, i])
+                     for i in range(len(S.RISKS))]
+    for i, (axis, risk) in enumerate(zip(dumbbell_axes, S.RISKS)):
+        draw_policy_dumbbell(axis, policy, risk, show_routes=(i == 0))
+    S.panel(dumbbell_axes[0], "b", "opponent policy shifts play",
+            pad=5, gap=8.5)
     main_fig.text(
         0.50, 0.045,
-        "Markers identify the stated risk; whiskers are paired 95% intervals "
-        "over ten repetition blocks.",
+        "Faint connectors are the ten matched repetition blocks; bold connectors "
+        "are block means. Labels report AU minus AS with paired 95% intervals.",
         ha="center", va="bottom", fontsize=S.FS_NOTE, color=S.MUTED,
     )
     S.save(main_fig, "scripted_opponent_main", width=S.TEXT)

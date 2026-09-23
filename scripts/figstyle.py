@@ -69,19 +69,22 @@ GREY_BAD = "#e8ebee"
 
 # --- the two actions ----------------------------------------------------------
 # One ink each, used nowhere else, so the reader learns them once.
-# Shared visual language with the approved reference figure: indigo is the
-# primary route, emerald is safe/kept, rose is unsafe/conflict, and sky/amber
-# separate the remaining routes. Markers and direct labels remain mandatory.
+# Shared visual language with the approved reference figure. The route marks use
+# darker publication colours than the overview fills, while markers and direct
+# labels remain mandatory as a second channel.
 INDIGO = "#4338ca"
 INDIGO_LIGHT = "#ecedfb"
-ROSE = "#e11d48"
+BLUE = "#1f77b4"
+BLUE_LIGHT = "#eaf2f7"
+ROSE = "#b23a48"
 ROSE_LIGHT = "#fde7ec"
-EMERALD = "#059669"
+EMERALD = "#2c8c62"
 EMERALD_LIGHT = "#e3f5ee"
 SKY = "#0ea5e9"
-AMBER = "#d97706"
+AMBER = "#d68e2c"
 SLATE = "#334155"
 SLATE_2 = "#64748b"
+PURPLE = "#7878c8"
 
 SAFE_C = EMERALD
 UNSAFE_C = ROSE
@@ -94,12 +97,12 @@ ACTION_LABEL = {"SAFE": "Safe", "UNSAFE": "Unsafe"}
 ROUTE_C = {
     "anthropic/claude-opus-5@default": ROSE,
     "anthropic/claude-sonnet-5@default": AMBER,
-    "google/gemini-3-flash-preview": INDIGO,
+    "google/gemini-3-flash-preview": BLUE,
     "google/gemini-3.1-flash-lite-preview": SKY,
-    "google/gemini-3.5-flash-lite": "#0284c7",
-    "openai/gpt-5.5-2026-04-23": "#7c3aed",
+    "google/gemini-3.5-flash-lite": "#24537a",
+    "openai/gpt-5.5-2026-04-23": PURPLE,
     "openai/gpt-5.4-2026-03-05": EMERALD,
-    "openai/gpt-5.4-mini-2026-03-17": "#a16207",
+    "openai/gpt-5.4-mini-2026-03-17": "#9a6700",
     "openai/gpt-5.4-nano-2026-03-17": SLATE_2,
     "human": INK,
 }

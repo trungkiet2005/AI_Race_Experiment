@@ -725,16 +725,20 @@ although swapping the opaque action-code mapping shifts \Unsafe{} play by
   \caption{A shared rival response changes a route's play. Panel (a) is a response
   surface: each tile is an admitted route's Unsafe rate under one scripted
   rival, with columns ordered from Always Safe to Always Unsafe and facets for
-  the three maximum-risk conditions. Panel (b) is a forest plot of the paired
-  Always-Unsafe minus Always-Safe effect at each risk, with 95\% intervals over
-  the ten matched repetition blocks. All fifteen lower bounds are positive.
-  Within-route contrasts are the estimands; cross-route magnitudes are
-  descriptive under heterogeneous contracts.}
+  the three maximum-risk conditions. Panel (b) shows the empirical response to
+  changing only the opponent policy: open points are the Always Safe rival and
+  filled points are the Always Unsafe rival, with faint matched repetition
+  blocks behind each bold mean connector. Labels report the paired
+  Always-Unsafe minus Always-Safe contrast with 95\% intervals. Within-route
+  contrasts are the estimands; cross-route magnitudes are descriptive under
+  heterogeneous contracts.}
   \Description{Two-panel figure. Panel a contains three response matrices,
   one per risk level, with five route rows and four ordered scripted-rival
-  columns; every tile prints the measured Unsafe rate. Panel b is a forest plot
-  with one coloured route group and three risk markers per route, horizontal
-  paired 95 percent intervals, and a vertical zero reference.}
+  columns; every tile prints the measured Unsafe rate. Panel b contains three
+  risk facets with the same five route rows. Open and filled points show the
+  Always Safe and Always Unsafe rival rates, faint connectors show the ten
+  matched repetition blocks, bold connectors show their means, and right-side
+  labels give paired 95 percent intervals.}
   \label{fig:scripted-opponent-main}
 \end{figure*}
 
@@ -833,23 +837,24 @@ level: the $\beta=2$ benchmark loses 98 points inside a risk step of $0.005$
 \begin{figure*}[t]
     \centering
     \includegraphics[width=\textwidth]{../figures/paper/theory_versus_behaviour.pdf}
-    \caption{The evolutionary benchmark and the admitted route profiles in a
-    common risk coordinate. (a) The direct confirmatory comparison is the
-    separate two-route block for Gemini 3 Flash and Claude Sonnet 5; the other
-    three admitted profiles are shown only as an analysis-only extension. The
-    small-mutation limit is step-like at strong selection and graded near
-    neutrality, while the graded profiles move gradually and Claude Opus 5
-    changes sharply between the two lowest tested levels. (b) The
+    \caption{The evolutionary benchmark and the confirmatory route profiles in
+    a common risk coordinate. (a) The direct comparison keeps only Gemini 3
+    Flash and Claude Sonnet 5, with individual race rates behind their means;
+    the other three admitted profiles remain an analysis-only extension in the
+    supplement. The small-mutation limit is step-like at strong selection and
+    graded near neutrality, while both confirmatory profiles move gradually.
+    (b) The
     corresponding finite-mutation population composition changes its dominant
     strategy from Always Unsafe through the conditional strategy that starts
     Unsafe to the conditional strategy that starts Safe as risk rises. The
-    hatched bars show the reported best-fit regime; the unhatched bars show the
-    reference regime.}
+    Within each risk pair, the right-hand bars show the reported best-fit regime
+    and the left-hand bars show the reference regime.}
     \label{fig:theory-behaviour}
     \Description{Two-panel comparison. Panel a plots Unsafe play against maximum
     private risk for the reconstructed evolutionary model at strong and weak
-    selection, the two-route confirmatory comparison for Gemini 3 Flash and
-    Claude Sonnet 5, and the three-route analysis-only extension. Panel b shows stacked stationary
+    selection, with individual race rates and means for the two-route
+    confirmatory comparison between Gemini 3 Flash and Claude Sonnet 5. The
+    three-route analysis-only extension is in the supplement. Panel b shows stacked stationary
     shares of four strategies at risks 0.1, 0.6 and 0.9 for the reference and
     reported best-fit finite-mutation regimes.}
 \end{figure*}
