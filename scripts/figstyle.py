@@ -55,13 +55,13 @@ DPI = 600
 PAD = 0.012
 
 # --- ink ----------------------------------------------------------------------
-INK = "#101418"
-INK_2 = "#454f59"
-MUTED = "#8b949d"
-HAIRLINE = "#c8ced4"
-GRID = "#dfe4e8"
+INK = "#0f172a"
+INK_2 = "#334155"
+MUTED = "#64748b"
+HAIRLINE = "#cbd5e1"
+GRID = "#e2e8f0"
 SURFACE = "#ffffff"
-BAND = "#eef1f4"
+BAND = "#f1f5f9"
 # A tile that has no value because the context never arose, which is a finding
 # and not missing data.  Kept distinct from every colour in the sequential map
 # so it cannot be misread as a low value.
@@ -69,8 +69,22 @@ GREY_BAD = "#e8ebee"
 
 # --- the two actions ----------------------------------------------------------
 # One ink each, used nowhere else, so the reader learns them once.
-SAFE_C = "#1b7837"
-UNSAFE_C = "#b2182b"
+# Shared visual language with the approved reference figure: indigo is the
+# primary route, emerald is safe/kept, rose is unsafe/conflict, and sky/amber
+# separate the remaining routes. Markers and direct labels remain mandatory.
+INDIGO = "#4338ca"
+INDIGO_LIGHT = "#ecedfb"
+ROSE = "#e11d48"
+ROSE_LIGHT = "#fde7ec"
+EMERALD = "#059669"
+EMERALD_LIGHT = "#e3f5ee"
+SKY = "#0ea5e9"
+AMBER = "#d97706"
+SLATE = "#334155"
+SLATE_2 = "#64748b"
+
+SAFE_C = EMERALD
+UNSAFE_C = ROSE
 ACTION_C = {"SAFE": SAFE_C, "UNSAFE": UNSAFE_C}
 ACTION_LABEL = {"SAFE": "Safe", "UNSAFE": "Unsafe"}
 
@@ -78,15 +92,15 @@ ACTION_LABEL = {"SAFE": "Safe", "UNSAFE": "Unsafe"}
 # Assigned once, in the order the manuscript always lists them, so a route keeps
 # its hue and its glyph in every figure of the paper and of the supplement.
 ROUTE_C = {
-    "anthropic/claude-opus-5@default": "#d55e00",              # vermillion
-    "anthropic/claude-sonnet-5@default": "#e69f00",            # orange
-    "google/gemini-3-flash-preview": "#009e73",                # bluish green
-    "google/gemini-3.1-flash-lite-preview": "#56b4e9",         # sky blue
-    "google/gemini-3.5-flash-lite": "#0072b2",                 # blue
-    "openai/gpt-5.5-2026-04-23": "#cc79a7",                    # reddish purple
-    "openai/gpt-5.4-2026-03-05": "#5d3a9b",                    # violet
-    "openai/gpt-5.4-mini-2026-03-17": "#8b6f47",               # brown
-    "openai/gpt-5.4-nano-2026-03-17": "#7f7f7f",               # grey
+    "anthropic/claude-opus-5@default": ROSE,
+    "anthropic/claude-sonnet-5@default": AMBER,
+    "google/gemini-3-flash-preview": INDIGO,
+    "google/gemini-3.1-flash-lite-preview": SKY,
+    "google/gemini-3.5-flash-lite": "#0284c7",
+    "openai/gpt-5.5-2026-04-23": "#7c3aed",
+    "openai/gpt-5.4-2026-03-05": EMERALD,
+    "openai/gpt-5.4-mini-2026-03-17": "#a16207",
+    "openai/gpt-5.4-nano-2026-03-17": SLATE_2,
     "human": INK,
 }
 ROUTE_M = {
