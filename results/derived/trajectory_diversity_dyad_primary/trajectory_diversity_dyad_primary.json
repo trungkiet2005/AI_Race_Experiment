@@ -34,10 +34,10 @@
   },
   "routes": [
     "Gemini 3 Flash",
-    "Claude Opus 5",
     "GPT-5.4",
     "GPT-5.5",
     "Claude Sonnet 5",
+    "Claude Opus 5",
     "Gemini 3.1 Flash Lite",
     "GPT-5.4 mini",
     "Gemini 3.5 Flash Lite",
@@ -45,10 +45,10 @@
   ],
   "admitted_routes": [
     "Gemini 3 Flash",
-    "Claude Opus 5",
     "GPT-5.4",
     "GPT-5.5",
-    "Claude Sonnet 5"
+    "Claude Sonnet 5",
+    "Claude Opus 5"
   ],
   "below_every_human_draw": 18,
   "admitted_below_every_human_draw": 13,

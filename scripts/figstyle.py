@@ -131,15 +131,15 @@ ROUTE_LABEL = {
     "human": "Humans",
 }
 ROUTE_SHORT = {
-    "anthropic/claude-opus-5@default": "Opus 5",
-    "anthropic/claude-sonnet-5@default": "Sonnet 5",
-    "google/gemini-3-flash-preview": "G3 Flash",
-    "google/gemini-3.1-flash-lite-preview": "G3.1 FL",
-    "google/gemini-3.5-flash-lite": "G3.5 FL",
+    "anthropic/claude-opus-5@default": "Claude Opus 5",
+    "anthropic/claude-sonnet-5@default": "Claude Sonnet 5",
+    "google/gemini-3-flash-preview": "Gemini 3 Flash",
+    "google/gemini-3.1-flash-lite-preview": "Gemini 3.1 Flash Lite",
+    "google/gemini-3.5-flash-lite": "Gemini 3.5 Flash Lite",
     "openai/gpt-5.5-2026-04-23": "GPT-5.5",
     "openai/gpt-5.4-2026-03-05": "GPT-5.4",
-    "openai/gpt-5.4-mini-2026-03-17": "5.4 mini",
-    "openai/gpt-5.4-nano-2026-03-17": "5.4 nano",
+    "openai/gpt-5.4-mini-2026-03-17": "GPT-5.4 mini",
+    "openai/gpt-5.4-nano-2026-03-17": "GPT-5.4 nano",
     "human": "Humans",
 }
 
@@ -191,15 +191,15 @@ def route_id(key: str) -> str:
     return ROUTE_ALIAS.get(key, key)
 
 
-# The five admitted routes, in the order they are always listed, then the four
-# refused.  Admission is a property of the route, so the split lives here and
-# not in each figure script.
+# The five eligible endpoints, in the canonical order used by every figure and
+# table, then the four screen-failing endpoints. Eligibility is a property of
+# the endpoint, so the split lives here and not in each figure script.
 ADMITTED = [
     "google/gemini-3-flash-preview",
-    "anthropic/claude-opus-5@default",
     "openai/gpt-5.4-2026-03-05",
     "openai/gpt-5.5-2026-04-23",
     "anthropic/claude-sonnet-5@default",
+    "anthropic/claude-opus-5@default",
 ]
 REFUSED = [
     "google/gemini-3.1-flash-lite-preview",

@@ -322,71 +322,52 @@ extend its claims beyond the idealised race.
 \section*{Supplementary roadmap}
 
 The supplement is organised as a short evidence package rather than a lab
-notebook. The unnumbered dividers identify the reader's path; the subsection
-labels remain attached to their original analyses so that existing
-cross-references stay stable.
+notebook. The matrix below makes the endpoint roster and evidence status
+explicit before the detailed checks begin.
 
 \begin{table*}[t]
-  \caption{Roadmap to the supplementary evidence. Sections A--C support the
-  headline claims most directly; Sections D--E contain the human diagnostics
-  and exploratory extensions. The main paper's claims remain scoped to the
-  designs and populations stated there.}
+  \caption{Coverage matrix for the supplementary evidence. Endpoint counts are
+  shown for the analysis that actually supports each claim; no row pools the
+  nine-screen roster with the separate open-weight or pilot batteries.}
   \centering
   \small
-  \begin{tabular}{@{}p{0.18\textwidth}p{0.39\textwidth}p{0.31\textwidth}@{}}
+  \begin{tabular}{@{}p{0.27\textwidth}p{0.23\textwidth}p{0.23\textwidth}p{0.17\textwidth}@{}}
     \toprule
-    Section & Supporting analyses & What the section adds \\
+    Analysis & Endpoints & Evidence status & Main claim? \\
     \midrule
-    A. Validity and provenance &
-      Quality-control screen (\S\ref{app:admission-v6}); open-weight battery
-      (\S\ref{app:open-weight-battery}); human-source reconstruction
-      (\S\ref{app:human-benchmark-replication}) &
-      Entry conditions, source checks and the boundaries of the evidence. \\
-    B. Core risk, theory and robustness &
-      Baseline and policy shape (\S\ref{app:frontier-baseline},
-      \S\ref{app:policy-shape}); replication (\S\ref{app:baseline-replication});
-      selection-strength sweep (\S\ref{app:egt-beta}); crossed representation
-      design (\S\ref{app:context-mapping}) &
-      The risk response, evolutionary comparison and representation checks. \\
-    C. Scripted-rival intervention &
-      Full five-route campaign (\S\ref{app:scripted-opponent}) &
-      The complete fixed-policy intervention, replay audit and paired effects. \\
-    D. Human comparison and diversity &
-      Two-player scope (\S\ref{app:twoplayer-baseline}); diversity
-      (\S\ref{app:diversity}); population identity
-      (\S\ref{app:population-identity}); predictive structure
-      (\S\ref{app:predictive-structure}); archetype and embedding diagnostics
-      (\S\ref{app:archetype-coverage}, \S\ref{app:tsne-outcome}) &
-      Sequence-level comparison and diagnostics of observable trajectory
-      diversity. \\
-    E. Exploratory interaction scope &
-      Personas (\S\ref{app:persona-detail}); group size
-      (\S\ref{app:nplayer-scope}, \S\ref{app:nplayer-matched}); position,
-      dynamics and horizon (\S\ref{app:position-cells},
-      \S\ref{app:joint-dynamics}, \S\ref{app:horizon-boundary}); citation
-      record (\S\ref{app:citation-audit}) &
-      Scoped extensions and the remaining reproducibility record. \\
+    Self-play risk response & 9 screened / 5 eligible & Confirmatory & Yes \\
+    Scripted opponent policy & 5/5 eligible & Confirmatory & Yes \\
+    EGT direct comparison & 2 prespecified & Confirmatory & Yes, direct \\
+    EGT secondary fit & 5/5 eligible & Secondary reanalysis & Yes, robustness \\
+    Presentation robustness & 2 prespecified & Limited robustness & Limited \\
+    Human trajectory diversity & 9 screened / 5 eligible headline & Confirmatory baseline & Yes \\
+    Matched group size & 1 eligible endpoint & Exploratory & No \\
     \bottomrule
   \end{tabular}
 \end{table*}
 
-For the headline claims, read Sections A--C first. Section D supplies the
-cluster-aware human comparison and its diagnostics; Section E is exploratory.
-The scripted-rival block is physically placed in Section C so its complete
+For the headline claims, read the screen, scripted-opponent, EGT-fit and human
+rows first. Open-weight, pilot-roster, persona, embedding and group-size
+analyses are exploratory extensions and are not pooled with the eligible
+endpoint claims. The scripted-opponent block is physically placed after the
+robustness checks so its complete
 evidence follows the main paper's rival result directly.
 
-Four terms are used with fixed meanings throughout. A \emph{route} is the
-exact provider string a request is addressed to, for example
-\path{google/gemini-3-flash-preview}. An \emph{endpoint} is a route that
-carries an admission verdict from the probe battery below. A
-\emph{checkpoint} is one dated model version, which is what a comparison
-across the rows of a behavioural table compares. \emph{Model} is used only
-generically, for a language model as a kind of system. Where a number belongs
-to a route rather than to a model in general, the route string is printed
-beside it.
+Four terms are used with fixed meanings throughout. An \emph{endpoint} is the
+exact hosted model version and provider configuration tested, for example
+\path{google/gemini-3-flash-preview}. An eligible endpoint carries a passing
+eligibility outcome from the probe battery below. A
+\emph{checkpoint} is used only for a dated model version when the distinction
+matters. \emph{Model} is used generically for a language-model system. The
+screen outcome is either \emph{screen-passing} (eligible) or
+\emph{screen-failing} (excluded); it is not a capability score.
 
 \appendix
-\section{Extended results and robustness checks}
+% The evidence package uses the explicit S1--S7 roadmap below; suppress the
+% legacy appendix letter and subsection counter so old A.1-style labels do not
+% survive into the final PDF.
+\setcounter{secnumdepth}{0}
+\section*{Supplementary evidence}
 \label{app:extended-results}
 % NOTE: remove the \appendix command above if the surrounding paper already
 % declares \appendix elsewhere (e.g. before the bibliography) -- it must
@@ -399,33 +380,18 @@ beside it.
 
 \begin{sloppypar}
 \noindent
-This supplement collects the material referenced from
-the main paper as supporting rather than extending the main
-claims: the record of the quality-control screen and which routes it admitted
-(\S\ref{app:admission-v6}), the human-benchmark replication check
-(\S\ref{app:human-benchmark-replication}), the persona comparison
-(\S\ref{app:persona-detail}), the predictive analysis
-(\S\ref{app:predictive-structure}), and the full two-player and $N$-player
-descriptive results (\S\ref{app:twoplayer-baseline},
-\S\ref{app:nplayer-scope}). It also carries the evidence the main paper only
-summarises: the separate and larger
-battery on the one model with published weights
-(\S\ref{app:open-weight-battery}), the selection-strength sweep of the evolutionary
-benchmark (\S\ref{app:egt-beta}), the crossed
-representation-robustness design completed on both routes selected for the
-crossed representation study
-(\S\ref{app:context-mapping}), the matched
-group-size comparison (\S\ref{app:nplayer-matched}), the scripted-rival
-campaign (\S\ref{app:scripted-opponent}), the
-cluster-count sweep behind the human archetypes
-(\S\ref{app:k-sensitivity}), the trajectory-diversity statistics
-(\S\ref{app:diversity}), the pilot roster the projections are built on
-(\S\ref{app:diversity-pilot}), the joint outcome dynamics of a race
-(\S\ref{app:joint-dynamics}), and the designed horizon boundary at round
-five (\S\ref{app:horizon-boundary}).
+This supplement collects the material referenced from the main paper as
+supporting rather than extending the main claims: endpoint eligibility and
+provenance, risk-response and theory robustness, the crossed presentation
+check, the full scripted-opponent table, the human-benchmark replication and
+trajectory-diversity statistics, and the matched group-size extension. The
+separate open-weight battery, pilot roster, classifier and embedding analyses,
+persona diagnostics, and joint-dynamics/horizon extensions remain in the
+repository as extended artifacts rather than part of this concise evidence
+package.
 \end{sloppypar}
 
-\subsubsection*{A. Validity, admission, and provenance}
+\subsubsection*{S1. Endpoint eligibility and provenance}
 
 \subsection{The quality-control screen: what it asked, and which routes passed}
 \label{app:admission-v6}
@@ -535,6 +501,7 @@ advertised routes never produced a scoreable answer at all, because transport
 failed before any probe was sampled; they were retained as failure records and
 never replaced by a substitute endpoint.
 
+\begin{comment}
 \subsection{A second, larger battery on the one model with published weights}
 \label{app:open-weight-battery}
 
@@ -613,7 +580,9 @@ diagnostic itself, 30 races and 558 decisions in each of the two presentations
 with no parse failure, and it is read only as a within-route contrast between
 two presentations of one mechanism.
 
-\subsubsection*{B. Robustness of the main two-player results}
+\end{comment}
+
+\subsubsection*{S2. Risk-response robustness}
 
 \subsection{Earlier two-route confirmatory baseline}
 \label{app:frontier-baseline}
@@ -753,7 +722,7 @@ in the EGTtools small-mutation limit while the shares come from the
 \subsection{The shape of a policy behind a rate}
 \label{app:policy-shape}
 
-Every gameplay number in \S\ref{app:frontier-baseline} is a rate: the share of
+Every gameplay number in the neutral-baseline analysis is a rate: the share of
 decisions that came out \Unsafe{}. A rate is silent about the thing an iterated
 game is for. Two routes can sit at the same rate while one is reading the board
 and the other is reciting a constant, and no table in this supplement separates
@@ -867,7 +836,7 @@ baseline protocol, version~3: at task version~3 on
 2026-09-08, which is the run reported everywhere else in this paper, and again
 at task version~4 on 2026-09-09 on a different billing identity. The repeat was
 not planned as evidence. It rode along with the push that carried the
-reasoning-budget amendment of \S\ref{app:admission-v6} and was recovered from
+reasoning-budget amendment of the eligibility screen and was recovered from
 the run archive afterwards. Protocol, prompt hash, mechanism, seed structure
 and the full set of thirty (game seed, risk) blocks are identical across the
 two runs, and the released analysis code refuses the comparison unless they
@@ -890,10 +859,12 @@ purpose. Both campaign analysers key their results by model route, so a second
 run of an already-represented route stored with the campaign would not raise an
 error. It would quietly displace the reported one.
 
+\subsubsection*{S3. Evolutionary benchmark sensitivity}
+
 \subsection{Selection-strength sweep of the evolutionary benchmark}
 \label{app:egt-beta}
 
-The comparison in \S\ref{app:frontier-baseline} uses one setting of the
+The comparison in the direct-baseline analysis uses one setting of the
 reconstructed evolutionary model. A reviewer may reasonably ask whether the
 gap between that model and the audited routes is a property of the model or an
 artifact of that one setting. This subsection answers that question by
@@ -1058,6 +1029,8 @@ mutation rate of the parameter points it is drawn at.
     \label{fig:theory-inversion}
 \end{figure*}
 
+\subsubsection*{S4. Presentation robustness}
+
 \subsection{Crossed representation-robustness design}
 \label{app:context-mapping}
 
@@ -1144,11 +1117,8 @@ formula are identical, and both routes had already passed the quality-control
 screen. Two routes is enough to show the effect replicates and not enough to
 characterise endpoints in general.
 
-Panel b of Figure~\ref{fig:what-moves-play} draws both routes' cells as an
-interaction plot on one common vertical span. That figure is placed with the
-matched group-size comparison of \S\ref{app:nplayer-matched}, because that is
-where all three of this supplement's manipulations of the same game can be read
-side by side. What the panel adds here is the question the table cannot answer:
+The crossed table keeps both routes' cells on one common vertical span. What the
+table adds here is the question a pooled rate cannot answer:
 the two factors do not interact on either route, so the narrative skin and the
 symbol mapping simply add, and the crossing that this rerun was built to test
 returns an interval spanning zero on both routes.
@@ -1254,6 +1224,7 @@ added anywhere, and each figure is a subset of the same released dataset.
     \end{tabular}
 \end{table}
 
+\begin{comment}
 \subsection{Claim-scoped citation audit}
 \label{app:citation-audit}
 
@@ -1319,12 +1290,12 @@ Not evidence that LLM agents and human participants are exchangeable. \\
 
 The reconstruction reproduces the original coefficients almost exactly
 (largest discrepancy 0.002), which is the basis for treating the human-side
-comparisons in the main paper's diversity comparison and the elicited-risk and
-persona results of \S\ref{app:persona-detail} as resting on a correctly
-processed benchmark
-rather than on a reimplementation error.
+comparisons in the main paper's diversity analysis as resting on a correctly
+processed benchmark rather than on a reimplementation error.
 
-\subsubsection*{C. Scripted-rival intervention}
+\end{comment}
+
+\subsubsection*{S5. Scripted-opponent results}
 
 \subsection{Five audited routes against a fixed and undisclosed rival policy}
 \label{app:scripted-opponent}
@@ -1391,8 +1362,9 @@ not a model boundary: the analysis never treats account identity as evidence
 about behaviour, and failed quota or authentication attempts contributed no
 races to the admitted set. The complete assignment audit is kept with those
 receipts. The full route-by-risk record is in
-Table~\ref{tab:scripted-opponent}; Figure~\ref{fig:scripted-opponent} shows the
-same response and context contrasts as categorical tiles.
+Table~\ref{tab:scripted-opponent} retains the full response and context
+contrasts; the main paper's Figure~3 is the only scripted-opponent
+visualization retained in the evidence package.
 
 \paragraph{Coverage and decoding contracts.} The final campaign is complete:
 all five admitted routes have all 12 route-by-strategy-by-risk cells. Every
@@ -1409,6 +1381,7 @@ run manifests carry the correct risk-specific hashes, so this is a provenance
 metadata limitation rather than a gameplay failure.
 
 
+\begin{comment}
 \begin{figure*}[t]
     \centering
     \includegraphics[width=0.99\textwidth]{../figures/paper/scripted_opponent.pdf}
@@ -1430,6 +1403,7 @@ metadata limitation rather than a gameplay failure.
     signed gap for the same routes and risk levels.}
     \label{fig:scripted-opponent}
 \end{figure*}
+\end{comment}
 
 \begin{comment}
 \begin{table*}[t]
@@ -1448,7 +1422,7 @@ metadata limitation rather than a gameplay failure.
     rather than because it is resolved that finely. The two cells at
     $100.0\%$ sit on a boundary, and every contrast through them is truncated
     rather than complete. The self-play rate is the same route in the neutral
-    baseline of \S\ref{app:frontier-baseline}, 10 races and 186 decisions per
+    baseline, 10 races and 186 decisions per
     cell, and it is a different design rather than another rival: at risk $0.1$
     nine of Gemini 3 Flash's ten self-play races have every decision
     \Unsafe{}, so the $74.2$ below it is a lower bound on that distance.}
@@ -1669,8 +1643,11 @@ failure, that is the wrong protocol, that has the wrong number of races, whose
 seat counterbalance is not five and five, or whose rival deviated from the
 strategy its directory claims.
 
-\subsubsection*{D. Human comparison and trajectory diversity}
+\subsubsection*{S6. Human reference and trajectory-diversity robustness}
 
+% Pilot, classifier, embedding, persona and archetype analyses are retained in
+% the repository as extended artifacts rather than in the concise supplement.
+\begin{comment}
 \subsection{Risk preference and assigned personas}
 \label{app:persona-detail}
 
@@ -2166,6 +2143,9 @@ imply matching the human reciprocity-dominated association profile.
 % 15/6) with its own manifest, and report the recovered cluster count and
 % unclustered fraction per configuration from that manifest.}
 
+% Legacy pilot, classifier, embedding, persona and N-player diagnostics remain
+% in the repository history but are outside the concise evidence package.
+\begin{comment}
 \subsection{Two-player checkpoint descriptive baseline (full scope)}
 \label{app:twoplayer-baseline}
 
@@ -2208,7 +2188,7 @@ per-risk-level rates underlying the qualitative curve descriptions above.
     \end{tabular}
 \end{table}
 
-\subsubsection*{E. Exploratory interaction scope}
+\subsubsection*{S7. Exploratory extensions}
 
 \subsection{$N$-player self-play scope ($N=3,4,5$)}
 \label{app:nplayer-scope}
@@ -2652,6 +2632,8 @@ does most of its work on under a quarter of the sample, and the archetype
 signatures should be read with that in mind. No participant is excluded at any
 step: all 341 receive a cluster label.
 
+\end{comment}
+
 \subsection{Trajectory-diversity statistics}
 \label{app:diversity}
 
@@ -2864,6 +2846,7 @@ human range at every risk. Claude Opus 5 again returns exactly one distinct
 trajectory at all three risk levels, with Hamming 0. The dyad correction changes
 the scope of the q{=}0 claim, not the concentration result itself.
 
+\begin{comment}
 \subsection{Behavioural-archetype coverage by population}
 \label{app:archetype-coverage}
 
@@ -2908,6 +2891,10 @@ cluster count from two to six.
 \end{table}
 
 
+\end{comment}
+
+\subsubsection*{S7. Exploratory extensions}
+
 \subsection{Matched group-size comparison}
 \label{app:nplayer-matched}
 
@@ -2921,7 +2908,7 @@ same prompt template, the same parser and one protocol, the matched
 group-size protocol, version~1,
 so the number of seats is the only thing deliberately varied. The two-player arm is not a near
 neighbour of the headline game: evaluating the group-count stage
-rule of Equation~\ref{eq:nplayer-payoff} at two companies returns the
+    group-count stage rule at two companies returns the
 two-player payoff matrix exactly, at $1.0$, $0.6$, $2.4$, $2.0$, which the
 released design check asserts offline before the task is pushed, together with the invariance of every other mechanism field and
 the sharing of the horizon draw described below.
@@ -3004,6 +2991,11 @@ instead of assuming it, and it holds for all ten blocks in every contrast.
     \end{tabular}
 \end{table}
 
+% The former composite compared one-route group size, two-route presentation,
+% and nine-route seat effects on one visual scale. It is retained below only as
+% an artifact trace; the final supplement keeps the matched group-size table
+% and the separate presentation/seat analyses instead.
+\begin{comment}
 \begin{figure*}[!t]
     \centering
     \includegraphics[width=\textwidth]{../figures/paper/what_moves_play.pdf}
@@ -3066,6 +3058,7 @@ instead of assuming it, and it holds for all ten blocks in every contrast.
     beside them.}
     \label{fig:what-moves-play}
 \end{figure*}
+\end{comment}
 
 \paragraph{What it shows.} \Unsafe{} play rises monotonically with the number
 of competing companies at every private-risk condition that leaves room for it
@@ -3074,21 +3067,13 @@ arm is the headline game itself, this also says something about the rest of the
 paper: the two-player results are the low end of that curve, not a special case
 beside it.
 
-Figure~\ref{fig:what-moves-play} draws that grid as its first panel, beside the
-two other manipulations this supplement ran on the same game: the crossed
-representation design of \S\ref{app:context-mapping} and the seat asymmetry of
-the neutral baseline. The figure sits in this subsection rather than with the
-representation design for two reasons. Group size is the only one of the three
-factors that moves play a long way, so it is the panel the figure leads with;
-and by this point in the supplement the other two designs have already been
-described in full, whereas a reader meeting the figure at
-\S\ref{app:context-mapping} would meet this grid many pages before the
-subsection that defines it. Read as a surface rather than as a table, the grid
-also makes plain something the rows do not. Adding companies does not carry play
-up a plane. It carries play into the ceiling, and the five hatched cells are
-where the measurement stops being a measurement: those cells contained no safe
-decision at all, so their contrast against the two-player arm is bounded by the
-boundary and not by the route.
+The table is deliberately kept separate from the presentation and seat checks.
+Group size is one route-specific exploratory manipulation, not a common scale on
+which the other robustness effects should be compared. Adding companies does not
+carry play up a plane. It carries play into the ceiling, and the five boundary
+cells are where the measurement stops being a measurement: those cells
+contained no safe decision at all, so their contrast against the two-player arm
+is bounded by the boundary and not by the endpoint.
 
 The size of the effect is what makes the grid worth having. Going from two
 companies to three adds $11.1$ points at $p_r^{\max}=0.6$ and $11.0$ at $0.9$;
@@ -3108,7 +3093,7 @@ mattering when private risk is low. It is that this route is already at the
 ceiling before any competitor is added, so the design has no room left in which
 an effect could appear. The same route reaches $98.9\%$ and $100.0\%$ \Unsafe{}
 at $p_r^{\max}=0.1$ in the two independent neutral-baseline runs of
-\S\ref{app:baseline-replication}, collected under a different protocol on a
+    earlier neutral-baseline runs, collected under a different protocol on a
 different engine, so the ceiling is a property of the route at low risk rather
 than an artifact of this sweep. Read together with the ceiling at
 $p_r^{\max}=0.6$ for five companies, the pattern is that this measurement has
@@ -3127,9 +3112,9 @@ report a risk level unless all four group sizes are present, refuses a cell with
 failure or the wrong seat count, and records the collecting identity of every
 cell it uses.
 
-\paragraph{Which route carries the seat gap.} Panel~c of
-Figure~\ref{fig:what-moves-play} reports a gap averaged over nine routes, and a
-reader is entitled to ask whether it describes nine routes or one. The
+\paragraph{Which endpoint carries the seat gap.} The separate seat analysis
+reports a gap averaged over nine endpoints, and a reader is entitled to ask
+whether it describes nine endpoints or one. The
 released analysis code answers that from the same corpus. The figures below
 weight each race equally, as the figure does. Over every round of the race the
 pooled gap of $+2.6$ pp is carried almost entirely by GPT-5.4 nano, at $+19.5$
@@ -3153,6 +3138,7 @@ one prompt version, nothing is randomised except the chair, and a route whose
 measured gap is zero is at zero because its two seats agree, not because the
 design removed the effect.
 
+\begin{comment}
 \subsection{Where a race goes, once it gets somewhere}
 \label{app:joint-dynamics}
 
@@ -3355,6 +3341,8 @@ a horizon response against a copy of itself and not against a different
 opponent. Nine commercial endpoints are not a sample from a population of
 models.
 
+
+\end{comment}
 
 \clearpage
 \bibliographystyle{ACM-Reference-Format}

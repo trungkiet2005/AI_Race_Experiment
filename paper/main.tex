@@ -26,6 +26,7 @@
 %%% Load required packages here (note that many are included already).
 
 \usepackage{balance} % for balancing columns on the final page
+\usepackage{placeins} % keep each result figure before the next subsection
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -300,26 +301,26 @@ competition rewards speed while caution reduces catastrophic risk? We study this
 question in an idealised AI-development race, where agents repeatedly choose
 between slower safe development and faster unsafe development.
 
-Across the tested frontier routes, risk responses share a qualitative direction
+Across the tested eligible endpoints, risk responses share a qualitative direction
 but differ in shape. Agents respond to increasing risk, with profiles ranging
-from gradual adaptation to near-deterministic switching. Behaviour is also
-strongly opponent-dependent. In a scripted-rival study of five frontier-model
+from gradual adaptation to near-deterministic switching. Behaviour also depends
+strongly on the opponent. In a scripted-rival study of five frontier-model
 endpoints that passed a frozen task-validity screen,
 changes in the rival's behaviour move the agents substantially, with a
-magnitude that varies by route and can overlap the effect of changing the
+magnitude that varies by endpoint and can overlap the effect of changing the
 stated risk itself. Thus, self-play outcomes can reflect an interaction between
 two copies of a policy rather than an intrinsic risk preference.
 
-Frontier agents also show a distinctive relationship to the theoretical and
+Eligible endpoints also show a distinctive relationship to the theoretical and
 human benchmarks. An analysis extending the evolutionary comparison across the
-admitted panel places the four graded profiles closer in response shape to the
-near-neutral regime than to its strong-selection prediction, while
+eligible panel places the four graded profiles closer in response shape to the
+weak-selection regime than to its strong-selection prediction, while
 their action trajectories generally occupy a more concentrated observed
-trajectory space than those of human participants: 13 of 15 admitted cells fall
+trajectory space than those of human participants: 13 of 15 eligible cells fall
 below every draw of a dyad-matched human null. These results suggest that AI-mediated competitive
 decisions may be model-specific, opponent-dependent and behaviourally
 concentrated, motivating evaluation at the level of interactions and trajectories
-rather than aggregate action rates alone. Claims are scoped to the tested routes,
+rather than aggregate action rates alone. Claims are scoped to the tested endpoints,
 one prompt version and one idealised game.
 \end{abstract}
 
@@ -380,8 +381,8 @@ relative progress fixed one at a time, which no observation of real firms
 allows. We reproduce the two-player game studied by
 \citet{falling_behind_unsafe} and add a compatible multiplayer version based
 on \citet{to_regulate_or_not}. We call one hosted model endpoint at one fixed
-configuration a \emph{route}, because the same model name can be served under
-settings we do not control.
+configuration an \emph{endpoint}; the same model family can be served under
+different dated versions or provider settings.
 
 Human experiments show why an average is the wrong thing to compare. In the
 two-player study of \citet{falling_behind_unsafe}, the preregistered comparison
@@ -456,16 +457,16 @@ the model, or do they emerge from the opponent the model happens to meet?
 \emph{Humans and theory:} do the agents reproduce the strategic structure that
 evolutionary game theory predicts, or the one human participants display?
 
-Each answer changes how the next should be read. The four graded routes respond
-gradually to the stated danger, while one route replaces that trade-off with a
+Each answer changes how the next should be read. The four graded endpoints respond
+gradually to the stated danger, while one endpoint replaces that trade-off with a
 switch from always fast to always careful. But where we put the agent against
 scripted code instead of a second copy of itself, the rival's stance shifts play
-on every route; its magnitude is checkpoint-specific and can overlap the effect
+on every endpoint; its magnitude is endpoint-specific and can overlap the effect
 of changing the stated danger. Neither external reference shows that shape: at
 its usual strong-selection setting the evolutionary model predicts a switch
 where the agents deliver a gradient, and
 on raw first-five-round trajectories human participants use nearly the whole observed
-trajectory space while admitted routes generally use a small part of it.
+trajectory space while eligible endpoints generally use a small part of it.
 
 Three contributions follow. First, a scripted-rival design for repeated-game
 evaluation and the critique it licenses. That an LLM's self-play behaviour need
@@ -480,12 +481,12 @@ trajectories rather than on aggregate rates, which is what makes the compression
 of observed trajectories visible at all. Third, an auditable race mechanism in which the engine
 and not generated text resolves every round, entered through a comprehension
 screen that scores answers to frozen questions against ground truth and never
-reads a race, so that the set of routes interpreted strategically was fixed by a
+reads a race, so that the set of endpoints interpreted strategically was fixed by a
 rule that cannot see the behaviour being interpreted. Exploratory multiplayer results remain in the
 supplementary material, because the available position analysis covers two
 checkpoints and cannot identify a general group-size effect.
 
-Every behavioural conclusion is scoped to its tested route, prompt version,
+Every behavioural conclusion is scoped to its tested endpoint, prompt version,
 decoding contract, provider path and run period. The labels \Safe{} and
 \Unsafe{} denote actions inside the experimental game and are not measurements
 of general LLM safety, of a subjective risk preference, or of suitability for
@@ -495,7 +496,7 @@ outcome, or an action taken by an organisation.
 \section{Preliminaries}
 \label{sec:preliminaries}
 
-We first specify the two-player game reproduced from \citet{falling_behind_unsafe} (\S\ref{sec:prelim-2p}), then its generalisation to $N>2$ companies (\S\ref{sec:prelim-np}). Figure~\ref{fig:mechanism} summarises the two-player instrument and the three empirical lenses used in the main results.
+We first specify the two-player game reproduced from \citet{falling_behind_unsafe} (\S\ref{sec:prelim-2p}). We additionally evaluate an exploratory $N$-player extension; its mechanism and results are reported in the supplementary material. Figure~\ref{fig:mechanism} summarises the two-player instrument and the three empirical lenses used in the main results.
 
 % This overview keeps the game mechanism visible while putting the delegation
 % question and the three behavioural lenses first.
@@ -540,22 +541,6 @@ The race lasts a minimum of $5$ rounds; after every completed round from round $
 \end{equation}
 where $n_i^U(T)$ counts company $i$'s Unsafe choices over the whole race and $p_r^{\max}$ is a treatment-level constant, assigned once per race, that we vary across three risk levels. If the draw against $q_i(T)$ fails, that company's entire race payoff, accumulated stage payoffs plus the prize, is zeroed. A company that ends behind is never subject to the draw: it keeps its stage payoffs regardless of how much Unsafe it played, but receives no share of the prize (Figure~\ref{fig:mechanism}a). This asymmetry, in which risk is built by both companies but realised only against whoever is ahead, is what makes Unsafe development a genuine gamble rather than a free speed advantage.
 
-\subsection{$N$-player game}
-\label{sec:prelim-np}
-
-The $N$-player game changes exactly one thing. Simultaneous sealed actions, the
-progress increments, the hidden minimum-five-round horizon, the terminal prize
-$B=100$, and the risk formula of Equation~\ref{eq:risk} all carry over
-unchanged, with the prize split evenly among the companies sharing the highest
-progress. What cannot carry over is the stage-payoff matrix, because with more
-than two companies there is no single opponent to index it against.
-Equation~\ref{eq:2p-matrix} therefore generalises to the group-count rule of
-\citet{to_regulate_or_not}, in which both payoffs depend on how many of the $N$
-companies chose Safe and not on which ones did
-(rather than on their identities). The engine supports $N \in \{2,3,4,5\}$. Since
-the multiplayer runs are an exploratory extension, the rule, its parameters and
-its results are in the supplementary material.
-
 \subsection{Game-theoretic benchmark}
 \label{sec:theory-benchmark}
 
@@ -584,9 +569,9 @@ At each decision an agent receives a versioned prompt carrying the round, the as
 
 Sampling parameters here are provider-visible contracts, not intended
 settings. The run manifests record a requested temperature of 0.7 that the
-hosted SDK forwarded on no baseline route, and no provider confirmed an
-effective value. Seed handling was route-specific: the SDK stripped the
-requested seed on the Google routes and forwarded it, application
+hosted SDK forwarded on no baseline endpoint, and no provider confirmed an
+effective value. Seed handling was endpoint-specific: the SDK stripped the
+requested seed on the Google endpoints and forwarded it, application
 unconfirmed, on the OpenAI and Anthropic ones.
 
 Both seats of a race are the same endpoint, so every gameplay rate below is
@@ -608,33 +593,32 @@ We separate confirmatory gameplay from diagnostic presentation checks. A
 \emph{diagnostic pilot} is an exploratory test for possible effects or failures;
 it does not estimate a stable effect. A \emph{confirmatory} study tests a
 question under a plan fixed before any result is inspected, with its protocol,
-route, prompt, configuration, race count and exclusion rules recorded in the
+endpoint, prompt, configuration, race count and exclusion rules recorded in the
 run manifest. We never pool the two strata.
 
 One presentation check is confirmatory and is described in the supplementary
-material: on two routes, a fully crossed rerun retells the same game under a
+material: on two endpoints, a fully crossed rerun retells the same game under a
 race story or as an abstract contest, and substitutes the opaque response
 codes $P$ and $Q$ for \Safe{} and \Unsafe{} under both code mappings. A
-task-validity screen gates which routes enter the behavioural comparison. It
+task-validity screen gates which endpoints enter the behavioural comparison. It
 is an inclusion rule, not a behavioural outcome, and all gameplay results
-below are analysed without ranking routes by its scores.
+below are analysed without ranking endpoints by its scores.
 
-\subsection{Quality-control screen on the routes}
+\subsection{Quality-control screen on the endpoints}
 \label{sec:design-screen}
 
 An action that parses is not evidence that the agent followed the race. Before
-behavioural analysis, each route therefore answered the same frozen bank of 20
-probes over six task-validity domains, three times. A route entered the study
+behavioural analysis, each endpoint therefore answered the same frozen bank of 20
+probes over six task-validity domains, three times. An endpoint entered the study
 only if it cleared the fixed thresholds of 80\% overall accuracy, 75\% state
-reconstruction and 75\% terminal scoring. Five of nine routes passed; the
-other four still played the same confirmatory baseline and remain visible
+reconstruction and 75\% terminal scoring. Five of nine endpoints passed; the
+other four still played the same confirmatory baseline and remain available
 throughout the trajectory-diversity analyses for transparency and sensitivity
 checks.
 
 The screen reads probes and never reads a race, so gameplay cannot change its
-verdict. Two admitted routes pass one screening domain at the minimum attainable
-score, and on this nine-route roster the admitted/refused split coincides with
-endpoint tier naming. We therefore use the screen only as a task-validity
+verdict. Two eligible endpoints pass one screening domain at the minimum attainable
+score. We therefore use the screen only as a task-validity
 inclusion rule, never as a capability axis or a behavioural contrast. Full
 screening results are retained in the supplementary material, and whether such
 a screen measures comprehension at all is the subject of a concurrent
@@ -644,102 +628,53 @@ screen score.
 \section{Results}
 \label{sec:results}
 
-These agents respond to the danger they are told about, and their behaviour
-also depends strongly on the rival. Four routes have profiles closer in response
-shape to the near-neutral evolutionary benchmark; Claude Opus 5 is the step-like
-exception. Admitted routes generally occupy a more concentrated observed
-trajectory space than human participants do: 13 of 15 route-risk cells fall
+These endpoints respond to the danger they are told about, and their behaviour
+also depends strongly on the rival. Four eligible endpoints have profiles closer
+in response shape to the weak-selection evolutionary benchmark; Claude Opus 5 is
+the step-like exception. Eligible endpoints generally occupy a more concentrated
+observed trajectory space than human participants do: 13 of 15 endpoint-risk cells fall
 below every draw of the primary dyad-matched human null. The four subsections
-take those results in turn. A route the
-quality-control screen of \S\ref{sec:design-screen} refused appears below only
-where it is named as refused. Three- to five-player
+take those results in turn. A screen-failing endpoint appears below only where it
+is named as excluded. Three- to five-player
 races, full model tables, predictive diagnostics and robustness checks are in
 the supplementary material.
 
 \subsection{How agents trade speed against safety}
 \label{sec:results-risk}
 
-There is a shared directional response across the frontier routes. \Unsafe{}
-play is non-increasing with the stated maximum private risk on every admitted
-route, while the shape varies: four of the five give ground gradually and the
-fifth switches (Figure~\ref{fig:risk-response}). Each route supplied 30 races
+There is a shared directional response across the eligible endpoints. \Unsafe{}
+play is non-increasing with the stated maximum private risk on every eligible
+endpoint, while the shape varies: four of the five give ground gradually and the
+fifth switches (Figure~\ref{fig:risk-response}). Each endpoint supplied 30 races
 and 558 dependent within-race decisions under one frozen protocol, with zero
 parse failures and ten races per risk cell. Risk contrasts use matched repetition
 blocks, and race-weighted reanalysis preserves the non-increasing response on
-every admitted route (supplementary material).
+every eligible endpoint (supplementary material).
 
 \begin{figure}[t]
     \centering
     \includegraphics[width=\columnwidth]{../figures/paper/risk_response.pdf}
     \caption{\Unsafe{} play is non-increasing with stated risk. The four graded
-    routes fall within a 19-point band; Claude Opus 5 switches from the ceiling
+    endpoints fall within a 19-point band; Claude Opus 5 switches from the ceiling
     to the floor. The outlined cells are at a
     boundary and therefore leave no room for a larger or smaller observed
-    rate. The repeat row is the same Gemini 3 Flash route collected under an
+    rate. The repeat row is the same Gemini 3 Flash endpoint collected under an
     independent administration.}
     \label{fig:risk-response}
-    \Description{Heatmap of Unsafe play for five admitted routes across three
+    \Description{Heatmap of Unsafe play for five eligible endpoints across three
     maximum private-risk conditions, with a right-hand column showing the drop
-    from the lowest to the highest condition. Four graded routes lie in a
+    from the lowest to the highest condition. Four graded endpoints lie in a
     narrow band and Claude Opus 5 forms a separate switch row; an additional
     repeat row is shown below.}
 \end{figure}
 
-\begin{figure*}[t]
-  \centering
-  \includegraphics[width=\textwidth]{../figures/paper/scripted_opponent_main.pdf}
-  \caption{A shared rival response changes a route's play. Panel (a) is a response
-  surface: each tile is an admitted route's Unsafe rate under one scripted
-  rival, with columns ordered from Always Safe to Always Unsafe and facets for
-  the three maximum-risk conditions. Panel (b) shows the empirical response to
-  changing only the rival policy: open points are the Always Safe rival and
-  filled points are the Always Unsafe rival, with faint matched repetition
-  blocks behind each bold mean connector. Labels report the paired
-  Always-Unsafe minus Always-Safe contrast with 95\% intervals. Within-route
-  contrasts are the estimands; cross-route magnitudes are descriptive under
-  heterogeneous contracts.}
-  \Description{Two-panel figure. Panel a contains three response matrices,
-  one per risk level, with five route rows and four ordered scripted-rival
-  columns; every tile prints the measured Unsafe rate. Panel b contains three
-  risk facets with the same five route rows. Open and filled points show the
-  Always Safe and Always Unsafe rival rates, faint connectors show the ten
-  matched repetition blocks, bold connectors show their means, and right-side
-  labels give paired 95 percent intervals.}
-  \label{fig:scripted-opponent-main}
-\end{figure*}
-
-\begin{figure*}[t]
-    \centering
-    \includegraphics[width=\textwidth]{../figures/paper/theory_versus_behaviour.pdf}
-    \caption{The evolutionary benchmark and the confirmatory route profiles in
-    a common risk coordinate. (a) The direct comparison keeps only Gemini 3
-    Flash and Claude Sonnet 5, with individual race rates behind their means;
-    the other three admitted profiles remain an analysis-only extension in the
-    supplement. The small-mutation limit is step-like at strong selection and
-    graded near neutrality, while both confirmatory profiles move gradually.
-    (b) The corresponding finite-mutation population composition changes its
-    dominant strategy from Always Unsafe through the conditional strategy that
-    starts Unsafe to the conditional strategy that starts Safe as risk rises.
-    Within each risk pair, the left bar shows the reference regime
-    ($\beta=2,\ \mu=.02$) and the right bar the reported best-fit regime
-    ($\beta=.01,\ \mu=.05$).}
-    \label{fig:theory-behaviour}
-    \Description{Two-panel comparison. Panel a plots Unsafe play against maximum
-    private risk for the reconstructed evolutionary model at strong and weak
-    selection, with individual race rates and means for the two-route
-    confirmatory comparison between Gemini 3 Flash and Claude Sonnet 5. The
-    three-route analysis-only extension is in the supplement. Panel b shows stacked stationary
-    shares of four strategies at risks 0.1, 0.6 and 0.9 for the reference and
-    reported best-fit finite-mutation regimes.}
-\end{figure*}
-
-The four graded routes, spanning three providers, have risk-response drops within
+The four graded endpoints, spanning three providers, have risk-response drops within
 a 19-point band, from 38.2 to 57.0 percentage points. We report that band
 rather than an average over all five, because averaging a switch with four
-slopes returns 54.8 points, a figure no graded route is near and which one row
+slopes returns 54.8 points, a figure no graded endpoint is near and which one row
 produces.
 
-That fifth route follows a threshold-like policy. Claude Opus 5 plays \Unsafe{}
+That fifth endpoint follows a threshold-like policy. Claude Opus 5 plays \Unsafe{}
 on all 186 decisions at risk $0.1$ and \Safe{} on all 372 decisions above it,
 with no race inside a cell departing from that. Its 100-point figure reaches
 the largest value on the scale, and because no risk level was run between
@@ -747,23 +682,23 @@ $0.1$ and $0.6$, the location of its transition is not measured.
 
 At the highest risk the game offers, where a winner's whole payoff is zeroed
 with probability up to $0.9$ in proportion to how much \Unsafe{} it played, the
-four graded routes still play \Unsafe{} on roughly a third to three fifths of
+four graded endpoints still play \Unsafe{} on roughly a third to three fifths of
 their decisions against a copy of themselves, in the $r{=}0.9$ column of
 Figure~\ref{fig:risk-response}. This variation shows that risk-aware behaviour
-remains contingent on route and interaction context. Two routes
+remains contingent on endpoint and interaction context. Two endpoints
 can also reach a similar rate through very different sets of races, which
 \S\ref{sec:results-diversity} measures directly.
 
-For the repeated Gemini 3 Flash route, the profile was stable across two
-administrations. Repeating the whole protocol on that route under the same frozen
+For the repeated Gemini 3 Flash endpoint, the profile was stable across two
+administrations. Repeating the whole protocol on that endpoint under the same frozen
 contract moved no risk cell by more than 1.1 points over 186 decisions, against
-a 93.0-point spread in risk response across the nine routes, and moved its own
-risk response from 38.7 to 40.3. This bounds run-to-run variation for that route
-at this sample size; it licenses no such bound for a route collected once, which
+a 93.0-point spread in risk response across the nine endpoints, and moved its own
+risk response from 38.7 to 40.3. This bounds run-to-run variation for that endpoint
+at this sample size; it licenses no such bound for an endpoint collected once, which
 matters here because no provider confirmed applying the requested sampling seed.
 
 Representation-equivalent prompt changes also move rates. The directional risk
-response survives a fully crossed narrative-by-symbol rerun on two routes,
+response survives a fully crossed narrative-by-symbol rerun on two endpoints,
 although swapping the opaque action-code mapping shifts \Unsafe{} play by
 8.3--9.5 percentage points (see the supplementary material).
 
@@ -771,45 +706,45 @@ although swapping the opaque action-code mapping shifts \Unsafe{} play by
 \subsection{The rival substantially reshapes play}
 \label{sec:results-scripted}
 
-In the five routes tested against scripted rivals, the observed behaviour does
-not support a context-independent risk profile. Across these routes, changing
+In the five endpoints tested against scripted rivals, the observed behaviour does
+not support a context-independent risk profile. Across these endpoints, changing
 who is on the other side moves play substantially, but the magnitude varies by
-route and can overlap the effect of changing how dangerous the race is told to
+endpoint and can overlap the effect of changing how dangerous the race is told to
 be. Every rate reported so far is mirror-match play, in which
-the rival is the route. One campaign fixes the rival instead.
+the rival is the endpoint. One campaign fixes the rival instead.
 
-The rival in that campaign is code, not a model. Five admitted routes each
+The rival in that campaign is code, not a model. Five eligible endpoints each
 played the four benchmark strategies of \S\ref{sec:theory-benchmark} at all
-three risk levels: 60 cells, ten races each, 600 races and 5{,}580 route
-decisions with no parse failure anywhere. It is never disclosed to the route,
+three risk levels: 60 cells, ten races each, 600 races and 5{,}580 endpoint
+decisions with no parse failure anywhere. It is never disclosed to the endpoint,
 and every one of its 5{,}580 recorded rival moves was
-recomputed afterwards from the route's own recorded history, which no cell
-failed. The route's seat is counterbalanced five and five inside each cell, and
+recomputed afterwards from the endpoint's own recorded history, which no cell
+failed. The endpoint's seat is counterbalanced five and five inside each cell, and
 each contrast is taken inside a repetition, so the hidden horizon is differenced
 out. Because rival-policy assignment is fixed and exogenous within matched
 blocks, the direction of a difference between rival policies is identified.
-Conditional policies can still respond mechanically to the route's previous
+Conditional policies can still respond mechanically to the endpoint's previous
 move, as specified by the fixed policy.
 
-Coverage is complete across the five routes, but decoding contracts are not
-homogeneous across endpoints. Cross-route differences in effect magnitude are
-therefore descriptive rather than controlled model comparisons; the full
+Coverage is complete across the five endpoints, but decoding contracts are not
+homogeneous across endpoints. Cross-endpoint differences in effect magnitude are
+therefore descriptive rather than controlled endpoint comparisons; the full
 contract provenance is reported in the supplement.
 
-Across these five routes, moving the scripted rival from Always Safe to Always
+Across these five endpoints, moving the scripted rival from Always Safe to Always
 Unsafe shifts \Unsafe{} play by 25.3--87.0 percentage points across the fifteen
-route-by-risk cells. Holding the rival at Always Safe, changing the stated risk
-from $0.1$ to $0.9$ moves it by 10.4--69.9 points, depending on the route. Both
+endpoint-by-risk cells. Holding the rival at Always Safe, changing the stated risk
+from $0.1$ to $0.9$ moves it by 10.4--69.9 points, depending on the endpoint. Both
 contrasts use the same ten matched blocks, and the two ranges overlap: the
 smallest rival-stance lower bound is $+16.5$ points, while the largest
 matched-arm risk contrast is $+69.9$ points on Claude Opus 5. The comparison is
 therefore context-sensitive and descriptive, not a universal ordering of rival
 effects over risk.
 
-Answering the rival is general across these five endpoints. \Unsafe{} play
+All five tested endpoints respond to the scripted opponent policy. \Unsafe{} play
 rises from the rival that always plays \Safe{}, through the two conditional
 rivals, to the rival that never plays \Safe{}, in fourteen of fifteen
-route-by-risk cells, with strict ordering in twelve. The one reversal is
+endpoint-by-risk cells, with strict ordering in twelve. The one reversal is
 GPT-5.5 at risk $0.1$, where the CAS rival draws $100.0\%$ and
 Always Unsafe is $97.8\%$, so this is a boundary case rather than a clean
 counterexample (Figure~\ref{fig:scripted-opponent-main}a). The paired
@@ -817,7 +752,7 @@ difference between the two unconditional rivals is
 positive in every cell. All fifteen paired-block 95\% intervals have positive
 lower bounds, with the smallest at $+16.5$ points
 (Figure~\ref{fig:scripted-opponent-main}b). The response to the stated risk
-survives the change of design as well: against a fixed safe rival, no route's
+survives the change of design as well: against a fixed safe rival, no endpoint's
 \Unsafe{} rate rises as the stated risk rises.
 
 The magnitude of the rival response varies markedly across checkpoints under
@@ -831,79 +766,121 @@ endpoint samples, so intervals that fail to overlap are a conservative sign of
 a difference rather than a test of one.
 
 A mirror-match rate is therefore an interaction outcome of one policy meeting
-itself, rather than a stand-alone measurement of how a route treats risk.
+itself, rather than a stand-alone measurement of how an endpoint treats risk.
 Self-play exceeds the fixed-safe rate in thirteen of fifteen cells; the two
 exceptions are Claude Opus 5 at the floor, lower at risk $0.6$ ($0.0\%$ against
 $1.1\%$) and tied at $0.0\%$ at risk $0.9$. On Gemini 3 Flash at the lowest risk, the distance is a
 lower bound because nine of its ten mirror-match races have every decision
 \Unsafe{}. These results motivate treating mirror-match rates as interaction
-outcomes rather than route-level risk preferences.
+outcomes rather than endpoint-level risk preferences.
 
 The bound on the finding is the design itself. Four reduced strategies are four
 points in a space of policies rather than a sample of rivals, so this
-establishes what a route does against \emph{these} rivals, on one game and one
+establishes what an endpoint does against \emph{these} rivals, on one game and one
 prompt version, and five commercial endpoints are not a sample from a
 population of models.
 
-\subsection{The same incentive, a different shape}
+\begin{figure*}[t]
+  \centering
+  \includegraphics[width=\textwidth]{../figures/paper/scripted_opponent_main.pdf}
+  \caption{A shared opponent policy changes an endpoint's play. Panel (a) is a
+  response surface: each tile is an eligible endpoint's Unsafe rate under one
+  scripted opponent, with columns ordered from Always Safe to Always Unsafe and
+  facets for the three maximum-risk conditions. Panel (b) shows the empirical
+  response to changing only the opponent policy: open points are the Always
+  Safe opponent and filled points are the Always Unsafe opponent, with faint
+  matched repetition blocks behind each bold mean connector. Labels report the
+  paired Always-Unsafe minus Always-Safe contrast with 95\% intervals.
+  Within-endpoint contrasts are the estimands; cross-endpoint magnitudes are
+  descriptive under heterogeneous contracts.}
+  \Description{Two-panel figure. Panel a contains three response matrices,
+  one per risk level, with five endpoint rows and four ordered scripted-opponent
+  columns; every tile prints the measured Unsafe rate. Panel b contains three
+  risk facets with the same five endpoint rows. Open and filled points show the
+  Always Safe and Always Unsafe opponent rates, faint connectors show the ten
+  matched repetition blocks, bold connectors show their means, and right-side
+  labels give paired 95 percent intervals.}
+  \label{fig:scripted-opponent-main}
+\end{figure*}
+
+\FloatBarrier
+
+\subsection{Weak selection better matches the graded response shape}
 \label{sec:results-theory}
 
-The agents and the theoretical population move in the same direction under the
-same incentive, but their response shapes differ because of an assumption inside
-the theory. The direct confirmatory profiles are graded, whereas strong selection
-in the benchmark predicts a cliff. Gemini 3 Flash gives 98.9\%, 73.1\% and
-60.2\%, and Claude Sonnet 5 gives 89.2\%, 48.4\% and 32.3\% over 30 races
-each. At the reference setting of \citet{falling_behind_unsafe}, $\beta=2$ and
-$\mu=\beta/Z$ lose 98 points inside a risk step of $0.005$
-(Figure~\ref{fig:theory-behaviour}a). Separately, an analysis-only extension to
-the other three admitted routes is reported in the supplement: GPT-5.4 and
-GPT-5.5 decline smoothly, while Claude Opus 5 switches. The difference is one
-of shape, not level.
+The four graded endpoint profiles are closer to the source study's human-fitted
+weak-selection regime than to its strong-selection reference setting
+(Figure~\ref{fig:theory-behaviour}b). The direct profiles remain the clearest
+shape comparison: Gemini 3 Flash gives 98.9\%, 73.1\% and 60.2\%, and Claude
+Sonnet 5 gives 89.2\%, 48.4\% and 32.3\% over 30 races each. At the reference
+setting of \citet{falling_behind_unsafe}, $\beta=2$ and $\mu=\beta/Z$ lose 98
+points inside a risk step of $0.005$ (Figure~\ref{fig:theory-behaviour}a).
+The all-five fit shows that Claude Opus 5 is the qualitative exception: its
+profile is near-step rather than graded, even though its weak-selection RMSE is
+still lower than its reference RMSE.
 
-The switch is a property of strong selection, not of the game. We swept
+In the evolutionary benchmark, the abrupt transition arises under strong
+selection and becomes graded under weak selection. We swept
 selection strength across $\beta \in [0.001, 10]$ crossed with three mutation
 rules, 90 stationary-distribution cells, each estimated from independent chains
 with the between-chain spread retained so that a badly mixed cell cannot be
 mistaken for a result. As $\beta$ falls towards neutrality the predicted
 high-risk \Unsafe{} rate rises off the floor and the model's own risk response
-becomes graded, which is the shape the routes show. At $\beta=0.01$ with
+becomes graded, which is the shape the endpoints show. At $\beta=0.01$ with
 $\mu=0.05$ the model predicts 87.3\%, 63.9\% and 38.0\%, the closest cell in the
-entire sweep to both routes, within 9.6 percentage points of Claude Sonnet 5
+entire sweep to both direct endpoints, within 9.6 percentage points of Claude Sonnet 5
 and 15.4 of Gemini 3 Flash in root-mean-square error.
 
-The agents land nearer to the regime that describes the people than to the one
-usually quoted as the theory's prediction, and that cell is not one we chose to
-fit: $\beta=0.01$ and $\mu=0.05$ are the values the source study reports as its
-own best fit to human play. An analysis-only extension fits the same existing
-sweep to all five admitted routes. For the four graded routes, the best
-well-mixed weak-selection cell has RMSEs of 5.1--15.4 percentage points,
-compared with 32.9--36.6 points at the reference cell; Claude Opus 5 is the
-qualitative exception because its observed profile is a near-step switch
-($100\%,0\%,0\%$), not a graded decline. The full five-route fit is in the
-supplement. The interpretation stays bounded. A stationary distribution
+The weak-selection cell is not one we chose to fit: $\beta=0.01$ and
+$\mu=0.05$ are the values the source study reports as its own best fit to human
+play. The interpretation stays bounded. A stationary distribution
 describes strategy frequencies in a population under selection and mutation,
 while our measurements are prompted decisions in self-play; the agreement in
-shape says the graded risk response is consistent with a near-neutral,
-high-exploration population, not that the routes are evolving. What the sweep
+shape says the graded risk response is consistent with weak selection and
+high exploration, not that the endpoints are evolving. What the sweep
 establishes is narrower and still useful: a claim that LLM agents contradict the
 evolutionary benchmark cannot rest on one setting of the selection strength,
 because the sign of the high-risk gap depends on it.
 
 
-\subsection{Frontier agents are behaviourally concentrated}
+\begin{figure*}[t]
+    \centering
+    \includegraphics[width=\textwidth]{../figures/paper/theory_versus_behaviour.pdf}
+    \caption{The evolutionary benchmark and the eligible endpoint profiles in
+    a common risk coordinate. (a) The direct comparison keeps the two
+    prespecified profiles, Gemini 3 Flash and Claude Sonnet 5, with individual
+    race rates behind their means. The small-mutation limit is step-like at
+    strong selection and graded near weak selection, while both direct profiles
+    move gradually. (b) Each dumbbell compares the canonical RMSE over the
+    three matched risk levels for the reference strong-selection regime
+    ($\beta=2,\ \mu=.02$) and the reported best weak-selection regime
+    ($\beta=.01,\ \mu=.05$). All five eligible endpoints are closer to the
+    weak-selection fit; Claude Opus 5 remains the qualitative near-step
+    exception in panel (a).}
+    \label{fig:theory-behaviour}
+    \Description{Two-panel comparison. Panel a plots Unsafe play against maximum
+    private risk for the reconstructed evolutionary model at strong and weak
+    selection, with individual race rates and means for Gemini 3 Flash and
+    Claude Sonnet 5. Panel b is a five-row dumbbell plot comparing each eligible
+    endpoint's RMSE under the reference strong-selection regime and its best
+    weak-selection fit over the three observed risk levels.}
+\end{figure*}
+
+\FloatBarrier
+\subsection{Eligible endpoints exhibit lower trajectory diversity than humans}
 \label{sec:results-diversity}
 
 Twenty people asked to run this race do not behave alike; twenty copies of a
-frontier route very nearly do. Human participants arrive at their average level
-of \Unsafe{} play through many different histories, while each admitted route
-reuses a small set of them, so a route can match the human mean without
+frontier endpoint very nearly do. Human participants arrive at their average level
+of \Unsafe{} play through many different histories, while each eligible endpoint
+reuses a small set of them, so an endpoint can match the human mean without
 resembling the human population at all. We measure this on first-five-round
 trajectories. Each player contributes one exact paired trajectory, a ten-bit
 string read within its own risk condition; because the progress increments are
 fixed, that string fully specifies the first-five-round joint-action trajectory.
-The comparison covers all nine routes that faced the screen, admitted and
-refused alike, on the confirmatory baseline, 60
-trajectories per route, against 340 complete human trajectories from the
+The comparison covers all nine endpoints that faced the screen, eligible and
+excluded alike, on the confirmatory baseline, 60
+trajectories per endpoint, against 340 complete human trajectories from the
 de-identified dataset of \citet{falling_behind_unsafe}. That single published
 study of a single game is the only human reference here, which bounds every
 human comparison below to that population and that mechanism.
@@ -922,9 +899,9 @@ Figure~\ref{fig:diversity} counts distinct first-five-round trajectories in
 matched samples of twenty, against $20{,}000$ human resamples of ten complete
 dyads at each risk. The human sample is larger, so matching prevents sample
 size from inflating its diversity, while dyad sampling preserves the unit of
-interaction. Eighteen of 27 route cells, including 13 of the 15 admitted cells,
+interaction. Eighteen of 27 endpoint cells, including 13 of the 15 eligible cells,
 fall below every dyad draw. The participant-level sensitivity gives 21 of 27,
-including all 15 admitted cells; the primary dyad-null floors are 12, 15 and 13
+including all 15 eligible cells; the primary dyad-null floors are 12, 15 and 13
 distinct trajectories at risks $0.1$, $0.6$ and $0.9$. The complementary
 participant-level table records effective counts of 18.9, 19.7 and 19.3 and
 mean pairwise distances of 0.47, 0.50 and 0.50. Panel b sorts the observed paths
@@ -932,7 +909,7 @@ by frequency and panel c displays the modal five-round joint-action sequence.
 The same cells support two numerical checks reported in the supplement: Hill
 $q{=}1$ counts effective trajectories and mean pairwise Hamming distance measures
 separation of their ten action bits. Under that complementary Hill $q{=}1$
-analysis, every admitted route sits entirely below the human interval at every
+analysis, every eligible endpoint sits entirely below the human interval at every
 risk level.
 
 The concentration is strongest for Claude Opus 5, which produces a single
@@ -943,29 +920,29 @@ highest risk and use a similar number of distinct trajectories, 12 and 13, yet t
 Gemini trajectories sit half again as far apart from one another, 0.41 against 0.27
 in mean pairwise distance.
 
-Under the participant-level sensitivity, two checkpoints are the only
+Under the participant-level sensitivity, two endpoints are the only
 exceptions, and the screen refuses both of them.
 GPT-5.4 mini uses 20, 17 and 17 distinct trajectories out of 20 at
 risks $0.1$, $0.6$ and $0.9$, and GPT-5.4 nano 16, 19 and 16; both land inside
-the participant-level human null at every risk level, and no other route reaches
+the participant-level human null at every risk level, and no other endpoint reaches
 it once under that sensitivity. On this measure they are not less diverse than
 people. Under the primary dyad null, GPT-5.4 and GPT-5.5 also meet the finite-draw
-floor at risk $0.9$, so the cluster-aware headline is 13 of 15 admitted cells
-rather than all 15. Because the two exceptions are outside the admitted set
+floor at risk $0.9$, so the cluster-aware headline is 13 of 15 eligible cells
+rather than all 15. Because the two exceptions are outside the eligible set
 fixed by the inclusion rule of \S\ref{sec:design-screen} before any race was
 read, they are reported, not interpreted as strategic diversity.
 
-\begin{figure*}[t]
+\begin{figure}[!b]
     \centering
-    \includegraphics[width=\textwidth]{../figures/paper/human_versus_model.pdf}
+    \includegraphics[width=\columnwidth]{../figures/paper/human_versus_model.pdf}
     \caption{Human participants occupy a broader observed trajectory space than
-    most admitted route-risk cells under a dyad-clustered null. Panel a compares
+    most eligible endpoint-risk cells under a dyad-clustered null. Panel a compares
     distinct paired first-five-round trajectories with $20{,}000$ draws of ten
-    complete human dyads; 13 of 15 admitted cells fall below every dyad draw.
+    complete human dyads; 13 of 15 eligible cells fall below every dyad draw.
     The participant-level null is a sensitivity analysis and places all 15 below
     every draw. Panel b sorts the 60
     matched trajectories by path frequency; panel c shows the modal pooled
-    joint-action path. Each tile is the focal route's action followed by its
+    joint-action path. Each tile is the focal endpoint's action followed by its
     rival's.}
     \label{fig:diversity}
     \Description{Panel a shows three facets, one per risk condition, each with a
@@ -974,7 +951,7 @@ read, they are reported, not interpreted as strategic diversity.
     Panel b shows frequency-sorted composition bars for the 60 matched
     trajectories. Panel c shows the modal five-round joint-action path for each
     population as one tile per round.}
-\end{figure*}
+\end{figure}
 
 The same picture holds one level down, on the rates themselves. Raw
 player-level \Unsafe{} rates, plotted per risk condition in the supplementary
@@ -989,32 +966,32 @@ them almost entirely by \Unsafe{} rate.
 Populations that look alike in rate can still be following different observed
 rules. Exploratory classifier and feature analyses in the supplement suggest
 that possibility, but use earlier pilot rosters containing neither GPT-5.4
-nor GPT-5.5, so they support no claim about the admitted panel.
+nor GPT-5.5, so they support no claim about the eligible panel.
 
 \section{Discussion and conclusion}
 \label{sec:discussion}
 
 These agents incorporate both the stated risk and the rival's stance. \Unsafe{}
 play is non-increasing as the stated chance of catastrophe rises on every
-admitted route, while on the five routes where the rival was replaced by scripted
+eligible endpoint, while on the five endpoints where the rival was replaced by scripted
 code, the rival's stance changes behaviour substantially, with a magnitude that
-varies by route and can overlap the effect of changing risk. In this game, the
-five tested routes are therefore
+varies by endpoint and can overlap the effect of changing risk. In this game, the
+five tested endpoints are therefore
 strongly context-sensitive: how the other side behaves can be more informative
 than the risk level alone.
 
 The human experiment is an external behavioural reference, not a target an
-agent should reproduce. Where a route matches a human association, the two
+agent should reproduce. Where an endpoint matches a human association, the two
 populations behave similarly on that one measured aspect of this task; it
 does not follow that they share a mechanism, and a mismatch does not
 invalidate the human result.
 
 Four limitations bound the claims directly. Nine commercial endpoints are not a
 sample from a population of models, and any two of them differ in far more than
-the one property a comparison names, so every contrast drawn between routes in
-this paper is descriptive and none of it separates a route's behaviour from its
+the one property a comparison names, so every contrast drawn between endpoints in
+this paper is descriptive and none of it separates an endpoint's behaviour from its
 provider, its scale or its training. The scripted-rival campaign covers five
-routes and four reduced strategies, which are four points in a space of
+    endpoints and four reduced strategies, which are four points in a space of
 policies rather than a sample of rivals. The human comparison rests on one
 published study of one game, 340 complete trajectories, and we do not add a
 second human dataset, because any other dataset would change the game as well
@@ -1025,12 +1002,12 @@ undisclosed author code, so it bounds the regime in which the benchmark is read
 rather than fitting the agents.
 
 Four further limits are worth stating. The crossed presentation design covers
-two routes, enough to show the effect replicates but not to characterise
+two endpoints, enough to show the effect replicates but not to characterise
 endpoints in general. A matched group-size grid exists on one
-route, but adding a company changes the stage payoff and the prompt length too,
+endpoint, but adding a company changes the stage payoff and the prompt length too,
 so no pure group-size effect is identifiable. Sampling was not under our
 control: no provider confirmed the requested temperature, and the seed was
-stripped on the Google routes and forwarded unconfirmed on the others. And this
+stripped on the Google endpoints and forwarded unconfirmed on the others. And this
 game models a private speed-versus-safety trade-off and nothing else, with no
 collective harm, regulation, communication or uncertainty about real
 capabilities.

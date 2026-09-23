@@ -626,7 +626,11 @@ def draw_policy_dumbbell(ax, policy, risk, *, show_routes=False):
                 ha="left", va="center", fontsize=S.FS_NOTE,
                 color=S.INK_2, clip_on=False)
 
-    ax.set_xlim(0, 145)
+    # The axis opens left of zero so that a route sitting on the floor draws a
+    # whole marker.  Claude Opus 5 answers Safe to a safe rival on every race at
+    # the two higher risks, and at a limit of exactly zero the axis cut its
+    # marker in half and hid the matched blocks behind it entirely.
+    ax.set_xlim(-4, 145)
     ax.set_ylim(-0.65, len(ROUTES) - 0.35)
     ax.set_xticks([0, 25, 50, 75, 100])
     ax.set_xlabel("Unsafe play (%)", labelpad=3)

@@ -43,6 +43,7 @@ with risk, Claude Opus 5 most steeply of all.
 
 from __future__ import annotations
 
+import json
 import sys
 from dataclasses import replace
 from pathlib import Path
@@ -78,6 +79,18 @@ THEORY_CSV = (
 STATIONARY_CSV = (
     Path(T.REPOSITORY_ROOT) / "results" / "frontier"
     / "egt_frontier_comparison_v2" / "egt_stationary_summary.csv"
+)
+FIT_JSON = (
+    Path(T.REPOSITORY_ROOT) / "results" / "open_source" / "egt_reproduction"
+    / "egt_admitted_route_fits.json"
+)
+
+EGT_ROUTE_ORDER = (
+    "google/gemini-3-flash-preview",
+    "openai/gpt-5.4-2026-03-05",
+    "openai/gpt-5.5-2026-04-23",
+    "anthropic/claude-sonnet-5@default",
+    "anthropic/claude-opus-5@default",
 )
 
 # The configuration fields the payoff construction reads.  One configuration is
@@ -218,10 +231,10 @@ def compute() -> dict:
         .rename("rate")
         .reset_index()
     )
-    stationary = load_archived_stationary_composition()
+    route_fits = load_route_fits()
     return {"curves": curves, "obs": obs, "counts": counts, "risks": risks,
             "implied": implied, "raw_rates": raw_rates,
-            "stationary": stationary}
+            "route_fits": route_fits}
 
 
 def load_archived_stationary_composition() -> dict[float, pd.DataFrame]:
@@ -254,6 +267,34 @@ def load_archived_stationary_composition() -> dict[float, pd.DataFrame]:
             raise ValueError(f"invalid strategy composition for beta={beta}")
         result[beta] = pd.DataFrame(shares, index=[0.1, 0.6, 0.9], columns=STRATEGY_ORDER)
     return result
+
+
+def load_route_fits() -> dict[str, dict]:
+    """Load the canonical all-five endpoint fit, rather than recomputing it."""
+    if not FIT_JSON.is_file():
+        raise FileNotFoundError(f"missing canonical route-fit artifact: {FIT_JSON}")
+    payload = json.loads(FIT_JSON.read_text(encoding="utf-8"))
+    summaries = payload.get("summaries", {})
+    if tuple(summaries) != tuple(sorted(summaries)):
+        summaries = {key: summaries[key] for key in sorted(summaries)}
+    if set(summaries) != set(EGT_ROUTE_ORDER):
+        raise ValueError(
+            "canonical EGT fit must cover exactly the five eligible endpoints: "
+            f"{sorted(summaries)}"
+        )
+    fits = {}
+    for route in EGT_ROUTE_ORDER:
+        row = summaries[route]
+        if not row["weak_closer_than_reference"]:
+            raise ValueError(f"weak-selection fit is not closer for {route}")
+        if (float(row["reference_rmse_percentage_points"]) <=
+                float(row["best_weak_rmse_percentage_points"])):
+            raise ValueError(f"reference fit is not worse for {route}")
+        if (float(row["best_weak_beta"]) != 0.01 or
+                float(row["best_weak_mutation"]) != 0.05):
+            raise ValueError(f"unexpected weak-selection cell for {route}")
+        fits[route] = row
+    return fits
 
 
 def report(res: dict) -> dict:
@@ -654,7 +695,8 @@ def panel_confirmatory(ax, res, d) -> None:
         (CONFIRMATORY_ROUTES[1], float(obs.loc[CONFIRMATORY_ROUTES[1]].iloc[-1]), -4.0),
     ):
         S.direct_label(ax, 0.90, 100 * y, S.ROUTE_SHORT[route],
-                       color=S.ROUTE_C[route], dx=4, dy=dy, weight="bold")
+                       color=S.ROUTE_C[route], dx=-3, dy=dy, ha="right",
+                       weight="bold")
     S.direct_label(ax, 0.66, 7.0,
                    rf"EGT $\beta={d['reference']:g}$", color=BETA_C[d["reference"]],
                    dx=3, dy=0, weight="bold")
@@ -666,8 +708,47 @@ def panel_confirmatory(ax, res, d) -> None:
     S.panel(ax, "a", "strong selection predicts a cliff; both confirmatory routes are graded", gap=8.0)
 
 
+def panel_rmse(ax, res) -> None:
+    """Draw the canonical five-endpoint strong-versus-weak fit comparison."""
+    fits = res["route_fits"]
+    y = np.arange(len(EGT_ROUTE_ORDER), dtype=float)
+    for index, route in enumerate(EGT_ROUTE_ORDER):
+        row = fits[route]
+        reference = float(row["reference_rmse_percentage_points"])
+        weak = float(row["best_weak_rmse_percentage_points"])
+        ax.plot([weak, reference], [index, index], color=S.HAIRLINE, lw=2.2,
+                solid_capstyle="round", zorder=1)
+        ax.scatter([reference], [index], s=26, marker="o", color=S.INK_2,
+                   edgecolor=S.SURFACE, linewidth=0.6, zorder=3)
+        ax.scatter([weak], [index], s=30, marker=S.ROUTE_M[route],
+                   color=S.ROUTE_C[route], edgecolor=S.SURFACE, linewidth=0.7,
+                   zorder=4)
+        ax.text(reference + 1.2, index - 0.13, f"{reference:.1f}",
+                ha="left", va="center", fontsize=S.FS_NOTE, color=S.INK_2)
+        ax.text(weak - 1.2, index + 0.13, f"{weak:.1f}",
+                ha="right", va="center", fontsize=S.FS_NOTE,
+                color=S.ROUTE_C[route], fontweight="bold")
+
+    ax.set_yticks(y, [S.ROUTE_LABEL[route] for route in EGT_ROUTE_ORDER])
+    ax.invert_yaxis()
+    ax.set_xlim(0, 62)
+    ax.set_xticks([0, 20, 40, 60])
+    ax.set_xlabel("RMSE over the three risk levels (percentage points)", labelpad=2)
+    ax.set_ylabel("")
+    S.strip(ax, grid_axis="x")
+    ax.grid(True, axis="x", color=S.GRID, linewidth=0.55, zorder=0)
+    ax.text(0.01, 1.08, "colored marker = weak fit",
+            transform=ax.transAxes, ha="left", va="bottom", fontsize=S.FS_NOTE,
+            color=S.INK_2)
+    ax.text(0.99, 1.08, "dark circle = strong reference",
+            transform=ax.transAxes, ha="right", va="bottom", fontsize=S.FS_NOTE,
+            color=S.INK_2)
+    S.panel(ax, "b", "all five endpoints are closer to weak selection",
+            gap=8.0)
+
+
 def draw_main_figure(res: dict, d: dict) -> None:
-    """Draw the confirmatory route comparison and the strategy composition."""
+    """Draw the direct shape comparison and the all-five endpoint fit."""
 
     expected_routes = set(CONFIRMATORY_ROUTES) | set(ANALYSIS_ONLY_ROUTES)
     if set(S.ADMITTED) != expected_routes:
@@ -676,62 +757,18 @@ def draw_main_figure(res: dict, d: dict) -> None:
             f"routes: expected {sorted(expected_routes)}, found {sorted(S.ADMITTED)}"
         )
 
-    fig = plt.figure(figsize=(S.TEXT, 3.12))
-    gs = fig.add_gridspec(1, 2, width_ratios=[1.55, 1.0], wspace=0.34)
-    fig.subplots_adjust(left=0.085, right=0.985, bottom=0.28, top=0.78)
+    fig = plt.figure(figsize=(S.TEXT, 3.24))
+    gs = fig.add_gridspec(1, 2, width_ratios=[1.22, 1.0], wspace=0.56)
+    fig.subplots_adjust(left=0.095, right=0.985, bottom=0.24, top=0.78)
 
     ax = fig.add_subplot(gs[0, 0])
     panel_confirmatory(ax, res, d)
 
-    ax = fig.add_subplot(gs[0, 1])
-    strategy_colours = {
-        "AS": S.SAFE_C,
-        "AU": S.UNSAFE_C,
-        "CS": "#86b980",
-        "CAS": "#d58b72",
-    }
-    strategy_labels = {
-        "AS": "AS: Always Safe",
-        "AU": "AU: Always Unsafe",
-        "CS": "CS: starts Safe",
-        "CAS": "CAS: starts Unsafe",
-    }
-    x = np.arange(3, dtype=float)
-    offsets = {2.0: -0.20, 0.01: 0.20}
-    width = 0.34
-    for beta in (2.0, 0.01):
-        bottom = np.zeros(3)
-        for strategy in STRATEGY_ORDER:
-            values = 100 * res["stationary"][beta][strategy].to_numpy()
-            ax.bar(
-                x + offsets[beta], values, width=width, bottom=bottom,
-                color=strategy_colours[strategy],
-                edgecolor=S.SURFACE if beta == 2.0 else S.INK_2,
-                linewidth=0.55,
-                zorder=3,
-            )
-            for xpos, base, value in zip(x + offsets[beta], bottom, values):
-                if value >= 12:
-                    ax.text(xpos, base + value / 2, strategy, ha="center", va="center",
-                            fontsize=S.FS_NOTE,
-                            color=S.SURFACE if strategy in ("AS", "AU", "CAS") else S.INK,
-                            weight="bold")
-            bottom += values
-    ax.set_xticks(x, ["0.1", "0.6", "0.9"])
-    ax.set_xlabel(r"maximum private risk $p_r^{\max}$", labelpad=17)
-    ax.set_ylabel("stationary strategy share (%)")
-    ax.set_ylim(0.0, 100.0)
-    S.strip(ax, grid_axis="y")
-    S.panel(ax, "b", "risk changes which strategy dominates", gap=8.0)
-    for xpos in x:
-        ax.text(xpos + offsets[2.0], -0.12, "$\\beta=2$\n$\\mu=.02$", transform=ax.get_xaxis_transform(),
-                ha="center", va="top", fontsize=S.FS_NOTE, color=S.INK_2)
-        ax.text(xpos + offsets[0.01], -0.12, "$\\beta=.01$\n$\\mu=.05$", transform=ax.get_xaxis_transform(),
-                ha="center", va="top", fontsize=S.FS_NOTE, color=S.INK_2)
+    panel_rmse(fig.add_subplot(gs[0, 1]), res)
     fig.text(
         0.50, 0.035,
-        "Dots are individual confirmatory race rates; lines are route means. "
-        "The three analysis-only profiles remain in the supplement.",
+        "Panel a shows the two prespecified direct profiles; panel b uses the "
+        "canonical secondary fit for all five eligible endpoints.",
         ha="center", va="bottom", fontsize=S.FS_NOTE, color=S.MUTED,
     )
     S.save(fig, "theory_versus_behaviour", width=S.TEXT)
