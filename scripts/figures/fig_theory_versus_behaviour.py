@@ -663,7 +663,7 @@ def panel_confirmatory(ax, res, d) -> None:
     S.direct_label(ax, RISK_GRID[weak_index], 100 * res["curves"][weak][weak_index],
                    rf"EGT $\beta={weak:g}$", color=BETA_C[weak], dx=3, dy=5,
                    weight="bold")
-    S.panel(ax, "a", "two confirmatory routes follow a graded response", gap=8.0)
+    S.panel(ax, "a", "strong selection predicts a cliff; both confirmatory routes are graded", gap=8.0)
 
 
 def draw_main_figure(res: dict, d: dict) -> None:
@@ -724,9 +724,9 @@ def draw_main_figure(res: dict, d: dict) -> None:
     S.strip(ax, grid_axis="y")
     S.panel(ax, "b", "risk changes which strategy dominates", gap=8.0)
     for xpos in x:
-        ax.text(xpos + offsets[2.0], -0.12, r"$\beta=2$", transform=ax.get_xaxis_transform(),
+        ax.text(xpos + offsets[2.0], -0.12, "$\\beta=2$\n$\\mu=.02$", transform=ax.get_xaxis_transform(),
                 ha="center", va="top", fontsize=S.FS_NOTE, color=S.INK_2)
-        ax.text(xpos + offsets[0.01], -0.12, r"$\beta=.01$", transform=ax.get_xaxis_transform(),
+        ax.text(xpos + offsets[0.01], -0.12, "$\\beta=.01$\n$\\mu=.05$", transform=ax.get_xaxis_transform(),
                 ha="center", va="top", fontsize=S.FS_NOTE, color=S.INK_2)
     fig.text(
         0.50, 0.035,

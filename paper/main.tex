@@ -685,6 +685,54 @@ every admitted route (supplementary material).
     repeat row is shown below.}
 \end{figure}
 
+\begin{figure*}[t]
+  \centering
+  \includegraphics[width=\textwidth]{../figures/paper/scripted_opponent_main.pdf}
+  \caption{A shared rival response changes a route's play. Panel (a) is a response
+  surface: each tile is an admitted route's Unsafe rate under one scripted
+  rival, with columns ordered from Always Safe to Always Unsafe and facets for
+  the three maximum-risk conditions. Panel (b) shows the empirical response to
+  changing only the rival policy: open points are the Always Safe rival and
+  filled points are the Always Unsafe rival, with faint matched repetition
+  blocks behind each bold mean connector. Labels report the paired
+  Always-Unsafe minus Always-Safe contrast with 95\% intervals. Within-route
+  contrasts are the estimands; cross-route magnitudes are descriptive under
+  heterogeneous contracts.}
+  \Description{Two-panel figure. Panel a contains three response matrices,
+  one per risk level, with five route rows and four ordered scripted-rival
+  columns; every tile prints the measured Unsafe rate. Panel b contains three
+  risk facets with the same five route rows. Open and filled points show the
+  Always Safe and Always Unsafe rival rates, faint connectors show the ten
+  matched repetition blocks, bold connectors show their means, and right-side
+  labels give paired 95 percent intervals.}
+  \label{fig:scripted-opponent-main}
+\end{figure*}
+
+\begin{figure*}[t]
+    \centering
+    \includegraphics[width=\textwidth]{../figures/paper/theory_versus_behaviour.pdf}
+    \caption{The evolutionary benchmark and the confirmatory route profiles in
+    a common risk coordinate. (a) The direct comparison keeps only Gemini 3
+    Flash and Claude Sonnet 5, with individual race rates behind their means;
+    the other three admitted profiles remain an analysis-only extension in the
+    supplement. The small-mutation limit is step-like at strong selection and
+    graded near neutrality, while both confirmatory profiles move gradually.
+    (b) The corresponding finite-mutation population composition changes its
+    dominant strategy from Always Unsafe through the conditional strategy that
+    starts Unsafe to the conditional strategy that starts Safe as risk rises.
+    Within each risk pair, the left bar shows the reference regime
+    ($\beta=2,\ \mu=.02$) and the right bar the reported best-fit regime
+    ($\beta=.01,\ \mu=.05$).}
+    \label{fig:theory-behaviour}
+    \Description{Two-panel comparison. Panel a plots Unsafe play against maximum
+    private risk for the reconstructed evolutionary model at strong and weak
+    selection, with individual race rates and means for the two-route
+    confirmatory comparison between Gemini 3 Flash and Claude Sonnet 5. The
+    three-route analysis-only extension is in the supplement. Panel b shows stacked stationary
+    shares of four strategies at risks 0.1, 0.6 and 0.9 for the reference and
+    reported best-fit finite-mutation regimes.}
+\end{figure*}
+
 The four graded routes, spanning three providers, have risk-response drops within
 a 19-point band, from 38.2 to 57.0 percentage points. We report that band
 rather than an average over all five, because averaging a switch with four
@@ -719,28 +767,6 @@ response survives a fully crossed narrative-by-symbol rerun on two routes,
 although swapping the opaque action-code mapping shifts \Unsafe{} play by
 8.3--9.5 percentage points (see the supplementary material).
 
-\begin{figure*}[t]
-  \centering
-  \includegraphics[width=\textwidth]{../figures/paper/scripted_opponent_main.pdf}
-  \caption{A shared rival response changes a route's play. Panel (a) is a response
-  surface: each tile is an admitted route's Unsafe rate under one scripted
-  rival, with columns ordered from Always Safe to Always Unsafe and facets for
-  the three maximum-risk conditions. Panel (b) shows the empirical response to
-  changing only the opponent policy: open points are the Always Safe rival and
-  filled points are the Always Unsafe rival, with faint matched repetition
-  blocks behind each bold mean connector. Labels report the paired
-  Always-Unsafe minus Always-Safe contrast with 95\% intervals. Within-route
-  contrasts are the estimands; cross-route magnitudes are descriptive under
-  heterogeneous contracts.}
-  \Description{Two-panel figure. Panel a contains three response matrices,
-  one per risk level, with five route rows and four ordered scripted-rival
-  columns; every tile prints the measured Unsafe rate. Panel b contains three
-  risk facets with the same five route rows. Open and filled points show the
-  Always Safe and Always Unsafe rival rates, faint connectors show the ten
-  matched repetition blocks, bold connectors show their means, and right-side
-  labels give paired 95 percent intervals.}
-  \label{fig:scripted-opponent-main}
-\end{figure*}
 
 \subsection{The rival substantially reshapes play}
 \label{sec:results-scripted}
@@ -814,7 +840,7 @@ lower bound because nine of its ten mirror-match races have every decision
 outcomes rather than route-level risk preferences.
 
 The bound on the finding is the design itself. Four reduced strategies are four
-points in a space of policies rather than a sample of opponents, so this
+points in a space of policies rather than a sample of rivals, so this
 establishes what a route does against \emph{these} rivals, on one game and one
 prompt version, and five commercial endpoints are not a sample from a
 population of models.
@@ -824,40 +850,15 @@ population of models.
 
 The agents and the theoretical population move in the same direction under the
 same incentive, but their response shapes differ because of an assumption inside
-the theory. At the reference setting of \citet{falling_behind_unsafe},
-$\beta=2$ and $\mu=\beta/Z$ predict \Unsafe{} play of 99.2\%, 98.0\% and
-1.9\% at risks $0.1$, $0.6$ and $0.9$. The direct confirmatory comparison is a
-separate two-route block: Gemini 3 Flash gives 98.9\%, 73.1\% and 60.2\%, and
-Claude Sonnet 5 gives 89.2\%, 48.4\% and 32.3\%, over 30 races each. The other
-three profiles are an analysis-only extension; GPT-5.4 and GPT-5.5 decline
-smoothly, while Claude Opus 5 switches. Thus the difference is one of shape, not
-level: the $\beta=2$ benchmark loses 98 points inside a risk step of $0.005$
-(Figure~\ref{fig:theory-behaviour}); the supplement reports the full fit.
-
-\begin{figure*}[t]
-    \centering
-    \includegraphics[width=\textwidth]{../figures/paper/theory_versus_behaviour.pdf}
-    \caption{The evolutionary benchmark and the confirmatory route profiles in
-    a common risk coordinate. (a) The direct comparison keeps only Gemini 3
-    Flash and Claude Sonnet 5, with individual race rates behind their means;
-    the other three admitted profiles remain an analysis-only extension in the
-    supplement. The small-mutation limit is step-like at strong selection and
-    graded near neutrality, while both confirmatory profiles move gradually.
-    (b) The
-    corresponding finite-mutation population composition changes its dominant
-    strategy from Always Unsafe through the conditional strategy that starts
-    Unsafe to the conditional strategy that starts Safe as risk rises. The
-    Within each risk pair, the right-hand bars show the reported best-fit regime
-    and the left-hand bars show the reference regime.}
-    \label{fig:theory-behaviour}
-    \Description{Two-panel comparison. Panel a plots Unsafe play against maximum
-    private risk for the reconstructed evolutionary model at strong and weak
-    selection, with individual race rates and means for the two-route
-    confirmatory comparison between Gemini 3 Flash and Claude Sonnet 5. The
-    three-route analysis-only extension is in the supplement. Panel b shows stacked stationary
-    shares of four strategies at risks 0.1, 0.6 and 0.9 for the reference and
-    reported best-fit finite-mutation regimes.}
-\end{figure*}
+the theory. The direct confirmatory profiles are graded, whereas strong selection
+in the benchmark predicts a cliff. Gemini 3 Flash gives 98.9\%, 73.1\% and
+60.2\%, and Claude Sonnet 5 gives 89.2\%, 48.4\% and 32.3\% over 30 races
+each. At the reference setting of \citet{falling_behind_unsafe}, $\beta=2$ and
+$\mu=\beta/Z$ lose 98 points inside a risk step of $0.005$
+(Figure~\ref{fig:theory-behaviour}a). Separately, an analysis-only extension to
+the other three admitted routes is reported in the supplement: GPT-5.4 and
+GPT-5.5 decline smoothly, while Claude Opus 5 switches. The difference is one
+of shape, not level.
 
 The switch is a property of strong selection, not of the game. We swept
 selection strength across $\beta \in [0.001, 10]$ crossed with three mutation
@@ -887,6 +888,7 @@ high-exploration population, not that the routes are evolving. What the sweep
 establishes is narrower and still useful: a claim that LLM agents contradict the
 evolutionary benchmark cannot rest on one setting of the selection strength,
 because the sign of the high-risk gap depends on it.
+
 
 \subsection{Frontier agents are behaviourally concentrated}
 \label{sec:results-diversity}
@@ -964,7 +966,7 @@ read, they are reported, not interpreted as strategic diversity.
     every draw. Panel b sorts the 60
     matched trajectories by path frequency; panel c shows the modal pooled
     joint-action path. Each tile is the focal route's action followed by its
-    opponent's.}
+    rival's.}
     \label{fig:diversity}
     \Description{Panel a shows three facets, one per risk condition, each with a
     histogram of a human dyad-resampling null and one marker per checkpoint placed
@@ -994,7 +996,7 @@ nor GPT-5.5, so they support no claim about the admitted panel.
 
 These agents incorporate both the stated risk and the rival's stance. \Unsafe{}
 play is non-increasing as the stated chance of catastrophe rises on every
-admitted route, while on the five routes where the opponent was replaced by scripted
+admitted route, while on the five routes where the rival was replaced by scripted
 code, the rival's stance changes behaviour substantially, with a magnitude that
 varies by route and can overlap the effect of changing risk. In this game, the
 five tested routes are therefore
@@ -1013,7 +1015,7 @@ the one property a comparison names, so every contrast drawn between routes in
 this paper is descriptive and none of it separates a route's behaviour from its
 provider, its scale or its training. The scripted-rival campaign covers five
 routes and four reduced strategies, which are four points in a space of
-policies rather than a sample of opponents. The human comparison rests on one
+policies rather than a sample of rivals. The human comparison rests on one
 published study of one game, 340 complete trajectories, and we do not add a
 second human dataset, because any other dataset would change the game as well
 as the population. And the evolutionary comparison is a reconstruction audited

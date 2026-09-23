@@ -529,12 +529,13 @@ def draw_effect_forest(ax, stance):
               handletextpad=0.35, columnspacing=0.9, bbox_to_anchor=(1.0, 1.01))
 
 
-def paired_policy_rows(route_rows: pd.DataFrame) -> dict:
-    """Return matched AS/AU route rates and block bootstrap intervals.
+def paired_policy_rows(route_rows: pd.DataFrame, published: dict) -> dict:
+    """Return matched AS/AU route rates and canonical block intervals.
 
     The two unconditional arms share the repetition seed and sampled horizon.
     The check is kept here, next to the dumbbell estimand, so a visual change
-    cannot silently turn a paired intervention into two unrelated means.
+    cannot silently turn a paired intervention into two unrelated means. The
+    interval is read from the same derived record used by Supplement Table 11.
     """
     result = {}
     for route in ROUTES:
@@ -559,23 +560,41 @@ def paired_policy_rows(route_rows: pd.DataFrame) -> dict:
             safe_rate = safe["unsafe"] / safe["decisions"]
             unsafe_rate = unsafe["unsafe"] / unsafe["decisions"]
             delta = unsafe_rate.to_numpy(float) - safe_rate.to_numpy(float)
-            rng = cell_rng(route, "policy_dumbbell", risk)
-            draws = rng.integers(0, delta.size, size=(N_BOOT, delta.size))
-            boot = delta[draws].mean(axis=1)
+            canonical = published[route]["paired_contrasts"][str(risk)][
+                "rival_unsafe_minus_rival_safe"
+            ]
+            if not canonical["pairing_verified"] or canonical["n_blocks"] != EXPECTED_RACES:
+                raise ValueError(f"{route} risk {risk}: canonical pairing is not verified")
+            if abs(float(delta.mean()) - canonical["mean_difference"]) > 1e-12:
+                raise ValueError(
+                    f"{route} risk {risk}: raw paired mean disagrees with the canonical table"
+                )
             result[(route, risk)] = {
                 "safe": float(safe_rate.mean()),
                 "unsafe": float(unsafe_rate.mean()),
-                "delta": float(delta.mean()),
-                "low": float(np.percentile(boot, 2.5)),
-                "high": float(np.percentile(boot, 97.5)),
+                "delta": float(canonical["mean_difference"]),
+                "low": float(canonical["ci95_low"]),
+                "high": float(canonical["ci95_high"]),
                 "safe_blocks": safe_rate.to_numpy(float),
                 "unsafe_blocks": unsafe_rate.to_numpy(float),
             }
     return result
 
 
+FACET_PAD = 7.0
+
+
+def facet_label(ax, risk):
+    """The risk condition a facet shows, at one height across every facet."""
+    ax.annotate(f"risk {S.RISK_LABEL[risk]}", xy=(0.5, 1.0),
+                xycoords="axes fraction", xytext=(0, FACET_PAD),
+                textcoords="offset points", ha="center", va="bottom",
+                fontsize=S.FS_CLAIM, color=S.INK, fontweight="bold",
+                annotation_clip=False)
+
+
 def draw_policy_dumbbell(ax, policy, risk, *, show_routes=False):
-    """Show the empirical response to changing only the opponent policy."""
+    """Show the empirical response to changing only the rival policy."""
     y_positions = np.arange(len(ROUTES) - 1, -1, -1, dtype=float)
     for y, route in zip(y_positions, ROUTES):
         entry = policy[(route, risk)]
@@ -622,8 +641,7 @@ def draw_policy_dumbbell(ax, policy, risk, *, show_routes=False):
     ax.grid(True, axis="x", color=S.GRID, linewidth=0.5, zorder=0)
     for spine in ax.spines.values():
         spine.set_visible(False)
-    ax.set_title(f"risk {S.RISK_LABEL[risk]}", loc="right" if show_routes else "center",
-                 fontsize=S.FS_CLAIM, color=S.INK, fontweight="bold", pad=5)
+    facet_label(ax, risk)
     if show_routes:
         ax.set_ylabel("route", labelpad=2)
 
@@ -824,7 +842,7 @@ def main() -> None:
         route: paired_risk_contrast(route_rows, route, "AS", S.RISKS[0], S.RISKS[-1])
         for route in ROUTES
     }
-    policy = paired_policy_rows(route_rows)
+    policy = paired_policy_rows(route_rows, published)
 
     # The figure is rendered only after every source-data and paired-contrast
     # guard below passes.  That makes the redesign fail closed: no plausible
@@ -894,11 +912,13 @@ def main() -> None:
         facets = [fig.add_subplot(top[0, i]) for i in range(len(S.RISKS))]
         for i, (ax, risk) in enumerate(zip(facets, S.RISKS)):
             draw_response_matrix(ax, surface, risk, first=(i == 0))
-            ax.set_title(f"risk {S.RISK_LABEL[risk]}",
-                         loc="right" if i == 0 else "center",
-                         fontsize=S.FS_CLAIM, color=S.INK, fontweight="bold",
-                         pad=26)
-        S.panel(facets[0], "a", "rival stance orders play", pad=5, gap=8.5)
+            facet_label(ax, risk)
+        # The panel claim gets a line of its own above the facet labels, which
+        # all sit at one height.  Setting a facet label through set_title puts
+        # it on the same axes title pad as the panel letter, so the first facet
+        # silently drops to the letter's pad and stops lining up with the rest.
+        S.panel(facets[0], "a", "rival stance orders play", pad=FACET_PAD + 11,
+                gap=8.5)
         return facets
 
     # The supplement retains the complete three-panel audit view, including
@@ -939,8 +959,8 @@ def main() -> None:
                      for i in range(len(S.RISKS))]
     for i, (axis, risk) in enumerate(zip(dumbbell_axes, S.RISKS)):
         draw_policy_dumbbell(axis, policy, risk, show_routes=(i == 0))
-    S.panel(dumbbell_axes[0], "b", "opponent policy shifts play",
-            pad=5, gap=8.5)
+    S.panel(dumbbell_axes[0], "b", "changing only the rival shifts play",
+            pad=FACET_PAD + 11, gap=8.5)
     main_fig.text(
         0.50, 0.045,
         "Faint connectors are the ten matched repetition blocks; bold connectors "
