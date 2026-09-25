@@ -364,9 +364,12 @@ screen outcome is either \emph{screen-passing} (eligible) or
 
 \appendix
 % The evidence package uses the explicit S1--S7 roadmap below; suppress the
-% legacy appendix letter and subsection counter so old A.1-style labels do not
-% survive into the final PDF.
-\setcounter{secnumdepth}{0}
+% legacy appendix letters and number each evidence block S1--S7 instead.
+\setcounter{secnumdepth}{2}
+\setcounter{tocdepth}{2}
+\renewcommand{\thesection}{S\arabic{section}}
+\renewcommand{\thesubsection}{\thesection.\arabic{subsection}}
+\tableofcontents
 \section*{Supplementary evidence}
 \label{app:extended-results}
 % NOTE: remove the \appendix command above if the surrounding paper already
@@ -385,13 +388,15 @@ supporting rather than extending the main claims: endpoint eligibility and
 provenance, risk-response and theory robustness, the crossed presentation
 check, the full scripted-opponent table, the human-benchmark replication and
 trajectory-diversity statistics, and the matched group-size extension. The
-separate open-weight battery, pilot roster, classifier and embedding analyses,
-persona diagnostics, and joint-dynamics/horizon extensions remain in the
-repository as extended artifacts rather than part of this concise evidence
-package.
+historical pilot rosters, classifier, predictive analysis, player-level rate
+distributions and embedding diagnostics are included only to support the main
+paper's scoped exploratory pointers. The separate open-weight battery, persona
+diagnostics, older pilot baselines, archetype projections, and
+joint-dynamics/horizon extensions remain in the repository as extended
+artifacts rather than part of this evidence package.
 \end{sloppypar}
 
-\subsubsection*{S1. Endpoint eligibility and provenance}
+\section{Endpoint eligibility and provenance}
 
 \subsection{The quality-control screen: what it asked, and which routes passed}
 \label{app:admission-v6}
@@ -582,7 +587,7 @@ two presentations of one mechanism.
 
 \end{comment}
 
-\subsubsection*{S2. Risk-response robustness}
+\section{Risk-response robustness}
 
 \subsection{Earlier two-route confirmatory baseline}
 \label{app:frontier-baseline}
@@ -859,7 +864,7 @@ purpose. Both campaign analysers key their results by model route, so a second
 run of an already-represented route stored with the campaign would not raise an
 error. It would quietly displace the reported one.
 
-\subsubsection*{S3. Evolutionary benchmark sensitivity}
+\section{Evolutionary benchmark sensitivity}
 
 \subsection{Selection-strength sweep of the evolutionary benchmark}
 \label{app:egt-beta}
@@ -1029,7 +1034,7 @@ mutation rate of the parameter points it is drawn at.
     \label{fig:theory-inversion}
 \end{figure*}
 
-\subsubsection*{S4. Presentation robustness}
+\section{Presentation robustness}
 
 \subsection{Crossed representation-robustness design}
 \label{app:context-mapping}
@@ -1295,7 +1300,7 @@ processed benchmark rather than on a reimplementation error.
 
 \end{comment}
 
-\subsubsection*{S5. Scripted-opponent results}
+\section{Scripted-opponent results}
 
 \subsection{Five audited routes against a fixed and undisclosed rival policy}
 \label{app:scripted-opponent}
@@ -1643,7 +1648,7 @@ failure, that is the wrong protocol, that has the wrong number of races, whose
 seat counterbalance is not five and five, or whose rival deviated from the
 strategy its directory claims.
 
-\subsubsection*{S6. Human reference and trajectory-diversity robustness}
+\section{Human reference and trajectory-diversity robustness}
 
 % Pilot, classifier, embedding, persona and archetype analyses are retained in
 % the repository as extended artifacts rather than in the concise supplement.
@@ -1847,13 +1852,15 @@ this comparison remains exploratory and cross-experimental rather than a
 like-for-like measurement. The starred rows are outside the nine-route
 confirmatory baseline and are retained only for exploratory persona analyses.
 
+\end{comment}
+
 \subsection{The pilot roster behind the projections}
 \label{app:diversity-pilot}
 
 The diversity comparison in the main paper reads all nine audited routes on the
-confirmatory baseline. The projections in this appendix, the behavioural
-archetypes, the classifier features and the two-dimensional embedding, are
-built on an earlier export of the same two-player game covering seven
+confirmatory baseline. The classifier, predictive analysis and two-dimensional
+embedding in this appendix are built on an earlier export of the same
+two-player game covering seven
 checkpoints. That seven-checkpoint roster is used only for these exploratory
 analyses; it does not redefine the nine-route human-diversity roster in the
 main paper. It pools 420 trajectories, 60 per checkpoint, with 340 complete human
@@ -1865,9 +1872,7 @@ account and so cannot be gated at all, and is retained as description rather
 than as evidence. Each player is represented by 15 raw features: own action,
 opponent action, and own-minus-opponent progress gap entering each of rounds 1
 to 5, which are the recorded states and actions themselves rather than derived
-quantities. The archetype projection uses 341 participants rather than 340,
-because its five descriptor summaries can be computed for one further
-participant whose complete five-round sequence is unavailable.
+quantities.
 
 No single aggregate rate characterises these checkpoints. Mean \Unsafe{} play
 over rounds 1 to 5 is lowest for GPT-5 nano ($17\%$), then Claude Sonnet 5
@@ -1877,15 +1882,8 @@ with the Gemini checkpoints running from $73\%$ (Gemini 3 Flash) to $83\%$
 uninformative about anything beyond that one number, which is why the main
 paper measures diversity on the action sequences instead.
 
-The archetype projection places each trajectory at the nearest of four
-behavioural archetypes fitted to the human sample alone
-(\S\ref{app:archetype-coverage}). The human sample occupies every archetype at
-every cluster count from two to six, while each checkpoint except GPT-5.4 nano
-is more concentrated, so that conclusion does not depend on the choice of four
-(\S\ref{app:k-sensitivity}); the archetypes themselves are exploratory
-descriptions rather than recovered types, best separated at four groups and
-only moderately stable under bootstrap. The two-dimensional embedding of the
-same space is \S\ref{app:tsne-outcome}, and neither the main paper nor this
+The two-dimensional embedding of the same space is
+\S\ref{app:tsne-outcome}, and neither the main paper nor this
 appendix rests a conclusion on it: recolouring its identical coordinates by
 outcome rather than by population separates it almost entirely by \Unsafe{}
 rate.
@@ -2143,8 +2141,9 @@ imply matching the human reciprocity-dominated association profile.
 % 15/6) with its own manifest, and report the recovered cluster count and
 % unclustered fraction per configuration from that manifest.}
 
-% Legacy pilot, classifier, embedding, persona and N-player diagnostics remain
-% in the repository history but are outside the concise evidence package.
+% The older descriptive baseline and unmatched N-player pilot remain outside
+% the evidence package. The scoped classifier and embedding diagnostics below
+% are retained because the main paper points to them explicitly.
 \begin{comment}
 \subsection{Two-player checkpoint descriptive baseline (full scope)}
 \label{app:twoplayer-baseline}
@@ -2188,7 +2187,7 @@ per-risk-level rates underlying the qualitative curve descriptions above.
     \end{tabular}
 \end{table}
 
-\subsubsection*{S7. Exploratory extensions}
+\section{Exploratory extensions}
 
 \subsection{$N$-player self-play scope ($N=3,4,5$)}
 \label{app:nplayer-scope}
@@ -2299,6 +2298,8 @@ in each cell. The decision count is retained only as a descriptive row count.
     \end{tabular}
 \end{table}
 
+\end{comment}
+
 \subsection{Trajectory embedding recoloured by outcome}
 \label{app:tsne-outcome}
 
@@ -2368,6 +2369,7 @@ Table~\ref{tab:population-identity} instead.
 
 
 
+\begin{comment}
 \subsection{Mean round-by-round profile per population}
 \label{app:human-radar}
 
@@ -2399,6 +2401,8 @@ progress gaps separated so that neither scale obscures the other.
 
 
 
+
+\end{comment}
 
 \subsection{Player-level \Unsafe{} rate by population}
 \label{app:unsafe-rate-by-group}
@@ -2434,6 +2438,37 @@ behaving the same way.
     the two Claude rows sit low, and the three Gemini rows sit high.}
 \end{figure*}
 
+\paragraph{Risk-stratified distributions.}
+The pooled mean above is only a location summary. Figure~\ref{fig:unsafe-rate-distributions}
+shows the underlying player-level spread separately at each assigned risk
+level. It uses every retained historical neutral or no-persona lane with
+player records, so its checkpoint roster is broader than the seven-checkpoint
+embedding roster and is separate from the nine-route confirmatory roster. The
+comparison is descriptive: it asks whether a population reaches its mean by
+placing players across the range or by concentrating them in a narrow band.
+
+\begin{figure*}[t]
+    \centering
+    \includegraphics[width=0.84\textwidth,height=0.72\textheight,keepaspectratio]{../figures/paper/human_vs_llm_distribution.pdf}
+    \caption{Player-level \Unsafe{}-rate distributions by assigned risk
+    condition over rounds 1--5. Each curve is a boundary-reflected kernel
+    density on the valid 0--100\% range, normalised within population and risk;
+    the vertical axis is logarithmic so near-deterministic checkpoint bands do
+    not flatten the broader human reference. The human curve is repeated in
+    each row, while checkpoint families are split across rows only for
+    legibility. Across all three risk conditions, human players span much of
+    the available range and the plotted checkpoints occupy narrower,
+    checkpoint-specific bands. These historical neutral-lane diagnostics do
+    not pool checkpoints or transfer admission verdicts across rosters.}
+    \label{fig:unsafe-rate-distributions}
+    \Description{Nine panels arranged as three checkpoint-family rows by three
+    assigned-risk columns. Each panel overlays a broad human density with
+    narrower checkpoint-specific densities of player-level Unsafe rates. The
+    horizontal axis runs from zero to one hundred percent Unsafe and the
+    vertical density axis is logarithmic.}
+\end{figure*}
+
+\begin{comment}
 \subsection{\Unsafe{} rate by persona band and relative position}
 \label{app:position-cells}
 
@@ -2893,25 +2928,40 @@ cluster count from two to six.
 
 \end{comment}
 
-\subsubsection*{S7. Exploratory extensions}
+\clearpage
+\section{Exploratory extensions}
 
 \subsection{Matched group-size comparison}
 \label{app:nplayer-matched}
 
-The three- to five-player pilots reported elsewhere in this supplement have no
-two-player arm, so a difference between group sizes could not be told apart from
-a difference between two separately built lanes. This subsection reports a
-matched comparison that removes that particular ambiguity.
+Older three- to five-player pilots used a separately built lane and had no
+two-player arm, so they remain excluded from this evidence package. This
+subsection instead reports a matched comparison in which every group size,
+including two, runs through the same $N$-player engine, prompt template, parser
+and protocol. The number of seats is the only field deliberately varied.
 
-Every group size, including two, is run through the same $N$-player engine, the
-same prompt template, the same parser and one protocol, the matched
-group-size protocol, version~1,
-so the number of seats is the only thing deliberately varied. The two-player arm is not a near
-neighbour of the headline game: evaluating the group-count stage
-    group-count stage rule at two companies returns the
-two-player payoff matrix exactly, at $1.0$, $0.6$, $2.4$, $2.0$, which the
-released design check asserts offline before the task is pushed, together with the invariance of every other mechanism field and
-the sharing of the horizon draw described below.
+With $k$ of $N$ companies choosing \Safe{} in a round, the engine assigns stage
+payoffs using the group-count rule of \citet{to_regulate_or_not}:
+\begin{equation}
+  \begin{aligned}
+    \pi_S(k) &=
+    \begin{cases}
+      -c + \dfrac{b}{N}, & k=N,\\[4pt]
+      -c + \dfrac{b}{k+s(N-k)}, & 1\leq k<N,
+    \end{cases}\\[5pt]
+    \pi_U(k) &= \dfrac{s b}{k+s(N-k)}, \qquad 0\leq k<N.
+  \end{aligned}
+  \label{eq:nplayer-matched-payoff}
+\end{equation}
+Here $b=4$, $c=1$ and $s=1.5$; the source rule's discovery term is set to
+zero. At $N=2$ this returns the headline game's four stage payoffs exactly:
+$1.0$, $0.6$, $2.4$ and $2.0$. \Safe{} and \Unsafe{} add $1.0$ and $1.5$
+progress steps, respectively. The hidden horizon lasts at least five rounds
+and then stops after each completed round with probability $0.2$. The prize
+$B=100$ is split among the companies tied for greatest progress, and the same
+private-risk rule and three risk levels apply. The released design check
+asserts the $N=2$ reduction and every invariant mechanism field before a task
+is collected.
 
 \paragraph{What was collected, and how.} The full grid: every group size at
 every private-risk condition, $p_r^{\max}\in\{0.1,0.6,0.9\}$, ten repetitions
@@ -3112,6 +3162,7 @@ report a risk level unless all four group sizes are present, refuses a cell with
 failure or the wrong seat count, and records the collecting identity of every
 cell it uses.
 
+\begin{comment}
 \paragraph{Which endpoint carries the seat gap.} The separate seat analysis
 reports a gap averaged over nine endpoints, and a reader is entitled to ask
 whether it describes nine endpoints or one. The
@@ -3137,6 +3188,7 @@ counterbalancing. The usual bounds hold. This is nine endpoints in one game at
 one prompt version, nothing is randomised except the chair, and a route whose
 measured gap is zero is at zero because its two seats agree, not because the
 design removed the effect.
+\end{comment}
 
 \begin{comment}
 \subsection{Where a race goes, once it gets somewhere}
@@ -3344,7 +3396,6 @@ models.
 
 \end{comment}
 
-\clearpage
 \bibliographystyle{ACM-Reference-Format}
 % \bibliography{sample}
 \bibliography{references}

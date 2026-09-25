@@ -14,6 +14,17 @@ touching anything under `paper/`.
 
 The combined version is frozen at the git tag `combined-manuscript-2026-09-12`.
 
+On 2026-09-25 the AAMAS supplementary material was audited against that frozen
+combined manuscript and the current main-paper promises. The canonical PDF is
+22 pages. Restored material is limited to the scoped historical pilot roster,
+population-identity classifier, predictive/SHAP diagnostic, paired t-SNE views,
+pooled player-level rates, risk-stratified player-level distributions, and the
+exact mechanism for the matched group-size comparison. Persona experiments,
+unmatched multiplayer pilots, archetype projections, joint-dynamics/horizon
+extensions, the separate open-weight comprehension battery, and audit-only seat
+claims remain excluded. Do not expand the supplement by reviving those blocks
+without rechecking the behaviour/ARR claim boundary.
+
 - Which claims belong to which paper: `docs/behaviour-paper-claim-map-2026-09-12.md`.
   Its claims A1 to A12 are the audit story and must NOT be results in the
   behaviour paper; its claims B1 to B24 are the behaviour story and must NOT be
