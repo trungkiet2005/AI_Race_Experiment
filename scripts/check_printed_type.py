@@ -94,6 +94,10 @@ def main() -> None:
             continue
         text = source.read_text(encoding="utf-8")
         for m in INCLUDE.finditer(text):
+            if Path(m.group("path")).name == "by":
+                # The AAMAS boilerplate resolves the Creative Commons badge
+                # through the class/TEXINPUTS path, not the paper directory.
+                continue
             before = text[: m.start()]
             in_star = before.rfind(r"\begin{figure*}") > before.rfind(r"\begin{figure}")
             path = (PAPER / m.group("path")).resolve()

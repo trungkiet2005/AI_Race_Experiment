@@ -193,7 +193,7 @@
     "supplement_figure_5_tsne_outcome": "generated",
     "supplement_figure_6_round_profiles": "generated"
   },
-  "generated_utc": "2026-09-25T10:59:56.368119+00:00",
+  "generated_utc": "2026-09-25T12:12:51.586093+00:00",
   "generator": "scripts/build_publication_figures.py",
   "manual_figure_origin": {
     "commit": "f0dde0d",
@@ -208,13 +208,13 @@
     "references\\source_study_dataset\\airace_deidentified_long.csv": "ba6009ed5a6702e9f3ec9782289226099edc2b78c63057e57967927a539f8eee",
     "results\\cross_model_pilot_synthesis\\data\\human_cluster_summary.csv": "2056314d4a1858f6ef068d033e8e8c623b69b5c8ead16c1971f33fcad8203484",
     "results\\cross_model_pilot_synthesis\\data\\llm_human_cluster_projection_unified.csv": "0a98ca17a3124c8030af5ca38ffb5a66ab2555bd350ed529f76f08f268953993",
-    "results\\derived\\scripted_opponent_campaign\\risk_versus_rival.json": "e6a882057c419abca2acd24d019734a0244bfb2c27baade0087ddea462e5fde1",
+    "results\\derived\\scripted_opponent_campaign\\risk_versus_rival.json": "f65c85adf0d76cd6470b4d1f3f48994fe3220c00f02823490fd8d0afbe80e5ae",
     "results\\derived\\trajectory_diversity_dyad_primary\\trajectory_diversity_dyad_primary.json": "11b24ae494f65dc34a03f7332bdd7814aa3c8775c6cc9d3dbec12aa3662a0d39",
     "results\\frontier\\egt_frontier_comparison_v2\\theory_llm_comparison.csv": "57cf703229df95e28cb51a8db95e902de895fb0801e3efb2d0ec7785bb416d78",
     "scripts\\analyze_trajectory_diversity_dyad.py": "f52a67c4f693c5162ea606eaae2dd87e12bd1064c911d92a95b733ec79b59022",
-    "scripts\\figures\\fig_human_versus_model.py": "ad7f0a69a3405d6ced5d28cb77e93141c6abbfb0bbe75b6ae88a7b1a666a61ca",
-    "scripts\\figures\\fig_overview.py": "12b0087cf378036ec7dd8979bde0747234e93e210c4f563aeacdb1b88149c07a",
-    "scripts\\figures\\fig_scripted_opponent.py": "492d965a89d1aa213029ee032ecc34f1671add7f5826b6a6b6a7081394547a46"
+    "scripts\\figures\\fig_human_versus_model.py": "ec709b5a8a3457a0e8e907b3b44e9f049d536a820bfc20c731fca70ad9618852",
+    "scripts\\figures\\fig_overview.py": "8f5ed14befca4d7540dae1600bf1b9b9b59cb0aa9658ee33256611b07293a0c4",
+    "scripts\\figures\\fig_scripted_opponent.py": "9096b0503fb00fe1fcea2d32b1a4317a3a8190b5ff471115250ac1bb3b140ead"
   },
   "style_module": "scripts/publication_style.py"
 }

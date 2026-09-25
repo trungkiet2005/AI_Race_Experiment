@@ -78,7 +78,7 @@ on Autonomous Agents and Multiagent Systems (AAMAS 2027)}{3--7 May 2027}{Hanoi, 
 
 %\title[]{LLM Agents Underrepresent Human Strategic Diversity in AI Development Races}
 
-\title[]{Supplementary Material: More Than the Risk: Frontier LLM Behaviour in AI Development Races Depends on the Rival}
+\title[]{Supplementary Material: Self-Play Can Mask Frontier LLM Risk Responses in AI Development Races}
 
 %%% Provide names, affiliations, and email addresses for all authors.
 % \author{Nimue}
@@ -292,8 +292,8 @@ on Autonomous Agents and Multiagent Systems (AAMAS 2027)}{3--7 May 2027}{Hanoi, 
 
 %%% Use this environment to specify a short abstract for your paper.
 \begin{abstract}
-This supplement supports More Than the Risk: Frontier LLM Behaviour in AI
-Development Races Depends on the Rival. It records the quality-control screen,
+This supplement supports Self-Play Can Mask Frontier LLM Risk Responses in AI
+Development Races. It records the quality-control screen,
 the theory comparison, the scripted-rival evidence, and the human diversity
 analysis, together with prompt and game robustness checks. These materials use
 the same routes, task and evidence boundaries as the main paper and do not
@@ -1368,9 +1368,10 @@ not a model boundary: the analysis never treats account identity as evidence
 about behaviour, and failed quota or authentication attempts contributed no
 races to the admitted set. The complete assignment audit is kept with those
 receipts. The full route-by-risk record is in
-Table~\ref{tab:scripted-opponent}, which retains the full response and context
-contrasts; the main paper's Figure~3 is the only scripted-opponent
-visualization retained in the evidence package.
+Tables~\ref{tab:scripted-opponent}--\ref{tab:scripted-opponent-interaction},
+which separate rates, paired contrasts and interactions for readability; the
+main paper's scripted-rival figure is the only visualization retained in the
+evidence package.
 
 \paragraph{Coverage and decoding contracts.} The final campaign is complete:
 all five admitted routes have all 12 route-by-strategy-by-risk cells. Every
@@ -1493,54 +1494,88 @@ metadata limitation rather than a gameplay failure.
 \end{comment}
 
 \begin{table*}[t]
-    \caption{Full five-route scripted-rival campaign. Each AS/CS/CAS/AU
-    entry is one route-by-strategy-by-risk cell with ten races and 93 route
-    decisions; each route-by-risk row therefore aggregates four such cells,
-    40 races and 372 route decisions, with both seats used and zero parse
-    failures or rival replay deviations. Rates are percentages of the route's
-    own decisions.
-    ``Rival stance'' is Always Unsafe minus Always Safe, differenced inside a
-    repetition; the bracketed values are its 95\% percentile interval over ten
-    blocks. ``Risk at Safe'' is the paired risk-0.1 minus risk-0.9 contrast with
-    the rival held at Always Safe, and contrast columns are percentage-point
-    differences. Rates pool decisions within a cell. A contrast is the mean
-    over matched repetitions of the within-repetition difference in race-level
-    rates, so a contrast need not equal the difference of the printed rates.
-    Claude Opus 5 has one legacy decoding cell. Coverage is complete across
-    the five routes, but decoding contracts are heterogeneous across endpoints,
-    so this cross-route comparison is descriptive rather than a controlled
-    comparison under one common decoding configuration.}
+    \caption{Rates in the full five-route scripted-rival campaign. Each
+    AS/CS/CAS/AU entry is one route-by-strategy-by-risk cell with ten races and
+    93 route decisions. Both seats are used in every cell, with zero parse
+    failures and zero rival replay deviations. Rates are percentages of the
+    route's own decisions; self-play is the corresponding neutral-baseline rate.}
     \label{tab:scripted-opponent}
     \centering
-    \scriptsize
-    \setlength{\tabcolsep}{3.2pt}
-    \begin{tabular}{@{}lcrrrr r lrr@{}}
+    \footnotesize
+    \setlength{\tabcolsep}{7pt}
+    \begin{tabular}{@{}lcrrrrr@{}}
         \toprule
-        Route & $p_r^{\max}$ & AS & CS & CAS & AU & Rival stance
-        & 95\% CI & Risk at Safe & Self-play \\
+        Endpoint & $p_r^{\max}$ & AS & CS & CAS & AU & Self-play \\
         \midrule
-        Gemini 3 Flash & 0.1 & 24.7 & 76.3 & 100.0 & 100.0 & +73.5 & [67.8, 78.7] & +10.4 & 98.9 \\
-        & 0.6 & 17.2 & 57.0 & 74.2 & 89.2 & +67.4 & [57.1, 76.6] & & 73.1 \\
-        & 0.9 & 14.0 & 57.0 & 67.7 & 88.2 & +71.7 & [65.6, 77.5] & & 60.2 \\
+        Gemini 3 Flash & 0.1 & 24.7 & 76.3 & 100.0 & 100.0 & 98.9 \\
+        & 0.6 & 17.2 & 57.0 & 74.2 & 89.2 & 73.1 \\
+        & 0.9 & 14.0 & 57.0 & 67.7 & 88.2 & 60.2 \\
         \addlinespace
-        Claude Opus 5 & 0.1 & 63.4 & 100.0 & 100.0 & 100.0 & +30.1 & [16.5, 42.8] & +69.9 & 100.0 \\
-        & 0.6 & 1.1 & 2.2 & 53.8 & 89.2 & +87.0 & [84.3, 89.6] & & 0.0 \\
-        & 0.9 & 0.0 & 3.2 & 35.5 & 62.4 & +59.3 & [51.2, 66.5] & & 0.0 \\
+        Claude Opus 5 & 0.1 & 63.4 & 100.0 & 100.0 & 100.0 & 100.0 \\
+        & 0.6 & 1.1 & 2.2 & 53.8 & 89.2 & 0.0 \\
+        & 0.9 & 0.0 & 3.2 & 35.5 & 62.4 & 0.0 \\
         \addlinespace
-        GPT-5.4 & 0.1 & 36.6 & 72.0 & 86.0 & 89.2 & +47.5 & [37.0, 57.2] & +12.3 & 87.1 \\
-        & 0.6 & 32.3 & 55.9 & 69.9 & 83.9 & +48.0 & [40.0, 55.0] & & 65.1 \\
-        & 0.9 & 25.8 & 50.5 & 62.4 & 80.6 & +49.8 & [35.8, 60.5] & & 46.8 \\
+        GPT-5.4 & 0.1 & 36.6 & 72.0 & 86.0 & 89.2 & 87.1 \\
+        & 0.6 & 32.3 & 55.9 & 69.9 & 83.9 & 65.1 \\
+        & 0.9 & 25.8 & 50.5 & 62.4 & 80.6 & 46.8 \\
         \addlinespace
-        GPT-5.5 & 0.1 & 72.0 & 98.9 & 100.0 & 97.8 & +25.3 & [20.3, 30.6] & +48.3 & 93.5 \\
-        & 0.6 & 23.7 & 82.8 & 87.1 & 91.4 & +66.1 & [62.5, 69.9] & & 70.4 \\
-        & 0.9 & 21.5 & 66.7 & 75.3 & 87.1 & +61.7 & [53.5, 69.1] & & 55.4 \\
+        GPT-5.5 & 0.1 & 72.0 & 98.9 & 100.0 & 97.8 & 93.5 \\
+        & 0.6 & 23.7 & 82.8 & 87.1 & 91.4 & 70.4 \\
+        & 0.9 & 21.5 & 66.7 & 75.3 & 87.1 & 55.4 \\
         \addlinespace
-        Claude Sonnet 5 & 0.1 & 22.6 & 63.4 & 89.2 & 90.3 & +63.8 & [54.8, 72.1] & +12.7 & 89.2 \\
-        & 0.6 & 10.8 & 43.0 & 62.4 & 77.4 & +65.7 & [62.2, 68.9] & & 48.4 \\
-        & 0.9 & 10.8 & 44.1 & 47.3 & 57.0 & +45.0 & [42.0, 48.2] & & 32.3 \\
+        Claude Sonnet 5 & 0.1 & 22.6 & 63.4 & 89.2 & 90.3 & 89.2 \\
+        & 0.6 & 10.8 & 43.0 & 62.4 & 77.4 & 48.4 \\
+        & 0.9 & 10.8 & 44.1 & 47.3 & 57.0 & 32.3 \\
         \bottomrule
     \end{tabular}
 \end{table*}
+
+\begin{table*}[t]
+    \caption{Paired contrasts underlying the scripted-rival result. Rival
+    stance is Always Unsafe minus Always Safe at one risk level. Risk at Safe
+    is risk 0.1 minus risk 0.9 with the rival held at Always Safe. Each entry is
+    a percentage-point mean with a 95\% percentile interval over ten matched
+    repetition blocks. Contrasts are within endpoints; cross-endpoint magnitudes
+    are descriptive because decoding contracts differ.}
+    \label{tab:scripted-opponent-contrasts}
+    \centering
+    \footnotesize
+    \setlength{\tabcolsep}{4.5pt}
+    \begin{tabular}{@{}lrrrr@{}}
+        \toprule
+        & \multicolumn{3}{c}{Rival stance at stated risk} & Risk at Safe \\
+        \cmidrule(lr){2-4}
+        Endpoint & $0.1$ & $0.6$ & $0.9$ & $0.1-0.9$ \\
+        \midrule
+        Gemini 3 Flash  & $+73.5$ [67.8, 78.7] & $+67.4$ [57.1, 76.6] & $+71.7$ [65.6, 77.5] & $+10.4$ [5.4, 15.7] \\
+        Claude Opus 5   & $+30.1$ [16.5, 42.8] & $+87.0$ [84.3, 89.6] & $+59.3$ [51.2, 66.5] & $+69.9$ [57.1, 83.5] \\
+        GPT-5.4         & $+47.5$ [37.0, 57.2] & $+48.0$ [40.0, 55.0] & $+49.8$ [35.8, 60.5] & $+12.3$ [6.2, 18.6] \\
+        GPT-5.5         & $+25.3$ [20.3, 30.6] & $+66.1$ [62.5, 69.9] & $+61.7$ [53.5, 69.1] & $+48.3$ [43.1, 54.3] \\
+        Claude Sonnet 5 & $+63.8$ [54.8, 72.1] & $+65.7$ [62.2, 68.9] & $+45.0$ [42.0, 48.2] & $+12.7$ [8.5, 16.6] \\
+        \bottomrule
+    \end{tabular}
+\end{table*}
+
+\begin{table}[t]
+    \caption{Paired rival-by-risk interaction,
+    $[(\mathrm{AU}-\mathrm{AS})_{0.9}-(\mathrm{AU}-\mathrm{AS})_{0.1}]$, in
+    percentage points. Positive values mean that the rival contrast grows from
+    low to high risk.}
+    \label{tab:scripted-opponent-interaction}
+    \centering
+    \footnotesize
+    \begin{tabular}{@{}lr@{}}
+        \toprule
+        Endpoint & Mean [95\% CI] \\
+        \midrule
+        Gemini 3 Flash  & $-1.8$ [$-7.9$, $3.7$] \\
+        Claude Opus 5   & $+29.2$ [$20.9$, $36.4$] \\
+        GPT-5.4         & $+2.3$ [$-4.6$, $9.4$] \\
+        GPT-5.5         & $+36.4$ [$29.0$, $44.0$] \\
+        Claude Sonnet 5 & $-18.9$ [$-25.1$, $-11.8$] \\
+        \bottomrule
+    \end{tabular}
+\end{table}
 
 \paragraph{One-cell contract sensitivity.} The one Claude Opus 5 cell collected
 under the legacy decoding contract is \emph{Always Safe} at risk $0.6$. A
@@ -1566,7 +1601,8 @@ at risk $0.1$, where Conditionally Antisocial Safe reaches $100.0\%$ and Always
 Unsafe reaches
 $97.8\%$. Both values are close to the ceiling, so the reversal is a
 saturated boundary observation rather than evidence against the broader
-direction.
+direction. Table~\ref{tab:scripted-opponent-contrasts} reports every paired
+contrast used in this summary.
 
 The response to stated risk survives once the rival is held fixed. Against
 \emph{Always Safe}, the rate never rises with risk on any of the five routes.
@@ -1576,18 +1612,16 @@ graded changes. This contrast is not interchangeable with the rival contrast:
 both are paired within repetitions, but they change different parts of the
 interaction.
 
-\paragraph{Finding two: the magnitude is checkpoint-specific.} The rival
-contrast ranges from $+25.3$ points for GPT-5.5 at risk $0.1$ to $+87.0$
-points for Claude Opus 5 at risk $0.6$. Gemini 3 Flash remains near $+70$
-points across risks, GPT-5.4 remains near $+50$, GPT-5.5 grows from $+25.3$
-to about $+66$, and Claude Sonnet 5 falls from about $+66$ to $+45$ at the
-highest risk. The route's level also differs. Against \emph{Always Safe},
-GPT-5.4 plays \Unsafe{} on $36.6\%$, $32.3\%$ and $25.8\%$ of its decisions,
-the highest rate of the five routes at risks $0.6$ and $0.9$. At risk $0.1$
-GPT-5.5 ($72.0\%$) and Claude Opus 5 ($63.4\%$) are higher. Claude Opus 5
-then falls to the floor at the two higher risks. These are separate endpoint
-samples, so non-overlapping intervals are a conservative sign of a difference
-rather than a test of one.
+\paragraph{Finding two: risk changes the rival effect in endpoint-specific
+directions.} Table~\ref{tab:scripted-opponent-interaction} tests the interaction
+directly as the high-risk minus low-risk change in the paired Always-Unsafe
+minus Always-Safe contrast. The interaction is positive on Claude Opus 5
+($+29.2$ points [20.9, 36.4]) and GPT-5.5 ($+36.4$ [29.0, 44.0]), negative on
+Claude Sonnet 5 ($-18.9$ [$-25.1$, $-11.8$]), and unresolved on Gemini 3 Flash
+and GPT-5.4 because both intervals contain zero. The data therefore reject a
+single claim that risk either amplifies or separates the rival effect across
+endpoints. These are within-endpoint interactions; cross-endpoint effect sizes
+remain descriptive because decoding contracts differ.
 
 \paragraph{We name the contrast for what it compares.} Calling the safe-rival
 arm exploitation would assert that the route takes the opportunity a

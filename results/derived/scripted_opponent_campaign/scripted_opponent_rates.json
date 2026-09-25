@@ -497,6 +497,14 @@
       }
     }
   },
+  "paired_rival_risk_interaction": {
+    "definition": "(AU minus AS at risk 0.9) minus (AU minus AS at risk 0.1), differenced inside a repetition",
+    "mean_difference": -0.01775793650793651,
+    "ci95_low": -0.07936507936507944,
+    "ci95_high": 0.03749999999999998,
+    "n_blocks": 10,
+    "pairing_verified": true
+  },
   "grid_complete": true,
   "cells_expected": 12,
   "cells_not_collected": []

@@ -313,6 +313,39 @@ def paired_contrast(blocks: dict, left: tuple, right: tuple, rng):
     }
 
 
+def paired_rival_risk_interaction(blocks: dict, low: float, high: float, rng):
+    """Change in the AU-minus-AS contrast from low to high stated risk.
+
+    All four rates are differenced inside the same repetition. Positive values
+    mean that the rival contrast is larger at high risk; negative values mean
+    it is smaller. The shared horizon seed must agree across all four arms.
+    """
+    keys = (("AU", low), ("AS", low), ("AU", high), ("AS", high))
+    if any(key not in blocks for key in keys):
+        return None
+    shared = sorted(set.intersection(*(set(blocks[key]) for key in keys)))
+    if len(shared) < MIN_RACES_FOR_INFERENCE:
+        return None
+    values, seeds_match = [], True
+    for rep in shared:
+        rows = [blocks[key][rep] for key in keys]
+        if len({row["seed"] for row in rows}) != 1:
+            seeds_match = False
+        au_low, as_low, au_high, as_high = (row["rate"] for row in rows)
+        values.append((au_high - as_high) - (au_low - as_low))
+    values = np.asarray(values, dtype=float)
+    draws = rng.integers(0, values.size, size=(N_BOOT, values.size))
+    means = values[draws].mean(axis=1)
+    return {
+        "definition": "(AU minus AS at risk 0.9) minus (AU minus AS at risk 0.1), differenced inside a repetition",
+        "mean_difference": float(values.mean()),
+        "ci95_low": float(np.percentile(means, 2.5)),
+        "ci95_high": float(np.percentile(means, 97.5)),
+        "n_blocks": int(values.size),
+        "pairing_verified": bool(seeds_match),
+    }
+
+
 def ceiling_diagnostic(blocks: dict, strategy: str, low: float, high: float) -> dict:
     """Where the two arms of a risk contrast sit, so its size can be read.
 
@@ -445,6 +478,11 @@ def analyse_route(route: str) -> dict | None:
                     blocks, strategy, low, high)
                 risk_contrasts[strategy][f"risk_{low}_minus_{high}"] = result
 
+    rival_risk_interaction = paired_rival_risk_interaction(
+        blocks, *RISK_CONTRAST_PAIRS[0],
+        cell_rng(*rng_key(route, "rival_risk_interaction", *RISK_CONTRAST_PAIRS[0])),
+    )
+
     # The route the manuscript cites keeps the file it has always written. A
     # later endpoint gets a folder of its own rather than extra rows in that
     # file, because a reader and a verifier both take those twelve rows to be
@@ -465,6 +503,7 @@ def analyse_route(route: str) -> dict | None:
         "rates": table[columns].to_dict(orient="records"),
         "paired_contrasts": {risk: dict(items) for risk, items in contrasts.items()},
         "paired_risk_contrasts": {s: dict(items) for s, items in risk_contrasts.items()},
+        "paired_rival_risk_interaction": rival_risk_interaction,
         # Stated rather than inferred, so a reader of the file never has to
         # count rows to find out whether this endpoint is a grid or a corner
         # of one that collection had reached when the file was written.
@@ -516,6 +555,7 @@ def analyse_route(route: str) -> dict | None:
     print(f"  wrote {out.relative_to(ROOT)}")
     return {"route": route, "table": table, "contrasts": contrasts,
             "risk_contrasts": risk_contrasts, "blocks": blocks,
+            "rival_risk_interaction": rival_risk_interaction,
             "grid_complete": payload["grid_complete"],
             "refused": problems, "missing": missing}
 
@@ -651,7 +691,7 @@ def write_risk_versus_rival(results: list[dict]) -> None:
     headline = f"risk_{RISK_CONTRAST_PAIRS[0][0]}_minus_{RISK_CONTRAST_PAIRS[0][1]}"
     fixed_rival_arms = ("AS", "AU")
 
-    risk_rows, rival_rows = [], []
+    risk_rows, rival_rows, interaction_rows = [], [], []
     for result in complete:
         for strategy in STRATEGIES:
             entry = result["risk_contrasts"].get(strategy, {}).get(headline)
@@ -663,6 +703,9 @@ def write_risk_versus_rival(results: list[dict]) -> None:
             if entry:
                 rival_rows.append({"model_route": result["route"],
                                    "max_private_risk": risk, **entry})
+        interaction = result.get("rival_risk_interaction")
+        if interaction:
+            interaction_rows.append({"model_route": result["route"], **interaction})
 
     # The like-for-like comparison the manuscript sentence needs: the rival
     # contrast runs between Always Safe and Always Unsafe, so the risk side of
@@ -710,6 +753,10 @@ def write_risk_versus_rival(results: list[dict]) -> None:
             "cells": rival_rows,
             "span_pp": span(rival_rows),
         },
+        "rival_by_risk_interaction": {
+            "definition": "change in the Always-Unsafe minus Always-Safe contrast from risk 0.1 to risk 0.9, differenced inside a repetition",
+            "cells": interaction_rows,
+        },
         "separation": {
             "largest_risk_contrast_on_matched_arms_pp":
                 span(matched)["high"] if matched else None,
@@ -744,6 +791,10 @@ def write_risk_versus_rival(results: list[dict]) -> None:
               f"[{100 * row['ci95_low']:+.1f}, {100 * row['ci95_high']:+.1f}]"
               f"   {100 * diag['low_risk_rate']:5.1f}% -> "
               f"{100 * diag['high_risk_rate']:5.1f}%{flag}")
+    for row in interaction_rows:
+        print(f"  {row['model_route']:<34} rival-by-risk interaction "
+              f"{100 * row['mean_difference']:+5.1f} pp "
+              f"[{100 * row['ci95_low']:+.1f}, {100 * row['ci95_high']:+.1f}]")
     if matched and rival_rows:
         tail = (f", and up to {span(conditional)['high']:.1f} against a conditional rival"
                 if conditional else "")

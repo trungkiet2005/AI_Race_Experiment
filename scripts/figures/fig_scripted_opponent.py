@@ -322,7 +322,7 @@ def draw_response_matrix(ax, surface, risk, *, first=False):
         for tick, route in zip(ax.get_yticklabels(), ROUTES):
             tick.set_color(S.ROUTE_C[route])
             tick.set_fontweight("bold")
-        ax.set_ylabel("route", labelpad=2)
+        ax.set_ylabel("endpoint", labelpad=2)
     else:
         ax.tick_params(axis="y", length=0)
     ax.set_xlabel("scripted rival", labelpad=2)
@@ -647,7 +647,7 @@ def draw_policy_dumbbell(ax, policy, risk, *, show_routes=False):
         spine.set_visible(False)
     facet_label(ax, risk)
     if show_routes:
-        ax.set_ylabel("route", labelpad=2)
+        ax.set_ylabel("endpoint", labelpad=2)
 
 
 def draw_context_matrix(ax, safe_arm, selfplay, censored):

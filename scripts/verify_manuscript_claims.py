@@ -1169,6 +1169,41 @@ with section("the stated risk at a fixed rival, against the rival at a fixed ris
           not sc_rvr["scope"]["routes_excluded_as_partial"],
           "the full five-route campaign is in scope")
 
+    sc_interactions = {
+        row["model_route"]: row
+        for row in sc_rvr["rival_by_risk_interaction"]["cells"]
+    }
+    sc_interaction_expectations = {
+        "google/gemini-3-flash-preview": (-1.8, -7.9, 3.7),
+        "anthropic/claude-opus-5@default": (29.2, 20.9, 36.4),
+        "openai/gpt-5.4-2026-03-05": (2.3, -4.6, 9.4),
+        "openai/gpt-5.5-2026-04-23": (36.4, 29.0, 44.0),
+        "anthropic/claude-sonnet-5@default": (-18.9, -25.1, -11.8),
+    }
+    check("the rival-by-risk artifact covers all five routes with verified pairing",
+          set(sc_interactions) == set(SCRIPTED_ROUTES)
+          and all(row["pairing_verified"] and row["n_blocks"] == 10
+                  for row in sc_interactions.values()),
+          f"{len(sc_interactions)} routes, ten matched blocks each")
+    for route, expected in sc_interaction_expectations.items():
+        row = sc_interactions[route]
+        observed = (
+            round(100 * row["mean_difference"], 1),
+            round(100 * row["ci95_low"], 1),
+            round(100 * row["ci95_high"], 1),
+        )
+        check(f"the paired rival-by-risk interaction is {expected[0]:+.1f} pp on {route}",
+              observed == expected,
+              f"{observed[0]:+.1f} [{observed[1]:+.1f}, {observed[2]:+.1f}] pp")
+    check("the rival-by-risk interaction is resolved on three routes and unresolved on two",
+          sum(row["ci95_low"] > 0 or row["ci95_high"] < 0
+              for row in sc_interactions.values()) == 3
+          and sc_interactions["google/gemini-3-flash-preview"]["ci95_low"] < 0
+          < sc_interactions["google/gemini-3-flash-preview"]["ci95_high"]
+          and sc_interactions["openai/gpt-5.4-2026-03-05"]["ci95_low"] < 0
+          < sc_interactions["openai/gpt-5.4-2026-03-05"]["ci95_high"],
+          "positive on Opus 5 and GPT-5.5, negative on Sonnet 5, unresolved on Gemini 3 Flash and GPT-5.4")
+
     sc_rival_span = sc_rvr["rival_contrast"]["span_pp"]
     sc_matched_span = sc_rvr["risk_contrast"]["span_on_matched_arms_pp"]
     sc_cond_span = sc_rvr["risk_contrast"]["span_on_conditional_arms_pp"]

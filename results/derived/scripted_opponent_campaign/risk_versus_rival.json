@@ -632,6 +632,56 @@
       "high": 87.02665390165392
     }
   },
+  "rival_by_risk_interaction": {
+    "definition": "change in the Always-Unsafe minus Always-Safe contrast from risk 0.1 to risk 0.9, differenced inside a repetition",
+    "cells": [
+      {
+        "model_route": "anthropic/claude-opus-5@default",
+        "definition": "(AU minus AS at risk 0.9) minus (AU minus AS at risk 0.1), differenced inside a repetition",
+        "mean_difference": 0.2917421467421467,
+        "ci95_low": 0.20888888888888885,
+        "ci95_high": 0.3637407037407037,
+        "n_blocks": 10,
+        "pairing_verified": true
+      },
+      {
+        "model_route": "anthropic/claude-sonnet-5@default",
+        "definition": "(AU minus AS at risk 0.9) minus (AU minus AS at risk 0.1), differenced inside a repetition",
+        "mean_difference": -0.18850441225441222,
+        "ci95_low": -0.2506061369186369,
+        "ci95_high": -0.11801587301587302,
+        "n_blocks": 10,
+        "pairing_verified": true
+      },
+      {
+        "model_route": "google/gemini-3-flash-preview",
+        "definition": "(AU minus AS at risk 0.9) minus (AU minus AS at risk 0.1), differenced inside a repetition",
+        "mean_difference": -0.01775793650793651,
+        "ci95_low": -0.07936507936507944,
+        "ci95_high": 0.03749999999999998,
+        "n_blocks": 10,
+        "pairing_verified": true
+      },
+      {
+        "model_route": "openai/gpt-5.4-2026-03-05",
+        "definition": "(AU minus AS at risk 0.9) minus (AU minus AS at risk 0.1), differenced inside a repetition",
+        "mean_difference": 0.023035714285714277,
+        "ci95_low": -0.046250000000000034,
+        "ci95_high": 0.09429017857142757,
+        "n_blocks": 10,
+        "pairing_verified": true
+      },
+      {
+        "model_route": "openai/gpt-5.5-2026-04-23",
+        "definition": "(AU minus AS at risk 0.9) minus (AU minus AS at risk 0.1), differenced inside a repetition",
+        "mean_difference": 0.3637808025308025,
+        "ci95_low": 0.2901282051282051,
+        "ci95_high": 0.43959790209790206,
+        "n_blocks": 10,
+        "pairing_verified": true
+      }
+    ]
+  },
   "separation": {
     "largest_risk_contrast_on_matched_arms_pp": 69.85936285936286,
     "smallest_rival_contrast_pp": 25.27346264846265,

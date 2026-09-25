@@ -276,10 +276,10 @@ RC = {
 }
 mpl.rcParams.update(RC)
 
-FS_PANEL = 8.2      # panel letter
-FS_CLAIM = 7.3      # the claim sentence beside the panel letter
-FS_NOTE = 6.2       # in-plot notes, direct labels, counts
-FS_TICK = 6.8
+FS_PANEL = 8.6      # panel letter
+FS_CLAIM = 7.8      # the claim sentence beside the panel letter
+FS_NOTE = 7.0       # in-plot notes, direct labels, counts
+FS_TICK = 7.0
 
 # The floor is on the PRINTED size, which is the drawn size because save fits
 # the canvas.  6.0 pt is the smallest type that survives a 600 dpi raster and a

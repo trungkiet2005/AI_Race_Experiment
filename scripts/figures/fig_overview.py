@@ -329,11 +329,11 @@ def panel_lenses(ax, facts):
     rows = [
         ("how far does the stated danger move it?",
          f"the maximum is set to {levels},\n"
-         f"against a copy of the same model, {facts['routes']} routes\n"
-         f"({facts['rival_routes']} admitted to the main panel)"),
+         f"against a copy of the same model, {facts['routes']} endpoints\n"
+         f"({facts['rival_routes']} included in the main panel)"),
         ("how far does the rival move it?",
          "the rival policy is fixed by code and undisclosed,\n"
-         f"{len(RIVALS)} strategies across {facts['rival_routes']} admitted routes"),
+         f"{len(RIVALS)} strategies across {facts['rival_routes']} included endpoints"),
         ("do people or theory show either shape?",
          f"the same race played by {facts['humans']} people, and the\n"
          "evolutionary benchmark built for it"),

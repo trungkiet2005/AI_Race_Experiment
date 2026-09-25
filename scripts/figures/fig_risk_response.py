@@ -195,7 +195,7 @@ def draw_tiles(ax, table: pd.DataFrame, graded: list[str], worst: float) -> None
     # "never 1.1 points off" says the two administrations are never 1.1 apart,
     # which is the opposite of the finding: 1.1 is the largest gap they reach.
     # Write the bound as a bound.
-    ax.annotate(f"the same route on an\nindependent repeat:\n"
+    ax.annotate(f"the same endpoint on an\nindependent repeat:\n"
                 f"at most {worst:.1f} points apart",
                 xy=(right + 0.20, len(graded) + 1), xytext=(2, 0),
                 textcoords="offset points", ha="left", va="center",
@@ -265,7 +265,7 @@ def main() -> None:
     # The band width is read off the drops rather than typed, because a typed
     # number in a title is the one number in a figure nothing recomputes.
     ax.set_title("Unsafe play never increases with stated risk;\n"
-                 f"four routes decline gradually, one switches",
+                 f"four endpoints decline gradually, one switches",
                  loc="left", pad=17, x=0.0, fontsize=S.FS_CLAIM, color=S.INK_2,
                  linespacing=1.4)
     S.save(fig, "risk_response", width=S.COL)

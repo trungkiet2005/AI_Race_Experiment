@@ -111,6 +111,10 @@ def scan() -> list[dict]:
             continue
         text = source.read_text(encoding="utf-8")
         for match in INCLUDE.finditer(text):
+            if Path(match.group("path")).name == "by":
+                # The AAMAS boilerplate resolves the Creative Commons badge
+                # through the class/TEXINPUTS path, not the paper directory.
+                continue
             before = text[: match.start()]
             # The nearest preceding float opening decides what \linewidth means.
             last_star = before.rfind(r"\begin{figure*}")

@@ -115,8 +115,8 @@ LABEL_TO_ROUTE = {S.ROUTE_LABEL[route]: route for route in S.ROUTE_ORDER}
 # Arial ships no check or ballot glyph, so a tick prints as a hollow box.  A
 # bracketed letter survives the font, greyscale and a photocopier, which is the
 # entire job of a verdict mark.
-VERDICT_MARK = {True: "[A]", False: "[F]"}
-VERDICT_KEY = "[A] admitted    [F] failed the comprehension gate"
+VERDICT_MARK = {True: "[I]", False: "[E]"}
+VERDICT_KEY = "[I] included    [E] excluded by task-validity rule"
 
 HUMAN_C = S.ROUTE_C["human"]
 NULL_FILL = "#d5dade"
@@ -651,7 +651,7 @@ def draw_figure(stem, order, *, marks, null_counts, model_counts, model_pooled,
     ax_b.tick_params(axis="y", length=0, pad=3)
     ax_b.set_xlabel(f"share of {len(human_keys)} matched trajectories (%)", labelpad=2)
     S.strip(ax_b, grid_axis="x")
-    S.panel(ax_b, "b", "routes reuse a small set of paths", pad=5)
+    S.panel(ax_b, "b", "endpoints reuse a small set of paths", pad=5)
 
     # --- c: compact game-theoretic fingerprint of the modal path -------------
     path_rows = [(frame.human_tick, "Human")] + rows
