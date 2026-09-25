@@ -464,6 +464,112 @@ def draw_effect_matrix(ax, stance, risk_stance):
         spine.set_visible(False)
 
 
+def draw_main_effect_surface(ax, stance, interaction):
+    """Show the within-risk rival effects and their risk interaction as tiles.
+
+    The top response matrices establish the shared direction of response. This
+    second surface then makes the paper's narrower claim legible: the size of
+    that response changes differently by endpoint as stated risk rises. A tile
+    is used instead of a connector because the signed interaction is the
+    estimand, not a trajectory. The outline carries its inferential status so
+    a small signed estimate that spans zero cannot look resolved.
+    """
+    from matplotlib.patches import Rectangle
+
+    y_positions = np.arange(len(ROUTES), dtype=float)
+    effect_x = np.arange(len(S.RISKS), dtype=float)
+    interaction_x = 3.65
+    rival_values = np.asarray([
+        [100 * stance[(route, risk)][0] for risk in S.RISKS]
+        for route in ROUTES
+    ])
+    if rival_values.shape != (len(ROUTES), len(S.RISKS)):
+        raise RuntimeError(f"main rival-effect surface has shape {rival_values.shape}")
+    if np.any(~np.isfinite(rival_values)):
+        raise RuntimeError("main rival-effect surface contains a non-finite value")
+
+    expected_routes = set(ROUTES)
+    if set(interaction) != expected_routes:
+        raise RuntimeError("main interaction surface does not cover the admitted routes")
+    interaction_values = np.asarray([
+        100 * interaction[route]["mean_difference"] for route in ROUTES
+    ])
+    if np.any(~np.isfinite(interaction_values)):
+        raise RuntimeError("main interaction surface contains a non-finite value")
+
+    # All 15 fixed-risk AU minus AS intervals must be positive before the
+    # caption says so. The separate interaction tiles are allowed to span zero,
+    # and advertise that fact with their dashed outlines.
+    if any(stance[(route, risk)][1] <= 0 for route in ROUTES for risk in S.RISKS):
+        raise RuntimeError("a fixed-risk rival interval reaches zero")
+
+    _route_rows(ax, y_positions=y_positions)
+    rival_max = float(np.max(rival_values))
+    interaction_max = float(np.max(np.abs(interaction_values)))
+    for row, route in enumerate(ROUTES):
+        for col, value in zip(effect_x, rival_values[row]):
+            _draw_tile(
+                ax, col, row, value,
+                face=_effect_fill(value, colour=S.UNSAFE_C, vmax=rival_max),
+                edge=S.UNSAFE_C, label=f"+{value:.1f}", linewidth=0.9,
+            )
+
+        entry = interaction[route]
+        point = 100 * entry["mean_difference"]
+        low = 100 * entry["ci95_low"]
+        high = 100 * entry["ci95_high"]
+        if not (np.isfinite(point) and np.isfinite(low) and np.isfinite(high)):
+            raise RuntimeError(f"non-finite rival-by-risk interaction for {route}")
+        resolved = low > 0 or high < 0
+        colour = S.UNSAFE_C if point >= 0 else S.BLUE
+        _draw_tile(
+            ax, interaction_x, row, point,
+            face=_effect_fill(point, colour=S.UNSAFE_C, negative_colour=S.BLUE,
+                              vmax=interaction_max),
+            edge=colour if resolved else S.MUTED,
+            label=f"{point:+.1f}", linewidth=1.15 if resolved else 0.9,
+        )
+        if not resolved:
+            # Dashed is intentionally a second channel, not arbitrary
+            # decoration: it is the 95% interval crossing the zero baseline.
+            ax.add_patch(Rectangle(
+                (interaction_x - 0.46, row - 0.41), 0.92, 0.82,
+                fill=False, edgecolor=S.MUTED, linewidth=0.95,
+                linestyle=(0, (2.0, 1.7)), joinstyle="round", zorder=4,
+            ))
+
+    # Framed blocks identify two estimands without adding a line legend. Red
+    # is the Safe-to-Unsafe intervention; blue/red in the final column is the
+    # signed change in that effect across stated risk.
+    ax.add_patch(Rectangle(
+        (-0.48, -0.48), 2.96, len(ROUTES) - 0.04,
+        fill=False, edgecolor=S.UNSAFE_C, linewidth=1.1, zorder=4, clip_on=False,
+    ))
+    ax.add_patch(Rectangle(
+        (interaction_x - 0.48, -0.48), 0.96, len(ROUTES) - 0.04,
+        fill=False, edgecolor=S.INK_2, linewidth=1.1, zorder=4, clip_on=False,
+    ))
+    ax.text(1.0, -0.92, "AU - AS at fixed risk", ha="center", va="center",
+            fontsize=S.FS_NOTE, color=S.UNSAFE_C, fontweight="bold")
+    ax.text(interaction_x, -0.92, "change from risk 0.1 to 0.9", ha="center",
+            va="center", fontsize=S.FS_NOTE, color=S.INK_2, fontweight="bold")
+
+    ax.set_xlim(-0.85, 4.18)
+    ax.set_ylim(len(ROUTES) - 0.48, -1.18)
+    ax.set_xticks([*effect_x, interaction_x])
+    ax.set_xticklabels([f"risk {S.RISK_LABEL[risk]}" for risk in S.RISKS]
+                       + ["paired\ninteraction"], fontsize=S.FS_NOTE)
+    ax.set_yticks(y_positions)
+    ax.set_yticklabels([])
+    ax.set_xlabel(
+        "paired change in Unsafe play (percentage points); dashed outline: interval crosses 0",
+        labelpad=8,
+    )
+    ax.tick_params(axis="both", length=0)
+    for spine in ax.spines.values():
+        spine.set_visible(False)
+
+
 def draw_effect_forest(ax, stance):
     """Show the fifteen paired rival effects with their measured intervals."""
     from matplotlib.lines import Line2D
@@ -529,58 +635,6 @@ def draw_effect_forest(ax, stance):
               handletextpad=0.35, columnspacing=0.9, bbox_to_anchor=(1.0, 1.01))
 
 
-def paired_policy_rows(route_rows: pd.DataFrame, published: dict) -> dict:
-    """Return matched AS/AU route rates and canonical block intervals.
-
-    The two unconditional arms share the repetition seed and sampled horizon.
-    The check is kept here, next to the dumbbell estimand, so a visual change
-    cannot silently turn a paired intervention into two unrelated means. The
-    interval is read from the same derived record used by Supplement Table 11.
-    """
-    result = {}
-    for route in ROUTES:
-        for risk in S.RISKS:
-            block = route_rows[
-                route_rows["route"].eq(route)
-                & route_rows["cell_risk"].eq(risk)
-                & route_rows["strategy"].isin(["AS", "AU"])
-            ]
-            per = block.groupby(["strategy", "rep"]).agg(
-                unsafe=("unsafe", "sum"), decisions=("unsafe", "size"),
-                seed=("game_seed", "first"),
-                horizon=("sampled_total_rounds", "first"),
-            )
-            safe = per.loc["AS"].sort_index()
-            unsafe = per.loc["AU"].sort_index()
-            if list(safe.index) != list(unsafe.index):
-                raise ValueError(f"{route} risk {risk}: AS/AU repetitions are not matched")
-            if not (safe["seed"].eq(unsafe["seed"]).all()
-                    and safe["horizon"].eq(unsafe["horizon"]).all()):
-                raise ValueError(f"{route} risk {risk}: AS/AU seeds or horizons differ")
-            safe_rate = safe["unsafe"] / safe["decisions"]
-            unsafe_rate = unsafe["unsafe"] / unsafe["decisions"]
-            delta = unsafe_rate.to_numpy(float) - safe_rate.to_numpy(float)
-            canonical = published[route]["paired_contrasts"][str(risk)][
-                "rival_unsafe_minus_rival_safe"
-            ]
-            if not canonical["pairing_verified"] or canonical["n_blocks"] != EXPECTED_RACES:
-                raise ValueError(f"{route} risk {risk}: canonical pairing is not verified")
-            if abs(float(delta.mean()) - canonical["mean_difference"]) > 1e-12:
-                raise ValueError(
-                    f"{route} risk {risk}: raw paired mean disagrees with the canonical table"
-                )
-            result[(route, risk)] = {
-                "safe": float(safe_rate.mean()),
-                "unsafe": float(unsafe_rate.mean()),
-                "delta": float(canonical["mean_difference"]),
-                "low": float(canonical["ci95_low"]),
-                "high": float(canonical["ci95_high"]),
-                "safe_blocks": safe_rate.to_numpy(float),
-                "unsafe_blocks": unsafe_rate.to_numpy(float),
-            }
-    return result
-
-
 FACET_PAD = 7.0
 
 
@@ -591,63 +645,6 @@ def facet_label(ax, risk):
                 textcoords="offset points", ha="center", va="bottom",
                 fontsize=S.FS_CLAIM, color=S.INK, fontweight="bold",
                 annotation_clip=False)
-
-
-def draw_policy_dumbbell(ax, policy, risk, *, show_routes=False):
-    """Show the empirical response to changing only the rival policy."""
-    y_positions = np.arange(len(ROUTES) - 1, -1, -1, dtype=float)
-    for y, route in zip(y_positions, ROUTES):
-        entry = policy[(route, risk)]
-        safe_blocks = 100 * entry["safe_blocks"]
-        unsafe_blocks = 100 * entry["unsafe_blocks"]
-        offsets = np.linspace(-0.18, 0.18, len(safe_blocks))
-        for offset, safe_value, unsafe_value in zip(offsets, safe_blocks, unsafe_blocks):
-            ax.plot([safe_value, unsafe_value], [y + offset, y + offset],
-                    color=S.HAIRLINE, linewidth=0.55, alpha=0.72, zorder=1)
-            ax.plot(safe_value, y + offset, marker="o", markersize=2.0,
-                    markerfacecolor=S.SURFACE, markeredgecolor=S.SAFE_C,
-                    markeredgewidth=0.55, alpha=0.72, zorder=2)
-            ax.plot(unsafe_value, y + offset, marker="o", markersize=2.0,
-                    markerfacecolor=S.UNSAFE_C, markeredgecolor=S.UNSAFE_C,
-                    alpha=0.72, zorder=2)
-
-        safe_value = 100 * entry["safe"]
-        unsafe_value = 100 * entry["unsafe"]
-        ax.plot([safe_value, unsafe_value], [y, y], color=S.INK_2,
-                linewidth=1.5, solid_capstyle="round", zorder=3)
-        ax.plot(safe_value, y, marker="o", markersize=5.0,
-                markerfacecolor=S.SURFACE, markeredgecolor=S.SAFE_C,
-                markeredgewidth=1.35, zorder=4)
-        ax.plot(unsafe_value, y, marker="o", markersize=5.0,
-                markerfacecolor=S.UNSAFE_C, markeredgecolor=S.SURFACE,
-                markeredgewidth=0.65, zorder=4)
-        ax.text(103, y, f"Δ {100 * entry['delta']:+.1f}"
-                f" [{100 * entry['low']:+.1f}, {100 * entry['high']:+.1f}]",
-                ha="left", va="center", fontsize=S.FS_NOTE,
-                color=S.INK_2, clip_on=False)
-
-    # The axis opens left of zero so that a route sitting on the floor draws a
-    # whole marker.  Claude Opus 5 answers Safe to a safe rival on every race at
-    # the two higher risks, and at a limit of exactly zero the axis cut its
-    # marker in half and hid the matched blocks behind it entirely.
-    ax.set_xlim(-4, 145)
-    ax.set_ylim(-0.65, len(ROUTES) - 0.35)
-    ax.set_xticks([0, 25, 50, 75, 100])
-    ax.set_xlabel("Unsafe play (%)", labelpad=3)
-    ax.set_yticks(y_positions)
-    ax.set_yticklabels([S.ROUTE_SHORT[route] if show_routes else ""
-                        for route in ROUTES])
-    if show_routes:
-        for tick, route in zip(ax.get_yticklabels(), ROUTES):
-            tick.set_color(S.ROUTE_C[route])
-            tick.set_fontweight("bold")
-    ax.tick_params(axis="y", length=0, pad=3)
-    ax.grid(True, axis="x", color=S.GRID, linewidth=0.5, zorder=0)
-    for spine in ax.spines.values():
-        spine.set_visible(False)
-    facet_label(ax, risk)
-    if show_routes:
-        ax.set_ylabel("endpoint", labelpad=2)
 
 
 def draw_context_matrix(ax, safe_arm, selfplay, censored):
@@ -846,7 +843,17 @@ def main() -> None:
         route: paired_risk_contrast(route_rows, route, "AS", S.RISKS[0], S.RISKS[-1])
         for route in ROUTES
     }
-    policy = paired_policy_rows(route_rows, published)
+    interaction_artifact = json.loads(
+        (DERIVED / "risk_versus_rival.json").read_text(encoding="utf-8"))
+    interaction = {
+        row["model_route"]: row
+        for row in interaction_artifact["rival_by_risk_interaction"]["cells"]
+    }
+    if set(interaction) != set(ROUTES):
+        raise ValueError("the rival-by-risk artifact does not cover the five admitted routes")
+    if any(not entry["pairing_verified"] or entry["n_blocks"] != EXPECTED_RACES
+           for entry in interaction.values()):
+        raise ValueError("the rival-by-risk interaction is not paired on every route")
 
     # The figure is rendered only after every source-data and paired-contrast
     # guard below passes.  That makes the redesign fail closed: no plausible
@@ -951,26 +958,17 @@ def main() -> None:
     )
     S.save(full, "scripted_opponent", width=S.TEXT)
 
-    main_fig = plt.figure(figsize=(S.TEXT, 3.96))
+    main_fig = plt.figure(figsize=(S.TEXT, 3.63))
     main_gs = main_fig.add_gridspec(
-        2, 1, height_ratios=[1.02, 1.58],
+        2, 1, height_ratios=[1.02, 1.24],
         left=0.105, right=0.975, top=0.86, bottom=0.16,
-        hspace=0.88,
+        hspace=0.94,
     )
     response_facets(main_fig, main_gs[0, 0])
-    dumbbells = main_gs[1, 0].subgridspec(1, len(S.RISKS), wspace=0.40)
-    dumbbell_axes = [main_fig.add_subplot(dumbbells[0, i])
-                     for i in range(len(S.RISKS))]
-    for i, (axis, risk) in enumerate(zip(dumbbell_axes, S.RISKS)):
-        draw_policy_dumbbell(axis, policy, risk, show_routes=(i == 0))
-    S.panel(dumbbell_axes[0], "b", "changing only the rival shifts play",
-            pad=FACET_PAD + 11, gap=8.5)
-    main_fig.text(
-        0.50, 0.045,
-        "Faint connectors are the ten matched repetition blocks; bold connectors "
-        "are block means. Labels report AU minus AS with paired 95% intervals.",
-        ha="center", va="bottom", fontsize=S.FS_NOTE, color=S.MUTED,
-    )
+    ax_main_effect = main_fig.add_subplot(main_gs[1, 0])
+    draw_main_effect_surface(ax_main_effect, stance, interaction)
+    S.panel(ax_main_effect, "b", "the rival effect changes shape by endpoint",
+            pad=5, gap=8.5)
     S.save(main_fig, "scripted_opponent_main", width=S.TEXT)
 
 if __name__ == "__main__":
