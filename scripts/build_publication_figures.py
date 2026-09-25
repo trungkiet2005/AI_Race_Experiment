@@ -602,7 +602,14 @@ def build_human_diversity() -> list[Path]:
                    cwd=ROOT, check=True)
     subprocess.run([sys.executable, str(HUMAN_DIVERSITY_SCRIPT)],
                    cwd=ROOT, check=True)
-    return [PAPER / "human_versus_model.pdf", PAPER / "human_versus_model.png"]
+    return [
+        PAPER / "human_versus_model_main.pdf",
+        PAPER / "human_versus_model_main.png",
+        PAPER / "human_versus_model.pdf",
+        PAPER / "human_versus_model.png",
+        PAPER / "human_versus_model_all_routes.pdf",
+        PAPER / "human_versus_model_all_routes.png",
+    ]
 
 
 def main() -> None:

@@ -70,7 +70,7 @@ on Autonomous Agents and Multiagent Systems (AAMAS 2027)}{3--7 May 2027}{Hanoi, 
 %%% In anonymous mode, it will be printed on the first page.
 
 \input{submission_id.tex}
-\acmSubmissionID{\SubmissionID}
+\expandafter\acmSubmissionID\expandafter{\SubmissionID}
 
 \submissionType{Research Paper Track}
 
@@ -494,10 +494,8 @@ reads the admitted against refused split as a measured contrast.
 refused routes carry \texttt{mini}, \texttt{nano} or \texttt{lite} as a whole
 word of their name, and none of the five admitted routes does. On this roster,
 then, the screen draws no line that the route name does not already draw.
-Whether a screen of this kind measures comprehension at all is examined in a
-concurrent submission \citep{anonConcurrentScreen2026}, which also reports how
-its verdicts hold up and how it compares with simpler signals. This supplement
-uses the screen only as the entry condition it is.
+Whether a screen of this kind measures comprehension is outside this paper's
+scope. This supplement uses the screen only as the entry condition it is.
 
 \paragraph{Nothing was discarded.} All nine routes played the same confirmatory
 baseline with the same race counts, and every refused route's behaviour is
@@ -941,6 +939,9 @@ best weak-selection cell is the same in every route, $\beta=0.01$ with fixed
 $\mu=0.05$; the four graded routes are substantially closer to it than to the
 reference $\beta=2$ (Table~\ref{tab:egt-five-route-fit}), while Claude Opus 5
 remains a qualitative near-step exception.
+The restricted two-route block and this extension use distinct observed
+profiles, so the RMSEs for their two overlapping routes are not pooled and need
+not match.
 
 \begin{table}[t]
     \caption{Analysis-only EGT fit across all five admitted routes. ``Reference''
@@ -1367,7 +1368,7 @@ not a model boundary: the analysis never treats account identity as evidence
 about behaviour, and failed quota or authentication attempts contributed no
 races to the admitted set. The complete assignment audit is kept with those
 receipts. The full route-by-risk record is in
-Table~\ref{tab:scripted-opponent} retains the full response and context
+Table~\ref{tab:scripted-opponent}, which retains the full response and context
 contrasts; the main paper's Figure~3 is the only scripted-opponent
 visualization retained in the evidence package.
 
@@ -1624,13 +1625,13 @@ that arm has no room above it. A self-play rate is an interaction outcome of
 one policy meeting a copy of itself, and every self-play number in this paper
 should be read that way.
 
-That self-play can hide behaviour is not a new observation.
+That self-play can mask behaviour is not a new observation.
 \citet{lekeasNashSuppression2026} report phenomena that are, in their words,
 invisible in self-play, including that which agent moves first decides which
 equilibrium a pair reaches. The contribution here is narrower and specific to
-this setting: what self-play hides is the \emph{risk response} itself, the one
-quantity this game exists to elicit, and it hides it on every route we have run
-this design on.
+this setting: self-play can alter or mask the magnitude and shape of the
+\emph{risk response}, the quantity this game exists to elicit. Every route in
+the scripted-rival campaign changes behaviour against at least one fixed rival.
 
 \paragraph{What it does not show.} Five routes, one game, one prompt version,
 ten races per cell. Five commercial endpoints are not a sample of a population
@@ -1858,10 +1859,9 @@ confirmatory baseline and are retained only for exploratory persona analyses.
 \label{app:diversity-pilot}
 
 The diversity comparison in the main paper reads all nine audited routes on the
-confirmatory baseline. The classifier, predictive analysis and two-dimensional
-embedding in this appendix are built on an earlier export of the same
-two-player game covering seven
-checkpoints. That seven-checkpoint roster is used only for these exploratory
+confirmatory baseline. The population classifier and two-dimensional embedding
+in this appendix instead use an earlier seven-checkpoint export of the same
+two-player game. That roster is used only for those exploratory trajectory
 analyses; it does not redefine the nine-route human-diversity roster in the
 main paper. It pools 420 trajectories, 60 per checkpoint, with 340 complete human
 trajectories from the de-identified dataset of
@@ -1951,7 +1951,11 @@ result and its source hashes are released with the analysis code.
 \label{app:predictive-structure}
 
 The preceding section shows that populations produce different action
-patterns. We now ask which recorded parts of the game best predict their next
+patterns. The predictive analysis uses a separate exploratory roster: nine
+checkpoint-specific neutral-lane datasets, with 30 or 60 races per checkpoint,
+plus the human decisions. Table~\ref{tab:feature-importance} lists that roster;
+it is not the seven-checkpoint trajectory sample above. We ask which recorded
+parts of the game best predict their next
 \Unsafe{} choice. This is a study of association, not cause or internal
 reasoning. For each population, we fit a random forest, a model that combines
 many decision trees. Table~\ref{tab:feature-importance} reports the result
@@ -2700,16 +2704,14 @@ identical and 0.5 means two trajectories differ on half their bits on average.
 Sample sizes differ across populations, and both counting statistics rise with
 sample size, so every cell is compared at the same size. The point estimate is
 the mean over draws of 20 trajectories taken without replacement from the
-cell, or the exact cell value where the cell already holds exactly 20. The
-interval is a two-stage cluster bootstrap: clusters are resampled with
-replacement first, and only then is the draw rarefied to 20 inside each
-resample, over 2{,}000 resamples. The cluster is the independent unit of the
-design: a source dyad for the human rows, with singleton complete trajectories
-retained, and a race for the checkpoint rows, because the two seats of a race
-share the same sampled horizon and setback draws and so are not independent of
-each other. The
-$n_{\rm cluster}$ column is that count. The human-side q=0 comparison used for
-the main figure is instead cluster-aware at the dyad level: it samples ten
+cell, or the exact cell value where the cell already holds exactly 20. For the
+participant-level sensitivity in Table~\ref{tab:diversity-rarefaction}, the
+interval resamples human participants and checkpoint races with replacement,
+then rarefies to 20 trajectories inside each of 2{,}000 resamples. A checkpoint
+race remains the cluster because its two seats share the same sampled horizon
+and setback draws. The $n_{\rm cluster}$ column reports participants for the
+human rows and races for the checkpoint rows. The human-side q=0 comparison
+used for the main figure is instead cluster-aware at the dyad level: it samples ten
 complete human dyads, retaining twenty trajectories but ten interaction units.
 Four complete human trajectories have no complete partner in the de-identified
 file and are omitted from that primary dyad null.
@@ -2981,14 +2983,14 @@ from a digest of that cell alone, so collecting one condition cannot move an
 interval already reported for another, and the released analysis code refuses
 to report any risk level that is missing an arm.
 
-Each cell was collected on a different account, again by a plan fixed in
-advance rather than by retrying until something succeeded: $N=2$ on one account,
-$N=3$, $N=4$ and $N=5$ on three others, each cell collected whole so that it
-carries its own race-clustered interval. The identity is a billing boundary
-rather than a model boundary, since the route, prompt, parser, protocol,
-temperature request and seed structure are identical across cells, but it is a
-difference between runs and is recorded per cell in its receipt rather than
-argued away.
+Within each risk level, the four group-size cells were collected on four
+different accounts; the assignment rotates across risk levels so that every
+account collected each group size once. Account is therefore orthogonal to
+group size over the full grid, but a contrast within one risk level still
+combines group size with account-specific execution variance. The repeated
+contrast sizes across independently assigned risk levels reduce but do not
+remove that limitation. Each cell remains whole on one account and carries its
+own race-clustered interval.
 
 \paragraph{The contrast is paired on the horizon.} The game seed is
 $\mathrm{base} + \mathrm{rep}$ and does not depend on the treatment name or on
@@ -3125,7 +3127,7 @@ cells are where the measurement stops being a measurement: those cells
 contained no safe decision at all, so their contrast against the two-player arm
 is bounded by the boundary and not by the endpoint.
 
-The size of the effect is what makes the grid worth having. Going from two
+The size of the contrast is what makes the grid worth having. Going from two
 companies to three adds $11.1$ points at $p_r^{\max}=0.6$ and $11.0$ at $0.9$;
 going to four adds $28.2$ and $28.1$. The two risk conditions were collected on
 different days and different identities, and they agree to a tenth of a point.
@@ -3141,9 +3143,9 @@ own limits. There every cell is at $100\%$, so the group-size contrast is
 exactly zero at every size. The right reading is not that group size stops
 mattering when private risk is low. It is that this route is already at the
 ceiling before any competitor is added, so the design has no room left in which
-an effect could appear. The same route reaches $98.9\%$ and $100.0\%$ \Unsafe{}
-at $p_r^{\max}=0.1$ in the two independent neutral-baseline runs of
-    earlier neutral-baseline runs, collected under a different protocol on a
+the contrast could appear. The same route reaches $98.9\%$ and $100.0\%$ \Unsafe{}
+at $p_r^{\max}=0.1$ in two independent neutral-baseline runs collected under a
+different protocol on a
 different engine, so the ceiling is a property of the route at low risk rather
 than an artifact of this sweep. Read together with the ceiling at
 $p_r^{\max}=0.6$ for five companies, the pattern is that this measurement has
@@ -3154,8 +3156,8 @@ instrument and not about where the mechanism operates.
 everything that comes with it, and no analysis repairs that. The group-count
 rule makes the stage payoff depend on how many companies there are, and the
 state description names each of them, so a larger group is also a different
-payoff and a longer prompt. The estimand is therefore the effect of group size
-\emph{within this game's own definition}. The comparison covers one route and ten
+payoff and a longer prompt. The estimand is therefore a descriptive group-size
+contrast \emph{within this game's own definition}. The comparison covers one route and ten
 races per cell, so it is not a claim about endpoints or about a population of
 models. It is regenerated by the released analysis code, which refuses to
 report a risk level unless all four group sizes are present, refuses a cell with a parse
@@ -3181,9 +3183,8 @@ There the rival is fixed and the route's seat is counterbalanced five and five
 inside every cell, and the gap over its 60 cells, pooled across the five routes
 it covers, is $-0.2$ pp $[-1.9,+1.6]$.
 
-What a seat gap on a refused route says about the screen is a question for the
-concurrent submission \citep{anonConcurrentScreen2026}, and this supplement does
-not argue it. The design protection this paper relies on is the seat
+What a seat gap on a refused route says about the screen is outside this paper's
+scope. The design protection this paper relies on is the seat
 counterbalancing. The usual bounds hold. This is nine endpoints in one game at
 one prompt version, nothing is randomised except the chair, and a route whose
 measured gap is zero is at zero because its two seats agree, not because the
@@ -3395,6 +3396,13 @@ models.
 
 
 \end{comment}
+
+\section*{AI-assisted technology statement}
+Claude Code and OpenAI Codex were used for code assistance, manuscript editing
+and verification. Exact model versions and complete interaction histories were
+not retained. The authors checked the resulting code and prose against the
+archived evidence and take responsibility for the manuscript, analyses,
+citations and released artifacts.
 
 \bibliographystyle{ACM-Reference-Format}
 % \bibliography{sample}

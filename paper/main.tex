@@ -77,7 +77,7 @@ on Autonomous Agents and Multiagent Systems (AAMAS 2027)}{3--7 May 2027}{Hanoi, 
 %%% In anonymous mode, it will be printed on the first page.
 
 \input{submission_id.tex}
-\acmSubmissionID{\SubmissionID}
+\expandafter\acmSubmissionID\expandafter{\SubmissionID}
 
 \submissionType{Research Paper Track}
 
@@ -480,8 +480,9 @@ not predict its behaviour against a different agent is known
 \citep{lekeasNashSuppression2026}, and fixed opponents are
 standard practice in this literature \citep{payneStrategicIntelligence2025};
 what we add is the version that matters for a safety reading, that self-play
-can hide the response to the treatment the study is about, measured against an
-undisclosed rival whose policy is fixed by code. Second, a
+can alter or mask the magnitude and shape of the response to the treatment the
+study is about, measured against an undisclosed rival whose policy is fixed by
+code. Second, a
 population-level comparison with human participants read on first-five-round
 trajectories rather than on aggregate rates, which is what makes the compression
 of observed trajectories visible at all. Third, an auditable race mechanism in which the engine
@@ -647,10 +648,9 @@ The screen reads probes and never reads a race, so gameplay cannot change its
 verdict. Two eligible endpoints pass one screening domain at the minimum attainable
 score. We therefore use the screen only as a task-validity
 inclusion rule, never as a capability axis or a behavioural contrast. The
-supplementary material retains the admission table and all three gate scores;
-whether such a screen measures comprehension at all is the subject of a concurrent
-submission \citep{anonConcurrentScreen2026}; no result below rests on a
-screen score.
+supplementary material retains the admission table and all three gate scores.
+Whether such a screen measures comprehension is outside this paper's scope;
+no result below rests on a screen score.
 
 \section{Results}
 \label{sec:results}
@@ -725,9 +725,10 @@ at this sample size; it licenses no such bound for an endpoint collected once, w
 matters here because no provider confirmed applying the requested sampling seed.
 
 Representation-equivalent prompt changes also move rates. The directional risk
-response survives a fully crossed narrative-by-symbol rerun on two endpoints,
-although swapping the opaque action-code mapping shifts \Unsafe{} play by
-8.3--9.5 percentage points (see the supplementary material).
+response survives a fully crossed narrative-by-symbol rerun on two endpoints.
+Swapping the opaque action-code mapping shifts \Unsafe{} play by 8.3--9.5
+percentage points, while changing the narrative skin shifts it by 3.4 and 10.8
+points on the two routes (see the supplementary material).
 
 
 \begin{figure*}[t]
@@ -929,9 +930,9 @@ because the sign of the high-risk gap depends on it.
 \label{sec:results-diversity}
 
 Twenty people asked to run this race do not behave alike; twenty copies of a
-frontier endpoint very nearly do. Human participants arrive at their average level
-of \Unsafe{} play through many different histories, while each eligible endpoint
-reuses a small set of them, so an endpoint can match the human mean without
+frontier endpoint often reuse far fewer observed paths. Human participants arrive
+at their average level of \Unsafe{} play through many different histories, while
+eligible endpoints generally reuse a smaller set, so an endpoint can match the human mean without
 resembling the human population at all. We measure this on first-five-round
 trajectories. Each player contributes one exact paired trajectory, a ten-bit
 string read within its own risk condition; because the progress increments are
@@ -939,7 +940,7 @@ fixed, that string fully specifies the first-five-round joint-action trajectory.
 The comparison covers all nine endpoints that faced the screen, eligible and
 excluded alike, on the confirmatory baseline, 60
 trajectories per endpoint, against 340 complete human trajectories from the
-de-identified dataset of \citet{falling_behind_unsafe}. That single published
+de-identified dataset of \citet{falling_behind_unsafe}. That single publicly released
 study of a single game is the only human reference here, which bounds every
 human comparison below to that population and that mechanism.
 
@@ -984,31 +985,27 @@ GPT-5.4 mini uses 20, 17 and 17 distinct trajectories out of 20 at
 risks $0.1$, $0.6$ and $0.9$, and GPT-5.4 nano 16, 19 and 16; both land inside
 the participant-level human null at every risk level, and no other endpoint reaches
 it once under that sensitivity. On this measure they are not less diverse than
-people. Under the primary dyad null, GPT-5.4 and GPT-5.5 also meet the finite-draw
-floor at risk $0.9$, so the cluster-aware headline is 13 of 15 eligible cells
-rather than all 15. Because the two exceptions are outside the eligible set
-fixed by the inclusion rule of \S\ref{sec:design-screen} before any race was
-read, they are reported, not interpreted as strategic diversity.
+people. Under the primary dyad null, GPT-5.4 and GPT-5.5 are not below the
+finite-draw floor at risk $0.9$, so the cluster-aware headline is 13 of 15 eligible cells
+rather than all 15. The two participant-sensitivity exceptions are outside the
+eligible set fixed by the inclusion rule of \S\ref{sec:design-screen} before
+any race was read, so they are reported, not interpreted as strategic diversity.
 
 \begin{figure}[!b]
     \centering
-    \includegraphics[width=\columnwidth]{../figures/paper/human_versus_model.pdf}
-    \caption{Human participants occupy a broader observed trajectory space than
-    most eligible endpoint-risk cells under a dyad-clustered null. Panel a compares
-    distinct paired first-five-round trajectories with $20{,}000$ draws of ten
-    complete human dyads; 13 of 15 eligible cells fall below every dyad draw.
-    The participant-level null is a sensitivity analysis and places all 15 below
-    every draw. Panel b sorts the 60
-    matched trajectories by path frequency; panel c shows the modal pooled
-    joint-action path. Each tile is the focal endpoint's action followed by its
-    rival's.}
+    \includegraphics[width=\columnwidth]{../figures/paper/human_versus_model_main.pdf}
+    \caption{Eligible endpoints usually occupy a narrower observed trajectory
+    space than matched human dyad draws. Each marker is the number of distinct
+    paired first-five-round trajectories in one endpoint-risk cell minus the
+    smallest value in $20{,}000$ draws of ten complete human dyads at that risk.
+    Thirteen of fifteen markers are below zero; the other two do not fall below
+    the finite-draw floor. The participant-level sensitivity places all 15 below
+    every draw.}
     \label{fig:diversity}
-    \Description{Panel a shows three facets, one per risk condition, each with a
-    histogram of a human dyad-resampling null and one marker per checkpoint placed
-    on the same axis, with the shaded region marking counts no human dyad draw reached.
-    Panel b shows frequency-sorted composition bars for the 60 matched
-    trajectories. Panel c shows the modal five-round joint-action path for each
-    population as one tile per round.}
+    \Description{A horizontal dot plot with one row per admitted endpoint and
+    three markers per row, one for each risk level. The horizontal coordinate is
+    the endpoint's distinct-trajectory count minus the smallest matched human
+    dyad-draw count. Thirteen markers are below zero and two lie at or above zero.}
 \end{figure}
 
 The same picture holds one level down, on the rates themselves. In the
@@ -1044,11 +1041,11 @@ is that a rate collected in self-play carries the rival inside it, so it cannot
 be quoted as the endpoint's own disposition, and a design that wants the
 disposition has to fix the rival by code and audit the moves that rival actually
 made. The second is that an aggregate rate is not a description of a population
-of agents. Twenty copies of an endpoint reach their average through far fewer
-distinct histories than twenty people do, so two systems can report the same
-headline rate while one of them has effectively one way of playing the game and
-the other has twenty. A safety argument that rests on a matched average is
-therefore resting on the weakest of the available comparisons.
+of agents. In 13 of the 15 eligible endpoint-risk cells, twenty endpoint
+trajectories occupy fewer distinct histories than every matched draw of twenty
+human trajectories. Claude Opus 5 is the limiting case with one trajectory;
+the human draws span many. Two systems can therefore report the same headline
+rate while reaching it through sharply different observed path distributions.
 
 The human experiment is an external behavioural reference, not a target an
 agent should reproduce. Where an endpoint matches a human association, the two
@@ -1061,9 +1058,9 @@ sample from a population of models, and any two of them differ in far more than
 the one property a comparison names, so every contrast drawn between endpoints in
 this paper is descriptive and none of it separates an endpoint's behaviour from its
 provider, its scale or its training. The scripted-rival campaign covers five
-    endpoints and four reduced strategies, which are four points in a space of
+endpoints and four reduced strategies, which are four points in a space of
 policies rather than a sample of rivals. The human comparison rests on one
-published study of one game, 340 complete trajectories, and we do not add a
+publicly released study of one game, 340 complete trajectories, and we do not add a
 second human dataset, because any other dataset would change the game as well
 as the population. And the evolutionary comparison is a reconstruction audited
 against pinned EGTtools source \citep{fernandezDomingos2020Egttools} rather

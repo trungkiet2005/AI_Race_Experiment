@@ -20,6 +20,7 @@ ROOT = Path(__file__).resolve().parents[1]
 PAPER_DIR = ROOT / "paper"
 BUILD_DIR = ROOT / "results" / "_build" / "latex" / "current"
 PDF_NAMES = ("ai_race_paper.pdf", "ai_race_supplementary.pdf")
+SUBMISSION_ID_SOURCE = PAPER_DIR / "submission_id.tex"
 
 
 def run_tool(command: list[str]) -> tuple[int, str]:
@@ -81,16 +82,31 @@ def check_pdf(pdf: Path, *, allow_placeholder_id: bool) -> list[str]:
     return errors
 
 
+def check_submission_id(*, allow_placeholder_id: bool) -> list[str]:
+    if allow_placeholder_id:
+        return []
+    if not SUBMISSION_ID_SOURCE.is_file():
+        relative = SUBMISSION_ID_SOURCE.relative_to(ROOT)
+        return [f"missing submission ID source: {relative}"]
+    text = SUBMISSION_ID_SOURCE.read_text(encoding="utf-8", errors="replace")
+    match = re.search(r"\\newcommand\{\\SubmissionID\}\{([^}]*)\}", text)
+    if match is None or not match.group(1).strip() or match.group(1).strip() == "TBD":
+        return ["anonymous submission ID is unassigned in paper/submission_id.tex"]
+    return []
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "--allow-placeholder-id",
         action="store_true",
-        help="allow the local draft's TBD anonymous submission ID",
+        help="allow the local draft's empty or TBD anonymous submission ID",
     )
     args = parser.parse_args()
 
-    errors: list[str] = []
+    errors: list[str] = check_submission_id(
+        allow_placeholder_id=args.allow_placeholder_id
+    )
     for name in PDF_NAMES:
         errors.extend(
             check_pdf(PAPER_DIR / name, allow_placeholder_id=args.allow_placeholder_id)

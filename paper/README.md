@@ -73,6 +73,7 @@ python scripts/check_publication.py --allow-placeholder-id
 Generated auxiliary files stay under the ignored `results/_build/latex/` tree.
 The build also synchronizes the two paper PDFs to
 `results/artifacts/publication/` for submission and release scripts.
-The QA command permits the local `TBD` submission ID during drafting; remove
-that option for the final anonymous submission check. Set the ID once in
-`submission_id.tex` when AAMAS assigns it.
+The QA command permits an empty local submission ID during drafting; remove that
+option for the final anonymous submission check. Set the ID once in
+`submission_id.tex` when AAMAS assigns it. The empty draft value is not printed
+in the PDFs.

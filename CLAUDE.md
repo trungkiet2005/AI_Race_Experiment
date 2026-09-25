@@ -242,7 +242,7 @@ Do not re-derive either one by hand:
 
 ## Conventions
 
-- Python ≥3.10, `from __future__ import annotations`, dataclasses for records, module docstrings that state *why* a design is the way it is. Comments explain non-obvious protocol reasoning, not mechanics.
+- Python ≥3.11, `from __future__ import annotations`, dataclasses for records, module docstrings that state *why* a design is the way it is. Comments explain non-obvious protocol reasoning, not mechanics.
 - Adding a treatment = a new `ai_race/configs/game/*.json`, not a code change. Adding an experiment = a new `configs/experiment/*.json`.
 - New `TurnRecord`/`GameResult` fields must be reflected in [results/README.md](results/README.md)'s schema section and in the analyser's validation, or completed runs will fail their audit.
 - Some docs under `kaggle/` are written in Vietnamese; match the language of the file you are editing.

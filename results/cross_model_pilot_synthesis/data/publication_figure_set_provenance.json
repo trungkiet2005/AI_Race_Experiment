@@ -116,8 +116,12 @@
       "figures\\paper\\llm_human_clustering\\02_archetype_signatures_and_coverage.svg"
     ],
     "figure_5_diversity": [
+      "figures\\paper\\human_versus_model_main.pdf",
+      "figures\\paper\\human_versus_model_main.png",
       "figures\\paper\\human_versus_model.pdf",
-      "figures\\paper\\human_versus_model.png"
+      "figures\\paper\\human_versus_model.png",
+      "figures\\paper\\human_versus_model_all_routes.pdf",
+      "figures\\paper\\human_versus_model_all_routes.png"
     ],
     "figure_6_tsne": [
       "figures\\paper\\llm_human_clustering\\01_tsne_hero_human_left.pdf",
@@ -189,7 +193,7 @@
     "supplement_figure_5_tsne_outcome": "generated",
     "supplement_figure_6_round_profiles": "generated"
   },
-  "generated_utc": "2026-09-25T09:44:26.360733+00:00",
+  "generated_utc": "2026-09-25T10:59:56.368119+00:00",
   "generator": "scripts/build_publication_figures.py",
   "manual_figure_origin": {
     "commit": "f0dde0d",
@@ -208,7 +212,7 @@
     "results\\derived\\trajectory_diversity_dyad_primary\\trajectory_diversity_dyad_primary.json": "11b24ae494f65dc34a03f7332bdd7814aa3c8775c6cc9d3dbec12aa3662a0d39",
     "results\\frontier\\egt_frontier_comparison_v2\\theory_llm_comparison.csv": "57cf703229df95e28cb51a8db95e902de895fb0801e3efb2d0ec7785bb416d78",
     "scripts\\analyze_trajectory_diversity_dyad.py": "f52a67c4f693c5162ea606eaae2dd87e12bd1064c911d92a95b733ec79b59022",
-    "scripts\\figures\\fig_human_versus_model.py": "8632e5682bac46c002a0771efdc15ea1cd165948438ddbfaa1512e2e427fa02f",
+    "scripts\\figures\\fig_human_versus_model.py": "ad7f0a69a3405d6ced5d28cb77e93141c6abbfb0bbe75b6ae88a7b1a666a61ca",
     "scripts\\figures\\fig_overview.py": "12b0087cf378036ec7dd8979bde0747234e93e210c4f563aeacdb1b88149c07a",
     "scripts\\figures\\fig_scripted_opponent.py": "492d965a89d1aa213029ee032ecc34f1671add7f5826b6a6b6a7081394547a46"
   },

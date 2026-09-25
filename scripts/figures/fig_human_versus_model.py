@@ -493,9 +493,14 @@ def main() -> None:
     # are named on the screened figure as the only ones in the study that get
     # there, which is the honest version of the sentence and the one a reviewer
     # has to see.  The supplement then draws all nine.
+    admitted_order = [label for label in order_all
+                      if LABEL_TO_ROUTE[label] in S.ADMITTED]
+    draw_main_gap_figure(
+        "human_versus_model_main", admitted_order,
+        null_counts=null_counts, model_counts=model_counts,
+    )
     draw_figure("human_versus_model",
-                [label for label in order_all
-                 if LABEL_TO_ROUTE[label] in S.ADMITTED],
+                admitted_order,
                 marks=False, **shared)
     draw_figure("human_versus_model_all_routes", order_all, marks=True, **shared)
 
@@ -505,6 +510,63 @@ def population_label(label: str, *, marks: bool) -> str:
         return "Humans"
     short = identity(label)[2]
     return f"{short} {VERDICT_MARK[identity(label)[3]]}" if marks else short
+
+
+def draw_main_gap_figure(stem, order, *, null_counts, model_counts):
+    """Draw the main-text estimand at native one-column size."""
+    floors = null_counts.min(axis=0)
+    gaps = {
+        label: [model_counts[label][i] - int(floors[i])
+                for i in range(len(S.RISKS))]
+        for label in order
+    }
+    values = [value for row in gaps.values() for value in row]
+    if sum(value < 0 for value in values) != 13 or len(values) != 15:
+        raise RuntimeError(
+            "main diversity gap figure no longer has the reported 13/15 cells"
+        )
+
+    fig, ax = plt.subplots(figsize=(S.COL, 2.45))
+    y_base = np.arange(len(order), dtype=float)[::-1]
+    risk_styles = {
+        0.1: (S.SLATE_2, "o", 0.18),
+        0.6: (S.BLUE, "s", 0.00),
+        0.9: (S.ROSE, "D", -0.18),
+    }
+
+    ax.axvspan(-15.0, 0.0, color=FORBIDDEN, lw=0, zorder=0)
+    ax.axvline(0.0, color=S.UNSAFE_C, lw=0.9, ls=(0, (3, 2)), zorder=2)
+    for y in y_base:
+        ax.axhline(y, color=S.GRID, lw=0.45, zorder=1)
+
+    for i, risk in enumerate(S.RISKS):
+        colour, marker, offset = risk_styles[risk]
+        xs = [gaps[label][i] for label in order]
+        ys = y_base + offset
+        for x, y in zip(xs, ys):
+            ax.plot([x, 0.0], [y, y], color=colour, lw=0.55, alpha=0.45,
+                    zorder=2)
+        ax.scatter(xs, ys, s=23, marker=marker, color=colour,
+                   edgecolors=S.SURFACE, linewidths=0.65, zorder=4,
+                   label=fr"$p_r^{{\max}}={S.RISK_LABEL[risk]}$")
+
+    ax.set_xlim(-15.0, 1.8)
+    ax.set_xticks([-15, -10, -5, 0, 1])
+    ax.set_ylim(-0.55, len(order) - 0.45)
+    ax.set_yticks(y_base, [identity(label)[2] for label in order])
+    ax.set_xlabel("endpoint distinct paths minus smallest human draw", labelpad=3)
+    ax.set_title("13 of 15 cells fall below every matched human draw",
+                 loc="left", pad=25, fontsize=S.FS_CLAIM, color=S.INK_2)
+    ax.annotate("finite-draw floor", xy=(0.0, 1.0),
+                xycoords=("data", "axes fraction"), xytext=(-2, -4),
+                textcoords="offset points", ha="right", va="top",
+                fontsize=S.FS_NOTE, color=S.UNSAFE_C)
+    ax.legend(loc="lower left", bbox_to_anchor=(0.0, 1.02), ncol=3,
+              frameon=False, fontsize=S.FS_NOTE, handletextpad=0.25,
+              columnspacing=0.7, borderaxespad=0.0)
+    ax.tick_params(axis="y", length=0, pad=3)
+    S.strip(ax, grid_axis="x")
+    S.save(fig, stem, width=S.COL)
 
 
 def draw_figure(stem, order, *, marks, null_counts, model_counts, model_pooled,

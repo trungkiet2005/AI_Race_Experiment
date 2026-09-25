@@ -441,7 +441,7 @@ with the final version.
 
 ## Quick check
 
-Python {python} was used to build and test this archive (any Python 3.10 or
+Python {python} was used to build and test this archive (any Python 3.11 or
 later with the pinned packages should work).
 
 ```
@@ -542,7 +542,8 @@ give identical arrays; the build of this archive checks that.
   characters (`PATH_MAP.tsv` maps each moved file to its original location).
   The checker finds these files through recursive patterns, so the move changes
   nothing it reads.
-* `SHA256SUMS.txt` lists every file in the archive.
+* `SHA256SUMS.txt` lists every other file in the archive; as usual, the checksum
+  manifest does not list itself.
 """
 
 

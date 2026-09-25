@@ -33,6 +33,7 @@ if __package__ in (None, ""):  # run as a script, so the sibling module is a pla
     sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 import anonymity_scan
+import check_publication
 
 ROOT = Path(__file__).resolve().parents[1]
 PAPER_DIR = ROOT / "paper"
@@ -54,7 +55,22 @@ def main() -> int:
         action="store_true",
         help="zip the existing results/_build/code_snapshot instead of rebuilding it",
     )
+    parser.add_argument(
+        "--allow-placeholder-id",
+        action="store_true",
+        help="allow an empty or TBD submission ID while preparing a pre-registration bundle",
+    )
     args = parser.parse_args()
+
+    id_errors = check_publication.check_submission_id(
+        allow_placeholder_id=args.allow_placeholder_id
+    )
+    if id_errors:
+        raise SystemExit(
+            "; ".join(id_errors)
+            + ". Register the abstract, set paper/submission_id.tex, rebuild the PDFs, "
+            "and run this command again."
+        )
 
     paper = PAPER_DIR / "ai_race_paper.pdf"
     supp = PAPER_DIR / "ai_race_supplementary.pdf"
