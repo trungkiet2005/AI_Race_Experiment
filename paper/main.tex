@@ -366,22 +366,30 @@ the observed rate may therefore reflect two adapting copies rather than a stable
 property of either one. This matters for language models used in strategic
 settings, where responses to an opponent can be exactly what the evaluation is
 trying to distinguish from responses to risk
-\citep{herrStrategicBias2024,playing_repeated_games_with_llms}.
+\citep{lekeasNashSuppression2026,herrStrategicBias2024,playing_repeated_games_with_llms}.
 
 We study this identification problem in an idealised race over AI development. Each
 round, two agents choose between slower \Safe{} development and faster
 \Unsafe{} development; \Unsafe{} creates a delayed chance that the winner loses
 its payoff. The game represents a controlled speed--safety dilemma rather than a
 real company in full \citep{ai_race_for_strategic_advantage,racing_to_the_precipice}.
-Related formal models study the same race structure
-\citep{to_regulate_or_not,artificial_intelligence_development_races}.
+A broader AI-race literature models bidding incentives, heterogeneous actors,
+regulation and voluntary safety commitments
+\citep{han2019modelling,to_regulate_or_not,artificial_intelligence_development_races,han2022voluntary};
+scenario games likewise identify coordination as central to race outcomes
+\citep{gruetzemacher2025strategic}.
 Its value is experimental: stated danger, rival policy and progress can be held
 fixed separately. We reproduce the two-player mechanism of
 \citet{falling_behind_unsafe}. One hosted model at one fixed configuration is an
 \emph{endpoint}; model families can differ across dated versions and provider
 settings.
 
-Prior work already shows that self-play need not predict cross-play
+LLM behavioural research now spans cognitive benchmarks and repeated
+matrix games \citep{codaFornoCogBench2024,playing_repeated_games_with_llms},
+reproducible testbeds with language and payoff interventions
+\citep{buscemiFAIRGAME2025,huynhUnderstanding2025,huynhPayoffScaling2026}, and
+multi-agent common-resource societies \citep{piattiGovSim2024}. Outcomes can
+change sharply when the interaction partners change
 \citep{lekeasNashSuppression2026}, and fixed opponents are established in LLM
 game experiments \citep{playing_repeated_games_with_llms,payneStrategicIntelligence2025}.
 Our question is narrower: \emph{does replacing the mirror opponent with a fixed,
@@ -393,7 +401,9 @@ Two checks protect this inference. First, a valid action format does not prove
 that an endpoint tracked state, arithmetic or terminal scoring. We use a frozen
 operational inclusion rule and let the game engine, rather than generated text,
 resolve every transition. Second, even equivalent prompt renderings can change
-model output. Formatting and answer order matter
+model output in strategic games
+\citep{robinsonBurdenFraming2025,mousaviDavoudiEtAl2026}. More generally,
+formatting and answer order matter
 \citep{sclarPromptFormatting2024,pezeshkpourOptionOrder2024,weiSelectionBias2024},
 as do small prompt and persona changes
 \citep{salinasButterfly2024,zhengPersona2024,herrStrategicBias2024}.
@@ -413,9 +423,11 @@ curve, not merely shift its level.
 This is the paper's core contribution: a matched, replay-audited demonstration
 that a self-play risk response in this game is an opponent-conditioned outcome.
 The human and evolutionary analyses are supporting checks, not separate novelty
-claims. The former compares first-five-round trajectories because human players
-can reach the same average through different paths
-\citep{falling_behind_unsafe,synthetic_replacement_human}; the latter asks whether
+claims. Human-proxy studies report both aggregate fidelity and distributional
+or behavioural distortions
+\citep{using_llm_to_simulate,out_of_one,synthetic_replacement_human}. We therefore
+test whether aggregate agreement hides distributional mismatch, using the source
+study's first-five-round trajectories \citep{falling_behind_unsafe}; the latter asks whether
 the observed curve depends on the evolutionary selection regime used as a
 reference. An exploratory group-size study remains in the supplementary material
 because it covers one endpoint and cannot identify a pure group-size effect.
@@ -855,7 +867,7 @@ and 15.4 of Gemini 3 Flash in root-mean-square error.
 
 The weak-selection cell was not selected solely to fit these endpoints:
 $\beta=0.01$ and $\mu=0.05$ are also the values the source study reports as its
-own best fit to human play. The interpretation stays bounded. A stationary distribution
+own best fit to human play \citep{falling_behind_unsafe}. The interpretation stays bounded. A stationary distribution
 describes strategy frequencies in a population under selection and mutation,
 while our measurements are prompted decisions in self-play; the agreement in
 shape says the graded risk response is consistent with weak selection and
@@ -907,7 +919,8 @@ participant-level table records effective counts of 18.9, 19.7 and 19.3 and
 mean pairwise distances of 0.47, 0.50 and 0.50. Panel b sorts the observed paths
 by frequency and panel c displays the modal five-round joint-action sequence.
 The same cells support two numerical checks reported in the supplement: Hill
-$q{=}1$ counts effective trajectories and mean pairwise Hamming distance measures
+$q{=}1$ counts effective trajectories \citep{hillDiversity1973}, and mean pairwise
+Hamming distance measures
 separation of their ten action bits. Under that complementary Hill $q{=}1$
 analysis, every eligible endpoint sits entirely below the human interval at every
 risk level.
