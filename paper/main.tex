@@ -954,12 +954,41 @@ reveals three different interactions: the rival effect grows with risk on two
 endpoints, shrinks on one and is unresolved on two. The self-play curve is
 therefore not an endpoint-only risk profile.
 
-Two measurement rules follow. To estimate how behaviour depends on the opponent,
-fix the rival by code and audit every move. To describe heterogeneity, report paths
-as well as aggregate rates. In 13 of 15 eligible cells, repeated samples from one
-endpoint occupy fewer distinct histories than every matched draw of different
-human participants. Claude Opus 5 is the limiting case, with one trajectory in
-each condition.
+Taken together, the mirror-match and scripted-rival results show why a
+self-play rate is not a stable trait of an endpoint. In self-play, the endpoint
+supplies both sides of the interaction: its early actions help create the
+history to which its later actions respond. The scripted campaign instead
+fixes the rival's mapping from history to action and makes every rival move
+auditable. Every Always-Unsafe minus Always-Safe contrast is positive, yet its
+interaction with stated risk grows on two endpoints, shrinks on one and remains
+unresolved on two. The directional response to risk survives, but its magnitude
+and shape cannot be separated from the opponent that generates the history.
+
+The opponent component can be as large as the stated-risk component. Against
+the fixed Always-Safe rival, moving maximum private risk from $0.1$ to $0.9$
+reduces \Unsafe{} play by 10.4 to 69.9 percentage points across the five tested
+endpoints. At fixed risk, replacing Always Safe with Always Unsafe raises it by
+25.3 to 87.0 points across the fifteen endpoint-by-risk cells. These spans
+overlap, so the data do not support a universal claim that either factor is
+larger. Both are paired within-endpoint contrasts that remove the shared
+horizon draw. Their magnitudes across endpoints remain descriptive because
+endpoint contracts differ. The sharper conclusion is that neither factor can
+be interpreted without holding the other fixed.
+
+This distinction changes what a strategic-agent evaluation should report. A
+mirror match establishes what one policy does when coupled to a copy of itself;
+it cannot identify a context-independent willingness to take risk. A more
+informative unit is an endpoint response surface across declared rival policies
+and risk conditions, with seat and horizon controlled inside matched blocks.
+Presentation also remains part of that surface because both the action-code
+mapping and narrative skin moved rates in the crossed reruns. The result does
+not justify a universal ranking of endpoints. It supports an auditable design
+in which the source of each contrast is known.
+
+Trajectory concentration exposes a second failure of aggregate evaluation. In
+13 of 15 eligible cells, repeated samples from one endpoint occupy fewer
+distinct histories than every matched draw of different human participants.
+Claude Opus 5 is the limiting case, with one trajectory in each condition.
 
 The human experiment is an external behavioural reference, not a target an
 agent should reproduce. Where an endpoint matches a human association, the two
@@ -967,27 +996,79 @@ populations behave similarly on that one measured aspect of this task; it
 does not follow that they share a mechanism, and a mismatch does not
 invalidate the human result.
 
+The human-side reconstruction was checked before that comparison. Refitting
+the source study's published dynamic specification on its de-identified data
+reproduces all four reported coefficients, with a largest absolute difference
+of 0.002. This check protects the trajectory comparison from a processing
+error in our reconstruction. It does not make the human sample representative
+of other populations or games, which is why the comparison remains a bounded
+behavioural reference.
+
+Opponent context may extend beyond policy to the number of competitors. In an
+exploratory matched extension on Gemini 3 Flash, moving from two to three
+companies raises \Unsafe{} play by about 11 points at both medium and high risk;
+four companies raise it by about 28 points. With five companies, the high-risk
+contrast reaches 40 points. All six contrasts at medium and high risk exclude
+zero, while every low-risk condition is already at the ceiling. This result does
+not identify a pure group-size effect because adding companies also changes the
+stage payoffs and lengthens the state description. It covers one endpoint, so it
+is evidence that the two-company case sits inside a wider interaction design,
+not evidence for a general scaling law.
+
+The evidence suggests a minimum reporting package for strategic agents. A
+task-validity screen checks whether the endpoint can follow the game. Self-play
+then describes the outcome
+between two copies, while a declared fixed-policy panel separates risk from the
+opponent that creates the history. Whole-path measures reveal concentration
+that an average action rate hides, and crossed presentation controls show
+whether the response survives equivalent renderings. Together these checks
+identify what changed, what was held fixed and how far the claim can travel.
+
 The scope is deliberately narrow. Nine commercial endpoints are not a model
 population, cross-endpoint contracts differ, and the scripted campaign covers
 five endpoints against four chosen policies. The human reference is one dataset
 from this game, while the evolutionary reference is a reconstruction checked
 against pinned EGTtools source \citep{fernandezDomingos2020Egttools}, not a fit of
-the endpoints. Presentation controls cover two endpoints, the group-size study
+the endpoints. One Claude Opus 5 scripted-rival cell used an earlier decoding
+contract. Removing that cell leaves all fourteen remaining rival contrasts
+positive and preserves the ordered policy pattern in thirteen of fourteen, so
+the headline does not depend on it; this scope check is not a harmonised
+replication. Presentation controls cover two endpoints, the group-size study
 covers one, and provider-side temperature and seed handling were not confirmed.
 Finally, the game omits collective harm, regulation, communication and uncertainty
 about real capabilities. These limits rule out claims about general model safety,
 intent or real organisations.
 
-The next discriminating tests are clear: repeat the matched rival-by-risk design
-at larger sample size, include adaptive rivals with declared policies, and apply
-the same trajectory measure in a second game. Those tests would show which
-interactions persist beyond this prompt, endpoint roster and mechanism.
+The evaluation target must therefore name the opponent distribution. Self-play
+estimates the outcome produced by two copies of one policy. A fixed rival
+estimates a response conditional on that declared policy, while a mixed pool
+would estimate outcomes under its own population composition. These quantities
+answer different questions and are not interchangeable. Calling a mirror-match
+rate an endpoint preference silently replaces the first target with the second.
+Our results show why that matters: the same stated danger produces different
+rates under different rivals, and similar aggregate rates can conceal strong
+trajectory concentration.
+
+Boundary behaviour also determines where another sample is useful. A cell at
+the ceiling or floor provides a directional bound, but it cannot locate the
+transition beyond that boundary. A denser risk grid around the observed switches
+and rival policies that avoid saturation would therefore be more informative
+than repeating cells with no room to move. This is especially important for the
+threshold-like endpoint and for the low-risk group-size cells.
+
+The next discriminating tests should widen one boundary at a time. Larger
+matched samples would sharpen the two unresolved rival-by-risk interactions.
+Adaptive rivals with declared policies would test whether the same patterns
+survive when the opponent changes its response online, while a sampled policy
+set would support inference beyond four chosen rivals. Repeating the matched
+design and trajectory measure in a second game, across multiple equivalent
+renderings, would separate a stable interaction pattern from a feature of this
+prompt and mechanism.
 
 Code, the de-identified run records and a checker that recomputes every
 reported quantity from them are provided with the supplementary material and
-will be released publicly with the final version.
-
-The main lesson is simple: self-play rates are interaction outcomes. Evaluations
+will be released publicly with the final version. Self-play rates are
+interaction outcomes. Evaluations
 of strategic agents should vary the opponent and compare whole trajectories, not
 only aggregate choices.
 
