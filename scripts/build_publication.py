@@ -73,6 +73,7 @@ def build_figures() -> None:
     """Regenerate the canonical manuscript figures before LaTeX compilation."""
 
     run([sys.executable, str(ROOT / "scripts" / "build_publication_figures.py")], cwd=ROOT)
+    run([sys.executable, str(ROOT / "scripts" / "build_figure_gallery.py")], cwd=ROOT)
 
 
 def build_paper() -> Path:
@@ -132,52 +133,54 @@ def strip_metadata(pdf: Path) -> int:
     except ImportError as exc:
         raise SystemExit("pypdf is required to strip PDF metadata: pip install pypdf") from exc
 
-    reader = PdfReader(str(pdf))
-    writer = PdfWriter(clone_from=reader)
-    writer.pdf_header = reader.pdf_header
-    title = (reader.metadata or {}).get("/Title")
-    writer.metadata = None
-    if title:
-        writer.add_metadata({"/Title": title})
-    for key in ("/Metadata", "/PieceInfo"):
-        if key in writer.root_object:
-            del writer.root_object[key]
-
-    seen: set[int] = set()
-    removed = 0
-
-    def walk(resources) -> None:
-        nonlocal removed
-        if resources is None:
-            return
-        xobjects = resources.get_object().get("/XObject")
-        if xobjects is None:
-            return
-        for ref in xobjects.get_object().values():
-            if isinstance(ref, IndirectObject):
-                if ref.idnum in seen:
-                    continue
-                seen.add(ref.idnum)
-            obj = ref.get_object()
-            if obj.get("/Subtype") != "/Form":
-                continue
-            for key in _PRIVATE_KEYS:
-                if key in obj:
-                    del obj[key]
-                    removed += 1
-            walk(obj.get("/Resources"))
-
-    for page in writer.pages:
-        for key in ("/Metadata", "/PieceInfo"):
-            if key in page:
-                del page[key]
-        walk(page.get("/Resources"))
-    # Deleting a reference leaves the dictionary it pointed to in the object
-    # table; without this the Canva identifiers would still be in the bytes.
-    writer.compress_identical_objects(remove_duplicates=False, remove_unreferenced=True)
     tmp = pdf.with_suffix(".stripped.pdf")
-    with tmp.open("wb") as handle:
-        writer.write(handle)
+    with pdf.open("rb") as source_handle:
+        reader = PdfReader(source_handle)
+        writer = PdfWriter(clone_from=reader)
+        writer.pdf_header = reader.pdf_header
+        title = (reader.metadata or {}).get("/Title")
+        writer.metadata = None
+        if title:
+            writer.add_metadata({"/Title": title})
+        for key in ("/Metadata", "/PieceInfo"):
+            if key in writer.root_object:
+                del writer.root_object[key]
+
+        seen: set[int] = set()
+        removed = 0
+
+        def walk(resources) -> None:
+            nonlocal removed
+            if resources is None:
+                return
+            xobjects = resources.get_object().get("/XObject")
+            if xobjects is None:
+                return
+            for ref in xobjects.get_object().values():
+                if isinstance(ref, IndirectObject):
+                    if ref.idnum in seen:
+                        continue
+                    seen.add(ref.idnum)
+                obj = ref.get_object()
+                if obj.get("/Subtype") != "/Form":
+                    continue
+                for key in _PRIVATE_KEYS:
+                    if key in obj:
+                        del obj[key]
+                        removed += 1
+                walk(obj.get("/Resources"))
+
+        for page in writer.pages:
+            for key in ("/Metadata", "/PieceInfo"):
+                if key in page:
+                    del page[key]
+            walk(page.get("/Resources"))
+        # Deleting a reference leaves the dictionary it pointed to in the object
+        # table; without this the Canva identifiers would still be in the bytes.
+        writer.compress_identical_objects(remove_duplicates=False, remove_unreferenced=True)
+        with tmp.open("wb") as target_handle:
+            writer.write(target_handle)
+    # The source handle must be closed before replacing the file on Windows.
     os.replace(tmp, pdf)
 
     leftover = PdfReader(str(pdf)).metadata or {}

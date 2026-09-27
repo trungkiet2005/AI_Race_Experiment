@@ -103,6 +103,7 @@ def configure_publication_style() -> None:
             "pdf.fonttype": 42,
             "ps.fonttype": 42,
             "svg.fonttype": "none",
+            "svg.hashsalt": "ai-race-publication-v1",
             "axes.axisbelow": True,
             "savefig.pad_inches": 0.0,
         }
@@ -189,8 +190,17 @@ def save_publication_figure(
         if fmt == "pdf":
             kwargs["metadata"] = {
                 "Title": stem.stem,
-                "Creator": "AI Race publication figure generator",
+                "Author": "",
+                "Creator": "",
                 "Subject": "AI Race empirical research figure",
+                "CreationDate": None,
+                "ModDate": None,
+            }
+        if fmt == "svg":
+            kwargs["metadata"] = {
+                "Title": stem.stem,
+                "Creator": "",
+                "Date": None,
             }
         fig.savefig(path, **kwargs)
         _strip_svg_whitespace(path)

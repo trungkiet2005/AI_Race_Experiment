@@ -193,7 +193,7 @@
     "supplement_figure_5_tsne_outcome": "generated",
     "supplement_figure_6_round_profiles": "generated"
   },
-  "generated_utc": "2026-09-25T12:12:51.586093+00:00",
+  "generated_utc": "2026-09-27T04:06:03.736629+00:00",
   "generator": "scripts/build_publication_figures.py",
   "manual_figure_origin": {
     "commit": "f0dde0d",
@@ -214,7 +214,7 @@
     "scripts\\analyze_trajectory_diversity_dyad.py": "f52a67c4f693c5162ea606eaae2dd87e12bd1064c911d92a95b733ec79b59022",
     "scripts\\figures\\fig_human_versus_model.py": "ec709b5a8a3457a0e8e907b3b44e9f049d536a820bfc20c731fca70ad9618852",
     "scripts\\figures\\fig_overview.py": "8f5ed14befca4d7540dae1600bf1b9b9b59cb0aa9658ee33256611b07293a0c4",
-    "scripts\\figures\\fig_scripted_opponent.py": "9096b0503fb00fe1fcea2d32b1a4317a3a8190b5ff471115250ac1bb3b140ead"
+    "scripts\\figures\\fig_scripted_opponent.py": "19fcf6825fda9d0411dfb900f38c030cad91555d369afa0bb7608923956e60f8"
   },
   "style_module": "scripts/publication_style.py"
 }

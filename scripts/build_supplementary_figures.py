@@ -666,7 +666,6 @@ def build_supplementary_figures(frame: pd.DataFrame | None = None) -> dict[str, 
     provenance = {
         "generator": "scripts/build_supplementary_figures.py",
         "style_module": "scripts/publication_style.py",
-        "generated_utc": pd.Timestamp.utcnow().isoformat(),
         "figure_outputs": {key: [str(path.relative_to(ROOT)) for path in paths]
                            for key, paths in outputs.items()},
         "source_sha256": {str(path.relative_to(ROOT)): _sha256(path) for path in source_paths},
@@ -680,6 +679,15 @@ def build_supplementary_figures(frame: pd.DataFrame | None = None) -> dict[str, 
         },
     }
     out = DATA / "supplementary_figure_set_provenance.json"
+    generated_utc = pd.Timestamp.utcnow().isoformat()
+    if out.is_file():
+        previous = json.loads(out.read_text(encoding="utf-8"))
+        previous_without_time = {
+            key: value for key, value in previous.items() if key != "generated_utc"
+        }
+        if previous_without_time == provenance:
+            generated_utc = previous.get("generated_utc", generated_utc)
+    provenance["generated_utc"] = generated_utc
     out.write_text(json.dumps(provenance, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     return outputs
 

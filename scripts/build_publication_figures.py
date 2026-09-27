@@ -642,7 +642,6 @@ def main() -> None:
     provenance = {
         "generator": "scripts/build_publication_figures.py",
         "style_module": "scripts/publication_style.py",
-        "generated_utc": pd.Timestamp.utcnow().isoformat(),
         "figure_outputs": {
             key: [str(path.relative_to(ROOT)) for path in paths] for key, paths in outputs.items()
         },
@@ -682,6 +681,15 @@ def main() -> None:
     }
     out = DATA / "publication_figure_set_provenance.json"
     out.parent.mkdir(parents=True, exist_ok=True)
+    generated_utc = pd.Timestamp.utcnow().isoformat()
+    if out.is_file():
+        previous = json.loads(out.read_text(encoding="utf-8"))
+        previous_without_time = {
+            key: value for key, value in previous.items() if key != "generated_utc"
+        }
+        if previous_without_time == provenance:
+            generated_utc = previous.get("generated_utc", generated_utc)
+    provenance["generated_utc"] = generated_utc
     out.write_text(json.dumps(provenance, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     print(json.dumps({"figures": len(outputs), "trajectories": len(frame), "provenance": str(out)}, indent=2))
 

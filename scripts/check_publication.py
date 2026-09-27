@@ -15,6 +15,8 @@ import subprocess
 import sys
 from pathlib import Path
 
+import anonymity_scan
+
 
 ROOT = Path(__file__).resolve().parents[1]
 PAPER_DIR = ROOT / "paper"
@@ -43,6 +45,19 @@ def check_pdf(pdf: Path, *, allow_placeholder_id: bool) -> list[str]:
         return [f"missing PDF: {pdf.relative_to(ROOT)}"]
     if pdf.read_bytes()[:5] != b"%PDF-":
         errors.append(f"invalid PDF header: {pdf.relative_to(ROOT)}")
+
+    receipt = anonymity_scan.read_receipt(pdf)
+    if receipt is None:
+        errors.append(
+            f"missing current anonymity receipt for {pdf.relative_to(ROOT)}"
+        )
+    elif not receipt.get("verified") or not receipt.get("clean") or receipt.get("overridden"):
+        errors.append(
+            f"anonymity receipt is not a clean verified verdict for {pdf.relative_to(ROOT)}"
+        )
+    report = anonymity_scan.scan_pdf(pdf)
+    if not report.verified or not report.clean:
+        errors.append(f"live anonymity scan failed for {pdf.relative_to(ROOT)}")
 
     stem = pdf.stem
     log = BUILD_DIR / f"{stem}.log"
@@ -111,6 +126,11 @@ def main() -> int:
         errors.extend(
             check_pdf(PAPER_DIR / name, allow_placeholder_id=args.allow_placeholder_id)
         )
+    page_code, page_output = run_tool(
+        [sys.executable, str(ROOT / "scripts" / "check_page_budget.py")]
+    )
+    if page_code != 0:
+        errors.append("main-paper page-budget gate failed: " + page_output.strip())
 
     if errors:
         print("publication QA failed:")

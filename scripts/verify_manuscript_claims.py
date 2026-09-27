@@ -1559,13 +1559,19 @@ with section("The two exploratory analyses the diversity section reports"):
     # The two exploratory analyses the diversity section reports.
     _rs_pid = json.load(open("results/cross_model_pilot_synthesis/data/population_identity_grouped.json", encoding="utf-8"))
     _rs_ba = _rs_pid["metrics"]["balanced_accuracy"]
-    check("the population classifier reaches 38.4 +/- 5.7 against a null mean of 12.4",
+    check("the population classifier reaches 38.4 +/- 5.7 against a null mean of 12.7",
           round(100 * _rs_ba["mean"], 1) == 38.4 and round(100 * _rs_ba["std"], 1) == 5.7
-          and round(100 * _rs_ba["null_mean"], 1) == 12.4,
+          and round(100 * _rs_ba["null_mean"], 1) == 12.7,
           f"{100 * _rs_ba['mean']:.1f} +/- {100 * _rs_ba['std']:.1f} vs {100 * _rs_ba['null_mean']:.1f}")
-    check("its permutation p rounds to 0.001 and is not below it",
-          round(_rs_ba["permutation_p"], 3) == 0.001 and _rs_ba["permutation_p"] > 0.0005,
+    _rs_n_perm = _rs_pid["permutation_null"]["n_permutations"]
+    check("its permutation p is 1/(200+1) and cannot undercut its Monte Carlo resolution",
+          abs(_rs_ba["permutation_p"] - 1 / (_rs_n_perm + 1)) < 1e-12
+          and _rs_ba["permutation_p"] >= 1 / (_rs_n_perm + 1),
           f"p = {_rs_ba['permutation_p']:.4f} over {_rs_pid['permutation_null']['n_permutations']} permutations")
+    check("the permutation null uses interaction groups and one statistic per repetition",
+          _rs_pid["permutation_null"]["unit"] == "LLM race or human dyad"
+          and _rs_pid["permutation_null"]["statistic"] == "mean across five fixed grouped folds",
+          str(_rs_pid["permutation_null"]))
 
     _rs_fi = json.load(open("results/cross_model_pilot_synthesis/data/feature_importance_results.json", encoding="utf-8"))
     _rs_roster = ["human", "gpt-5-nano", "gpt-5.4-nano", "google/gemini-3-flash-preview",

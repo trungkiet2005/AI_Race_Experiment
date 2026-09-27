@@ -74,6 +74,42 @@ def fit_metrics(X: np.ndarray, y: np.ndarray, train: np.ndarray, test: np.ndarra
     }
 
 
+def permute_group_labels(
+    y: np.ndarray, groups: np.ndarray, rng: np.random.Generator
+) -> np.ndarray:
+    """Permute one population label per interaction group.
+
+    Labels are shuffled only among groups of the same size. This preserves the
+    row-level class counts exactly while ensuring that both seats of an LLM race
+    and both members of a human dyad retain one common permuted label.
+    """
+
+    unique_groups, inverse = np.unique(groups, return_inverse=True)
+    group_labels = np.empty(len(unique_groups), dtype=y.dtype)
+    group_sizes = np.bincount(inverse)
+    for group_index in range(len(unique_groups)):
+        labels = np.unique(y[inverse == group_index])
+        if len(labels) != 1:
+            raise RuntimeError(
+                f"Interaction group {unique_groups[group_index]!r} contains "
+                f"{len(labels)} population labels"
+            )
+        group_labels[group_index] = labels[0]
+
+    permuted_group_labels = group_labels.copy()
+    for size in np.unique(group_sizes):
+        positions = np.flatnonzero(group_sizes == size)
+        permuted_group_labels[positions] = rng.permutation(group_labels[positions])
+    permuted = permuted_group_labels[inverse]
+
+    if not np.array_equal(np.bincount(permuted), np.bincount(y)):
+        raise RuntimeError("Grouped permutation changed the population class counts")
+    for group_index in range(len(unique_groups)):
+        if len(np.unique(permuted[inverse == group_index])) != 1:
+            raise RuntimeError("Grouped permutation split an interaction group")
+    return permuted
+
+
 def main() -> None:
     DATA.mkdir(parents=True, exist_ok=True)
     frame = load_trajectories()
@@ -92,17 +128,22 @@ def main() -> None:
         rows.append(metrics)
     observed = pd.DataFrame(rows)
 
-    # A permutation null preserves the grouped folds and the observed class
-    # counts.  It answers whether the tree exceeds chance under this exact
-    # class-imbalanced pooled design without treating rows as independent.
+    # A permutation null preserves the grouped folds, interaction groups, and
+    # observed class counts. It answers whether the tree exceeds chance under
+    # this exact class-imbalanced pooled design without treating rows as
+    # independent. Each permutation contributes one mean across the five fixed
+    # folds, matching the observed statistic and the advertised repetition N.
     rng = np.random.default_rng(SEED)
     null = {"accuracy": [], "balanced_accuracy": [], "macro_f1": []}
     for rep in range(N_PERMUTATIONS):
-        y_perm = rng.permutation(y)
+        y_perm = permute_group_labels(y, groups, rng)
+        fold_metrics = {key: [] for key in null}
         for fold, (train, test) in enumerate(splits):
             m = fit_metrics(X, y_perm, train, test, SEED + 10_000 + rep + fold)
             for key in null:
-                null[key].append(m[key])
+                fold_metrics[key].append(m[key])
+        for key in null:
+            null[key].append(float(np.mean(fold_metrics[key])))
 
     summary = {}
     for key in ("accuracy", "balanced_accuracy", "macro_f1"):
@@ -136,7 +177,13 @@ def main() -> None:
         "feature_count": int(X.shape[1]),
         "tree": {"max_depth": 3, "min_samples_leaf": 8, "class_weight": "balanced"},
         "split": {"method": "StratifiedGroupKFold", "n_splits": N_SPLITS, "group_definition": "race for LLM; source dyad for human", "seed": SEED},
-        "permutation_null": {"n_permutations": N_PERMUTATIONS, "seed": SEED},
+        "permutation_null": {
+            "n_permutations": N_PERMUTATIONS,
+            "seed": SEED,
+            "unit": "LLM race or human dyad",
+            "shuffle": "group labels within equal-size strata",
+            "statistic": "mean across five fixed grouped folds",
+        },
         "metrics": summary,
         "fold_metrics": rows,
         "source_hashes": source_hashes,

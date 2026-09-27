@@ -273,6 +273,7 @@ RC = {
     "pdf.fonttype": 42,
     "ps.fonttype": 42,
     "svg.fonttype": "none",
+    "svg.hashsalt": "ai-race-publication-v1",
 }
 mpl.rcParams.update(RC)
 
@@ -539,8 +540,28 @@ def save(fig, name, *, figdir=None, width=None, formats=("pdf", "png"),
     written = []
     for ext in formats:
         path = d / f"{name}.{ext}"
+        metadata = None
+        if ext == "pdf":
+            metadata = {
+                "Title": name,
+                "Author": "",
+                "Creator": "",
+                "CreationDate": None,
+                "ModDate": None,
+            }
+        elif ext == "svg":
+            metadata = {"Title": name, "Creator": "", "Date": None}
         fig.savefig(path, bbox_inches="tight", pad_inches=PAD,
-                    dpi=DPI if ext == "png" else None)
+                    dpi=DPI if ext == "png" else None, metadata=metadata)
+        if ext == "svg":
+            path.write_text(
+                "\n".join(
+                    line.rstrip()
+                    for line in path.read_text(encoding="utf-8").splitlines()
+                )
+                + "\n",
+                encoding="utf-8",
+            )
         written.append(path)
     plt.close(fig)
 

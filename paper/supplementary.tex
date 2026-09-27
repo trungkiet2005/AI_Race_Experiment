@@ -305,6 +305,7 @@ extend its claims beyond the idealised race.
 
 % \keywords{Legends, Myths, Folktales}
 \keywords{Large language models, AI development races, multi-agent systems, repeated games, AI safety, opponent-conditioned behaviour}
+\ccsdesc[500]{Computing methodologies~Multi-agent systems}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -339,7 +340,7 @@ explicit before the detailed checks begin.
     Scripted opponent policy & 5/5 eligible & Confirmatory & Yes \\
     EGT direct comparison & 2 prespecified & Confirmatory & Yes, direct \\
     EGT secondary fit & 5/5 eligible & Secondary reanalysis & Yes, robustness \\
-    Presentation robustness & 2 prespecified & Limited robustness & Limited \\
+    Presentation robustness & 2 prespecified & Confirmatory, scope-limited & Limited \\
     Human trajectory diversity & 9 screened / 5 eligible headline & Confirmatory baseline & Yes \\
     Matched group size & 1 eligible endpoint & Exploratory & No \\
     \bottomrule
@@ -733,19 +734,20 @@ those two cases. Figure~\ref{fig:policy-shape} is the object that does, and that
 is what it adds to the neutral baseline: not another number for how much
 \Unsafe{} play there was, but the policy that produced it.
 
-The read-out is the memory-one fingerprint of the evolutionary game theory
+The read-out is a memory-one action-response summary used in the evolutionary game theory
 literature: the probability of playing \Unsafe{} given the pair of moves that
 preceded it, the route's own move first and its rival's second. The choice is
-not an analytical convenience. The prompt shows the players only the
-immediately preceding round, so memory-one is the whole state the game makes
-available, and four conditional probabilities are therefore a complete
-description of a stationary policy rather than a summary of one. The fingerprint
+not an analytical convenience. The prompt exposes the immediately preceding
+round, but it also exposes current progress, accumulated risk and the round
+index. The four conditional probabilities therefore marginalise those other
+state variables; they summarise action-response regularity rather than identify
+a complete stationary policy. The summary
 is computed over the same nine-route neutral baseline the rest of this paper
 reports, 270 races and 5{,}022 decisions, of which the 4{,}482 that have a
 predecessor round enter the calculation; round one is excluded rather than
 folded in, because an opening move is a different object from a reply.
 
-The two lagged effects beside it are Mantel-Haenszel differences, stratified on
+The two lagged associations beside it are Mantel-Haenszel differences, stratified on
 the risk level and on the other lagged move. Both stratifications are
 load-bearing. Risk has to be held fixed because the three risk cells have very
 different base rates, so pooling them would let a route that simply plays more
@@ -787,9 +789,9 @@ their risk cell, the same clustering every other interval in this paper uses.
     Claude Sonnet 5 at 0.28, 1.00, 0.39 and 0.79. The bottom row, Claude Opus
     5, reads 0.00, then two tiles labelled never because those contexts did not
     occur, then 1.00. Panel b is a dot-and-interval chart with one row per
-    route and two series: the effect of the rival's last move, which is
+    route and two series: the association with the rival's last move, which is
     positive for six routes and reaches about 45 percentage points, and the
-    effect of the route's own last move, which is negative for every route
+    association with the route's own last move, which is negative for every route
     where it is defined and reaches about minus 51 points. The Claude Opus 5
     row carries the note that neither term is defined. Panel c shows two
     example races at maximum private risk 0.6 as step traces over sixteen
@@ -834,16 +836,14 @@ seed, and no provider confirmed applying it. Two runs of the same Google cell
 are therefore genuinely independent draws from the route, not a rerun of one
 draw.
 
-\texttt{google/gemini-3-flash-preview} was collected twice under the frozen
-baseline protocol, version~3: at task version~3 on
-2026-09-08, which is the run reported everywhere else in this paper, and again
-at task version~4 on 2026-09-09 on a different billing identity. The repeat was
-not planned as evidence. It rode along with the push that carried the
-reasoning-budget amendment of the eligibility screen and was recovered from
-the run archive afterwards. Protocol, prompt hash, mechanism, seed structure
-and the full set of thirty (game seed, risk) blocks are identical across the
-two runs, and the released analysis code refuses the comparison unless they
-are.
+\texttt{google/gemini-3-flash-preview} was collected twice under the same
+frozen baseline protocol. The first administration is the run reported
+elsewhere in this paper; the second is an independently sampled repeat that was
+not planned as confirmatory evidence. Protocol, prompt hash, mechanism, seed
+structure and the full set of thirty (game seed, risk) blocks are identical
+across the two administrations, and the released analysis code refuses the
+comparison unless they are. The repeat is analysed separately and is never
+pooled with the primary campaign.
 
 Agreement is close. \Unsafe{} rates move from $98.9\%$ to $100.0\%$ at
 $p_r^{\max}=0.1$, from $73.1\%$ to $74.2\%$ at $0.6$, and from $60.2\%$ to
@@ -857,10 +857,9 @@ is the comparison this check exists to protect.
 
 It is one route and one repeat, so it bounds run-to-run variation for this
 route at this sample size and licenses nothing for the routes that were
-collected once. The repeat is stored apart from the main campaign records on
-purpose. Both campaign analysers key their results by model route, so a second
-run of an already-represented route stored with the campaign would not raise an
-error. It would quietly displace the reported one.
+collected once. The repeat is stored apart from the main campaign records, and
+the analysis fails if an already represented route could replace the primary
+run.
 
 \section{Evolutionary benchmark sensitivity}
 
@@ -1948,7 +1947,9 @@ class-balanced loss under stratified five-fold grouped cross-validation. The
 two seats of an LLM race remain in the same fold, and human trajectories are
 grouped by source dyad. Since the pooled classes are unequal, balanced accuracy
 and macro-F1 are the primary measures. A 200-repetition permutation null
-preserves the observed class counts and the same grouped folds.
+shuffles one population label per race or dyad within equal-size strata,
+preserves the observed class counts and grouped folds, and records one mean
+across the five folds per permutation.
 
 \begin{table}[t]
     \caption{Dyad/race-grouped population-identity diagnostic on 760 complete
@@ -1965,16 +1966,16 @@ preserves the observed class counts and the same grouped folds.
         \toprule
         Metric & Observed & Permutation null mean & Null 95\% interval \\
         \midrule
-        Raw accuracy & 0.282 $\pm$ 0.073 & 0.085 & 0.046--0.171 \\
-        Balanced accuracy & \textbf{0.384 $\pm$ 0.057} & 0.124 & 0.072--0.180 \\
-        Macro-F1 & \textbf{0.237 $\pm$ 0.051} & 0.061 & 0.026--0.108 \\
+        Raw accuracy & 0.282 $\pm$ 0.073 & 0.088 & 0.066--0.120 \\
+        Balanced accuracy & \textbf{0.384 $\pm$ 0.057} & 0.127 & 0.092--0.168 \\
+        Macro-F1 & \textbf{0.237 $\pm$ 0.051} & 0.064 & 0.040--0.092 \\
         \bottomrule
     \end{tabular}
     }
 \end{table}
 
 Both primary scores exceed chance ($1/8$) and the grouped permutation null
-(both $p<0.001$). Raw accuracy is also above its grouped null ($p=0.004$),
+(both $p=0.005$). Raw accuracy is also above its grouped null ($p=0.005$),
 but we report it descriptively because the human class is larger. The result
 supports observable differences in the first-five-round trajectories, while
 the overlap and the shallow classifier do not support a claim that a latent

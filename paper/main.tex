@@ -310,8 +310,8 @@ strategic analysis.
 
 In self-play, all five reduce \Unsafe{} play as stated risk rises, although four
 respond gradually and one switches from the ceiling to the floor. We then hold
-the rival fixed by code. Across 600 races against four undisclosed scripted
-policies, the paired Always-Unsafe minus Always-Safe rival contrast is positive
+the rival fixed by code. With ten matched repetitions per endpoint, rival and
+risk condition, the paired Always-Unsafe minus Always-Safe rival contrast is positive
 in all 15 endpoint-by-risk cells, and every 95\% interval excludes zero. More
 importantly, the paired rival-by-risk interaction is endpoint-specific: the
 rival contrast grows with risk for Claude Opus 5 and GPT-5.5, shrinks for Claude
@@ -333,6 +333,7 @@ scoped to the tested endpoints, one prompt version and one idealised game.
 
 % \keywords{Legends, Myths, Folktales}
 \keywords{Large language models, AI development races, multi-agent systems, repeated games, AI safety, opponent-conditioned behaviour}
+\ccsdesc[500]{Computing methodologies~Multi-agent systems}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -460,7 +461,7 @@ We first specify the two-player game reproduced from \citet{falling_behind_unsaf
 \subsection{Two-player game}
 \label{sec:prelim-2p}
 
-Two companies $i \in \{1,2\}$ play a repeated race. In every round $t$, both simultaneously choose an action $a_i^t \in \{S, U\}$ (Safe, Unsafe) and commit to it before either learns the other's choice, and only then does the round resolve (Figure~\ref{fig:mechanism}a). Resolution has two parts. First, progress accumulates as $P_i^t = P_i^{t-1}+\sigma(a_i^t)$ with $\sigma(S)=1.0$ and $\sigma(U)=1.5$, so Unsafe always closes the race faster. Second, the round pays a stage payoff $\pi_i^t=\pi(a_i^t,a_{-i}^t)$, read off the fixed matrix (own action by row, opponent action by column, Figure~\ref{fig:mechanism}b):
+Two companies $i \in \{1,2\}$ play a repeated race. In every round $t$, both simultaneously choose an action $a_i^t \in \{S, U\}$ (Safe, Unsafe) and commit to it before either learns the other's choice, and only then does the round resolve (Figure~\ref{fig:mechanism}a). Resolution has two parts. First, progress accumulates as $P_i^t = P_i^{t-1}+\sigma(a_i^t)$ with $\sigma(S)=1.0$ and $\sigma(U)=1.5$, so Unsafe always closes the race faster. Second, the round pays a stage payoff $\pi_i^t=\pi(a_i^t,a_{-i}^t)$, read off the fixed matrix (own action by row, opponent action by column, Figure~\ref{fig:mechanism}c):
 \begin{equation}
     \pi = \begin{pmatrix} 1.0 & 0.6 \\ 2.4 & 2.0 \end{pmatrix}.
     \label{eq:2p-matrix}
@@ -590,6 +591,11 @@ the route name. The cutoffs are not externally validated. We therefore use the
 screen only as an operational inclusion rule, never as a measure of comprehension,
 capability or behaviour. The
 supplement retains every route and score.
+Within the observed stability box, the admitted set is unchanged over all 676
+combinations of the three achievable thresholds. The boundary is nevertheless
+visible: lowering state reconstruction by one answer, from the 75\% rule to the
+next attainable score of 73.3\%, admits Gemini 3.1 Flash Lite. This sensitivity
+is why the screen supports inclusion rather than a capability ranking.
 
 \section{Results}
 \label{sec:results}
@@ -660,10 +666,30 @@ at this sample size; it licenses no such bound for an endpoint collected once, w
 matters here because no provider confirmed applying the requested sampling seed.
 
 Representation-equivalent prompt changes also move rates. The directional risk
-response survives a fully crossed narrative-by-symbol rerun on two endpoints.
-Swapping the opaque action-code mapping shifts \Unsafe{} play by 8.3--9.5
-percentage points, while changing the narrative skin shifts it by 3.4 and 10.8
-points on the two routes (see the supplementary material).
+response survives a fully crossed narrative-by-symbol rerun on two endpoints,
+but neither the action-code mapping nor the narrative skin is behaviourally
+inert (Table~\ref{tab:presentation-robustness}). The similar mapping effects
+replicate across the two tested providers; the different story effects warn
+against treating two endpoints as a population of models.
+
+\begin{table}[t]
+\caption{Presentation contrasts in percentage points, paired within 60
+repetition blocks. Positive values mean that the second presentation raises
+\Unsafe{} play. Brackets are 95\% bootstrap intervals.}
+\label{tab:presentation-robustness}
+\centering
+\footnotesize
+\begin{tabular}{@{}llr@{}}
+\toprule
+Endpoint & Contrast & Effect [95\% interval] \\
+\midrule
+Gemini 3 Flash & code $Q$ means \Safe{} & $+9.5$ [$+5.6$, $+13.8$] \\
+Claude Sonnet 5 & code $Q$ means \Safe{} & $+8.3$ [$+5.4$, $+12.2$] \\
+Gemini 3 Flash & abstract contest & $+10.8$ [$+6.0$, $+15.6$] \\
+Claude Sonnet 5 & abstract contest & $+3.4$ [$+0.9$, $+7.4$] \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 
 \begin{figure*}[t]
@@ -752,6 +778,9 @@ and is statistically unresolved on Gemini 3 Flash and GPT-5.4. There is therefor
 no universal ``risk amplifies rivalry'' pattern; the shape itself is
 endpoint-specific. This conclusion is within endpoint. Decoding contracts differ,
 so effect-size comparisons across endpoints remain descriptive.
+With only ten matched repetitions per endpoint-by-risk cell, the intervals are
+necessarily coarse: they resolve three directional interactions and leave two
+unresolved, rather than demonstrating that the latter two are zero.
 
 The two conditional rivals make the dependence visible at the first move. They
 follow the same policy from round two onward and differ only in whether the rival
@@ -788,7 +817,7 @@ population of models.
     ($\beta=2,\ \mu=.02$) and the reported best weak-selection regime
     ($\beta=.01,\ \mu=.05$). All five eligible endpoints are closer to the
     weak-selection fit; Claude Opus 5 remains the qualitative near-step
-    exception in panel (a).}
+    exception in panel (b).}
     \label{fig:theory-behaviour}
     \Description{Two-panel comparison. Panel a plots Unsafe play against maximum
     private risk for the reconstructed evolutionary model at strong and weak
@@ -824,9 +853,9 @@ $\mu=0.05$ the model predicts 87.3\%, 63.9\% and 38.0\%, the closest cell in the
 entire sweep to both direct endpoints, within 9.6 percentage points of Claude Sonnet 5
 and 15.4 of Gemini 3 Flash in root-mean-square error.
 
-The weak-selection cell is not one we chose to fit: $\beta=0.01$ and
-$\mu=0.05$ are the values the source study reports as its own best fit to human
-play. The interpretation stays bounded. A stationary distribution
+The weak-selection cell was not selected solely to fit these endpoints:
+$\beta=0.01$ and $\mu=0.05$ are also the values the source study reports as its
+own best fit to human play. The interpretation stays bounded. A stationary distribution
 describes strategy frequencies in a population under selection and mutation,
 while our measurements are prompted decisions in self-play; the agreement in
 shape says the graded risk response is consistent with weak selection and
@@ -855,7 +884,8 @@ because the sign of the high-risk gap depends on it.
 Samples from different human participants span many paths; repeated samples from
 one fixed endpoint often reuse far fewer. An endpoint can therefore match a human
 average without reproducing the human sample's heterogeneity. We compare exact
-first-five-round joint-action trajectories, represented as ten-bit strings. The
+first-five-round joint-action trajectories, the longest prefix observed in
+every race under the minimum-five-round horizon, represented as ten-bit strings. The
 confirmatory baseline contributes 60 trajectories per endpoint. The only human
 reference is the de-identified dataset of \citet{falling_behind_unsafe}, so every
 comparison is bounded to that population and game.
