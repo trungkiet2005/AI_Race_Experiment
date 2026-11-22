@@ -148,3 +148,20 @@ interaction is computed from the four swapped cells alone. Same stopping rule;
 quota refusals are failure records. If the sign stays negative the reversal is
 not a contract artefact; if it turns positive the paper says the reversal is
 contract-dependent.
+
+## Amendment 4, 2026-11-23 (before any assigned route ran)
+
+Amendment 2's 256-token cap for `reasoning=none` routes is withdrawn. Under it,
+the push-validation run on `gemini-3-flash-preview` errored with
+`LengthFinishReasonError` at 252 completion tokens (identity `vkhoinguyen`,
+log under `results/_build/ijcai_revision/`), while every block-A response of
+that route fitted inside 256 tokens in September. The endpoint behind the
+route now produces longer structured completions, so the September contract
+can no longer be reproduced exactly. All routes therefore use the task's
+1,024-token cap, as the task has since the 2026-09-12 output-budget amendment.
+A cap only truncates; it cannot change a completion that fits. The paper must
+state that blocks B and C are a later re-administration under a larger cap on
+endpoints that may have changed provider-side, not a byte-identical
+replication, and report blocks separately before pooling. The launch was
+stopped again after push validation; no assigned route had run. Identity
+assignment is unchanged (`vkhoinguyen` keeps B AS 0.1).

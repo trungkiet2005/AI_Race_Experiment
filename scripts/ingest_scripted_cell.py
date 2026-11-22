@@ -208,7 +208,7 @@ def main() -> None:
         )
 
     dec = manifest.get("decoding") or {}
-    want_cap = 1024 if dec.get("reasoning_requested") == "low" else 256
+    want_cap = 1024  # amendment 4: every route on the 1,024-token cap
     if dec.get("output_token_limit") != want_cap:
         raise SystemExit(
             f"output_token_limit {dec.get('output_token_limit')} with reasoning "

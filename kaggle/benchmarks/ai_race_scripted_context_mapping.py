@@ -85,9 +85,6 @@ REASONING_LOW_ROUTES = ("claude-opus-5", "gpt-5.5")
 # provider-side reasoning. The resumption amendments use the low mode above
 # and this larger cap; the manifest records the amended contract.
 MAX_OUTPUT_TOKENS = 1024
-# Routes on the default reasoning=none contract keep the original 256-token
-# cap, so every route's contract matches the cells it is compared with.
-NONE_CONTRACT_OUTPUT_TOKENS = 256
 MAX_PARSE_RETRIES = 3
 MAX_TRANSPORT_RETRIES = 3
 REQUEST_TIMEOUT_SECONDS = 120
@@ -330,9 +327,7 @@ def resolve_llm_contract(llm):
         "model_route": route,
         "backend_mro": backend_mro,
         "output_token_limit_parameter": token_limit_parameter,
-        "output_token_limit": (
-            MAX_OUTPUT_TOKENS if reasoning_requested == "low" else NONE_CONTRACT_OUTPUT_TOKENS
-        ),
+        "output_token_limit": MAX_OUTPUT_TOKENS,
         "output_token_limit_selection": token_limit_selection,
         "request_timeout_applied": request_timeout_applied,
         "reasoning_requested": reasoning_requested,
