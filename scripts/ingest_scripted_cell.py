@@ -129,14 +129,22 @@ def main() -> None:
     parser.add_argument("--identity", required=True,
                         help="Kaggle account that ran the cell; the server cannot tell us.")
     parser.add_argument("--plan", default=DEFAULT_PLAN)
+    parser.add_argument("--campaign", type=Path, default=CAMPAIGN,
+                        help="Campaign tree to file the cell under. Replication blocks "
+                             "and new endpoints go in their own tree so a second run of "
+                             "a reported cell can never displace it.")
     parser.add_argument("--expect-route", default="",
                         help="Route the plan assigned to this cell. Checked against the "
                              "manifest so a run of the wrong endpoint cannot be filed "
                              "as the right one.")
+    parser.add_argument("--expect-base-seed", type=int, default=None,
+                        help="Seed block the plan declared; the race seeds must be "
+                             "exactly base..base+9.")
     parser.add_argument("--force", action="store_true",
                         help="Replace a cell already in the tree. Off by default so a "
                              "repeat download cannot quietly overwrite a different one.")
     args = parser.parse_args()
+    campaign = args.campaign if args.campaign.is_absolute() else ROOT / args.campaign
 
     src, manifest = find_run(args.download_root)
     design = manifest.get("opponent_design") or {}
@@ -199,7 +207,15 @@ def main() -> None:
             "report one route's behaviour as another's"
         )
 
-    dst = CAMPAIGN / f"{strategy}_risk{str(risk).replace('.', 'p')}" / route_tag(route)
+    import csv
+    with (src / "races.csv").open(encoding="utf-8") as fh:
+        seeds = sorted(int(r["game_seed"]) for r in csv.DictReader(fh))
+    if args.expect_base_seed is not None and seeds != list(
+        range(args.expect_base_seed, args.expect_base_seed + EXPECTED_RACES)
+    ):
+        raise SystemExit(f"race seeds {seeds} are not the declared block {args.expect_base_seed}")
+
+    dst = campaign / f"{strategy}_risk{str(risk).replace('.', 'p')}" / route_tag(route)
     if dst.exists() and not args.force:
         existing = dst / "collection_receipt.json"
         who = (json.loads(existing.read_text(encoding="utf-8")).get("executing_identity")
@@ -236,6 +252,7 @@ def main() -> None:
         "parse_failures": 0,
         "rival_replay_deviations": 0,
         "seat_counts": counts,
+        "base_seed": seeds[0],
     }
     (dst / "collection_receipt.json").write_text(json.dumps(receipt, indent=2), encoding="utf-8")
 
@@ -250,7 +267,7 @@ def main() -> None:
     have = sorted(
         (json.loads(p.read_text(encoding="utf-8"))["cell"]["strategy"],
          json.loads(p.read_text(encoding="utf-8"))["cell"]["max_private_risk"])
-        for p in CAMPAIGN.glob(f"*/{route_tag(route)}/collection_receipt.json")
+        for p in campaign.glob(f"*/{route_tag(route)}/collection_receipt.json")
     )
     print(f"  {route} now holds {len(have)} of 12 cells: {have}")
 
