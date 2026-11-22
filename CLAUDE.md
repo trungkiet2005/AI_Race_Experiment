@@ -9,7 +9,7 @@ touching anything under `paper/`.
 
 | paper | lives in | venue | status |
 |---|---|---|---|
-| behaviour: how routes trade danger against rivalry | `paper/main.tex`, `paper/supplementary.tex` | AAMAS 2027 | submission candidate; anonymous ID pending |
+| behaviour: how routes trade danger against rivalry | `paper/main.tex`, `paper/supplementary.tex` | **IJCAI 2027** (was AAMAS 2027; user switched 2026-11-22) | AAMAS build exists; port to IJCAI template pending, see `STATE.md` |
 | evaluation: what a comprehension screen measures | `paper/acl/main.tex` | ACL Rolling Review | **scaffold only, blocked on data** |
 
 The combined version is frozen at the git tag `combined-manuscript-2026-09-12`.
@@ -44,7 +44,18 @@ without rechecking the behaviour/ARR claim boundary.
 
 ## What this is
 
-**Venue:** AAMAS 2027, Hanoi, Vietnam, 3 to 7 May 2027.
+**Target venue since 2026-11-22: IJCAI 2027 main track** (Kyoto, 7 to 13 Aug
+2027). Abstract 2027-01-04, full paper 2027-01-11, 23:59 AoE. 7 body pages
+(figures and tables included) plus up to 2 pages of references only; overlength
+or modified-style papers are rejected without review. Official style from
+ijcai.org/authors_kit. Supplementary material separate, anonymised, PDF or ZIP up
+to 50 MB. Double blind, USD 100 fee unless primary paper, at most 8 submissions
+per author. No dual submission with a venue that has formal proceedings during
+review. Source: https://2027.ijcai.org/ijcai-2027-call-for-papers-main-track/
+(checked 2026-11-22). The AAMAS notes below describe the current sources until
+the port lands.
+
+**Former venue:** AAMAS 2027, Hanoi, Vietnam, 3 to 7 May 2027.
 
 `paper/main.tex` and `paper/supplementary.tex` are both built on the AAMAS 2027
 sigconf template: `\documentclass[sigconf,anonymous]{aamas}` with
