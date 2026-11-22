@@ -207,6 +207,13 @@ def main() -> None:
             "report one route's behaviour as another's"
         )
 
+    dec = manifest.get("decoding") or {}
+    want_cap = 1024 if dec.get("reasoning_requested") == "low" else 256
+    if dec.get("output_token_limit") != want_cap:
+        raise SystemExit(
+            f"output_token_limit {dec.get('output_token_limit')} with reasoning "
+            f"{dec.get('reasoning_requested')!r}; the declared contract is {want_cap}"
+        )
     import csv
     with (src / "races.csv").open(encoding="utf-8") as fh:
         seeds = sorted(int(r["game_seed"]) for r in csv.DictReader(fh))

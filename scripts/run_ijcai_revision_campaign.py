@@ -24,10 +24,10 @@ FAILED = ROOT / "results" / "failed_runs"
 LEDGER = ROOT / "results" / "_build" / "ijcai_revision" / "campaign_ledger.jsonl"
 
 SLICES = [
-    ("boymagic", "AS", "0.1", "B", "admitted"),
+    ("vkhoinguyen", "AS", "0.1", "B", "admitted"),  # replaces boymagic (amendment 2)
     ("chisboiz", "AS", "0.6", "B", "admitted"),
     ("chunaiu", "AS", "0.9", "B", "admitted"),
-    ("daosyduyminh", "AU", "0.1", "B", "admitted"),
+    ("nguyendinhhaduong", "AU", "0.1", "B", "admitted"),  # replaces daosyduyminh (amendment 2)
     ("hnhhctiliu", "AU", "0.6", "B", "admitted"),
     ("kakagotto", "AU", "0.9", "B", "admitted"),
     ("minh2duy", "AS", "0.1", "C", "admitted"),
@@ -43,7 +43,7 @@ SLICES = [
     ("trungkiet", "AU", "0.6", "A", "refused"),
     ("trngthtnhi", "AU", "0.9", "A", "refused"),
 ]
-RESERVE = ["chinguyentran", "trnnguynchis", "vkhoinguyen", "nguyendinhhaduong", "nvviet05", "tntduong"]
+RESERVE = ["nvviet05", "tntduong"]
 _lock = threading.Lock()
 
 
@@ -71,7 +71,8 @@ def run_slice(ident: str, strat: str, risk: str, block: str, group: str) -> None
         out = proc.stdout + proc.stderr
         quota_at_push = (
             proc.returncode == 4
-            and "exceeds your available quota" in out
+            and ("exceeds your available quota" in out
+                 or "identity verification required" in out)
             and "== run " not in out
         )
         log({"event": "end", "identity": ident, "slice": [block, strat, risk, group],

@@ -1,0 +1,15 @@
+{
+  "schema": "failure-record-v1",
+  "plan": "docs/ijcai-revision-collection-plan-2026-11-23.md",
+  "slice": {
+    "block": "B",
+    "strategy": "AS",
+    "risk": 0.1,
+    "group": "admitted"
+  },
+  "identity": "boymagic",
+  "stage": "push validation on gemini-3-flash-preview (not an assigned route)",
+  "error": "HTTP 403 quota refusal",
+  "assigned_routes_started": 0,
+  "classification": "quota refusal; never model evidence; replaced under amendment 1"
+}

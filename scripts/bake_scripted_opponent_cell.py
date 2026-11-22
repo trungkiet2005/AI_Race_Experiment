@@ -17,6 +17,7 @@ ROOT = Path(__file__).resolve().parents[1]
 CANONICAL = ROOT / "kaggle" / "benchmarks" / "ai_race_scripted_opponent.py"
 EXPECTED_STRATEGIES = 'STRATEGIES = _selected("AI_RACE_STRATEGIES", STRATEGIES_FROZEN, str)'
 EXPECTED_RISKS = 'RISK_LEVELS = _selected("AI_RACE_RISKS", RISK_LEVELS_FROZEN, float)'
+EXPECTED_LOW = 'REASONING_LOW_ROUTES = ("claude-opus-5", "gpt-5.5")'
 EXPECTED_SEED = 'BASE_SEED = int(os.environ.get("AI_RACE_SEED", "260726"))'
 ALLOWED_STRATEGIES = {"AS", "AU", "CS", "CAS"}
 ALLOWED_RISKS = {0.1, 0.6, 0.9}
@@ -28,6 +29,9 @@ def main() -> None:
     parser.add_argument("--risk", type=float, choices=sorted(ALLOWED_RISKS), required=True)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--source", type=Path, default=CANONICAL)
+    parser.add_argument("--add-reasoning-low", default="",
+                        help="Route prefix to move onto the low-reasoning, 1024-token "
+                             "contract, for a declared contract-swap cell only.")
     parser.add_argument("--base-seed", type=int, default=None,
                         help="Seed block for a pre-declared replication; omit to keep "
                              "the canonical block that pairs with every other campaign.")
@@ -48,6 +52,13 @@ def main() -> None:
         EXPECTED_RISKS,
         f"RISK_LEVELS = ({risk_literal},)",
     )
+    if args.add_reasoning_low:
+        if baked.count(EXPECTED_LOW) != 1:
+            raise SystemExit("reasoning-route line not found exactly once; refusing to bake")
+        baked = baked.replace(
+            EXPECTED_LOW,
+            f'REASONING_LOW_ROUTES = ("claude-opus-5", "gpt-5.5", {args.add_reasoning_low!r})',
+        )
     if args.base_seed is not None:
         if baked.count(EXPECTED_SEED) != 1:
             raise SystemExit("canonical seed line not found exactly once; refusing to bake")

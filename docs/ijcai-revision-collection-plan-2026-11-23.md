@@ -99,3 +99,24 @@ fixed reserve order: `chiboiz`, `chinguyentran`, `trnnguynchis`, `vkhoinguyen`,
 has started keeps the original stopping rule: the affected route cells are
 failure records and are not moved. Every replacement is logged with its
 failure record.
+
+## Amendment 2, 2026-11-23 (before any assigned route ran)
+
+1. **Decoding contract fix.** The current task source had a 1,024-token cap for
+   every route, while the original cells of every `reasoning=none` route
+   (Gemini 3 Flash, GPT-5.4, Claude Sonnet 5, and the refused routes' baselines)
+   used 256. The first launch was stopped after its push-validation step,
+   before any assigned route was requested, and the task now resolves the cap
+   per route: 1,024 for `reasoning=low` routes (GPT-5.5, Claude Opus 5), 256
+   otherwise. `scripts/ingest_scripted_cell.py` refuses a cell whose cap does
+   not match its route's contract. The same fix is applied to the new
+   presentation-crossed task.
+2. **Identity replacements under amendment 1.** `boymagic` and `daosyduyminh`
+   were refused with quota 403 at push validation (failure records in
+   `results/failed_runs/`). `chinguyentran` and `trnnguynchis` cannot push at
+   all (Kaggle requires phone and identity verification), so they leave the
+   reserve. Final assignment: `vkhoinguyen` takes B AS 0.1, `nguyendinhhaduong`
+   takes B AU 0.1; reserve order is now `nvviet05`, `tntduong`. An identity
+   that cannot push for an account-verification reason is treated like a
+   quota refusal at push validation (zero routes started).
+3. All 18 slices restart from the beginning; no route cell had been collected.
