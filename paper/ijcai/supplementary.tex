@@ -35,7 +35,7 @@
 /TemplateVersion (IJCAI.2027.0)
 }
 
-\title{Supplementary Material: Self-Play Rates Are Not Endpoint Risk Profiles:\\Fixed-Rival Audits of Frontier LLMs in an AI Race Game}
+\title{Supplementary Material: Self-Play Rates Are Not Risk Profiles:\\Frontier LLMs Depart from the Best Response to Fixed Rivals in an AI Race}
 
 \author{
     Anonymous Submission
@@ -46,7 +46,7 @@
 \maketitle
 
 \begin{abstract}
-This supplement supports ``Self-Play Rates Are Not Endpoint Risk Profiles: Fixed-Rival Audits of Frontier LLMs in an AI Race Game''. It records the quality-control screen,
+This supplement supports ``Self-Play Rates Are Not Risk Profiles: Frontier LLMs Depart from the Best Response to Fixed Rivals in an AI Race''. It records the quality-control screen,
 the theory comparison, the scripted-rival evidence, and the human diversity
 analysis, together with prompt and game robustness checks. These materials use
 the same routes, task and evidence boundaries as the main paper and do not
@@ -1457,6 +1457,81 @@ pooling them, and refuses a cell that did not complete, that carries a parse
 failure, that is the wrong protocol, that has the wrong number of races, whose
 seat counterbalance is not five and five, or whose rival deviated from the
 strategy its directory claims.
+
+\subsection{Best response and interaction statistics}
+\label{app:best-response}
+
+The best response to each fixed rival is the exact solution of the single-agent
+decision problem that the rival's fixed policy defines. The state is the round,
+the progress gap and the agent's own Unsafe count. The objective is expected
+total payoff, so it is risk neutral. The horizon rule is known to the solver and
+is not told to the endpoints. Against Always Safe the first move is an exact tie,
+and the rival contrast is identical under the three tie rules tried (least
+Unsafe play, most Unsafe play and an even split). A simulation of 6{,}000 races per
+cell in the game engine matches the solver in payoff and Unsafe rate, with the
+largest $|z|$ equal to 1.5.
+
+A quantal best responder picks each action with probability rising in its value,
+with precision $\lambda$: $\lambda=0$ is random play and large $\lambda$ approaches the
+best response. Table~\ref{tab:quantal} shows that the rival-by-risk interaction
+of such an agent is positive for small and large $\lambda$ and negative at
+intermediate values, so the sign of the interaction alone does not separate a
+reversal of the best response from noise around it.
+
+\begin{table}[t]
+\caption{Rival contrast (Always Unsafe minus Always Safe) and rival-by-risk
+interaction of a quantal best responder, in percentage points, by choice
+precision $\lambda$.}
+\label{tab:quantal}
+\centering
+\small
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+$\lambda$ & Risk 0.1 & Risk 0.6 & Risk 0.9 & Interaction \\
+\midrule
+0.01 & $+0.4$ & $+1.9$ & $+2.8$ & $+2.4$ \\
+0.03 & $+1.7$ & $+5.6$ & $+8.0$ & $+6.2$ \\
+0.1 & $+45.8$ & $+17.4$ & $+21.7$ & $-24.0$ \\
+0.3 & $+49.1$ & $+61.8$ & $+42.5$ & $-6.7$ \\
+1 & $+48.5$ & $+85.9$ & $+63.2$ & $+14.7$ \\
+3 & $+47.3$ & $+88.1$ & $+76.6$ & $+29.4$ \\
+Best response & $+44.4$ & $+88.3$ & $+77.8$ & $+33.3$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Table~\ref{tab:interaction-intervals} gives the interaction intervals under
+three methods. The percentile intervals are those drawn in the main figure. The
+BCa intervals correct for bias and skew in the ten-block bootstrap, and the
+sign-flip intervals invert a test that flips the sign of each block's
+difference. The three agree on which interactions exclude zero. Holm adjustment
+runs across the five endpoints. For the fifteen rival contrasts the smallest
+attainable sign-flip $p$ value is $2/1024$ per contrast, which Holm adjustment
+over fifteen turns into 0.029. Every adjusted value equals 0.029, because the
+smallest raw value sets the floor. On the log-odds
+scale, the Gemini 3 Flash interaction rests on the Always-Unsafe cell at risk
+$0.1$, which is at the ceiling, and GPT-5.5 and Claude Opus 5 are at or near the
+ceiling in the same cell.
+
+\begin{table}[t]
+\caption{Rival-by-risk interaction in percentage points under three interval
+methods, with the Holm-adjusted sign-flip $p$ value.}
+\label{tab:interaction-intervals}
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+Endpoint & Percentile & BCa & Sign-flip & Holm $p$ \\
+\midrule
+Gemini 3 Flash  & [$-7.9$, $3.7$] & [$-8.9$, $2.9$] & [$-9.1$, $4.7$] & 1.00 \\
+GPT-5.4         & [$-4.6$, $9.4$] & [$-4.6$, $9.7$] & [$-6.6$, $11.7$] & 1.00 \\
+GPT-5.5         & [$29.0$, $44.0$] & [$29.3$, $44.3$] & [$26.7$, $45.8$] & 0.010 \\
+Claude Sonnet 5 & [$-25.1$, $-11.8$] & [$-24.4$, $-10.8$] & [$-26.8$, $-10.6$] & 0.023 \\
+Claude Opus 5   & [$20.9$, $36.4$] & [$19.2$, $35.4$] & [$20.4$, $38.8$] & 0.016 \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \section{Human reference and trajectory-diversity robustness}
 

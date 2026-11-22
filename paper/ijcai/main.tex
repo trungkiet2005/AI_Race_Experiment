@@ -33,7 +33,7 @@
 /TemplateVersion (IJCAI.2027.0)
 }
 
-\title{Self-Play Rates Are Not Endpoint Risk Profiles:\\Fixed-Rival Audits of Frontier LLMs in an AI Race Game}
+\title{Self-Play Rates Are Not Risk Profiles:\\Frontier LLMs Depart from the Best Response to Fixed Rivals in an AI Race}
 
 \author{
     Anonymous Submission
@@ -45,34 +45,33 @@
 
 \begin{abstract}
 Self-play is a common way to evaluate language-model agents, but it entangles a
-focal endpoint with an adapting copy of itself. A measured response to risk may
-therefore describe the pairing rather than the endpoint. We test this
-in an idealised AI-development race, where faster \Unsafe{} development
-raises the winner's chance of losing its payoff. Nine commercial endpoints faced
-a frozen task-validity screen; five named higher-tier endpoints entered the
-strategic analysis.
+focal endpoint with an adapting copy of itself, so a measured response to risk
+may describe the pairing rather than the endpoint. We study this in an idealised
+AI-development race, where faster \Unsafe{} development raises the winner's
+chance of losing its payoff. Nine commercial endpoints faced a frozen
+task-validity screen, and five entered the strategic analysis.
 
-In self-play, all five reduce \Unsafe{} play as stated risk rises, although four
-respond gradually and one switches from the ceiling to the floor. We then hold
-the rival fixed by code. With ten matched races per endpoint, rival and
-risk condition, the paired Always-Unsafe minus Always-Safe rival contrast is positive
-in all 15 endpoint-by-risk cells, and every 95\% interval excludes zero. The
-paired rival-by-risk interaction differs by endpoint: within each endpoint and
-its own decoding contract, the rival contrast grows with risk for Claude Opus 5
-and GPT-5.5, shrinks for Claude Sonnet 5, and is unresolved for Gemini 3 Flash
-and GPT-5.4. These are three observed shapes under non-identical contracts. A
-self-play rate therefore does not identify an endpoint's response to risk,
-because it depends on the rival that generates the history.
+In self-play, all five reduce \Unsafe{} play as stated risk rises, four gradually
+and one by switching from the ceiling to the floor. We then hold the rival fixed
+by code and compare each endpoint with the exact best response to that rival.
+An always-\Unsafe rival draws more \Unsafe{} play than an always-\Safe one in all
+15 endpoint-by-risk cells, as a best-responding agent would also show, so this
+contrast is not the finding. The finding is the departure. For every endpoint,
+observed rates sit inside the best-response range in at most 2 of 12 cells.
+Within each endpoint and its own decoding contract, Claude Sonnet 5 reverses the
+best-response sign of the rival-by-risk interaction on both a rate and a
+log-odds scale. Gemini 3 Flash and GPT-5.4 stay flat on the rate scale where the
+best response does not, and the positive sign for GPT-5.5 depends on the scale.
+Claude Opus 5 shows the best-response sign on both scales.
 
-Two supporting checks add context. All five endpoint profiles fit a
-weak-selection evolutionary benchmark better than its strong-selection
-setting, and four of them match its graded shape. In a descriptive contrast,
-repeated samples from one eligible endpoint also
+A self-play rate therefore does not identify an endpoint's response to risk. We
+recommend reporting each endpoint's departure from the best response against
+every declared rival. Two supporting checks add context. All five endpoint
+profiles fit a weak-selection evolutionary benchmark better than its
+strong-selection setting, and repeated samples from one eligible endpoint
 occupy fewer first-five-round trajectories than matched draws of different
-human participants in 13 of 15 cells, as expected of one fixed policy.
-We recommend fixing and auditing the opponent and reporting trajectories as
-well as aggregate rates. Claims remain
-scoped to the tested endpoints, one prompt version and one idealised game.
+people in 13 of 15 cells, as expected of one fixed policy. Claims remain scoped to
+the tested endpoints, one prompt version and one idealised game.
 \end{abstract}
 
 \section{Introduction}
@@ -116,10 +115,11 @@ tournaments pit models against canonical strategies
 interaction partner changes \citep{lekeasNashSuppression2026}. As far as these
 reports show, none of them crosses a fixed, undisclosed rival with a stated
 catastrophe risk in a paired design whose rival moves are recomputed from the
-recorded history. That is the gap we fill. Our question is narrower than
-general strategic skill: \emph{does replacing the mirror opponent with a fixed
-policy change the size and shape of the response to the stated catastrophe
-risk itself?} That is the estimand a safety reading needs, and a high or low
+recorded history, and none compares the result with the exact best response to
+that rival. That is the gap we fill. Our question is narrower than general
+strategic skill: \emph{when the mirror opponent is replaced by a fixed policy,
+how far is the response to the stated catastrophe risk from the best response to
+that policy?} That is the estimand a safety reading needs, and a high or low
 self-play rate alone cannot answer it.
 
 Two checks protect this inference. First, a valid action format does not prove
@@ -138,19 +138,23 @@ every decision.
 
 The answer is not one universal opponent effect. In self-play, every included
 endpoint reduces \Unsafe{} play as stated risk rises, with four graded profiles
-and one threshold-like switch. Against four fixed scripted rivals, however, all
-five endpoints move substantially with the rival. A paired interaction analysis
-then shows three observed shapes, each within one endpoint and its own decoding
-contract: the rival effect grows with risk on Claude Opus 5 and GPT-5.5, shrinks
-on Claude Sonnet 5, and is unresolved on Gemini 3 Flash and GPT-5.4. A
-self-play rate therefore does not identify an endpoint's response to risk; it
-also reflects the rival that generates the history.
+and one threshold-like switch. Against four fixed scripted rivals, all five
+endpoints move substantially with the rival. A best-responding agent would also
+do so: the exact best response plays more \Unsafe{} against an always-\Unsafe
+rival, and its rival effect grows with risk. We therefore read the data against
+that benchmark. The endpoints depart from it in size and in shape, and each
+departure is read within one endpoint and its own decoding contract. Claude
+Sonnet 5 reverses the best-response interaction sign, Gemini 3 Flash and GPT-5.4
+are flat where the best response is not, the positive sign for GPT-5.5 depends on
+the scale, and Claude Opus 5 shows the best-response sign. A self-play rate
+therefore does not identify an endpoint's response to risk. It also reflects the
+rival that generates the history.
 
-This is the paper's core contribution: a matched, replay-audited demonstration
-that a self-play risk response in this game is an opponent-conditioned outcome.
-The human and evolutionary analyses are supporting checks, not separate novelty
-claims. Human-proxy studies report both aggregate fidelity and distributional
-or behavioural distortions
+This is the paper's core contribution: a matched, replay-audited measurement of
+how far frontier endpoints depart from the best response to fixed rivals, and the
+evidence that a self-play rate cannot stand in for it. The human and evolutionary
+analyses are supporting checks, not separate novelty claims. Human-proxy studies
+report both aggregate fidelity and distributional or behavioural distortions
 \citep{using_llm_to_simulate,out_of_one,synthetic_replacement_human}, so we
 describe how first-five-round trajectories compare with the source study's
 human data \citep{falling_behind_unsafe}, and how the observed curve sits
@@ -241,8 +245,6 @@ immediately, while across the full race Unsafe choices raise the setback risk
 for a winner or tied winner, so the best action can depend on the risk
 condition, earlier actions, and the expected response of other players.
 
-% TODO-E1: best-response paragraph (optimal Unsafe rate per fixed rival and risk, predicted interaction sign).
-
 We use four simple strategies as a theory benchmark, defined in
 Table~\ref{tab:benchmark-strategies}. Two of them ignore the other player and
 two of them do nothing but answer it, which is what makes the set a benchmark:
@@ -258,6 +260,51 @@ Selection strength $\beta$ controls how sharply payoff differences change
 strategy frequencies: strong selection can create an abrupt switch, while weak
 selection produces a more graded response. Mutation keeps alternative strategies
 present. These are shape references, not mechanisms attributed to the endpoints.
+
+\subsection{Best response to a fixed rival}
+\label{sec:best-response}
+
+Against a rival whose policy is fixed, the race is a single-agent decision
+problem, and we solve it exactly by dynamic programming over the round, the
+progress gap and the agent's own Unsafe count. The solver maximises expected
+total payoff, so it is risk neutral, and it knows the horizon rule that the
+endpoints are never told. A 6{,}000-race simulation in the game engine
+reproduces its payoffs and Unsafe rates (largest $|z|$ of 1.5).
+Table~\ref{tab:best-response} gives the resulting Unsafe rates. Against
+Always Safe the first move is an exact tie, so Unsafe play there is indifferent
+rather than chosen, and the rival contrast below is the same under every tie
+rule we tried (supplement S5.2).
+
+\begin{table}[t]
+\caption{Unsafe rate of the exact best response to each fixed rival, in percent,
+by stated risk. The Always-Safe row is a tie at the first move, shown under one
+tie rule.}
+\label{tab:best-response}
+\centering
+\footnotesize
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+Rival & Risk 0.1 & Risk 0.6 & Risk 0.9 \\
+\midrule
+AS  & 55.6 & 11.1 & 11.1 \\
+CS & 55.6 & 55.6 & 33.7 \\
+CAS & 100.0 & 55.3 & 51.4 \\
+AU & 100.0 & 99.4 & 88.9 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The best response therefore predicts a positive rival contrast. The best-response
+Always-Unsafe minus Always-Safe contrast is $+44.4$, $+88.3$ and $+77.8$ points
+at risks $0.1$, $0.6$ and $0.9$, and its rival-by-risk interaction is $+33.3$
+points. A positive contrast and a positive interaction are what a best responder
+does, so we do not present them as surprising. The contribution is how far, and
+in what shape, each endpoint departs from them. Two limits apply. The benchmark is
+risk neutral and knows the horizon, which the endpoints may not, so it marks a
+reference point and not what an endpoint ought to play. A noisy best responder,
+one that picks actions with probability rising in their value, can also produce a
+negative interaction at intermediate noise, so the interaction sign alone does
+not separate a reversal of the best response from noise around it.
 
 \section{Experimental design and evidence policy}
 \label{sec:design}
@@ -282,13 +329,18 @@ For endpoint $m$, stated risk $p$ and rival policy $\pi$, define
 Self-play observes only $R_m(p,m)$. The scripted-rival campaign instead compares
 $R_m(p,\pi)$ across policies $\pi$ fixed by code, and its rival-by-risk estimand
 is the change from low to high risk in the paired Always-Unsafe minus Always-Safe
-contrast.
+contrast, which we compare with the best response of
+\S\ref{sec:best-response}.
 
 The main outcome is whether an agent chooses \Unsafe{}. A race is the independent
 unit because later decisions depend on earlier states. We pool decisions only
 when reporting a cell's rate. For comparisons, we first calculate the difference
 within each matched repetition and then average those differences, so every
-repetition receives equal weight. A \emph{parse failure} is a response outside
+repetition receives equal weight. Intervals for rival contrasts and interactions
+are BCa bootstrap intervals over the ten matched blocks, so they rest on ten
+clusters. We also report sign-flip tests over the blocks, Holm-adjusted across
+the five interactions, and a logit with cluster-corrected errors for the log-odds scale. Other
+intervals are percentile bootstrap intervals over matched blocks. A \emph{parse failure} is a response outside
 the required action format; because the fallback changes later states, it marks
 the whole race as contaminated.
 \subsection{Evidence strata and admission}
@@ -407,7 +459,9 @@ endpoint-specific shapes are conditional on it.
   corresponding 95\% interval excludes zero. The right column gives the paired
   change in that effect from risk 0.1 to 0.9; solid outlines exclude zero and
   dashed outlines do not. Comparisons are within endpoints because endpoint
-  settings differ.}
+  settings differ. For reference, the exact best response gives a paired
+  Always-Unsafe minus Always-Safe effect of $+44.4$, $+88.3$ and $+77.8$ points
+  at risks 0.1, 0.6 and 0.9.}
   \Description{Two-panel figure. Panel a contains three response matrices,
   one per risk level, with five endpoint rows and four ordered scripted-opponent
   columns; every tile prints the measured Unsafe rate. Panel b contains five
@@ -418,7 +472,7 @@ endpoint-specific shapes are conditional on it.
   \label{fig:scripted-opponent-main}
 \end{figure*}
 
-\subsection{Fixed rivals reveal opponent-conditioned risk responses}
+\subsection{Fixed rivals against the best response}
 \label{sec:results-scripted}
 
 Every rate so far is mirror-match play, in which the rival is the endpoint.
@@ -439,50 +493,70 @@ GPT-5.5 at risk $0.1$, where the CAS rival draws $100.0\%$ and
 Always Unsafe is $97.8\%$, so this is a boundary case rather than a clean
 counterexample (Figure~\ref{fig:scripted-opponent-main}a). The paired
 difference between the two unconditional rivals is
-positive in every cell. All fifteen paired-block 95\% intervals have positive
-lower bounds, with the smallest at $+16.5$ points
-(Figure~\ref{fig:scripted-opponent-main}b). The response to the stated risk
-survives the change of design as well: against a fixed safe rival, no endpoint's
-\Unsafe{} rate rises as the stated risk rises.
+positive in every cell, as the best response predicts. All fifteen paired-block
+95\% intervals have positive lower bounds, with the smallest at $+16.5$ points
+(Figure~\ref{fig:scripted-opponent-main}b). Adjusted for the fifteen tests, every
+sign-flip $p$ value is 0.029, the smallest that ten blocks allow. The response to
+the stated risk survives the change of design as well: against a fixed safe
+rival, no endpoint's \Unsafe{} rate rises as the stated risk rises.
+
+The size of the contrast is where the endpoints differ from the best response.
+In 12 of the 15 cells the observed contrast is 10 or more points away from the
+best-response value, and for no endpoint do more than 2 of its 12 rival-by-risk
+cell rates fall inside the best-response range (none for Claude Sonnet 5 and
+GPT-5.4).
 
 \begin{table}[t]
 \caption{Does stated risk change the rival effect? Entries are the paired
-interaction $[(\mathrm{AU}-\mathrm{AS})_{0.9}-(\mathrm{AU}-\mathrm{AS})_{0.1}]$
-in percentage points on the rate scale, with 95\% percentile-bootstrap intervals
-over ten matched repetitions (ten clusters). Positive values mean that changing
-the rival matters more at high risk. Contracts are not identical: GPT-5.5 ran
-with reasoning set to low and a 1{,}024-token cap, most other endpoints with
-reasoning off and a 256-token cap, and one Claude Opus 5 cell on an earlier
-contract. Intervals are not adjusted for multiplicity.}
+interaction $[(\mathrm{AU}-\mathrm{AS})_{0.9}-(\mathrm{AU}-\mathrm{AS})_{0.1}]$,
+in percentage points with 95\% BCa intervals over ten matched blocks, and on the
+log-odds scale from a logit with cluster-corrected errors (ten clusters). Positive values
+mean that changing the rival matters more at high risk. The last row is the exact
+best response. Sign-flip tests over the blocks, Holm-adjusted across the five
+endpoints, give $p=0.010$ for GPT-5.5, $0.016$ for Claude Opus 5, $0.023$ for
+Claude Sonnet 5 and $1.00$ for the other two. The Gemini 3 Flash log-odds value
+rests on the Always-Unsafe cell at risk $0.1$, which is at the ceiling. Contracts
+are not identical: GPT-5.5 ran with reasoning set to low and a 1{,}024-token cap,
+most other endpoints with reasoning off and a 256-token cap, and one Claude Opus
+5 cell on an earlier contract. Percentile intervals, as drawn in the figure,
+give the same resolved signs.}
 \label{tab:rival-risk-interaction}
-% TODO-E3: BCa or permutation intervals, Holm-adjusted values and the log-odds interaction go here.
 \centering
-\footnotesize
-\begin{tabular}{@{}lr@{}}
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}lrr@{}}
 \toprule
-Endpoint & Rival $\times$ risk interaction \\
+Endpoint & Rate scale (pp) & Log odds \\
 \midrule
-Gemini 3 Flash  & $-1.8$ [$-7.9$, $3.7$] \\
-GPT-5.4         & $+2.3$ [$-4.6$, $9.4$] \\
-GPT-5.5         & $+36.4$ [$29.0$, $44.0$] \\
-Claude Sonnet 5 & $-18.9$ [$-25.1$, $-11.8$] \\
-Claude Opus 5   & $+29.2$ [$20.9$, $36.4$] \\
+Gemini 3 Flash  & $-1.8$ [$-8.9$, $2.9$] & $-2.57$ [$-3.45$, $-1.70$] \\
+GPT-5.4         & $+2.3$ [$-4.6$, $9.7$] & $-0.17$ [$-0.56$, $0.22$] \\
+GPT-5.5         & $+36.4$ [$29.3$, $44.3$] & $+0.49$ [$-0.73$, $1.71$] \\
+Claude Sonnet 5 & $-18.9$ [$-24.4$, $-10.8$] & $-1.05$ [$-1.49$, $-0.61$] \\
+Claude Opus 5   & $+29.2$ [$19.2$, $35.4$] & $+1.04$ [$0.51$, $1.58$] \\
+\midrule
+Best response   & $+33.3$ & not computed \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 The interaction in Table~\ref{tab:rival-risk-interaction} applies
-Equation~\ref{eq:opponent-conditioned-risk} directly to test whether the apparent
-risk response depends on the rival. Within each endpoint and its own contract,
-the rival contrast grows from low to high risk on Claude Opus 5 and GPT-5.5,
-shrinks on Claude Sonnet 5, and is unresolved on Gemini 3 Flash and GPT-5.4.
-There is therefore no universal ``risk amplifies rivalry'' pattern. The
-endpoints differ in shape, but decoding contracts differ too, so the
-cross-endpoint comparison is descriptive and the three shapes are not
-attributed to the models alone. With ten repetitions per cell, the two
-unresolved interactions are not shown to be zero. Each cell seats the endpoint
-five times in each seat, and percentile intervals over ten clusters can
-undercover.
+Equation~\ref{eq:opponent-conditioned-risk} directly and sets it beside the best
+response, whose interaction is positive. Within each endpoint and its own
+contract, Claude Sonnet 5 reverses that sign on both scales, so it plays
+relatively less against Always Unsafe at high risk than at low risk, where the
+best response plays more. Gemini 3 Flash and GPT-5.4 are flat on the rate scale,
+and GPT-5.4 is flat on the log-odds scale too. The negative Gemini log-odds value
+comes from one ceiling cell and is not read as a reversal. Claude Opus 5 shows
+the best-response sign on both scales, and its rate-scale value sits near the
+best-response $+33.3$, although its cell rates do not. The positive sign for
+GPT-5.5 holds on the rate scale but is not resolved on the log-odds scale, where
+the ceiling at risk $0.1$ compresses the contrast, so it depends on the scale.
+There is therefore no universal pattern. Decoding contracts differ, so the
+cross-endpoint comparison is descriptive and the observed shapes are not
+attributed to the models alone. With ten blocks per cell, the unresolved
+interactions are not shown to be zero. The best response is a point of
+reference, and Section~\ref{sec:best-response} explains why a sign reversal
+alone does not rule out noisy best-responding.
 
 The two conditional rivals make the dependence visible at the first move. They
 follow the same policy from round two onward and differ only in whether the rival
@@ -562,11 +636,17 @@ supplement S6.
 A self-play rate is not a stable trait of an endpoint. In self-play the
 endpoint supplies both sides of the interaction, so its early actions create
 the history its later actions respond to. Fixing the rival by code removes that
-loop. Every eligible endpoint still plays less \Unsafe{} as risk rises, but the
-rival effect grows with risk on two endpoints, shrinks on one and stays
-unresolved on two, within each endpoint's own contract. The direction of the risk
-response survives; its size and shape depend on the opponent that generates the
-history. The opponent can matter as much as the stated risk. Against the
+loop and lets us ask the sharper question: how far is each endpoint from the
+exact best response to the rival it faces? A positive rival contrast and a
+positive rival-by-risk interaction are what a best responder shows, so they are
+not the result. The result is the departure. Observed rates fall inside the
+best-response range in at most 2 of 12 cells for any endpoint. Claude Sonnet 5
+reverses the best-response interaction sign on both scales, Gemini 3 Flash and
+GPT-5.4 are flat where the best response is not, GPT-5.5 keeps the best-response
+sign only on the rate scale, and Claude Opus 5 shows it on both. Each reading
+holds within one endpoint and its own decoding contract.
+
+The opponent can matter as much as the stated risk. Against the
 Always-Safe rival, raising maximum private risk from $0.1$ to $0.9$ lowers
 \Unsafe{} play by 10.4 to 69.9 percentage points across endpoints. At fixed
 risk, replacing Always Safe with Always Unsafe raises it by 25.3 to 87.0 points.
@@ -576,24 +656,28 @@ This changes what a strategic-agent evaluation should report. Self-play
 estimates the outcome of two copies of one policy, a fixed rival estimates a
 response conditional on that declared policy, and a mixed pool estimates
 outcomes under its own population mix. We recommend, without having validated it
-beyond this game, a reporting package of a task-validity screen, a declared
-fixed-policy panel crossed with risk, whole-trajectory measures and crossed
-presentation controls. Presentation belongs in it because both the action-code
-mapping and the narrative skin moved rates. The trajectory contrast is a
-descriptive reference, not a target: one fixed policy is expected to occupy
-fewer paths than a population, and a match on one measure does not imply a
-shared mechanism.
+beyond this game, that the unit of report be each endpoint's departure from the
+best response against every declared rival, alongside a task-validity screen,
+whole-trajectory measures and crossed presentation controls. Presentation
+belongs in it because both the action-code mapping and the narrative skin moved
+rates. The trajectory contrast is a descriptive reference, not a target: one
+fixed policy is expected to occupy fewer paths than a population, and a match on
+one measure does not imply a shared mechanism.
 
 The scope is deliberately narrow. Nine commercial endpoints are not a model
 population, decoding contracts differ across endpoints, and the scripted panel
-uses four chosen policies. One Claude Opus 5 cell used an earlier decoding
-contract; removing it leaves all fourteen remaining rival contrasts positive.
-Provider-side temperature and seed handling could not be confirmed, so the
-closed endpoints cannot be regenerated exactly. The game omits collective harm,
-regulation and communication, so the results say nothing about general model
-safety or real organisations. An exploratory group-size study on one endpoint
-is in the supplement. The most informative next tests are adaptive rivals with
-declared policies, an open-weight replication with controlled decoding, a
+uses four chosen policies. The best response is risk neutral and knows the
+horizon, and a noisy best responder can flip the interaction sign, so the
+departures describe distance from one reference and not a verdict on rationality.
+One Claude Opus 5 cell used an earlier decoding contract; removing it leaves all
+fourteen remaining rival contrasts positive. Ten blocks per cell set the
+smallest attainable adjusted $p$ value at 0.029, and the interactions rest on ten
+clusters. Provider-side temperature and seed handling could not be confirmed, so
+the closed endpoints cannot be regenerated exactly. The game omits collective
+harm, regulation and communication, so the results say nothing about general
+model safety or real organisations. An exploratory group-size study on one
+endpoint is in the supplement. The most informative next tests are adaptive
+rivals and cross-play, an open-weight replication with controlled decoding, a
 denser risk grid around the observed switches, and the same matched design in a
 second game.
 
@@ -618,6 +702,7 @@ not retained. The authors checked the resulting code and prose against the
 archived evidence and take responsibility for the manuscript, analyses and
 citations.
 
+\clearpage
 \bibliographystyle{named}
 \bibliography{../references}
 
