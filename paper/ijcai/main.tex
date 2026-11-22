@@ -267,7 +267,7 @@ present. These are shape references, not mechanisms attributed to the endpoints.
 Against a rival whose policy is fixed, the race is a single-agent decision
 problem, and we solve it exactly by dynamic programming over the round, the
 progress gap and the agent's own Unsafe count. The solver maximises expected
-total payoff, so it is risk neutral, and it knows the horizon rule that the
+total payoff, so it is risk neutral, and it knows the rival's policy, which the
 endpoints are never told. A 6{,}000-race simulation in the game engine
 reproduces its payoffs and Unsafe rates (largest $|z|$ of 1.5).
 Table~\ref{tab:best-response} gives the resulting Unsafe rates. Against
@@ -300,7 +300,7 @@ at risks $0.1$, $0.6$ and $0.9$, and its rival-by-risk interaction is $+33.3$
 points. A positive contrast and a positive interaction are what a best responder
 does, so we do not present them as surprising. The contribution is how far, and
 in what shape, each endpoint departs from them. Two limits apply. The benchmark is
-risk neutral and knows the horizon, which the endpoints may not, so it marks a
+risk neutral and knows the rival's policy, which the endpoints must infer, so it marks a
 reference point and not what an endpoint ought to play. A noisy best responder,
 one that picks actions with probability rising in their value, can also produce a
 negative interaction at intermediate noise, so the interaction sign alone does
@@ -666,8 +666,7 @@ one measure does not imply a shared mechanism.
 
 The scope is deliberately narrow. Nine commercial endpoints are not a model
 population, decoding contracts differ across endpoints, and the scripted panel
-uses four chosen policies. The best response is risk neutral and knows the
-horizon, and a noisy best responder can flip the interaction sign, so the
+uses four chosen policies. The best response is risk neutral and knows the rival's policy, and a noisy best responder can flip the interaction sign, so the
 departures describe distance from one reference and not a verdict on rationality.
 One Claude Opus 5 cell used an earlier decoding contract; removing it leaves all
 fourteen remaining rival contrasts positive. Ten blocks per cell set the
