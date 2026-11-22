@@ -120,3 +120,31 @@ failure record.
    that cannot push for an account-verification reason is treated like a
    quota refusal at push validation (zero routes started).
 3. All 18 slices restart from the beginning; no route cell had been collected.
+
+## Amendment 3, 2026-11-23: E4 contract-swap cells (declared before any E4 request)
+
+Purpose: test whether Claude Sonnet 5's reversal of the best-response
+interaction sign is produced by its decoding contract. Claude Sonnet 5 is run
+under the GPT-5.5 contract (`reasoning=low`, 1,024-token cap) on rivals AS and
+AU at risks 0.1 and 0.9, canonical block A (pairs with its original cells).
+Baked with `--add-reasoning-low claude-sonnet-5`. The legacy Claude Opus 5
+`AS@0.6` cell is also re-collected under the active contract (low, 1,024).
+Filed under `results/frontier/scripted_opponent_contract_swap/`.
+
+Each cell runs on an E8 identity after that identity's E8 slice has finished
+(so the E8 assignment is never displaced):
+
+| Cell | Identity |
+|---|---|
+| Sonnet 5 low AS 0.1 | tnkiet |
+| Sonnet 5 low AS 0.9 | hunhtrungkit |
+| Sonnet 5 low AU 0.1 | foundnotkiet |
+| Sonnet 5 low AU 0.9 | trungkiet |
+| Opus 5 low AS 0.6 | trngthtnhi |
+
+Analysis: the interaction for Sonnet 5 under the swapped contract, paired by
+repetition with the original block-A cells only for description; the swapped
+interaction is computed from the four swapped cells alone. Same stopping rule;
+quota refusals are failure records. If the sign stays negative the reversal is
+not a contract artefact; if it turns positive the paper says the reversal is
+contract-dependent.
