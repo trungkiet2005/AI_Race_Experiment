@@ -1,0 +1,481 @@
+{
+  "table2_reproduced": true,
+  "interactions": [
+    {
+      "endpoint": "anthropic/claude-opus-5@default",
+      "n_blocks": 10,
+      "rate_interaction_pp": 29.17421467421467,
+      "percentile_ci_pp": [
+        20.888888888888886,
+        36.37407037407037
+      ],
+      "bca_ci_pp": [
+        19.1965811965812,
+        35.439005439005435
+      ],
+      "bca_z0": -0.05474703125272558,
+      "bca_accel": -0.04997542022483563,
+      "signflip_ci_pp": [
+        20.42114285714286,
+        38.77742857142857
+      ],
+      "signflip_p": 0.00390625,
+      "logodds_corner": {
+        "estimate": 1.0445110462706957,
+        "se_cluster": 0.235106806972157,
+        "t": 4.442708655366129,
+        "df": 9,
+        "p_value": 0.0016171484906909758,
+        "ci95_low": 0.5126624988560158,
+        "ci95_high": 1.5763595936853756,
+        "n_decisions": 372,
+        "n_clusters": 10
+      },
+      "logodds_corner_cluster_bootstrap_ci": [
+        0.6405423387194887,
+        1.5052040843168968
+      ],
+      "logodds_corner_bootstrap_draws_ok": 1000,
+      "logodds_linear_risk": {
+        "estimate": 3.678001706285698,
+        "se_cluster": 1.4017770900730682,
+        "t": 2.6238135380668695,
+        "df": 9,
+        "p_value": 0.027637576082368612,
+        "ci95_low": 0.5069616213304826,
+        "ci95_high": 6.849041791240913,
+        "n_decisions": 558,
+        "n_clusters": 10
+      },
+      "interaction_cells_flagged": {
+        "AU@0.1": "ceiling",
+        "AS@0.9": "floor"
+      },
+      "holm_p_signflip_5": 0.015625,
+      "holm_p_logodds_corner_5": 0.004851445472072927,
+      "holm_p_logodds_linear_5": 0.08291272824710584
+    },
+    {
+      "endpoint": "anthropic/claude-sonnet-5@default",
+      "n_blocks": 10,
+      "rate_interaction_pp": -18.850441225441223,
+      "percentile_ci_pp": [
+        -25.060613691863693,
+        -11.801587301587302
+      ],
+      "bca_ci_pp": [
+        -24.44990597725459,
+        -10.775946275946277
+      ],
+      "bca_z0": 0.04077533853700515,
+      "bca_accel": 0.04266740303935333,
+      "signflip_ci_pp": [
+        -26.755187499999998,
+        -10.593062500000002
+      ],
+      "signflip_p": 0.0078125,
+      "logodds_corner": {
+        "estimate": -1.0491423080010038,
+        "se_cluster": 0.19621164482968861,
+        "t": -5.346993084491278,
+        "df": 9,
+        "p_value": 0.0004641825989598356,
+        "ci95_low": -1.4930038857769012,
+        "ci95_high": -0.6052807302251064,
+        "n_decisions": 372,
+        "n_clusters": 10
+      },
+      "logodds_corner_cluster_bootstrap_ci": [
+        -1.407884218294666,
+        -0.6410062460148687
+      ],
+      "logodds_corner_bootstrap_draws_ok": 1000,
+      "logodds_linear_risk": {
+        "estimate": -1.2300962343653952,
+        "se_cluster": 0.2539859004022898,
+        "t": -4.843167405816773,
+        "df": 9,
+        "p_value": 0.0009169841195380568,
+        "ci95_low": -1.8046522582101865,
+        "ci95_high": -0.6555402105206038,
+        "n_decisions": 558,
+        "n_clusters": 10
+      },
+      "interaction_cells_flagged": {},
+      "holm_p_signflip_5": 0.0234375,
+      "holm_p_logodds_corner_5": 0.0018567303958393424,
+      "holm_p_logodds_linear_5": 0.003667936478152227
+    },
+    {
+      "endpoint": "google/gemini-3-flash-preview",
+      "n_blocks": 10,
+      "rate_interaction_pp": -1.7757936507936511,
+      "percentile_ci_pp": [
+        -7.936507936507945,
+        3.749999999999998
+      ],
+      "bca_ci_pp": [
+        -8.898809523809527,
+        2.946428571428572
+      ],
+      "bca_z0": -0.049883783633526836,
+      "bca_accel": -0.046423933015829005,
+      "signflip_ci_pp": [
+        -9.120555555555555,
+        4.6839166666666685
+      ],
+      "signflip_p": 0.625,
+      "logodds_corner": {
+        "estimate": -2.573702148571559,
+        "se_cluster": 0.3882146251087648,
+        "t": -6.6295857551747135,
+        "df": 9,
+        "p_value": 9.595733277574331e-05,
+        "ci95_low": -3.451904643464371,
+        "ci95_high": -1.695499653678747,
+        "n_decisions": 372,
+        "n_clusters": 10
+      },
+      "logodds_corner_cluster_bootstrap_ci": [
+        -2.9893738264589973,
+        -2.190053893877182
+      ],
+      "logodds_corner_bootstrap_draws_ok": 1000,
+      "logodds_linear_risk": {
+        "estimate": -1.8791842566508015,
+        "se_cluster": 0.29037458221877027,
+        "t": -6.471586604763535,
+        "df": 9,
+        "p_value": 0.00011520071875235879,
+        "ci95_low": -2.536057197711529,
+        "ci95_high": -1.222311315590074,
+        "n_decisions": 558,
+        "n_clusters": 10
+      },
+      "interaction_cells_flagged": {
+        "AU@0.1": "ceiling"
+      },
+      "holm_p_signflip_5": 1.0,
+      "holm_p_logodds_corner_5": 0.00047978666387871654,
+      "holm_p_logodds_linear_5": 0.0005760035937617939
+    },
+    {
+      "endpoint": "openai/gpt-5.4-2026-03-05",
+      "n_blocks": 10,
+      "rate_interaction_pp": 2.303571428571428,
+      "percentile_ci_pp": [
+        -4.6250000000000036,
+        9.429017857142757
+      ],
+      "bca_ci_pp": [
+        -4.625000000000002,
+        9.732142857142856
+      ],
+      "bca_z0": 0.007012350067633825,
+      "bca_accel": 0.00728989154672432,
+      "signflip_ci_pp": [
+        -6.552750000000001,
+        11.662999999999998
+      ],
+      "signflip_p": 0.625,
+      "logodds_corner": {
+        "estimate": -0.1694728040170263,
+        "se_cluster": 0.17133043799210596,
+        "t": -0.9891575951310809,
+        "df": 9,
+        "p_value": 0.34843200754873677,
+        "ci95_low": -0.5570491815262224,
+        "ci95_high": 0.21810357349216986,
+        "n_decisions": 372,
+        "n_clusters": 10
+      },
+      "logodds_corner_cluster_bootstrap_ci": [
+        -0.44631920736003416,
+        0.18339827230883457
+      ],
+      "logodds_corner_bootstrap_draws_ok": 1000,
+      "logodds_linear_risk": {
+        "estimate": -0.24234295916595838,
+        "se_cluster": 0.19813733168804165,
+        "t": -1.2231059997694755,
+        "df": 9,
+        "p_value": 0.2523484916941174,
+        "ci95_low": -0.6905607432617855,
+        "ci95_high": 0.20587482492986875,
+        "n_decisions": 558,
+        "n_clusters": 10
+      },
+      "interaction_cells_flagged": {},
+      "holm_p_signflip_5": 1.0,
+      "holm_p_logodds_corner_5": 0.6968640150974735,
+      "holm_p_logodds_linear_5": 0.3050801277424196
+    },
+    {
+      "endpoint": "openai/gpt-5.5-2026-04-23",
+      "n_blocks": 10,
+      "rate_interaction_pp": 36.378080253080256,
+      "percentile_ci_pp": [
+        29.012820512820507,
+        43.95979020979021
+      ],
+      "bca_ci_pp": [
+        29.28571428571429,
+        44.26302863802864
+      ],
+      "bca_z0": 0.012195048822353095,
+      "bca_accel": 0.011415927559127998,
+      "signflip_ci_pp": [
+        26.67387500000001,
+        45.79262500000001
+      ],
+      "signflip_p": 0.001953125,
+      "logodds_corner": {
+        "estimate": 0.48666952049137846,
+        "se_cluster": 0.5399295094769675,
+        "t": 0.901357514174059,
+        "df": 9,
+        "p_value": 0.3908810238490821,
+        "ci95_low": -0.7347358867780649,
+        "ci95_high": 1.7080749277608218,
+        "n_decisions": 372,
+        "n_clusters": 10
+      },
+      "logodds_corner_cluster_bootstrap_ci": [
+        -1.1755339045860513,
+        1.2993791413956433
+      ],
+      "logodds_corner_bootstrap_draws_ok": 1000,
+      "logodds_linear_risk": {
+        "estimate": 0.9181146324786668,
+        "se_cluster": 0.5874871497444812,
+        "t": 1.5627824929923777,
+        "df": 9,
+        "p_value": 0.1525400638712098,
+        "ci95_low": -0.41087363136771315,
+        "ci95_high": 2.2471028963250466,
+        "n_decisions": 558,
+        "n_clusters": 10
+      },
+      "interaction_cells_flagged": {
+        "AU@0.1": "ceiling"
+      },
+      "holm_p_signflip_5": 0.009765625,
+      "holm_p_logodds_corner_5": 0.6968640150974735,
+      "holm_p_logodds_linear_5": 0.3050801277424196
+    }
+  ],
+  "au_minus_as_contrasts": [
+    {
+      "endpoint": "anthropic/claude-opus-5@default",
+      "risk": 0.1,
+      "au_minus_as_pp": 30.14063714063714,
+      "signflip_ci_pp": [
+        14.774625000000002,
+        46.245749999999994
+      ],
+      "signflip_p": 0.015625,
+      "min_attainable_p": 0.001953125,
+      "flags": {
+        "AU": "ceiling"
+      },
+      "holm_p_signflip_15": 0.029296875
+    },
+    {
+      "endpoint": "anthropic/claude-opus-5@default",
+      "risk": 0.6,
+      "au_minus_as_pp": 87.02665390165392,
+      "signflip_ci_pp": [
+        83.6578125,
+        90.20756250000001
+      ],
+      "signflip_p": 0.001953125,
+      "min_attainable_p": 0.001953125,
+      "flags": {
+        "AS": "floor"
+      },
+      "holm_p_signflip_15": 0.029296875
+    },
+    {
+      "endpoint": "anthropic/claude-opus-5@default",
+      "risk": 0.9,
+      "au_minus_as_pp": 59.31485181485182,
+      "signflip_ci_pp": [
+        49.84454545454546,
+        68.401
+      ],
+      "signflip_p": 0.001953125,
+      "min_attainable_p": 0.001953125,
+      "flags": {
+        "AS": "floor"
+      },
+      "holm_p_signflip_15": 0.029296875
+    },
+    {
+      "endpoint": "anthropic/claude-sonnet-5@default",
+      "risk": 0.1,
+      "au_minus_as_pp": 63.84497446997448,
+      "signflip_ci_pp": [
+        53.33763636363636,
+        74.23072727272726
+      ],
+      "signflip_p": 0.001953125,
+      "min_attainable_p": 0.001953125,
+      "flags": {},
+      "holm_p_signflip_15": 0.029296875
+    },
+    {
+      "endpoint": "anthropic/claude-sonnet-5@default",
+      "risk": 0.6,
+      "au_minus_as_pp": 65.68588356088357,
+      "signflip_ci_pp": [
+        61.38909090909092,
+        70.01127272727274
+      ],
+      "signflip_p": 0.001953125,
+      "min_attainable_p": 0.001953125,
+      "flags": {},
+      "holm_p_signflip_15": 0.029296875
+    },
+    {
+      "endpoint": "anthropic/claude-sonnet-5@default",
+      "risk": 0.9,
+      "au_minus_as_pp": 44.994533244533244,
+      "signflip_ci_pp": [
+        41.20331818181818,
+        48.78494318181818
+      ],
+      "signflip_p": 0.001953125,
+      "min_attainable_p": 0.001953125,
+      "flags": {},
+      "holm_p_signflip_15": 0.029296875
+    },
+    {
+      "endpoint": "google/gemini-3-flash-preview",
+      "risk": 0.1,
+      "au_minus_as_pp": 73.46701909201909,
+      "signflip_ci_pp": [
+        66.60228571428571,
+        80.33028571428572
+      ],
+      "signflip_p": 0.001953125,
+      "min_attainable_p": 0.001953125,
+      "flags": {
+        "AU": "ceiling"
+      },
+      "holm_p_signflip_15": 0.029296875
+    },
+    {
+      "endpoint": "google/gemini-3-flash-preview",
+      "risk": 0.6,
+      "au_minus_as_pp": 67.37910700410701,
+      "signflip_ci_pp": [
+        54.88169230769231,
+        79.50538461538463
+      ],
+      "signflip_p": 0.001953125,
+      "min_attainable_p": 0.001953125,
+      "flags": {},
+      "holm_p_signflip_15": 0.029296875
+    },
+    {
+      "endpoint": "google/gemini-3-flash-preview",
+      "risk": 0.9,
+      "au_minus_as_pp": 71.69122544122544,
+      "signflip_ci_pp": [
+        64.16815277777778,
+        79.17495833333334
+      ],
+      "signflip_p": 0.001953125,
+      "min_attainable_p": 0.001953125,
+      "flags": {},
+      "holm_p_signflip_15": 0.029296875
+    },
+    {
+      "endpoint": "openai/gpt-5.4-2026-03-05",
+      "risk": 0.1,
+      "au_minus_as_pp": 47.53930791430791,
+      "signflip_ci_pp": [
+        34.76131250000001,
+        59.8835
+      ],
+      "signflip_p": 0.001953125,
+      "min_attainable_p": 0.001953125,
+      "flags": {},
+      "holm_p_signflip_15": 0.029296875
+    },
+    {
+      "endpoint": "openai/gpt-5.4-2026-03-05",
+      "risk": 0.6,
+      "au_minus_as_pp": 48.03299478299479,
+      "signflip_ci_pp": [
+        38.61112500000001,
+        56.595000000000006
+      ],
+      "signflip_p": 0.001953125,
+      "min_attainable_p": 0.001953125,
+      "flags": {},
+      "holm_p_signflip_15": 0.029296875
+    },
+    {
+      "endpoint": "openai/gpt-5.4-2026-03-05",
+      "risk": 0.9,
+      "au_minus_as_pp": 49.84287934287934,
+      "signflip_ci_pp": [
+        34.28690909090909,
+        61.52745454545455
+      ],
+      "signflip_p": 0.00390625,
+      "min_attainable_p": 0.001953125,
+      "flags": {},
+      "holm_p_signflip_15": 0.029296875
+    },
+    {
+      "endpoint": "openai/gpt-5.5-2026-04-23",
+      "risk": 0.1,
+      "au_minus_as_pp": 25.27346264846265,
+      "signflip_ci_pp": [
+        18.68867032967033,
+        31.853824175824176
+      ],
+      "signflip_p": 0.001953125,
+      "min_attainable_p": 0.001953125,
+      "flags": {
+        "AU": "ceiling"
+      },
+      "holm_p_signflip_15": 0.029296875
+    },
+    {
+      "endpoint": "openai/gpt-5.5-2026-04-23",
+      "risk": 0.6,
+      "au_minus_as_pp": 66.13765401265401,
+      "signflip_ci_pp": [
+        61.58135164835164,
+        70.74268131868132
+      ],
+      "signflip_p": 0.001953125,
+      "min_attainable_p": 0.001953125,
+      "flags": {},
+      "holm_p_signflip_15": 0.029296875
+    },
+    {
+      "endpoint": "openai/gpt-5.5-2026-04-23",
+      "risk": 0.9,
+      "au_minus_as_pp": 61.651542901542896,
+      "signflip_ci_pp": [
+        51.66830769230769,
+        71.36253846153846
+      ],
+      "signflip_p": 0.001953125,
+      "min_attainable_p": 0.001953125,
+      "flags": {},
+      "holm_p_signflip_15": 0.029296875
+    }
+  ],
+  "min_attainable_signflip_p": 0.001953125,
+  "notes": {
+    "logit": "Firth-penalised logit on decision rows; CR1 sandwich clustered on repetition; t with G-1=9 df; corner = AU/AS x risk 0.1/0.9 (matches Table 2); linear = risk as numeric over 0.1/0.6/0.9",
+    "signflip": "exact, 2^10 sign patterns over matched repetition blocks, two-sided; interval by test inversion on a 4001-point grid",
+    "bca": "200000 resamples, jackknife acceleration",
+    "ceiling_floor": "flag when pooled rate >= 0.95 or <= 0.05"
+  }
+}

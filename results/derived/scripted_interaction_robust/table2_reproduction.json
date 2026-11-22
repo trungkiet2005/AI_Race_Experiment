@@ -1,0 +1,87 @@
+{
+  "anthropic/claude-opus-5@default": {
+    "recomputed_pp": [
+      29.2,
+      20.9,
+      36.4
+    ],
+    "manuscript_pp": [
+      29.2,
+      20.9,
+      36.4
+    ],
+    "match": true,
+    "percentile_ci_pp_full": [
+      20.888888888888886,
+      36.37407037407037
+    ]
+  },
+  "anthropic/claude-sonnet-5@default": {
+    "recomputed_pp": [
+      -18.9,
+      -25.1,
+      -11.8
+    ],
+    "manuscript_pp": [
+      -18.9,
+      -25.1,
+      -11.8
+    ],
+    "match": true,
+    "percentile_ci_pp_full": [
+      -25.060613691863693,
+      -11.801587301587302
+    ]
+  },
+  "google/gemini-3-flash-preview": {
+    "recomputed_pp": [
+      -1.8,
+      -7.9,
+      3.7
+    ],
+    "manuscript_pp": [
+      -1.8,
+      -7.9,
+      3.7
+    ],
+    "match": true,
+    "percentile_ci_pp_full": [
+      -7.936507936507945,
+      3.749999999999998
+    ]
+  },
+  "openai/gpt-5.4-2026-03-05": {
+    "recomputed_pp": [
+      2.3,
+      -4.6,
+      9.4
+    ],
+    "manuscript_pp": [
+      2.3,
+      -4.6,
+      9.4
+    ],
+    "match": true,
+    "percentile_ci_pp_full": [
+      -4.6250000000000036,
+      9.429017857142757
+    ]
+  },
+  "openai/gpt-5.5-2026-04-23": {
+    "recomputed_pp": [
+      36.4,
+      29.0,
+      44.0
+    ],
+    "manuscript_pp": [
+      36.4,
+      29.0,
+      44.0
+    ],
+    "match": true,
+    "percentile_ci_pp_full": [
+      29.012820512820507,
+      43.95979020979021
+    ]
+  }
+}
