@@ -35,7 +35,7 @@
 /TemplateVersion (IJCAI.2027.0)
 }
 
-\title{Supplementary Material: Self-Play Can Mask Frontier LLM Risk Responses in AI Development Races}
+\title{Supplementary Material: Self-Play Rates Are Not Endpoint Risk Profiles:\\Fixed-Rival Audits of Frontier LLMs in an AI Race Game}
 
 \author{
     Anonymous Submission
@@ -46,8 +46,7 @@
 \maketitle
 
 \begin{abstract}
-This supplement supports Self-Play Can Mask Frontier LLM Risk Responses in AI
-Development Races. It records the quality-control screen,
+This supplement supports ``Self-Play Rates Are Not Endpoint Risk Profiles: Fixed-Rival Audits of Frontier LLMs in an AI Race Game''. It records the quality-control screen,
 the theory comparison, the scripted-rival evidence, and the human diversity
 analysis, together with prompt and game robustness checks. These materials use
 the same routes, task and evidence boundaries as the main paper and do not
@@ -97,6 +96,13 @@ eligibility outcome from the probe battery below. A
 matters. \emph{Model} is used generically for a language-model system. The
 screen outcome is either \emph{screen-passing} (eligible) or
 \emph{screen-failing} (excluded); it is not a capability score.
+
+Throughout, \emph{confirmatory} means that the protocol, endpoint, prompt,
+configuration, race count and exclusion rules were fixed in the run manifest
+when the run started; it does not mean preregistered. The screen verdicts for
+three of nine routes, which came after their gameplay, and the final three
+GPT-5.5 scripted cells, run after a declared account reallocation, are not
+confirmatory in this sense.
 
 \appendix
 % The evidence package uses the explicit S1--S7 roadmap below; suppress the
@@ -239,6 +245,14 @@ reported in this supplement beside the five admitted ones. Four further
 advertised routes never produced a scoreable answer at all, because transport
 failed before any probe was sampled; they were retained as failure records and
 never replaced by a substitute endpoint.
+
+\paragraph{Stability of the admitted set.} Within the observed stability box,
+the admitted set is unchanged over all 676 combinations of the three achievable
+thresholds. The boundary is nevertheless visible: lowering state reconstruction
+by one answer, from the 75\% rule to the next attainable score of 73.3\%,
+admits Gemini 3.1 Flash Lite. This sensitivity is why the screen supports
+inclusion rather than a capability ranking, and why the admitted/refused split,
+which follows the route name, is best read as a size proxy.
 
 \begin{comment}
 \subsection{A second, larger battery on the one model with published weights}
@@ -597,6 +611,33 @@ the analysis fails if an already represented route could replace the primary
 run.
 
 \section{Evolutionary benchmark sensitivity}
+
+\subsection{Endpoint profiles against the benchmark}
+\label{app:egt-profiles}
+
+Figure~\ref{fig:theory-behaviour} compares the endpoint profiles with the
+reconstructed evolutionary benchmark in a common risk coordinate. The
+benchmark is a shape reference. The closest weak-selection cell is the best of
+90 cells over three risk points, and the source study's human-fitted values
+coincide with it.
+
+\begin{figure*}[t]
+    \centering
+    \includegraphics[width=\textwidth]{../../figures/paper/theory_versus_behaviour.pdf}
+    \caption{The evolutionary benchmark and the eligible endpoint profiles in
+    a common risk coordinate. (a) The direct comparison keeps the two
+    prespecified profiles, Gemini 3 Flash and Claude Sonnet 5, with individual
+    race rates behind their means. The small-mutation limit is step-like at
+    strong selection and graded near weak selection, while both direct profiles
+    move gradually. (b) Each dumbbell compares the root-mean-square error over the
+    three matched risk levels for the reference strong-selection regime
+    ($\beta=2,\ \mu=.02$) and the best weak-selection regime found in the sweep
+    ($\beta=.01,\ \mu=.05$). All five eligible endpoints are closer to the
+    weak-selection fit; Claude Opus 5 remains the qualitative near-step
+    exception in panel (b).}
+    \label{fig:theory-behaviour}
+\end{figure*}
+
 
 \subsection{Selection-strength sweep of the evolutionary benchmark}
 \label{app:egt-beta}
@@ -1418,6 +1459,30 @@ seat counterbalance is not five and five, or whose rival deviated from the
 strategy its directory claims.
 
 \section{Human reference and trajectory-diversity robustness}
+
+\subsection{Endpoint samples against matched human dyad draws}
+\label{app:diversity-figure}
+
+Of 341 released participants, 340 have complete five-round paths. The primary
+comparison uses the 336 participants whose partner is also complete, forming 168
+dyads. The reconstruction check of the source study's dynamic model uses 338
+participants and 2{,}888 round-level observations (Section~\ref{app:human-benchmark-replication}).
+Figure~\ref{fig:diversity} shows the comparison summarised in the main paper.
+The human reference is one population playing one game, and an endpoint sample
+comes from one fixed policy at one decoding setting, so the contrast is
+descriptive.
+
+\begin{figure*}[t]
+    \centering
+    \includegraphics[width=\textwidth]{../../figures/paper/human_versus_model.pdf}
+    \caption{Repeated samples from eligible endpoints usually occupy fewer paths
+    than matched human dyad draws. (a) Distinct first-five-round paths; the dashed
+    line is the minimum in $20{,}000$ matched draws (13/15 cells fall below it).
+    (b) Frequency-ranked paths over 60 trajectories. (c) The modal joint-action
+    sequence. A participant-level sensitivity places all 15 cells below every draw.}
+    \label{fig:diversity}
+\end{figure*}
+
 
 % Pilot, classifier, embedding, persona and archetype analyses are retained in
 % the repository as extended artifacts rather than in the concise supplement.
