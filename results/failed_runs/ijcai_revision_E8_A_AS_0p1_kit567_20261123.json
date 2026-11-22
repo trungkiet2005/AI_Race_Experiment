@@ -1,0 +1,17 @@
+{
+  "schema": "failure-record-v1",
+  "date_utc": "2026-11-22T23:45:03.012145Z",
+  "plan": "docs/ijcai-revision-collection-plan-2026-11-23.md",
+  "slice": {
+    "block": "A",
+    "strategy": "AS",
+    "risk": 0.1,
+    "group": "refused"
+  },
+  "identity": "kit567",
+  "stage": "push validation run on gemini-3-flash-preview (not an assigned route)",
+  "error": "HTTP 403 max estimated cost of operation ($0.00427425) exceeds available quota (based on max_output_tokens)",
+  "assigned_routes_started": 0,
+  "source_sha256": "f0a0158e54b5d6ea63182a866bd4f74395f37f8f6a41150e27bb8fccfb3d3134",
+  "classification": "quota refusal; never model evidence"
+}

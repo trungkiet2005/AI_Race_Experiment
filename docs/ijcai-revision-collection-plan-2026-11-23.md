@@ -84,3 +84,18 @@ GPT-5.4 interactions away from zero, the "flat" description changes; if Claude
 Sonnet 5 stays negative across blocks, its reversal of the best-response sign
 replicates. If refused routes show the same rival ordering, the screen does not
 drive the rival result. All outcomes are reported.
+
+## Amendment 1, 2026-11-23 (before any assigned route ran)
+
+The first slice (E8 A AS 0.1 on `kit567`) was refused with HTTP 403 during the
+push's own validation run on `gemini-3-flash-preview`, before any assigned
+route was requested (failure record
+`results/failed_runs/ijcai_revision_E8_A_AS_0p1_kit567_20261123.json`). No
+route data exists for it, so replacing the identity cannot select on an
+outcome. Rule added: an identity refused **at push validation, with zero
+assigned routes started**, is replaced by the next unused identity in this
+fixed reserve order: `chiboiz`, `chinguyentran`, `trnnguynchis`, `vkhoinguyen`,
+`nguyendinhhaduong`, `nvviet05`, `tntduong`. A refusal after any assigned route
+has started keeps the original stopping rule: the affected route cells are
+failure records and are not moved. Every replacement is logged with its
+failure record.
