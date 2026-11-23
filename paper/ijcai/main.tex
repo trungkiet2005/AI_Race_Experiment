@@ -60,8 +60,9 @@ contrast is not the finding. The finding is the departure. For every endpoint,
 observed rates sit inside the best-response range in at most 2 of 12 cells.
 Within each endpoint and its own decoding contract, Claude Sonnet 5 reverses the
 best-response sign of the rival-by-risk interaction on both a rate and a
-log-odds scale, and the reversal recurs, larger, in a second independent block
-of matched races collected two months later. Claude Opus 5 keeps the
+log-odds scale. The reversal recurs, larger, in a second independent block of
+matched races collected two months later, and under another endpoint's
+decoding contract. Claude Opus 5 keeps the
 best-response sign on the rate scale in both blocks, and the other endpoints are
 small or null where the best response is large.
 
@@ -551,7 +552,9 @@ relatively less against Always Unsafe at high risk than at low risk, where the
 best response plays more. A second block of twenty races per rival and risk,
 collected two months later on new seeds, repeats the reversal at a larger size,
 and pooling both blocks gives $-25.9$ points (Holm $p<0.001$) and a negative
-log-odds value. Claude Opus 5 keeps the best-response sign on the rate scale in
+log-odds value. Run under the GPT-5.5 contract, with reasoning set to low and a
+1{,}024-token cap, it gives $-35.2$ points [$-42.4$, $-29.9$], so the reversal
+is not a product of its decoding contract. Claude Opus 5 keeps the best-response sign on the rate scale in
 both blocks, but its pooled log-odds value is not resolved, because its cells
 sit at the ceiling and the floor. Gemini 3 Flash and GPT-5.4 stay within five
 points of zero on the rate scale, where the best response predicts $+33.3$. Their
@@ -678,8 +681,8 @@ The scope is deliberately narrow. Nine commercial endpoints are not a model
 population, decoding contracts differ across endpoints, and the scripted panel
 uses four chosen policies. The best response is risk neutral and knows the rival's policy, and a noisy best responder can flip the interaction sign, so the
 departures describe distance from one reference and not a verdict on rationality.
-One Claude Opus 5 cell used an earlier decoding contract; removing it leaves all
-fourteen remaining rival contrasts positive. The interactions rest on
+One Claude Opus 5 cell used an earlier decoding contract; re-collected under
+the active contract it stays at the floor (4.3\% against 1.1\% \Unsafe{}). The interactions rest on
 twenty matched blocks per endpoint at most, and the second block is a later
 re-administration under a larger output cap, not an identical replication. Provider-side temperature and seed handling could not be confirmed, so
 the closed endpoints cannot be regenerated exactly. The game omits collective

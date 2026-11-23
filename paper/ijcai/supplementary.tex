@@ -1354,9 +1354,12 @@ metadata limitation rather than a gameplay failure.
 
 \paragraph{One-cell contract sensitivity.} The one Claude Opus 5 cell collected
 under the legacy decoding contract is \emph{Always Safe} at risk $0.6$. A
-predeclared harmonisation attempt under the active contract returned a quota
-403 before any race or model output was produced, so it is retained as an
-infrastructure failure and the existing cell is not replaced. Excluding it as a
+first harmonisation attempt under the active contract returned a quota 403
+before any race was played and is retained as an infrastructure failure. A
+second, declared attempt completed: under the active contract the cell plays
+\Unsafe{} on 4.3\% of decisions, against 1.1\% under the legacy contract, so
+both sit at the floor. The legacy cell is kept as collected and the new cell is
+reported beside it, not in its place. Excluding it as a
 read-only scope check removes one $\text{Always Unsafe} - \text{Always Safe}$
 contrast and one four-strategy ordering cell. The remaining evidence still has
 positive rival contrasts in $14/14$ cells and the weak ordering in $13/14$
@@ -1591,6 +1594,15 @@ screen score, reverses the ordering at $-22.1$ points, playing \Unsafe{} on
 $86.0\%$ of its decisions against Always Safe. The direction of the rival effect
 in the main paper therefore does not depend on the screen, except for the
 endpoint that the screen scores lowest.
+
+The decoding contract does not produce Claude Sonnet 5's reversal. Its four
+interaction cells were re-run on the first block's seeds under the GPT-5.5
+contract (reasoning set to low, 1{,}024-token cap). The interaction is $-35.2$
+points [$-42.4$, $-29.9$] (exact sign-flip $p=0.002$, the smallest ten blocks
+allow), against $-18.9$ under its own contract. The Always-Unsafe cell at risk
+$0.1$ reaches 100\% under the swapped contract, which enlarges the negative
+value, but the sign does not depend on it: the Always-Unsafe minus Always-Safe
+contrast falls from $+80.6$ points at risk $0.1$ to $+45.4$ at risk $0.9$.
 
 \section{Human reference and trajectory-diversity robustness}
 
