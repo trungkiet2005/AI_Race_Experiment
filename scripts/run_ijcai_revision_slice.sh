@@ -45,17 +45,51 @@ python3 scripts/bake_scripted_opponent_cell.py --strategy "$STRAT" --risk "$RISK
   --output "$WORK/ai_race_scripted_opponent.py" || exit 3
 shasum -a 256 "$WORK/ai_race_scripted_opponent.py"
 
-echo "== push $(date -u +%T)"
-pool b t push "$TASK" -f "$WORK/ai_race_scripted_opponent.py" --wait || { echo "PUSH_FAILED"; exit 4; }
+# Long operations are never awaited inside one CLI call (the pool wrapper kills a
+# call after 900 s); they are started and then polled.
+task_status() { pool b t status "$TASK" 2>&1 | awk '/^Status:/{print $2; exit}'; }
+route_status() { pool b t status "$TASK" -m "$1" 2>&1 | awk -v m="$1" '$1==m{print $2; exit}'; }
+wait_task() {
+  local i s
+  for i in $(seq 1 240); do
+    s="$(task_status)"
+    case "$s" in Completed) return 0 ;; Errored|Failed|ERRORED) return 1 ;; esac
+    sleep 60
+  done
+  return 1
+}
 
-RUNARGS=""
-for m in $MODELS; do RUNARGS="$RUNARGS -m $m"; done
-echo "== run $(date -u +%T): $MODELS"
-pool b t run "$TASK" $RUNARGS --wait || echo "RUN_RETURNED_NONZERO (per-route status below)"
+if [ "${SKIP_PUSH:-0}" != "1" ]; then
+  echo "== push $(date -u +%T)"
+  OUT="$(pool b t push "$TASK" -f "$WORK/ai_race_scripted_opponent.py" 2>&1)"; echo "$OUT" | tail -5
+  echo "$OUT" | grep -q -i -E "exceeds your available quota|identity verification required" && { echo "PUSH_FAILED"; exit 4; }
+else
+  echo "== push skipped (resume)"
+fi
+if ! wait_task; then
+  pool b t status "$TASK" 2>&1 | tail -20
+  echo "PUSH_FAILED"; exit 4
+fi
+echo "== push validated $(date -u +%T)"
+
+if [ "${SKIP_RUN:-0}" != "1" ]; then
+  RUNARGS=""
+  for m in $MODELS; do RUNARGS="$RUNARGS -m $m"; done
+  echo "== run $(date -u +%T): $MODELS"
+  pool b t run "$TASK" $RUNARGS 2>&1 | tail -3
+else
+  echo "== run skipped (resume)"
+fi
+for m in $MODELS; do
+  for i in $(seq 1 360); do
+    s="$(route_status "$m")"
+    case "$s" in Running|Queued|Pending|"") sleep 60 ;; *) break ;; esac
+  done
+  echo "== route $m final status: ${s:-unknown} $(date -u +%T)"
+done
 
 for m in $MODELS; do
-  echo "== route $m $(date -u +%T)"
-  pool b t status "$TASK" -m "$m" 2>&1 | tail -3
+  echo "== collect $m $(date -u +%T)"
   DL="$WORK/dl_$m"
   mkdir -p "$DL"
   pool b t download "$TASK" -m "$m" -o "$DL" >/dev/null 2>&1 || { echo "DOWNLOAD_FAILED $m"; continue; }

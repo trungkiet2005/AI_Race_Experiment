@@ -11,6 +11,7 @@ Threads only wait on subprocesses; nothing heavy runs on this machine.
 from __future__ import annotations
 
 import argparse
+import os
 import datetime as dt
 import json
 import subprocess
@@ -45,6 +46,7 @@ SLICES = [
 ]
 RESERVE = ["nvviet05", "tntduong"]
 _lock = threading.Lock()
+RESUME: dict[str, str] = {}
 
 
 def log(event: dict) -> None:
@@ -64,9 +66,15 @@ def next_reserve() -> str | None:
 def run_slice(ident: str, strat: str, risk: str, block: str, group: str) -> None:
     while ident:
         log({"event": "start", "identity": ident, "slice": [block, strat, risk, group]})
+        env = dict(os.environ)
+        mode = RESUME.pop(ident, "")
+        if mode in ("run", "collect"):
+            env["SKIP_PUSH"] = "1"
+        if mode == "collect":
+            env["SKIP_RUN"] = "1"
         proc = subprocess.run(
             ["bash", str(DRIVER), ident, strat, risk, block, group],
-            capture_output=True, text=True,
+            capture_output=True, text=True, env=env,
         )
         out = proc.stdout + proc.stderr
         quota_at_push = (
@@ -102,7 +110,12 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--workers", type=int, default=6)
     ap.add_argument("--only", default="", help="comma list of identities to run")
+    ap.add_argument("--resume", default="",
+                    help="identity=run|collect,...: skip push (run) or push and run (collect)")
     args = ap.parse_args()
+    for item in filter(None, args.resume.split(",")):
+        k, v = item.split("=")
+        RESUME[k] = v
     todo = [s for s in SLICES if not args.only or s[0] in args.only.split(",")]
     with ThreadPoolExecutor(max_workers=args.workers) as pool:
         for s in todo:
