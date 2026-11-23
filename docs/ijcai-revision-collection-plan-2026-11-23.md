@@ -165,3 +165,12 @@ endpoints that may have changed provider-side, not a byte-identical
 replication, and report blocks separately before pooling. The launch was
 stopped again after push validation; no assigned route had run. Identity
 assignment is unchanged (`vkhoinguyen` keeps B AS 0.1).
+
+## Replacement log under amendment 1
+
+- `chiboiz` (E8 A AS 0.1): quota 403 at push validation; replaced by `nvviet05`.
+- `osduyminh` (E2 C AS 0.6): quota 403 at push validation (confirmed from the
+  downloaded validation run; the status view showed only a transport error);
+  replaced by `tntduong`, the last reserve.
+- `tnkiet` (E8 A AS 0.6): quota 403 at push validation; no reserve left, so the
+  refused routes' AS@0.6 cell is missing and is reported as missing.

@@ -68,6 +68,11 @@ else
 fi
 if ! wait_task; then
   pool b t status "$TASK" 2>&1 | tail -20
+  # The status view hides the provider error; read it from the validation run.
+  VDL="$WORK/validation_dl"; mkdir -p "$VDL"
+  VM="$(pool b t status "$TASK" 2>&1 | awk '/Errored/{print $1; exit}')"
+  [ -n "$VM" ] && pool b t download "$TASK" -m "$VM" -o "$VDL" >/dev/null 2>&1
+  grep -rho -E "exceeds your available quota|identity verification required" "$VDL" 2>/dev/null | sort -u
   echo "PUSH_FAILED"; exit 4
 fi
 echo "== push validated $(date -u +%T)"
