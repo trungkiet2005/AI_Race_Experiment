@@ -1,9 +1,9 @@
 # STATE
 
 ## Now
-Behaviour paper ported to IJCAI 2027 (`paper/ijcai/main.tex`, `paper/ijcai/supplementary.tex`); AAMAS sources in `paper/` kept as legacy. Body fits 7 pages, references start page 8.
-Story reframed after the best-response baseline (2026-11-23): a positive rival contrast and rival x risk interaction are what an exact best responder does; the finding is each endpoint's departure from it (Sonnet 5 reverses the sign on rate and log-odds scales; Gemini 3 Flash and GPT-5.4 flat; GPT-5.5 sign scale-dependent; Opus matches). Title: "Self-Play Rates Are Not Risk Profiles: Frontier LLMs Depart from the Best Response to Fixed Rivals in an AI Race".
-Simulated blind IJCAI review round 1 (before reframe): reject, mean 4.3/10 (`paper/reviews/ijcai_blind_round1.md`).
+IJCAI 2027 port of the behaviour paper (`paper/ijcai/`), body 7 pages, refs p8-9.
+Story (2026-11-23, after the quantal fit): title "Self-Play Rates Are Not Risk Profiles: Five LLM Endpoints Against Fixed Rivals in an AI Race". Two benchmarks bracket the rival x risk interaction sign: exact best response (+33.3) and a noisy (logit quantal) best response fitted per endpoint (negative for all). Sonnet 5 and Gemini 3 Flash match the noisy benchmark (Sonnet -25.9 vs predicted -24.1); Opus 5 and GPT-5.5 show the exact benchmark's sign, which noise cannot produce; Sonnet 5 with reasoning on departs from both (-35.2 vs +0.1). A rival-blind model (race position + fixed belief) fits 4/5 endpoints better than the noisy best response.
+Reviews: round 1 (pre-reframe) 4.3/10 reject; round 2 6/5/4, AC borderline reject ~25% (`paper/reviews/ijcai_blind_round2.md`); round 3 running.
 
 ## Lanes and owners
 - Mac Claude: Kaggle Benchmarks campaign E2/E8, paper integration, review loop.
@@ -27,6 +27,7 @@ Simulated blind IJCAI review round 1 (before reframe): reject, mean 4.3/10 (`pap
 6. Submission: abstract on the IJCAI site by 2027-01-04 AoE, full paper 2027-01-11 AoE; supplement as separate anonymised PDF/ZIP (<= 50 MB).
 
 ## Decisions ledger
+- 2026-11-23: claim that Sonnet 'reverses the best response' withdrawn; its interaction matches a fitted noisy best response (Claude, forced by quantal-fit result). Paper reports both benchmarks.
 - 2026-11-22: target venue for the behaviour paper is IJCAI 2027 (user).
 - 2026-11-22: project lives in `~/PhD_Farming/active/AI_Race_Experiment` on the Mac.
 - 2026-11-22: paper was never submitted to AAMAS (user), so no dual-submission issue.
