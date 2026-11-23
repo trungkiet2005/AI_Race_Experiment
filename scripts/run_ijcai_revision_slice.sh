@@ -21,12 +21,17 @@ case "$BLOCK" in
   C) SEED=280726; SEEDARG="--base-seed 280726" ;;
   *) echo "bad block"; exit 2 ;;
 esac
+EXTRA_BAKE=""
 case "$GROUP" in
   admitted) MODELS="gemini-3-flash-preview gpt-5.4-2026-03-05 gpt-5.5-2026-04-23 claude-sonnet-5-default claude-opus-5-default"
             if [ "$BLOCK" = "A" ]; then echo "admitted routes use blocks B/C"; exit 2; fi
             CAMPAIGN="results/frontier/scripted_opponent_replication/block_${BLOCK}" ;;
   refused)  MODELS="gemini-3.1-flash-lite-preview gpt-5.4-mini-2026-03-17 gemini-3.5-flash-lite gpt-5.4-nano-2026-03-17"
             CAMPAIGN="results/frontier/scripted_opponent_refused" ;;
+  swap_sonnet) MODELS="claude-sonnet-5-default"; EXTRA_BAKE="--add-reasoning-low claude-sonnet-5"
+            CAMPAIGN="results/frontier/scripted_opponent_contract_swap/sonnet_low" ;;
+  harmonize_opus) MODELS="claude-opus-5-default"
+            CAMPAIGN="results/frontier/scripted_opponent_contract_swap/opus_active" ;;
   *) echo "bad group"; exit 2 ;;
 esac
 
@@ -41,7 +46,7 @@ pool() { python3 "$POOL" run "$IDENT" -- "$@"; }
 
 echo "== $(date -u +%FT%TZ) slice $BLOCK $STRAT $RISK on $IDENT -> $CAMPAIGN"
 cd "$REPO" || exit 2
-python3 scripts/bake_scripted_opponent_cell.py --strategy "$STRAT" --risk "$RISK" $SEEDARG \
+python3 scripts/bake_scripted_opponent_cell.py --strategy "$STRAT" --risk "$RISK" $SEEDARG $EXTRA_BAKE \
   --output "$WORK/ai_race_scripted_opponent.py" || exit 3
 shasum -a 256 "$WORK/ai_race_scripted_opponent.py"
 

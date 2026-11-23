@@ -110,12 +110,19 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--workers", type=int, default=6)
     ap.add_argument("--only", default="", help="comma list of identities to run")
+    ap.add_argument("--assignment", default="",
+                    help="JSON file with 'slices' [[identity,strategy,risk,block,group],...] and 'reserve'")
     ap.add_argument("--resume", default="",
                     help="identity=run|collect,...: skip push (run) or push and run (collect)")
     args = ap.parse_args()
     for item in filter(None, args.resume.split(",")):
         k, v = item.split("=")
         RESUME[k] = v
+    global SLICES
+    if args.assignment:
+        spec = json.loads(Path(args.assignment).read_text(encoding="utf-8"))
+        SLICES = [tuple(s) for s in spec["slices"]]
+        RESERVE[:] = spec.get("reserve", [])
     todo = [s for s in SLICES if not args.only or s[0] in args.only.split(",")]
     with ThreadPoolExecutor(max_workers=args.workers) as pool:
         for s in todo:

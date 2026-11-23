@@ -190,3 +190,16 @@ assignment is unchanged (`vkhoinguyen` keeps B AS 0.1).
   routes; AS@0.6, AS@0.9 and AU@0.9 are missing (quota at push validation, no
   reserve). Only the risk-0.1 AU minus AS contrast is computable.
 - Every failure has a record under `results/failed_runs/ijcai_revision_*`.
+
+## Amendment 5, 2026-11-23: E4 reassignment (before any E4 request)
+
+Three identities named in amendment 3 (`tnkiet`, `hunhtrungkit`,
+`trngthtnhi`) were refused on quota during E8, so the E4 cells move to
+identities that finished their own slices. The design of amendment 3 is
+unchanged. Assignment and reserve order are fixed in
+`docs/ijcai-revision-e4-assignment.json`: Sonnet 5 under `reasoning=low` on AS
+0.1 (`foundnotkiet`), AU 0.1 (`trungkiet`), AS 0.9 (`vkhoinguyen`), AU 0.9
+(`nguyendinhhaduong`); Opus 5 AS 0.6 under the active contract (`tntduong`);
+reserve `minh2duy`, `trngbotrn`, `vinhdinhthien`, `tonngohan`, `hnhhctiliu`,
+`chunaiu`. Amendment 1's reserve rule applies (push-validation refusals only);
+a refusal after the route has started is a failure record.
