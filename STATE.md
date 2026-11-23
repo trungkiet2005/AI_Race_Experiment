@@ -10,7 +10,8 @@ Simulated blind IJCAI review round 1 (before reframe): reject, mean 4.3/10 (`pap
 - Subagent: E5 code port (`kaggle/benchmarks/ai_race_scripted_context_mapping.py`), code only.
 
 ## Running jobs
-- Campaign runner `scripts/run_ijcai_revision_campaign.py` (Mac pid 13726, 6 slices at a time), plan `docs/ijcai-revision-collection-plan-2026-11-23.md` + amendment 1. Ledger `results/_build/ijcai_revision/campaign_ledger.jsonl`; per-slice logs `results/_build/ijcai_revision/<slice>/log.txt`. Outputs: `results/frontier/scripted_opponent_replication/block_{B,C}/`, `results/frontier/scripted_opponent_refused/`.
+- Campaign runner (plan + amendments 1-4 in `docs/ijcai-revision-collection-plan-2026-11-23.md`): pilot slice on vkhoinguyen (pid 20569, log `results/_build/ijcai_revision/campaign_stdout3.log`) and 17 other slices, 5 at a time (pid 33700, `campaign_stdout4.log`). Ledger `results/_build/ijcai_revision/campaign_ledger.jsonl`. After it finishes: `python3 scripts/analyze_scripted_replication.py`, then run E4 cells (amendment 3) on the E8 identities.
+- All routes use the 1,024-token cap (amendment 4: the 256 cap now truncates Gemini 3 Flash). Blocks B/C are a later re-administration, not a byte-identical replication.
 
 ## Next steps
 1. When E2/E8 land: analyse blocks B+C (pooled interaction with block factor; best-response departure), refused routes (descriptive, supplement).
