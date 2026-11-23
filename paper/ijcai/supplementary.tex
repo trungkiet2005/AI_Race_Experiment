@@ -101,7 +101,7 @@ Throughout, \emph{confirmatory} means that the protocol, endpoint, prompt,
 configuration, race count and exclusion rules were fixed in the run manifest
 when the run started; it does not mean preregistered. The screen verdicts for
 three of nine routes, which came after their gameplay, and the final three
-GPT-5.5 scripted cells, run after a declared account reallocation, are not
+GPT-5.5 scripted cells, collected after a declared change in the collection schedule, are not
 confirmatory in this sense.
 
 \appendix
@@ -171,21 +171,16 @@ and what the defence rests on, is the fixed bank, the fixed rule and the fact
 that the instrument cannot see the outcome it selects on.
 
 Three facts make the nine rows of Table~\ref{tab:admission-v6} comparable with
-one another. All nine ran under one protocol identifier. All nine answered the
-same probe bank, whose SHA-256 hash begins \texttt{2953fb47}, and read the same
-rules context, whose hash begins \texttt{b80981a5}; the analysis script fails
-closed and refuses to tabulate a route whose hashes differ. Eight routes ran at
-benchmark task version 7 and one, \path{google/gemini-3.5-flash-lite}, at
-version 8, whose outgoing request omits the reasoning-budget argument because
-that provider returns an invalid-argument error when the argument is present at
-all. That is a difference in the transport contract rather than evidence about
-the model, it is recorded in that route's own manifest, and the amendment
-introducing per-route contracts is dated in the collection protocol. For every
-other route the outgoing request is byte-identical to the earlier runs. One
-failed run is retained rather than deleted: the same route at task version 7
-ended in exhausted transport retries and produced no scoreable answer, so it
-appears nowhere in the table and is kept as a transport failure beside the
-campaign.
+one another. All nine ran under one protocol, answered the same frozen probe
+bank and read the same rules text, and the analysis refuses to tabulate a route
+whose probe bank or rules text differ. One route,
+\path{google/gemini-3.5-flash-lite}, is sent without the reasoning-budget
+argument, because that provider rejects any request that carries it. That is a
+difference in the request format, not evidence about the model, and it is
+recorded with the route. For every other route the request is identical to the
+earlier runs. One failed attempt on that route ended in repeated transport
+errors with no scoreable answer; it appears nowhere in the table and is kept as
+a transport failure.
 
 \begin{table*}[t]
     \caption{The nine screened routes on the three conditions that decide
@@ -696,12 +691,12 @@ largest single-condition deviation is reported beside it so that one badly
 missed condition stays visible. For both routes the minimum-error cell is
     $\beta = 0.01$ with fixed $\mu = 0.05$, whose profile is 87.3\%, 63.9\%, and
     38.0\%. Against \path{anthropic/claude-sonnet-5@default}, observed at 89.2\%,
-    48.4\%, and 32.3\%, that cell has an error of 10.28 percentage points and a
-largest single-condition miss of 17.70 points, at risk $0.6$. Against
+    48.4\%, and 32.3\%, that cell has an error of 9.6 percentage points and a
+largest single-condition miss of 15.5 points, at risk $0.6$. Against
     \path{google/gemini-3-flash-preview}, observed at 98.9\%, 73.1\%, and 60.2\%,
-the error is 15.13 points and the largest miss 21.14 points, at risk $0.9$.
-Even the best cell on the grid is therefore more than ten percentage points
-away from either route.
+the error is 15.4 points and the largest miss 22.2 points, at risk $0.9$.
+This is the best of 90 cells fitted to these two routes, so the agreement is in
+shape, and the remaining gap is not small.
 
 \paragraph{All-five admitted-route extension.} The preceding block is the
 earlier two-route confirmatory comparison. To check whether its qualitative
@@ -1125,24 +1120,17 @@ conditional arm would measure nothing.
 
 \paragraph{How the rival was audited.} A scripted rival is code, so it cannot be
 audited by reading a response. It was audited by replay: the released
-ingestion code recomputes every rival move from the route's own recorded moves and refuses the
+analysis code recomputes every rival move from the route's own recorded moves and refuses the
 cell on a single deviation. All 60 cells replayed clean. This is the one failure
 that would have left the data looking perfectly healthy while answering a
 different question than the one asked.
 
-\paragraph{The collection record.} The workload was partitioned into the
-analysis unit itself, one route by rival by risk cell, and each cell was
-collected whole on one declared account. The assignment was fixed before the
-final extension began and is recorded in collection receipts that are kept
-outside the paper, because they name the accounts. All 60 cells
-carry the same scripted-rival protocol and prompt version; the three task
-hashes are one per risk level and are identical across routes. This keeps the
-game mechanism fixed while
-allowing account rotation across cells. The account is a billing boundary,
-not a model boundary: the analysis never treats account identity as evidence
-about behaviour, and failed quota or authentication attempts contributed no
-races to the admitted set. The complete assignment audit is kept with those
-receipts. The full route-by-risk record is in
+\paragraph{The collection record.} Each route by rival by risk cell was
+collected whole in one collection session, under an assignment fixed before the
+collection began, so the session can never be confounded with a rival or a
+risk level. All 60 cells carry the same protocol, prompt and game mechanism.
+Requests refused by the provider's usage quota contributed no races and are
+kept as failure records. The full route-by-risk record is in
 Tables~\ref{tab:scripted-opponent}--\ref{tab:scripted-opponent-interaction},
 which separate rates, paired contrasts and interactions for readability; the
 main paper's scripted-rival figure is the only visualization retained in the
@@ -1235,37 +1223,7 @@ metadata limitation rather than a gameplay failure.
     \end{tabular}
 \end{table*}
 
-\begin{table*}[t]
-    \caption{Initial three-route collection record, retained for audit trace
-    and not used for the full-campaign claim. Which account collected which
-    cell. The
-    assignment was fixed in a collection plan committed before the first cell
-    of the extension was started, and this table is read back from each cell's
-    own receipt rather than from the plan. The five accounts are anonymised for
-    double-blind review and appear here as A to E, labelled in order of first
-    appearance in this table; the mapping is retained privately and is restored
-    in the camera-ready artifact. An account is a billing boundary and not a
-    model boundary: route, prompt, parser, protocol, temperature request and
-    seed structure are identical in every cell. The rotation is what makes that
-    assumption checkable instead of merely asserted.}
-    \centering
-    \small
-    \setlength{\tabcolsep}{3.2pt}
-    \begin{tabular}{@{}lccccccccc@{}}
-        \toprule
-        & \multicolumn{3}{c}{Gemini 3 Flash} & \multicolumn{3}{c}{GPT-5.4}
-        & \multicolumn{3}{c}{Claude Sonnet 5} \\
-        \cmidrule(lr){2-4} \cmidrule(lr){5-7} \cmidrule(lr){8-10}
-        $p_r^{\max}$ & $0.1$ & $0.6$ & $0.9$ & $0.1$ & $0.6$ & $0.9$
-        & $0.1$ & $0.6$ & $0.9$ \\
-        \midrule
-        Always Safe & A & B & C & B & C & D & E & A & B \\
-        Conditional Safe & C & E & A & C & D & E & A & B & C \\
-        Conditional Unsafe & E & A & B & A & B & C & D & E & A \\
-        Always Unsafe & B & C & E & E & A & B & C & D & E \\
-        \bottomrule
-    \end{tabular}
-\end{table*}
+
 \end{comment}
 
 \begin{table*}[t]
@@ -1542,7 +1500,7 @@ Claude Opus 5   & [$20.9$, $36.4$] & [$19.2$, $35.4$] & [$20.4$, $38.8$] & 0.016
 A second block of matched races was collected two months after the first, on
 the Always-Safe and Always-Unsafe rivals at all three risks, with new game
 seeds and the same task, prompt, parser, scripted rivals and seat
-counterbalance. The assignment of cells to collection accounts and the stopping
+counterbalance. The assignment of cells to collection sessions and the stopping
 rule were written down before the first request. The second block differs from
 the first in one declared respect: every route now runs with a 1{,}024-token
 output cap, because the 256-token cap of the first block truncated the current
@@ -1581,7 +1539,7 @@ scale in both blocks. Their negative log-odds values rest on cells at or near
 the ceiling and are not read as reversals. GPT-5.5 is absent from the table
 because two of its second-block cells were refused by the provider's usage
 quota after the run had started; under the declared stopping rule such cells
-are recorded as failures and never moved to another account. A third block on
+are recorded as failures and never moved to another session. A third block on
 further seeds lost every Always-Unsafe cell at risk $0.9$ in the same way, so it
 is not tabulated.
 
@@ -1846,8 +1804,8 @@ main paper. It pools 420 trajectories, 60 per checkpoint, with 340 complete huma
 trajectories from the de-identified dataset of
 \citet{falling_behind_unsafe}, one incomplete human record excluded, $N=760$.
 Six of the seven checkpoints carry an endpoint-admission verdict from
-\S\ref{app:admission-v6}; GPT-5 nano is no longer offered on the audited
-account and so cannot be gated at all, and is retained as description rather
+\S\ref{app:admission-v6}; GPT-5 nano is no longer offered by the provider
+and so cannot be gated at all, and is retained as description rather
 than as evidence. Each player is represented by 15 raw features: own action,
 opponent action, and own-minus-opponent progress gap entering each of rounds 1
 to 5, which are the recorded states and actions themselves rather than derived
@@ -2951,27 +2909,22 @@ every private-risk condition, $p_r^{\max}\in\{0.1,0.6,0.9\}$, ten repetitions
 each, on the admitted route
 \texttt{google/\discretionary{}{}{}gemini-\discretionary{}{}{}3-\discretionary{}{}{}flash-\discretionary{}{}{}preview}. That is 120 races and 3{,}696
 decisions
-with zero parse failures. No collection account available to us sustains the
-whole four-by-three grid, which needs roughly 7{,}800 requests, so the sweep was
-partitioned into the analysis unit itself, one (group size, risk) cell of ten
-repetitions, and each cell was collected whole on one identity so that it
-carries its own race-clustered interval rather than being stitched together
-across accounts. Cells were assigned to identities in a plan committed before
-the first was started, and the assignment rotates across risk levels so that no
-identity is confounded with a group size; every cell records its collecting
-identity in its collection receipt. Every cell's bootstrap generator is derived
+with zero parse failures. Provider usage limits do not allow the whole four-by-three grid, which needs
+roughly 7{,}800 requests, in one session, so each (group size, risk) cell of ten
+repetitions was collected whole in one session and carries its own
+race-clustered interval. Cells were assigned to sessions in a plan fixed before
+the first was started, rotating across risk levels so that no session is
+confounded with a group size. Every cell's bootstrap generator is derived
 from a digest of that cell alone, so collecting one condition cannot move an
 interval already reported for another, and the released analysis code refuses
 to report any risk level that is missing an arm.
 
-Within each risk level, the four group-size cells were collected on four
-different accounts; the assignment rotates across risk levels so that every
-account collected each group size once. Account is therefore orthogonal to
-group size over the full grid, but a contrast within one risk level still
-combines group size with account-specific execution variance. The repeated
-contrast sizes across independently assigned risk levels reduce but do not
-remove that limitation. Each cell remains whole on one account and carries its
-own race-clustered interval.
+Within each risk level, the four group-size cells were collected in four
+different sessions, rotated so that every session collected each group size
+once. Session is therefore orthogonal to group size over the full grid, but a
+contrast within one risk level still combines group size with session-level
+execution variance. The repeated contrast sizes across independently assigned
+risk levels reduce but do not remove that limitation.
 
 \paragraph{The contrast is paired on the horizon.} The game seed is
 $\mathrm{base} + \mathrm{rep}$ and does not depend on the treatment name or on
@@ -3377,6 +3330,64 @@ models.
 
 
 \end{comment}
+
+\section{The prompt}
+\label{app:prompt}
+
+Every model decision in the scripted-rival design used the prompt below, with
+the round, the state and the history filled in. It is shown verbatim for a
+risk-$0.6$ race at round two, after both companies played \Safe{} in round one.
+The prompt states the full mechanism, including the payoffs, the setback rule
+and the stopping rule, and the rival's current private risk. It never says that
+the rival follows a fixed policy, and it never names the policy. The exact best
+response of the main paper knows that policy; the model has to infer it from
+the history.
+
+\begin{figure*}[t]
+\centering
+\fbox{\parbox{0.96\textwidth}{\raggedright\scriptsize\ttfamily
+You are Company\_1 and your opponent is Company\_2.\\
+\mbox{}\\
+You and Company\_2 lead competing companies in a race to develop a new technology.\\
+\mbox{}\\
+Every round each of you has the following choices: 'SAFE' and 'UNSAFE'. Both of you choose simultaneously.\\
+SAFE advances your company 1 race step and carries no additional risk. UNSAFE advances your company 1.5 race steps and increases your private risk.\\
+\mbox{}\\
+The race lasts at least 5 rounds. After every completed round from round 5 onward, the race ends with probability 20\%. You do not know the final round in advance.\\
+The current round is number 2.\\
+\mbox{}\\
+If you both choose SAFE, you both get 1.\\
+If you choose SAFE and Company\_2 chooses UNSAFE, you get 0.6 and Company\_2 gets 2.4.\\
+If you choose UNSAFE and Company\_2 chooses SAFE, you get 2.4 and Company\_2 gets 0.6.\\
+If you both choose UNSAFE, you both get 2.\\
+\mbox{}\\
+When the race ends, the company with greater cumulative progress receives a prize of 100. If progress is tied, each company receives 50.\\
+Your maximum private setback risk in this race is 60\%. Your current private risk equals that maximum multiplied by the fraction of your completed actions that were UNSAFE.\\
+Private setback risk is applied only if you win or tie for first. If a setback occurs, you lose your entire payoff from this race: accumulated round payoffs plus prize. If you lose the race, you receive no prize, face no setback, and keep your accumulated round payoffs.\\
+\mbox{}\\
+This is the state of the race before your current decision:\\
+- Your accumulated round payoff: 1\\
+- Company\_2 accumulated round payoff: 1\\
+- Your current private setback risk: 0\%\\
+- Company\_2 current private setback risk: 0\%\\
+- Your cumulative progress: 1\\
+- Company\_2 cumulative progress: 1\\
+- Your progress minus Company\_2 progress: 0\\
+\mbox{}\\
+This is the history of the choices made so far:\\
+Round 1: you chose SAFE; Company\_2 chose SAFE. Round payoffs were 1 for you and 1 for the opponent; progress increments were 1 and 1.\\
+\mbox{}\\
+Your goal is to maximize your own expected payoff by making the best strategies based on the provided information.\\
+\mbox{}\\
+Choose between SAFE and UNSAFE without assuming you know the simultaneous choice of Company\_2.\\
+Return exactly one line and no other text, using one of these forms:\\
+ACTION: SAFE\\
+ACTION: UNSAFE\\
+\mbox{}
+}}
+\caption{The verbatim prompt at round two of a risk-$0.6$ race.}
+\label{fig:verbatim-prompt}
+\end{figure*}
 
 \section*{AI-assisted technology statement}
 Claude Code and OpenAI Codex were used for code assistance, manuscript editing

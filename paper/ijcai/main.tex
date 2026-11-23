@@ -54,7 +54,7 @@ task-validity screen, and five entered the strategic analysis.
 In self-play, all five reduce \Unsafe{} play as stated risk rises, four gradually
 and one by switching from the ceiling to the floor. We then hold the rival fixed
 by code and compare each endpoint with the exact best response to that rival.
-An always-\Unsafe rival draws more \Unsafe{} play than an always-\Safe one in all
+An always-\Unsafe{} rival draws more \Unsafe{} play than an always-\Safe{} one in all
 15 endpoint-by-risk cells, as a best-responding agent would also show, so this
 contrast is not the finding. The finding is the departure. For every endpoint,
 observed rates sit inside the best-response range in at most 2 of 12 cells.
@@ -142,7 +142,7 @@ The answer is not one universal opponent effect. In self-play, every included
 endpoint reduces \Unsafe{} play as stated risk rises, with four graded profiles
 and one threshold-like switch. Against four fixed scripted rivals, all five
 endpoints move substantially with the rival. A best-responding agent would also
-do so: the exact best response plays more \Unsafe{} against an always-\Unsafe
+do so: the exact best response plays more \Unsafe{} against an always-\Unsafe{}
 rival, and its rival effect grows with risk. We therefore read the data against
 that benchmark. The endpoints depart from it in size and in shape, and each
 departure is read within one endpoint and its own decoding contract. Claude
@@ -355,7 +355,7 @@ stable effect. A \emph{confirmatory} run here means that its protocol, endpoint,
 prompt, configuration, race count and exclusion rules were fixed in the run
 manifest when it started. It was not preregistered. The screen verdicts for
 three of nine routes, which came after their gameplay, and the final three
-GPT-5.5 scripted cells, run after a declared account reallocation, are not
+GPT-5.5 scripted cells, collected after a declared change in the collection schedule, are not
 called confirmatory.
 
 One presentation check is described in the supplementary material: on two
@@ -521,9 +521,10 @@ from a logit with cluster-corrected errors on A+B, and on block A for GPT-5.5,
 whose second block is incomplete. Positive values mean that changing the rival
 matters more at high risk; the last row is the exact best response. Log-odds
 values for Gemini 3 Flash and Claude Opus 5 rest on ceiling or floor cells.
-Contracts are not identical: GPT-5.5 ran with reasoning set to low and a
-1{,}024-token cap; the other endpoints ran with reasoning off, at 256 tokens in
-block A and 1{,}024 in block B.}
+Contracts are not identical: GPT-5.5 and Claude Opus 5 ran with reasoning set
+to low and a 1{,}024-token cap (one block-A Opus cell on an earlier contract);
+Gemini 3 Flash, GPT-5.4 and Claude Sonnet 5 ran with reasoning off, at 256
+tokens in block A and 1{,}024 in block B.}
 \label{tab:rival-risk-interaction}
 \centering
 \scriptsize
