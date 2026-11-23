@@ -72,7 +72,7 @@ GROUPS: list[tuple[str, list[str]]] = [
     ("Original baseline checkpoints", ["gpt-5-nano", "gpt-5.4-nano", "google/gemini-3-flash-preview"]),
     ("Lite / newer-generation checkpoints",
      ["google/gemini-3.1-flash-lite-preview", "google/gemini-3.5-flash-lite", "gpt-5.6-luna", "gpt-5.6-terra"]),
-    ("Claude (Bedrock)", ["claude-opus-5", "claude-sonnet-5"]),
+    ("Claude", ["claude-opus-5", "claude-sonnet-5"]),
 ]
 
 NEUTRAL_INPUTS = {

@@ -35,7 +35,7 @@
 /TemplateVersion (IJCAI.2027.0)
 }
 
-\title{Supplementary Material: Self-Play Rates Are Not Risk Profiles:\\Frontier LLMs Depart from the Best Response to Fixed Rivals in an AI Race}
+\title{Supplementary Material: Self-Play Rates Are Not Risk Profiles: Five LLM Endpoints Against Fixed Rivals in an AI Race}
 
 \author{
     Anonymous Submission
@@ -134,7 +134,7 @@ historical pilot rosters, classifier, predictive analysis, player-level rate
 distributions and embedding diagnostics are included only to support the main
 paper's scoped exploratory pointers. The separate open-weight battery, persona
 diagnostics, older pilot baselines, archetype projections, and
-joint-dynamics/horizon extensions remain in the repository as extended
+joint-dynamics/horizon extensions remain in the released records as extended
 artifacts rather than part of this evidence package.
 \end{sloppypar}
 
@@ -1383,7 +1383,7 @@ substantially across the five routes.
 The route's own opening move is not a constant across the campaign: Gemini 3
 Flash opened \Unsafe{} in all 120 races, Claude Opus 5 in 41, GPT-5.4 in 116,
 GPT-5.5 in 115, and Claude Sonnet 5 in 23. The opening-move contrast is about
-the rival's first move, which the task file fixes, and not about the route's.
+the rival's first move, which the design fixes, and not about the route's.
 
 \paragraph{What it means for the rest of this paper.} A self-play rate is not a
 measurement of how a route treats risk. Self-play exceeds the fixed-safe rate
@@ -1417,7 +1417,7 @@ released analysis code, which takes one endpoint at a time, writes one derived t
 pooling them, and refuses a cell that did not complete, that carries a parse
 failure, that is the wrong protocol, that has the wrong number of races, whose
 seat counterbalance is not five and five, or whose rival deviated from the
-strategy its directory claims.
+strategy its cell is labelled with.
 
 \subsection{Best response and interaction statistics}
 \label{app:best-response}
@@ -1565,13 +1565,13 @@ contrast falls from $+80.6$ points at risk $0.1$ to $+45.4$ at risk $0.9$.
 \subsection{A fitted noisy best response}
 \label{sec:supp-quantal}
 
-The exact best response of the main paper chooses the higher-value action with
+The informed best response of the main paper chooses the higher-value action with
 certainty. A noisy best responder instead chooses \Unsafe{} with probability
 $1/(1+\exp(-\lambda\,[Q(s,\Unsafe)-Q(s,\Safe)]))$, where $Q$ is the value of
 each action in state $s$ under the same noisy policy against the same fixed
 rival, solved by dynamic programming over the round, both companies' progress,
 the endpoint's \Unsafe{} count and the rival's last move. Large $\lambda$
-recovers the exact best response and $\lambda\to 0$ gives a coin flip. For each
+recovers the informed best response and $\lambda\to 0$ gives a coin flip. For each
 endpoint we fit $\lambda$ by maximum likelihood on its own decisions at their
 recorded states, pooling all four rivals in block A and both rivals in block B,
 with a 95\% interval from a bootstrap over matched repetition blocks. We then
@@ -2684,8 +2684,8 @@ participant-level human resampling and the companion Hill and Hamming
 statistics. Together they make each value checkable against its population,
 its risk condition, and the independent unit it rests on.
 Table~\ref{tab:diversity-rarefaction} is the earlier seven-checkpoint pilot
-export, kept because it carries GPT-5 nano, an endpoint no longer offered on
-the audited identity and therefore holding no admission verdict. That export
+export, kept because it carries GPT-5 nano, an endpoint no longer offered by
+the provider and therefore holding no admission verdict. That export
 has no row for GPT-5.4 or GPT-5.5, which are two of the five admitted routes,
 so it cannot settle a claim about the admitted set and is not used for one.
 
@@ -3125,7 +3125,7 @@ is bounded by the boundary and not by the endpoint.
 The size of the contrast is what makes the grid worth having. Going from two
 companies to three adds $11.1$ points at $p_r^{\max}=0.6$ and $11.0$ at $0.9$;
 going to four adds $28.2$ and $28.1$. The two risk conditions were collected on
-different days and different identities, and they agree to a tenth of a point.
+different days and in different sessions, and they agree to a tenth of a point.
 That agreement holds for the paired contrast. The differences of the printed
 rates at four companies are $29.5$ and $25.9$ points. The five-company contrast is the exception, $+31.0$ against $+40.0$, and the
 reason is visible in the table rather than interesting: at $p_r^{\max}=0.6$ the
