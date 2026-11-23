@@ -19,12 +19,13 @@ Reviews: round 1 (pre-reframe) 4.3/10 reject; round 2 6/5/4, AC borderline rejec
 - Kaggle quota: most accounts now exhausted; reconcile state with `scripts/reconcile_ijcai_revision.py --dry-run`.
 
 ## Next steps
-1. When E2/E8 land: analyse blocks B+C (pooled interaction with block factor; best-response departure), refused routes (descriptive, supplement).
-2. E4: declare amendment and run Sonnet 5 under the GPT-5.5 contract (reasoning low, 1024 tokens) at AS/AU x 0.1/0.9, block A; rerun Opus AS@0.6 under the active contract. Reserve identities left after E2/E8.
-3. E5: after the port is verified offline, declare plan and run AS/AU x 0.1/0.9 x 4 renderings on Gemini 3 Flash and Sonnet 5.
-4. Remaining TODO-E3 in main.tex: diversity effect size with interval.
-5. Integrate new results into paper, rerun blind review panel (fresh reviewers, no prior rounds), loop until accept.
-6. Submission: abstract on the IJCAI site by 2027-01-04 AoE, full paper 2027-01-11 AoE; supplement as separate anonymised PDF/ZIP (<= 50 MB).
+Review rounds 2 and 3 both scored 6/5/4 (AC borderline reject ~25%): text fixes have plateaued; remaining must-items are experiments that need Kaggle Model Proxy quota (exhausted on nearly all accounts 2026-11-23).
+1. When quota returns: E5 = scripted AS/AU x risk 0.1/0.9 under the other three prompt renderings (task `kaggle/benchmarks/ai_race_scripted_context_mapping.py`, ready and verified), Sonnet 5 first, then Opus 5 and GPT-5.5. Declare a plan before the first request.
+2. Common decoding contract for all five endpoints (reasoning low, 1024 tokens) on AS/AU x 0.1/0.9: Opus and GPT-5.5 already; Sonnet done (E4); add Gemini 3 Flash and GPT-5.4.
+3. Complete GPT-5.5 block B (AS@0.6, AU@0.9) and a third block on new seeds for the interaction cells.
+4. Remaining round-3 text items: T9/T10 compress Sec 4.3-4.4, T11 novelty vs Akata/Payne, T13 confirmatory definition, T14 figure footnote, T15 block-B column, T19 archive contents, T20 vocabulary; supplement Table 6 code strings; Fig 1c label overlap.
+5. Rerun a blind panel after each experiment lands.
+6. Submission: IJCAI abstract 2027-01-04 AoE, full paper 2027-01-11 AoE.
 
 ## Decisions ledger
 - 2026-11-23: claim that Sonnet 'reverses the best response' withdrawn; its interaction matches a fitted noisy best response (Claude, forced by quantal-fit result). Paper reports both benchmarks.
