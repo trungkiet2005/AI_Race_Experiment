@@ -60,9 +60,10 @@ contrast is not the finding. The finding is the departure. For every endpoint,
 observed rates sit inside the best-response range in at most 2 of 12 cells.
 Within each endpoint and its own decoding contract, Claude Sonnet 5 reverses the
 best-response sign of the rival-by-risk interaction on both a rate and a
-log-odds scale. Gemini 3 Flash and GPT-5.4 stay flat on the rate scale where the
-best response does not, and the positive sign for GPT-5.5 depends on the scale.
-Claude Opus 5 shows the best-response sign on both scales.
+log-odds scale, and the reversal recurs, larger, in a second independent block
+of matched races collected two months later. Claude Opus 5 keeps the
+best-response sign on the rate scale in both blocks, and the other endpoints are
+small or null where the best response is large.
 
 A self-play rate therefore does not identify an endpoint's response to risk. We
 recommend reporting each endpoint's departure from the best response against
@@ -144,9 +145,9 @@ do so: the exact best response plays more \Unsafe{} against an always-\Unsafe
 rival, and its rival effect grows with risk. We therefore read the data against
 that benchmark. The endpoints depart from it in size and in shape, and each
 departure is read within one endpoint and its own decoding contract. Claude
-Sonnet 5 reverses the best-response interaction sign, Gemini 3 Flash and GPT-5.4
-are flat where the best response is not, the positive sign for GPT-5.5 depends on
-the scale, and Claude Opus 5 shows the best-response sign. A self-play rate
+Sonnet 5 reverses the best-response interaction sign in two independent blocks,
+Claude Opus 5 keeps it on the rate scale, and the other endpoints are small or
+null where the best response is large. A self-play rate
 therefore does not identify an endpoint's response to risk. It also reflects the
 rival that generates the history.
 
@@ -211,7 +212,7 @@ Unsafe strictly dominates Safe at the stage level (row 2 exceeds row 1 in both c
 
 The race lasts a minimum of $5$ rounds; after every completed round from round $5$ onward it terminates with probability $0.2$, giving an expected horizon $\mathbb{E}[T]=9$. Neither company is ever told the horizon, so neither can condition on the current round being the last (Figure~\ref{fig:mechanism}a). Termination resolves in two further steps. First, the company with the higher cumulative progress $P_i^T$ wins a prize $B=100$, split $50/50$ on an exact tie. Second, and only for that winner or tied winners, an accumulated private setback risk is drawn:
 \begin{equation}
-    q_i(T) = p_r^{\max} \cdot \frac{n_i^U(T)}{T}, q_i(T) \in [0,1], p_r^{\max}\in\{0.10,0.60,0.90\},
+    q_i(T) = p_r^{\max} \cdot \frac{n_i^U(T)}{T},\qquad p_r^{\max}\in\{0.1,0.6,0.9\},
     \label{eq:risk}
 \end{equation}
 where $n_i^U(T)$ counts company $i$'s Unsafe choices over the whole race and $p_r^{\max}$ is a treatment-level constant, assigned once per race, that we vary across three risk levels. If the draw against $q_i(T)$ fails, that company's entire race payoff, accumulated stage payoffs plus the prize, is zeroed. A company that ends behind is never subject to the draw: it keeps its stage payoffs regardless of how much Unsafe it played, but receives no share of the prize (Figure~\ref{fig:mechanism}a). This asymmetry, in which risk is built by both companies but realised only against whoever is ahead, is what makes Unsafe development a genuine gamble rather than a free speed advantage.
@@ -227,13 +228,14 @@ CS and CAS react to nothing else. These four are also the fixed rivals of
 \label{tab:benchmark-strategies}
 \centering
 \footnotesize
-\begin{tabular}{@{}llp{0.34\linewidth}@{}}
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}llp{0.30\linewidth}@{}}
 \toprule
 Strategy & Opening & Every later round \\
 \midrule
 Always Safe (AS) & \Safe{} & \Safe{} \\
-Conditionally Safe (CS) & \Safe{} & copy the rival's last move \\
-Conditionally Antisocial Safe (CAS) & \Unsafe{} & copy the rival's last move \\
+Cond.\ Safe (CS) & \Safe{} & copy the rival's last move \\
+Cond.\ Antisocial Safe (CAS) & \Unsafe{} & copy the rival's last move \\
 Always Unsafe (AU) & \Unsafe{} & \Unsafe{} \\
 \bottomrule
 \end{tabular}
@@ -282,6 +284,7 @@ tie rule.}
 \label{tab:best-response}
 \centering
 \footnotesize
+\setlength{\tabcolsep}{2pt}
 \begin{tabular}{@{}lrrr@{}}
 \toprule
 Rival & Risk 0.1 & Risk 0.6 & Risk 0.9 \\
@@ -508,33 +511,34 @@ GPT-5.4).
 
 \begin{table}[t]
 \caption{Does stated risk change the rival effect? Entries are the paired
-interaction $[(\mathrm{AU}-\mathrm{AS})_{0.9}-(\mathrm{AU}-\mathrm{AS})_{0.1}]$,
-in percentage points with 95\% BCa intervals over ten matched blocks, and on the
-log-odds scale from a logit with cluster-corrected errors (ten clusters). Positive values
-mean that changing the rival matters more at high risk. The last row is the exact
-best response. Sign-flip tests over the blocks, Holm-adjusted across the five
-endpoints, give $p=0.010$ for GPT-5.5, $0.016$ for Claude Opus 5, $0.023$ for
-Claude Sonnet 5 and $1.00$ for the other two. The Gemini 3 Flash log-odds value
-rests on the Always-Unsafe cell at risk $0.1$, which is at the ceiling. Contracts
-are not identical: GPT-5.5 ran with reasoning set to low and a 1{,}024-token cap,
-most other endpoints with reasoning off and a 256-token cap, and one Claude Opus
-5 cell on an earlier contract. Percentile intervals, as drawn in the figure,
-give the same resolved signs.}
+interaction $[(\mathrm{AU}-\mathrm{AS})_{0.9}-(\mathrm{AU}-\mathrm{AS})_{0.1}]$
+in percentage points. Block A is the first collection (ten matched blocks, BCa
+intervals); A+B adds a second collection on new seeds two months later (twenty
+blocks, sign-flip intervals, Holm-adjusted $p$ of $0.049$ for Gemini 3 Flash,
+$0.66$ for GPT-5.4 and below $0.001$ for both Claude endpoints). Log odds come
+from a logit with cluster-corrected errors on A+B, and on block A for GPT-5.5,
+whose second block is incomplete. Positive values mean that changing the rival
+matters more at high risk; the last row is the exact best response. Log-odds
+values for Gemini 3 Flash and Claude Opus 5 rest on ceiling or floor cells.
+Contracts are not identical: GPT-5.5 ran with reasoning set to low and a
+1{,}024-token cap; the other endpoints ran with reasoning off, at 256 tokens in
+block A and 1{,}024 in block B.}
 \label{tab:rival-risk-interaction}
 \centering
 \scriptsize
 \setlength{\tabcolsep}{3pt}
-\begin{tabular}{@{}lrr@{}}
+\setlength{\tabcolsep}{2pt}
+\begin{tabular}{@{}lrrr@{}}
 \toprule
-Endpoint & Rate scale (pp) & Log odds \\
+Endpoint & Block A (pp) & A+B (pp) & Log odds \\
 \midrule
-Gemini 3 Flash  & $-1.8$ [$-8.9$, $2.9$] & $-2.57$ [$-3.45$, $-1.70$] \\
-GPT-5.4         & $+2.3$ [$-4.6$, $9.7$] & $-0.17$ [$-0.56$, $0.22$] \\
-GPT-5.5         & $+36.4$ [$29.3$, $44.3$] & $+0.49$ [$-0.73$, $1.71$] \\
-Claude Sonnet 5 & $-18.9$ [$-24.4$, $-10.8$] & $-1.05$ [$-1.49$, $-0.61$] \\
-Claude Opus 5   & $+29.2$ [$19.2$, $35.4$] & $+1.04$ [$0.51$, $1.58$] \\
+Gemini 3 Flash  & $-1.8$ [$-8.9$, $2.9$] & $-4.7$ [$-8.7$, $-0.7$] & $-3.48$ \\
+GPT-5.4         & $+2.3$ [$-4.6$, $9.7$] & $+1.1$ [$-3.9$, $6.0$] & $-0.38$ \\
+GPT-5.5         & $+36.4$ [$29.3$, $44.3$] & incomplete & $+0.49$ \\
+Claude Sonnet 5 & $-18.9$ [$-24.4$, $-10.8$] & $-25.9$ [$-30.9$, $-20.7$] & $-1.55$ \\
+Claude Opus 5   & $+29.2$ [$19.2$, $35.4$] & $+22.3$ [$14.6$, $29.9$] & $-1.13$ \\
 \midrule
-Best response   & $+33.3$ & not computed \\
+Best response   & $+33.3$ & $+33.3$ & not computed \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -544,17 +548,21 @@ Equation~\ref{eq:opponent-conditioned-risk} directly and sets it beside the best
 response, whose interaction is positive. Within each endpoint and its own
 contract, Claude Sonnet 5 reverses that sign on both scales, so it plays
 relatively less against Always Unsafe at high risk than at low risk, where the
-best response plays more. Gemini 3 Flash and GPT-5.4 are flat on the rate scale,
-and GPT-5.4 is flat on the log-odds scale too. The negative Gemini log-odds value
-comes from one ceiling cell and is not read as a reversal. Claude Opus 5 shows
-the best-response sign on both scales, and its rate-scale value sits near the
-best-response $+33.3$, although its cell rates do not. The positive sign for
-GPT-5.5 holds on the rate scale but is not resolved on the log-odds scale, where
-the ceiling at risk $0.1$ compresses the contrast, so it depends on the scale.
-There is therefore no universal pattern. Decoding contracts differ, so the
+best response plays more. A second block of twenty races per rival and risk,
+collected two months later on new seeds, repeats the reversal at a larger size,
+and pooling both blocks gives $-25.9$ points (Holm $p<0.001$) and a negative
+log-odds value. Claude Opus 5 keeps the best-response sign on the rate scale in
+both blocks, but its pooled log-odds value is not resolved, because its cells
+sit at the ceiling and the floor. Gemini 3 Flash and GPT-5.4 stay within five
+points of zero on the rate scale, where the best response predicts $+33.3$. Their
+negative log-odds values rest on ceiling cells and are not read as reversals.
+GPT-5.5 keeps the best-response sign on the rate scale in the first block only,
+because its second block is incomplete. The blocks differ by up to 14 points
+for the same endpoint, which fits provider-side change between collections, so
+we report them separately before pooling. There is therefore no universal
+pattern. Decoding contracts differ, so the
 cross-endpoint comparison is descriptive and the observed shapes are not
-attributed to the models alone. With ten blocks per cell, the unresolved
-interactions are not shown to be zero. The best response is a point of
+attributed to the models alone. A null interaction is not shown to be zero. The best response is a point of
 reference, and Section~\ref{sec:best-response} explains why a sign reversal
 alone does not rule out noisy best-responding.
 
@@ -643,9 +651,9 @@ exact best response to the rival it faces? A positive rival contrast and a
 positive rival-by-risk interaction are what a best responder shows, so they are
 not the result. The result is the departure. Observed rates fall inside the
 best-response range in at most 2 of 12 cells for any endpoint. Claude Sonnet 5
-reverses the best-response interaction sign on both scales, Gemini 3 Flash and
-GPT-5.4 are flat where the best response is not, GPT-5.5 keeps the best-response
-sign only on the rate scale, and Claude Opus 5 shows it on both. Each reading
+reverses the best-response interaction sign on both scales and in two
+independent blocks, Claude Opus 5 keeps it on the rate scale, and the other
+endpoints are small or null where the best response is large. Each reading
 holds within one endpoint and its own decoding contract.
 
 The opponent can matter as much as the stated risk. Against the
@@ -671,9 +679,9 @@ population, decoding contracts differ across endpoints, and the scripted panel
 uses four chosen policies. The best response is risk neutral and knows the rival's policy, and a noisy best responder can flip the interaction sign, so the
 departures describe distance from one reference and not a verdict on rationality.
 One Claude Opus 5 cell used an earlier decoding contract; removing it leaves all
-fourteen remaining rival contrasts positive. Ten blocks per cell set the
-smallest attainable adjusted $p$ value at 0.029, and the interactions rest on ten
-clusters. Provider-side temperature and seed handling could not be confirmed, so
+fourteen remaining rival contrasts positive. The interactions rest on
+twenty matched blocks per endpoint at most, and the second block is a later
+re-administration under a larger output cap, not an identical replication. Provider-side temperature and seed handling could not be confirmed, so
 the closed endpoints cannot be regenerated exactly. The game omits collective
 harm, regulation and communication, so the results say nothing about general
 model safety or real organisations. An exploratory group-size study on one
