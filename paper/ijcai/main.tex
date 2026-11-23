@@ -33,7 +33,7 @@
 /TemplateVersion (IJCAI.2027.0)
 }
 
-\title{Self-Play Rates Are Not Risk Profiles:\\Frontier LLMs Depart from the Best Response to Fixed Rivals in an AI Race}
+\title{Self-Play Rates Are Not Risk Profiles:\\Five LLM Endpoints Against Fixed Rivals in an AI Race}
 
 \author{
     Anonymous Submission
@@ -44,36 +44,27 @@
 \maketitle
 
 \begin{abstract}
-Self-play is a common way to evaluate language-model agents, but it entangles a
-focal endpoint with an adapting copy of itself, so a measured response to risk
-may describe the pairing rather than the endpoint. We study this in an idealised
+Self-play is a common way to evaluate language-model agents, but it couples an
+endpoint with an adapting copy of itself, so a measured response to risk may
+describe the pairing rather than the endpoint. We study this in an idealised
 AI-development race, where faster \Unsafe{} development raises the winner's
-chance of losing its payoff. Nine commercial endpoints faced a frozen
-task-validity screen, and five entered the strategic analysis.
-
-In self-play, all five reduce \Unsafe{} play as stated risk rises, four gradually
-and one by switching from the ceiling to the floor. We then hold the rival fixed
-by code and compare each endpoint with the exact best response to that rival.
-An always-\Unsafe{} rival draws more \Unsafe{} play than an always-\Safe{} one in all
-15 endpoint-by-risk cells, as a best-responding agent would also show, so this
-contrast is not the finding. The finding is the departure. For every endpoint,
-observed rates sit inside the best-response range in at most 2 of 12 cells.
-Within each endpoint and its own decoding contract, Claude Sonnet 5 reverses the
-best-response sign of the rival-by-risk interaction on both a rate and a
-log-odds scale. The reversal recurs, larger, in a second independent block of
-matched races collected two months later, and under another endpoint's
-decoding contract. Claude Opus 5 keeps the
-best-response sign on the rate scale in both blocks, and the other endpoints are
-small or null where the best response is large.
-
-A self-play rate therefore does not identify an endpoint's response to risk. We
-recommend reporting each endpoint's departure from the best response against
-every declared rival. Two supporting checks add context. All five endpoint
-profiles fit a weak-selection evolutionary benchmark better than its
-strong-selection setting, and repeated samples from one eligible endpoint
-occupy fewer first-five-round trajectories than matched draws of different
-people in 13 of 15 cells, as expected of one fixed policy. Claims remain scoped to
-the tested endpoints, one prompt version and one idealised game.
+chance of losing its payoff. Five commercial endpoints that passed a frozen
+task-validity screen played four fixed, undisclosed rival policies at three
+risk levels, and we compare each with two benchmarks: the exact best response
+to the rival, and a noisy best response whose noise is fitted to the endpoint's
+own decisions. Every endpoint plays more \Unsafe{} against an always-\Unsafe{}
+rival than against an always-\Safe{} one, as both benchmarks predict. The
+rival-by-risk interaction separates them. The exact best response predicts that
+the rival matters more at high risk, while the fitted noisy response predicts
+the opposite for every endpoint. Claude Sonnet 5 and Gemini 3 Flash match the
+noisy benchmark, Claude Opus 5 and GPT-5.5 show the exact benchmark's sign,
+which noise cannot produce, and Claude Sonnet 5 with reasoning enabled departs
+from both. The Claude patterns recur in a second collection block. A model that
+reacts to the race position but not to the rival's policy fits four of five
+endpoints better than either benchmark. A self-play rate therefore does not
+identify an endpoint's response to risk, and we recommend reporting endpoints
+against fixed rivals and both benchmarks. Claims are scoped to five endpoints,
+one prompt rendering and one idealised game.
 \end{abstract}
 
 \section{Introduction}
@@ -141,20 +132,21 @@ every decision.
 The answer is not one universal opponent effect. In self-play, every included
 endpoint reduces \Unsafe{} play as stated risk rises, with four graded profiles
 and one threshold-like switch. Against four fixed scripted rivals, all five
-endpoints move substantially with the rival. A best-responding agent would also
-do so: the exact best response plays more \Unsafe{} against an always-\Unsafe{}
-rival, and its rival effect grows with risk. We therefore read the data against
-that benchmark. The endpoints depart from it in size and in shape, and each
-departure is read within one endpoint and its own decoding contract. Claude
-Sonnet 5 reverses the best-response interaction sign in two independent blocks,
-Claude Opus 5 keeps it on the rate scale, and the other endpoints are small or
-null where the best response is large. A self-play rate
-therefore does not identify an endpoint's response to risk. It also reflects the
-rival that generates the history.
+endpoints move substantially with the rival, as a best-responding agent would.
+The informative quantity is the rival-by-risk interaction, because two natural
+benchmarks predict opposite signs for it: the exact best response says the
+rival matters more at high risk, and a noisy best response fitted to each
+endpoint says it matters less. The endpoints split between them. Claude Sonnet
+5 and Gemini 3 Flash look like noisy best responders, Claude Opus 5 and GPT-5.5
+respond as sharply as the exact benchmark, and Claude Sonnet 5 with reasoning
+enabled matches neither. A self-play rate therefore does not identify an
+endpoint's response to risk. It also reflects the rival that generates the
+history.
 
 This is the paper's core contribution: a matched, replay-audited measurement of
-how far frontier endpoints depart from the best response to fixed rivals, and the
-evidence that a self-play rate cannot stand in for it. The human and evolutionary
+each endpoint's rival-conditioned risk response against an exact and a fitted
+noisy best response, and the evidence that a self-play rate cannot stand in for
+it. The human and evolutionary
 analyses are supporting checks, not separate novelty claims. Human-proxy studies
 report both aggregate fidelity and distributional or behavioural distortions
 \citep{using_llm_to_simulate,out_of_one,synthetic_replacement_human}, so we
@@ -301,14 +293,18 @@ AU & 100.0 & 99.4 & 88.9 \\
 The best response therefore predicts a positive rival contrast. The best-response
 Always-Unsafe minus Always-Safe contrast is $+44.4$, $+88.3$ and $+77.8$ points
 at risks $0.1$, $0.6$ and $0.9$, and its rival-by-risk interaction is $+33.3$
-points. A positive contrast and a positive interaction are what a best responder
-does, so we do not present them as surprising. The contribution is how far, and
-in what shape, each endpoint departs from them. Two limits apply. The benchmark is
+points. A positive contrast and a positive interaction are what an exact best
+responder does, so we do not present them as surprising. Two limits apply. The benchmark is
 risk neutral and knows the rival's policy, which the endpoints must infer, so it marks a
 reference point and not what an endpoint ought to play. A noisy best responder,
-one that picks actions with probability rising in their value, can also produce a
-negative interaction at intermediate noise, so the interaction sign alone does
-not separate a reversal of the best response from noise around it.
+one that picks actions with probability rising in their value, can produce the
+opposite sign. We therefore fit one for each endpoint: a logit quantal response
+to the same rival, whose single noise parameter $\lambda$ is estimated by maximum
+likelihood from the endpoint's own decisions at their recorded states, and we
+predict its interaction by simulating that policy on the same seeds (supplement
+S5.4). At the fitted noise, this benchmark predicts a negative interaction for
+every endpoint. The two benchmarks therefore bracket the possible signs, and an
+endpoint can be read against both.
 
 \section{Experimental design and evidence policy}
 \label{sec:design}
@@ -518,12 +514,9 @@ interaction $[(\mathrm{AU}-\mathrm{AS})_{0.9}-(\mathrm{AU}-\mathrm{AS})_{0.1}]$
 in percentage points. Block A is the first collection (ten matched blocks, BCa
 intervals); A+B adds a second collection on new seeds two months later (twenty
 blocks, sign-flip intervals, Holm-adjusted $p$ of $0.049$ for Gemini 3 Flash,
-$0.66$ for GPT-5.4 and below $0.001$ for both Claude endpoints). Log odds come
-from a logit with cluster-corrected errors on A+B, and on block A for GPT-5.5,
-whose second block is incomplete. Positive values mean that changing the rival
-matters more at high risk; the last row is the exact best response. Log-odds
-values for Gemini 3 Flash and Claude Opus 5 rest on ceiling or floor cells.
-Contracts are not identical: GPT-5.5 and Claude Opus 5 ran with reasoning set
+$0.66$ for GPT-5.4 and below $0.001$ for both Claude endpoints). The last column is the interaction predicted by each endpoint's fitted noisy
+best response (A+B; block A for GPT-5.5, whose second block is incomplete). Positive values mean that changing the rival
+matters more at high risk; the last row is the exact best response. Contracts are not identical: GPT-5.5 and Claude Opus 5 ran with reasoning set
 to low and a 1{,}024-token cap (one block-A Opus cell on an earlier contract);
 Gemini 3 Flash, GPT-5.4 and Claude Sonnet 5 ran with reasoning off, at 256
 tokens in block A and 1{,}024 in block B.}
@@ -534,43 +527,40 @@ tokens in block A and 1{,}024 in block B.}
 \setlength{\tabcolsep}{2pt}
 \begin{tabular}{@{}lrrr@{}}
 \toprule
-Endpoint & Block A (pp) & A+B (pp) & Log odds \\
+Endpoint & Block A (pp) & A+B (pp) & Noisy BR \\
 \midrule
-Gemini 3 Flash  & $-1.8$ [$-8.9$, $2.9$] & $-4.7$ [$-8.7$, $-0.7$] & $-3.48$ \\
-GPT-5.4         & $+2.3$ [$-4.6$, $9.7$] & $+1.1$ [$-3.9$, $6.0$] & $-0.38$ \\
-GPT-5.5         & $+36.4$ [$29.3$, $44.3$] & incomplete & $+0.49$ \\
-Claude Sonnet 5 & $-18.9$ [$-24.4$, $-10.8$] & $-25.9$ [$-30.9$, $-20.7$] & $-1.55$ \\
-Claude Opus 5   & $+29.2$ [$19.2$, $35.4$] & $+22.3$ [$14.6$, $29.9$] & $-1.13$ \\
+Gemini 3 Flash  & $-1.8$ [$-8.9$, $2.9$] & $-4.7$ [$-8.7$, $-0.7$] & $-14.3$ \\
+GPT-5.4         & $+2.3$ [$-4.6$, $9.7$] & $+1.1$ [$-3.9$, $6.0$] & $-1.4$ \\
+GPT-5.5         & $+36.4$ [$29.3$, $44.3$] & incomplete & $-16.9$ \\
+Claude Sonnet 5 & $-18.9$ [$-24.4$, $-10.8$] & $-25.9$ [$-30.9$, $-20.7$] & $-24.1$ \\
+Claude Opus 5   & $+29.2$ [$19.2$, $35.4$] & $+22.3$ [$14.6$, $29.9$] & $-18.8$ \\
 \midrule
-Best response   & $+33.3$ & $+33.3$ & not computed \\
+Exact best response & $+33.3$ & $+33.3$ & \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-The interaction in Table~\ref{tab:rival-risk-interaction} applies
-Equation~\ref{eq:opponent-conditioned-risk} directly and sets it beside the best
-response, whose interaction is positive. Within each endpoint and its own
-contract, Claude Sonnet 5 reverses that sign on both scales, so it plays
-relatively less against Always Unsafe at high risk than at low risk, where the
-best response plays more. A second block of twenty races per rival and risk,
-collected two months later on new seeds, repeats the reversal at a larger size,
-and pooling both blocks gives $-25.9$ points (Holm $p<0.001$) and a negative
-log-odds value. Run under the GPT-5.5 contract, with reasoning set to low and a
-1{,}024-token cap, it gives $-35.2$ points [$-42.4$, $-29.9$], so the reversal
-is not a product of its decoding contract. Claude Opus 5 keeps the best-response sign on the rate scale in
-both blocks, but its pooled log-odds value is not resolved, because its cells
-sit at the ceiling and the floor. Gemini 3 Flash and GPT-5.4 stay within five
-points of zero on the rate scale, where the best response predicts $+33.3$. Their
-negative log-odds values rest on ceiling cells and are not read as reversals.
-GPT-5.5 keeps the best-response sign on the rate scale in the first block only,
-because its second block is incomplete. The blocks differ by up to 14 points
-for the same endpoint, which fits provider-side change between collections, so
-we report them separately before pooling. There is therefore no universal
-pattern. Decoding contracts differ, so the
-cross-endpoint comparison is descriptive and the observed shapes are not
-attributed to the models alone. A null interaction is not shown to be zero. The best response is a point of
-reference, and Section~\ref{sec:best-response} explains why a sign reversal
-alone does not rule out noisy best-responding.
+Table~\ref{tab:rival-risk-interaction} sets each endpoint's interaction beside
+both benchmarks. Claude Sonnet 5's interaction is negative in both collection
+blocks and pooled ($-25.9$ points, Holm $p<0.001$), and its fitted noisy best
+response predicts almost exactly that ($-24.1$, 95\% band $-36.8$ to $-11.3$).
+Gemini 3 Flash and GPT-5.4 also sit inside their noisy bands. Claude Opus 5 and
+GPT-5.5 do not: their interactions are positive ($+22.3$ and $+36.4$) where
+their fitted noise predicts $-18.8$ and $-16.9$, so they respond to the rival
+as sharply as the exact best response does, and noise cannot produce that
+sign. Claude Sonnet 5 run under the GPT-5.5 contract, with reasoning enabled,
+becomes much less noisy ($\lambda$ rises from $0.10$ to $0.45$), so its noisy
+benchmark predicts no interaction ($+0.1$, band $-14.1$ to $+14.0$), yet it
+plays $-35.2$ points: this is the one case that departs from both benchmarks.
+A model that conditions on the race position and a fixed belief about the
+rival's play, but not on the rival's observed policy, fits the decisions of
+four of five endpoints better than the noisy best response, so most endpoints
+appear to react to the race state the rival creates rather than to a model of
+the rival. Decoding contracts differ, so these readings hold within each
+endpoint. Opus and GPT-5.5 cells at the ceiling at risk $0.1$ make their
+log-odds interactions unstable, and the blocks differ by up to 14 points for the
+same endpoint, which fits provider-side change between collections
+(supplement S5.3).
 
 The two conditional rivals make the dependence visible at the first move. They
 follow the same policy from round two onward and differ only in whether the rival
@@ -652,15 +642,14 @@ supplement S6.
 A self-play rate is not a stable trait of an endpoint. In self-play the
 endpoint supplies both sides of the interaction, so its early actions create
 the history its later actions respond to. Fixing the rival by code removes that
-loop and lets us ask the sharper question: how far is each endpoint from the
-exact best response to the rival it faces? A positive rival contrast and a
-positive rival-by-risk interaction are what a best responder shows, so they are
-not the result. The result is the departure. Observed rates fall inside the
-best-response range in at most 2 of 12 cells for any endpoint. Claude Sonnet 5
-reverses the best-response interaction sign on both scales and in two
-independent blocks, Claude Opus 5 keeps it on the rate scale, and the other
-endpoints are small or null where the best response is large. Each reading
-holds within one endpoint and its own decoding contract.
+loop and lets us ask a sharper question: which benchmark does each endpoint
+resemble when the rival is known to the analyst? A positive rival contrast is
+what every benchmark predicts, so it is not the result. The rival-by-risk
+interaction is, because an exact and a fitted noisy best response predict
+opposite signs. Claude Sonnet 5 and Gemini 3 Flash match the noisy benchmark,
+Claude Opus 5 and GPT-5.5 match the sign only a sharp responder produces, and
+Claude Sonnet 5 with reasoning enabled matches neither. Each reading holds
+within one endpoint and its own decoding contract.
 
 The opponent can matter as much as the stated risk. Against the
 Always-Safe rival, raising maximum private risk from $0.1$ to $0.9$ lowers
@@ -672,8 +661,8 @@ This changes what a strategic-agent evaluation should report. Self-play
 estimates the outcome of two copies of one policy, a fixed rival estimates a
 response conditional on that declared policy, and a mixed pool estimates
 outcomes under its own population mix. We recommend, without having validated it
-beyond this game, that the unit of report be each endpoint's departure from the
-best response against every declared rival, alongside a task-validity screen,
+beyond this game, that each endpoint be reported against an exact and a fitted noisy best
+response for every declared rival, alongside a task-validity screen,
 whole-trajectory measures and crossed presentation controls. Presentation
 belongs in it because both the action-code mapping and the narrative skin moved
 rates. The trajectory contrast is a descriptive reference, not a target: one
@@ -682,8 +671,9 @@ one measure does not imply a shared mechanism.
 
 The scope is deliberately narrow. Nine commercial endpoints are not a model
 population, decoding contracts differ across endpoints, and the scripted panel
-uses four chosen policies. The best response is risk neutral and knows the rival's policy, and a noisy best responder can flip the interaction sign, so the
-departures describe distance from one reference and not a verdict on rationality.
+uses four chosen policies. Both benchmarks are risk neutral and know the rival's policy, so they are
+references for reading behaviour, not verdicts on rationality, and the noisy
+benchmark has one free parameter fitted to the same data.
 One Claude Opus 5 cell used an earlier decoding contract; re-collected under
 the active contract it stays at the floor (4.3\% against 1.1\% \Unsafe{}). The interactions rest on
 twenty matched blocks per endpoint at most, and the second block is a later
