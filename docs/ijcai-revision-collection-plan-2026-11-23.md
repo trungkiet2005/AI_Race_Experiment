@@ -174,3 +174,7 @@ assignment is unchanged (`vkhoinguyen` keeps B AS 0.1).
   replaced by `tntduong`, the last reserve.
 - `tnkiet` (E8 A AS 0.6): quota 403 at push validation; no reserve left, so the
   refused routes' AS@0.6 cell is missing and is reported as missing.
+- `hunhtrungkit` (E8 A AS 0.9) and `trngthtnhi` (E8 A AU 0.9): quota 403 at
+  push validation; no reserve left, so the refused routes' AS@0.9 and AU@0.9
+  cells are missing and reported as missing. The refused-route grid therefore
+  has AU at risks 0.1 and 0.6, and AS at risk 0.1 only if `nvviet05` completes.
