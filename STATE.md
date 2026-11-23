@@ -10,8 +10,13 @@ Simulated blind IJCAI review round 1 (before reframe): reject, mean 4.3/10 (`pap
 - Subagent: E5 code port (`kaggle/benchmarks/ai_race_scripted_context_mapping.py`), code only.
 
 ## Running jobs
-- Campaign runner (plan + amendments 1-4 in `docs/ijcai-revision-collection-plan-2026-11-23.md`): pilot slice on vkhoinguyen (pid 20569, log `results/_build/ijcai_revision/campaign_stdout3.log`) and 17 other slices, 5 at a time (pid 33700, `campaign_stdout4.log`). Ledger `results/_build/ijcai_revision/campaign_ledger.jsonl`. After it finishes: `python3 scripts/analyze_scripted_replication.py`, then run E4 cells (amendment 3) on the E8 identities.
-- All routes use the 1,024-token cap (amendment 4: the 256 cap now truncates Gemini 3 Flash). Blocks B/C are a later re-administration, not a byte-identical replication.
+- E4 contract-swap cells (amendment 5, `docs/ijcai-revision-e4-assignment.json`), Mac pid 27068, log `results/_build/ijcai_revision/e4_stdout.log`. Outputs `results/frontier/scripted_opponent_contract_swap/{sonnet_low,opus_active}/`. Do NOT edit `scripts/run_ijcai_revision_slice.sh` while it runs (bash reads scripts incrementally; an edit broke slices on 2026-11-23).
+
+## Collected (2026-11-23)
+- E2 block B: complete for Gemini 3 Flash, GPT-5.4, Sonnet 5, Opus 5; GPT-5.5 missing 2 cells (quota). Block C: AU@0.9 missing for all routes (quota), not tabulated.
+- E8 refused routes: AS@0.1, AU@0.1, AU@0.6 only.
+- Analysis `scripts/analyze_scripted_replication.py` -> `results/derived/scripted_replication/`. Pooled A+B rate interaction: Sonnet -25.9 [-30.9,-20.7], Opus +22.3, Gemini -4.7 (Holm .049), GPT-5.4 +1.1. Integrated into paper (Table 2, supplement S5.3).
+- Kaggle quota: most accounts now exhausted; reconcile state with `scripts/reconcile_ijcai_revision.py --dry-run`.
 
 ## Next steps
 1. When E2/E8 land: analyse blocks B+C (pooled interaction with block factor; best-response departure), refused routes (descriptive, supplement).
