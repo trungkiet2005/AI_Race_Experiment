@@ -178,3 +178,15 @@ assignment is unchanged (`vkhoinguyen` keeps B AS 0.1).
   push validation; no reserve left, so the refused routes' AS@0.9 and AU@0.9
   cells are missing and reported as missing. The refused-route grid therefore
   has AU at risks 0.1 and 0.6, and AS at risk 0.1 only if `nvviet05` completes.
+
+## Collection outcome, 2026-11-23
+
+- Block B: complete for Gemini 3 Flash, GPT-5.4, Claude Sonnet 5 and Claude
+  Opus 5 (six cells each). GPT-5.5 lacks AS@0.6 and AU@0.9 (quota 403 after the
+  route started on `chisboiz` and `kakagotto`), so block B is not a GPT-5.5 grid.
+- Block C: AU@0.9 is missing for all five routes (quota 403 after the routes
+  started on `trunkdabest`), so block C is listed and not tabulated.
+- Refused routes (block A): AS@0.1, AU@0.1 and AU@0.6 exist for all four
+  routes; AS@0.6, AS@0.9 and AU@0.9 are missing (quota at push validation, no
+  reserve). Only the risk-0.1 AU minus AS contrast is computable.
+- Every failure has a record under `results/failed_runs/ijcai_revision_*`.

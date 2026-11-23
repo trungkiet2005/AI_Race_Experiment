@@ -128,17 +128,23 @@ def main() -> None:
     if REFUSED.exists():
         aso.CAMPAIGN = REFUSED
         for route in aso.routes_present():
-            blocks, problems = load_blocks(REFUSED, route)
-            if blocks is None:
-                report["excluded"][f"{route} refused"] = problems
+            turns, _, problems = aso.load_cells(route)
+            if turns.empty:
+                report["excluded"][f"{route} refused"] = problems or ["no cells"]
                 continue
-            refused[route] = {
-                "rates_pct": {f"{s}@{r}": 100 * sum(b["unsafe"] for b in blocks[(s, r)].values())
-                              / sum(b["decisions"] for b in blocks[(s, r)].values())
-                              for s in RIVALS for r in aso.RISKS},
-                "au_minus_as": {str(r): summarise(contrast_values(blocks, r), rng) for r in aso.RISKS},
-                "interaction": summarise(interaction_values(blocks), rng),
+            blocks = {k: v for k, v in aso.repetition_blocks(turns).items() if k[0] in RIVALS}
+            entry = {
+                "cells_present": sorted(f"{s}@{r}" for s, r in blocks),
+                "rates_pct": {f"{s}@{r}": 100 * sum(b["unsafe"] for b in blk.values())
+                              / sum(b["decisions"] for b in blk.values())
+                              for (s, r), blk in sorted(blocks.items())},
+                "au_minus_as": {str(r): summarise(contrast_values(blocks, r), rng)
+                                for r in aso.RISKS if ("AU", r) in blocks and ("AS", r) in blocks},
+                "problems": problems,
             }
+            if all((s, r) in blocks for s in RIVALS for r in (LOW, HIGH)):
+                entry["interaction"] = summarise(interaction_values(blocks), rng)
+            refused[route] = entry
     report["refused_routes"] = refused
     (OUT / "scripted_replication.json").write_text(json.dumps(report, indent=2), encoding="utf-8")
     for route, e in report["routes"].items():
